@@ -42,7 +42,8 @@ function createPredicates(bigMess) {
     // What something is of a kind
     bigMess
         .p("isA")
-        .syntax("is a");
+        .syntax("is a")
+        .syntax("is an");
 
     // What something has an attribute
     bigMess

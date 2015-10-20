@@ -1,5 +1,8 @@
-<html>
+<html ng-app="mindgame">
 <head>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="./app/app.js"></script>
     <script type="bigMess" id="TheHouse2">
 
 the "story"
@@ -53,13 +56,14 @@ Block comments
 
 Story:
     is called 'The Room',
-    is authored by "Mathieu Sylvain".
+    is authored by "Mathieu Sylvain"
 
 Player:
     is in the "kitchen",
     is named "You",
-    is described as "You are simply you!".
+    is described as "You are simply you!"
 
+// Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
 Kitchen:
     is a "room",
     is named "The Kitchen",
@@ -85,6 +89,26 @@ The Bedroom:
     that the simple wooden base is engraved with weird cuneiform etchings. The etchings seem
     to sometimes repeat but not in any clear pattern."
 
+// Define classes of objects to be reused in the game
+A #butterknife:
+    is called "Spoon",
+    can be owned a maximum of 12,
+    is described as "A basic stainless spoon."
+    is also described as "It's just your basic stainless rounded and dull spoon with bland markings and the distorted reflection of your ugly face when you stare into it."
+
+// Trigger events at key moments in the game flow
+when @Player enters for the first time @TheBedroom:
+    @Player says to himself "This room is creapy out, I think I shat my pants!"
+    @Player obtains @ShartedUnderwears
+
+// Define inventory and their rules
+@ShartedUnderwears:
+    is an @inventory,
+    is called "Sharted Underwears",
+    can be owned a maximum of 1,
+    can be dropped @nowhere,
+    is described as "You seem to have soiled you pair of favorite underwears with something more than a fart."
+
     </script>
     <script src="bigmess.js"></script>
     <script src="bigmess.parse.js"></script>
@@ -92,6 +116,6 @@ The Bedroom:
     <script src="test.js"></script>
 </head>
 <body>
-
+    <div ui-view></div>
 </body>
 </html>

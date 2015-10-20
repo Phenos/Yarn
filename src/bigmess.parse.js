@@ -84,6 +84,25 @@
             return this;
         };
 
+        this.startSingleCharBlock = function (stateId) {
+            this.flush()
+                .skip()
+                .state(stateId);
+        };
+
+        this.endSingleCharBlock = function () {
+            this.flush()
+                .skip()
+                .state("");
+        };
+
+        this.endPunctuationToken = function () {
+            this.flush()
+                .step()
+                .flush()
+                .step();
+        };
+
         this.isEnded = function () {
             return this.pos > this.text.length;
         };
@@ -102,16 +121,16 @@
 
             if (pointer.state() === "") {
                 if (pointer.chr === '"') {
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("double-quote");
+                    pointer.startSingleCharBlock("double-quote");
                     continue;
                 } else if (pointer.chr === "'") {
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("single-quote");
+                    pointer.startSingleCharBlock("single-quote");
+                    continue;
+                } else if (pointer.chr === "{") {
+                    pointer.startSingleCharBlock("mustache");
+                    continue;
+                } else if (pointer.chr === "[") {
+                    pointer.startSingleCharBlock("bracket");
                     continue;
                 } else if (numeric.indexOf(pointer.chr) >= 0) {
                     pointer
@@ -119,22 +138,13 @@
                         .state("numeric");
                     continue;
                 } else if (pointer.chr === '@') {
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("at");
+                    pointer.startSingleCharBlock("at");
                     continue;
                 } else if (pointer.chr === '#') {
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("hash");
+                    pointer.startSingleCharBlock("hash");
                     continue;
                 } else if (pointer.chr === '$') {
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("dollar");
+                    pointer.startSingleCharBlock("dollar");
                     continue;
                 } else if (pointer.chr === '/') {
                     if (pointer.peek(1) === '/') {
@@ -153,36 +163,18 @@
                         continue;
                     }
                 } else if (pointer.chr === '.') {
-                    // Flush new token with additionnal dot token
-                    pointer
-                        .flush()
-                        .step()
-                        .flush()
-                        .step();
+                    pointer.endPunctuationToken();
                     continue;
                 } else if (pointer.chr === ',') {
-                    // Flush token with additionnal comma token
-                    pointer
-                        .flush()
-                        .step()
-                        .flush()
-                        .step();
+                    pointer.endPunctuationToken();
                     continue;
                 } else if (pointer.chr === ':') {
-                    // Flush token with additionnal comma token
-                    pointer
-                        .flush()
-                        .step()
-                        .flush()
-                        .step();
+                    pointer.endPunctuationToken();
                     continue;
                 }
             } else if (pointer.state() === "line-comment") {
                 if (pointer.chr === "\n") {
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("");
+                    pointer.endSingleCharBlock();
                     continue;
                 }
             } else if (pointer.state() === "block-comment") {
@@ -197,25 +189,26 @@
                 }
             } else if (pointer.state() === "double-quote") {
                 if (pointer.chr === '"') {
-                    // End quoted token and back to default state
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("");
+                    pointer.endSingleCharBlock();
                     continue;
                 }
             } else if (pointer.state() === "single-quote") {
                 if (pointer.chr === "'") {
-                    // End quoted token and back to default state
-                    pointer
-                        .flush()
-                        .skip()
-                        .state("");
+                    pointer.endSingleCharBlock();
+                    continue;
+                }
+            } else if (pointer.state() === "mustache") {
+                if (pointer.chr === "}") {
+                    pointer.endSingleCharBlock();
+                    continue;
+                }
+            } else if (pointer.state() === "bracket") {
+                if (pointer.chr === "]") {
+                    pointer.endSingleCharBlock();
                     continue;
                 }
             } else if (pointer.state() === "numeric") {
                 if (numericExtended.indexOf(pointer.chr) < 0) {
-                    // End hash token and back to default state
                     pointer
                         .flush()
                         .state("");

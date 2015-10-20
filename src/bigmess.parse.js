@@ -24,7 +24,7 @@
 
         console.log("------");
         pointer.tokens.forEach(function (token) {
-            console.log(token[0] + "   %c[" + token[1] +"]", 'color: #ccc');
+            console.log(token[0] + "   %c[" + token[1] + "]", 'color: #ccc');
         });
     };
 
@@ -95,8 +95,8 @@
         while (!pointer.isEnded()) {
 
             cycle++;
-            if (cycle>maxCycle) {
-                console.log(pointer)
+            if (cycle > maxCycle) {
+                console.log(pointer);
                 throw("Too many cycles!");
             }
 
@@ -106,45 +106,51 @@
                         .flush()
                         .skip()
                         .state("double-quote");
+                    continue;
                 } else if (pointer.chr === "'") {
                     pointer
                         .flush()
                         .skip()
                         .state("single-quote");
+                    continue;
                 } else if (numeric.indexOf(pointer.chr) >= 0) {
                     pointer
                         .flush()
                         .state("numeric");
+                    continue;
                 } else if (pointer.chr === '@') {
                     pointer
                         .flush()
                         .skip()
                         .state("at");
+                    continue;
                 } else if (pointer.chr === '#') {
                     pointer
                         .flush()
                         .skip()
                         .state("hash");
+                    continue;
                 } else if (pointer.chr === '$') {
                     pointer
                         .flush()
                         .skip()
                         .state("dollar");
+                    continue;
                 } else if (pointer.chr === '/') {
                     if (pointer.peek(1) === '/') {
                         pointer
                             .flush()
                             .skip()
                             .skip()
-                            .state("line-comment")
+                            .state("line-comment");
+                        continue;
                     } else if (pointer.peek(1) === '*') {
                         pointer
                             .flush()
                             .skip()
                             .skip()
-                            .state("block-comment")
-                    } else {
-                        pointer.step();
+                            .state("block-comment");
+                        continue;
                     }
                 } else if (pointer.chr === '.') {
                     // Flush new token with additionnal dot token
@@ -153,6 +159,7 @@
                         .step()
                         .flush()
                         .step();
+                    continue;
                 } else if (pointer.chr === ',') {
                     // Flush token with additionnal comma token
                     pointer
@@ -160,6 +167,7 @@
                         .step()
                         .flush()
                         .step();
+                    continue;
                 } else if (pointer.chr === ':') {
                     // Flush token with additionnal comma token
                     pointer
@@ -167,8 +175,7 @@
                         .step()
                         .flush()
                         .step();
-                } else {
-                    pointer.step();
+                    continue;
                 }
             } else if (pointer.state() === "line-comment") {
                 if (pointer.chr === "\n") {
@@ -176,8 +183,7 @@
                         .flush()
                         .skip()
                         .state("");
-                } else {
-                    pointer.step();
+                    continue;
                 }
             } else if (pointer.state() === "block-comment") {
                 if (pointer.chr === "*") {
@@ -186,11 +192,8 @@
                             .flush()
                             .skip()
                             .state("");
-                    } else {
-                        pointer.step();
+                        continue;
                     }
-                } else {
-                    pointer.step();
                 }
             } else if (pointer.state() === "double-quote") {
                 if (pointer.chr === '"') {
@@ -199,8 +202,7 @@
                         .flush()
                         .skip()
                         .state("");
-                } else {
-                    pointer.step();
+                    continue;
                 }
             } else if (pointer.state() === "single-quote") {
                 if (pointer.chr === "'") {
@@ -209,8 +211,7 @@
                         .flush()
                         .skip()
                         .state("");
-                } else {
-                    pointer.step();
+                    continue;
                 }
             } else if (pointer.state() === "numeric") {
                 if (numericExtended.indexOf(pointer.chr) < 0) {
@@ -218,39 +219,23 @@
                     pointer
                         .flush()
                         .state("");
-                } else {
-                    pointer.step();
+                    continue;
                 }
-            } else if (pointer.state() === "hash") {
+            } else if (
+                pointer.state() === "hash" ||
+                pointer.state() === "at" ||
+                pointer.state() === "dollar"
+            ) {
                 if (alphaNumExtended.indexOf(pointer.chr) < 0) {
                     // End hash token and back to default state
                     pointer
                         .flush()
                         .state("");
-                } else {
-                    pointer.step();
+                    continue;
                 }
-            } else if (pointer.state() === "at") {
-                if (alphaNumExtended.indexOf(pointer.chr) < 0) {
-                    // End hash token and back to default state
-                    pointer
-                        .flush()
-                        .state("");
-                } else {
-                    pointer.step();
-                }
-            } else if (pointer.state() === "dollar") {
-                if (alphaNumExtended.indexOf(pointer.chr) < 0) {
-                    // End hash token and back to default state
-                    pointer
-                        .flush()
-                        .state("");
-                } else {
-                    pointer.step();
-                }
-            } else {
-                pointer.step();
             }
+            // Otherwise
+            pointer.step();
         }
     }
 

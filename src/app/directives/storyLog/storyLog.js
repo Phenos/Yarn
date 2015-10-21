@@ -16,8 +16,6 @@ function StoryLogDirective() {
 
     function StoryLogController($scope, $element, $compile) {
 
-        this.ready({storyLog: this});
-
         this.log = function (text) {
             var scope = $scope.$new();
             scope.text = text;
@@ -25,6 +23,9 @@ function StoryLogDirective() {
             console.log("storyLog.log", text);
             $element.append(logItemEl);
         }
+
+        this.ready({storyLog: this});
+
     }
 }
 

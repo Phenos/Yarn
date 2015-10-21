@@ -10,7 +10,7 @@ function LogItemDirective() {
         },
         scope: {},
         controllerAs: 'logItem',
-        template: '<div>{{ logItem.text }}</div>',
+        template: '<div class="logItem">{{ logItem.text }}</div>',
         controller: LogItemController
     };
 

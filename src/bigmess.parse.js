@@ -17,16 +17,53 @@
     BigMess.prototype.parse = function (text) {
         var pointer = new Pointer(text);
 
-        tokenize(pointer);
+        var tokens = tokenize(pointer);
+        var script = new Script();
+        script
+            .compile(tokens);
+        //    .run(this, {});
 
-        console.log("pointer", pointer);
-        console.log("pointer.tokens", pointer.tokens);
+        //console.log("pointer", pointer);
+        //console.log("pointer.tokens", pointer.tokens);
 
-        console.log("------");
-        pointer.tokens.forEach(function (token) {
-            console.log(token[0] + "   %c[" + token[1] + "]", 'color: #ccc');
-        });
+        //pointer.tokens.forEach(function (token) {
+        //    console.log(token[0] + "   %c[" + token[1] + "]", 'color: #ccc');
+        //});
+
+
+
     };
+
+    function Script() {
+        this.ast;
+
+        this.compile = function (tokens) {
+            this.ast = new Sequence();
+            compile(this.ast, tokens);
+        };
+
+        this.run = function (bigMess, scope) {
+
+        }
+    }
+
+
+    function compile(ast, tokens) {
+        //tokens.forEach(function (token, index, tokens) {
+        //
+        //})
+    }
+
+
+
+    function Statement(type) {
+        this.type = type;
+        this.arguments = [];
+    }
+
+    function Sequence() {
+        this.statements = [];
+    }
 
     function Pointer(text) {
 

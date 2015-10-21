@@ -22,8 +22,9 @@ var mindgame = angular.module('mindgame', [
         function gameController($scope, $element) {
 
             this.registerLog = function (controller) {
-                //console.log("registerLog", controller);
+                console.log("registerLog", controller);
                 this.storyLog = controller;
+                this.ready();
             };
 
             this.log = function (text) {
@@ -32,7 +33,31 @@ var mindgame = angular.module('mindgame', [
             };
 
             //console.log('ALLO!');
+
+            this.start = function () {
+
+                var theHouse = new MindGame();
+
+                var m = theHouse.bigMess;
+
+                var storyText = document.getElementById("TheHouse").innerText;
+
+                theHouse.parse(storyText);
+
+                this.log("Welcome to the BegMess demo story!");
+                //var room = m.t("player").a("isIn");
+                //this.log("You are in " + room.a("isNamed").text());
+                //this.log("You look around: ");
+                //this.log(room.a("isDescribedAs").text());
+
+            };
+
+            this.ready = function () {
+                this.start();
+            };
+
         }
+
     })
 
 })();

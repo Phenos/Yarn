@@ -19,8 +19,11 @@
 
         var tokens = tokenize(pointer);
         var script = new Script();
-        script
+        var grid = script
             .compile(tokens);
+
+        return grid;
+
         //    .run(this, {});
 
         //console.log("pointer", pointer);
@@ -31,7 +34,6 @@
         //});
 
 
-
     };
 
     function Script() {
@@ -39,7 +41,7 @@
 
         this.compile = function (tokens) {
             this.ast = new Sequence();
-            compile(this.ast, tokens);
+            return compile(this.ast, tokens);
         };
 
         this.run = function (bigMess, scope) {
@@ -49,11 +51,19 @@
 
 
     function compile(ast, tokens) {
-        //tokens.forEach(function (token, index, tokens) {
-        //
-        //})
+        var grid = ["<table class='testGrid'><thead><tr><td>Type</td><td>Token</td><td>Raw</td></tr></thead>"];
+        tokens.forEach(function (token, index, tokens) {
+            grid.push("<tr><td>");
+            grid.push(token[0]);
+            grid.push("</td><td>");
+            grid.push(token[1]);
+            grid.push("</td><td>");
+            grid.push(token[2]);
+            grid.push("</td></tr>");
+        });
+        grid.push("</table>");
+        return grid;
     }
-
 
 
     function Statement(type) {
@@ -67,15 +77,16 @@
 
     function Pointer(text) {
 
-        this._state = "";
+        this._state = "default";
 
         this.start = function (text) {
             this.text = text;
             this.chr = "";
             this.pos = 0;
             this.buffer = [];
+            this.rawBuffer = [];
             this.tokens = [];
-            this._state = "";
+            this._state = "default";
             this.chr = this.text[this.pos];
         };
 
@@ -91,12 +102,14 @@
 
         this.step = function () {
             this.buffer.push(this.chr);
+            this.rawBuffer.push(this.chr);
             this.pos++;
             this.read();
             return this;
         };
 
         this.skip = function () {
+            this.rawBuffer.push(this.chr);
             this.pos++;
             this.read();
             return this;
@@ -109,15 +122,28 @@
 
         this.flush = function () {
             var txt;
+            var txtRaw;
             var token;
+            var previousToken;
+            txtRaw = this.rawBuffer.join("");
             txt = this.buffer.join("");
-            //console.log("FLUSH!!", txt);
-            txt = txt.trim();
-            if (txt !== "") {
-                token = [txt, this.state()];
-                this.tokens.push(token);
+            if (txtRaw != "") {
+                // Collapse line-breaks into multi-linebreak
+                previousToken = this.tokens[this.tokens.length - 1];
+                if (previousToken && this.state() === "linebreak" &&
+                    (previousToken[0] === "linebreak" || previousToken[0] === "multi-linebreak")
+                ) {
+                    previousToken[0] = "multi-linebreak";
+                    previousToken[2] = previousToken[2] + txtRaw;
+                } else {
+                    token = [this.state(), txt, txtRaw];
+                    this.tokens.push(token);
+                }
             }
+            // Reset the state
+            this.state("default");
             this.buffer = [];
+            this.rawBuffer = [];
             return this;
         };
 
@@ -128,16 +154,13 @@
         };
 
         this.endSingleCharBlock = function () {
-            this.flush()
-                .skip()
-                .state("");
+            this.skip()
+                .flush();
         };
 
-        this.endPunctuationToken = function () {
-            this.flush()
-                .step()
-                .flush()
-                .step();
+        this.endPunctuationToken = function (type) {
+            this.flush().state(type);
+            this.step().flush();
         };
 
         this.isEnded = function () {
@@ -156,7 +179,7 @@
                 throw("Too many cycles!");
             }
 
-            if (pointer.state() === "") {
+            if (pointer.state() === "default") {
                 if (pointer.chr === '"') {
                     pointer.startSingleCharBlock("double-quote");
                     continue;
@@ -199,14 +222,17 @@
                             .state("block-comment");
                         continue;
                     }
+                } else if (pointer.chr === '\n') {
+                    pointer.endPunctuationToken("linebreak");
+                    continue;
                 } else if (pointer.chr === '.') {
-                    pointer.endPunctuationToken();
+                    pointer.endPunctuationToken("period");
                     continue;
                 } else if (pointer.chr === ',') {
-                    pointer.endPunctuationToken();
+                    pointer.endPunctuationToken("comma");
                     continue;
                 } else if (pointer.chr === ':') {
-                    pointer.endPunctuationToken();
+                    pointer.endPunctuationToken("colon");
                     continue;
                 }
             } else if (pointer.state() === "line-comment") {
@@ -218,9 +244,9 @@
                 if (pointer.chr === "*") {
                     if (pointer.peek(1) === "/") {
                         pointer
-                            .flush()
                             .skip()
-                            .state("");
+                            .skip()
+                            .flush();
                         continue;
                     }
                 }
@@ -247,8 +273,7 @@
             } else if (pointer.state() === "numeric") {
                 if (numericExtended.indexOf(pointer.chr) < 0) {
                     pointer
-                        .flush()
-                        .state("");
+                        .flush(pointer.state());
                     continue;
                 }
             } else if (
@@ -257,16 +282,15 @@
                 pointer.state() === "dollar"
             ) {
                 if (alphaNumExtended.indexOf(pointer.chr) < 0) {
-                    // End hash token and back to default state
                     pointer
-                        .flush()
-                        .state("");
+                        .flush(pointer.state());
                     continue;
                 }
             }
             // Otherwise
             pointer.step();
         }
+        return pointer.tokens;
     }
 
 })();

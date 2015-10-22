@@ -42,9 +42,11 @@ var mindgame = angular.module('mindgame', [
 
                 var storyText = document.getElementById("TheHouse").innerText;
 
-                theHouse.parse(storyText);
+                var grid = theHouse.parse(storyText);
 
-                this.log("Welcome to the BegMess demo story!");
+                $element.append(grid.join(""));
+
+                this.log("Welcome to the BigMess demo story!");
                 //var room = m.t("player").a("isIn");
                 //this.log("You are in " + room.a("isNamed").text());
                 //this.log("You look around: ");

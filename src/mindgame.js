@@ -9,8 +9,8 @@ function MindGame () {
 }
 
 MindGame.prototype.parse = function (text) {
-    this.bigMess.parse(text);
-    return this;
+    return this.bigMess.parse(text);
+    //return this;
 };
 
 function defineKinds(bigMess) {

@@ -22,7 +22,7 @@ function StoryLogDirective() {
             var logItemEl = $compile('<log-item text="text"></log-item>')(scope);
             console.log("storyLog.log", text);
             $element.append(logItemEl);
-        }
+        };
 
         this.ready({storyLog: this});
 

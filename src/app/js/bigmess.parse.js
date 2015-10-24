@@ -40,8 +40,10 @@
         this.ast;
 
         this.compile = function (tokens) {
-            this.ast = new Sequence();
-            return compile(this.ast, tokens);
+            setASTOperations(tokens);
+            this.ast = compileAST(tokens);
+            console.log(this.ast);
+            return render(this.ast, tokens);
         };
 
         this.run = function (bigMess, scope) {
@@ -50,11 +52,13 @@
     }
 
 
-    function compile(ast, tokens) {
-        var grid = ["<table class='testGrid'><thead><tr><td>Type</td><td>Token</td><td>Raw</td></tr></thead>"];
+    function render(ast, tokens) {
+        var grid = ["<table class='testGrid'><thead><tr><td>Type</td><td>AST Operation</td><td>Token</td><td>Raw</td></tr></thead>"];
         tokens.forEach(function (token, index, tokens) {
             grid.push("<tr><td>");
             grid.push(token[0]);
+            grid.push("</td><td>");
+            grid.push(token[3]);
             grid.push("</td><td>");
             grid.push(token[1]);
             grid.push("</td><td>");
@@ -65,15 +69,157 @@
         return grid;
     }
 
+    function setASTOperations(tokens) {
 
-    function Statement(type) {
+        tokens.forEach(function (token, index, tokens) {
+            var command = "";
+            var type = token[0];
+            if (type === "default") {
+                command = "appendInstruction"
+            } else if (type === "period") {
+                command = "endSequence"
+            } else if (type === "multiLinebreak") {
+                command = "endSequence"
+            } else if (type === "numeric") {
+                command = "appendValue"
+            } else if (type === "singleQuote") {
+                command = "appendValue"
+            } else if (type === "doubleQuote") {
+                command = "appendValue"
+            } else if (type === "colon") {
+                command = "startArguments"
+            } else if (type === "comma") {
+                command = "nextArgument"
+            } else if (type === "linebreak") {
+                command = "ignore"
+            } else if (type === "lineComment") {
+                command = "ignore"
+            } else if (type === "blockComment") {
+                command = "ignore"
+            }
+            token[3] = command;
+        });
+    }
+
+    function compileAST(tokens) {
+        var ast = new AST();
+        var cursor = ast.cursor;
+
+        tokens.forEach(function (token) {
+            var command = token[3];
+            var tokenString = token[1];
+            switch (command) {
+                case "appendInstruction":
+                    cursor.appendInstruction(tokenString);
+                    break;
+                case "endSequence":
+                    cursor.endSequence();
+                    break;
+                case "appendValue":
+                    cursor.appendValue(tokenString);
+                    break;
+                case "startArguments":
+                    cursor.startArguments();
+                    break;
+                case "nextArgument":
+                    cursor.nextArgument();
+                    break;
+                case "ignore":
+                    break;
+            }
+        });
+        return ast;
+    }
+
+    function AST() {
+        this.root = new Node("sequence", "root");
+        this.cursor = new Cursor().start(this.root);
+    }
+
+    function Cursor() {
+        this.stack = [];
+    }
+
+    Cursor.prototype.size = function () {
+        return this.stack.length;
+    };
+
+    Cursor.prototype.start = function (node) {
+        this.stack = [node];
+        return this;
+    };
+
+    Cursor.prototype.push = function (node) {
+        this.stack.push(node);
+        return this;
+    };
+
+    Cursor.prototype.pop = function (node) {
+        this.stack.pop();
+        return this;
+    };
+
+    Cursor.prototype.head = function () {
+        return this.stack[this.stack.length - 1];
+    };
+
+    Cursor.prototype.parent = function () {
+        var offset = (this.stack.length > 2) ? -2 : -1;
+        return this.stack[this.stack.length - offset];
+    };
+
+    Cursor.prototype.root = function () {
+        return this.stack[0];
+    };
+
+    Cursor.prototype.appendInstruction = function (value) {
+        var node = new Node("instruction", value);
+        this.head().set.add(node);
+        return this;
+    };
+    Cursor.prototype.endSequence = function () {
+        if (this.size() > 1) {
+            this.pop();
+        }
+        return this;
+    };
+    Cursor.prototype.appendValue = function (value) {
+        var node = new Node("value", value);
+        // If the value follows an instructino, the value is considered an unique argument to the instruction
+        if (this.head().set.last() &&
+            this.head().set.last().type === "instruction") {
+            this.push(this.head().set.last());
+            this.pop();
+        } else {
+            this.head().set.add(node);
+        }
+        return this;
+    };
+    Cursor.prototype.startArguments = function () {
+        var node = this.head().set.last();
+        this.push(node);
+        return this;
+    };
+    Cursor.prototype.nextArgument = function () {
+        return this;
+    };
+
+    function Node(type, value) {
         this.type = type;
-        this.arguments = [];
+        this.value = value;
+        this.set = new Set();
     }
 
-    function Sequence() {
-        this.statements = [];
+    function Set() {
+        this.nodes = [];
     }
+    Set.prototype.add = function (node) {
+        this.nodes.push(node);
+        return this;
+    };
+    Set.prototype.last = function () {
+        return this.nodes[this.nodes.length - 1];
+    };
 
     function Pointer(text) {
 
@@ -128,12 +274,12 @@
             txtRaw = this.rawBuffer.join("");
             txt = this.buffer.join("");
             if (txtRaw != "") {
-                // Collapse line-breaks into multi-linebreak
+                // Collapse line-breaks into multiLinebreak
                 previousToken = this.tokens[this.tokens.length - 1];
                 if (previousToken && this.state() === "linebreak" &&
-                    (previousToken[0] === "linebreak" || previousToken[0] === "multi-linebreak")
+                    (previousToken[0] === "linebreak" || previousToken[0] === "multiLinebreak")
                 ) {
-                    previousToken[0] = "multi-linebreak";
+                    previousToken[0] = "multiLinebreak";
                     previousToken[2] = previousToken[2] + txtRaw;
                 } else {
                     token = [this.state(), txt, txtRaw];
@@ -181,10 +327,10 @@
 
             if (pointer.state() === "default") {
                 if (pointer.chr === '"') {
-                    pointer.startSingleCharBlock("double-quote");
+                    pointer.startSingleCharBlock("doubleQuote");
                     continue;
                 } else if (pointer.chr === "'") {
-                    pointer.startSingleCharBlock("single-quote");
+                    pointer.startSingleCharBlock("singleQuote");
                     continue;
                 } else if (pointer.chr === "{") {
                     pointer.startSingleCharBlock("mustache");
@@ -212,14 +358,14 @@
                             .flush()
                             .skip()
                             .skip()
-                            .state("line-comment");
+                            .state("lineComment");
                         continue;
                     } else if (pointer.peek(1) === '*') {
                         pointer
                             .flush()
                             .skip()
                             .skip()
-                            .state("block-comment");
+                            .state("blockComment");
                         continue;
                     }
                 } else if (pointer.chr === '\n') {
@@ -235,12 +381,12 @@
                     pointer.endPunctuationToken("colon");
                     continue;
                 }
-            } else if (pointer.state() === "line-comment") {
+            } else if (pointer.state() === "lineComment") {
                 if (pointer.chr === "\n") {
                     pointer.endSingleCharBlock();
                     continue;
                 }
-            } else if (pointer.state() === "block-comment") {
+            } else if (pointer.state() === "blockComment") {
                 if (pointer.chr === "*") {
                     if (pointer.peek(1) === "/") {
                         pointer
@@ -250,12 +396,12 @@
                         continue;
                     }
                 }
-            } else if (pointer.state() === "double-quote") {
+            } else if (pointer.state() === "doubleQuote") {
                 if (pointer.chr === '"') {
                     pointer.endSingleCharBlock();
                     continue;
                 }
-            } else if (pointer.state() === "single-quote") {
+            } else if (pointer.state() === "singleQuote") {
                 if (pointer.chr === "'") {
                     pointer.endSingleCharBlock();
                     continue;

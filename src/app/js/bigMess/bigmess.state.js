@@ -28,7 +28,7 @@
         function getStringFromThingOrValue(obj) {
             var value;
             if (typeof obj === "undefined") {
-                value = "[undefined]";
+                value = "";
             } else if (typeof obj === "object") {
                 value = obj.label || obj.id;
             } else {
@@ -59,8 +59,9 @@
      * Get or create a new thing
      * @param id
      */
-    State.prototype.thing = function (id) {
+    State.prototype.thing = function (_id) {
         var thing;
+        var id = _id.toLowerCase();
 
         if (!id)
             throw("Things must have an id");
@@ -94,61 +95,66 @@
     };
 
     /**
-     * Get or create a new assertion and the objects associated to it
+     * Get a new assertion and the objects associated to it
      * @param subject
      * @param predicate
      * @param object
      * @returns {*}
      */
-    State.prototype.assertion = function (subject, predicate, object) {
-        //var subject;
-        //var predicate;
-        //var object;
+    State.prototype.setAssertion = function (subject, predicate, object) {
         var assertion;
         var foundAssertions;
 
-        //if (!subjectId)
-        //    throw("Assertion subject must have an id");
-        //
-        //subject = this.t(subjectId);
-
-        if (predicate) {
-            //predicate = this.p(predicateId);
-
-
-            if (object) {
+        if (predicate && subject) {
+            // Look for an existing assertion
+            foundAssertions = [];
+            // todo: use built indexes instead of itterating trough all predicates
+            this.assertions.forEach(function (assertion) {
+                if (assertion.subject === subject &&
+                    assertion.predicate === predicate &&
+                    assertion.object === object) {
+                    foundAssertions.push(assertion);
+                }
+            });
+            if (foundAssertions[0]) {
+                assertion = foundAssertions[0].object;
+            } else {
                 // Create a new assertion
-                //object = this.t(objectId);
                 assertion = new Assertion(subject, predicate, object, this);
                 this.assertions.push(assertion);
-                return this;
-            } else {
-                // Look for an existing assertion
-                foundAssertions = [];
-                // todo: use built indexes instead of itterating trough all predicates
-                this.assertions.forEach(function (assertion) {
-                    if (assertion.subject === subject && assertion.predicate === predicate) {
-                        foundAssertions.push(assertion);
-                    }
-                });
-                if (foundAssertions[0]) {
-                    return foundAssertions[0].object;
-                }
             }
+        } else {
+            console.warn("Impossible to create assertion without at least a subject and a predicate.")
         }
-
-
-        // todo: check for duplicate
-        this.assertions.push(assertion);
 
         return assertion;
     };
+    State.prototype.getAssertion = function (subject, predicate) {
+        var assertion;
+        var foundAssertions;
 
+        if (predicate && subject) {
+            // Look for an existing assertion
+            foundAssertions = [];
+            // todo: use built indexes instead of itterating trough all predicates
+            this.assertions.forEach(function (assertion) {
+                if (assertion.subject === subject &&
+                    assertion.predicate === predicate) {
+                    foundAssertions.push(assertion);
+                }
+            });
+        } else {
+            console.warn("Impossible to find assertion without at least a subject and a predicate.")
+        }
+
+        return foundAssertions;
+    };
     /**
      * Get or create a new type of predicate
      * @param id
      */
-    State.prototype.predicate = function (id) {
+    State.prototype.predicate = function (_id) {
+        var id = _id.toLowerCase();
         var predicate;
         var syntax;
 
@@ -167,12 +173,6 @@
         }
         return predicate;
     };
-
-// Shorthands for main functions
-    State.prototype.t = State.prototype.thing;
-    State.prototype.a = State.prototype.assertion;
-    State.prototype.p = State.prototype.predicate;
-
 
     /**
      * An assertion about things in the graph
@@ -194,20 +194,17 @@
      * @constructor
      */
     BigMess.Thing = Thing;
-    function Thing(id, bigMess) {
+    function Thing(_id, state) {
+        var id = _id.toLowerCase();
         this.id = id;
 
         /**
-         * Get or set an assertion, returns itself or the object of the assertion found.
+         * Get an assertion, returns itself or the object of the assertion found.
          * @type {Function}
          */
-        this.a = this.assertion = function (predicateId, thingId) {
-            var object = bigMess.assertion(this.id, predicateId, thingId);
-            if (thingId) {
-                return this;
-            } else {
-                return object;
-            }
+        this.getAssertion = function (predicate) {
+            var assertion = state.getAssertion(this, predicate);
+            return assertion;
         };
 
         /**
@@ -237,7 +234,8 @@
      * @constructor
      */
     BigMess.Predicate = Predicate;
-    function Predicate(id, bigMess) {
+    function Predicate(_id, bigMess) {
+        var id = _id.toLowerCase();
         this.id = id;
         this.label = id;
 

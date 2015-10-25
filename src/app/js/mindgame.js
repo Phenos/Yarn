@@ -16,61 +16,61 @@ MindGame.prototype.load = function (text) {
 function defineKinds(state) {
     // Player
     state
-        .t("player");
+        .thing("player");
 
     // Persons
     state
-        .t("person");
+        .thing("person");
 
     // Places
     state
-        .t("room");
+        .thing("room");
 
     // Objects (as in "object" in the game)
     state
-        .t("object");
+        .thing("object");
 }
 
 function createPredicates(state) {
 
     // What something is of a kind
     state
-        .p("isAuthoredBy")
+        .predicate("isAuthoredBy")
         .syntax("is created by")
         .syntax("is authored by");
 
     // What something is of a kind
     state
-        .p("isA")
+        .predicate("isA")
         .syntax("is an")
         .syntax("is a");
 
     // What something has an attribute
     state
-        .p("is")
+        .predicate("is")
         .syntax("is");
 
     // What something is called
     state
-        .p("isNamed")
+        .predicate("isNamed")
         .syntax("is titled")
         .syntax("is named")
         .syntax("is called");
 
     // What something is described as when looked at
     state
-        .p("isDescribedAs")
+        .predicate("isDescribedAs")
         .syntax("is described")
         .syntax("is described as");
 
     state
-        .p("isAlsoDescribedAs")
+        .predicate("isAlsoDescribedAs")
         .syntax("is also described")
         .syntax("is also described as");
 
     // When something is in a place
     state
-        .p("isIn")
+        .predicate("isIn")
         .syntax("is in the")
         .syntax("is inside the")
         .syntax("is at the")
@@ -80,7 +80,7 @@ function createPredicates(state) {
 
     // When a place is linked to another place
     state
-        .p("linksTo")
+        .predicate("linksTo")
         .syntax("goes to")
         .syntax("is open to")
         .syntax("goes to the")
@@ -90,7 +90,7 @@ function createPredicates(state) {
 
     // When a place is linked to another place
     state
-        .p("this")
+        .predicate("this")
         .syntax("that")
         .syntax("the");
 }

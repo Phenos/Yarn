@@ -28,33 +28,53 @@ var mindgame = angular.module('mindgame', [
             };
 
             this.log = function (text) {
-                console.log('$scope.log', text);
                 this.storyLog.log(text);
+            };
+
+            this.command = function (text) {
+                if (text === "state") {
+                    this.storyLog.log($scope.game.bigMess.state.html());
+                } else {
+                    this.storyLog.log("Sorry... unknown command : "+ text);
+                }
             };
 
             //console.log('ALLO!');
 
             this.start = function () {
 
-                var theHouse = new MindGame();
+                var game = new MindGame();
 
-                var m = theHouse.bigMess;
+                $scope.game = game;
 
                 var storyText = document.getElementById("TheHouse").innerText;
 
-                theHouse.load(storyText);
+                game.load(storyText);
 
                 // Output the tree and pointer in html
-                $element.append(theHouse.bigMess.script.ast.html());
-                $element.append(theHouse.bigMess.script.pointer.html());
 
-                theHouse.bigMess.runScript();
+                //$element.append(theHouse.bigMess.script.ast.html());
+                //$element.append(theHouse.bigMess.script.pointer.html());
 
-                $element.prepend(theHouse.bigMess.state.html());
+                game.bigMess.runScript();
+
+                $element.prepend(game.bigMess.state.html());
 
                 this.log("Welcome to the BigMess demo story!");
-                //var room = m.t("player").a("isIn");
-                //this.log("You are in " + room.a("isNamed").text());
+
+                var state = game.bigMess.state;
+                var isIn = state.predicate("is in");
+                var isDescribedAs = state.predicate("described as");
+                var isCalled = state.predicate("is called");
+                var room = state.thing("you").getAssertion(isIn);
+                if (room.length) {
+                    // Todo, create helper for getting a predicate value or it' id as a fallback
+                    var label = room[0].object.getAssertion(isCalled)[0].object;
+                    this.log("You are in " + label);
+                } else {
+                    this.log("You are nowhere to be found! Place your hero somewhere");
+                }
+
                 //this.log("You look around: ");
                 //this.log(room.a("isDescribedAs").text());
 

@@ -77,7 +77,7 @@
             // Get or create a new thing according to that symbol
             if (node.variant === "value") {
                 returnValue = node.value;
-                console.log("VALUE variant:", node.value);
+                //console.log("VALUE variant:", node.value);
             } else if (node.variant === "reference") {
                 returnValue = this.state.thing(node.value);
             } else if (node.variant === "constant") {
@@ -103,13 +103,17 @@
             // Run the child set of node to be used by the predicate
             args = this.runSet(node.set);
             // Create assertion from predicate
-            args.forEach(function (arg) {
-                //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
+            if (args.length) {
+                args.forEach(function (arg) {
+                    //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
+                    var currentThis = self.stack.head().values.this;
+                    var assertion = self.state.setAssertion(currentThis, predicate, arg);
+                    //console.log("created assetion: ", arg);
+                });
+            } else {
                 var currentThis = self.stack.head().values.this;
-                console.log("arg", arg);
-                var assertion = self.state.assertion(currentThis, predicate, arg);
-                //console.log("created assetion: ", arg);
-            });
+                self.state.setAssertion(currentThis, predicate);
+            }
             returnValue = null;
         } else {
             returnValue = null;

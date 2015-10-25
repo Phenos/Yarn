@@ -29,7 +29,9 @@
 
     /**
      * Get or create a new thing
-     * @param id
+     * @param predicate
+     * @param text
+     * @returns {*}
      */
     State.prototype.syntax = function (predicate, text) {
         var syntax;
@@ -48,9 +50,10 @@
 
     /**
      * Get or create a new assertion and the objects associated to it
-     * @param subject
-     * @param predicate
-     * @param object
+     * @param subjectId
+     * @param predicateId
+     * @param objectId
+     * @returns {*}
      */
     State.prototype.assertion = function (subjectId, predicateId, objectId) {
         var subject;
@@ -195,7 +198,7 @@
             bigMess.syntax(this, text);
             return this;
         }
-    };
+    }
 
 })();
 

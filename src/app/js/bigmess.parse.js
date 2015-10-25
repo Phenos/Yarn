@@ -18,8 +18,8 @@
         var pointer = new Pointer(text);
 
         var tokens = tokenize(pointer);
-        var script = new Script();
-        var grid = script
+        this.script = new Script();
+        var grid = this.script
             .compile(tokens);
 
         return grid;
@@ -40,10 +40,10 @@
         this.ast;
 
         this.compile = function (tokens) {
-            setASTOperations(tokens);
-            this.ast = compileAST(tokens);
+            setASTOperations(tokens); // todo: make setASTOperation a method of AST
+            this.ast = compileAST(tokens); // todo: make compileAST a method of AST
             console.log(this.ast);
-            return render(this.ast, tokens);
+            return renderToken(tokens);
         };
 
         this.run = function (bigMess, scope) {
@@ -52,7 +52,7 @@
     }
 
 
-    function render(ast, tokens) {
+    function renderToken(tokens) {
         var grid = ["<table class='testGrid'><thead><tr><td>Type</td><td>AST Operation</td><td>Token</td><td>Raw</td></tr></thead>"];
         tokens.forEach(function (token, index, tokens) {
             grid.push("<tr><td>");
@@ -66,7 +66,7 @@
             grid.push("</td></tr>");
         });
         grid.push("</table>");
-        return grid;
+        return grid.join("");
     }
 
     function setASTOperations(tokens) {
@@ -136,6 +136,58 @@
         this.cursor = new Cursor().start(this.root);
     }
 
+    AST.prototype.render = function() {
+        var html = ["<div class='tree'>"];
+        html.push(this.root.render());
+        html.push("</div>");
+        return html.join("");
+    };
+
+
+    function Node(type, value) {
+        this.type = type;
+        this.value = value;
+        this.set = new Set();
+    }
+
+    Node.prototype.render = function () {
+        var html = [];
+        html.push("<div class='node'>");
+        html.push(
+            "<span class='label'><span class='value'>" +
+            this.value.substr(0, 30) +
+            "</span> <span class='type'>"
+            + this.type +
+            "</span></span>");
+        html.push(this.set.render());
+        html.push("</div>");
+        return html.join("");
+    };
+
+    function Set() {
+        this.nodes = [];
+    }
+
+    Set.prototype.render = function ()  {
+        var html = [];
+        html.push("<div class='set'>");
+        this.nodes.forEach(function (node) {
+            html.push(node.render());
+        });
+        html.push("</div>");
+        return html.join("");
+    };
+
+    Set.prototype.add = function (node) {
+        this.nodes.push(node);
+        return this;
+    };
+
+    Set.prototype.last = function () {
+        return this.nodes[this.nodes.length - 1];
+    };
+
+
     function Cursor() {
         this.stack = [];
     }
@@ -204,22 +256,6 @@
         return this;
     };
 
-    function Node(type, value) {
-        this.type = type;
-        this.value = value;
-        this.set = new Set();
-    }
-
-    function Set() {
-        this.nodes = [];
-    }
-    Set.prototype.add = function (node) {
-        this.nodes.push(node);
-        return this;
-    };
-    Set.prototype.last = function () {
-        return this.nodes[this.nodes.length - 1];
-    };
 
     function Pointer(text) {
 

@@ -14,45 +14,36 @@
      * Parse a text into various semantic parts to be consumed by BigMess
      * @param text
      */
-    BigMess.prototype.parse = function (text) {
-        var pointer = new Pointer(text);
+    BigMess.prototype.load = function (text) {
+        this.script.load(text);
+    };
 
-        var tokens = tokenize(pointer);
-        this.script = new Script();
-        var grid = this.script
-            .compile(tokens);
+    BigMess.Script = Script;
+    function Script() {
+        this.pointer = new Pointer();
+        this.ast = new AST();
+    }
 
-        return grid;
+    Script.prototype.load = function (text) {
+        this.pointer.tokenize(text);
+        this.compile(this.pointer.tokens); // Todo.. this should not be compile
+        return this;
+    };
 
-        //    .run(this, {});
-
-        //console.log("pointer", pointer);
-        //console.log("pointer.tokens", pointer.tokens);
-
-        //pointer.tokens.forEach(function (token) {
-        //    console.log(token[0] + "   %c[" + token[1] + "]", 'color: #ccc');
-        //});
-
+    Script.prototype.execute = function (state) {
 
     };
 
-    function Script() {
-        this.ast;
-
-        this.compile = function (tokens) {
-            setASTOperations(tokens); // todo: make setASTOperation a method of AST
-            this.ast = compileAST(tokens); // todo: make compileAST a method of AST
-            console.log(this.ast);
-            return renderToken(tokens);
-        };
-
-        this.run = function (bigMess, scope) {
-
-        }
-    }
+    Script.prototype.compile = function (tokens) {
+        this.ast.compile(tokens);
+        return this;
+    };
 
 
-    function renderToken(tokens) {
+
+
+    Pointer.prototype.html = function () {
+        var tokens = this.tokens;
         var grid = ["<table class='testGrid'><thead><tr><td>Type</td><td>AST Operation</td><td>Token</td><td>Raw</td></tr></thead>"];
         tokens.forEach(function (token, index, tokens) {
             grid.push("<tr><td>");
@@ -67,9 +58,15 @@
         });
         grid.push("</table>");
         return grid.join("");
+    };
+
+
+    function AST() {
+        this.root = new Node("sequence", "root");
+        this.cursor = new Cursor().start(this.root);
     }
 
-    function setASTOperations(tokens) {
+    AST.prototype.qualifyTokens = function (tokens) {
 
         tokens.forEach(function (token, index, tokens) {
             var command = "";
@@ -103,13 +100,26 @@
             }
             token[3] = command;
         });
-    }
+    };
 
-    function compileAST(tokens) {
-        var ast = new AST();
-        var cursor = ast.cursor;
+    AST.prototype.html = function() {
+        var html = ["<div class='tree'>"];
+        html.push(this.root.html());
+        html.push("</div>");
+        return html.join("");
+    };
 
-        tokens.forEach(function (token, index, tokens) {
+    /**
+     * Compile an Abstract Syntax Tree from a series of tokens
+     * @param tokens
+     * @returns {*}
+     */
+    AST.prototype.compile = function (tokens) {
+        var cursor = this.cursor;
+
+        this.qualifyTokens(tokens);
+
+        tokens.forEach(function (token) {
             var command = token[3];
             var tokenString = token[1];
             switch (command) {
@@ -138,20 +148,7 @@
                     break;
             }
         });
-        return ast;
     }
-
-    function AST() {
-        this.root = new Node("sequence", "root");
-        this.cursor = new Cursor().start(this.root);
-    }
-
-    AST.prototype.render = function() {
-        var html = ["<div class='tree'>"];
-        html.push(this.root.render());
-        html.push("</div>");
-        return html.join("");
-    };
 
 
     function Node(type, value, variant) {
@@ -161,7 +158,7 @@
         this.set = new Set();
     }
 
-    Node.prototype.render = function () {
+    Node.prototype.html = function () {
         var html = [];
         html.push("<div class='node'>");
         html.push(
@@ -172,7 +169,7 @@
             "</span>");
         if (this.variant) html.push("<span class='variant'>" + this.variant + "</span>");
         html.push("</span>");
-        html.push(this.set.render());
+        html.push(this.set.html());
         html.push("</div>");
         return html.join("");
     };
@@ -181,11 +178,11 @@
         this.nodes = [];
     }
 
-    Set.prototype.render = function ()  {
+    Set.prototype.html = function ()  {
         var html = [];
         html.push("<div class='set'>");
         this.nodes.forEach(function (node) {
-            html.push(node.render());
+            html.push(node.html());
         });
         html.push("</div>");
         return html.join("");
@@ -299,13 +296,14 @@
         return this;
     };
 
-
-    function Pointer(text) {
+    // Todo: Token should be an object not an array
+    // Todo: Move all method functions into the prototype
+    function Pointer() {
 
         this._state = "default";
 
-        this.start = function (text) {
-            this.text = text;
+        this.start = function () {
+            this.text = "";
             this.chr = "";
             this.pos = 0;
             this.buffer = [];
@@ -397,10 +395,14 @@
             return this.pos > this.text.length;
         };
 
-        this.start(text);
+        this.start();
     }
 
-    function tokenize(pointer) {
+    Pointer.prototype.tokenize = function (text) {
+        var pointer = this;
+
+        pointer.text = text;
+
         while (!pointer.isEnded()) {
 
             cycle++;
@@ -520,7 +522,6 @@
             // Otherwise
             pointer.step();
         }
-        return pointer.tokens;
     }
 
 })();

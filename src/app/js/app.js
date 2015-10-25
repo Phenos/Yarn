@@ -42,11 +42,13 @@ var mindgame = angular.module('mindgame', [
 
                 var storyText = document.getElementById("TheHouse").innerText;
 
-                var grid = theHouse.parse(storyText);
+                theHouse.load(storyText);
 
+                // Output the tree and pointer in html
+                $element.append(theHouse.bigMess.script.ast.html());
+                $element.append(theHouse.bigMess.script.pointer.html());
 
-                $element.append(theHouse.bigMess.script.ast.render());
-                $element.append(grid);
+                theHouse.bigMess.runScript();
 
                 this.log("Welcome to the BigMess demo story!");
                 //var room = m.t("player").a("isIn");

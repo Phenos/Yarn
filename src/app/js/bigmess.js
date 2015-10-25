@@ -2,18 +2,31 @@
 
 
 function BigMess() {
+    this.script = new BigMess.Script();
+    this.state = new BigMess.State();
+}
+
+BigMess.State = State;
+function State () {
     this.assertions = [];
     this.things = {};
     this.predicates = {};
     this.syntaxes = {};
-}
+};
+
+BigMess.prototype.runScript = function () {
+    console.log("BigMess.runScript");
+    this.script.execute(this.state);
+    return this;
+};
+
 
 
 /**
  * Get or create a new thing
  * @param id
  */
-BigMess.prototype.thing = function (id) {
+State.prototype.thing = function (id) {
     var thing;
 
     if (!id)
@@ -30,7 +43,7 @@ BigMess.prototype.thing = function (id) {
  * Get or create a new thing
  * @param id
  */
-BigMess.prototype.syntax = function (predicate, text) {
+State.prototype.syntax = function (predicate, text) {
     var syntax;
 
     if (!predicate)
@@ -51,7 +64,7 @@ BigMess.prototype.syntax = function (predicate, text) {
  * @param predicate
  * @param object
  */
-BigMess.prototype.assertion = function (subjectId, predicateId, objectId) {
+State.prototype.assertion = function (subjectId, predicateId, objectId) {
     var subject;
     var predicate;
     var object;
@@ -99,7 +112,7 @@ BigMess.prototype.assertion = function (subjectId, predicateId, objectId) {
  * Get or create a new type of predicate
  * @param id
  */
-BigMess.prototype.predicate = function (id) {
+State.prototype.predicate = function (id) {
     var predicate;
 
     if (!id)
@@ -114,9 +127,9 @@ BigMess.prototype.predicate = function (id) {
 };
 
 // Shorthands for main functions
-BigMess.prototype.t = BigMess.prototype.thing;
-BigMess.prototype.a = BigMess.prototype.assertion;
-BigMess.prototype.p = BigMess.prototype.predicate;
+State.prototype.t = State.prototype.thing;
+State.prototype.a = State.prototype.assertion;
+State.prototype.p = State.prototype.predicate;
 
 
 

@@ -4,72 +4,72 @@ function MindGame () {
 
     this.bigMess = new BigMess();
 
-    createPredicates(this.bigMess);
-    defineKinds(this.bigMess);
+    createPredicates(this.bigMess.state);
+    defineKinds(this.bigMess.state);
 }
 
-MindGame.prototype.parse = function (text) {
-    return this.bigMess.parse(text);
+MindGame.prototype.load = function (text) {
+    return this.bigMess.load(text);
     //return this;
 };
 
-function defineKinds(bigMess) {
+function defineKinds(state) {
     // Player
-    bigMess
+    state
         .t("player");
 
     // Persons
-    bigMess
+    state
         .t("person");
 
     // Places
-    bigMess
+    state
         .t("room");
 
     // Objects (as in "object" in the game)
-    bigMess
+    state
         .t("object");
 }
 
-function createPredicates(bigMess) {
+function createPredicates(state) {
 
     // What something is of a kind
-    bigMess
+    state
         .p("isAuthoredBy")
         .syntax("is created by")
         .syntax("is authored by");
 
     // What something is of a kind
-    bigMess
+    state
         .p("isA")
         .syntax("is a")
         .syntax("is an");
 
     // What something has an attribute
-    bigMess
+    state
         .p("is")
         .syntax("is");
 
     // What something is called
-    bigMess
+    state
         .p("isNamed")
         .syntax("is titled")
         .syntax("is called")
         .syntax("is named");
 
     // What something is described as when looked at
-    bigMess
+    state
         .p("isDescribedAs")
         .syntax("is described")
         .syntax("is described as");
 
-    bigMess
+    state
         .p("isAlsoDescribedAs")
         .syntax("is also described")
         .syntax("is also described as");
 
     // When something is in a place
-    bigMess
+    state
         .p("isIn")
         .syntax("is in the")
         .syntax("is inside the")
@@ -79,7 +79,7 @@ function createPredicates(bigMess) {
         .syntax("is at");
 
     // When a place is linked to another place
-    bigMess
+    state
         .p("linksTo")
         .syntax("goes to")
         .syntax("is open to")

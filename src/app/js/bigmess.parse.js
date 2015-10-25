@@ -61,9 +61,9 @@
             grid.push(token[3]);
             grid.push("</td><td>");
             grid.push(token[1]);
-            grid.push("</td><td>");
+            grid.push("</td><td>[");
             grid.push(token[2]);
-            grid.push("</td></tr>");
+            grid.push("]</td></tr>");
         });
         grid.push("</table>");
         return grid.join("");
@@ -88,6 +88,10 @@
                 command = "appendValue"
             } else if (type === "colon") {
                 command = "startArguments"
+            } else if (type === "hash") {
+                command = "appendReference"
+            } else if (type === "at") {
+                command = "appendConstant"
             } else if (type === "comma") {
                 command = "nextArgument"
             } else if (type === "linebreak") {
@@ -116,7 +120,13 @@
                     cursor.endSequence();
                     break;
                 case "appendValue":
-                    cursor.appendValue(tokenString);
+                    cursor.appendSymbol("value", tokenString);
+                    break;
+                case "appendReference":
+                    cursor.appendSymbol("reference", tokenString);
+                    break;
+                case "appendConstant":
+                    cursor.appendSymbol("constant", tokenString);
                     break;
                 case "startArguments":
                     cursor.startArguments();
@@ -155,7 +165,7 @@
         html.push("<div class='node'>");
         html.push(
             "<span class='label'><span class='value'>" +
-            this.value.substr(0, 30) +
+            this.value.substr(0, 80) +
             "</span> <span class='type'>"
             + this.type +
             "</span></span>");
@@ -235,12 +245,15 @@
         }
         return this;
     };
-    Cursor.prototype.appendValue = function (value) {
-        var node = new Node("value", value);
-        // If the value follows an instructino, the value is considered an unique argument to the instruction
+    Cursor.prototype.appendSymbol = function (type, value) {
+        var node = new Node(type, value);
+
         if (this.head().set.last() &&
-            this.head().set.last().type === "instruction") {
+            this.head().set.last().type === 'instruction') {
+            // If the value follows an instruction, the value is considered an unique argument to the instruction
+
             this.push(this.head().set.last());
+            this.head().set.add(node);
             this.pop();
         } else {
             this.head().set.add(node);
@@ -308,24 +321,29 @@
             var token;
             var previousToken;
             txtRaw = this.rawBuffer.join("");
-            txt = this.buffer.join("");
-            if (txtRaw != "") {
-                // Collapse line-breaks into multiLinebreak
-                previousToken = this.tokens[this.tokens.length - 1];
-                if (previousToken && this.state() === "linebreak" &&
-                    (previousToken[0] === "linebreak" || previousToken[0] === "multiLinebreak")
-                ) {
-                    previousToken[0] = "multiLinebreak";
-                    previousToken[2] = previousToken[2] + txtRaw;
+            txt = this.buffer.join("").trim();
+            if (txtRaw !== "") {
+                if (txt === "" && this.state() === "default") {
+                    // Ignore whitespace here!
+
                 } else {
-                    token = [this.state(), txt, txtRaw];
-                    this.tokens.push(token);
+                    // Collapse line-breaks into multiLinebreak
+                    previousToken = this.tokens[this.tokens.length - 1];
+                    if (previousToken && this.state() === "linebreak" &&
+                        (previousToken[0] === "linebreak" || previousToken[0] === "multiLinebreak")
+                    ) {
+                        previousToken[0] = "multiLinebreak";
+                        previousToken[2] = previousToken[2] + txtRaw;
+                    } else {
+                        token = [this.state(), txt, txtRaw];
+                        this.tokens.push(token);
+                    }
+                    // Reset the state
+                    this.state("default");
+                    this.buffer = [];
+                    this.rawBuffer = [];
                 }
             }
-            // Reset the state
-            this.state("default");
-            this.buffer = [];
-            this.rawBuffer = [];
             return this;
         };
 

@@ -46,7 +46,7 @@ var mindgame = angular.module('mindgame', [
 
 
                 $element.append(theHouse.bigMess.script.ast.render());
-                //$element.append(grid);
+                $element.append(grid);
 
                 this.log("Welcome to the BigMess demo story!");
                 //var room = m.t("player").a("isIn");

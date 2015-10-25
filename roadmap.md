@@ -1,11 +1,10 @@
 
-
+- parser: support for blocks like "start chapter / end chapter"
 - Address Entities with "@"
-- Stop unquoted entities with ":"
 - Make predicate matching case insensitive
-- Create simple camelCase version of quoted entities
-- .flush(x) au lieu de .flush().flush()
-- Keep raw tokens in token list
+- Automagically create simple camelCase version of quoted entities
 - Make tokenizer more modular with types of "in/out" state handlers
 - Warn of unknown predicate
-- Differentiate between state definitions, events handling, event triggering and conditions.
+- Find a way to dynamize long texts with variables and references
+
+

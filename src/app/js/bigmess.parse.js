@@ -109,7 +109,7 @@
         var ast = new AST();
         var cursor = ast.cursor;
 
-        tokens.forEach(function (token) {
+        tokens.forEach(function (token, index, tokens) {
             var command = token[3];
             var tokenString = token[1];
             switch (command) {
@@ -154,8 +154,9 @@
     };
 
 
-    function Node(type, value) {
+    function Node(type, value, variant) {
         this.type = type;
+        this.variant = variant;
         this.value = value;
         this.set = new Set();
     }
@@ -168,7 +169,9 @@
             this.value.substr(0, 80) +
             "</span> <span class='type'>"
             + this.type +
-            "</span></span>");
+            "</span>");
+        if (this.variant) html.push("<span class='variant'>" + this.variant + "</span>");
+        html.push("</span>");
         html.push(this.set.render());
         html.push("</div>");
         return html.join("");
@@ -200,6 +203,7 @@
 
     function Cursor() {
         this.stack = [];
+        this.sequenceBroken = false;
     }
 
     Cursor.prototype.size = function () {
@@ -216,7 +220,7 @@
         return this;
     };
 
-    Cursor.prototype.pop = function (node) {
+    Cursor.prototype.pop = function () {
         this.stack.pop();
         return this;
     };
@@ -236,36 +240,62 @@
 
     Cursor.prototype.appendInstruction = function (value) {
         var node = new Node("instruction", value);
-        this.head().set.add(node);
-        return this;
-    };
-    Cursor.prototype.endSequence = function () {
-        if (this.size() > 1) {
-            this.pop();
+
+        if (this.head().set.last() &&
+            this.head().set.last().type === 'symbol' &&
+            !this.sequenceBroken) {
+            // If the instruction follows a symbol, the instruction is considered to be "absorbed" as
+            // a unique argument by the symble (and vice versa)
+
+            this.sequenceBroken = false;
+            this.push(this.head().set.last());
+            this.head().set.add(node);
+            //this.pop();
+        } else {
+            this.sequenceBroken = false;
+            this.head().set.add(node);
         }
         return this;
     };
-    Cursor.prototype.appendSymbol = function (type, value) {
-        var node = new Node(type, value);
+    Cursor.prototype.endSequence = function () {
+        while (this.size() > 1) {
+            this.pop();
+        }
+        // if the next sequence starts with a value following an instruction
+        // this will prevent the value from being "absorbed" by the instruction
+        this.sequenceBroken = true;
+        return this;
+    };
+    Cursor.prototype.appendSymbol = function (variant, value) {
+        var node = new Node("symbol", value, variant);
 
         if (this.head().set.last() &&
-            this.head().set.last().type === 'instruction') {
-            // If the value follows an instruction, the value is considered an unique argument to the instruction
+            this.head().set.last().type === 'instruction' &&
+            !this.sequenceBroken) {
+            // If the value follows an instruction, the value is considered to be "absorbed" as
+            // a unique argument by the instruction
 
+            this.sequenceBroken = false;
             this.push(this.head().set.last());
             this.head().set.add(node);
-            this.pop();
+            //this.pop();
         } else {
+            this.sequenceBroken = false;
             this.head().set.add(node);
         }
         return this;
     };
     Cursor.prototype.startArguments = function () {
+        this.sequenceBroken = false;
         var node = this.head().set.last();
         this.push(node);
         return this;
     };
     Cursor.prototype.nextArgument = function () {
+        this.sequenceBroken = true;
+        if (this.size() > 1) {
+            this.pop();
+        }
         return this;
     };
 

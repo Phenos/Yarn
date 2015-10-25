@@ -24,7 +24,7 @@ function UserInputDirective() {
         };
 
         this.submit = function () {
-            console.log("this.submit!!!", this.text);
+            //console.log("this.submit!!!", this.text);
             this.onSubmit({text: this.text});
             this.text = "";
             $element.find("input")[0].focus();

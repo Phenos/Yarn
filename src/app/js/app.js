@@ -7,7 +7,6 @@ var mindgame = angular.module('mindgame', [
     'use strict';
 
     angular.module('mindgame').config(function ($stateProvider, $urlRouterProvider) {
-        console.log('config');
 
         $urlRouterProvider.otherwise('/');
 
@@ -16,13 +15,13 @@ var mindgame = angular.module('mindgame', [
             controller: gameController,
             controllerAs: 'game',
             //bindToController: {},
-            template: '<div><user-input on-submit="game.log(text)"></user-input><story-log ready="game.registerLog(storyLog)"></story-log></div>'
+            template: '<div><user-input on-submit="game.command(text)"></user-input><story-log ready="game.registerLog(storyLog)"></story-log></div>'
         });
 
-        function gameController($scope, $element) {
+        function gameController($scope, $element, $compile) {
 
             this.registerLog = function (controller) {
-                console.log("registerLog", controller);
+                //console.log("registerLog", controller);
                 this.storyLog = controller;
                 this.ready();
             };
@@ -33,8 +32,12 @@ var mindgame = angular.module('mindgame', [
 
             this.command = function (text) {
                 if (text === "state") {
-                    this.storyLog.log($scope.game.bigMess.state.html());
+                    // todo: Dictionnary of game commands
+                    var html = this.game.bigMess.state.html();
+                    this.storyLog.log(html);
                 } else {
+                    // todo: Styled output for unknown commands
+                    // todo: Scroll to bottom after output
                     this.storyLog.log("Sorry... unknown command : "+ text);
                 }
             };
@@ -45,7 +48,7 @@ var mindgame = angular.module('mindgame', [
 
                 var game = new MindGame();
 
-                $scope.game = game;
+                this.game = game;
 
                 var storyText = document.getElementById("TheHouse").innerText;
 
@@ -60,12 +63,27 @@ var mindgame = angular.module('mindgame', [
 
                 $element.prepend(game.bigMess.state.html());
 
-                this.log("Welcome to the BigMess demo story!");
-
                 var state = game.bigMess.state;
+
+
                 var isIn = state.predicate("is in");
-                var isDescribedAs = state.predicate("described as");
+                var isDescribedAs = state.predicate("is described as");
                 var isCalled = state.predicate("is called");
+
+
+                // Story welcome message and introduction
+
+                // todo: Output specially styled titles for story and chapters
+                var story = state.thing("story");
+                var storyTitle = story.getAssertion(isCalled)[0].object;
+                if (storyTitle) this.log(storyTitle);
+                var storyDescription = story.getAssertion(isDescribedAs)[0].object;
+                if (storyDescription) this.log(storyDescription);
+                // todo: Output specially styled separators
+                this.log("---------");
+
+                // Describe where you are at the beginning
+
                 var room = state.thing("you").getAssertion(isIn);
                 if (room.length) {
                     // Todo, create helper for getting a predicate value or it' id as a fallback
@@ -74,9 +92,6 @@ var mindgame = angular.module('mindgame', [
                 } else {
                     this.log("You are nowhere to be found! Place your hero somewhere");
                 }
-
-                //this.log("You look around: ");
-                //this.log(room.a("isDescribedAs").text());
 
             };
 

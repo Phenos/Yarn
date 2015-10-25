@@ -20,8 +20,7 @@ function Pointer() {
     };
 
     this.peek = function (len) {
-        var str = this.text.substr(this.pos + 1, len);
-        return str;
+        return this.text.substr(this.pos + 1, len);
     };
 
     this.state = function (id) {

@@ -42,8 +42,8 @@ function createPredicates(state) {
     // What something is of a kind
     state
         .p("isA")
-        .syntax("is a")
-        .syntax("is an");
+        .syntax("is an")
+        .syntax("is a");
 
     // What something has an attribute
     state
@@ -54,8 +54,8 @@ function createPredicates(state) {
     state
         .p("isNamed")
         .syntax("is titled")
-        .syntax("is called")
-        .syntax("is named");
+        .syntax("is named")
+        .syntax("is called");
 
     // What something is described as when looked at
     state
@@ -83,10 +83,10 @@ function createPredicates(state) {
         .p("linksTo")
         .syntax("goes to")
         .syntax("is open to")
-        .syntax("links to")
         .syntax("goes to the")
         .syntax("is open to the")
-        .syntax("links to the");
+        .syntax("links to the")
+        .syntax("links to");
 
     // When a place is linked to another place
     state

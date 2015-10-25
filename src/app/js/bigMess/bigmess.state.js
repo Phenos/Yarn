@@ -30,7 +30,7 @@
             if (typeof obj === "undefined") {
                 value = "[undefined]";
             } else if (typeof obj === "object") {
-                value = obj.id;
+                value = obj.label || obj.id;
             } else {
                 value = obj;
             }
@@ -239,6 +239,7 @@
     BigMess.Predicate = Predicate;
     function Predicate(id, bigMess) {
         this.id = id;
+        this.label = id;
 
         /**
          * Define a new syntax for this predicate
@@ -246,6 +247,7 @@
          * @returns {Predicate}
          */
         this.syntax = function (text) {
+            this.label = text;
             bigMess.syntax(this, text);
             return this;
         }

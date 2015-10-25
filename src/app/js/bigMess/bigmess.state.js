@@ -9,6 +9,51 @@
         this.syntaxes = {};
     }
 
+    State.prototype.html = function () {
+        var html = [];
+
+        html.push("<div class='assertions'>");
+        this.assertions.forEach(function (assertion) {
+            html.push("<div class='assertion'>");
+            html.push("<span class='subject " + getTypeFromThingOrValue(assertion.subject) + "'>");
+            html.push(getStringFromThingOrValue(assertion.subject));
+            html.push("</span><span class='predicate'>");
+            html.push(getStringFromThingOrValue(assertion.predicate));
+            html.push("</span><span class='object " + getTypeFromThingOrValue(assertion.object) + "'>");
+            html.push(getStringFromThingOrValue(assertion.object));
+            html.push("</span></div>");
+        });
+        html.push("</div>");
+
+        function getStringFromThingOrValue(obj) {
+            var value;
+            if (typeof obj === "undefined") {
+                value = "[undefined]";
+            } else if (typeof obj === "object") {
+                value = obj.id;
+            } else {
+                value = obj;
+            }
+            return value;
+        }
+
+        function getTypeFromThingOrValue(obj) {
+            var value;
+            var type;
+            if (typeof obj === "undefined") {
+                value = "isUndefined";
+            } else if (typeof obj === "object") {
+                value = "isThing"
+            } else {
+                type = typeof obj;
+                type = "is" + type.substr(0,1).toUpperCase() + type.substr(1);
+                value = type;
+            }
+            return value;
+        }
+
+        return html.join("");
+    };
 
     /**
      * Get or create a new thing
@@ -50,30 +95,30 @@
 
     /**
      * Get or create a new assertion and the objects associated to it
-     * @param subjectId
-     * @param predicateId
-     * @param objectId
+     * @param subject
+     * @param predicate
+     * @param object
      * @returns {*}
      */
-    State.prototype.assertion = function (subjectId, predicateId, objectId) {
-        var subject;
-        var predicate;
-        var object;
+    State.prototype.assertion = function (subject, predicate, object) {
+        //var subject;
+        //var predicate;
+        //var object;
         var assertion;
         var foundAssertions;
 
-        if (!subjectId)
-            throw("Assertion subject must have an id");
+        //if (!subjectId)
+        //    throw("Assertion subject must have an id");
+        //
+        //subject = this.t(subjectId);
 
-        subject = this.t(subjectId);
-
-        if (predicateId) {
-            predicate = this.p(predicateId);
+        if (predicate) {
+            //predicate = this.p(predicateId);
 
 
-            if (objectId) {
+            if (object) {
                 // Create a new assertion
-                object = this.t(objectId);
+                //object = this.t(objectId);
                 assertion = new Assertion(subject, predicate, object, this);
                 this.assertions.push(assertion);
                 return this;
@@ -105,14 +150,20 @@
      */
     State.prototype.predicate = function (id) {
         var predicate;
+        var syntax;
 
         if (!id)
             throw("Assertions must have an id");
 
-        predicate = this.predicates[id];
+        // Resolve the predicate from the syntax
+        syntax = this.syntaxes[id];
+        if (syntax) predicate = syntax.predicate;
+
         if (!predicate) {
             predicate = new Predicate(id, this);
+            //console.log("Created new predicate", predicate);
             this.predicates[id] = predicate;
+            this.syntaxes[id] = new Syntax(id, predicate);
         }
         return predicate;
     };

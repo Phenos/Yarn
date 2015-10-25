@@ -3,6 +3,39 @@
 
 <script type="bigMess" id="TheHouse">
 
+@story
+    is called 'The Room'.
+
+@chapther
+    is named "Breakfast",
+    is numbered 1 .
+
+this #You
+    is an @actor,
+    is named "You",
+    is in the #Kitchen.
+
+// Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
+this #Kitchen:
+    is a @room,
+    is named "Your Kitchen",
+    links to the #Bedroom,
+    is described as
+        "The kitchen is a small modern room with black countertops,
+        white cabinets, basic appliances and a single door leading
+        to a bedroom.".
+
+this #Bedroom:
+    is a @room,
+    is named "Your Bedroom",
+    links to the #Kitchen,
+    is described as
+        "The bedroom is dark and bare of any furniture
+        except a large bed and a small wooden nighstand.".
+
+</script>
+<script type="bigMess" id="TheHouse">
+
 // Comments on one line
 
 Chapter:
@@ -86,6 +119,7 @@ when @Player enters in @TheBedroom for the first time :
     <script src="../js/bigMess/bigmess.node.js"></script>
     <script src="../js/bigMess/bigmess.cursor.js"></script>
     <script src="../js/bigMess/bigmess.ast.js"></script>
+    <script src="../js/bigMess/bigmess.runtime.js"></script>
     <script src="../js/bigMess/bigmess.script.js"></script>
     <script src="../js/bigMess/bigmess.state.js"></script>
     <script src="./js/mindgame.js"></script>

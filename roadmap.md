@@ -1,4 +1,12 @@
 
+# NEXT
+
+- Execution of script with state
+- Bug: Number are interpreted as string
+
+# BACKLOG
+
+- Load scripts from external files
 - parser: support for blocks like "start chapter / end chapter"
 - Address Entities with "@"
 - Make predicate matching case insensitive

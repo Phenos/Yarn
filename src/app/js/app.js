@@ -50,6 +50,8 @@ var mindgame = angular.module('mindgame', [
 
                 theHouse.bigMess.runScript();
 
+                $element.prepend(theHouse.bigMess.state.html());
+
                 this.log("Welcome to the BigMess demo story!");
                 //var room = m.t("player").a("isIn");
                 //this.log("You are in " + room.a("isNamed").text());

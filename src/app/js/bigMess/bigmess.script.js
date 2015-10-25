@@ -1,4 +1,4 @@
-(function (Pointer, AST) {
+(function (Pointer, AST, Runtime) {
     "use strict";
 
     BigMess.Script = Script;
@@ -14,7 +14,9 @@
     };
 
     Script.prototype.execute = function (state) {
-
+        console.log("Script.execute");
+        var runtime = new Runtime(this.ast, state);
+        runtime.run();
     };
 
     Script.prototype.compile = function (tokens) {
@@ -22,5 +24,5 @@
         return this;
     };
 
-})(BigMess.Pointer, BigMess.AST);
+})(BigMess.Pointer, BigMess.AST, BigMess.Runtime);
 

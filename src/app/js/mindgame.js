@@ -88,5 +88,10 @@ function createPredicates(state) {
         .syntax("is open to the")
         .syntax("links to the");
 
+    // When a place is linked to another place
+    state
+        .p("this")
+        .syntax("that")
+        .syntax("the");
 }
 

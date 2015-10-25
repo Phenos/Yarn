@@ -3,7 +3,7 @@
 
     BigMess.AST = AST;
     function AST() {
-        this.root = new Node("sequence", "root");
+        this.root = new Node("symbol", "root");
         this.cursor = new Cursor().start(this.root);
     }
 

@@ -8,7 +8,7 @@ function BigMess() {
     "use strict";
 
     BigMess.prototype.runScript = function () {
-        console.log("BigMess.runScript");
+        //console.log("BigMess.runScript");
         this.script.execute(this.state);
         return this;
     };

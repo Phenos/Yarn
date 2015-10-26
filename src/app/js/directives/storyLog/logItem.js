@@ -6,6 +6,7 @@ function LogItemDirective($sce) {
     return {
         restrict: 'E',
         bindToController: {
+            type: '=',
             text: '='
         },
         scope: {},
@@ -15,12 +16,12 @@ function LogItemDirective($sce) {
     };
 
     function LogItemController($scope, $element) {
+        var self = this;
 
         $scope.$watch('logItem.text', function(value) {
-            $element[0].innerHTML = "<div class='logItem'>" + value + "<div>";
+            $element[0].innerHTML = "<div class='logItem is-" + self.type + "'>" + value + "<div>";
         });
 
-        console.log('LogItemController');
     }
 }
 

@@ -17,13 +17,20 @@ function StoryLogDirective() {
     function StoryLogController($scope, $element, $compile) {
 
         this.log = function (text) {
-            var scope = $scope.$new();
-            scope.text = text;
-            var logItemEl = $compile('<log-item text="text"></log-item>')(scope);
-            console.log("storyLog.log", text);
-            $element.append(logItemEl);
+            this.write(text, "log");
         };
 
+        this.debug = function (text) {
+            this.write(text, "debug");
+        };
+
+        this.write = function (text, type) {
+            var scope = $scope.$new();
+            scope.text = text;
+            scope.type = type;
+            var logItemEl = $compile('<log-item type="type" text="text"></log-item>')(scope);
+            $element.append(logItemEl);
+        };
         this.ready({storyLog: this});
 
     }

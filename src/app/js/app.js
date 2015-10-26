@@ -1,5 +1,6 @@
 var mindgame = angular.module('mindgame', [
-    'ui.router'
+    'ui.router',
+    'luegg.directives'
 ]);
 
 (function () {
@@ -19,6 +20,8 @@ var mindgame = angular.module('mindgame', [
         });
 
         function gameController($scope, $element, $compile) {
+            // todo: this object should not be called "game"
+            var main = this;
 
             this.registerLog = function (controller) {
                 //console.log("registerLog", controller);
@@ -31,16 +34,39 @@ var mindgame = angular.module('mindgame', [
             };
 
             this.command = function (text) {
-                if (text === "state") {
-                    // todo: Dictionnary of game commands
-                    var html = this.game.bigMess.state.html();
-                    this.storyLog.log(html);
+                var command = commands[text];
+                if (command) {
+                    command(this);
                 } else {
                     // todo: Styled output for unknown commands
                     // todo: Scroll to bottom after output
                     this.storyLog.log("Sorry... unknown command : "+ text);
                 }
             };
+
+            var commands = {
+                state: stateCommand,
+                tree: treeCommand,
+                tokens: tokensCommand
+            };
+
+            function stateCommand (main) {
+                var html = main.game.bigMess.state.html();
+                main.storyLog.debug("Outputing current game state:");
+                main.storyLog.debug(html);
+            }
+
+            function treeCommand (main) {
+                var html = main.game.bigMess.script.ast.html();
+                main.storyLog.debug("Outputing execution tree:");
+                main.storyLog.debug(html);
+            }
+
+            function tokensCommand (main) {
+                var html = main.game.bigMess.script.pointer.html();
+                main.storyLog.debug("Outputing script parsing:");
+                main.storyLog.debug(html);
+            }
 
             //console.log('ALLO!');
 
@@ -50,20 +76,18 @@ var mindgame = angular.module('mindgame', [
 
                 this.game = game;
 
+                // todo: Make this a service
                 var storyText = document.getElementById("TheHouse").innerText;
 
                 game.load(storyText);
-
-                // Output the tree and pointer in html
-
-                //$element.append(theHouse.bigMess.script.ast.html());
-                //$element.append(theHouse.bigMess.script.pointer.html());
-
                 game.bigMess.runScript();
-
-                $element.prepend(game.bigMess.state.html());
-
                 var state = game.bigMess.state;
+
+                // todo: Put these 3 commands on keystrokes
+                this.command("tree");
+                this.command("tokens");
+                this.command("state");
+
 
 
                 var isIn = state.predicate("is in");

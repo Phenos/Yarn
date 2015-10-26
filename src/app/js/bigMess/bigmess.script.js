@@ -14,7 +14,6 @@
     };
 
     Script.prototype.execute = function (state) {
-        console.log("Script.execute");
         var runtime = new Runtime(this.ast, state);
         runtime.run();
     };

@@ -24,6 +24,10 @@ function StoryLogDirective() {
             this.write(text, "debug");
         };
 
+        this.error = function (text) {
+            this.write(text, "error");
+        };
+
         this.heading = function (text) {
             this.write(text, "heading");
         };

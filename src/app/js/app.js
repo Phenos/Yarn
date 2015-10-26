@@ -17,7 +17,8 @@ var mindgame = angular.module('mindgame', [
             controller: gameController,
             controllerAs: 'game',
             //bindToController: {},
-            template: '<div class="main-ui"><user-input on-submit="game.command(text)"></user-input><story-log ready="game.registerLog(storyLog)"></story-log> <div class="ellipsis"><span class="one">▸</span><span class="two">▸</span><span class="three">▸</span>​</div> </div>'
+            //todo: Externalise template in html file
+            template: '<div class="main-ui"><user-input on-submit="game.command(text)"></user-input><story-log ready="game.registerLog(storyLog)"></story-log> <div class="ellipsis"><span class="one">▸</span><span class="two">▸</span><span class="three">▸</span>​</div></div>'
         });
 
         function gameController($scope, $element, $compile, hotkeys) {
@@ -35,9 +36,7 @@ var mindgame = angular.module('mindgame', [
                 if (command) {
                     command(this);
                 } else {
-                    // todo: Styled output for unknown commands
-                    // todo: Scroll to bottom after output
-                    this.storyLog.log("Sorry... unknown command : " + text);
+                    this.storyLog.error("Sorry... unknown command : " + text);
                 }
             };
 

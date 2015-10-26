@@ -131,6 +131,8 @@ var mindgame = angular.module('mindgame', [
                     // Todo, create helper for getting a predicate value or it' id as a fallback
                     var label = room[0].object.getAssertion(isCalled)[0].object;
                     this.storyLog.log("You are in " + label);
+                    var description = room[0].object.getAssertion(isDescribedAs)[0].object;
+                    if (description) this.storyLog.log(description);
                 } else {
                     this.storyLog.log("You are nowhere to be found! Place your hero somewhere");
                 }

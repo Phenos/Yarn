@@ -24,6 +24,18 @@ function StoryLogDirective() {
             this.write(text, "debug");
         };
 
+        this.heading = function (text) {
+            this.write(text, "heading");
+        };
+
+        this.subHeading = function (text) {
+            this.write(text, "subHeading");
+        };
+
+        this.divider = function (text) {
+            this.write(text, "divider");
+        };
+
         this.write = function (text, type) {
             var scope = $scope.$new();
             scope.text = text;

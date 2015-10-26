@@ -1,6 +1,7 @@
 var mindgame = angular.module('mindgame', [
     'ui.router',
-    'luegg.directives'
+    'luegg.directives',
+    'cfp.hotkeys'
 ]);
 
 (function () {
@@ -16,10 +17,10 @@ var mindgame = angular.module('mindgame', [
             controller: gameController,
             controllerAs: 'game',
             //bindToController: {},
-            template: '<div><user-input on-submit="game.command(text)"></user-input><story-log ready="game.registerLog(storyLog)"></story-log></div>'
+            template: '<div class="main-ui"><user-input on-submit="game.command(text)"></user-input><story-log ready="game.registerLog(storyLog)"></story-log> <div class="ellipsis"><span class="one">▸</span><span class="two">▸</span><span class="three">▸</span>​</div> </div>'
         });
 
-        function gameController($scope, $element, $compile) {
+        function gameController($scope, $element, $compile, hotkeys) {
             // todo: this object should not be called "game"
             var main = this;
 
@@ -29,10 +30,6 @@ var mindgame = angular.module('mindgame', [
                 this.ready();
             };
 
-            this.log = function (text) {
-                this.storyLog.log(text);
-            };
-
             this.command = function (text) {
                 var command = commands[text];
                 if (command) {
@@ -40,7 +37,7 @@ var mindgame = angular.module('mindgame', [
                 } else {
                     // todo: Styled output for unknown commands
                     // todo: Scroll to bottom after output
-                    this.storyLog.log("Sorry... unknown command : "+ text);
+                    this.storyLog.log("Sorry... unknown command : " + text);
                 }
             };
 
@@ -50,23 +47,51 @@ var mindgame = angular.module('mindgame', [
                 tokens: tokensCommand
             };
 
-            function stateCommand (main) {
+            function stateCommand(main) {
                 var html = main.game.bigMess.state.html();
                 main.storyLog.debug("Outputing current game state:");
                 main.storyLog.debug(html);
             }
 
-            function treeCommand (main) {
+            function treeCommand(main) {
                 var html = main.game.bigMess.script.ast.html();
                 main.storyLog.debug("Outputing execution tree:");
                 main.storyLog.debug(html);
             }
 
-            function tokensCommand (main) {
+            function tokensCommand(main) {
                 var html = main.game.bigMess.script.pointer.html();
                 main.storyLog.debug("Outputing script parsing:");
                 main.storyLog.debug(html);
             }
+
+
+            hotkeys
+                .bindTo($scope)
+                .add({
+                    combo: 'ctrl+1',
+                    description: 'Output the current state',
+                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                    callback: function () {
+                        main.command("state");
+                    }
+                })
+                .add({
+                    combo: 'ctrl+2',
+                    description: 'Output the execution tree',
+                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                    callback: function () {
+                        main.command("tree");
+                    }
+                })
+                .add({
+                    combo: 'ctrl+3',
+                    description: 'Outputing script parsing',
+                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                    callback: function () {
+                        main.command("tokens");
+                    }
+                });
 
             //console.log('ALLO!');
 
@@ -83,12 +108,6 @@ var mindgame = angular.module('mindgame', [
                 game.bigMess.runScript();
                 var state = game.bigMess.state;
 
-                // todo: Put these 3 commands on keystrokes
-                this.command("tree");
-                this.command("tokens");
-                this.command("state");
-
-
 
                 var isIn = state.predicate("is in");
                 var isDescribedAs = state.predicate("is described as");
@@ -100,11 +119,11 @@ var mindgame = angular.module('mindgame', [
                 // todo: Output specially styled titles for story and chapters
                 var story = state.thing("story");
                 var storyTitle = story.getAssertion(isCalled)[0].object;
-                if (storyTitle) this.log(storyTitle);
+                if (storyTitle) this.storyLog.heading(storyTitle);
                 var storyDescription = story.getAssertion(isDescribedAs)[0].object;
-                if (storyDescription) this.log(storyDescription);
+                if (storyDescription) this.storyLog.subHeading(storyDescription);
                 // todo: Output specially styled separators
-                this.log("---------");
+                this.storyLog.divider("—&nbsp;&nbsp;&nbsp;⟡&nbsp;&nbsp;&nbsp;—");
 
                 // Describe where you are at the beginning
 
@@ -112,9 +131,9 @@ var mindgame = angular.module('mindgame', [
                 if (room.length) {
                     // Todo, create helper for getting a predicate value or it' id as a fallback
                     var label = room[0].object.getAssertion(isCalled)[0].object;
-                    this.log("You are in " + label);
+                    this.storyLog.log("You are in " + label);
                 } else {
-                    this.log("You are nowhere to be found! Place your hero somewhere");
+                    this.storyLog.log("You are nowhere to be found! Place your hero somewhere");
                 }
 
             };

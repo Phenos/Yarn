@@ -39,5 +39,44 @@
 - Make tokenizer more modular with types of "in/out" state handlers
 - Warn of unknown predicate
 - Find a way to dynamize long texts with variables and references
+- Ability to switch from one actor to another
+- Force sequence of actions and naration
+- 
 
 
+# WBS
+
+## Epix: Prompt!
+
+
+- What do you do ?
+Move/Look
+
+- Do you take the pill ?
+Yes/No
+
+
+
+
+
+
+
+
+## Epic: Player moves from one room to another
+
+- Trigger a move command with the "m" key
+- With the move command, show a log item of type "options" to show the list of rooms
+- Focus the cursor on the first option
+- Select a room from the list using the keyboard (arrows or tab and spacebar)
+- Move the player from one room to another when a selection is made
+- Trigger the "entered room" routine when entering a room
+- Ensure that a player is not in two room at once
+
+## Room movement refinements
+
+- Trigger a selection of room with the number keys [1 to 9]
+- Press [esc] to cancel the current choice
+- Select a room with the mouse
+- Remove the list of choice after a selection is made
+- When entering a room, dont show the same room description more than X times in Y minutes
+- When no rooms are available, the "No rooms available" message fades out after a moment

@@ -16,14 +16,15 @@ var mindgame = angular.module('mindgame', [
             url: '/',
             controller: gameController,
             controllerAs: 'game',
-            //bindToController: {},
-            //todo: Externalise template in html file
-            template: '<div class="main-ui"><user-input on-submit="game.command(text)"></user-input><story-log ready="game.registerLog(storyLog)"></story-log> <div class="ellipsis"><span class="one">▸</span><span class="two">▸</span><span class="three">▸</span>​</div></div>'
+            //bindToController: {}, // todo: bind to controller
+            templateUrl: './html/app.html'
         });
 
         function gameController($scope, $element, $compile, hotkeys) {
             // todo: this object should not be called "game"
             var main = this;
+
+            console.log("Game started!");
 
             this.registerLog = function (controller) {
                 //console.log("registerLog", controller);
@@ -136,6 +137,18 @@ var mindgame = angular.module('mindgame', [
                 } else {
                     this.storyLog.log("You are nowhere to be found! Place your hero somewhere");
                 }
+
+                // Prompt the user with a question
+                // todo: This should be inside a sort of REPL pattern with a handler for each types of context
+                main.question = "Where do you want to go?";
+                main.choices = [
+                    {value: "move up", label: "Up!"},
+                    {value: "move down", label: "Down!"}
+                ];
+                main.choose = function (value) {
+                    main.command(value);
+                }
+
 
             };
 

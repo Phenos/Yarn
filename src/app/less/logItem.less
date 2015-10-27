@@ -35,7 +35,7 @@
     }
     &.is-heading {
         font-size: 2em;
-        margin: 1em 5em;
+        margin: 0.5em 5em;
         font-weight: 200;
         text-align: center;
         color: #654;
@@ -49,11 +49,18 @@
     }
     &.is-divider {
         font-size: 1.3em;
-        margin: 1.2em 5em;
+        margin: 1.5em 5em;
         font-weight: bold;
         text-align: center;
         color: #876;
         opacity: 0.4;
+
+        .divider svg {
+            width: 160px;
+            path {
+                fill: #876;
+            }
+        }
     }
     &.is-debug {
         font-family: sans-serif;

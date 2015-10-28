@@ -116,29 +116,27 @@ var mindgame = angular.module('mindgame', [
 
                 this.startGame2 = function () {
                     var isIn = state.predicate("is in");
-                    var isDescribedAs = state.predicate("is described as");
-                    var isCalled = state.predicate("is called");
-
 
                     // Story welcome message and introduction
 
                     // todo: Output specially styled titles for story and chapters
                     var story = state.thing("story");
-                    var storyTitle = story.getAssertion(isCalled)[0] && story.getAssertion(isCalled)[0].object;
+                    var storyTitle = state.resolveValue("story.isNamed");
+
                     if (storyTitle) this.storyLog.heading(storyTitle);
-                    var storyDescription = story.getAssertion(isDescribedAs)[0] && story.getAssertion(isDescribedAs)[0].object;
+
+                    var storyDescription = state.resolveValue("story.isDescribedAs");
                     if (storyDescription) this.storyLog.subHeading(storyDescription);
                     // todo: Output specially styled separators
                     this.storyLog.divider("—&nbsp;&nbsp;&nbsp;⟡&nbsp;&nbsp;&nbsp;—");
 
                     // Describe where you are at the beginning
 
-                    var room = state.thing("you").getAssertion(isIn);
-                    if (room.length) {
-                        // Todo, create helper for getting a predicate value or it' id as a fallback
-                        var label = room[0].object.getAssertion(isCalled)[0] && room[0].object.getAssertion(isCalled)[0].object;
+                    var room = state.resolveValue("you.isIn");
+                    if (room) {
+                        var label = room.resolveValue("isCalled");
                         this.storyLog.log("You are in " + label);
-                        var description = room[0].object.getAssertion(isDescribedAs)[0].object;
+                        var description = room.resolveValue("isDescribedAs");
                         if (description) this.storyLog.log(description);
                     } else {
                         this.storyLog.log("You are nowhere to be found! Place your hero somewhere");

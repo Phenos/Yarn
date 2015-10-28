@@ -9,6 +9,71 @@
         this.syntaxes = {};
     }
 
+    State.prototype.getPredicates = function(tokens) {
+        var self = this;
+        var predicates = [];
+        tokens.forEach(function (token) {
+            var predicate = self.predicate(token);
+            if (!predicate) throw "Unknown predicate [" + token + "] in expression [" + expression + "]";
+            predicates.push(predicate);
+        });
+        return predicates;
+    };
+
+    State.prototype.resolve = function (expression, _thing) {
+        var self = this;
+        var predicates = [];
+        var thing = _thing;
+        var values = [];
+        var value;
+        // If a thing was not supplied as a starting point, use the first token as the thing id
+        if (!thing) {
+            var tokens = expression.split(".");
+            var thingId = tokens.shift();
+            if (thingId) thing = this.thing(thingId);
+        }
+        if (thing && tokens.length) {
+            value = thing.resolveValue(tokens.join("."));
+            if (value) values.push(value);
+        } else {
+            values.push(this);
+        }
+        return values;
+    };
+
+    Thing.prototype.resolveValue = function (expression) {
+        var value;
+        var context = this;
+        var tokens = expression.split(".");
+        var predicates = this.state.getPredicates(tokens);
+        predicates.forEach(function (predicate) {
+            var assertion;
+            console.log('predicate', predicate);
+            if (context) {
+                assertion = context.getAssertion(predicate);
+                if (assertion.length) {
+                    console.log('assertion', assertion[0].object);
+                    context = assertion[0].object;
+                } else {
+                    console.log('context nulled');
+                    context = null;
+                }
+            }
+        });
+        if (context) value = context;
+        return value;
+    };
+
+
+
+    State.prototype.resolveValue = function (expression) {
+        var value;
+        var resolved = this.resolve(expression);
+        console.log('resolved', resolved);
+        if (resolved.length) value = resolved[0];
+        return value;
+    };
+
     State.prototype.html = function () {
         var html = [];
 
@@ -197,6 +262,7 @@
     function Thing(_id, state) {
         var id = _id.toLowerCase();
         this.id = id;
+        this.state = state;
 
         /**
          * Get an assertion, returns itself or the object of the assertion found.

@@ -2,7 +2,7 @@
 Begin @story
 
 @story is called 'The Room',
-    has id "theHouse-v1"
+    has id "theHouse-v1",
     is described as
     'A story of small complexities and critical trivialities!'.
 

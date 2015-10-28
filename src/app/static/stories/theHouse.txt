@@ -1,15 +1,18 @@
 
 Begin @story
 
-@story is called 'The Room', is described as
+@story is called 'The Room',
+    has id "theHouse-v1"
+    is described as
     'A story of small complexities and critical trivialities!'.
+
 
 @chapther is named "Breakfast".
 
-This #You is an @actor, is named "You", is in the #Kitchen.
+#You is an @actor, is named "You", is in the #Kitchen.
 
 // Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
-This #Kitchen:
+The #Kitchen:
     is a @room,
     is named "Your Kitchen",
     links to the #Bedroom,
@@ -18,7 +21,7 @@ This #Kitchen:
         white cabinets, basic appliances and a single door leading
         to a bedroom.<br/>You see <strong>no</strong> exits!".
 
-This #Bedroom:
+The #Bedroom:
     is a @room,
     is named "Your Bedroom",
     links to the #Kitchen,

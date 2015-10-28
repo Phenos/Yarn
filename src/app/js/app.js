@@ -106,7 +106,7 @@ var mindgame = angular.module('mindgame', [
                 this.game = game;
                 var state = game.bigMess.state;
 
-
+                // Load all game scipts
                 loadPageScripts('BigMess', function (source) {
                     game.load(source);
                     game.bigMess.runScript();
@@ -174,12 +174,7 @@ var mindgame = angular.module('mindgame', [
                     main.choose = function (value) {
                         prompt.answer(value);
                     };
-
                 }
-
-
-
-
             };
 
             this.ready = function () {

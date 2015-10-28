@@ -7,6 +7,9 @@
 # BUG
 
 - Very first char is lost during parsing of tokens
+- An error is always triggered at start:
+    Unknown node variant [undefined]
+    5bigmess.state.js:127 Impossible to create assertion without at least a subject and a predicate.
 
 # Refactoring
 
@@ -16,6 +19,7 @@
 
 # BACKLOG
 
+- Errors during should output a trace. Ex.: "Unknown node variant"
 - List available rooms with numbered options
 
 - Command to "look" - L

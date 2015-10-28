@@ -31,6 +31,7 @@ var config = {
         watch: [
             'src/app/less/**/*.less',
             'src/app/static/**/*.html',
+            'src/app/static/**/*.txt',
             'src/app/js/**/*.js'
         ]
     }

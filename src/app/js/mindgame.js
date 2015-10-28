@@ -39,6 +39,11 @@ function createPredicates(state) {
         .syntax("is created by")
         .syntax("is authored by");
 
+    // The Action the user what about to make (ex.: Move, Look, etc)
+    state
+        .predicate("isAboutTo")
+        .syntax("is about to");
+
     // What something is of a kind
     state
         .predicate("isA")

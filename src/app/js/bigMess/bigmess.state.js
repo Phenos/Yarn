@@ -41,35 +41,11 @@
         return values;
     };
 
-    Thing.prototype.resolveValue = function (expression) {
-        var value;
-        var context = this;
-        var tokens = expression.split(".");
-        var predicates = this.state.getPredicates(tokens);
-        predicates.forEach(function (predicate) {
-            var assertion;
-            console.log('predicate', predicate);
-            if (context) {
-                assertion = context.getAssertion(predicate);
-                if (assertion.length) {
-                    console.log('assertion', assertion[0].object);
-                    context = assertion[0].object;
-                } else {
-                    console.log('context nulled');
-                    context = null;
-                }
-            }
-        });
-        if (context) value = context;
-        return value;
-    };
-
-
 
     State.prototype.resolveValue = function (expression) {
         var value;
         var resolved = this.resolve(expression);
-        console.log('resolved', resolved);
+        //console.log('resolved', resolved);
         if (resolved.length) value = resolved[0];
         return value;
     };
@@ -273,6 +249,11 @@
             return assertion;
         };
 
+        this.setAssertion = function (predicate, object) {
+            state.setAssertion(this, predicate, object);
+            return this;
+        };
+
         /**
          * Return this thing as text (string)
          * @returns {*}
@@ -281,6 +262,31 @@
             return this.id;
         }
     }
+
+    Thing.prototype.resolveValue = function (expression) {
+        var value;
+        var context = this;
+        var tokens = expression.split(".");
+        var predicates = this.state.getPredicates(tokens);
+        predicates.forEach(function (predicate) {
+            //console.log('context', context);
+            var assertion;
+            //console.log('predicate', predicate);
+            if (context) {
+                assertion = context.getAssertion(predicate);
+                if (assertion.length) {
+                    //console.log('assertion', assertion[0].object);
+                    context = assertion[0].object;
+                } else {
+                    //console.log('context nulled');
+                    context = null;
+                }
+            }
+        });
+        if (context) value = context;
+        return value;
+    };
+
 
     /**
      * A syntax of natural language that be use to define a predicate

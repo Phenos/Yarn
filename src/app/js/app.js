@@ -138,16 +138,100 @@ var mindgame = angular.module('mindgame', [
                     this.storyLog.log("You are nowhere to be found! Place your hero somewhere");
                 }
 
+
+
+                function PromptLoop() {
+                    this.contexts = [];
+                    this.contextsRef = [];
+                }
+
+                PromptLoop.prototype.getPromptFromContext = function (state) {
+                    var prompt;
+                    var context = this.contexts.find(findContext);
+
+                    function findContext(context) {
+                        var found;
+                        if (context.when(state)) found = context;
+                        return found;
+                    }
+
+                    // Setup the prompt if a context was found
+                    if (context) {
+                        prompt = new Prompt();
+                        context.question(prompt);
+                    }
+
+                    prompt.answer = function (value) {
+                        var option = prompt.optionsRef[value];
+                        context.answer(option);
+                    };
+
+                    return prompt;
+                };
+
+                PromptLoop.prototype.addContext = function (id, config) {
+                    var context = new Context(id);
+                    config(context);
+                    this.contexts.push(context);
+                    this.contextsRef[id] = context;
+                };
+
+                function Context(id) {
+                    this.id = id;
+                    this.question = null;
+                    this.when = null;
+                    this.answer = null;
+                }
+
+                function Prompt() {
+                    this.question = "";
+                    this.options = [];
+                    this.optionsRef = {};
+                }
+
+                Prompt.prototype.option = function (label, value) {
+                    var option = new Option(label, value);
+                    this.options.push(option);
+                    this.optionsRef[value] = option;
+                };
+
+                function Option(label, value) {
+                    this.label = label;
+                    this.value = value;
+                }
+
+
+                // Create an instant of the promptLoop
+
+                var promptLoop = new PromptLoop;
+                promptLoop.addContext("YourInARoom", YourInARoom);
+                function YourInARoom(context) {
+                    context.when = function (state) {
+                        // Test with the player is currently in a room
+                        return true;
+                    };
+                    context.question = function (prompt) {
+                        prompt.question = "Where do you want to go ?";
+                        prompt.option("Up!", "move up");
+                        prompt.option("Down!", "move down");
+                    };
+                    context.answer = function answer(option) {
+                        // todo: this should be injected instead of taken from parent scope
+                        main.command(option.value);
+                    };
+                }
+
+                // Load the appropriate prompt and setup the ui with the prompt
+
+                var prompt = promptLoop.getPromptFromContext();
                 // Prompt the user with a question
                 // todo: This should be inside a sort of REPL pattern with a handler for each types of context
-                main.question = "Where do you want to go?";
-                main.choices = [
-                    {value: "move up", label: "Up!"},
-                    {value: "move down", label: "Down!"}
-                ];
+                main.question = prompt.question;
+                main.options = prompt.options;
                 main.choose = function (value) {
-                    main.command(value);
-                }
+                    prompt.answer(value);
+                };
+
 
 
             };

@@ -5,7 +5,7 @@ function UserChoiceDirective() {
         restrict: 'E',
         bindToController: {
             question: '=',
-            choices: '=',
+            options: '=',
             onChoose: '&'
         },
         scope: {},

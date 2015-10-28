@@ -1,8 +1,8 @@
 <div>
     <h3 class="question" ng-bind="userChoice.question"></h3>
     <ul>
-        <li ng-repeat="choice in userChoice.choices">
-            <a href="#" ng-click="userChoice.choose(choice.value)" ng-bind="choice.label"></a>
+        <li ng-repeat="option in userChoice.options">
+            <a href="#" ng-click="userChoice.choose(option.value)" ng-bind="option.label"></a>
         </li>
 
     </ul>

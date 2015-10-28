@@ -1,0 +1,29 @@
+
+Begin @story
+
+@story is called 'The Room', is described as
+    'A story of small complexities and critical trivialities!'.
+
+@chapther is named "Breakfast".
+
+This #You is an @actor, is named "You", is in the #Kitchen.
+
+// Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
+This #Kitchen:
+    is a @room,
+    is named "Your Kitchen",
+    links to the #Bedroom,
+    is described as
+        "The <a href='#kitchen'>kitchen</a> is a small modern room with black countertops,
+        white cabinets, basic appliances and a single door leading
+        to a bedroom.<br/>You see <strong>no</strong> exits!".
+
+This #Bedroom:
+    is a @room,
+    is named "Your Bedroom",
+    links to the #Kitchen,
+    is described as
+        "The bedroom is dark and bare of any furniture
+        except a large bed and a small wooden nighstand.".
+
+End @story

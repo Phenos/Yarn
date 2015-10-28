@@ -4,6 +4,16 @@
 - Execution of script with state
 - Bug: Number are interpreted as string
 
+# BUG
+
+- Very first char is lost during parsing of tokens
+
+# Refactoring
+
+- Move commands into a separate directive
+- Move hotkey into a separate directive
+- Move PromptLoop into a separate directive
+
 # BACKLOG
 
 - List available rooms with numbered options
@@ -31,7 +41,6 @@
 - Handle negative assertions syntax such as "is not in"
 - Ability to output various state rendering into the story log
 - Put all state rendering into a "debug" panel in the game ui
-- Load scripts from external files
 - parser: support for blocks like "start chapter / end chapter"
 - Address Entities with "@"
 - Make predicate matching case insensitive
@@ -46,21 +55,21 @@
 
 # WBS
 
-## Epix: Prompt!
+## Epic: Prompt!
 
+- [DONE] Prompt loop with configurable handlers
+- Prompt for movement: list of available rooms
+- Prompt to choose action: Move, Inventory, Look, Back
 
-- What do you do ?
-Move/Look
+## Epic: Loading and stage persistence mechanics
 
-- Do you take the pill ?
-Yes/No
-
-
-
-
-
-
-
+- Load scripts trough <script> tag
+- Ability to set Stories and Chapter scope
+- Reader can switch between le list of available stories
+- State is flushed when loading another story
+- Persist state in real-time at "Story" level
+- Retrieve stored state when comming back to a story
+- Command to clear the state
 
 ## Epic: Player moves from one room to another
 

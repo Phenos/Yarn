@@ -1,11 +1,11 @@
 
 # NEXT
 
-- Execution of script with state
-- Bug: Number are interpreted as string
+- More powerfull method from complexe queries
 
 # BUG
 
+- Bug: Number are interpreted as string
 - Very first char is lost during parsing of tokens
 - An error is always triggered at start:
     Unknown node variant [undefined]
@@ -58,6 +58,19 @@
 
 
 # WBS
+
+## Epic: Inventory
+
+- Prompt to "choose" an inventory item (ex.: discard, place, use, look)
+- Prompt to "do things" with the selected inventory item (ex.: discard, place, use, look)
+- Support for inventory items that are finite supply.
+- Support for inventory items that are infinite supply.
+- Support for inventory items that are unique (taking the item, takes it away from current position)
+- Ability to place back in somthing that is a "container".
+- Restrict in which type of container an item can go. (ex.: Moving stuff from a drawer to the fridge)
+- Restrict in which exact container an item gan go.
+- Player can "discard" an item if the item is discardable.
+- 
 
 ## Epic: Prompt!
 

@@ -22,8 +22,7 @@
 
     State.prototype.resolve = function (expression, _thing) {
         var thing = _thing;
-        var values = [];
-        var value;
+        var allResolved = [];
         // If a thing was not supplied as a starting point, use the first token as the thing id
         if (!thing) {
             var tokens = expression.split(".");
@@ -31,19 +30,16 @@
             if (thingId) thing = this.thing(thingId);
         }
         if (thing && tokens.length) {
-            value = thing.resolveValue(tokens.join("."));
-            if (value) values.push(value);
-        } else {
-            values.push(this);
+            allResolved = thing.resolve(tokens.join("."));
         }
-        return values;
+        return allResolved;
     };
 
 
     State.prototype.resolveValue = function (expression) {
         var value;
         var resolved = this.resolve(expression);
-        //console.log('resolved', resolved);
+        console.log('State.resolved', resolved);
         if (resolved.length) value = resolved[0];
         return value;
     };
@@ -279,7 +275,42 @@
         return this.id;
     };
 
+    Thing.prototype.resolve = function (expression) {
+        console.log("THING resolve", this, expression);
+        var thingInContext = this;
+        var tokens = expression.split(".");
+        var predicates = this.state.getPredicates(tokens);
+        var allResolved = [];
+        predicates.forEach(function (predicate, index, predicates) {
+            //console.log('context', context);
+            var assertions;
+            //console.log('predicate', predicate);
+            if (thingInContext) {
+                assertions = thingInContext.getAssertion(predicate);
+                if (assertions.length) {
+                    //console.log('assertion', assertion[0].object);
+                    // If it is the last predicate, return multiple value
+                    // todo: allow to broader search (not just collection on the last branch)
+                    if (predicates.length === index + 1) {
+                        assertions.forEach(function (assertion) {
+                            allResolved.push(assertion.object);
+                        });
+                        thingInContext = assertions[0];
+                    } else {
+                        thingInContext = assertions[0].object;
+                    }
+                } else {
+                    //console.log('context nulled');
+                    thingInContext = null;
+                }
+            }
+        });
+        return allResolved;
+    };
+
     Thing.prototype.resolveValue = function (expression) {
+        this.resolve(expression);
+
         var value;
         var context = this;
         var tokens = expression.split(".");

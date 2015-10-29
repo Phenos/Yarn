@@ -119,7 +119,49 @@ body {
 }
 
 
+user-choice {
+    display: block;
+    text-align: center;
+    margin: 0.5em 5em 10em 5em;
 
+    h3 {
+        font-size: 1.4em;
+        margin-bottom: 0.5em;
+        font-weight: 200;
+        text-align: center;
+        color: #654;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        li {
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+            list-style: none;
+            a {
+                position: relative;
+                display: block;
+                padding: 6px 20px;
+                margin: 10px 20px;
+                text-decoration: none;
+                color: #fff;
+                background: #a86;
+                box-shadow: 0 6px 8px 0px rgba(0,0,0,0.2);
+                &:hover {
+                    top: -1px;
+                    box-shadow: 0 7px 8px 0px rgba(0,0,0,0.2);
+                    background: #b86;
+                }
+                &:active {
+                    top: 2px;
+                    box-shadow: 0 4px 8px 0px rgba(0,0,0,0.2);
+                }
+            }
+        }
+    }
+}
 
 
 

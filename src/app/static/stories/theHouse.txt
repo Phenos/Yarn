@@ -14,19 +14,30 @@ Begin @story
 // Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
 The #Kitchen:
     is a @room,
-    is named "Your Kitchen",
+    is named "The Kitchen",
     links to the #Bedroom,
+    links to the #Bathroom,
     is described as
         "The <a href='#kitchen'>kitchen</a> is a small modern room with black countertops,
-        white cabinets, basic appliances and a single door leading
-        to a bedroom.<br/>You see <strong>no</strong> exits!".
+        white cabinets, basic appliances and a kitchen table. There are two doors leading
+        to a bedroom and a bathroom.<br/>You see <strong>no</strong> exits!".
 
 The #Bedroom:
     is a @room,
-    is named "Your Bedroom",
+    is named "The Bedroom",
     links to the #Kitchen,
     is described as
         "The bedroom is dark and bare of any furniture
         except a large bed and a small wooden nighstand.".
+
+The #Bathroom:
+    is a @room,
+    is named "The Bathroom",
+    links to the #Kitchen,
+    is described as
+        "The bathroom is small perfectly cubic room covered with while tiles
+        dark brass fittings. It is equiped with all the classic bathroom items.
+        Everything is very very very clean. And it smells like the ocean breeze.
+        "
 
 End @story

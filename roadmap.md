@@ -87,6 +87,8 @@
 
 ## Room movement refinements
 
+- Movements are described with a "action" type log
+- Room descriptio are described with "described" type log
 - Trigger a selection of room with the number keys [1 to 9]
 - Press [esc] to cancel the current choice
 - Select a room with the mouse

@@ -180,7 +180,7 @@ var mindgame = angular.module('mindgame', [
                         } else {
                             main.storyLog.error("Failed to find this room [%s]", option.value);
                         }
-                        DescribeWhereYouAre()
+                        DescribeWhereYouAre(true);
                     };
                 }
 
@@ -222,11 +222,16 @@ var mindgame = angular.module('mindgame', [
             }
 
             // Describe where you are at the beginning
-            function DescribeWhereYouAre() {
+            function DescribeWhereYouAre(justMoved) {
                 var room = state.resolveValue("you.isIn");
+                console.log("Your in room ", room);
                 if (room) {
                     var label = room.resolveValue("isNamed");
-                    main.storyLog.log("You are in " + label);
+                    if (justMoved) {
+                        main.storyLog.log("You moved to " + label);
+                    } else {
+                        main.storyLog.log("You are in " + label);
+                    }
                     var description = room.resolveValue("isDescribedAs");
                     if (description) main.storyLog.log(description);
                 } else {

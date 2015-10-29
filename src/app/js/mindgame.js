@@ -83,7 +83,7 @@ function createPredicates(state) {
         .syntax("is inside")
         .syntax("is at");
 
-    // When a place is linked to another place
+        // When a place is linked to another place
     state
         .predicate("linksTo")
         .syntax("goes to")

@@ -3,6 +3,14 @@
 
 - More powerfull method from complexe queries
 
+Ball is a Inventory Item
+var isInventoryItems = thing("InventoryItem").getReverse("isA");
+var thingsInRoom =
+    thing("You")
+        .get("isIn") // Get the room your in
+            .get("hasInIt") // Get the things that are in the room
+                .filter(isInventoryItems) // Keep only items that are also inventory items
+
 # BUG
 
 - Bug: Number are interpreted as string

@@ -71,6 +71,8 @@ var mindgame = angular.module('mindgame', [
                 var commands = {
                     move: moveCommand,
                     look: lookCommand,
+                    take: takeCommand,
+                    inventory: inventoryCommand,
                     state: stateCommand,
                     tree: treeCommand,
                     tokens: tokensCommand
@@ -101,9 +103,36 @@ var mindgame = angular.module('mindgame', [
                     state.thing("You").setAssertion(isAboutTo, "move");
                 }
 
+                function takeCommand(main) {
+                    var isAboutTo = state.predicate("isAboutTo");
+                    state.thing("You").setAssertion(isAboutTo, "take");
+                }
+
                 function lookCommand(main) {
                     var isAboutTo = state.predicate("isAboutTo");
                     state.thing("You").setAssertion(isAboutTo, "look");
+                }
+
+                function inventoryCommand(main) {
+                    var itemList;
+                    var thingsInInventory = state.resolve("You.hasInInventory");
+                    if (thingsInInventory.length) {
+                        itemList = [];
+                        thingsInInventory.forEach(function (thing) {
+                            var label = thing.resolveValue("isNamed");
+                            itemList.push(label);
+                        });
+                        var message = [
+                            "You have ",
+                            thingsInInventory.length,
+                            " item in inventory: <a href='#'>",
+                            itemList.join("</a>, <a href='#'>"),
+                            "</a>."
+                        ];
+                        main.storyLog.log(message.join(""));
+                    } else {
+                        main.storyLog.error("You have nothing in inventory!");
+                    }
                 }
             }
             function SetupKeystrokes () {
@@ -163,14 +192,14 @@ var mindgame = angular.module('mindgame', [
                     context.question = function (promptLoop, prompt) {
                         prompt.question = "Where do you want to go ?";
                         var rooms = state.resolve("you.isIn.linksTo");
-                        console.log('rooms', rooms);
+                        //console.log('rooms', rooms);
                         rooms.forEach(function (room) {
                             var label = room.resolveValue("isNamed");
                             prompt.option(label, room.id);
                         });
                     };
                     context.answer = function answer(promptLoop, option) {
-                        console.trace(".answer for WhereToDo");
+                        //console.trace(".answer for WhereToDo");
                         // todo: this should be injected instead of taken from parent scope
                         var isAboutTo = state.predicate("isAboutTo");
                         state.thing("You").removeAssertions(isAboutTo);
@@ -197,26 +226,74 @@ var mindgame = angular.module('mindgame', [
                     context.question = function (promptLoop, prompt) {
                         prompt.question = "What do you want to look at ?";
                         var thingsInRoom = state.resolve("You.isIn.hasInIt");
-                        console.log('thingsInRoom', thingsInRoom);
+                        //console.log('thingsInRoom', thingsInRoom);
                         if (thingsInRoom.length) {
                             thingsInRoom.forEach(function (thing) {
                                 var label = thing.resolveValue("isNamed");
                                 prompt.option(label, thing.id);
                             });
-                        } else {
-                            main.storyLog.error("Nothing to look at here!");
-                            // todo: this is clunky.... force an empty answer
-                            //context.answer(promptLoop, null);
-                            // todo: Instread of a "showPrompt", it should be a return value
                         }
                     };
                     context.answer = function answer(promptLoop, option) {
-                        console.trace(".answer for WhatToLookAt");
+                        var isAboutTo = state.predicate("isAboutTo");
+                        state.thing("You").removeAssertions(isAboutTo);
+                        if (option) {
+                            var thing = state.thing(option.value);
+                            DescribeThing(thing);
+                        } else {
+                            main.storyLog.error("Nothing to look at here!");
+                        }
+                    };
+                }
+
+                promptLoop.addContext("WhatToTake", WhatToTake);
+                function WhatToTake(context) {
+                    context.when = function (state) {
+                        var isAboutTo = state.resolveValue("You.isAboutTo");
+                        return isAboutTo === "take";
+                    };
+                    context.question = function (promptLoop, prompt) {
+                        prompt.question = "What do you want to take ?";
+                        var thingsInRoom = state.resolve("You.isIn.hasInIt");
+                        var thingsThatAreInventory = [];
+                        console.trace("thingsInRoom", thingsInRoom);
+
+                        // Todo: YUCK... Find a better way to do these checks!!!!!
+                        thingsInRoom.forEach(function (thing) {
+                            console.trace("thing", thing.id);
+                            // Check if item is an InventoryItem
+                            var isInventoryItem = false;
+                            var thingsThatAre = thing.resolve("isA");
+                            thingsThatAre.forEach(function (thing) {
+                                console.trace("is a", thing.id);
+                                if (thing === state.thing("InventoryItem")) isInventoryItem = true;
+                            });
+                            if (isInventoryItem) thingsThatAreInventory.push(thing);
+                        });
+
+
+                        //console.log('thingsInRoom', thingsInRoom);
+                        if (thingsThatAreInventory.length) {
+                            thingsThatAreInventory.forEach(function (thing) {
+                                var label = thing.resolveValue("isNamed");
+                                prompt.option(label, thing.id);
+                            });
+                        }
+                    };
+                    context.answer = function answer(promptLoop, option) {
                         var isAboutTo = state.predicate("isAboutTo");
                         state.thing("You").removeAssertions(isAboutTo);
 
-                        var thing = state.thing(option.value);
-                        DescribeThing(thing);
+                        if (option) {
+                            // todo: Find sexier api for removing an assertion
+                            // todo: Implement "unique" assertions... such as when someone is
+                            var thing = state.thing(option.value);
+                            var hasInInventory = state.predicate("hasInInventory");
+                            state.thing("You").setAssertion(hasInInventory, thing);
+                            DescribeThingTakenInInventory(thing);
+                        } else {
+                            main.storyLog.error("Sorry, nothing to take here!");
+                        }
 
                     };
                 }
@@ -230,9 +307,11 @@ var mindgame = angular.module('mindgame', [
                         prompt.question = "What do you want to do ?";
                         prompt.option("Move", "move");
                         prompt.option("Look", "look");
+                        prompt.option("Take", "take");
+                        prompt.option("Inventory", "inventory");
                     };
                     context.answer = function answer(promptLoop, option) {
-                        console.trace(".answer for WhatToDo");
+                        //console.trace(".answer for WhatToDo");
                         // todo: this should be injected instead of taken from parent scope
                         main.command(option.value);
                     };
@@ -246,7 +325,7 @@ var mindgame = angular.module('mindgame', [
             function updatePromptUI(promptLoop) {
                 var prompt = promptLoop.currentPrompt;
                 if (prompt) {
-                    console.trace("prompt found", prompt);
+                    //console.trace("prompt found", prompt);
 
                     // Prompt the user with a question
                     // todo: This should be inside a sort of REPL pattern with a handler for each types of context
@@ -264,7 +343,7 @@ var mindgame = angular.module('mindgame', [
             // Describe where you are at the beginning
             function DescribeWhereYouAre(justMoved) {
                 var room = state.resolveValue("you.isIn");
-                console.log("Your in room ", room);
+                //console.log("Your in room ", room);
                 if (room) {
                     var label = room.resolveValue("isNamed");
                     if (justMoved) {
@@ -286,6 +365,14 @@ var mindgame = angular.module('mindgame', [
                     var description = thing.resolveValue("isDescribedAs");
                     if (label) main.storyLog.log("You look at the " + label);
                     if (description) main.storyLog.log(description);
+                }
+            }
+
+            // Describe where you are at the beginning
+            function DescribeThingTakenInInventory(thing) {
+                if (thing) {
+                    var label = thing.resolveValue("isNamed");
+                    if (label) main.storyLog.log("You took the " + label);
                 }
             }
 

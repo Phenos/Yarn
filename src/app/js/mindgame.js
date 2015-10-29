@@ -90,7 +90,14 @@ function createPredicates(state) {
         .syntax("has in it a")
         .syntax("has a");
 
-        // When a place is linked to another place
+    // When something has something else. Ex.: Kitchen has a Kitchen Table
+    state
+        .predicate("hasInInventory")
+        .syntax("has in inventory a")
+        .syntax("has in inventoy")
+        .syntax("has inventoy");
+
+    // When a place is linked to another place
     state
         .predicate("linksTo")
         .syntax("goes to")

@@ -39,7 +39,7 @@
     State.prototype.resolveValue = function (expression) {
         var value;
         var resolved = this.resolve(expression);
-        console.log('State.resolved', resolved);
+        //console.log('State.resolved', resolved);
         if (resolved.length) value = resolved[0];
         return value;
     };

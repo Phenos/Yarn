@@ -150,25 +150,37 @@ var mindgame = angular.module('mindgame', [
 
                 var promptLoop = new PromptLoop;
 
-                promptLoop.addContext("YourInARoom", YourInARoom);
-                function YourInARoom(context) {
+                promptLoop.addContext("WhereToDo", WhereToDo);
+                function WhereToDo(context) {
                     context.when = function (state) {
                         var isAboutTo = state.resolveValue("You.isAboutTo");
-                        console.log('isAboutTo', isAboutTo);
                         // todo: Test with the player is currently in a room
                         return isAboutTo === "move";
                     };
                     context.question = function (prompt) {
                         prompt.question = "Where do you want to go ?";
                         // Todo, show the list of available rooms
-                        prompt.option("Up!", "move up");
-                        prompt.option("Down!", "move down");
+                        var rooms = state.resolve("you.isIn.linksTo");
+                        console.log('rooms', rooms);
+                        rooms.forEach(function (room) {
+                            var label = room.resolveValue("isNamed");
+                            prompt.option(label, room.id);
+                        });
                     };
                     context.answer = function answer(option) {
                         // todo: this should be injected instead of taken from parent scope
                         var isAboutTo = state.predicate("isAboutTo");
-                        main.command(option.value);
                         state.thing("You").removeAssertions(isAboutTo);
+                        var room = state.thing(option.value);
+                        var isIn = state.predicate("isIn");
+                        if (room) {
+                            state.thing("You")
+                                .removeAssertions(isIn)
+                                .setAssertion(isIn, room);
+                        } else {
+                            main.storyLog.error("Failed to find this room [%s]", option.value);
+                        }
+                        DescribeWhereYouAre()
                     };
                 }
 

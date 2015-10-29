@@ -21,8 +21,6 @@
     };
 
     State.prototype.resolve = function (expression, _thing) {
-        var self = this;
-        var predicates = [];
         var thing = _thing;
         var values = [];
         var value;
@@ -98,7 +96,7 @@
 
     /**
      * Get or create a new thing
-     * @param id
+     * @param _id
      */
     State.prototype.thing = function (_id) {
         var thing;
@@ -174,7 +172,6 @@
     State.prototype.removeAssertions = function (subject, predicate, object) {
         // Look for matching assertions
         // todo: use built indexes instead of itterating trough all predicates
-        console.log("Discarding: ", subject, predicate, object);
         this.assertions = this.assertions.filter(function (assertion) {
             var keep = true;
             if (subject && Object.is(object, assertion.subject)) keep = false;
@@ -208,7 +205,7 @@
     };
     /**
      * Get or create a new type of predicate
-     * @param id
+     * @param _id
      */
     State.prototype.predicate = function (_id) {
         var id = _id.toLowerCase();
@@ -247,42 +244,40 @@
 
     /**
      * A "thing" in the graph
-     * @param id
+     * @param _id
      * @constructor
      */
     BigMess.Thing = Thing;
     function Thing(_id, state) {
-        var id = _id.toLowerCase();
-        this.id = id;
+        this.id =_id.toLowerCase();
         this.state = state;
-
-        /**
-         * Get an assertion, returns itself or the object of the assertion found.
-         * @type {Function}
-         */
-        this.getAssertion = function (predicate) {
-            var assertion = state.getAssertion(this, predicate);
-            return assertion;
-        };
-
-        this.setAssertion = function (predicate, object) {
-            state.setAssertion(this, predicate, object);
-            return this;
-        };
-
-        this.removeAssertions = function (predicate, object) {
-            state.removeAssertions(this, predicate, object);
-            return this;
-        };
-
-        /**
-         * Return this thing as text (string)
-         * @returns {*}
-         */
-        this.text = function () {
-            return this.id;
-        }
     }
+
+    /**
+     * Get an assertion, returns itself or the object of the assertion found.
+     * @type {Function}
+     */
+    Thing.prototype.getAssertion = function (predicate) {
+        return this.state.getAssertion(this, predicate);
+    };
+
+    Thing.prototype.setAssertion = function (predicate, object) {
+        this.state.setAssertion(this, predicate, object);
+        return this;
+    };
+
+    Thing.prototype.removeAssertions = function (predicate, object) {
+        this.state.removeAssertions(this, predicate, object);
+        return this;
+    };
+
+    /**
+     * Return this thing as text (string)
+     * @returns {*}
+     */
+    Thing.prototype.text = function () {
+        return this.id;
+    };
 
     Thing.prototype.resolveValue = function (expression) {
         var value;

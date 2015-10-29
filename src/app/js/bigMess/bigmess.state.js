@@ -170,6 +170,22 @@
 
         return assertion;
     };
+
+    State.prototype.removeAssertions = function (subject, predicate, object) {
+        // Look for matching assertions
+        // todo: use built indexes instead of itterating trough all predicates
+        console.log("Discarding: ", subject, predicate, object);
+        this.assertions = this.assertions.filter(function (assertion) {
+            var keep = true;
+            if (subject && Object.is(object, assertion.subject)) keep = false;
+            if (predicate && Object.is(predicate, assertion.predicate)) keep = false;
+            if (object && Object.is(object, assertion.object)) keep = false;
+            return keep;
+        });
+        return this;
+    };
+
+
     State.prototype.getAssertion = function (subject, predicate) {
         var assertion;
         var foundAssertions;
@@ -251,6 +267,11 @@
 
         this.setAssertion = function (predicate, object) {
             state.setAssertion(this, predicate, object);
+            return this;
+        };
+
+        this.removeAssertions = function (predicate, object) {
+            state.removeAssertions(this, predicate, object);
             return this;
         };
 

@@ -32,11 +32,28 @@ var mindgame = angular.module('mindgame', [
             SetupKeystrokes();
             SetupCommands();
 
-            // todo: Inject service instead of registering with parent
+            // todo: Inject an (async?) service instead of registering with parent
             this.registerLog = function (controller) {
                 //console.log("registerLog", controller);
                 this.storyLog = controller;
                 this.ready();
+            };
+
+            this.ready = function () {
+                // Load all game scipts
+                loadPageScripts('BigMess', function (source) {
+                    game.load(source);
+                    game.bigMess.runScript();
+                }).then(function () {
+                    main.start()
+                });
+
+            };
+            this.start = function () {
+                var promptLoop = SetupPromptLoop();
+                LogStoryIntroduction();
+                DescribeWhereYouAre();
+                showPrompt(promptLoop);
             };
 
             function SetupCommands() {
@@ -114,23 +131,6 @@ var mindgame = angular.module('mindgame', [
                     });
             }
 
-            this.ready = function () {
-                // Load all game scipts
-                loadPageScripts('BigMess', function (source) {
-                    game.load(source);
-                    game.bigMess.runScript();
-                }).then(function () {
-                    main.start()
-                });
-
-            };
-            this.start = function () {
-                var promptLoop = SetupPromptLoop();
-                LogStoryIntroduction();
-                DescribeWhereYouAre();
-                showPrompt(promptLoop);
-            };
-
             // Story welcome message and introduction
             // todo: Output specially styled titles for story and chapters
             function LogStoryIntroduction() {
@@ -166,7 +166,9 @@ var mindgame = angular.module('mindgame', [
                     };
                     context.answer = function answer(option) {
                         // todo: this should be injected instead of taken from parent scope
+                        var isAboutTo = state.predicate("isAboutTo");
                         main.command(option.value);
+                        state.thing("You").removeAssertions(isAboutTo);
                     };
                 }
 
@@ -200,7 +202,7 @@ var mindgame = angular.module('mindgame', [
                     main.options = prompt.options;
                     main.choose = function (value) {
                         prompt.answer(value);
-                        showPrompt();
+                        showPrompt(promptLoop);
                     };
                 } else {
                     main.storyLog.error("OUSP!!!... no prompt were found!!!");

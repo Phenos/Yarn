@@ -30,7 +30,7 @@ var mindgame = angular.module('mindgame', [
             var state = game.bigMess.state;
 
             SetupKeystrokes();
-            SetupCommands();
+            SetupCommands(state);
 
             // todo: Inject an (async?) service instead of registering with parent
             this.registerLog = function (controller) {
@@ -49,14 +49,14 @@ var mindgame = angular.module('mindgame', [
                 });
 
             };
+
             this.start = function () {
-                var promptLoop = SetupPromptLoop();
                 LogStoryIntroduction();
                 DescribeWhereYouAre();
-                showPrompt(promptLoop);
+                this.promptLoop = SetupPromptLoop(updatePromptUI);
             };
 
-            function SetupCommands() {
+            function SetupCommands(state) {
 
                 // todo: Move commands into a separate directive
                 main.command = function (text) {
@@ -70,6 +70,7 @@ var mindgame = angular.module('mindgame', [
 
                 var commands = {
                     move: moveCommand,
+                    look: lookCommand,
                     state: stateCommand,
                     tree: treeCommand,
                     tokens: tokensCommand
@@ -96,9 +97,13 @@ var mindgame = angular.module('mindgame', [
                 }
 
                 function moveCommand(main) {
-                    var state = main.game.bigMess.state;
                     var isAboutTo = state.predicate("isAboutTo");
                     state.thing("You").setAssertion(isAboutTo, "move");
+                }
+
+                function lookCommand(main) {
+                    var isAboutTo = state.predicate("isAboutTo");
+                    state.thing("You").setAssertion(isAboutTo, "look");
                 }
             }
             function SetupKeystrokes () {
@@ -147,19 +152,16 @@ var mindgame = angular.module('mindgame', [
 
             function SetupPromptLoop() {
                 // Create an instant of the promptLoop
-
-                var promptLoop = new PromptLoop;
+                var promptLoop = new PromptLoop(state, updatePromptUI);
 
                 promptLoop.addContext("WhereToDo", WhereToDo);
                 function WhereToDo(context) {
                     context.when = function (state) {
                         var isAboutTo = state.resolveValue("You.isAboutTo");
-                        // todo: Test with the player is currently in a room
                         return isAboutTo === "move";
                     };
-                    context.question = function (prompt) {
+                    context.question = function (promptLoop, prompt) {
                         prompt.question = "Where do you want to go ?";
-                        // Todo, show the list of available rooms
                         var rooms = state.resolve("you.isIn.linksTo");
                         console.log('rooms', rooms);
                         rooms.forEach(function (room) {
@@ -167,7 +169,8 @@ var mindgame = angular.module('mindgame', [
                             prompt.option(label, room.id);
                         });
                     };
-                    context.answer = function answer(option) {
+                    context.answer = function answer(promptLoop, option) {
+                        console.trace(".answer for WhereToDo");
                         // todo: this should be injected instead of taken from parent scope
                         var isAboutTo = state.predicate("isAboutTo");
                         state.thing("You").removeAssertions(isAboutTo);
@@ -182,6 +185,38 @@ var mindgame = angular.module('mindgame', [
                         }
                         DescribeWhereYouAre(true);
                     };
+                    return promptLoop;
+                }
+
+                promptLoop.addContext("WhatToLookAt", WhatToLookAt);
+                function WhatToLookAt(context) {
+                    context.when = function (state) {
+                        var isAboutTo = state.resolveValue("You.isAboutTo");
+                        return isAboutTo === "look";
+                    };
+                    context.question = function (promptLoop, prompt) {
+                        prompt.question = "What do you want to look at ?";
+                        var thingsInRoom = state.resolve("You.isIn.hasInIt");
+                        console.log('thingsInRoom', thingsInRoom);
+                        if (thingsInRoom.length) {
+                            thingsInRoom.forEach(function (thing) {
+                                var label = thing.resolveValue("isNamed");
+                                prompt.option(label, thing.id);
+                            });
+                        } else {
+                            main.storyLog.error("Nothing to look at here!");
+                            // todo: this is clunky.... force an empty answer
+                            //context.answer(promptLoop, null);
+                            // todo: Instread of a "showPrompt", it should be a return value
+                        }
+                    };
+                    context.answer = function answer(promptLoop, option) {
+                        console.trace(".answer for WhatToLookAt");
+                        console.log("No choices!!!", option);
+                        var isAboutTo = state.predicate("isAboutTo");
+                        state.thing("You").removeAssertions(isAboutTo);
+                        console.log("command state");
+                    };
                 }
 
                 promptLoop.addContext("WhatToDo", WhatToDo);
@@ -189,35 +224,41 @@ var mindgame = angular.module('mindgame', [
                     context.when = function (state) {
                         return true;
                     };
-                    context.question = function (prompt) {
+                    context.question = function (promptLoop, prompt) {
                         prompt.question = "What do you want to do ?";
                         prompt.option("Move", "move");
                         prompt.option("Look", "look");
                     };
-                    context.answer = function answer(option) {
+                    context.answer = function answer(promptLoop, option) {
+                        console.trace(".answer for WhatToDo");
                         // todo: this should be injected instead of taken from parent scope
-                        console.log("option", option);
                         main.command(option.value);
                     };
                 }
 
+                promptLoop.update();
                 return promptLoop;
             }
 
             // Load the appropriate prompt and setup the ui with the prompt
-            function showPrompt(promptLoop) {
-                var prompt = promptLoop.getPromptFromState(state);
+            function updatePromptUI(promptLoop) {
+                console.log("------updatingprompt-------");
+                var prompt = promptLoop.currentPrompt;
                 if (prompt) {
+                    console.trace("prompt found", prompt);
+
                     // Prompt the user with a question
                     // todo: This should be inside a sort of REPL pattern with a handler for each types of context
                     main.question = prompt.question;
                     main.options = prompt.options;
                     main.choose = function (value) {
-                        prompt.answer(value);
-                        showPrompt(promptLoop);
+                        console.log("a", value, prompt.currentPrompt);
+                        prompt.answer(promptLoop, value);
+                        promptLoop.update();
+                        console.log("b");
                     };
                 } else {
-                    main.storyLog.error("OUSP!!!... no prompt were found!!!");
+                    main.storyLog.error("OUPS!!!... no prompt were found!!!");
                 }
             }
 
@@ -239,6 +280,16 @@ var mindgame = angular.module('mindgame', [
                 }
             }
 
+            // Describe where you are at the beginning
+            function DescribeThing(thing) {
+                if (thing) {
+                    var label = thing.resolveValue("isNamed");
+                    var description = thing.resolveValue("isDescribedAs");
+                    if (label) main.storyLog.log("You look at the " + label);
+                    if (description) main.storyLog.log(description);
+                }
+            }
+
 
         }
 
@@ -248,40 +299,49 @@ var mindgame = angular.module('mindgame', [
 
 
 
-
-
-
-
-
-
-
-function PromptLoop() {
+function PromptLoop(state, updatePromptUI) {
+    this.state = state;
     this.contexts = [];
     this.contextsRef = [];
+    this.currentPrompt = null;
+    this.updatePromptUI = updatePromptUI;
+    this.update();
 }
 
-PromptLoop.prototype.getPromptFromState = function (state) {
+PromptLoop.prototype.update = function (dontUpdateUI) {
     var prompt;
+    var self = this;
     var context = this.contexts.find(findContext);
 
     function findContext(context) {
         var found;
-        if (context.when(state)) found = context;
+        if (context.when(self.state)) found = context;
         return found;
     }
 
     // Setup the prompt if a context was found
+    console.trace("wtf!", context);
     if (context) {
         prompt = new Prompt();
-        context.question(prompt);
-
-        prompt.answer = function (value) {
-            var option = prompt.optionsRef[value];
-            context.answer(option);
-        };
+        this.currentPrompt = prompt;
+        context.question(this, prompt);
+        if (prompt.options.length) {
+            prompt.answer = function (promptLoop, value) {
+                var option = prompt.optionsRef[value];
+                context.answer(self, option);
+                console.log("--prompt.answer");
+                self.update();
+            };
+        } else {
+            // No choices available... simply process a null answer
+            // And update the state afterward
+            context.answer(self, null);
+            //self.updatePromptUI(self);
+        }
+        if (!dontUpdateUI) this.updatePromptUI(this);
+    } else {
+        console.log("No context found!");
     }
-
-    return prompt;
 };
 
 PromptLoop.prototype.addContext = function (id, config) {

@@ -1,7 +1,7 @@
 
 Begin @story
 
-@story is called 'The Room',
+@story is called 'The Small House',
     has id "theHouse-v1",
     is described as
     'A story of small complexities and critical trivialities!'.
@@ -17,10 +17,18 @@ The #Kitchen:
     is named "The Kitchen",
     links to the #Bedroom,
     links to the #Bathroom,
+    has in it the #KitchenTable,
     is described as
         "The <a href='#kitchen'>kitchen</a> is a small modern room with black countertops,
         white cabinets, basic appliances and a kitchen table. There are two doors leading
         to a bedroom and a bathroom.<br/>You see <strong>no</strong> exits!".
+
+The #KitchenTable,
+    is a @Thing,
+    is called "Kitchen Table",
+    is described as
+        "This round kitchen table is made of dark mapple and has four chairs.
+        It has two diver covers already layed out on it."
 
 The #Bedroom:
     is a @room,

@@ -276,7 +276,6 @@
     };
 
     Thing.prototype.resolve = function (expression) {
-        console.log("THING resolve", this, expression);
         var thingInContext = this;
         var tokens = expression.split(".");
         var predicates = this.state.getPredicates(tokens);

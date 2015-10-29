@@ -212,10 +212,12 @@ var mindgame = angular.module('mindgame', [
                     };
                     context.answer = function answer(promptLoop, option) {
                         console.trace(".answer for WhatToLookAt");
-                        console.log("No choices!!!", option);
                         var isAboutTo = state.predicate("isAboutTo");
                         state.thing("You").removeAssertions(isAboutTo);
-                        console.log("command state");
+
+                        var thing = state.thing(option.value);
+                        DescribeThing(thing);
+
                     };
                 }
 
@@ -242,7 +244,6 @@ var mindgame = angular.module('mindgame', [
 
             // Load the appropriate prompt and setup the ui with the prompt
             function updatePromptUI(promptLoop) {
-                console.log("------updatingprompt-------");
                 var prompt = promptLoop.currentPrompt;
                 if (prompt) {
                     console.trace("prompt found", prompt);
@@ -252,10 +253,8 @@ var mindgame = angular.module('mindgame', [
                     main.question = prompt.question;
                     main.options = prompt.options;
                     main.choose = function (value) {
-                        console.log("a", value, prompt.currentPrompt);
                         prompt.answer(promptLoop, value);
                         promptLoop.update();
-                        console.log("b");
                     };
                 } else {
                     main.storyLog.error("OUPS!!!... no prompt were found!!!");
@@ -320,7 +319,6 @@ PromptLoop.prototype.update = function (dontUpdateUI) {
     }
 
     // Setup the prompt if a context was found
-    console.trace("wtf!", context);
     if (context) {
         prompt = new Prompt();
         this.currentPrompt = prompt;
@@ -329,7 +327,6 @@ PromptLoop.prototype.update = function (dontUpdateUI) {
             prompt.answer = function (promptLoop, value) {
                 var option = prompt.optionsRef[value];
                 context.answer(self, option);
-                console.log("--prompt.answer");
                 self.update();
             };
         } else {

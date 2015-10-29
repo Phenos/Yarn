@@ -23,7 +23,7 @@ The #Kitchen:
         white cabinets, basic appliances and a kitchen table. There are two doors leading
         to a bedroom and a bathroom.<br/>You see <strong>no</strong> exits!".
 
-The #KitchenTable,
+The #KitchenTable:
     is a @Thing,
     is called "Kitchen Table",
     is described as

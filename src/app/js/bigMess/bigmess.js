@@ -7,9 +7,8 @@ function BigMess() {
 (function () {
     "use strict";
 
-    BigMess.prototype.runScript = function () {
-        //console.log("BigMess.runScript");
-        this.script.execute(this.state);
+    BigMess.prototype.run = function () {
+        this.script.run(this.state);
         return this;
     };
 
@@ -19,6 +18,7 @@ function BigMess() {
      */
     BigMess.prototype.load = function (text) {
         this.script.load(text);
+        return this;
     };
 
 })();

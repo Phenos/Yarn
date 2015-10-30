@@ -13,7 +13,7 @@
         return this;
     };
 
-    Script.prototype.execute = function (state) {
+    Script.prototype.run = function (state) {
         var runtime = new Runtime(this.ast, state);
         runtime.run();
     };

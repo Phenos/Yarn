@@ -20,6 +20,7 @@ function writers(storyLogService,
         if (storyDescription) storyLog.subHeading(storyDescription);
         // todo: Output specially styled separators
         storyLog.divider();
+        return this;
     }
 
 
@@ -39,6 +40,7 @@ function writers(storyLogService,
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");
         }
+        return this;
     }
 
     // Describe where you are at the beginning
@@ -49,6 +51,7 @@ function writers(storyLogService,
             if (label) storyLog.log("You look at the " + label);
             if (description) storyLog.log(description);
         }
+        return this;
     }
 
     // Describe where you are at the beginning
@@ -57,6 +60,7 @@ function writers(storyLogService,
             var label = thing.resolveValue("isNamed");
             if (label) storyLog.log("You took the " + label);
         }
+        return this;
     }
 
     return {

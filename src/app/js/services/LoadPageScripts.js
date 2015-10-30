@@ -1,8 +1,8 @@
 angular.module('mindgame').factory('loadPageScripts', loadPageScripts);
 
-function loadPageScripts ($http, $document, $q) {
-
-// todo: Make this a service
+function loadPageScripts($document,
+                         $http,
+                         $q) {
 
     function loadScripts(scriptType, onLoad) {
         var promise;
@@ -10,6 +10,7 @@ function loadPageScripts ($http, $document, $q) {
         promise = $q(function (success) {
             success();
         });
+
         angular.forEach($document.find("script"), function (scriptTag) {
             if (scriptTag.type.toLowerCase() === "bigmess") {
                 promise = promise.then(function () {
@@ -17,7 +18,6 @@ function loadPageScripts ($http, $document, $q) {
                 });
             }
         });
-
 
         return promise;
     }

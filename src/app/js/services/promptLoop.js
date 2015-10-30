@@ -139,32 +139,32 @@ function promptLoop(storyLogService,
         };
     }
 
-    function getPromptLoop(updatePromptUI) {
-        // Create an instant of the promptLoop
-        var promptLoop = new PromptLoop(state, updatePromptUI);
+    // Create an instant of the promptLoop
+    var promptLoop = new PromptLoop(state);
 
-        promptLoop.addContext("WhereToDo", WhereToDo);
-        promptLoop.addContext("WhatToLookAt", WhatToLookAt);
-        promptLoop.addContext("WhatToTake", WhatToTake);
-        promptLoop.addContext("WhatToDo", WhatToDo);
-        promptLoop.update();
-        return promptLoop;
-    }
+    promptLoop.addContext("WhereToDo", WhereToDo);
+    promptLoop.addContext("WhatToLookAt", WhatToLookAt);
+    promptLoop.addContext("WhatToTake", WhatToTake);
+    promptLoop.addContext("WhatToDo", WhatToDo);
+    promptLoop.update();
 
-    return getPromptLoop;
+    return promptLoop;
 }
 
 
 
 
-function PromptLoop(state, updatePromptUI) {
+function PromptLoop(state) {
     this.state = state;
     this.contexts = [];
     this.contextsRef = [];
     this.currentPrompt = null;
-    this.updatePromptUI = updatePromptUI;
-    this.update();
+    this.updatePromptUI = function() {};
 }
+
+PromptLoop.prototype.onUpdate = function (onUpdatePrompt) {
+    this.updatePromptUI = onUpdatePrompt;
+};
 
 PromptLoop.prototype.update = function (dontUpdateUI) {
     var prompt;

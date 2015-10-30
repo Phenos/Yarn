@@ -14,7 +14,7 @@
                     .filter(isInventoryItems) // Keep only items that are also inventory items
 ```
 
-## BUG
+## BUGS
 
 - Bug: Number are interpreted as string
 - Very first char is lost during parsing of tokens
@@ -23,9 +23,9 @@
     - Impossible to create assertion without at least a subject and a predicate.
 
 
-## Unplanned features
+## LEFTOVER BACKLOG
 
-- 
+- Traduire en francais
 
 ## WBS
 

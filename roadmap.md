@@ -17,22 +17,25 @@ var thingsInRoom =
 - Very first char is lost during parsing of tokens
 - An error is always triggered at start:
     Unknown node variant [undefined]
-    5bigmess.state.js:127 Impossible to create assertion without at least a subject and a predicate.
+    Impossible to create assertion without at least a subject and a predicate.
 
 # Refactoring
 
-- Move commands into a separate directive
-- Move hotkey into a separate directive
-- Move PromptLoop into a separate directive
+- Make tokenizer more modular with types of "in/out" state handlers
+
+# EPICS
+
+- Dialogs and Actors
+- Hints and assistance
+- 
 
 # BACKLOG
 
-- Errors during should output a trace. Ex.: "Unknown node variant"
+- Combine JS and CSS resources with SourceMaps
+- Bring back web fonts locally
+
 - List available rooms with numbered options
 
-- Command to "look" - L
-- Command to "move/go" - M/G
-- Command to "inventory" - I
 - Command to "clear log" and show me where I am - C
 - Command to "use" - U - Show objects you can use right now (inventory and in context)
 - Command to "take" - T
@@ -42,30 +45,35 @@ var thingsInRoom =
 - Command to exit the context backward to the room - X
 
 - Pause log between long log items, spacebar to continue
-- Show "keystroke" help when idle for X secondes
-
-- Do selections and object manipulations in overlay which doesnt polute the log, only show result in log.
-- Define text to appear when transitionning between rooms
 - Have a separate set of state/assertions between the original state and the changed state
 - Syntax and mechanic for hightlighting words in the text and link them with game assets
-- Todo: reate helper for getting a predicate value or it' id as a fallback
 - Handle "unique value" assertions such as "isIn"
 - Handle negative assertions syntax such as "is not in"
-- Ability to output various state rendering into the story log
 - Put all state rendering into a "debug" panel in the game ui
 - parser: support for blocks like "start chapter / end chapter"
-- Address Entities with "@"
-- Make predicate matching case insensitive
-- Automagically create simple camelCase version of quoted entities
-- Make tokenizer more modular with types of "in/out" state handlers
-- Warn of unknown predicate
+- Use "@" for reserved constants or native objects
 - Find a way to dynamize long texts with variables and references
 - Ability to switch from one actor to another
-- Force sequence of actions and naration
 - 
 
 
 # WBS
+
+## Debugging and Error handling
+
+- Errors during should output a trace. Ex.: "Unknown node variant"
+- Warn of unknown predicate
+- Debug mode to show when/how state changes trough the story
+
+## Epic: Events
+
+- Basic event handler
+- Trigger storyLog entries upon event
+- Trigger when moving in/out/beteen rooms
+- Trigger when taking or placing objects
+- Trigger when looking at something
+- Conditionnal events
+- Counters (ex.: ability to count how many time reader entered the room)
 
 ## Epic: Inventory
 
@@ -77,14 +85,11 @@ var thingsInRoom =
 - Ability to place back in somthing that is a "container".
 - Restrict in which type of container an item can go. (ex.: Moving stuff from a drawer to the fridge)
 - Restrict in which exact container an item gan go.
-- Player can "discard" an item if the item is discardable.
-- 
+- Player can "discard" an item if the item is discardable. 
 
 ## Epic: Prompt!
 
-- [DONE] Prompt loop with configurable handlers
-- Prompt for movement: list of available rooms
-- Prompt to choose action: Move, Inventory, Look, Back
+- Trigger choices with keystrokes specific to each prompt/options
 
 ## Epic: Loading and stage persistence mechanics
 

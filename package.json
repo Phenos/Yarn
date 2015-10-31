@@ -11,8 +11,8 @@
     "ejs": "2.3.3",
     "express": "4.13.3"
   },
-  "___engines": {
-    "node": "0.12.7"
+  "engines": {
+    "node": "0.12.2"
   },
   "author": "",
   "license": "ISC",

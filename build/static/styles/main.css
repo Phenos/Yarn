@@ -1,0 +1,141 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Halant', serif;
+  background: #f4edea;
+}
+.main-ui {
+  margin-bottom: 100px;
+}
+.testGrid {
+  position: relative;
+  font-size: 1em;
+  width: auto;
+  border-collapse: collapse;
+}
+.testGrid thead td {
+  font-weight: bold;
+}
+.testGrid tr {
+  padding: 0;
+  margin: 0;
+}
+.testGrid tr td {
+  padding: 2px 10px;
+  margin: 0;
+  font-size: 1em;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.03);
+}
+.testGrid tr td:first-child {
+  padding-left: 0;
+}
+.tree .node {
+  position: relative;
+  padding: 0.2em 0 0 0em;
+  margin: 0.1em 0 0 0;
+}
+.tree .node .label {
+  display: block;
+  margin: 0;
+}
+.tree .node .label .value {
+  font-size: 1em;
+  padding-right: 0.5em;
+}
+.tree .node .label .type {
+  font-size: 0.9em;
+  color: #999;
+  padding-right: 0.5em;
+}
+.tree .node .label .variant {
+  font-size: 0.9em;
+  color: #8c8;
+}
+.tree .node .set {
+  margin: 0.2em 0 0 0.1em;
+  padding: 0 0 0 2em;
+  border-left: 1px dotted #ccc;
+}
+/* ------------------------------------ */
+.assertions {
+  font-size: 1em;
+}
+.assertions .assertion {
+  padding: 4px 0px;
+}
+.assertions .assertion .subject {
+  padding: 0 10px 0 0;
+}
+.assertions .assertion .predicate {
+  padding: 0 10px 0 0;
+  color: #888888;
+}
+.assertions .assertion .object {
+  padding: 0 10px 0 0;
+}
+.assertions .assertion .isUndefined,
+.assertions .assertion .isUnknown {
+  color: #992222;
+  font-weight: bold;
+}
+.assertions .assertion .isThing {
+  font-weight: bold;
+  color: #333399;
+}
+.assertions .assertion .isThing:before {
+  content: "#";
+}
+.assertions .assertion .isString {
+  color: #339933;
+  font-style: italic;
+}
+.assertions .assertion .isString:before {
+  content: "\"";
+}
+.assertions .assertion .isString:after {
+  content: "\"";
+}
+.assertions .assertion .isNumber:before {
+  content: "#";
+}
+user-choice {
+  display: block;
+  text-align: center;
+  margin: 0.5em 5em 10em 5em;
+}
+user-choice h3 {
+  font-size: 1.4em;
+  margin-bottom: 0.5em;
+  font-weight: 200;
+  text-align: center;
+  color: #654;
+}
+user-choice ul {
+  padding: 0;
+  margin: 0;
+}
+user-choice ul li {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  list-style: none;
+}
+user-choice ul li a {
+  position: relative;
+  display: block;
+  padding: 6px 20px;
+  margin: 10px 10px;
+  text-decoration: none;
+  color: #fff;
+  background: #a86;
+  box-shadow: 0 6px 8px 0px rgba(0, 0, 0, 0.2);
+}
+user-choice ul li a:hover {
+  top: -1px;
+  box-shadow: 0 7px 8px 0px rgba(0, 0, 0, 0.2);
+  background: #b86;
+}
+user-choice ul li a:active {
+  top: 2px;
+  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2);
+}

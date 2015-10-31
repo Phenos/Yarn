@@ -23,7 +23,6 @@ The #Kitchen:
     is named "The Kitchen",
     links to the #Bedroom,
     links to the #Bathroom,
-    links to the #FrontOfTheHouse,
     has in it the #KitchenTable,
     has in it the #RedPill,
     is described as
@@ -31,18 +30,6 @@ The #Kitchen:
         white cabinets, basic appliances and a kitchen table. There are two doors leading
         to a bedroom and a bathroom. The is also a red pill on the table *wink* *wink* .
         <br/>You see <strong>no</strong> exits!".
-
-The #FrontOfTheHouse:
-    is a @room,
-    is named "Front of the house",
-    has in it a #RedSoccerBall,
-    is described as "You see a car, your garage and a great big lawn. On the lawn there is a red soccer ball.".
-
-The #RedSoccerBall:
-    is a @Thing,
-    is called "Red Soccer Ball",
-    is a @InventoryItem,
-    is described as "The soccer ball is red and turquoise. It smells like banana."
 
 The #RedPill:
     is a @Thing,
@@ -74,5 +61,73 @@ The #Bathroom:
         dark brass fittings. It is equiped with all the classic bathroom items.
         Everything is very very very clean. And it smells like the ocean breeze.
         "
+
+The #DarkPlace:
+    is a @room,
+    is named "A Dark Place",
+    is described as "Your in a cold dark clostrophobic place. Your head is spinning."
+/*
+
+Sample event scenatio: When reader eats the red pill, he is transported into a "dark place", becomes sick and hungry.
+
+*/
+
+
+// Case #1
+
+The #Redpill:
+    when #isUsed: #FallInADarkPlace.
+
+Sequence #FallInADarkPlace:
+    #You:
+        read "You eat the red pill.... oups... this doesnt feel right!!!!"
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+// Case #2
+
+When using #Redpill:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!",
+    #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+// Case #3 - Separate event sequence into a reuseable series
+
+When using #Redpill:
+    trigger events #FallInADarkPlace.
+
+Event #FallInADarkPlace:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!"
+    #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+
+// Case #4 - Add condition, event only happen in the bedroom
+
+When using #Redpill:
+    If is in #bedroom:
+        trigger events #FallInADarkPlace.
+
+Event #FallInADarkPlace:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!"
+    #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+
+
+
+
+
 
 End @story

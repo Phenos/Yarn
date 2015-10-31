@@ -23,6 +23,7 @@ The #Kitchen:
     is named "The Kitchen",
     links to the #Bedroom,
     links to the #Bathroom,
+    links to the #FrontOfTheHouse,
     has in it the #KitchenTable,
     has in it the #RedPill,
     is described as
@@ -30,6 +31,18 @@ The #Kitchen:
         white cabinets, basic appliances and a kitchen table. There are two doors leading
         to a bedroom and a bathroom. The is also a red pill on the table *wink* *wink* .
         <br/>You see <strong>no</strong> exits!".
+
+The #FrontOfTheHouse:
+    is a @room,
+    is named "Front of the house",
+    has in it a #RedSoccerBall,
+    is described as "You see a car, your garage and a great big lawn. On the lawn there is a red soccer ball.".
+
+The #RedSoccerBall:
+    is a @Thing,
+    is called "Red Soccer Ball",
+    is a @InventoryItem,
+    is described as "The soccer ball is red and turquoise. It smells like banana."
 
 The #RedPill:
     is a @Thing,

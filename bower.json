@@ -16,6 +16,7 @@
     "angular": "~1.4.7",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
     "angular-scroll-glue": "~2.0.6",
-    "angular-ui-router": "~0.2.15"
+    "angular-ui-router": "~0.2.15",
+    "angularjs-breakpoint": "*"
   }
 }

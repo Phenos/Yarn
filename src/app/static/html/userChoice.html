@@ -2,8 +2,7 @@
     <h3 class="question" ng-bind="userChoice.question"></h3>
     <ul>
         <li ng-repeat="option in userChoice.options">
-            <a href="#" ng-click="userChoice.choose(option.value)" ng-bind="option.label"></a>
+            <a href="#" ng-click="userChoice.choose(option.value); $event.preventDefault();" ng-bind="option.label"></a>
         </li>
-
     </ul>
 </div>

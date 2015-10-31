@@ -1,0 +1,18 @@
+{
+  "name": "angularjs-breakpoint",
+  "main": "js/breakpoint.min.js",
+  "ignore": [
+    ".*"
+  ],
+  "homepage": "https://github.com/snapjay/angularjs-breakpoint",
+  "_release": "4ed81717c5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4ed81717c568b19e2ce7f02e1439d93fb2cb14f5"
+  },
+  "_source": "git://github.com/snapjay/angularjs-breakpoint.git",
+  "_target": "*",
+  "_originalSource": "angularjs-breakpoint",
+  "_direct": true
+}

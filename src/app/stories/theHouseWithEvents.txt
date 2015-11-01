@@ -73,6 +73,7 @@ Sample event scenatio: When reader eats the red pill, he is transported into a "
 */
 
 
+// ---------------------------------------------------------------
 // Case #1
 
 The #Redpill:
@@ -86,6 +87,7 @@ Sequence #FallInADarkPlace:
         is @sick,
         is @hungry;
 
+// ---------------------------------------------------------------
 // Case #2
 
 When using #Redpill:
@@ -96,6 +98,7 @@ When using #Redpill:
         is @sick,
         is @hungry;
 
+// ---------------------------------------------------------------
 // Case #3 - Separate event sequence into a reuseable series
 
 When using #Redpill:
@@ -110,6 +113,7 @@ Event #FallInADarkPlace:
         is @hungry;
 
 
+// ---------------------------------------------------------------
 // Case #4 - Add condition, event only happen in the bedroom
 
 When using #Redpill:
@@ -123,6 +127,59 @@ Event #FallInADarkPlace:
         is in #DarkPlace,
         is @sick,
         is @hungry;
+
+// ---------------------------------------------------------------
+// Case #5
+
+when #EatRedPillInBeadroom:
+    using #Redpill:
+    if is in #bedroom:
+        do #FallInADarkPlace.
+
+case #EatRedPillInBeadroom:
+    #you use #Redpill,
+    #you is in #bedroom,
+    do #FallInADarkPlace.
+
+event #FallInADarkPlace:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!"
+    #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+
+// Case when player eats a red pill
+
+case #EatRedPillInBeadroom3:
+    when #you use #redpill,,,
+    if #you are in the #bedroom,,,
+    do #FallInADarkPlace.
+
+on #FallInADarkPlace:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!",
+    with #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry.
+
+// Case when hammer is used on glass skull
+
+when #you used #bigRedLever do #Open.
+
+when #hammer used with #glassSkull do #Open.
+
+when #you enter #bedroom do #fallAsleep.
+
+when #you take #magicWand do #revealTruth.
+
+when #money is given to #homelessMan
+
+when #homelessMan take #money do #learnSecretFromHomelessMan
+
+
 
 
 

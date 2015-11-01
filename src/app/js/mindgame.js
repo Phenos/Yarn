@@ -81,7 +81,13 @@ function createPredicates(state) {
         .syntax("is at the")
         .syntax("is in")
         .syntax("is inside")
-        .syntax("is at");
+        .syntax("is at")
+        .syntax("are in the")
+        .syntax("are inside the")
+        .syntax("are at the")
+        .syntax("are in")
+        .syntax("are inside")
+        .syntax("are at");
 
     // When something has something else. Ex.: Kitchen has a Kitchen Table
     state
@@ -113,4 +119,3 @@ function createPredicates(state) {
         .syntax("that")
         .syntax("the");
 }
-

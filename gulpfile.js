@@ -17,10 +17,12 @@ var config = {
     paths: {
         buildRoot: 'build',
         staticRoot: 'build/static',
+        storiesRoot: 'build/static/stories',
         distStylesRoot: 'build/static/styles',
         distTempLess: 'build/static/less-temp',
         less: 'src/app/less/**/*.less',
         staticSource: 'src/app/static/**',
+        storiesSource: 'src/app/stories/**',
         javascriptSource: [
             "src/app/js/module.js",
             "src/app/js/routes.js",
@@ -58,7 +60,16 @@ var config = {
             'src/app/static/**/*.html',
             'src/app/static/**/*.txt',
             'src/app/js/**/*.js'
-        ]
+        ],
+        watches: {
+            statics: [
+                'src/app/static/**/*.html',
+                'src/app/static/**/*.txt'
+            ],
+            js: 'src/app/js/**/*.js',
+            stories: 'src/app/stories/**',
+            less: 'src/app/less/**/*.less'
+        }
     }
 };
 
@@ -69,7 +80,8 @@ var cwd = {
 var paths = config.paths;
 
 gulp.task('compileLess', lessTask);
-gulp.task('copyStaticTask', copyStaticTask);
+gulp.task('copyStatic', copyStaticTask);
+gulp.task('copyStories', copyStoriesTask);
 gulp.task('copyBowerComponents', copyBowerComponents);
 gulp.task('copyLess', copyLess);
 gulp.task('copyJs', copyJsTask);
@@ -77,7 +89,8 @@ gulp.task('compressJS', compressJsTask);
 gulp.task('compressJSVendors', compressJsVendorsTask);
 gulp.task('copyAssets', gulp.series(
     'copyBowerComponents',
-    'copyStaticTask',
+    'copyStatic',
+    'copyStories',
     'compressJSVendors',
     'compressJS',
     'copyJs',
@@ -107,6 +120,13 @@ function copyStaticTask() {
     return gulp.src(paths.staticSource)
         .pipe(using())
         .pipe(gulp.dest(paths.staticRoot, cwd));
+}
+
+function copyStoriesTask() {
+    // Copy static folder
+    return gulp.src(paths.storiesSource)
+        .pipe(using())
+        .pipe(gulp.dest(paths.storiesRoot, cwd));
 }
 
 function copyJsTask() {
@@ -181,7 +201,10 @@ function serverTask(callback) {
 }
 
 function watchTask() {
-    return gulp.watch(paths.watch, gulp.series('build', browserSync.reload));
+    gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
+    gulp.watch(paths.watches.js, gulp.series('compressJS', 'copyJs', browserSync.reload));
+    gulp.watch(paths.watches.stories, gulp.series('copyStories', browserSync.reload));
+    gulp.watch(paths.watches.statics, gulp.series('copyStatic', browserSync.reload));
 }
 
 function lessTask() {

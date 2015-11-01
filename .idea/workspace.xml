@@ -1,132 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="8" />
-    <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
-  </component>
   <component name="ChangeListManager">
     <list id="94d96aae-7a74-44a0-b850-8b1f25077655" name="Default" comment="" />
-    <list id="a42e9ffa-49da-4ad8-af96-a3d0c45f02d9" name="More powerfull method from complexe queries" comment="Added the front lawn for Anne! lol" />
-    <list default="true" id="b4607123-df97-4324-a601-2658182da4d4" name="Bring fonts locally" comment="Compression and concatenation of js and lss files.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-300/Halant-300.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-300/Halant-300.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-300/Halant-300.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-300/Halant-300.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-500/Halant-500.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-500/Halant-500.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-500/Halant-500.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-500/Halant-500.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-600/Halant-600.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-600/Halant-600.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-600/Halant-600.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-600/Halant-600.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-700/Halant-700.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-700/Halant-700.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-700/Halant-700.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-700/Halant-700.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-regular/Halant-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-regular/Halant-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-regular/Halant-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-regular/Halant-regular.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-300/Halant-300.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-300/Halant-300.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-300/Halant-300.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-300/Halant-300.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-500/Halant-500.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-500/Halant-500.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-500/Halant-500.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-500/Halant-500.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-600/Halant-600.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-600/Halant-600.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-600/Halant-600.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-600/Halant-600.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-700/Halant-700.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-700/Halant-700.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-700/Halant-700.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-700/Halant-700.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-regular/Halant-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-regular/Halant-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-regular/Halant-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-regular/Halant-regular.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/css/fonts.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-300/Halant-300.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-300/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-500/Halant-500.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-500/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-600/Halant-600.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-600/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-700/Halant-700.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-700/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-regular/Halant-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/fonts/Halant/fonts/Halant-regular/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/all.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.ast.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.cursor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.node.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.pointer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.runtime.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.script.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/bigmess.state.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/commands.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/game.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/loadGameScripts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/loadPageScripts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/promptLoop.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/root.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/storyLog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/storyLog/logItem.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/storyLog/storyLog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/userChoice/userChoice.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/userInput/userInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/vendors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/js/writers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/stories/theHouseWithEvents.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/styles/all.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/css/fonts.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-300/Halant-300.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-300/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-500/Halant-500.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-500/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-600/Halant-600.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-600/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-700/Halant-700.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-700/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-regular/Halant-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/static/fonts/Halant/fonts/Halant-regular/LICENSE.txt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.ast.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.cursor.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.node.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.pointer.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.runtime.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.script.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/bigMess/bigmess.state.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/config.state.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/controllers/root.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/directives/storyLog/logItem.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/directives/storyLog/storyLog.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/directives/userChoice/userChoice.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/directives/userInput/userInput.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/services/commands.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/services/game.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/services/loadGameScripts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/services/loadPageScripts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/services/promptLoop.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/services/storyLog.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/js/services/writers.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/styles/ellipsis.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/styles/global.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/styles/logItem.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/styles/main.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/styles/storyLog.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/static/styles/userInput.css" afterPath="" />
+    <list id="29cef767-7255-43e1-91bb-578d7903a6e8" name="!!!!! Stupid project files stuck here" comment="" />
+    <list default="true" id="264fbb09-3abe-4fa3-bc9b-a267f321b65e" name="Trigger events and run sequences" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/stories/test-onEvent.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/app/static/stories/theHouse.txt" afterPath="$PROJECT_DIR$/src/app/stories/theHouse.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/app/static/stories/theHouse1b.txt" afterPath="$PROJECT_DIR$/src/app/stories/theHouse1b.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/app/static/stories/theHouse2.txt" afterPath="$PROJECT_DIR$/src/app/stories/theHouse2.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/app/static/stories/theHouseWithEvents.txt" afterPath="$PROJECT_DIR$/src/app/stories/theHouseWithEvents.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/html/userChoice.html" afterPath="$PROJECT_DIR$/build/static/html/userChoice.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/index.html" afterPath="$PROJECT_DIR$/build/static/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/all.js" afterPath="$PROJECT_DIR$/build/static/js/all.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/mindgame.js" afterPath="$PROJECT_DIR$/build/static/js/mindgame.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/stories/theHouseWithEvents.txt" afterPath="$PROJECT_DIR$/build/static/stories/theHouseWithEvents.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/static/html/userChoice.html" afterPath="$PROJECT_DIR$/src/app/static/html/userChoice.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/mindgame.js" afterPath="$PROJECT_DIR$/src/app/js/mindgame.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/static/index.html" afterPath="$PROJECT_DIR$/src/app/static/index.html" />
     </list>
     <ignored path="bigmess.iws" />
@@ -149,11 +38,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/static/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3449074">
-              <caret line="38" column="26" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
+            <state vertical-scroll-proportion="-9.0">
+              <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="theHouse.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="theHouse2.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse2.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="theHouse1b.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse1b.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test-onEvent.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/stories/test-onEvent.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.3125">
+              <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -163,77 +92,17 @@
         <entry file="file://$PROJECT_DIR$/gulpfile.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="154" column="29" selection-start-line="154" selection-start-column="29" selection-end-line="154" selection-end-column="29" />
+              <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userInput.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/directives/userInput/userInput.js">
+      <file leaf-file-name="mindgame.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/js/mindgame.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="writers.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/services/writers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bigmess.cursor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.cursor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="storyLog.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/directives/storyLog/storyLog.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="79" selection-start-line="16" selection-start-column="79" selection-end-line="16" selection-end-column="79" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logItem.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/directives/storyLog/logItem.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userChoice.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/directives/userChoice/userChoice.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="40" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="40" />
+              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -247,64 +116,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.pointer.js" />
-        <option value="$PROJECT_DIR$/build/static/index.html" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.ast.js" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/userInput/userInput.js" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/storyLog/logItem.js" />
-        <option value="$PROJECT_DIR$/src/app/less/storyLog.less" />
-        <option value="$PROJECT_DIR$/src/app/less/ellipsis.less" />
-        <option value="$PROJECT_DIR$/src/app/static/images/divider.svg" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/userChoise/userInput.js" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/userChoise/userChoice.js" />
-        <option value="$PROJECT_DIR$/src/app/static/stories/theHouse2.txt" />
-        <option value="$PROJECT_DIR$/src/app/less/logItem.less" />
-        <option value="$PROJECT_DIR$/src/app/js/services/LoadPageScripts.js" />
-        <option value="$PROJECT_DIR$/src/app/less/userInput.less" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.state.js" />
-        <option value="$PROJECT_DIR$/src/app/js/mindgame.js" />
-        <option value="$PROJECT_DIR$/src/app/less/main.less" />
-        <option value="$PROJECT_DIR$/src/app/js/services/loadPageScripts.js" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/storyLog/storyLog.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/storyLog.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/commands.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/promptLoop.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/writers.js" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.js" />
-        <option value="$PROJECT_DIR$/src/app/static/html/app.html" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/userChoice/userChoice.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/game.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/loadGameScripts.js" />
-        <option value="$PROJECT_DIR$/src/app/js/controllers/root.js" />
-        <option value="$PROJECT_DIR$/src/app/js/app.js" />
-        <option value="$PROJECT_DIR$/src/app/js/routes.js" />
-        <option value="$PROJECT_DIR$/roadmap.md" />
-        <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/app/less/main.less" />
-        <option value="$PROJECT_DIR$/src/app/js/module.js" />
-        <option value="$PROJECT_DIR$/src/app/less/userInput.less" />
-        <option value="$PROJECT_DIR$/src/app/less/logItem.less" />
-        <option value="$PROJECT_DIR$/src/app/less/storyLog.less" />
-        <option value="$PROJECT_DIR$/src/app/less/global.less" />
         <option value="$PROJECT_DIR$/src/app/static/stories/theHouseWithEvents.txt" />
         <option value="$PROJECT_DIR$/src/app/static/stories/theHouse.txt" />
-        <option value="$PROJECT_DIR$/src/app/static/html/userChoice.html" />
-        <option value="$PROJECT_DIR$/src/app/static/fonts/Halant/css/fonts.css" />
-        <option value="$PROJECT_DIR$/src/app/static/html/userChoice.html" />
+        <option value="$PROJECT_DIR$/src/app/static/stories/test-onEvent.txt" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
-        <option value="$PROJECT_DIR$/src/app/static/index.html" />
+        <option value="$PROJECT_DIR$/src/app/stories/test-onEvent.txt" />
+        <option value="$PROJECT_DIR$/src/app/js/mindgame.js" />
         <option value="$PROJECT_DIR$/src/app/static/index.html" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" />
-  <component name="JsBuildToolPackageJson" detection-done="true">
-    <package-json value="$PROJECT_DIR$/package.json" />
-  </component>
+  <component name="JsBuildToolPackageJson" detection-done="true" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <gulpfiles>
@@ -351,38 +174,9 @@
       </GulpfileState>
     </gulpfiles>
   </component>
-  <component name="PhpServers">
-    <servers />
-  </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="width" value="1280" />
     <option name="height" value="800" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>JavaScript</id>
-          </State>
-          <State>
-            <id>JavaScript function metricsJavaScript</id>
-          </State>
-          <State>
-            <id>Potentially confusing code constructsJavaScript</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>Potentially confusing code constructsJavaScript</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -444,10 +238,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -468,240 +258,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stories" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fonts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Halant" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fonts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fonts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Halant" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="directives" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="directives" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="userChoice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yarn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="styles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -712,37 +268,18 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="ignore_missing_gitignore" value="true" />
-    <property name="FullScreen" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="recentsLimit" value="5" />
-    <property name="js.buildTools.grunt.node_interpreter" value="/usr/local/bin/node" />
-    <property name="js.buildTools.grunt.grunt-cli.package" value="" />
-    <property name="js.buildTools.gulp.node_interpreter" value="/usr/local/bin/node" />
-    <property name="js.buildTools.gulp.gulp_package_dir" value="/usr/local/lib/node_modules/gulp-cli" />
+    <property name="SearchEverywhereHistoryKey" value="gulp&#9;FILE&#9;file:///Users/mathieu/dev/yarn/gulpfile.js&#10;index&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/index.html&#10;house&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/stories/theHouse.txt" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="SearchEverywhereHistoryKey" value="gulp&#9;FILE&#9;file:///Users/mathieu/dev/yarn/gulpfile.js&#10;mindga&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/mindgame.js&#10;index&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/index.html&#10;mind&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/mindgame.js&#10;house&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/stories/theHouse2.txt&#10;th&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/stories/theHouse.txt&#10;choice&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/directives/userChoice/userChoice.js&#10;story&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/storyLog.less&#10;item&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/logItem.less&#10;module&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/module.js&#10;modules&#9;FILE&#9;file:///Users/mathieu/dev/yarn/.idea/modules.xml&#10;inde&#9;FILE&#9;file:///Users/mathieu/dev/yarn/index.js&#10;packa&#9;FILE&#9;file:///Users/mathieu/dev/yarn/package.json&#10;markdown&#9;null&#9;null&#10;app&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/src/app/js/app.js&#10;less&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/src/app/less/main.less&#10;inp&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/src/app/less/userInput.less&#10;main.&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/src/app/less/main.less&#10;roam&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/roadmap.md&#10;the&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/src/app/static/stories/theHouse.txt&#10;road&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/roadmap.md&#10;userCh&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/src/app/js/directives/userChoice/userChoice.js&#10;index.&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/build/static/index.html&#10;roadm&#9;FILE&#9;file:///Users/mathieu/dev/bigmess/roadmap.md&#10;BigMe&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/app/static/stories" />
-      <recent name="$PROJECT_DIR$/src/app/js/bigMess" />
-      <recent name="$PROJECT_DIR$/src/app/js" />
-      <recent name="$PROJECT_DIR$/src/app/static" />
-      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/app" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/app/static/fonts" />
       <recent name="$PROJECT_DIR$/src/app/static/stories" />
-      <recent name="$PROJECT_DIR$/src/app/js" />
-      <recent name="$PROJECT_DIR$/src/app/js/services" />
-      <recent name="$PROJECT_DIR$/src/app/js/directives" />
     </key>
   </component>
-  <component name="RunManager" selected="Gulp.js.Start watch!">
+  <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
@@ -757,23 +294,7 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.grunt" factoryName="Grunt.js">
-      <pass-parent-env-vars value="true" />
-      <envs />
-      <force value="false" />
-      <verbose value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <pass-parent-envs>true</pass-parent-envs>
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -782,352 +303,23 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Start watch!" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
-      <tasks />
-      <arguments />
-      <pass-parent-envs>true</pass-parent-envs>
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="dev" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
-      <tasks>
-        <task>dev</task>
-      </tasks>
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Gulp.js.Start watch!" />
-      <item index="1" class="java.lang.String" itemvalue="Gulp.js.dev" />
-    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
-    <task id="Default" summary="Default task">
-      <changelist id="94d96aae-7a74-44a0-b850-8b1f25077655" name="Default" comment="" />
-      <created>1445177351885</created>
-      <option name="number" value="Default" />
-      <updated>1445697341849</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Added serve task to bulp build">
-      <created>1445697210292</created>
-      <option name="number" value="00009" />
+    <task active="true" id="LOCAL-00001">
+      <changelist id="264fbb09-3abe-4fa3-bc9b-a267f321b65e" name="Trigger events and run sequences" comment="" />
+      <created>1446339686791</created>
+      <option name="number" value="00001" />
       <option name="project" value="LOCAL" />
-      <updated>1445697210292</updated>
+      <updated>1446339711484</updated>
     </task>
-    <task id="LOCAL-00010" summary="Added Browser-Sync to build">
-      <changelist id="" name="Added Browser-Sync to build" comment="" />
-      <created>1445697336521</created>
-      <option name="number" value="00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1445714909186</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Added browserSync, build folder and watch in gulp file">
-      <created>1445713460306</created>
-      <option name="number" value="00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1445713460306</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Set ast operations">
-      <created>1445714907979</created>
-      <option name="number" value="00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1445786638026</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Firest draft of the AST compiler">
-      <created>1445719518145</created>
-      <option name="number" value="00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1445719518145</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Added a renderer for the AST">
-      <created>1445741812912</created>
-      <option name="number" value="00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1445741812912</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Metter AST compiling&#10;">
-      <created>1445744440815</created>
-      <option name="number" value="00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1445744440815</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Completed AST compiling">
-      <created>1445780126095</created>
-      <option name="number" value="00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1445780126095</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Completed AST compiling">
-      <created>1445780153600</created>
-      <option name="number" value="00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1445780153600</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Refactoring">
-      <created>1445784262070</created>
-      <option name="number" value="00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1445784262070</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Refactored code into modules">
-      <created>1445786029384</created>
-      <option name="number" value="00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1445786029384</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Code linting">
-      <created>1445786546512</created>
-      <option name="number" value="00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1445786546513</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Code linting">
-      <created>1445786573517</created>
-      <option name="number" value="00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1445786573517</updated>
-    </task>
-    <task id="LOCAL-00022" summary="First draft of the execution">
-      <changelist id="" name="First draft of the execution process" comment="" />
-      <created>1445786631732</created>
-      <option name="number" value="00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1446128745867</updated>
-    </task>
-    <task id="LOCAL-00023" summary="- Execution of AST with Runtime&#10;- Styled html output for state object">
-      <created>1445801449164</created>
-      <option name="number" value="00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1445801449164</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Predicates now have a default label defined by the last declared syntax.">
-      <created>1445802510739</created>
-      <option name="number" value="00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1445802510739</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Initial execution loop is complete">
-      <created>1445806290501</created>
-      <option name="number" value="00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1445806290501</updated>
-    </task>
-    <task id="LOCAL-00026" summary="State is now available as a command&#10;">
-      <created>1445808608369</created>
-      <option name="number" value="00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1445808608369</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Styled logs, commands, ui improvements">
-      <created>1445821873474</created>
-      <option name="number" value="00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1445821873474</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Better styled logs, ellipsis">
-      <created>1445825980800</created>
-      <option name="number" value="00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1445825980800</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Better logging for errors">
-      <created>1445828344625</created>
-      <option name="number" value="00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1445828344625</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Room description, better logging, roadmap items.">
-      <created>1445830930295</created>
-      <option name="number" value="00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1445830930295</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Draft: userChoice directive">
-      <created>1445917305190</created>
-      <option name="number" value="00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1445917305190</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Fixed broken fadeOut animatin">
-      <created>1445917669907</created>
-      <option name="number" value="00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1445917669907</updated>
-    </task>
-    <task id="LOCAL-00033" summary="First working version of the prompt loop">
-      <created>1446049770794</created>
-      <option name="number" value="00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1446049770794</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Loading scripts trough &lt;script&gt; tags">
-      <created>1446058788432</created>
-      <option name="number" value="00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1446058788432</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Better handling of story reloading">
-      <created>1446059559123</created>
-      <option name="number" value="00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1446059559123</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Created helper for getting a predicate value or it' id as a fallback">
-      <created>1446065286567</created>
-      <option name="number" value="00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1446065286567</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Refactoring while competing the &quot;Move&quot; command&#10;">
-      <created>1446074916266</created>
-      <option name="number" value="00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1446074916266</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Move loop almost complete!&#10;">
-      <created>1446084292970</created>
-      <option name="number" value="00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1446084292970</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Loop for the move command is ugly but complete!">
-      <created>1446085607332</created>
-      <option name="number" value="00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1446085607332</updated>
-    </task>
-    <task id="LOCAL-00040" summary="First version of movements is complete.">
-      <created>1446089336389</created>
-      <option name="number" value="00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1446089336389</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Arggghhnnnaaaaa">
-      <created>1446101212834</created>
-      <option name="number" value="00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1446101212834</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Working action and loop for &quot;Look&quot;&#10;">
-      <created>1446102712289</created>
-      <option name="number" value="00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1446102712289</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Start of inventory mechanic.">
-      <created>1446128190925</created>
-      <option name="number" value="00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1446128190925</updated>
-    </task>
-    <task id="LOCAL-00044" summary="More powerfull method from complexe queries">
-      <changelist id="a42e9ffa-49da-4ad8-af96-a3d0c45f02d9" name="More powerfull method from complexe queries" comment="" />
-      <created>1446128743175</created>
-      <option name="number" value="00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1446302125608</updated>
-    </task>
-    <task id="LOCAL-00045" summary="More powerfull method from complexe queries">
-      <created>1446128773824</created>
-      <option name="number" value="00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1446128773824</updated>
-    </task>
-    <task id="LOCAL-00046" summary="More powerfull method from complexe queries">
-      <created>1446130534444</created>
-      <option name="number" value="00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1446130534444</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Refactoring of most code routines into services">
-      <created>1446177892117</created>
-      <option name="number" value="00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1446177892117</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Better refactoring into services. App.js has now bare minimum">
-      <created>1446180070677</created>
-      <option name="number" value="00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1446180070677</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Updated backlog">
-      <created>1446181621505</created>
-      <option name="number" value="00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1446181621505</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Updated backlog">
-      <created>1446214876597</created>
-      <option name="number" value="00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1446214876600</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Commiting static build for deployment">
-      <created>1446248736755</created>
-      <option name="number" value="00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1446248736755</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Adding Proc file for Heroku deploy&#10;&#10;">
-      <created>1446248852163</created>
-      <option name="number" value="00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1446248852163</updated>
-    </task>
-    <task id="LOCAL-00053" summary="Seting up heroku deployment">
-      <created>1446249624902</created>
-      <option name="number" value="00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1446249624902</updated>
-    </task>
-    <task id="LOCAL-00054" summary="Commiting static build for deployment">
-      <created>1446249740988</created>
-      <option name="number" value="00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1446249740989</updated>
-    </task>
-    <task id="LOCAL-00055" summary="CSS Tweaking for mobile devices">
-      <created>1446263263753</created>
-      <option name="number" value="00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1446263263753</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Added the front lawn for Anne! lol">
-      <created>1446301849241</created>
-      <option name="number" value="00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1446301849241</updated>
-    </task>
-    <task active="true" id="LOCAL-00057">
-      <changelist id="b4607123-df97-4324-a601-2658182da4d4" name="Bring fonts locally" comment="" />
-      <created>1446302096537</created>
-      <option name="number" value="00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1446302125609</updated>
-    </task>
-    <option name="localTasksCounter" value="58" />
+    <option name="localTasksCounter" value="2" />
     <option name="clearContext" value="false" />
     <option name="createBranch" value="false" />
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -1135,13 +327,13 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32786885" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3369863" sideWeight="0.51615506" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3369863" sideWeight="0.5193861" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23510723" sideWeight="0.32718122" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3369863" sideWeight="0.4838449" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44246575" sideWeight="0.6462036" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21324718" sideWeight="0.20884521" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21324718" sideWeight="0.7911548" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3369863" sideWeight="0.4806139" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3041096" sideWeight="0.64216477" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21324718" sideWeight="0.22047244" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21324718" sideWeight="0.77952754" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18671875" sideWeight="0.5069307" order="2" side_tool="true" content_ui="tabs" />
@@ -1156,48 +348,6 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33561644" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-  </component>
-  <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
-      <collection />
-    </option>
-    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-      <collection />
-    </option>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="false" />
-    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="false" />
-    <MESSAGE value="Better styled logs, ellipsis" />
-    <MESSAGE value="Better logging for errors" />
-    <MESSAGE value="Room description, better logging, roadmap items." />
-    <MESSAGE value="Draft: userChoice directive" />
-    <MESSAGE value="Fixed broken fadeOut animatin" />
-    <MESSAGE value="First working version of the prompt loop" />
-    <MESSAGE value="Loading scripts trough &lt;script&gt; tags" />
-    <MESSAGE value="Better handling of story reloading" />
-    <MESSAGE value="Created helper for getting a predicate value or it' id as a fallback" />
-    <MESSAGE value="Refactoring while competing the &quot;Move&quot; command&#10;" />
-    <MESSAGE value="Move loop almost complete!&#10;" />
-    <MESSAGE value="Loop for the move command is ugly but complete!" />
-    <MESSAGE value="First version of movements is complete." />
-    <MESSAGE value="Arggghhnnnaaaaa" />
-    <MESSAGE value="Working action and loop for &quot;Look&quot;&#10;" />
-    <MESSAGE value="Start of inventory mechanic." />
-    <MESSAGE value="More powerfull method from complexe queries" />
-    <MESSAGE value="Refactoring of most code routines into services" />
-    <MESSAGE value="Better refactoring into services. App.js has now bare minimum" />
-    <MESSAGE value="Updated backlog" />
-    <MESSAGE value="Adding Proc file for Heroku deploy&#10;&#10;" />
-    <MESSAGE value="Seting up heroku deployment" />
-    <MESSAGE value="Commiting static build for deployment" />
-    <MESSAGE value="CSS Tweaking for mobile devices" />
-    <MESSAGE value="Added the front lawn for Anne! lol" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the front lawn for Anne! lol" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1266,13 +416,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.09911894">
           <caret line="3" column="51" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/static/stories/theHouse1b.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53418803">
-          <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -1399,30 +542,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/static/stories/theHouse.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4152249">
-          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/static/stories/theHouse2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38062283">
-          <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/static/stories/theHouseWithEvents.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.66435987">
-          <caret line="115" column="6" selection-start-line="115" selection-start-column="6" selection-end-line="115" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/less/storyLog.less">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10830325">
@@ -1451,38 +570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.625">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/config.state.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/mindgame.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="28" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="24" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1535,30 +622,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/directives/storyLog/logItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/directives/userChoice/userChoice.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="40" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.cursor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.ast.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.122093">
@@ -1575,10 +638,90 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/config.state.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19736843">
+          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16447368">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32894737">
           <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.cursor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7697368">
+          <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/directives/storyLog/logItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32894737">
+          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/directives/userChoice/userChoice.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1842105">
+          <caret line="36" column="40" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse1b.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouseWithEvents.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4625">
+          <caret line="153" column="0" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1586,15 +729,31 @@
     <entry file="file://$PROJECT_DIR$/gulpfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="154" column="29" selection-start-line="154" selection-start-column="29" selection-end-line="154" selection-end-column="29" />
+          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/mindgame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/static/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3449074">
-          <caret line="38" column="26" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
+        <state vertical-scroll-proportion="-9.0">
+          <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/test-onEvent.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3125">
+          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
           <folding />
         </state>
       </provider>

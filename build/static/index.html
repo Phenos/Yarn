@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="./styles/main.css"/>
     <link rel="stylesheet" href="./bower_components/angular-hotkeys/src/hotkeys.css"/>
     -->
-    <!--<link rel="stylesheet" href="./styles/all.css"/>-->
+    <link rel="stylesheet" href="./styles/all.css"/>
     <!--
     <script src="./bower_components/angular/angular.js"></script>
     <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -53,8 +53,8 @@
     <script src="./js/mindgame.js"></script>
     -->
 </head>
-<body scroll-glue="false" breakpoint="{0:'isMobileWidth', 480:'isMobileLandscapeWidth', 641:'isTabletWidth', 1025:'isDesktopWidth', 1281:'isWidescreenLayout'}">
+<body scroll-glue="false"
+      breakpoint="{{ breakpoints }}">
     <div ui-view></div>
 </body>
-<link rel="stylesheet" href="./styles/all.css"/>
 </html>

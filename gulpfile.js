@@ -133,9 +133,9 @@ function compressJsVendorsTask() {
         .pipe(using())
         .pipe(sourcemaps.init())
         .pipe(sourcemaps.write())
-        //.pipe(uglify({
-        //    mangle: false
-        //}))
+        .pipe(uglify({
+            mangle: false
+        }))
         .pipe(concat('vendors.js'))
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }

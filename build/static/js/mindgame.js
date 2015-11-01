@@ -4,7 +4,8 @@ function MindGame () {
 
     this.bigMess = new BigMess();
 
-    createPredicates(this.bigMess.state);
+    createDescriptivePredicates(this.bigMess.state);
+    createActionPredicates(this.bigMess.state);
     defineKinds(this.bigMess.state);
 }
 
@@ -31,7 +32,7 @@ function defineKinds(state) {
         .thing("object");
 }
 
-function createPredicates(state) {
+function createDescriptivePredicates(state) {
 
     // What something is of a kind
     state
@@ -118,4 +119,18 @@ function createPredicates(state) {
         .predicate("this")
         .syntax("that")
         .syntax("the");
+}
+
+function createActionPredicates(state) {
+
+    // Something uses something else
+    state
+        .predicate("use", "action")
+        .syntax("use")
+        .syntax("uses")
+        .syntax("use the")
+        .syntax("uses the")
+        .syntax("use a")
+        .syntax("uses a");
+
 }

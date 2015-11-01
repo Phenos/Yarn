@@ -4,6 +4,7 @@
     BigMess.State = State;
     function State() {
         this.assertions = [];
+        this.actionHandlers = [];
         this.things = {};
         this.predicates = {};
         this.syntaxes = {};
@@ -58,14 +59,28 @@
             html.push(getStringFromThingOrValue(assertion.object));
             html.push("</span></div>");
         });
+        html.push("</div><hr /><div>");
+        this.actionHandlers.forEach(function (actionHandler) {
+            html.push("<div class='assertion'>");
+            html.push("<span class='subject " + getTypeFromThingOrValue(actionHandler.subject) + "'>");
+            html.push(getStringFromThingOrValue(actionHandler.subject));
+            html.push("</span><span class='predicate'>");
+            html.push(getStringFromThingOrValue(actionHandler.predicate));
+            html.push("</span><span class='object " + getTypeFromThingOrValue(actionHandler.object) + "'>");
+            html.push(getStringFromThingOrValue(actionHandler.object));
+            html.push("</span>+<span class='doReference " + getTypeFromThingOrValue(actionHandler.do) + "'>");
+            html.push(getStringFromThingOrValue(actionHandler.do));
+            html.push("</span></div>");
+        });
         html.push("</div>");
 
         function getStringFromThingOrValue(obj) {
             var value;
             if (typeof obj === "undefined") {
-                value = "";
+                value = "[undefined]";
             } else if (typeof obj === "object") {
                 value = obj.label || obj.id;
+                console.log('--------->>>>-', value, obj);
             } else {
                 value = obj;
             }
@@ -130,7 +145,44 @@
     };
 
     /**
-     * Get a new assertion and the objects associated to it
+     * Get a new Action Handler
+     * @param subject
+     * @param predicate
+     * @param object
+     * @param doReference
+     * @returns {*}
+     */
+    State.prototype.setActionHandler = function (subject, predicate, object, doReference) {
+        var actionHandler;
+        var foundActionHandler;
+
+        if (predicate && subject) {
+            // Look for an existing assertion
+            foundActionHandler = [];
+            // todo: use built indexes instead of itterating trough all predicates
+            this.actionHandlers.forEach(function (actionHandler) {
+                if (actionHandler.subject === subject &&
+                    actionHandler.predicate === predicate &&
+                    actionHandler.object === object) {
+                    foundActionHandler.push(actionHandler);
+                }
+            });
+            if (foundActionHandler[0]) {
+                actionHandler = foundActionHandler[0].object;
+            } else {
+                // Create a new assertion
+                actionHandler = new ActionHandler(subject, predicate, object, doReference);
+                this.actionHandlers.push(actionHandler);
+            }
+        } else {
+            console.warn("Impossible to create an Action Handler' type of assertion without at least a subject and a predicate.")
+        }
+
+        return actionHandler;
+    };
+
+    /**
+     * Get a new assertion
      * @param subject
      * @param predicate
      * @param object
@@ -203,7 +255,7 @@
      * Get or create a new type of predicate
      * @param _id
      */
-    State.prototype.predicate = function (_id) {
+    State.prototype.predicate = function (_id, type) {
         var id = _id.toLowerCase();
         var predicate;
         var syntax;
@@ -216,7 +268,7 @@
         if (syntax) predicate = syntax.predicate;
 
         if (!predicate) {
-            predicate = new Predicate(id, this);
+            predicate = new Predicate(id, type, this);
             //console.log("Created new predicate", predicate);
             this.predicates[id] = predicate;
             this.syntaxes[id] = new Syntax(id, predicate);
@@ -236,6 +288,21 @@
         this.subject = subject;
         this.predicate = predicate;
         this.object = object;
+    }
+
+    /**
+     * An assertion of an action or an event about things in the graph
+     * @param subject
+     * @param predicate
+     * @param object
+     * @constructor
+     */
+    BigMess.ActionHandler = ActionHandler;
+    function ActionHandler(subject, predicate, object, doReference) {
+        this.subject = subject;
+        this.predicate = predicate;
+        this.object = object;
+        this.do = doReference;
     }
 
     /**
@@ -352,10 +419,11 @@
      * @constructor
      */
     BigMess.Predicate = Predicate;
-    function Predicate(_id, bigMess) {
+    function Predicate(_id, type, bigMess) {
         var id = _id.toLowerCase();
         this.id = id;
         this.label = id;
+        this.type = type;
 
         /**
          * Define a new syntax for this predicate

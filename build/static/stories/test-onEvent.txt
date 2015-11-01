@@ -1,6 +1,17 @@
 
 when #you use #bigRedLever do #Open.
 
+// NO.... #you: @when use #bigRedLever do #Open.
+
+/*
+#you:
+    is named "Bob",
+    when:
+        take #magicWand do #revealTruth,
+    is aged 34,
+*/
+
+
 /*
 
 when #hammer used with #glassSkull do #Open.
@@ -12,6 +23,27 @@ when #you take #magicWand do #revealTruth.
 when #money is given to #homelessMan
 
 when #homelessMan take #money do #learnSecretFromHomelessMan
+
+*/
+
+
+
+/*
+
+#hammer:
+    @when used with #glassSkull do #Open.
+
+#you:
+    @when enters into #bedroom do #fallAsleep.
+
+#you
+    @when take #magicWand do #revealTruth.
+
+#money
+    @when is given to #homelessMan
+
+#homelessMan:
+    @when take #money do #learnSecretFromHomelessMan
 
 */
 

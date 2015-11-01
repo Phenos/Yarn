@@ -20,8 +20,11 @@
     "browser-sync": "^2.9.11",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
     "gulp-less": "^3.0.3",
     "gulp-serve": "^1.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.4.2",
     "gulp-using": "0.0.1",
     "gulp-watch": "^4.3.5"
   }

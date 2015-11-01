@@ -1,22 +1,33 @@
 <html ng-app="mindgame">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script type="bigMess" src="./stories/theHouse.txt"></script>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script
+            type="bigMess"
+            src="./stories/theHouse.txt"></script>
     <!--<script type="bigMess" src="./stories/theHouse1b.txt"></script>-->
     <!--<script type="bigMess" src="./stories/theHouse2.txt"></script>-->
-    <link href='https://fonts.googleapis.com/css?family=Halant:400,300,500,600,700&subset=latin,latin-ext'
-          rel='stylesheet' type='text/css'>
+    <link href='./fonts/Halant/css/fonts.css' rel='stylesheet' type='text/css'>
+    <!--
     <link rel="stylesheet" href="./styles/userInput.css"/>
     <link rel="stylesheet" href="./styles/logItem.css"/>
     <link rel="stylesheet" href="./styles/storyLog.css"/>
     <link rel="stylesheet" href="./styles/ellipsis.css"/>
     <link rel="stylesheet" href="./styles/main.css"/>
     <link rel="stylesheet" href="./bower_components/angular-hotkeys/src/hotkeys.css"/>
+    -->
+    <!--<link rel="stylesheet" href="./styles/all.css"/>-->
+    <!--
     <script src="./bower_components/angular/angular.js"></script>
     <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="./bower_components/angular-scroll-glue/src/scrollglue.js"></script>
     <script src="./bower_components/angular-hotkeys/build/hotkeys.js"></script>
     <script src="./bower_components/angularjs-breakpoint/breakpoint-0.0.1.js"></script>
+    -->
+    <script src="./js/vendors.js"></script>
+    <script src="./js/all.js"></script>
+    <!--
     <script src="./js/module.js"></script>
     <script src="./js/routes.js"></script>
     <script src="./js/controllers/root.js"></script>
@@ -40,8 +51,10 @@
     <script src="./js/bigMess/bigmess.script.js"></script>
     <script src="./js/bigMess/bigmess.state.js"></script>
     <script src="./js/mindgame.js"></script>
+    -->
 </head>
 <body scroll-glue="false" breakpoint="{0:'isMobileWidth', 480:'isMobileLandscapeWidth', 641:'isTabletWidth', 1025:'isDesktopWidth', 1281:'isWidescreenLayout'}">
     <div ui-view></div>
 </body>
+<link rel="stylesheet" href="./styles/all.css"/>
 </html>

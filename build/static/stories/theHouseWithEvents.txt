@@ -1,0 +1,133 @@
+
+Begin @story
+
+@story is called 'The Small House',
+    has id "theHouse-v1",
+    is described as
+    'A story of small complexities and critical trivialities!'.
+
+
+@chapther is named "Breakfast".
+
+#You is an @actor, is named "You", is in the #Kitchen.
+
+#You has in inventory a #PlasticSpoon.
+
+The #PlasticSpoon:
+    is an @InventoryItem,
+    is named "Plastic Spoon".
+
+// Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
+The #Kitchen:
+    is a @room,
+    is named "The Kitchen",
+    links to the #Bedroom,
+    links to the #Bathroom,
+    has in it the #KitchenTable,
+    has in it the #RedPill,
+    is described as
+        "The <a href='#kitchen'>kitchen</a> is a small modern room with black countertops,
+        white cabinets, basic appliances and a kitchen table. There are two doors leading
+        to a bedroom and a bathroom. The is also a red pill on the table *wink* *wink* .
+        <br/>You see <strong>no</strong> exits!".
+
+The #RedPill:
+    is a @Thing,
+    is a @InventoryItem,
+    is called "Red Pill",
+    is described as "Juste a red pill... It's nothing suspicious and looks delicious."
+
+The #KitchenTable:
+    is a @Thing,
+    is called "Kitchen Table",
+    is described as
+        "This round kitchen table is made of dark mapple and has four chairs.
+        It has two diver covers already layed out on it."
+
+The #Bedroom:
+    is a @room,
+    is named "The Bedroom",
+    links to the #Kitchen,
+    is described as
+        "The bedroom is dark and bare of any furniture
+        except a large bed and a small wooden nighstand.".
+
+The #Bathroom:
+    is a @room,
+    is named "The Bathroom",
+    links to the #Kitchen,
+    is described as
+        "The bathroom is small perfectly cubic room covered with while tiles
+        dark brass fittings. It is equiped with all the classic bathroom items.
+        Everything is very very very clean. And it smells like the ocean breeze.
+        "
+
+The #DarkPlace:
+    is a @room,
+    is named "A Dark Place",
+    is described as "Your in a cold dark clostrophobic place. Your head is spinning."
+/*
+
+Sample event scenatio: When reader eats the red pill, he is transported into a "dark place", becomes sick and hungry.
+
+*/
+
+
+// Case #1
+
+The #Redpill:
+    when #isUsed: #FallInADarkPlace.
+
+Sequence #FallInADarkPlace:
+    #You:
+        read "You eat the red pill.... oups... this doesnt feel right!!!!"
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+// Case #2
+
+When using #Redpill:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!",
+    #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+// Case #3 - Separate event sequence into a reuseable series
+
+When using #Redpill:
+    trigger events #FallInADarkPlace.
+
+Event #FallInADarkPlace:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!"
+    #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+
+// Case #4 - Add condition, event only happen in the bedroom
+
+When using #Redpill:
+    If is in #bedroom:
+        trigger events #FallInADarkPlace.
+
+Event #FallInADarkPlace:
+    log "You eat the red pill.... oups... this doesnt feel right!!!!"
+    #You:
+        loose all @InventoryItem,
+        is in #DarkPlace,
+        is @sick,
+        is @hungry;
+
+
+
+
+
+
+
+End @story

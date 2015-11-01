@@ -2,6 +2,7 @@
 when #you use #bigRedLever do #Open.
 
 /*
+
 when #hammer used with #glassSkull do #Open.
 
 when #you enter #bedroom do #fallAsleep.
@@ -11,6 +12,7 @@ when #you take #magicWand do #revealTruth.
 when #money is given to #homelessMan
 
 when #homelessMan take #money do #learnSecretFromHomelessMan
+
 */
 
 

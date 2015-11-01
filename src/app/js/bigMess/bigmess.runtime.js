@@ -44,9 +44,9 @@
         return this.scopes[0];
     };
 
-    Stack.prototype.push = function (obj) {
+    Stack.prototype.push = function (mode, obj) {
         //console.log("Pushed : ", obj);
-        this.scopes.push(new Scope(obj));
+        this.scopes.push(new Scope(mode, obj));
     };
 
     Stack.prototype.pop = function () {
@@ -54,8 +54,9 @@
         this.scopes.pop();
     };
 
-    function Scope(obj) {
+    function Scope(mode, obj) {
         this.values = obj;
+        this.values["$mode"] = mode;
     }
 
     /**
@@ -74,7 +75,7 @@
         var defaultMode = {
             "root": function (runtime, node) {
                 // Nothing to do really with the root instruction!
-                runtime.stack.push({
+                runtime.stack.push("default", {
                     "this": "root"
                 });
                 runtime.runSet(node.set);
@@ -92,7 +93,7 @@
                 } else {
                     console.warn("Unknown node variant [" + node.variant + "]");
                 }
-                runtime.stack.push({
+                runtime.stack.push("default", {
                     "this": returnValue
                 });
                 runtime.runSet(node.set);
@@ -100,7 +101,7 @@
                 return returnValue;
             },
             "value": function (runtime, node) {
-                runtime.stack.push({
+                runtime.stack.push("default", {
                     "this": node.value
                 });
                 returnValue = node.value;

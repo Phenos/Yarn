@@ -3,12 +3,13 @@
   <component name="ChangeListManager">
     <list id="94d96aae-7a74-44a0-b850-8b1f25077655" name="Default" comment="" />
     <list id="29cef767-7255-43e1-91bb-578d7903a6e8" name="!!!!! Stupid project files stuck here" comment="" />
-    <list default="true" id="264fbb09-3abe-4fa3-bc9b-a267f321b65e" name="Trigger events and run sequences" comment="Made watches more targetted for CSS, JS, Statics, Stories">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/static/stories/test-onEvent.txt" />
+    <list default="true" id="264fbb09-3abe-4fa3-bc9b-a267f321b65e" name="Trigger events and run sequences" comment="Refactored runtime with sctructured handlers in preparation for multiple modes">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/all.js" afterPath="$PROJECT_DIR$/build/static/js/all.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/bigmess.runtime.js" afterPath="$PROJECT_DIR$/build/static/js/bigmess.runtime.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/stories/test-onEvent.txt" afterPath="$PROJECT_DIR$/build/static/stories/test-onEvent.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" afterPath="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/stories/test-onEvent.txt" afterPath="$PROJECT_DIR$/src/app/stories/test-onEvent.txt" />
     </list>
     <ignored path="bigmess.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,8 +44,18 @@
       <file leaf-file-name="bigmess.runtime.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.123931624">
-              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.35555556">
+              <caret line="118" column="39" selection-start-line="118" selection-start-column="39" selection-end-line="118" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test-onEvent.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/stories/test-onEvent.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -62,10 +73,10 @@
         <option value="$PROJECT_DIR$/src/app/static/stories/theHouse.txt" />
         <option value="$PROJECT_DIR$/src/app/static/stories/test-onEvent.txt" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
-        <option value="$PROJECT_DIR$/src/app/stories/test-onEvent.txt" />
         <option value="$PROJECT_DIR$/src/app/js/mindgame.js" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" />
         <option value="$PROJECT_DIR$/src/app/static/index.html" />
+        <option value="$PROJECT_DIR$/src/app/stories/test-onEvent.txt" />
+        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" />
       </list>
     </option>
   </component>
@@ -311,7 +322,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="index&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/index.html&#10;gulp&#9;FILE&#9;file:///Users/mathieu/dev/yarn/gulpfile.js&#10;house&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/stories/theHouse.txt" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/test-onEvent.txt&#10;index&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/index.html&#10;gulp&#9;FILE&#9;file:///Users/mathieu/dev/yarn/gulpfile.js&#10;house&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/stories/theHouse.txt" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
   </component>
   <component name="RecentsManager">
@@ -365,7 +376,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446347327834</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactored runtime with sctructured handlers in preparation for multiple modes">
+      <created>1446349005628</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1446349005628</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <option name="clearContext" value="false" />
     <option name="createBranch" value="false" />
     <servers />
@@ -411,7 +428,8 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Made watches more targetted for CSS, JS, Statics, Stories" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made watches more targetted for CSS, JS, Statics, Stories" />
+    <MESSAGE value="Refactored runtime with sctructured handlers in preparation for multiple modes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored runtime with sctructured handlers in preparation for multiple modes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -759,14 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/stories/test-onEvent.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.098684214">
-          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse1b.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5635965">
@@ -815,10 +825,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/test-onEvent.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.123931624">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.35555556">
+          <caret line="118" column="39" selection-start-line="118" selection-start-column="39" selection-end-line="118" selection-end-column="39" />
           <folding />
         </state>
       </provider>

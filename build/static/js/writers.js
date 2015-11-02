@@ -35,11 +35,7 @@ function writers(storyLogService,
             if (scenery) sceneryService.change(scenery);
 
             var label = room.resolveValue("isNamed");
-            if (justMoved) {
-                storyLog.log("You moved to " + label);
-            } else {
-                storyLog.log("You are in " + label);
-            }
+            storyLog.heading(label);
             var description = room.resolveValue("isDescribedAs");
             if (description) storyLog.log(description);
         } else {
@@ -55,7 +51,7 @@ function writers(storyLogService,
             var description = thing.resolveValue("isDescribedAs");
             var image = thing.resolveValue("hasImage");
             if (image) storyLog.thingImage(image);
-            if (label) storyLog.log("You look at the " + label);
+            if (label) storyLog.subHeading(label);
             if (description) storyLog.log(description);
         }
         return this;

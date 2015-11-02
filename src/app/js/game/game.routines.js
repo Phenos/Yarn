@@ -8,23 +8,26 @@ function gameRoutines(game) {
     // Move the player to another room
     game.logic.register("move", move);
     function move(roomId) {
-        var room = this.state.thing(roomId);
-        var isIn = this.state.predicate("isIn");
+        var room = game.state.thing(roomId);
+        var isIn = game.state.predicate("isIn");
+        var you = game.state.thing("You");
         if (room) {
-            this.state.thing("You")
+            you
                 .removeAssertions(isIn)
                 .setAssertion(isIn, room);
         }
+        // TODO : Trigger movesFrom
+        game.logic.trigger(you, "movesTo", room);
         return room;
     }
 
     // Set what action the player is "about to do"
     game.logic.register("aboutTo", aboutTo);
     function aboutTo(aboutToId) {
-        var isAboutTo = this.state.predicate("isAboutTo");
-        this.state.thing("You").removeAssertions(isAboutTo);
+        var isAboutTo = game.state.predicate("isAboutTo");
+        game.state.thing("You").removeAssertions(isAboutTo);
         if (aboutToId) {
-            this.state.thing("You").setAssertion(isAboutTo, aboutToId);
+            game.state.thing("You").setAssertion(isAboutTo, aboutToId);
         }
         return true;
     }

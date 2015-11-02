@@ -14,6 +14,10 @@ Begin @story
 
 #You has in inventory a #PlasticSpoon.
 
+when #You enters the #Bedroom do #FeelTired.
+
+on #FeelTired: #you is #Tired.
+
 The #PlasticSpoon:
     is an @InventoryItem,
     has image "http://www.geriatricmedical.com/UserFiles/Images/Category/choice-medium-weight-white-plastic-soup-spoon-1000-case.jpg",
@@ -62,8 +66,8 @@ The #KitchenTable:
     has image "http://ak1.ostkcdn.com/images/products/3545815/Rubberwood-40-inch-Diameter-Round-Drop-leaf-Table-P11608107a.jpg",
     is called "Kitchen Table",
     is described as
-        "This round kitchen table is made of dark mapple and has four chairs.
-        It has two diver covers already layed out on it."
+        "This round kitchen table is made of dark maple and has four chairs.
+        It has two diner covers already layed out on it."
 
 The #Bedroom:
     is a @room,

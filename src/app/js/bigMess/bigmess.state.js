@@ -231,6 +231,7 @@
     };
 
 
+    // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
     State.prototype.getAssertion = function (subject, predicate) {
         var assertion;
         var foundAssertions;
@@ -251,6 +252,30 @@
 
         return foundAssertions;
     };
+
+    State.prototype.getActionHandler = function (subject, predicate, object) {
+        var assertion;
+        var foundActionHandler;
+
+        if (predicate && subject && object) {
+            // Look for an existing assertion
+            // todo: use built indexes instead of itterating trough all predicates
+            this.actionHandlers.forEach(function (actionHandler) {
+                if (actionHandler.subject === subject &&
+                    actionHandler.predicate === predicate &&
+                    actionHandler.object === object) {
+                    foundActionHandler = actionHandler;
+                }
+            });
+        } else {
+            console.warn("Impossible to ensure a single actionHandler without at least a subject, predicate and object.")
+        }
+
+        return foundActionHandler;
+    };
+
+
+
     /**
      * Get or create a new type of predicate
      * @param _id

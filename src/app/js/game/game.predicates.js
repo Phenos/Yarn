@@ -102,8 +102,11 @@ function gamePedicates(game) {
         .syntax("the");
 
 
-
-    // Create the Action predicates
+    /*
+     =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+     Create the Action predicates
+     =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+     */
 
 
 
@@ -116,5 +119,19 @@ function gamePedicates(game) {
         .syntax("uses the")
         .syntax("use a")
         .syntax("uses a");
+
+    // Something uses something else
+    state
+        .predicate("movesTo", "action")
+        .syntax("moves to")
+        .syntax("moves into")
+        .syntax("goes to")
+        .syntax("goes into")
+        .syntax("moves")
+        .syntax("goes")
+        .syntax("enters")
+        .syntax("enters the")
+        .syntax("enters in")
+        .syntax("enters into");
 
 }

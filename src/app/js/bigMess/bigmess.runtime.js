@@ -212,7 +212,7 @@
                     // Add a collection of action handler to add the "do" to then afterward
                     var actionHandlers = head.values.actionHandlers = [];
 
-                    var doReferences = head.values["$do"];
+                    var doReferences = head.values["$do"] || [];
 
                     // Create assertion from predicate
                     //TODO: Instead of an "if", simply prefil the args with [undefined] if no args

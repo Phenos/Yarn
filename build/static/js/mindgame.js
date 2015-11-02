@@ -51,6 +51,15 @@ function createDescriptivePredicates(state) {
         .syntax("is an")
         .syntax("is a");
 
+    // What something is of a kind
+    state
+        .predicate("hasScenery")
+        .syntax("has scenery");
+
+    state
+        .predicate("hasImage")
+        .syntax("has image");
+
     // What something has an attribute
     state
         .predicate("is")

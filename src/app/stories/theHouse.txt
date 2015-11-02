@@ -3,6 +3,7 @@ Begin @story
 
 @story is called 'The Small House',
     has id "theHouse-v1",
+    has scenery "http://assets.dwell.com/sites/default/files/2012/12/13/into-the-woods-gambier-island-house-rectangle.jpg",
     is described as
     'A story of small complexities and critical trivialities!'.
 
@@ -15,12 +16,14 @@ Begin @story
 
 The #PlasticSpoon:
     is an @InventoryItem,
+    has image "http://www.geriatricmedical.com/UserFiles/Images/Category/choice-medium-weight-white-plastic-soup-spoon-1000-case.jpg",
     is named "Plastic Spoon".
 
 // Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
 The #Kitchen:
     is a @room,
     is named "The Kitchen",
+    has scenery "http://tovtov.com/wp-content/uploads/furniture-ideas-interesting-rounded-dark-polished-custom-farm-house-table-on-circle-dining-rug-in-small-modern-dining-room-decors-elegant-farm-house-table-for-kitchen-and-dining-room-design.jpg",
     links to the #Bedroom,
     links to the #Bathroom,
     links to the #FrontOfTheHouse,
@@ -34,24 +37,29 @@ The #Kitchen:
 
 The #FrontOfTheHouse:
     is a @room,
+    has scenery "http://imagesus.homeaway.com/mda01/88a8ac99-f663-4391-ab51-2ba9d64bee10.1.10",
     is named "Front of the house",
     has in it a #RedSoccerBall,
+    links to #kitchen,
     is described as "You see a car, your garage and a great big lawn. On the lawn there is a red soccer ball.".
 
 The #RedSoccerBall:
     is a @Thing,
     is called "Red Soccer Ball",
     is a @InventoryItem,
+    has image "http://us.123rf.com/450wm/sergeo9/sergeo91405/sergeo9140500004/28063834-football-branded-with-the-switzerland-flag-on-green-grass.jpg?ver=6",
     is described as "The soccer ball is red and turquoise. It smells like banana."
 
 The #RedPill:
     is a @Thing,
     is a @InventoryItem,
     is called "Red Pill",
+    has image "http://images.sodahead.com/polls/003100733/91177053_redpill_answer_1_xlarge.png",
     is described as "Juste a red pill... It's nothing suspicious and looks delicious."
 
 The #KitchenTable:
     is a @Thing,
+    has image "http://ak1.ostkcdn.com/images/products/3545815/Rubberwood-40-inch-Diameter-Round-Drop-leaf-Table-P11608107a.jpg",
     is called "Kitchen Table",
     is described as
         "This round kitchen table is made of dark mapple and has four chairs.
@@ -61,6 +69,7 @@ The #Bedroom:
     is a @room,
     is named "The Bedroom",
     links to the #Kitchen,
+    has scenery "http://rilane.com/wp-content/uploads/2014/07/Sensual-Bedroom-with-Concrete-Walls.jpg",
     is described as
         "The bedroom is dark and bare of any furniture
         except a large bed and a small wooden nighstand.".
@@ -69,6 +78,7 @@ The #Bathroom:
     is a @room,
     is named "The Bathroom",
     links to the #Kitchen,
+    has scenery "https://s-media-cache-ak0.pinimg.com/originals/5f/b8/6a/5fb86a242e1b2ab86f269a26a9420be2.jpg",
     is described as
         "The bathroom is small perfectly cubic room covered with while tiles
         dark brass fittings. It is equiped with all the classic bathroom items.

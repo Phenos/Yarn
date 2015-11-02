@@ -9,7 +9,7 @@ function promptLoop(storyLogService,
 
     var state = game.state;
 
-    function WhereToDo(context) {
+    function WhereToGo(context) {
         context.when = function (state) {
             var isAboutTo = state.resolveValue("You.isAboutTo");
             return isAboutTo === "move";
@@ -142,7 +142,7 @@ function promptLoop(storyLogService,
     // Create an instant of the promptLoop
     var promptLoop = new PromptLoop(state);
 
-    promptLoop.addContext("WhereToDo", WhereToDo);
+    promptLoop.addContext("WhereToDo", WhereToGo);
     promptLoop.addContext("WhatToLookAt", WhatToLookAt);
     promptLoop.addContext("WhatToTake", WhatToTake);
     promptLoop.addContext("WhatToDo", WhatToDo);

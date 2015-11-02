@@ -3,7 +3,8 @@ angular.module('mindgame').factory('writers', writers);
 // TODO:  storyLog and state are ASYNC ????
 
 function writers(storyLogService,
-                 game) {
+                 game,
+                 sceneryService) {
 
     var storyLog = storyLogService;
     var state = game.state;
@@ -26,9 +27,13 @@ function writers(storyLogService,
 
     // Describe where you are at the beginning
     function DescribeWhereYouAre(justMoved) {
+        storyLog.clear();
         var room = state.resolveValue("you.isIn");
         //console.log("Your in room ", room);
         if (room) {
+            var scenery = room.resolveValue("hasScenery");
+            if (scenery) sceneryService.change(scenery);
+
             var label = room.resolveValue("isNamed");
             if (justMoved) {
                 storyLog.log("You moved to " + label);
@@ -48,6 +53,8 @@ function writers(storyLogService,
         if (thing) {
             var label = thing.resolveValue("isNamed");
             var description = thing.resolveValue("isDescribedAs");
+            var image = thing.resolveValue("hasImage");
+            if (image) storyLog.thingImage(image);
             if (label) storyLog.log("You look at the " + label);
             if (description) storyLog.log(description);
         }

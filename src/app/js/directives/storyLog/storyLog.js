@@ -14,7 +14,12 @@
             controller: StoryLogController
         };
 
-        function StoryLogController(storyLogService, $scope, $element, $compile) {
+        function StoryLogController(storyLogService, $scope, $element, $compile, $window) {
+
+            this.clear = function () {
+                $element.empty();
+                $window.scroll(0, 0);
+            };
 
             this.write = function (text, type) {
                 var scope = $scope.$new();

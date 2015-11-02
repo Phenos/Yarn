@@ -1,13 +1,27 @@
 
+@import "vars.less";
+
 body {
     margin: 0;
     padding: 0;
     font-family: 'Halant', serif;
-    background: #f4edea;
+    background: #000;
 }
 
+
 .main-ui {
-    margin-bottom: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    width: 100%;
+    padding-bottom: 30vh;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+[ui-view] {
+    z-index: 1000;
 }
 
 .testGrid {
@@ -135,7 +149,7 @@ user-choice {
         margin-bottom: 0.5em;
         font-weight: 200;
         text-align: center;
-        color: #654;
+        color: #fff;
     }
 
     ul {
@@ -157,13 +171,14 @@ user-choice {
                     margin: 0.3em 0.3em;
                 }
                 text-decoration: none;
-                color: #fff;
-                background: #a86;
-                box-shadow: 0 6px 8px 0px rgba(0,0,0,0.2);
+                color: #000;
+                background: #ddd;
+                .defaultShadow();
+
                 &:hover {
                     top: -1px;
                     box-shadow: 0 7px 8px 0px rgba(0,0,0,0.2);
-                    background: #b86;
+                    background: #fff;
                 }
                 &:active {
                     top: 2px;

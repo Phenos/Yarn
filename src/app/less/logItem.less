@@ -1,8 +1,24 @@
+@import "vars.less";
+
 .logItem {
 
     padding: 6px 20px;
     margin: 0.5em 5em;
+    color: #fff;
 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+
+    a:visited,
+    a:link,
+    a {
+        color: #ff9;
+        text-decoration: none;
+        font-weight: 400;
+    }
+    strong {
+        //color: #987;
+        font-weight: 600;
+    }
 
     .isMobileWidth & {
         margin-right: 0.2em !important;
@@ -18,19 +34,8 @@
         margin: 1em 3em;
         font-weight: 300;
         text-align: center;
-        color: #765;
+        //color: #765;
 
-        a:visited,
-        a:link,
-        a {
-            color: #642;
-            text-decoration: none;
-            font-weight: 400;
-        }
-        strong {
-            color: #987;
-            font-weight: 600;
-        }
     }
     &.is-error {
         .fadeOut();
@@ -40,7 +45,7 @@
         font-weight: 300;
         text-align: center;
         font-style: italic;
-        color: #a98;
+        //color: #a98;
     }
     &.is-heading {
         font-size: 2em;
@@ -49,7 +54,7 @@
         }
         font-weight: 200;
         text-align: center;
-        color: #654;
+        //color: #654;
     }
     &.is-subHeading {
         font-size: 1.3em;
@@ -58,7 +63,7 @@
         }
         font-weight: 200;
         text-align: center;
-        color: #876;
+        //color: #876;
     }
     &.is-divider {
         font-size: 1.3em;
@@ -68,17 +73,36 @@
         }
         font-weight: bold;
         text-align: center;
-        color: #876;
+        //color: #876;
         opacity: 0.4;
 
         .divider svg {
             width: 160px;
             path {
-                fill: #876;
+                fill: #fff;
             }
         }
     }
+    &.is-thingImage {
+        font-size: 1.3em;
+        margin: 1.5em 5em;
+        text-align: center;
+
+        .isMobileWidth & {
+            margin: 0.25em 5em;
+        }
+
+        img {
+            .defaultShadow();
+            width: 5em;
+            height: 5em;
+            border-radius: 50%;
+            border: none;
+            background: #fff;
+        }
+    }
     &.is-debug {
+        color: #000;
         font-family: sans-serif;
         font-size: 0.7em;
         background: #fff;

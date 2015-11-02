@@ -113,7 +113,6 @@
                 // First, test if the instruction is for a mode change or a predicate
                 var modeHandler = modes[node.value];
                 if (modeHandler) {
-                    console.log("WHHHHHEEEEEEENNNNN!");
                     runtime.stack.push("when", {
                     });
                     runtime.runSet(node.set);
@@ -221,7 +220,7 @@
                         args.forEach(function (arg) {
                             //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
                             var currentThis = runtime.stack.head().values.this;
-                            console.log("runtime.stack.head().values", runtime.stack.head().values);
+                            //console.log("runtime.stack.head().values", runtime.stack.head().values);
                             doReferences.forEach(function (doReference) {
                                 var actionHandler = runtime.state.setActionHandler(currentThis, predicate, arg, doReference);
                                 actionHandlers.push(actionHandler);
@@ -263,11 +262,11 @@
             mode = "default";
         } else {
             mode = head.values["$mode"];
-            console.log('-----head.values', mode, node.type, head.values);
+            //console.log('-----head.values', mode, node.type, head.values);
             if (!mode) mode = "default";
         }
         var nodeHandler = modes[mode][node.type];
-        console.log("  nodeHandler :   ", nodeHandler);
+        //console.log("  nodeHandler :   ", nodeHandler);
 
         if (!nodeHandler) nodeHandler = modes["default"]["fallback"];
         returnValue = nodeHandler(this, node);

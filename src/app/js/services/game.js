@@ -1,14 +1,17 @@
 angular.module('mindgame').factory('game', game);
 
-function game() {
+function game(gamePedicates,
+              gameRoutines,
+              gameThings) {
 
-    var game = new MindGame();
+    var game = new BigMess();
 
-    return {
-        game: game,
-        bigMess: game.bigMess,
-        state: game.bigMess.state
-    };
+    // Load various configuration modules
+    gamePedicates(game);
+    gameRoutines(game);
+    gameThings(game);
+
+    return game;
 
 }
 

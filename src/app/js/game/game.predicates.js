@@ -1,38 +1,10 @@
 "use strict";
+angular.module('mindgame').factory('gamePedicates', function() {
+    return gamePedicates;
+});
 
-function MindGame () {
-
-    this.bigMess = new BigMess();
-
-    createDescriptivePredicates(this.bigMess.state);
-    createActionPredicates(this.bigMess.state);
-    defineKinds(this.bigMess.state);
-}
-
-MindGame.prototype.load = function (text) {
-    return this.bigMess.load(text);
-    //return this;
-};
-
-function defineKinds(state) {
-    // Player
-    state
-        .thing("player");
-
-    // Persons
-    state
-        .thing("person");
-
-    // Places
-    state
-        .thing("room");
-
-    // Objects (as in "object" in the game)
-    state
-        .thing("object");
-}
-
-function createDescriptivePredicates(state) {
+function gamePedicates(game) {
+    var state = game.state;
 
     // What something is of a kind
     state
@@ -128,9 +100,12 @@ function createDescriptivePredicates(state) {
         .predicate("this")
         .syntax("that")
         .syntax("the");
-}
 
-function createActionPredicates(state) {
+
+
+    // Create the Action predicates
+
+
 
     // Something uses something else
     state

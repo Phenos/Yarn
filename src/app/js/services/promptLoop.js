@@ -8,6 +8,7 @@ function promptLoop(storyLogService,
     var storyLog = storyLogService;
 
     var state = game.state;
+    var logic = game.logic;
 
     function WhereToGo(context) {
         context.when = function (state) {
@@ -26,18 +27,12 @@ function promptLoop(storyLogService,
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhereToDo");
             // todo: this should be injected instead of taken from parent scope
-            var isAboutTo = state.predicate("isAboutTo");
-            state.thing("You").removeAssertions(isAboutTo);
-            var room = state.thing(option.value);
-            var isIn = state.predicate("isIn");
-            if (room) {
-                state.thing("You")
-                    .removeAssertions(isIn)
-                    .setAssertion(isIn, room);
+            logic.routines.aboutTo("");
+            if (logic.routines.move(option.value)) {
+                writers.DescribeWhereYouAre(true);
             } else {
                 storyLog.error("Failed to find this room [%s]", option.value);
             }
-            writers.DescribeWhereYouAre(true);
         };
         return promptLoop;
     }
@@ -59,8 +54,7 @@ function promptLoop(storyLogService,
             }
         };
         context.answer = function answer(promptLoop, option) {
-            var isAboutTo = state.predicate("isAboutTo");
-            state.thing("You").removeAssertions(isAboutTo);
+            logic.routines.aboutTo("");
             if (option) {
                 var thing = state.thing(option.value);
                 writers.DescribeThing(thing);

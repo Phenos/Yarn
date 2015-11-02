@@ -2,6 +2,7 @@
 function BigMess() {
     this.script = new BigMess.Script();
     this.state = new BigMess.State();
+    this.logic = new BigMess.Logic(this.state, this.script);
 }
 
 (function () {

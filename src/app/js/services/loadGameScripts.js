@@ -19,7 +19,7 @@ function loadGameScripts(game,
 
     function onLoadScript(source) {
         // TODO: game.game ????? UGLY!
-        game.bigMess.load(source).run();
+        game.load(source).run();
     }
 
     return loadGameScripts;

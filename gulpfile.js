@@ -26,6 +26,9 @@ var config = {
         javascriptSource: [
             "src/app/js/module.js",
             "src/app/js/routes.js",
+            "src/app/js/game/game.predicates.js",
+            "src/app/js/game/game.routines.js",
+            "src/app/js/game/game.things.js",
             "src/app/js/controllers/**/*.js",
             "src/app/js/services/**/*.js",
             "src/app/js/directives/**/*.js",
@@ -33,11 +36,11 @@ var config = {
             "src/app/js/bigMess/bigmess.pointer.js",
             "src/app/js/bigMess/bigmess.node.js",
             "src/app/js/bigMess/bigmess.cursor.js",
+            "src/app/js/bigMess/bigmess.logic.js",
             "src/app/js/bigMess/bigmess.ast.js",
             "src/app/js/bigMess/bigmess.runtime.js",
             "src/app/js/bigMess/bigmess.script.js",
-            "src/app/js/bigMess/bigmess.state.js",
-            "src/app/js/mindgame.js"
+            "src/app/js/bigMess/bigmess.state.js"
         ],
         javascriptVendorsSource: [
             "./bower_components/angular/angular.js",

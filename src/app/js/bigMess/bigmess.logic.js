@@ -25,12 +25,18 @@
             // Find any existing ActionHandles
             var actionHandler = this.state.getActionHandler(subject, predicate, object);
 
+            if (actionHandler) {
 
-
-
-            // TODO: Find the script node which is child of the "do" operator
-            // NEXT:
-            // TODO Execute the node found
+                // Find the script node which is child of the "do" operator
+                var referenceNode = this.script.references[actionHandler.do.id];
+                if (referenceNode) {
+                    this.script.runtime.runNode(referenceNode);
+                    // TODO Execute the node found
+                    console.log("FOUND!!!!!", referenceNode);
+                } else {
+                    console.log("No 'on' node reference found for " + actionHandler.do.id);
+                }
+            }
 
 
 

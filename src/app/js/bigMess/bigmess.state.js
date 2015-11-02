@@ -254,7 +254,6 @@
     };
 
     State.prototype.getActionHandler = function (subject, predicate, object) {
-        var assertion;
         var foundActionHandler;
 
         if (predicate && subject && object) {

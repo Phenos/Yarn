@@ -15,11 +15,13 @@
      * @param state
      * @constructor
      */
-    function Runtime(ast, state) {
+    function Runtime(ast, state, onModeChange) {
         this.ast = ast;
         this.state = state;
         this.cursor = new Cursor();
         this.stack = new Stack();
+        // Allows the logic class to keep track on special key nodes
+        this.onModeChange = onModeChange || function(){};
     }
 
     // todo: See if code should be generalized between Stack/Pointer/Cursor
@@ -46,7 +48,8 @@
 
     Stack.prototype.push = function (mode, obj) {
         //console.log("Pushed : ", obj);
-        this.scopes.push(new Scope(mode, obj));
+        var head = this.head();
+        this.scopes.push(new Scope(mode, obj, head));
     };
 
     Stack.prototype.pop = function () {
@@ -54,8 +57,9 @@
         this.scopes.pop();
     };
 
-    function Scope(mode, obj) {
+    function Scope(mode, obj, parent) {
         this.values = obj;
+        this.parent = parent;
         this.values["$mode"] = mode;
     }
 
@@ -80,6 +84,7 @@
                 runtime.stack.pop();
             },
             "symbol": function (runtime, node) {
+                console.log("symbole ", node.value);
                 // Get or create a new thing according to that symbol
                 if (node.variant === "value") {
                     returnValue = node.value;
@@ -108,23 +113,20 @@
                 return returnValue;
             },
             "instruction": function (runtime, node) {
+                console.log("instruction ", node.value);
                 var predicate;
                 var args;
+                var mode;
                 // First, test if the instruction is for a mode change or a predicate
                 var modeHandler = modes[node.value];
                 if (modeHandler) {
-                    runtime.stack.push("when", {
+                    mode = node.value;
+                    runtime.stack.push(mode, {
                     });
                     runtime.runSet(node.set);
                     runtime.stack.pop();
 
-                    //
-                    // *** *** *** *** *** *** *** *** *** *** *** ***
-                    //
-
                 } else {
-
-
 
                     // Identify which predicate corresponds to this instruction
                     predicate = runtime.state.predicate(node.value);
@@ -136,7 +138,7 @@
                             //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
                             var currentThis = runtime.stack.head().values.this;
                             var assertion = runtime.state.setAssertion(currentThis, predicate, arg);
-                            //console.log("created assetion: ", arg);
+                            console.log("created assetion: ", assertion);
                         });
                     } else {
                         var currentThis = runtime.stack.head().values.this;
@@ -246,11 +248,25 @@
             }
         };
 
+        // Dont execute enything from a "on" node
+        var onMode = {
+            "root": function (runtime, node) {
+            },
+            "symbol": function (runtime, node) {
+            },
+            "value": function (runtime, node) {
+            },
+            "instruction": function (runtime, node) {
+            },
+            "fallback": function (runtime, node) {
+            }
+        };
+
         var modes = {
             "default": defaultMode,
             "when": whenMode,
-            "do": {},
-            "on": {}
+            "do": {}, //TODO: Not yet implement... really needed ?
+            "on": onMode
         };
 
 
@@ -264,12 +280,28 @@
             mode = head.values["$mode"];
             //console.log('-----head.values', mode, node.type, head.values);
             if (!mode) mode = "default";
+
+            // Detect a mode change from parent node. Ex: when, on
+            var parent = head.parent;
+            if (parent) {
+                var parentMode = head.parent.values["$mode"];
+                if (!parentMode) parentMode = "default";
+                if (mode !== parentMode) this.onModeChange(mode, node);
+            }
+
         }
+
+
         var nodeHandler = modes[mode][node.type];
         //console.log("  nodeHandler :   ", nodeHandler);
 
-        if (!nodeHandler) nodeHandler = modes["default"]["fallback"];
+        if (!nodeHandler) {
+            nodeHandler = modes.default.fallback;
+        }
+
+
         returnValue = nodeHandler(this, node);
+
 
         this.cursor.pop();
 

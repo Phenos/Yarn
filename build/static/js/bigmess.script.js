@@ -5,6 +5,9 @@
     function Script() {
         this.pointer = new Pointer();
         this.ast = new AST();
+        // Keep a reference t key named nodes
+        this.references = {};
+        this.runtime;
     }
 
     Script.prototype.load = function (text) {
@@ -14,8 +17,15 @@
     };
 
     Script.prototype.run = function (state) {
-        var runtime = new Runtime(this.ast, state);
-        runtime.run();
+        var self = this;
+        this.runtime = new Runtime(this.ast, state, onModeChange);
+        this.runtime.run();
+
+        function onModeChange(mode, node){
+            console.log("Keeping reference to [" + node.value + "]", mode, node);
+            var nodeReferenceId = node.value;
+            self.references[nodeReferenceId.toLowerCase()] = node;
+        }
     };
 
     Script.prototype.compile = function (tokens) {

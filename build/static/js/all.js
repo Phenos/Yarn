@@ -379,7 +379,9 @@ angular.module('mindgame').factory('game', game);
 
 function game(gamePedicates,
               gameRoutines,
-              gameThings) {
+              gameThings,
+              $window,
+              $timeout) {
 
     var game = new BigMess();
 
@@ -388,14 +390,71 @@ function game(gamePedicates,
     gameRoutines(game);
     gameThings(game);
 
+
+    $timeout(function () {
+
+        //$window.resizeTo(100, 100);
+        //
+        //$window.scrollTo(0, 100);
+    }, 2000);
+
+
+
     return game;
 
 }
 
 
+// TODO: Make a pull request?
+var breakpointApp = angular.module('breakpointApp',[]);
+
+breakpointApp.directive('breakpoint', ['$window', '$rootScope', function($window, $rootScope){
+    return {
+        restrict:"A",
+        link:function(scope, element, attr){
+            scope.breakpoint = {class:'', windowSize:$window.innerWidth }; // Initialise Values
+
+            var breakpoints = (scope.$eval(attr.breakpoint));
+
+            angular.element($window).bind('resize', setWindowSize);
+            angular.element($window).bind('load', setWindowSize);
+            //console.log("YEAG!");
+
+            scope.$watch('breakpoint.windowSize', function(windowWidth, oldValue){
+                setClass(windowWidth);
+            });
+
+            scope.$watch('breakpoint.class', function(newClass, oldClass) {
+                if (newClass != oldClass) broadcastEvent(oldClass);
+            });
+
+            function broadcastEvent (oldClass) {
+                $rootScope.$broadcast('breakpointChange', scope.breakpoint, oldClass);
+            }
+
+            function setWindowSize (){
+                scope.breakpoint.windowSize = $window.innerWidth;
+                if (screen.width) scope.breakpoint.windowSize = screen.width;
+                if(!scope.$$phase) scope.$apply();
+            }
+
+            function setClass(windowWidth){
+                var breakpointClass = breakpoints[Object.keys(breakpoints)[0]];
+                for (var breakpoint in breakpoints){
+                    if (breakpoint < windowWidth) breakpointClass = breakpoints[breakpoint];
+                    element.removeClass(breakpoints[breakpoint]);
+                }
+                element.addClass(breakpointClass);
+                scope.breakpoint.class  = breakpointClass;
+                if(!scope.$$phase) scope.$apply();
+            }
+        }
+    };
+}]);
 
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJnYW1lLmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmZhY3RvcnkoJ2dhbWUnLCBnYW1lKTtcblxuZnVuY3Rpb24gZ2FtZShnYW1lUGVkaWNhdGVzLFxuICAgICAgICAgICAgICBnYW1lUm91dGluZXMsXG4gICAgICAgICAgICAgIGdhbWVUaGluZ3MpIHtcblxuICAgIHZhciBnYW1lID0gbmV3IEJpZ01lc3MoKTtcblxuICAgIC8vIExvYWQgdmFyaW91cyBjb25maWd1cmF0aW9uIG1vZHVsZXNcbiAgICBnYW1lUGVkaWNhdGVzKGdhbWUpO1xuICAgIGdhbWVSb3V0aW5lcyhnYW1lKTtcbiAgICBnYW1lVGhpbmdzKGdhbWUpO1xuXG4gICAgcmV0dXJuIGdhbWU7XG5cbn1cblxuXG5cbiJdLCJmaWxlIjoiZ2FtZS5qcyIsInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJnYW1lLmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmZhY3RvcnkoJ2dhbWUnLCBnYW1lKTtcblxuZnVuY3Rpb24gZ2FtZShnYW1lUGVkaWNhdGVzLFxuICAgICAgICAgICAgICBnYW1lUm91dGluZXMsXG4gICAgICAgICAgICAgIGdhbWVUaGluZ3MsXG4gICAgICAgICAgICAgICR3aW5kb3csXG4gICAgICAgICAgICAgICR0aW1lb3V0KSB7XG5cbiAgICB2YXIgZ2FtZSA9IG5ldyBCaWdNZXNzKCk7XG5cbiAgICAvLyBMb2FkIHZhcmlvdXMgY29uZmlndXJhdGlvbiBtb2R1bGVzXG4gICAgZ2FtZVBlZGljYXRlcyhnYW1lKTtcbiAgICBnYW1lUm91dGluZXMoZ2FtZSk7XG4gICAgZ2FtZVRoaW5ncyhnYW1lKTtcblxuXG4gICAgJHRpbWVvdXQoZnVuY3Rpb24gKCkge1xuXG4gICAgICAgIC8vJHdpbmRvdy5yZXNpemVUbygxMDAsIDEwMCk7XG4gICAgICAgIC8vXG4gICAgICAgIC8vJHdpbmRvdy5zY3JvbGxUbygwLCAxMDApO1xuICAgIH0sIDIwMDApO1xuXG5cblxuICAgIHJldHVybiBnYW1lO1xuXG59XG5cblxuLy8gVE9ETzogTWFrZSBhIHB1bGwgcmVxdWVzdD9cbnZhciBicmVha3BvaW50QXBwID0gYW5ndWxhci5tb2R1bGUoJ2JyZWFrcG9pbnRBcHAnLFtdKTtcblxuYnJlYWtwb2ludEFwcC5kaXJlY3RpdmUoJ2JyZWFrcG9pbnQnLCBbJyR3aW5kb3cnLCAnJHJvb3RTY29wZScsIGZ1bmN0aW9uKCR3aW5kb3csICRyb290U2NvcGUpe1xuICAgIHJldHVybiB7XG4gICAgICAgIHJlc3RyaWN0OlwiQVwiLFxuICAgICAgICBsaW5rOmZ1bmN0aW9uKHNjb3BlLCBlbGVtZW50LCBhdHRyKXtcbiAgICAgICAgICAgIHNjb3BlLmJyZWFrcG9pbnQgPSB7Y2xhc3M6JycsIHdpbmRvd1NpemU6JHdpbmRvdy5pbm5lcldpZHRoIH07IC8vIEluaXRpYWxpc2UgVmFsdWVzXG5cbiAgICAgICAgICAgIHZhciBicmVha3BvaW50cyA9IChzY29wZS4kZXZhbChhdHRyLmJyZWFrcG9pbnQpKTtcblxuICAgICAgICAgICAgYW5ndWxhci5lbGVtZW50KCR3aW5kb3cpLmJpbmQoJ3Jlc2l6ZScsIHNldFdpbmRvd1NpemUpO1xuICAgICAgICAgICAgYW5ndWxhci5lbGVtZW50KCR3aW5kb3cpLmJpbmQoJ2xvYWQnLCBzZXRXaW5kb3dTaXplKTtcbiAgICAgICAgICAgIC8vY29uc29sZS5sb2coXCJZRUFHIVwiKTtcblxuICAgICAgICAgICAgc2NvcGUuJHdhdGNoKCdicmVha3BvaW50LndpbmRvd1NpemUnLCBmdW5jdGlvbih3aW5kb3dXaWR0aCwgb2xkVmFsdWUpe1xuICAgICAgICAgICAgICAgIHNldENsYXNzKHdpbmRvd1dpZHRoKTtcbiAgICAgICAgICAgIH0pO1xuXG4gICAgICAgICAgICBzY29wZS4kd2F0Y2goJ2JyZWFrcG9pbnQuY2xhc3MnLCBmdW5jdGlvbihuZXdDbGFzcywgb2xkQ2xhc3MpIHtcbiAgICAgICAgICAgICAgICBpZiAobmV3Q2xhc3MgIT0gb2xkQ2xhc3MpIGJyb2FkY2FzdEV2ZW50KG9sZENsYXNzKTtcbiAgICAgICAgICAgIH0pO1xuXG4gICAgICAgICAgICBmdW5jdGlvbiBicm9hZGNhc3RFdmVudCAob2xkQ2xhc3MpIHtcbiAgICAgICAgICAgICAgICAkcm9vdFNjb3BlLiRicm9hZGNhc3QoJ2JyZWFrcG9pbnRDaGFuZ2UnLCBzY29wZS5icmVha3BvaW50LCBvbGRDbGFzcyk7XG4gICAgICAgICAgICB9XG5cbiAgICAgICAgICAgIGZ1bmN0aW9uIHNldFdpbmRvd1NpemUgKCl7XG4gICAgICAgICAgICAgICAgc2NvcGUuYnJlYWtwb2ludC53aW5kb3dTaXplID0gJHdpbmRvdy5pbm5lcldpZHRoO1xuICAgICAgICAgICAgICAgIGlmIChzY3JlZW4ud2lkdGgpIHNjb3BlLmJyZWFrcG9pbnQud2luZG93U2l6ZSA9IHNjcmVlbi53aWR0aDtcbiAgICAgICAgICAgICAgICBpZighc2NvcGUuJCRwaGFzZSkgc2NvcGUuJGFwcGx5KCk7XG4gICAgICAgICAgICB9XG5cbiAgICAgICAgICAgIGZ1bmN0aW9uIHNldENsYXNzKHdpbmRvd1dpZHRoKXtcbiAgICAgICAgICAgICAgICB2YXIgYnJlYWtwb2ludENsYXNzID0gYnJlYWtwb2ludHNbT2JqZWN0LmtleXMoYnJlYWtwb2ludHMpWzBdXTtcbiAgICAgICAgICAgICAgICBmb3IgKHZhciBicmVha3BvaW50IGluIGJyZWFrcG9pbnRzKXtcbiAgICAgICAgICAgICAgICAgICAgaWYgKGJyZWFrcG9pbnQgPCB3aW5kb3dXaWR0aCkgYnJlYWtwb2ludENsYXNzID0gYnJlYWtwb2ludHNbYnJlYWtwb2ludF07XG4gICAgICAgICAgICAgICAgICAgIGVsZW1lbnQucmVtb3ZlQ2xhc3MoYnJlYWtwb2ludHNbYnJlYWtwb2ludF0pO1xuICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICAgICBlbGVtZW50LmFkZENsYXNzKGJyZWFrcG9pbnRDbGFzcyk7XG4gICAgICAgICAgICAgICAgc2NvcGUuYnJlYWtwb2ludC5jbGFzcyAgPSBicmVha3BvaW50Q2xhc3M7XG4gICAgICAgICAgICAgICAgaWYoIXNjb3BlLiQkcGhhc2UpIHNjb3BlLiRhcHBseSgpO1xuICAgICAgICAgICAgfVxuICAgICAgICB9XG4gICAgfTtcbn1dKTtcblxuXG4iXSwiZmlsZSI6ImdhbWUuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
 
 angular.module('mindgame').factory('loadGameScripts', loadGameScripts);
 

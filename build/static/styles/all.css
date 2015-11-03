@@ -555,10 +555,15 @@ scenery {
   padding: 0;
   background-repeat: no-repeat;
   background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
+  background-size: auto 100%;
+  -webkit-background-size: auto 100%;
+  -moz-background-size: auto 100%;
+  -o-background-size: auto 100%;
+  filter: blur(8px);
   -webkit-filter: blur(8px);
-  z-index: 100;
+  -moz-filter: blur(8px);
+  -o-filter: blur(8px);
+  z-index: -1;
 }
 
 story-log {

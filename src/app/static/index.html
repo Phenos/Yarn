@@ -1,8 +1,13 @@
 <html ng-app="mindgame">
 <head>
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable = no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Yarn Demo">
+
+    <title>Yarn Demo</title>
     <!--<script type="bigMess" src="../stories/test-onEvent.txt"></script>-->
     <script type="bigMess" src="./stories/theHouse.txt"></script>
     <!--<script type="bigMess" src="./stories/theHouse1b.txt"></script>-->
@@ -54,7 +59,7 @@
 </head>
 <body scroll-glue="false"
       breakpoint="{{ breakpoints }}">
-    <div ui-view></div>
-    <scenery></scenery>
+<div ui-view></div>
+<scenery></scenery>
 </body>
 </html>

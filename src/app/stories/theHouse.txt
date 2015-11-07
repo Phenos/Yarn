@@ -27,7 +27,7 @@ The #PlasticSpoon:
 The #Kitchen:
     is a @room,
     is named "The Kitchen",
-    has scenery "http://tovtov.com/wp-content/uploads/furniture-ideas-interesting-rounded-dark-polished-custom-farm-house-table-on-circle-dining-rug-in-small-modern-dining-room-decors-elegant-farm-house-table-for-kitchen-and-dining-room-design.jpg",
+    has scenery "http://www.tarmints.com/wp-content/uploads/2015/06/round-kitchen-table-with-fabric-chairs-687x1024.jpg",
     links to the #Bedroom,
     links to the #Bathroom,
     links to the #FrontOfTheHouse,

@@ -28,7 +28,7 @@ function game(gamePedicates,
 }
 
 
-// TODO: Make a pull request?
+// TODO: Make a pull request? Put into a /patched-vendors folder ?
 var breakpointApp = angular.module('breakpointApp',[]);
 
 breakpointApp.directive('breakpoint', ['$window', '$rootScope', function($window, $rootScope){

@@ -565,6 +565,9 @@ scenery {
   -o-filter: blur(8px);
   z-index: -1;
 }
+.isDesktopWidth scenery {
+  background-size: cover;
+}
 
 story-log {
   display: block;

@@ -6,17 +6,20 @@ scenery {
     padding: 0;
     background-repeat: no-repeat;
     background-position: center center;
-
-    .isDesktopWidth & {
-        background-size: cover;
+    // TOTO: User mixin for vendor prefix
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    .isMobileWidth & {
+        background-size: auto 100%;
+        -webkit-background-size: auto 100%;
+        -moz-background-size: auto 100%;
+        -o-background-size: auto 100%;
     }
 
     //background-attachment: fixed;
 
-    background-size: auto 100%;
-    -webkit-background-size: auto 100%;
-    -moz-background-size: auto 100%;
-    -o-background-size: auto 100%;
 
     filter: blur(8px);
     -webkit-filter: blur(8px);

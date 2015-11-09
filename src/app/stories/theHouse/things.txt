@@ -1,3 +1,4 @@
+
 The #PlasticSpoon:
     is an @InventoryItem,
     has image "http://www.geriatricmedical.com/UserFiles/Images/Category/choice-medium-weight-white-plastic-soup-spoon-1000-case.jpg",

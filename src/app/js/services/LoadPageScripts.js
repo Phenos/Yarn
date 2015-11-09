@@ -1,7 +1,7 @@
 angular.module('mindgame').factory('loadPageScripts', loadPageScripts);
 
-function loadPageScripts($document,
-                         $http,
+function loadPageScripts(loadScript,
+                         $document,
                          $q) {
 
     function loadScripts(scriptType, onLoad) {
@@ -12,7 +12,7 @@ function loadPageScripts($document,
         });
 
         angular.forEach($document.find("script"), function (scriptTag) {
-            if (scriptTag.type.toLowerCase() === "bigmess") {
+            if (scriptTag.type.toLowerCase() === scriptType) {
                 promise = promise.then(function () {
                     return loadScript(scriptTag.src, onLoad);
                 });
@@ -20,20 +20,6 @@ function loadPageScripts($document,
         });
 
         return promise;
-    }
-
-    function loadScript (src, onLoad) {
-        //console.log(scriptTag);
-        var config = {
-            method: 'GET',
-            url: src
-        };
-        function then(response) {
-            console.info("Loaded script ", response.config.url);
-            onLoad(response.data);
-        }
-        return $http(config)
-            .then(then);
     }
 
     return loadScripts;

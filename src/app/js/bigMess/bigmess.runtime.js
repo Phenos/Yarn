@@ -13,16 +13,18 @@
      * Runtime class user to execute the ast with the state
      * @param ast
      * @param state
+     * @param onModeChange
      * @constructor
      * @return {string}
      */
-    function Runtime(ast, state, onModeChange) {
+    function Runtime(ast, state, onModeChange, onImport) {
         this.ast = ast;
         this.state = state;
         this.cursor = new Cursor();
         this.stack = new Stack();
         // Allows the logic class to keep track on special key nodes
-        this.onModeChange = onModeChange || function(){};
+        this.onModeChange = onModeChange || function () {};
+        this.onImport = onImport || function () {};
     }
 
     // todo: See if code should be generalized between Stack/Pointer/Cursor
@@ -73,6 +75,8 @@
     };
 
     Runtime.prototype.runNode = function (node) {
+        var self = this;
+
         var returnValue;
 
         var defaultMode = {
@@ -119,9 +123,9 @@
                 var args;
                 var mode;
                 // First, test if the instruction is for a mode change or a predicate
-                var modeHandler = modes[node.value];
+                var modeHandler = modes[node.value.trim().toLowerCase()];
                 if (modeHandler) {
-                    mode = node.value;
+                    mode = node.value.trim().toLowerCase();
                     runtime.stack.push(mode, {
                     });
                     runtime.runSet(node.set);
@@ -249,6 +253,100 @@
             }
         };
 
+
+        var importMode = {
+            "root": function (runtime, node) {
+                // Nothing to do really with the root instruction!
+            },
+            "symbol": function (runtime, node) {
+                // whenMode: Get or create a new thing according to that symbol
+                if (node.variant === "value") {
+                    returnValue = node.value;
+                    //console.log("VALUE variant:", node.value);
+                } else if (node.variant === "reference") {
+                    returnValue = runtime.state.thing(node.value);
+                } else if (node.variant === "constant") {
+                    returnValue = runtime.state.thing(node.value);
+                } else {
+                    console.warn("Unknown node variant [" + node.variant + "]");
+                }
+                runtime.stack.push("when", {
+                    "this": returnValue
+                });
+
+
+                // Call the onImport to trigger the loading and execution
+                // of an imported file
+                self.onImport(returnValue);
+                // DONT RUN THE SET ????
+                // todo: figure out...
+                //runtime.runSet(node.set);
+
+                runtime.stack.pop();
+                return returnValue;
+            },
+            "value": function (runtime, node) {
+                runtime.stack.push("import", {
+                    "this": node.value
+                });
+                returnValue = node.value;
+                runtime.runSet(node.set);
+                runtime.stack.pop();
+                return returnValue;
+            },
+            "instruction": function (runtime, node) {
+                //var predicate;
+                //var args;
+                //
+                //if (node.value === "do" ) {
+                //
+                //
+                //    var parent = runtime.stack.parent();
+                //    //debugger;
+                //    args = runtime.runSet(node.set);
+                //    parent.values["$do"] = args;
+                //
+                //} else {
+                //
+                //    // Identify which predicate corresponds to this instruction
+                //    predicate = runtime.state.predicate(node.value);
+                //    // Run the child set of node to be used by the predicate
+                //    args = runtime.runSet(node.set);
+                //
+                //    var head = runtime.stack.head();
+                //    // Add a collection of action handler to add the "do" to then afterward
+                //    var actionHandlers = head.values.actionHandlers = [];
+                //
+                //    var doReferences = head.values["$do"] || [];
+                //
+                //    // Create assertion from predicate
+                //    //TODO: Instead of an "if", simply prefil the args with [undefined] if no args
+                //    if (args.length) {
+                //        args.forEach(function (arg) {
+                //            //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
+                //            var currentThis = runtime.stack.head().values.this;
+                //            //console.log("runtime.stack.head().values", runtime.stack.head().values);
+                //            doReferences.forEach(function (doReference) {
+                //                var actionHandler = runtime.state.setActionHandler(currentThis, predicate, arg, doReference);
+                //                actionHandlers.push(actionHandler);
+                //            });
+                //            //console.log("created assetion: ", arg);
+                //        });
+                //    } else {
+                //        var currentThis = runtime.stack.head().values.this;
+                //        doReferences.forEach(function (doReference) {
+                //            var actionHandler = runtime.state.setActionHandler(currentThis, predicate, null, doReference);
+                //            actionHandlers.push(actionHandler);
+                //        });
+                //    }
+                //
+                //    //debugger;
+                //
+                //}
+                //return null;
+            }
+        };
+
         // Dont execute enything from a "on" node
         var onMode = {
             "root": function (runtime, node) {
@@ -265,6 +363,7 @@
 
         var modes = {
             "default": defaultMode,
+            "import": importMode,
             "when": whenMode,
             "do": {}, //TODO: Not yet implement... really needed ?
             "on": onMode

@@ -62,13 +62,13 @@ function commands(storyLogService,
     }
 
     function treeCommand() {
-        var html = game.bigMess.script.ast.html();
+        var html = game.script.ast.html();
         storyLog.debug("Outputing execution tree:");
         storyLog.debug(html);
     }
 
     function tokensCommand() {
-        var html = game.bigMess.script.pointer.html();
+        var html = game.script.pointer.html();
         storyLog.debug("Outputing script parsing:");
         storyLog.debug(html);
     }

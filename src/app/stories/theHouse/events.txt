@@ -1,0 +1,3 @@
+
+when #You enters the #Bedroom do #FeelTired.
+on #FeelTired: #you is #Tired.

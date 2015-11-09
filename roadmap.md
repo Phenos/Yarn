@@ -162,3 +162,6 @@
 - Remove the list of choice after a selection is made
 - When entering a room, dont show the same room description more than X times in Y minutes
 - When no rooms are available, the "No rooms available" message fades out after a moment
+
+
+

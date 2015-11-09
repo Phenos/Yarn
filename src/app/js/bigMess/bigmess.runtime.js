@@ -14,6 +14,7 @@
      * @param ast
      * @param state
      * @constructor
+     * @return {string}
      */
     function Runtime(ast, state, onModeChange) {
         this.ast = ast;

@@ -28,6 +28,11 @@ function game(gamePedicates,
 }
 
 
+/*
+
+This lib was tweaked to use Screen width instead of window width temporariblly
+
+*/
 // TODO: Make a pull request? Put into a /patched-vendors folder ?
 var breakpointApp = angular.module('breakpointApp',[]);
 
@@ -57,7 +62,10 @@ breakpointApp.directive('breakpoint', ['$window', '$rootScope', function($window
 
             function setWindowSize (){
                 scope.breakpoint.windowSize = $window.innerWidth;
-                if (screen.width) scope.breakpoint.windowSize = screen.width;
+
+                // This lib was tweaked to use Screen width instead of window width temporariblly
+                //if (screen && screen.width) scope.breakpoint.windowSize = screen.width;
+
                 if(!scope.$$phase) scope.$apply();
             }
 

@@ -6,16 +6,19 @@ scenery {
   padding: 0;
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: auto 100%;
-  -webkit-background-size: auto 100%;
-  -moz-background-size: auto 100%;
-  -o-background-size: auto 100%;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   filter: blur(8px);
   -webkit-filter: blur(8px);
   -moz-filter: blur(8px);
   -o-filter: blur(8px);
   z-index: -1;
 }
-.isDesktopWidth scenery {
-  background-size: cover;
+.isMobileWidth scenery {
+  background-size: auto 100%;
+  -webkit-background-size: auto 100%;
+  -moz-background-size: auto 100%;
+  -o-background-size: auto 100%;
 }

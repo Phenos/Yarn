@@ -1,30 +1,6 @@
-Import "objects.txt"
-
-Begin @story
-
-@story is called 'The Small House',
-    has id "theHouse-v1",
-    has scenery "http://assets.dwell.com/sites/default/files/2012/12/13/into-the-woods-gambier-island-house-rectangle.jpg",
-    is described as
-    'A story of small complexities and critical trivialities!'.
-
-
-@chapther is named "Breakfast".
-
-#You is an @actor, is named "You", is in the #Kitchen.
-
-#You has in inventory a #PlasticSpoon.
-
-when #You enters the #Bedroom do #FeelTired.
-
-on #FeelTired: #you is #Tired.
-
-The #PlasticSpoon:
-    is an @InventoryItem,
-    has image "http://www.geriatricmedical.com/UserFiles/Images/Category/choice-medium-weight-white-plastic-soup-spoon-1000-case.jpg",
-    is named "Plastic Spoon".
 
 // Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
+
 The #Kitchen:
     is a @room,
     is named "The Kitchen",
@@ -48,28 +24,6 @@ The #FrontOfTheHouse:
     links to #kitchen,
     is described as "You see a car, your garage and a great big lawn. On the lawn there is a red soccer ball.".
 
-The #RedSoccerBall:
-    is a @Thing,
-    is called "Red Soccer Ball",
-    is a @InventoryItem,
-    has image "http://us.123rf.com/450wm/sergeo9/sergeo91405/sergeo9140500004/28063834-football-branded-with-the-switzerland-flag-on-green-grass.jpg?ver=6",
-    is described as "The soccer ball is red and turquoise. It smells like banana."
-
-The #RedPill:
-    is a @Thing,
-    is a @InventoryItem,
-    is called "Red Pill",
-    has image "http://images.sodahead.com/polls/003100733/91177053_redpill_answer_1_xlarge.png",
-    is described as "Juste a red pill... It's nothing suspicious and looks delicious."
-
-The #KitchenTable:
-    is a @Thing,
-    has image "http://ak1.ostkcdn.com/images/products/3545815/Rubberwood-40-inch-Diameter-Round-Drop-leaf-Table-P11608107a.jpg",
-    is called "Kitchen Table",
-    is described as
-        "This round kitchen table is made of dark maple and has four chairs.
-        It has two diner covers already layed out on it."
-
 The #Bedroom:
     is a @room,
     is named "The Bedroom",
@@ -88,16 +42,8 @@ The #Bathroom:
     is described as
         "The bathroom is small perfectly cubic room covered with while tiles
         dark brass fittings. It is equiped with all the classic bathroom items.
-        Everything is very very very clean. And it smells like the ocean breeze.
+        Everything is very very very clean. And it smells like the ocean breeze. And there is also a man called Bob in here!!!
         "
-
-The #FlashLight:
-    is named "Flashlight",
-    is a @thing,
-    is an @InventoryItem,
-    has image "https://meritsecurity.com/wp-content/uploads/2014/10/iHandy_Flashlight_Pro.jpg",
-    is described as "A yellow plastic standard ordinary boring flashlight... looks cheap. Probably from Walmart".
-
 The #BedSideTable:
     is a @room,
     is named "Bedside Table",
@@ -113,5 +59,3 @@ The #BedsideTableDrawer:
     links to #BedSideTable,
     is described as "Your in the drawer... it's a little cramped. It's you and a flashlight",
     has a #FlashLight.
-
-End @story

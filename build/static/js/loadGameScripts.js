@@ -7,7 +7,7 @@ function loadGameScripts(game,
 
     function loadGameScripts() {
         // Load all game scipts
-        loadPageScripts('BigMess', onLoadScript).then(onLoadComplete);
+        loadPageScripts('yarn', onLoadScript).then(onLoadComplete);
     }
 
     function onLoadComplete() {
@@ -19,7 +19,8 @@ function loadGameScripts(game,
 
     function onLoadScript(source) {
         // TODO: game.game ????? UGLY!
-        game.load(source).run();
+        var script = game.load(source);
+        script.run(game.state);
     }
 
     return loadGameScripts;

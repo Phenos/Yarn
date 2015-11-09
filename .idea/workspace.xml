@@ -3,29 +3,9 @@
   <component name="ChangeListManager">
     <list id="94d96aae-7a74-44a0-b850-8b1f25077655" name="Default" comment="" />
     <list id="29cef767-7255-43e1-91bb-578d7903a6e8" name="!!!!! Stupid project files stuck here" comment="" />
-    <list default="true" id="264fbb09-3abe-4fa3-bc9b-a267f321b65e" name="Trigger events and run sequences" comment="Fix for the breakpoint lib not working properly on iOS">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/stories/theHouse-withBeginEnd.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/stories/theHouse/dialogs.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/stories/theHouse/events.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/stories/theHouse/rooms.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/stories/theHouse/things.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/app/stories/theHouse.txt" afterPath="$PROJECT_DIR$/src/app/stories/theHouse/theHouse.txt" />
+    <list default="true" id="264fbb09-3abe-4fa3-bc9b-a267f321b65e" name="Trigger events and run sequences" comment="Separate story in multiple files&#10;Samples for dialogs&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/index.html" afterPath="$PROJECT_DIR$/build/static/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/all.js" afterPath="$PROJECT_DIR$/build/static/js/all.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/bigmess.runtime.js" afterPath="$PROJECT_DIR$/build/static/js/bigmess.runtime.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/game.js" afterPath="$PROJECT_DIR$/build/static/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/less-temp/scenery.css" afterPath="$PROJECT_DIR$/build/static/less-temp/scenery.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/less-temp/userInput.css" afterPath="$PROJECT_DIR$/build/static/less-temp/userInput.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/stories/theHouse.txt" afterPath="$PROJECT_DIR$/build/static/stories/theHouse.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/styles/all.css" afterPath="$PROJECT_DIR$/build/static/styles/all.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/roadmap.md" afterPath="$PROJECT_DIR$/roadmap.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" afterPath="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/services/commands.js" afterPath="$PROJECT_DIR$/src/app/js/services/commands.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/less/global.less" afterPath="$PROJECT_DIR$/src/app/less/global.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/less/logItem.less" afterPath="$PROJECT_DIR$/src/app/less/logItem.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/less/userInput.less" afterPath="$PROJECT_DIR$/src/app/less/userInput.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/static/index.html" afterPath="$PROJECT_DIR$/src/app/static/index.html" />
     </list>
     <ignored path="bigmess.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,8 +60,8 @@
       <file leaf-file-name="roadmap.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/roadmap.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.78971964">
-              <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.47429907">
+              <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -741,7 +721,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446912624185</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Separate story in multiple files&#10;Samples for dialogs&#10;">
+      <created>1447037003283</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1447037003283</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <option name="clearContext" value="false" />
     <option name="createBranch" value="false" />
     <servers />
@@ -831,7 +817,8 @@
     <MESSAGE value="Added stub for event triggers" />
     <MESSAGE value="Working event/trigger mechanic." />
     <MESSAGE value="Fix for the breakpoint lib not working properly on iOS" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix for the breakpoint lib not working properly on iOS" />
+    <MESSAGE value="Separate story in multiple files&#10;Samples for dialogs&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Separate story in multiple files&#10;Samples for dialogs&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1230,8 +1217,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/roadmap.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78971964">
-          <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.47429907">
+          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
           <folding />
         </state>
       </provider>

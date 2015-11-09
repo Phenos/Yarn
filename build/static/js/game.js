@@ -1,18 +1,28 @@
 angular.module('mindgame').factory('game', game);
 
-function game(gamePedicates,
+function game(loadScript,
+              gamePedicates,
               gameRoutines,
               gameThings,
-              $window,
               $timeout) {
 
-    var game = new BigMess();
+    // todo: rename "BigMess" to Yarn
+    var game = new BigMess(scriptLoader);
 
     // Load various configuration modules
     gamePedicates(game);
     gameRoutines(game);
     gameThings(game);
 
+    // todo: put scriptLoader into a service
+    function scriptLoader(url) {
+        console.log("URL: ---> ", url);
+        loadScript(url, onLoad);
+        function onLoad(source) {
+            var script = game.load(source);
+            script.run(game.state);
+        }
+    }
 
     $timeout(function () {
 

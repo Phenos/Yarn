@@ -1,0 +1,52 @@
+
+#Bob:
+    is an @actor,
+    is named "Bob",
+    has image "http://www.lazyliteratus.com/wp-content/uploads/2011/05/crazy_old_man-236x300.jpg",
+    is in the #Bathroom,
+    has dialog #BobIsInTheBathroom.
+
+//---[ Bathroom Argument with Bob ]-----------------------
+
+Dialog #BobIsInTheBathroom:
+    #Bob says "Hu... hi there. What are you doing here?",
+    can reply #reply_I_dont_know,
+    can reply #sorryImLaving,
+    can reply #hereToBrushMyTeeth.
+
+    Dialog #reply_I_dont_know:
+        #You say "I dont know... what are YOU doing here?",
+        jump to #BobIsShaving.
+
+    Dialog #sorryImLaving:
+        #You say "Ho, sorry, I'm leaving!",
+        jump to #LeavingBobAlone.
+
+    Dialog #hereToBrushMyTeeth:
+        #You say "I'm just here to brush my teeth, can you leave?",
+        jump to #ImBrushingMyTeeth.
+
+Dialog #BobIsShaving:
+    #Bob says "I'm shaving... leave me alone!",
+    can reply #sorryImLaving,
+    can reply #hereToBrushMyTeeth,
+    can say nothing
+
+Dialog #LeavingBobAlone:
+    #Bob says "Yeah.. that's it, leave now."
+    #You are in the #Kitchen
+
+Dialog #ImBrushingMyTeeth:
+    #Bob says "I'm ALSO brushing my teeth... how about YOU leave!!!",
+    naration "Bob flexes his muscles, cracks his knuckles and pushes you out of the bathroom!",
+    #You are in the #Kitchen
+
+
+
+
+
+
+
+
+
+

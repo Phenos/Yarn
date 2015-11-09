@@ -2,12 +2,13 @@
     "use strict";
 
     BigMess.Script = Script;
-    function Script() {
+    function Script(scriptLoader) {
+        this.scriptLoader = scriptLoader;
         this.pointer = new Pointer();
         this.ast = new AST();
         // Keep a reference t key named nodes
         this.references = {};
-        this.runtime;
+        this.runtime = null;
     }
 
     Script.prototype.load = function (text) {
@@ -18,13 +19,18 @@
 
     Script.prototype.run = function (state) {
         var self = this;
-        this.runtime = new Runtime(this.ast, state, onModeChange);
+        this.runtime = new Runtime(this.ast, state, onModeChange, onImport);
         this.runtime.run();
 
         function onModeChange(mode, node){
             console.log("Keeping reference to [" + node.value + "]", mode, node);
             var nodeReferenceId = node.value;
             self.references[nodeReferenceId.toLowerCase()] = node;
+        }
+
+        function onImport(url) {
+            console.log("-----> onImport ", url);
+            self.scriptLoader(url);
         }
     };
 

@@ -19,6 +19,7 @@
 
     Script.prototype.run = function (state) {
         var self = this;
+
         this.runtime = new Runtime(this.ast, state, onModeChange, onImport);
         this.runtime.run();
 

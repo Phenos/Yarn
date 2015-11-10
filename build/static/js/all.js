@@ -477,26 +477,52 @@ breakpointApp.directive('breakpoint', ['$window', '$rootScope', function($window
 angular.module('mindgame').factory('loadGameScripts', loadGameScripts);
 
 function loadGameScripts(game,
+                         loadScript,
                          loadPageScripts,
                          writers,
                          promptLoop) {
 
     function loadGameScripts() {
         // Load all game scipts
-        loadPageScripts('yarn', onLoadScript).then(onLoadComplete);
+        loadPageScripts('yarn')
+            .then(onSuccess, onFail, onLoad);
     }
 
-    function onLoadComplete() {
+    function onFail(error) {
+        console.log("Fail? ", error);
+    }
+
+    /**
+     * Called once all files are loaded (including imports)
+     */
+    function onSuccess(result) {
+        console.log("onSuccess? ", result);
         writers
             .LogStoryIntroduction()
             .DescribeWhereYouAre();
         promptLoop.update();
     }
 
-    function onLoadScript(source) {
-        // TODO: game.game ????? UGLY!
+    /**
+     * handler when additionnal module must be imported from the initial loaded file
+     * @param source
+     */
+    function onLoad(source) {
         var script = game.load(source);
-        script.run(game.state);
+        console.log("running script", source.substr(0, 100));
+        script.run(game.state, onImport);
+    }
+
+
+    // todo: put scriptLoader into a service
+    function onImport(url) {
+        console.log("IMPORTING: ", url);
+        loadScript(url).then(onLoad);
+        function onLoad(source) {
+            console.log("IMPORTED: ", url);
+            var script = game.load(source);
+            script.run(game.state);
+        }
     }
 
     return loadGameScripts;
@@ -506,7 +532,7 @@ function loadGameScripts(game,
 
 
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkR2FtZVNjcmlwdHMuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZmFjdG9yeSgnbG9hZEdhbWVTY3JpcHRzJywgbG9hZEdhbWVTY3JpcHRzKTtcblxuZnVuY3Rpb24gbG9hZEdhbWVTY3JpcHRzKGdhbWUsXG4gICAgICAgICAgICAgICAgICAgICAgICAgbG9hZFBhZ2VTY3JpcHRzLFxuICAgICAgICAgICAgICAgICAgICAgICAgIHdyaXRlcnMsXG4gICAgICAgICAgICAgICAgICAgICAgICAgcHJvbXB0TG9vcCkge1xuXG4gICAgZnVuY3Rpb24gbG9hZEdhbWVTY3JpcHRzKCkge1xuICAgICAgICAvLyBMb2FkIGFsbCBnYW1lIHNjaXB0c1xuICAgICAgICBsb2FkUGFnZVNjcmlwdHMoJ3lhcm4nLCBvbkxvYWRTY3JpcHQpLnRoZW4ob25Mb2FkQ29tcGxldGUpO1xuICAgIH1cblxuICAgIGZ1bmN0aW9uIG9uTG9hZENvbXBsZXRlKCkge1xuICAgICAgICB3cml0ZXJzXG4gICAgICAgICAgICAuTG9nU3RvcnlJbnRyb2R1Y3Rpb24oKVxuICAgICAgICAgICAgLkRlc2NyaWJlV2hlcmVZb3VBcmUoKTtcbiAgICAgICAgcHJvbXB0TG9vcC51cGRhdGUoKTtcbiAgICB9XG5cbiAgICBmdW5jdGlvbiBvbkxvYWRTY3JpcHQoc291cmNlKSB7XG4gICAgICAgIC8vIFRPRE86IGdhbWUuZ2FtZSA/Pz8/PyBVR0xZIVxuICAgICAgICB2YXIgc2NyaXB0ID0gZ2FtZS5sb2FkKHNvdXJjZSk7XG4gICAgICAgIHNjcmlwdC5ydW4oZ2FtZS5zdGF0ZSk7XG4gICAgfVxuXG4gICAgcmV0dXJuIGxvYWRHYW1lU2NyaXB0cztcblxufVxuXG5cblxuIl0sImZpbGUiOiJsb2FkR2FtZVNjcmlwdHMuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkR2FtZVNjcmlwdHMuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZmFjdG9yeSgnbG9hZEdhbWVTY3JpcHRzJywgbG9hZEdhbWVTY3JpcHRzKTtcblxuZnVuY3Rpb24gbG9hZEdhbWVTY3JpcHRzKGdhbWUsXG4gICAgICAgICAgICAgICAgICAgICAgICAgbG9hZFNjcmlwdCxcbiAgICAgICAgICAgICAgICAgICAgICAgICBsb2FkUGFnZVNjcmlwdHMsXG4gICAgICAgICAgICAgICAgICAgICAgICAgd3JpdGVycyxcbiAgICAgICAgICAgICAgICAgICAgICAgICBwcm9tcHRMb29wKSB7XG5cbiAgICBmdW5jdGlvbiBsb2FkR2FtZVNjcmlwdHMoKSB7XG4gICAgICAgIC8vIExvYWQgYWxsIGdhbWUgc2NpcHRzXG4gICAgICAgIGxvYWRQYWdlU2NyaXB0cygneWFybicpXG4gICAgICAgICAgICAudGhlbihvblN1Y2Nlc3MsIG9uRmFpbCwgb25Mb2FkKTtcbiAgICB9XG5cbiAgICBmdW5jdGlvbiBvbkZhaWwoZXJyb3IpIHtcbiAgICAgICAgY29uc29sZS5sb2coXCJGYWlsPyBcIiwgZXJyb3IpO1xuICAgIH1cblxuICAgIC8qKlxuICAgICAqIENhbGxlZCBvbmNlIGFsbCBmaWxlcyBhcmUgbG9hZGVkIChpbmNsdWRpbmcgaW1wb3J0cylcbiAgICAgKi9cbiAgICBmdW5jdGlvbiBvblN1Y2Nlc3MocmVzdWx0KSB7XG4gICAgICAgIGNvbnNvbGUubG9nKFwib25TdWNjZXNzPyBcIiwgcmVzdWx0KTtcbiAgICAgICAgd3JpdGVyc1xuICAgICAgICAgICAgLkxvZ1N0b3J5SW50cm9kdWN0aW9uKClcbiAgICAgICAgICAgIC5EZXNjcmliZVdoZXJlWW91QXJlKCk7XG4gICAgICAgIHByb21wdExvb3AudXBkYXRlKCk7XG4gICAgfVxuXG4gICAgLyoqXG4gICAgICogaGFuZGxlciB3aGVuIGFkZGl0aW9ubmFsIG1vZHVsZSBtdXN0IGJlIGltcG9ydGVkIGZyb20gdGhlIGluaXRpYWwgbG9hZGVkIGZpbGVcbiAgICAgKiBAcGFyYW0gc291cmNlXG4gICAgICovXG4gICAgZnVuY3Rpb24gb25Mb2FkKHNvdXJjZSkge1xuICAgICAgICB2YXIgc2NyaXB0ID0gZ2FtZS5sb2FkKHNvdXJjZSk7XG4gICAgICAgIGNvbnNvbGUubG9nKFwicnVubmluZyBzY3JpcHRcIiwgc291cmNlLnN1YnN0cigwLCAxMDApKTtcbiAgICAgICAgc2NyaXB0LnJ1bihnYW1lLnN0YXRlLCBvbkltcG9ydCk7XG4gICAgfVxuXG5cbiAgICAvLyB0b2RvOiBwdXQgc2NyaXB0TG9hZGVyIGludG8gYSBzZXJ2aWNlXG4gICAgZnVuY3Rpb24gb25JbXBvcnQodXJsKSB7XG4gICAgICAgIGNvbnNvbGUubG9nKFwiSU1QT1JUSU5HOiBcIiwgdXJsKTtcbiAgICAgICAgbG9hZFNjcmlwdCh1cmwpLnRoZW4ob25Mb2FkKTtcbiAgICAgICAgZnVuY3Rpb24gb25Mb2FkKHNvdXJjZSkge1xuICAgICAgICAgICAgY29uc29sZS5sb2coXCJJTVBPUlRFRDogXCIsIHVybCk7XG4gICAgICAgICAgICB2YXIgc2NyaXB0ID0gZ2FtZS5sb2FkKHNvdXJjZSk7XG4gICAgICAgICAgICBzY3JpcHQucnVuKGdhbWUuc3RhdGUpO1xuICAgICAgICB9XG4gICAgfVxuXG4gICAgcmV0dXJuIGxvYWRHYW1lU2NyaXB0cztcblxufVxuXG5cblxuIl0sImZpbGUiOiJsb2FkR2FtZVNjcmlwdHMuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
 
 angular.module('mindgame').factory('loadPageScripts', loadPageScripts);
 
@@ -514,51 +540,60 @@ function loadPageScripts(loadScript,
                          $document,
                          $q) {
 
-    function loadScripts(scriptType, onLoad) {
-        var promise;
+    function loadScripts(scriptType) {
+        var deferred = $q.defer();
+        var rootPromise = deferred.promise;
+        var promise = rootPromise;
 
-        promise = $q(function (success) {
-            success();
-        });
-
-        angular.forEach($document.find("script"), function (scriptTag) {
+        /**
+         * Queue all scripts on the page to load sequencially
+         */
+        angular.forEach($document.find("script"), onEachScript);
+        function onEachScript(scriptTag) {
             if (scriptTag.type.toLowerCase() === scriptType) {
-                promise = promise.then(function () {
-                    return loadScript(scriptTag.src, onLoad);
-                });
+                promise = queueScriptLoad(scriptTag.src, promise);
             }
-        });
+        }
+        function queueScriptLoad(src, promise) {
+            console.log("Queueuing script", src);
+            return loadScript(src).then(function (source) {
+                deferred.notify(source);
+                return promise;
+            });
+        }
 
-        return promise;
+        return rootPromise;
     }
 
     return loadScripts;
 }
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkUGFnZVNjcmlwdHMuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZmFjdG9yeSgnbG9hZFBhZ2VTY3JpcHRzJywgbG9hZFBhZ2VTY3JpcHRzKTtcblxuZnVuY3Rpb24gbG9hZFBhZ2VTY3JpcHRzKGxvYWRTY3JpcHQsXG4gICAgICAgICAgICAgICAgICAgICAgICAgJGRvY3VtZW50LFxuICAgICAgICAgICAgICAgICAgICAgICAgICRxKSB7XG5cbiAgICBmdW5jdGlvbiBsb2FkU2NyaXB0cyhzY3JpcHRUeXBlLCBvbkxvYWQpIHtcbiAgICAgICAgdmFyIHByb21pc2U7XG5cbiAgICAgICAgcHJvbWlzZSA9ICRxKGZ1bmN0aW9uIChzdWNjZXNzKSB7XG4gICAgICAgICAgICBzdWNjZXNzKCk7XG4gICAgICAgIH0pO1xuXG4gICAgICAgIGFuZ3VsYXIuZm9yRWFjaCgkZG9jdW1lbnQuZmluZChcInNjcmlwdFwiKSwgZnVuY3Rpb24gKHNjcmlwdFRhZykge1xuICAgICAgICAgICAgaWYgKHNjcmlwdFRhZy50eXBlLnRvTG93ZXJDYXNlKCkgPT09IHNjcmlwdFR5cGUpIHtcbiAgICAgICAgICAgICAgICBwcm9taXNlID0gcHJvbWlzZS50aGVuKGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAgICAgICAgICAgcmV0dXJuIGxvYWRTY3JpcHQoc2NyaXB0VGFnLnNyYywgb25Mb2FkKTtcbiAgICAgICAgICAgICAgICB9KTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgfSk7XG5cbiAgICAgICAgcmV0dXJuIHByb21pc2U7XG4gICAgfVxuXG4gICAgcmV0dXJuIGxvYWRTY3JpcHRzO1xufVxuIl0sImZpbGUiOiJsb2FkUGFnZVNjcmlwdHMuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkUGFnZVNjcmlwdHMuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZmFjdG9yeSgnbG9hZFBhZ2VTY3JpcHRzJywgbG9hZFBhZ2VTY3JpcHRzKTtcblxuZnVuY3Rpb24gbG9hZFBhZ2VTY3JpcHRzKGxvYWRTY3JpcHQsXG4gICAgICAgICAgICAgICAgICAgICAgICAgJGRvY3VtZW50LFxuICAgICAgICAgICAgICAgICAgICAgICAgICRxKSB7XG5cbiAgICBmdW5jdGlvbiBsb2FkU2NyaXB0cyhzY3JpcHRUeXBlKSB7XG4gICAgICAgIHZhciBkZWZlcnJlZCA9ICRxLmRlZmVyKCk7XG4gICAgICAgIHZhciByb290UHJvbWlzZSA9IGRlZmVycmVkLnByb21pc2U7XG4gICAgICAgIHZhciBwcm9taXNlID0gcm9vdFByb21pc2U7XG5cbiAgICAgICAgLyoqXG4gICAgICAgICAqIFF1ZXVlIGFsbCBzY3JpcHRzIG9uIHRoZSBwYWdlIHRvIGxvYWQgc2VxdWVuY2lhbGx5XG4gICAgICAgICAqL1xuICAgICAgICBhbmd1bGFyLmZvckVhY2goJGRvY3VtZW50LmZpbmQoXCJzY3JpcHRcIiksIG9uRWFjaFNjcmlwdCk7XG4gICAgICAgIGZ1bmN0aW9uIG9uRWFjaFNjcmlwdChzY3JpcHRUYWcpIHtcbiAgICAgICAgICAgIGlmIChzY3JpcHRUYWcudHlwZS50b0xvd2VyQ2FzZSgpID09PSBzY3JpcHRUeXBlKSB7XG4gICAgICAgICAgICAgICAgcHJvbWlzZSA9IHF1ZXVlU2NyaXB0TG9hZChzY3JpcHRUYWcuc3JjLCBwcm9taXNlKTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgICBmdW5jdGlvbiBxdWV1ZVNjcmlwdExvYWQoc3JjLCBwcm9taXNlKSB7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyhcIlF1ZXVldWluZyBzY3JpcHRcIiwgc3JjKTtcbiAgICAgICAgICAgIHJldHVybiBsb2FkU2NyaXB0KHNyYykudGhlbihmdW5jdGlvbiAoc291cmNlKSB7XG4gICAgICAgICAgICAgICAgZGVmZXJyZWQubm90aWZ5KHNvdXJjZSk7XG4gICAgICAgICAgICAgICAgcmV0dXJuIHByb21pc2U7XG4gICAgICAgICAgICB9KTtcbiAgICAgICAgfVxuXG4gICAgICAgIHJldHVybiByb290UHJvbWlzZTtcbiAgICB9XG5cbiAgICByZXR1cm4gbG9hZFNjcmlwdHM7XG59XG4iXSwiZmlsZSI6ImxvYWRQYWdlU2NyaXB0cy5qcyIsInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
 
 angular.module('mindgame').factory('loadScript', loadScript);
 
 function loadScript($http) {
 
-    function loadScript (src, onLoad) {
+    function loadScript (src) {
         //console.log(scriptTag);
         var config = {
             method: 'GET',
             url: src
         };
+
         function then(response) {
-            console.info("Loaded script ", response.config.url);
-            onLoad(response.data);
+            console.info("Loaded script: ", response.config.url);
+            return response.data;
         }
-        return $http(config)
-            .then(then);
+
+        return $http(config).then(then);
     }
+
 
     return loadScript;
 }
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkU2NyaXB0LmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmZhY3RvcnkoJ2xvYWRTY3JpcHQnLCBsb2FkU2NyaXB0KTtcblxuZnVuY3Rpb24gbG9hZFNjcmlwdCgkaHR0cCkge1xuXG4gICAgZnVuY3Rpb24gbG9hZFNjcmlwdCAoc3JjLCBvbkxvYWQpIHtcbiAgICAgICAgLy9jb25zb2xlLmxvZyhzY3JpcHRUYWcpO1xuICAgICAgICB2YXIgY29uZmlnID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnR0VUJyxcbiAgICAgICAgICAgIHVybDogc3JjXG4gICAgICAgIH07XG4gICAgICAgIGZ1bmN0aW9uIHRoZW4ocmVzcG9uc2UpIHtcbiAgICAgICAgICAgIGNvbnNvbGUuaW5mbyhcIkxvYWRlZCBzY3JpcHQgXCIsIHJlc3BvbnNlLmNvbmZpZy51cmwpO1xuICAgICAgICAgICAgb25Mb2FkKHJlc3BvbnNlLmRhdGEpO1xuICAgICAgICB9XG4gICAgICAgIHJldHVybiAkaHR0cChjb25maWcpXG4gICAgICAgICAgICAudGhlbih0aGVuKTtcbiAgICB9XG5cbiAgICByZXR1cm4gbG9hZFNjcmlwdDtcbn1cbiJdLCJmaWxlIjoibG9hZFNjcmlwdC5qcyIsInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkU2NyaXB0LmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmZhY3RvcnkoJ2xvYWRTY3JpcHQnLCBsb2FkU2NyaXB0KTtcblxuZnVuY3Rpb24gbG9hZFNjcmlwdCgkaHR0cCkge1xuXG4gICAgZnVuY3Rpb24gbG9hZFNjcmlwdCAoc3JjKSB7XG4gICAgICAgIC8vY29uc29sZS5sb2coc2NyaXB0VGFnKTtcbiAgICAgICAgdmFyIGNvbmZpZyA9IHtcbiAgICAgICAgICAgIG1ldGhvZDogJ0dFVCcsXG4gICAgICAgICAgICB1cmw6IHNyY1xuICAgICAgICB9O1xuXG4gICAgICAgIGZ1bmN0aW9uIHRoZW4ocmVzcG9uc2UpIHtcbiAgICAgICAgICAgIGNvbnNvbGUuaW5mbyhcIkxvYWRlZCBzY3JpcHQ6IFwiLCByZXNwb25zZS5jb25maWcudXJsKTtcbiAgICAgICAgICAgIHJldHVybiByZXNwb25zZS5kYXRhO1xuICAgICAgICB9XG5cbiAgICAgICAgcmV0dXJuICRodHRwKGNvbmZpZykudGhlbih0aGVuKTtcbiAgICB9XG5cblxuICAgIHJldHVybiBsb2FkU2NyaXB0O1xufVxuIl0sImZpbGUiOiJsb2FkU2NyaXB0LmpzIiwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=
 
 angular.module('mindgame').factory('promptLoop', promptLoop);
 
@@ -972,31 +1007,6 @@ function writers(storyLogService,
 
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ3cml0ZXJzLmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmZhY3RvcnkoJ3dyaXRlcnMnLCB3cml0ZXJzKTtcblxuLy8gVE9ETzogIHN0b3J5TG9nIGFuZCBzdGF0ZSBhcmUgQVNZTkMgPz8/P1xuXG5mdW5jdGlvbiB3cml0ZXJzKHN0b3J5TG9nU2VydmljZSxcbiAgICAgICAgICAgICAgICAgZ2FtZSxcbiAgICAgICAgICAgICAgICAgc2NlbmVyeVNlcnZpY2UpIHtcblxuICAgIHZhciBzdG9yeUxvZyA9IHN0b3J5TG9nU2VydmljZTtcbiAgICB2YXIgc3RhdGUgPSBnYW1lLnN0YXRlO1xuXG4gICAgLy8gU3Rvcnkgd2VsY29tZSBtZXNzYWdlIGFuZCBpbnRyb2R1Y3Rpb25cbiAgICAvLyB0b2RvOiBPdXRwdXQgc3BlY2lhbGx5IHN0eWxlZCB0aXRsZXMgZm9yIHN0b3J5IGFuZCBjaGFwdGVyc1xuICAgIGZ1bmN0aW9uIExvZ1N0b3J5SW50cm9kdWN0aW9uKCkge1xuICAgICAgICB2YXIgc3RvcnkgPSBzdGF0ZS50aGluZyhcInN0b3J5XCIpO1xuICAgICAgICB2YXIgc3RvcnlUaXRsZSA9IHN0YXRlLnJlc29sdmVWYWx1ZShcInN0b3J5LmlzTmFtZWRcIik7XG5cbiAgICAgICAgaWYgKHN0b3J5VGl0bGUpIHN0b3J5TG9nLmhlYWRpbmcoc3RvcnlUaXRsZSk7XG5cbiAgICAgICAgdmFyIHN0b3J5RGVzY3JpcHRpb24gPSBzdGF0ZS5yZXNvbHZlVmFsdWUoXCJzdG9yeS5pc0Rlc2NyaWJlZEFzXCIpO1xuICAgICAgICBpZiAoc3RvcnlEZXNjcmlwdGlvbikgc3RvcnlMb2cuc3ViSGVhZGluZyhzdG9yeURlc2NyaXB0aW9uKTtcbiAgICAgICAgLy8gdG9kbzogT3V0cHV0IHNwZWNpYWxseSBzdHlsZWQgc2VwYXJhdG9yc1xuICAgICAgICBzdG9yeUxvZy5kaXZpZGVyKCk7XG4gICAgICAgIHJldHVybiB0aGlzO1xuICAgIH1cblxuXG4gICAgLy8gRGVzY3JpYmUgd2hlcmUgeW91IGFyZSBhdCB0aGUgYmVnaW5uaW5nXG4gICAgZnVuY3Rpb24gRGVzY3JpYmVXaGVyZVlvdUFyZShqdXN0TW92ZWQpIHtcbiAgICAgICAgc3RvcnlMb2cuY2xlYXIoKTtcbiAgICAgICAgdmFyIHJvb20gPSBzdGF0ZS5yZXNvbHZlVmFsdWUoXCJ5b3UuaXNJblwiKTtcbiAgICAgICAgLy9jb25zb2xlLmxvZyhcIllvdXIgaW4gcm9vbSBcIiwgcm9vbSk7XG4gICAgICAgIGlmIChyb29tKSB7XG4gICAgICAgICAgICB2YXIgc2NlbmVyeSA9IHJvb20ucmVzb2x2ZVZhbHVlKFwiaGFzU2NlbmVyeVwiKTtcbiAgICAgICAgICAgIGlmIChzY2VuZXJ5KSBzY2VuZXJ5U2VydmljZS5jaGFuZ2Uoc2NlbmVyeSk7XG5cbiAgICAgICAgICAgIHZhciBsYWJlbCA9IHJvb20ucmVzb2x2ZVZhbHVlKFwiaXNOYW1lZFwiKTtcbiAgICAgICAgICAgIHN0b3J5TG9nLmhlYWRpbmcobGFiZWwpO1xuICAgICAgICAgICAgdmFyIGRlc2NyaXB0aW9uID0gcm9vbS5yZXNvbHZlVmFsdWUoXCJpc0Rlc2NyaWJlZEFzXCIpO1xuICAgICAgICAgICAgaWYgKGRlc2NyaXB0aW9uKSBzdG9yeUxvZy5sb2coZGVzY3JpcHRpb24pO1xuICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgc3RvcnlMb2cubG9nKFwiWW91IGFyZSBub3doZXJlIHRvIGJlIGZvdW5kISBQbGFjZSB5b3VyIGhlcm8gc29tZXdoZXJlXCIpO1xuICAgICAgICB9XG4gICAgICAgIHJldHVybiB0aGlzO1xuICAgIH1cblxuICAgIC8vIERlc2NyaWJlIHdoZXJlIHlvdSBhcmUgYXQgdGhlIGJlZ2lubmluZ1xuICAgIGZ1bmN0aW9uIERlc2NyaWJlVGhpbmcodGhpbmcpIHtcbiAgICAgICAgaWYgKHRoaW5nKSB7XG4gICAgICAgICAgICB2YXIgbGFiZWwgPSB0aGluZy5yZXNvbHZlVmFsdWUoXCJpc05hbWVkXCIpO1xuICAgICAgICAgICAgdmFyIGRlc2NyaXB0aW9uID0gdGhpbmcucmVzb2x2ZVZhbHVlKFwiaXNEZXNjcmliZWRBc1wiKTtcbiAgICAgICAgICAgIHZhciBpbWFnZSA9IHRoaW5nLnJlc29sdmVWYWx1ZShcImhhc0ltYWdlXCIpO1xuICAgICAgICAgICAgaWYgKGltYWdlKSBzdG9yeUxvZy50aGluZ0ltYWdlKGltYWdlKTtcbiAgICAgICAgICAgIGlmIChsYWJlbCkgc3RvcnlMb2cuc3ViSGVhZGluZyhsYWJlbCk7XG4gICAgICAgICAgICBpZiAoZGVzY3JpcHRpb24pIHN0b3J5TG9nLmxvZyhkZXNjcmlwdGlvbik7XG4gICAgICAgIH1cbiAgICAgICAgcmV0dXJuIHRoaXM7XG4gICAgfVxuXG4gICAgLy8gRGVzY3JpYmUgd2hlcmUgeW91IGFyZSBhdCB0aGUgYmVnaW5uaW5nXG4gICAgZnVuY3Rpb24gRGVzY3JpYmVUaGluZ1Rha2VuSW5JbnZlbnRvcnkodGhpbmcpIHtcbiAgICAgICAgaWYgKHRoaW5nKSB7XG4gICAgICAgICAgICB2YXIgbGFiZWwgPSB0aGluZy5yZXNvbHZlVmFsdWUoXCJpc05hbWVkXCIpO1xuICAgICAgICAgICAgaWYgKGxhYmVsKSBzdG9yeUxvZy5sb2coXCJZb3UgdG9vayB0aGUgXCIgKyBsYWJlbCk7XG4gICAgICAgIH1cbiAgICAgICAgcmV0dXJuIHRoaXM7XG4gICAgfVxuXG4gICAgcmV0dXJuIHtcbiAgICAgICAgRGVzY3JpYmVUaGluZ1Rha2VuSW5JbnZlbnRvcnk6IERlc2NyaWJlVGhpbmdUYWtlbkluSW52ZW50b3J5LFxuICAgICAgICBEZXNjcmliZVRoaW5nOkRlc2NyaWJlVGhpbmcsXG4gICAgICAgIERlc2NyaWJlV2hlcmVZb3VBcmU6RGVzY3JpYmVXaGVyZVlvdUFyZSxcbiAgICAgICAgTG9nU3RvcnlJbnRyb2R1Y3Rpb246TG9nU3RvcnlJbnRyb2R1Y3Rpb25cbiAgICB9O1xuXG59XG5cblxuXG4iXSwiZmlsZSI6IndyaXRlcnMuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
 
-angular.module('mindgame').directive('scenery', SceneryDirective);
-
-function SceneryDirective() {
-    return {
-        restrict: 'E',
-        bindToController: {
-        },
-        scope: {},
-        controllerAs: 'scenery',
-        templateUrl: './html/scenery.html',
-        controller: SceneryController
-    };
-
-    function SceneryController(sceneryService, $element) {
-        console.log("screnery directive loader!");
-
-        sceneryService.onChange( function (image) {
-            console.log("Changing the scenere: ", image);
-            $element.css("background-image", "url(" + image + ")");
-            console.log($element);
-        });
-    }
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJzY2VuZXJ5L3NjZW5lcnkuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZGlyZWN0aXZlKCdzY2VuZXJ5JywgU2NlbmVyeURpcmVjdGl2ZSk7XG5cbmZ1bmN0aW9uIFNjZW5lcnlEaXJlY3RpdmUoKSB7XG4gICAgcmV0dXJuIHtcbiAgICAgICAgcmVzdHJpY3Q6ICdFJyxcbiAgICAgICAgYmluZFRvQ29udHJvbGxlcjoge1xuICAgICAgICB9LFxuICAgICAgICBzY29wZToge30sXG4gICAgICAgIGNvbnRyb2xsZXJBczogJ3NjZW5lcnknLFxuICAgICAgICB0ZW1wbGF0ZVVybDogJy4vaHRtbC9zY2VuZXJ5Lmh0bWwnLFxuICAgICAgICBjb250cm9sbGVyOiBTY2VuZXJ5Q29udHJvbGxlclxuICAgIH07XG5cbiAgICBmdW5jdGlvbiBTY2VuZXJ5Q29udHJvbGxlcihzY2VuZXJ5U2VydmljZSwgJGVsZW1lbnQpIHtcbiAgICAgICAgY29uc29sZS5sb2coXCJzY3JlbmVyeSBkaXJlY3RpdmUgbG9hZGVyIVwiKTtcblxuICAgICAgICBzY2VuZXJ5U2VydmljZS5vbkNoYW5nZSggZnVuY3Rpb24gKGltYWdlKSB7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyhcIkNoYW5naW5nIHRoZSBzY2VuZXJlOiBcIiwgaW1hZ2UpO1xuICAgICAgICAgICAgJGVsZW1lbnQuY3NzKFwiYmFja2dyb3VuZC1pbWFnZVwiLCBcInVybChcIiArIGltYWdlICsgXCIpXCIpO1xuICAgICAgICAgICAgY29uc29sZS5sb2coJGVsZW1lbnQpO1xuICAgICAgICB9KTtcbiAgICB9XG59Il0sImZpbGUiOiJzY2VuZXJ5L3NjZW5lcnkuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
-
 (function() {
 
 angular.module('mindgame').directive('logItem', LogItemDirective);
@@ -1067,6 +1077,31 @@ function LogItemDirective($sce) {
 })();
 
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJzdG9yeUxvZy9zdG9yeUxvZy5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24gKCkge1xuXG4gICAgYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZGlyZWN0aXZlKCdzdG9yeUxvZycsIFN0b3J5TG9nRGlyZWN0aXZlKTtcblxuICAgIGZ1bmN0aW9uIFN0b3J5TG9nRGlyZWN0aXZlKCkge1xuICAgICAgICByZXR1cm4ge1xuICAgICAgICAgICAgcmVzdHJpY3Q6ICdFJyxcbiAgICAgICAgICAgIGJpbmRUb0NvbnRyb2xsZXI6IHtcbiAgICAgICAgICAgICAgICByZWFkeTogXCImXCJcbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgICBzY29wZToge30sXG4gICAgICAgICAgICBjb250cm9sbGVyQXM6ICdzdG9yeUxvZycsXG4gICAgICAgICAgICAvL3RlbXBsYXRlOiAnPGRpdiBjbGFzcz1cImxvZ0l0ZW1zXCI+e3sgdXNlcklucHV0LnRleHQgfX08L2Rpdj4nLFxuICAgICAgICAgICAgY29udHJvbGxlcjogU3RvcnlMb2dDb250cm9sbGVyXG4gICAgICAgIH07XG5cbiAgICAgICAgZnVuY3Rpb24gU3RvcnlMb2dDb250cm9sbGVyKHN0b3J5TG9nU2VydmljZSwgJHNjb3BlLCAkZWxlbWVudCwgJGNvbXBpbGUsICR3aW5kb3cpIHtcblxuICAgICAgICAgICAgdGhpcy5jbGVhciA9IGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAgICAgICAkZWxlbWVudC5lbXB0eSgpO1xuICAgICAgICAgICAgICAgICR3aW5kb3cuc2Nyb2xsKDAsIDApO1xuICAgICAgICAgICAgfTtcblxuICAgICAgICAgICAgdGhpcy53cml0ZSA9IGZ1bmN0aW9uICh0ZXh0LCB0eXBlKSB7XG4gICAgICAgICAgICAgICAgdmFyIHNjb3BlID0gJHNjb3BlLiRuZXcoKTtcbiAgICAgICAgICAgICAgICBzY29wZS50ZXh0ID0gdGV4dDtcbiAgICAgICAgICAgICAgICBzY29wZS50eXBlID0gdHlwZTtcbiAgICAgICAgICAgICAgICB2YXIgbG9nSXRlbUVsID0gJGNvbXBpbGUoJzxsb2ctaXRlbSB0eXBlPVwidHlwZVwiIHRleHQ9XCJ0ZXh0XCI+PC9sb2ctaXRlbT4nKShzY29wZSk7XG4gICAgICAgICAgICAgICAgJGVsZW1lbnQuYXBwZW5kKGxvZ0l0ZW1FbCk7XG4gICAgICAgICAgICB9O1xuXG4gICAgICAgICAgICBzdG9yeUxvZ1NlcnZpY2UucmVnaXN0ZXIodGhpcyk7XG5cbiAgICAgICAgfVxuICAgIH1cblxufSkoKTtcbiJdLCJmaWxlIjoic3RvcnlMb2cvc3RvcnlMb2cuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+
+angular.module('mindgame').directive('scenery', SceneryDirective);
+
+function SceneryDirective() {
+    return {
+        restrict: 'E',
+        bindToController: {
+        },
+        scope: {},
+        controllerAs: 'scenery',
+        templateUrl: './html/scenery.html',
+        controller: SceneryController
+    };
+
+    function SceneryController(sceneryService, $element) {
+        console.log("screnery directive loader!");
+
+        sceneryService.onChange( function (image) {
+            console.log("Changing the scenere: ", image);
+            $element.css("background-image", "url(" + image + ")");
+            console.log($element);
+        });
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJzY2VuZXJ5L3NjZW5lcnkuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZGlyZWN0aXZlKCdzY2VuZXJ5JywgU2NlbmVyeURpcmVjdGl2ZSk7XG5cbmZ1bmN0aW9uIFNjZW5lcnlEaXJlY3RpdmUoKSB7XG4gICAgcmV0dXJuIHtcbiAgICAgICAgcmVzdHJpY3Q6ICdFJyxcbiAgICAgICAgYmluZFRvQ29udHJvbGxlcjoge1xuICAgICAgICB9LFxuICAgICAgICBzY29wZToge30sXG4gICAgICAgIGNvbnRyb2xsZXJBczogJ3NjZW5lcnknLFxuICAgICAgICB0ZW1wbGF0ZVVybDogJy4vaHRtbC9zY2VuZXJ5Lmh0bWwnLFxuICAgICAgICBjb250cm9sbGVyOiBTY2VuZXJ5Q29udHJvbGxlclxuICAgIH07XG5cbiAgICBmdW5jdGlvbiBTY2VuZXJ5Q29udHJvbGxlcihzY2VuZXJ5U2VydmljZSwgJGVsZW1lbnQpIHtcbiAgICAgICAgY29uc29sZS5sb2coXCJzY3JlbmVyeSBkaXJlY3RpdmUgbG9hZGVyIVwiKTtcblxuICAgICAgICBzY2VuZXJ5U2VydmljZS5vbkNoYW5nZSggZnVuY3Rpb24gKGltYWdlKSB7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyhcIkNoYW5naW5nIHRoZSBzY2VuZXJlOiBcIiwgaW1hZ2UpO1xuICAgICAgICAgICAgJGVsZW1lbnQuY3NzKFwiYmFja2dyb3VuZC1pbWFnZVwiLCBcInVybChcIiArIGltYWdlICsgXCIpXCIpO1xuICAgICAgICAgICAgY29uc29sZS5sb2coJGVsZW1lbnQpO1xuICAgICAgICB9KTtcbiAgICB9XG59Il0sImZpbGUiOiJzY2VuZXJ5L3NjZW5lcnkuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
 
 angular.module('mindgame').directive('userChoice', UserChoiceDirective);
 
@@ -2217,6 +2252,7 @@ Pointer.prototype.html = function () {
 
     Script.prototype.run = function (state) {
         var self = this;
+
         this.runtime = new Runtime(this.ast, state, onModeChange, onImport);
         this.runtime.run();
 
@@ -2240,7 +2276,7 @@ Pointer.prototype.html = function () {
 })(BigMess.Pointer, BigMess.AST, BigMess.Runtime);
 
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJiaWdtZXNzLnNjcmlwdC5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24gKFBvaW50ZXIsIEFTVCwgUnVudGltZSkge1xuICAgIFwidXNlIHN0cmljdFwiO1xuXG4gICAgQmlnTWVzcy5TY3JpcHQgPSBTY3JpcHQ7XG4gICAgZnVuY3Rpb24gU2NyaXB0KHNjcmlwdExvYWRlcikge1xuICAgICAgICB0aGlzLnNjcmlwdExvYWRlciA9IHNjcmlwdExvYWRlcjtcbiAgICAgICAgdGhpcy5wb2ludGVyID0gbmV3IFBvaW50ZXIoKTtcbiAgICAgICAgdGhpcy5hc3QgPSBuZXcgQVNUKCk7XG4gICAgICAgIC8vIEtlZXAgYSByZWZlcmVuY2UgdCBrZXkgbmFtZWQgbm9kZXNcbiAgICAgICAgdGhpcy5yZWZlcmVuY2VzID0ge307XG4gICAgICAgIHRoaXMucnVudGltZSA9IG51bGw7XG4gICAgfVxuXG4gICAgU2NyaXB0LnByb3RvdHlwZS5sb2FkID0gZnVuY3Rpb24gKHRleHQpIHtcbiAgICAgICAgdGhpcy5wb2ludGVyLnRva2VuaXplKHRleHQpO1xuICAgICAgICB0aGlzLmNvbXBpbGUodGhpcy5wb2ludGVyLnRva2Vucyk7IC8vIFRvZG8uLiB0aGlzIHNob3VsZCBub3QgYmUgY29tcGlsZVxuICAgICAgICByZXR1cm4gdGhpcztcbiAgICB9O1xuXG4gICAgU2NyaXB0LnByb3RvdHlwZS5ydW4gPSBmdW5jdGlvbiAoc3RhdGUpIHtcbiAgICAgICAgdmFyIHNlbGYgPSB0aGlzO1xuICAgICAgICB0aGlzLnJ1bnRpbWUgPSBuZXcgUnVudGltZSh0aGlzLmFzdCwgc3RhdGUsIG9uTW9kZUNoYW5nZSwgb25JbXBvcnQpO1xuICAgICAgICB0aGlzLnJ1bnRpbWUucnVuKCk7XG5cbiAgICAgICAgZnVuY3Rpb24gb25Nb2RlQ2hhbmdlKG1vZGUsIG5vZGUpe1xuICAgICAgICAgICAgY29uc29sZS5sb2coXCJLZWVwaW5nIHJlZmVyZW5jZSB0byBbXCIgKyBub2RlLnZhbHVlICsgXCJdXCIsIG1vZGUsIG5vZGUpO1xuICAgICAgICAgICAgdmFyIG5vZGVSZWZlcmVuY2VJZCA9IG5vZGUudmFsdWU7XG4gICAgICAgICAgICBzZWxmLnJlZmVyZW5jZXNbbm9kZVJlZmVyZW5jZUlkLnRvTG93ZXJDYXNlKCldID0gbm9kZTtcbiAgICAgICAgfVxuXG4gICAgICAgIGZ1bmN0aW9uIG9uSW1wb3J0KHVybCkge1xuICAgICAgICAgICAgY29uc29sZS5sb2coXCItLS0tLT4gb25JbXBvcnQgXCIsIHVybCk7XG4gICAgICAgICAgICBzZWxmLnNjcmlwdExvYWRlcih1cmwpO1xuICAgICAgICB9XG4gICAgfTtcblxuICAgIFNjcmlwdC5wcm90b3R5cGUuY29tcGlsZSA9IGZ1bmN0aW9uICh0b2tlbnMpIHtcbiAgICAgICAgdGhpcy5hc3QuY29tcGlsZSh0b2tlbnMpO1xuICAgICAgICByZXR1cm4gdGhpcztcbiAgICB9O1xuXG59KShCaWdNZXNzLlBvaW50ZXIsIEJpZ01lc3MuQVNULCBCaWdNZXNzLlJ1bnRpbWUpO1xuXG4iXSwiZmlsZSI6ImJpZ21lc3Muc2NyaXB0LmpzIiwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJiaWdtZXNzLnNjcmlwdC5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24gKFBvaW50ZXIsIEFTVCwgUnVudGltZSkge1xuICAgIFwidXNlIHN0cmljdFwiO1xuXG4gICAgQmlnTWVzcy5TY3JpcHQgPSBTY3JpcHQ7XG4gICAgZnVuY3Rpb24gU2NyaXB0KHNjcmlwdExvYWRlcikge1xuICAgICAgICB0aGlzLnNjcmlwdExvYWRlciA9IHNjcmlwdExvYWRlcjtcbiAgICAgICAgdGhpcy5wb2ludGVyID0gbmV3IFBvaW50ZXIoKTtcbiAgICAgICAgdGhpcy5hc3QgPSBuZXcgQVNUKCk7XG4gICAgICAgIC8vIEtlZXAgYSByZWZlcmVuY2UgdCBrZXkgbmFtZWQgbm9kZXNcbiAgICAgICAgdGhpcy5yZWZlcmVuY2VzID0ge307XG4gICAgICAgIHRoaXMucnVudGltZSA9IG51bGw7XG4gICAgfVxuXG4gICAgU2NyaXB0LnByb3RvdHlwZS5sb2FkID0gZnVuY3Rpb24gKHRleHQpIHtcbiAgICAgICAgdGhpcy5wb2ludGVyLnRva2VuaXplKHRleHQpO1xuICAgICAgICB0aGlzLmNvbXBpbGUodGhpcy5wb2ludGVyLnRva2Vucyk7IC8vIFRvZG8uLiB0aGlzIHNob3VsZCBub3QgYmUgY29tcGlsZVxuICAgICAgICByZXR1cm4gdGhpcztcbiAgICB9O1xuXG4gICAgU2NyaXB0LnByb3RvdHlwZS5ydW4gPSBmdW5jdGlvbiAoc3RhdGUpIHtcbiAgICAgICAgdmFyIHNlbGYgPSB0aGlzO1xuXG4gICAgICAgIHRoaXMucnVudGltZSA9IG5ldyBSdW50aW1lKHRoaXMuYXN0LCBzdGF0ZSwgb25Nb2RlQ2hhbmdlLCBvbkltcG9ydCk7XG4gICAgICAgIHRoaXMucnVudGltZS5ydW4oKTtcblxuICAgICAgICBmdW5jdGlvbiBvbk1vZGVDaGFuZ2UobW9kZSwgbm9kZSl7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyhcIktlZXBpbmcgcmVmZXJlbmNlIHRvIFtcIiArIG5vZGUudmFsdWUgKyBcIl1cIiwgbW9kZSwgbm9kZSk7XG4gICAgICAgICAgICB2YXIgbm9kZVJlZmVyZW5jZUlkID0gbm9kZS52YWx1ZTtcbiAgICAgICAgICAgIHNlbGYucmVmZXJlbmNlc1tub2RlUmVmZXJlbmNlSWQudG9Mb3dlckNhc2UoKV0gPSBub2RlO1xuICAgICAgICB9XG5cbiAgICAgICAgZnVuY3Rpb24gb25JbXBvcnQodXJsKSB7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyhcIi0tLS0tPiBvbkltcG9ydCBcIiwgdXJsKTtcbiAgICAgICAgICAgIHNlbGYuc2NyaXB0TG9hZGVyKHVybCk7XG4gICAgICAgIH1cbiAgICB9O1xuXG4gICAgU2NyaXB0LnByb3RvdHlwZS5jb21waWxlID0gZnVuY3Rpb24gKHRva2Vucykge1xuICAgICAgICB0aGlzLmFzdC5jb21waWxlKHRva2Vucyk7XG4gICAgICAgIHJldHVybiB0aGlzO1xuICAgIH07XG5cbn0pKEJpZ01lc3MuUG9pbnRlciwgQmlnTWVzcy5BU1QsIEJpZ01lc3MuUnVudGltZSk7XG5cbiJdLCJmaWxlIjoiYmlnbWVzcy5zY3JpcHQuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
 
 (function () {
     "use strict";

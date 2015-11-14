@@ -7,6 +7,7 @@ var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
+var bump = require('gulp-bump');
 
 var config = {
     server: {
@@ -24,6 +25,8 @@ var config = {
         staticSource: 'src/app/static/**',
         storiesSource: 'src/app/stories/**',
         javascriptSource: [
+            "src/app/js/yarn/yarn.js",
+            "src/app/js/yarn/**/*.js",
             "src/app/js/module.js",
             "src/app/js/routes.js",
             "src/app/js/game/game.predicates.js",
@@ -31,19 +34,11 @@ var config = {
             "src/app/js/game/game.things.js",
             "src/app/js/controllers/**/*.js",
             "src/app/js/services/**/*.js",
-            "src/app/js/directives/**/*.js",
-            "src/app/js/bigMess/bigmess.js",
-            "src/app/js/bigMess/bigmess.pointer.js",
-            "src/app/js/bigMess/bigmess.node.js",
-            "src/app/js/bigMess/bigmess.cursor.js",
-            "src/app/js/bigMess/bigmess.logic.js",
-            "src/app/js/bigMess/bigmess.ast.js",
-            "src/app/js/bigMess/bigmess.runtime.js",
-            "src/app/js/bigMess/bigmess.script.js",
-            "src/app/js/bigMess/bigmess.state.js"
+            "src/app/js/directives/**/*.js"
         ],
         javascriptVendorsSource: [
             "./bower_components/angular/angular.js",
+            "./bower_components/angular-animate/angular-animate.js",
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
             "./bower_components/angular-scroll-glue/src/scrollglue.js",
             "./bower_components/angular-hotkeys/build/hotkeys.js",
@@ -82,6 +77,7 @@ var cwd = {
 
 var paths = config.paths;
 
+gulp.task('bump', bumpTask);
 gulp.task('compileLess', lessTask);
 gulp.task('copyStatic', copyStaticTask);
 gulp.task('copyStories', copyStoriesTask);
@@ -117,6 +113,12 @@ gulp.task('dev', gulp.series(
 
 // -----[ Task Functions ]--------
 
+function bumpTask() {
+    return gulp.src(['bower.json', 'package.json', 'src/app/static/metadata.json'], {base: '.'})
+        .pipe(using())
+        .pipe(bump({type:'patch'}))
+        .pipe(gulp.dest('./'), cwd);
+}
 
 function copyStaticTask() {
     // Copy static folder

@@ -574,6 +574,48 @@ scenery {
   -o-background-size: auto 100%;
 }
 
+splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 1px;
+  overflow: visible;
+  z-index: 9999;
+}
+splash .splash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  z-index: 9999;
+}
+splash .splash .splash-content {
+  position: absolute;
+  width: 100%;
+  top: 50vh;
+  margin-top: -25vh;
+  text-align: center;
+  font-size: 1em;
+  color: #fff;
+}
+splash .splash .splash-content.ng-hide {
+  -webkit-transition: all ease-out 0.4s;
+  transition: all ease-out 0.4s;
+  margin-top: -35vh;
+}
+splash .splash .splash-content .splash-logo {
+  width: 40vw;
+  max-width: 253px;
+}
+splash .splash.ng-hide {
+  -webkit-transition: all ease-out 0.4s;
+  transition: all ease-out 0.4s;
+  opacity: 0;
+}
+
 story-log {
   display: block;
   padding: 20px 40px 20px 40px;

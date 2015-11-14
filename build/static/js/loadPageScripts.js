@@ -4,23 +4,32 @@ function loadPageScripts(loadScript,
                          $document,
                          $q) {
 
-    function loadScripts(scriptType, onLoad) {
-        var promise;
+    function loadPageScripts(scriptType) {
+        //var promise = $q(function () {
+        //    console.log("starting chain!");
+        //});
+        var deferred = $q.defer();
+        var scripts = [];
 
-        promise = $q(function (success) {
-            success();
-        });
-
-        angular.forEach($document.find("script"), function (scriptTag) {
+        /**
+         * Queue all scripts on the page to load sequencially
+         */
+        var promises = [];
+        var scriptTags = $document.find("script");
+        angular.forEach(scriptTags, function (scriptTag) {
             if (scriptTag.type.toLowerCase() === scriptType) {
-                promise = promise.then(function () {
-                    return loadScript(scriptTag.src, onLoad);
-                });
+                console.log("queued script ", scriptTag.src);
+                promises.push(loadScript(scriptTag.src));
             }
         });
 
-        return promise;
+        $q.all(promises).then(function (scripts) {
+            console.log("scripts", scripts);
+            deferred.resolve(scripts);
+        });
+
+        return deferred.promise;
     }
 
-    return loadScripts;
+    return loadPageScripts;
 }

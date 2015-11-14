@@ -22,6 +22,13 @@
 
         $stateProvider.state('root', {
             url: '/',
+            resolve: {
+                "metadata": function (loadMetadata) {
+                    return loadMetadata().then(function (metadata) {
+                        return metadata;
+                    });
+                }
+            },
             controllerAs: 'root',
             bindToController: {},
             templateUrl: './html/app.html',

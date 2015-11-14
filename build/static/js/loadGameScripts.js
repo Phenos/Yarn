@@ -3,25 +3,62 @@ angular.module('mindgame').factory('loadGameScripts', loadGameScripts);
 function loadGameScripts(game,
                          loadPageScripts,
                          writers,
-                         promptLoop) {
+                         promptLoop,
+                         splashService) {
 
     function loadGameScripts() {
         // Load all game scipts
-        loadPageScripts('yarn', onLoadScript).then(onLoadComplete);
+        return loadPageScripts('yarn')
+            .then(onSuccess, onFail);
     }
 
-    function onLoadComplete() {
-        writers
-            .LogStoryIntroduction()
-            .DescribeWhereYouAre();
-        promptLoop.update();
+    function onFail(error) {
+        console.log("Fail????? BOOOM!!! ", error);
     }
 
-    function onLoadScript(source) {
-        // TODO: game.game ????? UGLY!
-        var script = game.load(source);
-        script.run(game.state);
+    /**
+     * Called once all files are loaded (including imports)
+     */
+    function onSuccess(scripts) {
+        console.info("Game script loaded successfully", scripts);
+
+        if (scripts.length) {
+            game.load(scripts[0]).then(function (script) {
+                console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
+                console.log("script WHOO", script);
+
+                script.run(game.state);
+
+                console.log("======[ SHOULD HAVE ENDED RUN ]=======");
+                splashService.hide();
+                writers
+                    .LogStoryIntroduction()
+                    .DescribeWhereYouAre();
+                promptLoop.update();
+
+            });
+        }
+
+
+
     }
+
+    ///**
+    // * handler when additionnal module must be imported from the initial loaded file
+    // * @param source
+    // */
+    //function onLoad(source) {
+    //    function onCompiled(script) {
+    //        console.log("running script", source.substr(0, 100));
+    //        //script.run(game.state, onImport);
+    //    }
+    //}
+
+    //
+    //// todo: put scriptLoader into a service
+    //function onImport(url) {
+    //    console.log("-------- REMOVE OLD IMPORTING: ", url);
+    //}
 
     return loadGameScripts;
 

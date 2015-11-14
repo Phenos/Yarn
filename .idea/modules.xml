@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../yarn/.idea/yarn.iml" filepath="$PROJECT_DIR$/../yarn/.idea/yarn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/yarn.iml" filepath="$PROJECT_DIR$/.idea/yarn.iml" />
     </modules>
   </component>
 </project>

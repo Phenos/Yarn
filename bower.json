@@ -1,6 +1,6 @@
 {
   "name": "bigmess",
-  "version": "0.0.0",
+  "version": "0.0.11",
   "authors": [
     "mathieu <mathieu.sylvain@phenos.ca>"
   ],
@@ -17,6 +17,7 @@
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
     "angular-scroll-glue": "~2.0.6",
     "angular-ui-router": "~0.2.15",
-    "angularjs-breakpoint": "*"
+    "angularjs-breakpoint": "*",
+    "angular-animate": "~1.4.7"
   }
 }

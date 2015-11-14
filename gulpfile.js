@@ -114,9 +114,10 @@ gulp.task('dev', gulp.series(
 // -----[ Task Functions ]--------
 
 function bumpTask() {
-    return gulp.src(['./bower.json', './package.json', './src/app/static/metadata.json'])
+    return gulp.src(['bower.json', 'package.json', 'src/app/static/metadata.json'], {base: '.'})
+        .pipe(using())
         .pipe(bump({type:'patch'}))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./'), cwd);
 }
 
 function copyStaticTask() {

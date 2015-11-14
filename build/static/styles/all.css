@@ -594,11 +594,8 @@ splash .splash {
 }
 splash .splash .splash-content {
   position: absolute;
-  height: 30vh;
-  width: auto;
-  left: 50vw;
+  width: 100%;
   top: 50vh;
-  margin-left: -15vh;
   margin-top: -25vh;
   text-align: center;
   font-size: 1em;
@@ -610,7 +607,8 @@ splash .splash .splash-content.ng-hide {
   margin-top: -35vh;
 }
 splash .splash .splash-content .splash-logo {
-  width: 100%;
+  width: 40vw;
+  max-width: 253px;
 }
 splash .splash.ng-hide {
   -webkit-transition: all ease-out 0.4s;

@@ -4,30 +4,32 @@ function loadPageScripts(loadScript,
                          $document,
                          $q) {
 
-    function loadScripts(scriptType) {
+    function loadPageScripts(scriptType) {
+        //var promise = $q(function () {
+        //    console.log("starting chain!");
+        //});
         var deferred = $q.defer();
-        var rootPromise = deferred.promise;
-        var promise = rootPromise;
+        var scripts = [];
 
         /**
          * Queue all scripts on the page to load sequencially
          */
-        angular.forEach($document.find("script"), onEachScript);
-        function onEachScript(scriptTag) {
+        var promises = [];
+        var scriptTags = $document.find("script");
+        angular.forEach(scriptTags, function (scriptTag) {
             if (scriptTag.type.toLowerCase() === scriptType) {
-                promise = queueScriptLoad(scriptTag.src, promise);
+                console.log("queued script ", scriptTag.src);
+                promises.push(loadScript(scriptTag.src));
             }
-        }
-        function queueScriptLoad(src, promise) {
-            console.log("Queueuing script", src);
-            return loadScript(src).then(function (source) {
-                deferred.notify(source);
-                return promise;
-            });
-        }
+        });
 
-        return rootPromise;
+        $q.all(promises).then(function (scripts) {
+            console.log("scripts", scripts);
+            deferred.resolve(scripts);
+        });
+
+        return deferred.promise;
     }
 
-    return loadScripts;
+    return loadPageScripts;
 }

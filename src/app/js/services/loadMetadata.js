@@ -10,7 +10,7 @@ function loadMetadata($http) {
         };
 
         function then(response) {
-            console.info("Loaded: ", response.config.url, response.data);
+            console.info("Loaded metadata from : ", response.config.url, response.data);
             return response.data;
         }
 

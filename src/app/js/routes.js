@@ -24,9 +24,7 @@
             url: '/',
             resolve: {
                 "metadata": function (loadMetadata) {
-                    console.log("resolving metadata");
                     return loadMetadata().then(function (metadata) {
-                        console.log("loaded metadata", metadata);
                         return metadata;
                     });
                 }

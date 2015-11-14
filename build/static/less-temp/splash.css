@@ -1,0 +1,43 @@
+splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 1px;
+  overflow: visible;
+  z-index: 9999;
+}
+splash .splash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  z-index: 9999;
+}
+splash .splash .splash-content {
+  position: absolute;
+  height: 30vh;
+  width: auto;
+  left: 50vw;
+  top: 50vh;
+  margin-left: -15vh;
+  margin-top: -25vh;
+  text-align: center;
+  font-size: 1em;
+  color: #fff;
+}
+splash .splash .splash-content.ng-hide {
+  -webkit-transition: all ease-out 0.4s;
+  transition: all ease-out 0.4s;
+  margin-top: -35vh;
+}
+splash .splash .splash-content .splash-logo {
+  width: 100%;
+}
+splash .splash.ng-hide {
+  -webkit-transition: all ease-out 0.4s;
+  transition: all ease-out 0.4s;
+  opacity: 0;
+}

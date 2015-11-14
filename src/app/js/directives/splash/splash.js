@@ -17,7 +17,6 @@ function SplashDirective() {
     function SplashController($timeout, $scope) {
         $scope.visible = true;
 
-        console.log("----------------", $scope.metadata);
         // todo: Trigger fadeout only when app has finished loading and compiling all initial assets
         $timeout(hide, 1500);
 

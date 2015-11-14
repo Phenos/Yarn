@@ -1743,9 +1743,7 @@ angular.module('mindgame', [
             url: '/',
             resolve: {
                 "metadata": function (loadMetadata) {
-                    console.log("resolving metadata");
                     return loadMetadata().then(function (metadata) {
-                        console.log("loaded metadata", metadata);
                         return metadata;
                     });
                 }
@@ -1760,7 +1758,7 @@ angular.module('mindgame', [
 })();
 
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJyb3V0ZXMuanMiXSwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uICgpIHtcbiAgICAndXNlIHN0cmljdCc7XG5cblxuICAgIGFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmNvbmZpZyhhcHApO1xuXG4gICAgYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykucnVuKGZ1bmN0aW9uKCRyb290U2NvcGUpIHtcbiAgICAgICAgJHJvb3RTY29wZS5icmVha3BvaW50cyA9IHtcbiAgICAgICAgICAgIDA6ICdpc01vYmlsZVdpZHRoJyxcbiAgICAgICAgICAgIDQ4MDogJ2lzTW9iaWxlTGFuZHNjYXBlV2lkdGgnLFxuICAgICAgICAgICAgNjQxOiAnaXNUYWJsZXRXaWR0aCcsXG4gICAgICAgICAgICAxMDI1OiAnaXNEZXNrdG9wV2lkdGgnLFxuICAgICAgICAgICAgMTI4MTogJ2lzV2lkZXNjcmVlbkxheW91dCdcbiAgICAgICAgICAgIH07XG4gICAgICAgIH0pO1xuXG4gICAgZnVuY3Rpb24gYXBwKCRzdGF0ZVByb3ZpZGVyLFxuICAgICAgICAgICAgICAgICAkdXJsUm91dGVyUHJvdmlkZXIpIHtcblxuXG4gICAgICAgICR1cmxSb3V0ZXJQcm92aWRlci5vdGhlcndpc2UoJy8nKTtcblxuICAgICAgICAkc3RhdGVQcm92aWRlci5zdGF0ZSgncm9vdCcsIHtcbiAgICAgICAgICAgIHVybDogJy8nLFxuICAgICAgICAgICAgcmVzb2x2ZToge1xuICAgICAgICAgICAgICAgIFwibWV0YWRhdGFcIjogZnVuY3Rpb24gKGxvYWRNZXRhZGF0YSkge1xuICAgICAgICAgICAgICAgICAgICBjb25zb2xlLmxvZyhcInJlc29sdmluZyBtZXRhZGF0YVwiKTtcbiAgICAgICAgICAgICAgICAgICAgcmV0dXJuIGxvYWRNZXRhZGF0YSgpLnRoZW4oZnVuY3Rpb24gKG1ldGFkYXRhKSB7XG4gICAgICAgICAgICAgICAgICAgICAgICBjb25zb2xlLmxvZyhcImxvYWRlZCBtZXRhZGF0YVwiLCBtZXRhZGF0YSk7XG4gICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gbWV0YWRhdGE7XG4gICAgICAgICAgICAgICAgICAgIH0pO1xuICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgICBjb250cm9sbGVyQXM6ICdyb290JyxcbiAgICAgICAgICAgIGJpbmRUb0NvbnRyb2xsZXI6IHt9LFxuICAgICAgICAgICAgdGVtcGxhdGVVcmw6ICcuL2h0bWwvYXBwLmh0bWwnLFxuICAgICAgICAgICAgY29udHJvbGxlcjogJ3Jvb3QnXG4gICAgICAgIH0pO1xuXG4gICAgfVxufSkoKTtcblxuIl0sImZpbGUiOiJyb3V0ZXMuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJyb3V0ZXMuanMiXSwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uICgpIHtcbiAgICAndXNlIHN0cmljdCc7XG5cblxuICAgIGFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmNvbmZpZyhhcHApO1xuXG4gICAgYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykucnVuKGZ1bmN0aW9uKCRyb290U2NvcGUpIHtcbiAgICAgICAgJHJvb3RTY29wZS5icmVha3BvaW50cyA9IHtcbiAgICAgICAgICAgIDA6ICdpc01vYmlsZVdpZHRoJyxcbiAgICAgICAgICAgIDQ4MDogJ2lzTW9iaWxlTGFuZHNjYXBlV2lkdGgnLFxuICAgICAgICAgICAgNjQxOiAnaXNUYWJsZXRXaWR0aCcsXG4gICAgICAgICAgICAxMDI1OiAnaXNEZXNrdG9wV2lkdGgnLFxuICAgICAgICAgICAgMTI4MTogJ2lzV2lkZXNjcmVlbkxheW91dCdcbiAgICAgICAgICAgIH07XG4gICAgICAgIH0pO1xuXG4gICAgZnVuY3Rpb24gYXBwKCRzdGF0ZVByb3ZpZGVyLFxuICAgICAgICAgICAgICAgICAkdXJsUm91dGVyUHJvdmlkZXIpIHtcblxuXG4gICAgICAgICR1cmxSb3V0ZXJQcm92aWRlci5vdGhlcndpc2UoJy8nKTtcblxuICAgICAgICAkc3RhdGVQcm92aWRlci5zdGF0ZSgncm9vdCcsIHtcbiAgICAgICAgICAgIHVybDogJy8nLFxuICAgICAgICAgICAgcmVzb2x2ZToge1xuICAgICAgICAgICAgICAgIFwibWV0YWRhdGFcIjogZnVuY3Rpb24gKGxvYWRNZXRhZGF0YSkge1xuICAgICAgICAgICAgICAgICAgICByZXR1cm4gbG9hZE1ldGFkYXRhKCkudGhlbihmdW5jdGlvbiAobWV0YWRhdGEpIHtcbiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiBtZXRhZGF0YTtcbiAgICAgICAgICAgICAgICAgICAgfSk7XG4gICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgfSxcbiAgICAgICAgICAgIGNvbnRyb2xsZXJBczogJ3Jvb3QnLFxuICAgICAgICAgICAgYmluZFRvQ29udHJvbGxlcjoge30sXG4gICAgICAgICAgICB0ZW1wbGF0ZVVybDogJy4vaHRtbC9hcHAuaHRtbCcsXG4gICAgICAgICAgICBjb250cm9sbGVyOiAncm9vdCdcbiAgICAgICAgfSk7XG5cbiAgICB9XG59KSgpO1xuXG4iXSwiZmlsZSI6InJvdXRlcy5qcyIsInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
 
 "use strict";
 angular.module('mindgame').factory('gamePedicates', function() {
@@ -1968,10 +1966,10 @@ angular.module('mindgame').controller('root', rootController);
 
 function rootController(metadata, loadGameScripts, $scope) {
     $scope.metadata = metadata;
-    console.log("Game started!");
+    console.info("Yarn game started!");
     loadGameScripts();
 }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJyb290LmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmNvbnRyb2xsZXIoJ3Jvb3QnLCByb290Q29udHJvbGxlcik7XG5cbmZ1bmN0aW9uIHJvb3RDb250cm9sbGVyKG1ldGFkYXRhLCBsb2FkR2FtZVNjcmlwdHMsICRzY29wZSkge1xuICAgICRzY29wZS5tZXRhZGF0YSA9IG1ldGFkYXRhO1xuICAgIGNvbnNvbGUubG9nKFwiR2FtZSBzdGFydGVkIVwiKTtcbiAgICBsb2FkR2FtZVNjcmlwdHMoKTtcbn0iXSwiZmlsZSI6InJvb3QuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJyb290LmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmNvbnRyb2xsZXIoJ3Jvb3QnLCByb290Q29udHJvbGxlcik7XG5cbmZ1bmN0aW9uIHJvb3RDb250cm9sbGVyKG1ldGFkYXRhLCBsb2FkR2FtZVNjcmlwdHMsICRzY29wZSkge1xuICAgICRzY29wZS5tZXRhZGF0YSA9IG1ldGFkYXRhO1xuICAgIGNvbnNvbGUuaW5mbyhcIllhcm4gZ2FtZSBzdGFydGVkIVwiKTtcbiAgICBsb2FkR2FtZVNjcmlwdHMoKTtcbn0iXSwiZmlsZSI6InJvb3QuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
 
 angular.module('mindgame').factory('commands', commands);
 
@@ -2271,7 +2269,7 @@ function loadMetadata($http) {
         };
 
         function then(response) {
-            console.info("Loaded: ", response.config.url, response.data);
+            console.info("Loaded metadata from : ", response.config.url, response.data);
             return response.data;
         }
 
@@ -2281,7 +2279,7 @@ function loadMetadata($http) {
     return loadMetadata;
 }
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkTWV0YWRhdGEuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZmFjdG9yeSgnbG9hZE1ldGFkYXRhJywgbG9hZE1ldGFkYXRhKTtcblxuZnVuY3Rpb24gbG9hZE1ldGFkYXRhKCRodHRwKSB7XG5cbiAgICBmdW5jdGlvbiBsb2FkTWV0YWRhdGEgKCkge1xuICAgICAgICAvL2NvbnNvbGUubG9nKHNjcmlwdFRhZyk7XG4gICAgICAgIHZhciBjb25maWcgPSB7XG4gICAgICAgICAgICBtZXRob2Q6ICdHRVQnLFxuICAgICAgICAgICAgdXJsOiAnLi9tZXRhZGF0YS5qc29uJ1xuICAgICAgICB9O1xuXG4gICAgICAgIGZ1bmN0aW9uIHRoZW4ocmVzcG9uc2UpIHtcbiAgICAgICAgICAgIGNvbnNvbGUuaW5mbyhcIkxvYWRlZDogXCIsIHJlc3BvbnNlLmNvbmZpZy51cmwsIHJlc3BvbnNlLmRhdGEpO1xuICAgICAgICAgICAgcmV0dXJuIHJlc3BvbnNlLmRhdGE7XG4gICAgICAgIH1cblxuICAgICAgICByZXR1cm4gJGh0dHAoY29uZmlnKS50aGVuKHRoZW4pO1xuICAgIH1cblxuICAgIHJldHVybiBsb2FkTWV0YWRhdGE7XG59XG4iXSwiZmlsZSI6ImxvYWRNZXRhZGF0YS5qcyIsInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJsb2FkTWV0YWRhdGEuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZmFjdG9yeSgnbG9hZE1ldGFkYXRhJywgbG9hZE1ldGFkYXRhKTtcblxuZnVuY3Rpb24gbG9hZE1ldGFkYXRhKCRodHRwKSB7XG5cbiAgICBmdW5jdGlvbiBsb2FkTWV0YWRhdGEgKCkge1xuICAgICAgICAvL2NvbnNvbGUubG9nKHNjcmlwdFRhZyk7XG4gICAgICAgIHZhciBjb25maWcgPSB7XG4gICAgICAgICAgICBtZXRob2Q6ICdHRVQnLFxuICAgICAgICAgICAgdXJsOiAnLi9tZXRhZGF0YS5qc29uJ1xuICAgICAgICB9O1xuXG4gICAgICAgIGZ1bmN0aW9uIHRoZW4ocmVzcG9uc2UpIHtcbiAgICAgICAgICAgIGNvbnNvbGUuaW5mbyhcIkxvYWRlZCBtZXRhZGF0YSBmcm9tIDogXCIsIHJlc3BvbnNlLmNvbmZpZy51cmwsIHJlc3BvbnNlLmRhdGEpO1xuICAgICAgICAgICAgcmV0dXJuIHJlc3BvbnNlLmRhdGE7XG4gICAgICAgIH1cblxuICAgICAgICByZXR1cm4gJGh0dHAoY29uZmlnKS50aGVuKHRoZW4pO1xuICAgIH1cblxuICAgIHJldHVybiBsb2FkTWV0YWRhdGE7XG59XG4iXSwiZmlsZSI6ImxvYWRNZXRhZGF0YS5qcyIsInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
 
 angular.module('mindgame').factory('loadPageScripts', loadPageScripts);
 
@@ -2781,6 +2779,35 @@ function SceneryDirective() {
 }
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJzY2VuZXJ5L3NjZW5lcnkuanMiXSwic291cmNlc0NvbnRlbnQiOlsiYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZGlyZWN0aXZlKCdzY2VuZXJ5JywgU2NlbmVyeURpcmVjdGl2ZSk7XG5cbmZ1bmN0aW9uIFNjZW5lcnlEaXJlY3RpdmUoKSB7XG4gICAgcmV0dXJuIHtcbiAgICAgICAgcmVzdHJpY3Q6ICdFJyxcbiAgICAgICAgYmluZFRvQ29udHJvbGxlcjoge1xuICAgICAgICB9LFxuICAgICAgICBzY29wZToge30sXG4gICAgICAgIGNvbnRyb2xsZXJBczogJ3NjZW5lcnknLFxuICAgICAgICB0ZW1wbGF0ZVVybDogJy4vaHRtbC9zY2VuZXJ5Lmh0bWwnLFxuICAgICAgICBjb250cm9sbGVyOiBTY2VuZXJ5Q29udHJvbGxlclxuICAgIH07XG5cbiAgICBmdW5jdGlvbiBTY2VuZXJ5Q29udHJvbGxlcihzY2VuZXJ5U2VydmljZSwgJGVsZW1lbnQpIHtcbiAgICAgICAgY29uc29sZS5sb2coXCJzY3JlbmVyeSBkaXJlY3RpdmUgbG9hZGVyIVwiKTtcblxuICAgICAgICBzY2VuZXJ5U2VydmljZS5vbkNoYW5nZSggZnVuY3Rpb24gKGltYWdlKSB7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyhcIkNoYW5naW5nIHRoZSBzY2VuZXJlOiBcIiwgaW1hZ2UpO1xuICAgICAgICAgICAgJGVsZW1lbnQuY3NzKFwiYmFja2dyb3VuZC1pbWFnZVwiLCBcInVybChcIiArIGltYWdlICsgXCIpXCIpO1xuICAgICAgICAgICAgY29uc29sZS5sb2coJGVsZW1lbnQpO1xuICAgICAgICB9KTtcbiAgICB9XG59Il0sImZpbGUiOiJzY2VuZXJ5L3NjZW5lcnkuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
 
+angular.module('mindgame').directive('splash', SplashDirective);
+
+function SplashDirective() {
+    return {
+        restrict: 'E',
+        bindToController: {
+        },
+        scope: {
+            visible: "=",
+            metadata: "="
+        },
+        controllerAs: 'splash',
+        template: '<div class="splash" ng-show="visible"><div class="splash-content" ng-show="visible"><img class="splash-logo" src="/images/logo-253px-onDark.png"><p>v{{ metadata.version }}</p><p>Loading...</p><div></div>',
+        controller: SplashController
+    };
+
+    function SplashController($timeout, $scope) {
+        $scope.visible = true;
+
+        // todo: Trigger fadeout only when app has finished loading and compiling all initial assets
+        $timeout(hide, 1500);
+
+        function hide() {
+            $scope.visible = false;
+        }
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJzcGxhc2gvc3BsYXNoLmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmRpcmVjdGl2ZSgnc3BsYXNoJywgU3BsYXNoRGlyZWN0aXZlKTtcblxuZnVuY3Rpb24gU3BsYXNoRGlyZWN0aXZlKCkge1xuICAgIHJldHVybiB7XG4gICAgICAgIHJlc3RyaWN0OiAnRScsXG4gICAgICAgIGJpbmRUb0NvbnRyb2xsZXI6IHtcbiAgICAgICAgfSxcbiAgICAgICAgc2NvcGU6IHtcbiAgICAgICAgICAgIHZpc2libGU6IFwiPVwiLFxuICAgICAgICAgICAgbWV0YWRhdGE6IFwiPVwiXG4gICAgICAgIH0sXG4gICAgICAgIGNvbnRyb2xsZXJBczogJ3NwbGFzaCcsXG4gICAgICAgIHRlbXBsYXRlOiAnPGRpdiBjbGFzcz1cInNwbGFzaFwiIG5nLXNob3c9XCJ2aXNpYmxlXCI+PGRpdiBjbGFzcz1cInNwbGFzaC1jb250ZW50XCIgbmctc2hvdz1cInZpc2libGVcIj48aW1nIGNsYXNzPVwic3BsYXNoLWxvZ29cIiBzcmM9XCIvaW1hZ2VzL2xvZ28tMjUzcHgtb25EYXJrLnBuZ1wiPjxwPnZ7eyBtZXRhZGF0YS52ZXJzaW9uIH19PC9wPjxwPkxvYWRpbmcuLi48L3A+PGRpdj48L2Rpdj4nLFxuICAgICAgICBjb250cm9sbGVyOiBTcGxhc2hDb250cm9sbGVyXG4gICAgfTtcblxuICAgIGZ1bmN0aW9uIFNwbGFzaENvbnRyb2xsZXIoJHRpbWVvdXQsICRzY29wZSkge1xuICAgICAgICAkc2NvcGUudmlzaWJsZSA9IHRydWU7XG5cbiAgICAgICAgLy8gdG9kbzogVHJpZ2dlciBmYWRlb3V0IG9ubHkgd2hlbiBhcHAgaGFzIGZpbmlzaGVkIGxvYWRpbmcgYW5kIGNvbXBpbGluZyBhbGwgaW5pdGlhbCBhc3NldHNcbiAgICAgICAgJHRpbWVvdXQoaGlkZSwgMTUwMCk7XG5cbiAgICAgICAgZnVuY3Rpb24gaGlkZSgpIHtcbiAgICAgICAgICAgICRzY29wZS52aXNpYmxlID0gZmFsc2U7XG4gICAgICAgIH1cbiAgICB9XG59Il0sImZpbGUiOiJzcGxhc2gvc3BsYXNoLmpzIiwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=
+
 (function() {
 
 angular.module('mindgame').directive('logItem', LogItemDirective);
@@ -2851,36 +2878,6 @@ function LogItemDirective($sce) {
 })();
 
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJzdG9yeUxvZy9zdG9yeUxvZy5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24gKCkge1xuXG4gICAgYW5ndWxhci5tb2R1bGUoJ21pbmRnYW1lJykuZGlyZWN0aXZlKCdzdG9yeUxvZycsIFN0b3J5TG9nRGlyZWN0aXZlKTtcblxuICAgIGZ1bmN0aW9uIFN0b3J5TG9nRGlyZWN0aXZlKCkge1xuICAgICAgICByZXR1cm4ge1xuICAgICAgICAgICAgcmVzdHJpY3Q6ICdFJyxcbiAgICAgICAgICAgIGJpbmRUb0NvbnRyb2xsZXI6IHtcbiAgICAgICAgICAgICAgICByZWFkeTogXCImXCJcbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgICBzY29wZToge30sXG4gICAgICAgICAgICBjb250cm9sbGVyQXM6ICdzdG9yeUxvZycsXG4gICAgICAgICAgICAvL3RlbXBsYXRlOiAnPGRpdiBjbGFzcz1cImxvZ0l0ZW1zXCI+e3sgdXNlcklucHV0LnRleHQgfX08L2Rpdj4nLFxuICAgICAgICAgICAgY29udHJvbGxlcjogU3RvcnlMb2dDb250cm9sbGVyXG4gICAgICAgIH07XG5cbiAgICAgICAgZnVuY3Rpb24gU3RvcnlMb2dDb250cm9sbGVyKHN0b3J5TG9nU2VydmljZSwgJHNjb3BlLCAkZWxlbWVudCwgJGNvbXBpbGUsICR3aW5kb3cpIHtcblxuICAgICAgICAgICAgdGhpcy5jbGVhciA9IGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAgICAgICAkZWxlbWVudC5lbXB0eSgpO1xuICAgICAgICAgICAgICAgICR3aW5kb3cuc2Nyb2xsKDAsIDApO1xuICAgICAgICAgICAgfTtcblxuICAgICAgICAgICAgdGhpcy53cml0ZSA9IGZ1bmN0aW9uICh0ZXh0LCB0eXBlKSB7XG4gICAgICAgICAgICAgICAgdmFyIHNjb3BlID0gJHNjb3BlLiRuZXcoKTtcbiAgICAgICAgICAgICAgICBzY29wZS50ZXh0ID0gdGV4dDtcbiAgICAgICAgICAgICAgICBzY29wZS50eXBlID0gdHlwZTtcbiAgICAgICAgICAgICAgICB2YXIgbG9nSXRlbUVsID0gJGNvbXBpbGUoJzxsb2ctaXRlbSB0eXBlPVwidHlwZVwiIHRleHQ9XCJ0ZXh0XCI+PC9sb2ctaXRlbT4nKShzY29wZSk7XG4gICAgICAgICAgICAgICAgJGVsZW1lbnQuYXBwZW5kKGxvZ0l0ZW1FbCk7XG4gICAgICAgICAgICB9O1xuXG4gICAgICAgICAgICBzdG9yeUxvZ1NlcnZpY2UucmVnaXN0ZXIodGhpcyk7XG5cbiAgICAgICAgfVxuICAgIH1cblxufSkoKTtcbiJdLCJmaWxlIjoic3RvcnlMb2cvc3RvcnlMb2cuanMiLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
-
-angular.module('mindgame').directive('splash', SplashDirective);
-
-function SplashDirective() {
-    return {
-        restrict: 'E',
-        bindToController: {
-        },
-        scope: {
-            visible: "=",
-            metadata: "="
-        },
-        controllerAs: 'splash',
-        template: '<div class="splash" ng-show="visible"><div class="splash-content" ng-show="visible"><img class="splash-logo" src="/images/logo-253px-onDark.png"><p>v{{ metadata.version }}</p><p>Loading...</p><div></div>',
-        controller: SplashController
-    };
-
-    function SplashController($timeout, $scope) {
-        $scope.visible = true;
-
-        console.log("----------------", $scope.metadata);
-        // todo: Trigger fadeout only when app has finished loading and compiling all initial assets
-        $timeout(hide, 1500);
-
-        function hide() {
-            $scope.visible = false;
-        }
-    }
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJzcGxhc2gvc3BsYXNoLmpzIl0sInNvdXJjZXNDb250ZW50IjpbImFuZ3VsYXIubW9kdWxlKCdtaW5kZ2FtZScpLmRpcmVjdGl2ZSgnc3BsYXNoJywgU3BsYXNoRGlyZWN0aXZlKTtcblxuZnVuY3Rpb24gU3BsYXNoRGlyZWN0aXZlKCkge1xuICAgIHJldHVybiB7XG4gICAgICAgIHJlc3RyaWN0OiAnRScsXG4gICAgICAgIGJpbmRUb0NvbnRyb2xsZXI6IHtcbiAgICAgICAgfSxcbiAgICAgICAgc2NvcGU6IHtcbiAgICAgICAgICAgIHZpc2libGU6IFwiPVwiLFxuICAgICAgICAgICAgbWV0YWRhdGE6IFwiPVwiXG4gICAgICAgIH0sXG4gICAgICAgIGNvbnRyb2xsZXJBczogJ3NwbGFzaCcsXG4gICAgICAgIHRlbXBsYXRlOiAnPGRpdiBjbGFzcz1cInNwbGFzaFwiIG5nLXNob3c9XCJ2aXNpYmxlXCI+PGRpdiBjbGFzcz1cInNwbGFzaC1jb250ZW50XCIgbmctc2hvdz1cInZpc2libGVcIj48aW1nIGNsYXNzPVwic3BsYXNoLWxvZ29cIiBzcmM9XCIvaW1hZ2VzL2xvZ28tMjUzcHgtb25EYXJrLnBuZ1wiPjxwPnZ7eyBtZXRhZGF0YS52ZXJzaW9uIH19PC9wPjxwPkxvYWRpbmcuLi48L3A+PGRpdj48L2Rpdj4nLFxuICAgICAgICBjb250cm9sbGVyOiBTcGxhc2hDb250cm9sbGVyXG4gICAgfTtcblxuICAgIGZ1bmN0aW9uIFNwbGFzaENvbnRyb2xsZXIoJHRpbWVvdXQsICRzY29wZSkge1xuICAgICAgICAkc2NvcGUudmlzaWJsZSA9IHRydWU7XG5cbiAgICAgICAgY29uc29sZS5sb2coXCItLS0tLS0tLS0tLS0tLS0tXCIsICRzY29wZS5tZXRhZGF0YSk7XG4gICAgICAgIC8vIHRvZG86IFRyaWdnZXIgZmFkZW91dCBvbmx5IHdoZW4gYXBwIGhhcyBmaW5pc2hlZCBsb2FkaW5nIGFuZCBjb21waWxpbmcgYWxsIGluaXRpYWwgYXNzZXRzXG4gICAgICAgICR0aW1lb3V0KGhpZGUsIDE1MDApO1xuXG4gICAgICAgIGZ1bmN0aW9uIGhpZGUoKSB7XG4gICAgICAgICAgICAkc2NvcGUudmlzaWJsZSA9IGZhbHNlO1xuICAgICAgICB9XG4gICAgfVxufSJdLCJmaWxlIjoic3BsYXNoL3NwbGFzaC5qcyIsInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
 
 angular.module('mindgame').directive('userChoice', UserChoiceDirective);
 

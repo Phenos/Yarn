@@ -7,6 +7,7 @@ var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
+var bump = require('gulp-bump');
 
 var config = {
     server: {
@@ -37,6 +38,7 @@ var config = {
         ],
         javascriptVendorsSource: [
             "./bower_components/angular/angular.js",
+            "./bower_components/angular-animate/angular-animate.js",
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
             "./bower_components/angular-scroll-glue/src/scrollglue.js",
             "./bower_components/angular-hotkeys/build/hotkeys.js",
@@ -75,6 +77,7 @@ var cwd = {
 
 var paths = config.paths;
 
+gulp.task('bump', bumpTask);
 gulp.task('compileLess', lessTask);
 gulp.task('copyStatic', copyStaticTask);
 gulp.task('copyStories', copyStoriesTask);
@@ -110,6 +113,11 @@ gulp.task('dev', gulp.series(
 
 // -----[ Task Functions ]--------
 
+function bumpTask() {
+    return gulp.src(['./bower.json', './package.json', './src/app/static/metadata.json'])
+        .pipe(bump({type:'patch'}))
+        .pipe(gulp.dest('./'));
+}
 
 function copyStaticTask() {
     // Copy static folder

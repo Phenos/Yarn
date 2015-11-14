@@ -74,7 +74,7 @@
          */
         Runtime.prototype.run = function () {
             this.cursor.start(this.ast.root);
-            this.runNode(this.ast.root);
+            return this.runNode(this.ast.root);
         };
 
         Runtime.prototype.runNode = function (node) {
@@ -92,7 +92,7 @@
                     runtime.stack.pop();
                 },
                 "symbol": function (runtime, node) {
-                    console.log("symbole ", node.value);
+                    //console.log("symbole ", node.value);
                     // Get or create a new thing according to that symbol
                     if (node.variant === "value") {
                         returnValue = node.value;
@@ -121,7 +121,7 @@
                     return returnValue;
                 },
                 "instruction": function (runtime, node) {
-                    console.log("instruction ", node.value);
+                    //console.log("instruction ", node.value);
                     var predicate;
                     var args;
                     var mode;

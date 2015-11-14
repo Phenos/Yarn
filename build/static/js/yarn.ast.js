@@ -10,39 +10,28 @@
         }
 
         AST.prototype.qualifyTokens = function (tokens) {
-
-            tokens.forEach(function (token, index, tokens) {
-                var command = "";
+            tokens.forEach(function (token) {
+                var command;
                 var type = token[0];
-                if (type === "default") {
-                    command = "appendInstruction"
-                } else if (type === "period") {
-                    command = "endSequence"
-                } else if (type === "multiLinebreak") {
-                    command = "endSequence"
-                } else if (type === "numeric") {
-                    command = "appendValue"
-                } else if (type === "singleQuote") {
-                    command = "appendValue"
-                } else if (type === "doubleQuote") {
-                    command = "appendValue"
-                } else if (type === "colon") {
-                    command = "startArguments"
-                } else if (type === "hash") {
-                    command = "appendReference"
-                } else if (type === "at") {
-                    command = "appendConstant"
-                } else if (type === "comma") {
-                    command = "nextArgument"
-                } else if (type === "linebreak") {
-                    command = "ignore"
-                } else if (type === "lineComment") {
-                    command = "ignore"
-                } else if (type === "blockComment") {
-                    command = "ignore"
-                }
+                command = TokenCommands[type];
                 token[3] = command;
             });
+        };
+
+        var TokenCommands = {
+            "default": "appendInstruction",
+            "period": "endSequence",
+            "multiLinebreak": "endSequence",
+            "numeric": "appendValue",
+            "singleQuote": "appendValue",
+            "doubleQuote": "appendValue",
+            "colon": "startArguments",
+            "hash": "appendReference",
+            "at": "appendConstant",
+            "comma": "nextArgument",
+            "linebreak": "ignore",
+            "lineComment": "ignore",
+            "blockComment": "ignore"
         };
 
         AST.prototype.html = function () {
@@ -63,36 +52,13 @@
 
             this.qualifyTokens(tokens);
 
-            var promise = $q(function (resolve, reject) {
+            var promise = $q(function (resolve) {
 
                 tokens.forEach(function (token) {
                     var command = token[3];
                     var tokenString = token[1];
-                    switch (command) {
-                        case "appendInstruction":
-                            cursor.appendInstruction(tokenString);
-                            break;
-                        case "endSequence":
-                            cursor.endSequence();
-                            break;
-                        case "appendValue":
-                            cursor.appendSymbol("value", tokenString);
-                            break;
-                        case "appendReference":
-                            cursor.appendSymbol("reference", tokenString);
-                            break;
-                        case "appendConstant":
-                            cursor.appendSymbol("constant", tokenString);
-                            break;
-                        case "startArguments":
-                            cursor.startArguments();
-                            break;
-                        case "nextArgument":
-                            cursor.nextArgument();
-                            break;
-                        case "ignore":
-                            break;
-                    }
+                    var tokenHandler = TokenHandlers[command];
+                    tokenHandler(cursor, tokenString);
                 });
 
                 resolve(self);
@@ -100,8 +66,35 @@
 
             return promise;
         };
+        
+        var TokenHandlers = {
+            "appendInstruction": function (cursor, tokenString) {
+                cursor.appendInstruction(tokenString);
+            },
+            "endSequence": function (cursor) {
+                cursor.endSequence();
+            },
+            "appendValue": function (cursor, tokenString) {
+                cursor.appendSymbol("value", tokenString);
+            },
+            "appendReference": function (cursor, tokenString) {
+                cursor.appendSymbol("reference", tokenString);
+            },
+            "appendConstant": function (cursor, tokenString) {
+                cursor.appendSymbol("constant", tokenString);
+            },
+            "startArguments": function (cursor) {
+                cursor.startArguments();
+            },
+            "nextArgument": function (cursor) {
+                cursor.nextArgument();
+            },
+            "ignore": function (cursor, tokenString) {
+            }
+        };
 
         return AST;
+
     }
 
 })();

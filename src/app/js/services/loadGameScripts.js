@@ -4,12 +4,14 @@ function loadGameScripts(game,
                          loadScript,
                          loadPageScripts,
                          writers,
-                         promptLoop) {
+                         promptLoop,
+                         splashService, $timeout) {
 
     function loadGameScripts() {
         // Load all game scipts
         loadPageScripts('yarn')
             .then(onSuccess, onFail, onLoad);
+        splashService.hide();
     }
 
     function onFail(error) {
@@ -20,7 +22,8 @@ function loadGameScripts(game,
      * Called once all files are loaded (including imports)
      */
     function onSuccess(result) {
-        console.log("onSuccess? ", result);
+        console.info("Game script loaded successfully", result);
+        splashService.hide();
         writers
             .LogStoryIntroduction()
             .DescribeWhereYouAre();
@@ -47,6 +50,7 @@ function loadGameScripts(game,
         function onLoad(source) {
             console.log("IMPORTED: ", url);
             var script = game.load(source).then(onCompiled);
+
             function onCompiled() {
                 script.run(game.state);
             }

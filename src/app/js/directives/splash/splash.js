@@ -14,14 +14,16 @@ function SplashDirective() {
         controller: SplashController
     };
 
-    function SplashController($timeout, $scope) {
+    function SplashController($timeout, $scope, splashService) {
         $scope.visible = true;
 
-        // todo: Trigger fadeout only when app has finished loading and compiling all initial assets
-        $timeout(hide, 1500);
+        this.hide = function () {
+            $timeout(function () {
+                $scope.visible = false;
+            }, 1000);
+        };
 
-        function hide() {
-            $scope.visible = false;
-        }
+        splashService.register(this);
+
     }
 }

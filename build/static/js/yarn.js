@@ -30,10 +30,11 @@ function YarnService(State, Logic, Script) {
         this.load = function (text) {
             var script = new Script();
             this.scripts.push(script);
-            var promise = script.load(text).then(function () {
+            console.log("yarn.load");
+            return script.load(text).then(function (v) {
+                console.log("?", v);
                 return script;
             });
-            return promise;
         };
     }
 

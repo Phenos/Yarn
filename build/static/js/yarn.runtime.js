@@ -134,6 +134,13 @@
                         runtime.runSet(node.set);
                         runtime.stack.pop();
 
+                    } else if (node.value === "@imported") {
+                        //runtime.stack.push("default", {
+                        //    "this": "root"
+                        //});
+                        runtime.runSet(node.set);
+                        //runtime.stack.pop();
+
                     } else {
 
                         // Identify which predicate corresponds to this instruction

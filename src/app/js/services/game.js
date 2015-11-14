@@ -1,13 +1,13 @@
-angular.module('mindgame').factory('game', game);
+angular.module('mindgame').factory('game', gameService);
 
-function game(loadScript,
+function gameService(Yarn,
+              loadScript,
               gamePedicates,
               gameRoutines,
               gameThings,
               $timeout) {
 
-    // todo: rename "BigMess" to Yarn
-    var game = new BigMess(scriptLoader);
+    var game = new Yarn(scriptLoader);
 
     // Load various configuration modules
     gamePedicates(game);

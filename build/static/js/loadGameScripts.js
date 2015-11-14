@@ -32,9 +32,11 @@ function loadGameScripts(game,
      * @param source
      */
     function onLoad(source) {
-        var script = game.load(source);
-        console.log("running script", source.substr(0, 100));
-        script.run(game.state, onImport);
+        game.load(source).then(onCompiled);
+        function onCompiled(script) {
+            console.log("running script", source.substr(0, 100));
+            script.run(game.state, onImport);
+        }
     }
 
 
@@ -44,8 +46,10 @@ function loadGameScripts(game,
         loadScript(url).then(onLoad);
         function onLoad(source) {
             console.log("IMPORTED: ", url);
-            var script = game.load(source);
-            script.run(game.state);
+            var script = game.load(source).then(onCompiled);
+            function onCompiled() {
+                script.run(game.state);
+            }
         }
     }
 

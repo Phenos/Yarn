@@ -4,14 +4,16 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "gulp": "./node_modules/gulp/bin/gulp",
     "start": "node server.js",
-    "postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node_modules/gulp/bin/gulp  build",
+    "postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
   "dependencies": {
+    "bower": "latest",
+    "del": "^2.1.0",
     "ejs": "2.3.3",
     "express": "4.13.3",
-    "bower": "latest",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-bump": "^1.0.0",
     "gulp-clean": "^0.3.1",

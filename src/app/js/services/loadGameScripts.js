@@ -23,7 +23,7 @@ function loadGameScripts(game,
         console.info("Game script loaded successfully", scripts);
 
         if (scripts.length) {
-            game.load(scripts[0]).then(function (script) {
+            game.load(scripts[0].source, scripts[0].url).then(function (script) {
                 console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
                 console.log("script WHOO", script);
 

@@ -27,11 +27,11 @@ function YarnService(State, Logic, Script) {
          * Parse a text into various semantic parts to be consumed by Yarn
          * @param text
          */
-        this.load = function (text) {
+        this.load = function (text, url) {
             var script = new Script();
             this.scripts.push(script);
             console.log("yarn.load");
-            return script.load(text).then(function (v) {
+            return script.load(text, url).then(function (v) {
                 console.log("?", v);
                 return script;
             });

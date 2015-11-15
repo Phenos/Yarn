@@ -11,7 +11,10 @@ function loadScript($http) {
 
         function then(response) {
             console.info("Loaded script: ", response.config.url);
-            return response.data;
+            return {
+                source: response.data,
+                url: src
+            };
         }
 
         return $http(config).then(then);

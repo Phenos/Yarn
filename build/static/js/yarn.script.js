@@ -3,9 +3,10 @@
 
     angular.module('yarn').factory('Script', ScriptService);
 
-    function ScriptService(Pointer, AST, Runtime, $q, loadScript) {
+    function ScriptService(Pointer, AST, Runtime, $q, loadScript, URI) {
 
         function Script() {
+            this.url = "";
             this.source = "";
             this.pointer = new Pointer();
             this.ast = new AST();
@@ -16,13 +17,16 @@
             this.runtime = null;
         }
 
-        Script.prototype.load = function (source) {
+        // todo: this should load the scripts itself instead of relying on parent
+
+        Script.prototype.load = function (source, url) {
+            this.url = url || "";
             this.source = source;
             var self = this;
             this.pointer.tokenize(source);
-            console.log("yarn.script.load");
+            //console.log("yarn.script.load");
             return this.compile(this.pointer.tokens).then(function (ast) {
-                console.log("after compile");
+                //console.log("after compile");
                 return self.processImports(ast);
             });
         };
@@ -30,28 +34,13 @@
         Script.prototype.run = function (state) {
             var self = this;
 
-            this.runtime = new Runtime(this.ast, state, onModeChange, onImport);
+            this.runtime = new Runtime(this.ast, state, onModeChange);
             this.runtime.run();
 
             function onModeChange(mode, node){
                 console.log("Keeping reference to [" + node.value + "]", mode, node);
                 var nodeReferenceId = node.value;
                 self.references[nodeReferenceId.toLowerCase()] = node;
-            }
-
-            function onImport(url) {
-                console.log("-----> onImport ", url);
-
-
-
-
-
-
-
-                console.log("SCRIPT LOADING SHOULD OCCUR HERE!")
-
-
-
             }
         };
 
@@ -61,67 +50,57 @@
 
         Script.prototype.processImports = function (ast) {
             console.info("Parsing AST for imports");
-            console.log("ast", ast);
-            return parseNode(ast.root);
+            //console.log("ast", ast);
+            return this.parseNode(ast.root);
         };
 
-        function parseNode(node) {
+        Script.prototype.parseNode = function (node) {
+            var self = this;
             if (node.type === "instruction" && node.value === "Import") {
-                return importSet(node.set);
+                return self.importSet(node.set);
             } else {
-                return parseSet(node.set);
+                return self.parseSet(node.set);
             }
-        }
+        };
 
-        function importSet(set) {
+        Script.prototype.importSet = function (set) {
+            var self = this;
             var promises = [];
             if (set.nodes.length) {
                 angular.forEach(set.nodes, function (node) {
-                    promises.push(importNode(node));
+                    promises.push(self.importNode(node));
                 });
             }
             return $q.all(promises);
-        }
+        };
 
-        function importNode(node) {
-            console.log("IMPORTING!", node);
-            return loadScript(node.value).then(function (text) {
+        Script.prototype.importNode = function (node) {
+            var url = URI(node.value).absoluteTo(this.url);
+            return loadScript(url).then(function (loadedScript) {
                 var script = new Script();
-                return script.load(text).then(function () {
-                    console.log("SCRIPT IMPORTED", script);
-
+                return script.load(loadedScript.source, loadedScript.url).then(function () {
                     // Graft the root node of the imported script onto
                     // the node which imported the script
                     // then change the node type to
                     node.type = "instruction";
                     node.value = "@imported";
                     node.set = script.ast.root.set;
-
+                    console.info("Grafted imported AST into parent AST")
                 });
             });
-        }
+        };
 
-        function parseSet(set) {
+        Script.prototype.parseSet = function parseSet(set) {
+            var self = this;
             var promises = [];
             if (set.nodes.length) {
                 angular.forEach(set.nodes, function (node) {
-                    promises.push(parseNode(node));
+                    promises.push(self.parseNode(node));
                 });
             }
             return $q.all(promises);
-        }
+        };
 
-/*
-
- cursor: Cursor
-    root: Node
-        set: Set
-         nodes: Array[7]
-             0: Node
-                 set: Set
-                     nodes: Array[4]
-
- */
         return Script;
     }
 

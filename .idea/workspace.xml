@@ -2,21 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="94d96aae-7a74-44a0-b850-8b1f25077655" name="Default" comment="" />
-    <list id="29cef767-7255-43e1-91bb-578d7903a6e8" name="!!!!! Stupid project files stuck here" comment="" />
-    <list default="true" id="8675cac1-88bb-4250-a49d-16abe75b533b" name="Make sure the game imports script sequencially and runs only after all scripts are loaded" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list id="8675cac1-88bb-4250-a49d-16abe75b533b" name="Make sure the game imports script sequencially and runs only after all scripts are loaded" comment="Failed attempt at recursive importing. Run routines must also become async with promises" />
+    <list default="true" id="db1add84-03c4-47e6-b393-a1ea4cc00514" name="Load file async when parsing import instructinos" comment="Import system completed!!!!">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/index.html" afterPath="$PROJECT_DIR$/build/static/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/all.js" afterPath="$PROJECT_DIR$/build/static/js/all.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/bigmess.script.js" afterPath="$PROJECT_DIR$/build/static/js/bigmess.script.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/loadGameScripts.js" afterPath="$PROJECT_DIR$/build/static/js/loadGameScripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/loadPageScripts.js" afterPath="$PROJECT_DIR$/build/static/js/loadPageScripts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/loadScript.js" afterPath="$PROJECT_DIR$/build/static/js/loadScript.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js" afterPath="$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/services/LoadPageScripts.js" afterPath="$PROJECT_DIR$/src/app/js/services/LoadPageScripts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/module.js" afterPath="$PROJECT_DIR$/build/static/js/module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/vendors.js" afterPath="$PROJECT_DIR$/build/static/js/vendors.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/yarn.js" afterPath="$PROJECT_DIR$/build/static/js/yarn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/js/yarn.script.js" afterPath="$PROJECT_DIR$/build/static/js/yarn.script.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/metadata.json" afterPath="$PROJECT_DIR$/build/static/metadata.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/static/stories/theHouse/dialogs.txt" afterPath="$PROJECT_DIR$/build/static/stories/theHouse/dialogs.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/module.js" afterPath="$PROJECT_DIR$/src/app/js/module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/services/loadGameScripts.js" afterPath="$PROJECT_DIR$/src/app/js/services/loadGameScripts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/services/loadScript.js" afterPath="$PROJECT_DIR$/src/app/js/services/loadScript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/yarn/yarn.js" afterPath="$PROJECT_DIR$/src/app/js/yarn/yarn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/js/yarn/yarn.script.js" afterPath="$PROJECT_DIR$/src/app/js/yarn/yarn.script.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/static/index.html" afterPath="$PROJECT_DIR$/src/app/static/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/stories/theHouse/dialogs.txt" afterPath="$PROJECT_DIR$/src/app/stories/theHouse/dialogs.txt" />
     </list>
     <ignored path="bigmess.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,31 +46,285 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="yarn.script.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.script.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.28125">
+              <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="all.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/static/js/all.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.9259257">
+              <caret line="28" column="11" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="34" />
+              <folding>
+                <marker date="1447563643000" expanded="true" signature="152:1075" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="175:1055" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="186:282" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="435:609" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="517:572" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="620:733" placeholder="/** Parse a text into various semantic parts to be consumed by Yarn ...*/" />
+                <marker date="1447563643000" expanded="true" signature="775:1048" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="953:1036" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="2817:5853" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="2935:5850" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="2961:3081" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="3139:3361" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="3185:3349" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="3392:3911" placeholder="{&quot;default&quot;: &quot;appendInstruction&quot;...}" />
+                <marker date="1447563643000" expanded="true" signature="4132:4263" placeholder="/** Compile an Abstract Syntax Tree from a series of tokens ...*/" />
+                <marker date="1447563643000" expanded="true" signature="4314:4842" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="4473:4801" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="4524:4753" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="4881:5821" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="5064:5117" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="5177:5251" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="5315:5393" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="5456:5533" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="5583:5639" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="5687:5741" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="10426:13806" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="10541:13803" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="10570:10651" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="10798:10867" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="10918:10989" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="11035:11101" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="11262:11392" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="11549:12234" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="11731:12090" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="11749:11906" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="12096:12199" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="12288:12609" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="12326:12369" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="12382:12534" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="12678:13354" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="12869:13210" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="12887:13026" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="13216:13319" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="13411:13564" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="13619:13772" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="13694:13737" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="18753:20553" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="18862:20549" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="18902:19011" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="19066:19246" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="19129:19194" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="19317:20418" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="19500:20321" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="19682:20244" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="19889:20101" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="20107:20226" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="20327:20408" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="23333:24889" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="23438:24885" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="23484:23627" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="23671:24220" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="23804:23971" placeholder="..." />
+                <marker date="1447563643000" expanded="true" signature="23915:23971" placeholder="..." />
+                <marker date="1447563643000" expanded="true" signature="24291:24331" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="24374:24628" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="24494:24549" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="24675:24746" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="27351:37158" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="27466:37154" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="27477:27586" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="27614:30777" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="27692:27994" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="28153:28259" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="28298:28490" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="28529:28677" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="28716:28808" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="28848:30181" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="29101:30138" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="29169:29244" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="29250:30120" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="29604:29770" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="29776:29921" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="30243:30352" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="30405:30478" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="30536:30630" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="30832:36390" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="31267:36380" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="31333:31441" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="31494:34121" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="31541:31667" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="31698:31824" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="31855:31978" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="32009:32131" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="32176:32349" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="32380:32497" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="32528:32647" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="32678:32799" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="32830:33497" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="32885:33162" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="33197:33475" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="33529:33652" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="33683:33803" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="33834:33953" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="33984:34103" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="34166:34343" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="34214:34325" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="34389:34754" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="34436:34736" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="34491:34714" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="34799:34975" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="34846:34957" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35020:35196" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35067:35178" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35238:35414" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35285:35396" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35455:35631" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35502:35613" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35672:35900" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="35740:35882" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="36076:36305" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="36145:36287" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="36439:37122" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="36676:37041" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="51047:64150" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="51167:64146" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="51197:51281" placeholder="{&quot;when&quot;: true...}" />
+                <marker date="1447563643000" expanded="true" signature="51293:51501" placeholder="/** Runtime class user to execute the ast with the state ...*/" />
+                <marker date="1447563643000" expanded="true" signature="51553:51839" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="51849:51967" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="51993:52034" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="52290:52421" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="52568:52718" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="52763:52840" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="52885:53002" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="53012:53063" placeholder="/** Start to execute the AST ...*/" />
+                <marker date="1447563643000" expanded="true" signature="53108:53213" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="53268:63785" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="53360:57522" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="53411:53703" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="53534:53596" placeholder="{&quot;this&quot;: &quot;root&quot;...}" />
+                <marker date="1447563643000" expanded="true" signature="53756:54729" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="53778:53890" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="53941:54083" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="54123:54217" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="54256:54350" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="54356:54464" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="54515:54582" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="54781:55092" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="54879:54945" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="55150:57302" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="55515:55777" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="55630:55657" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="55815:56118" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="55890:55998" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="56124:57251" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="56522:57036" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="56580:57008" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="57042:57229" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="57357:57508" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="57552:62026" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="57603:57906" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="57697:57888" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="57959:58880" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="58095:58237" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="58277:58371" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="58410:58504" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="58510:58618" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="58666:58733" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="58932:59240" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="58981:59047" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="59298:61806" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="59412:59645" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="59651:61755" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="60276:60413" placeholder="//..." />
+                <marker date="1447563643000" expanded="true" signature="60455:61281" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="60513:61253" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="60910:61147" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="61287:61695" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="61441:61667" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="61861:62012" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62108:62486" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62159:62178" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62231:62250" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62302:62321" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62379:62398" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62453:62472" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62513:62702" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62830:62879" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="62885:63437" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="63200:63422" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="63587:63656" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="63838:64113" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="63943:64076" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="82590:83257" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="82744:83257" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="82773:83103" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="83243:83257" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yarn.script.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/static/js/yarn.script.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="83" column="26" selection-start-line="83" selection-start-column="26" selection-end-line="83" selection-end-column="26" />
+              <folding>
+                <marker date="1447563643000" expanded="true" signature="666:680" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="2548:3255" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="2673:3243" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="2809:3227" placeholder="{...}" />
+                <marker date="1447563643000" expanded="true" signature="2831:2991" placeholder="//..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loadGameScripts.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="loadScript.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/js/services/loadScript.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bigmess.script.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js">
+      <file leaf-file-name="loadPageScripts.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/js/services/loadPageScripts.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="30" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
+              <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loadGameScripts.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
+      <file leaf-file-name="yarn.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.84024894">
-              <caret line="49" column="5" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/static/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.291667">
+              <caret line="17" column="52" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -76,56 +338,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/app/static/stories/theHouseWithEvents.txt" />
-        <option value="$PROJECT_DIR$/src/app/static/stories/theHouse.txt" />
-        <option value="$PROJECT_DIR$/src/app/static/stories/test-onEvent.txt" />
-        <option value="$PROJECT_DIR$/src/app/stories/test-onEvent.txt" />
-        <option value="$PROJECT_DIR$/src/app/static/html/scenery.html" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/scenery/userChoice.js" />
-        <option value="$PROJECT_DIR$/build/static/js/promptLoop.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/scenery.js" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/scenery/scenery.js" />
-        <option value="$PROJECT_DIR$/src/app/less/vars.less" />
-        <option value="$PROJECT_DIR$/src/app/js/services/storyLog.js" />
-        <option value="$PROJECT_DIR$/src/app/js/directives/storyLog/storyLog.js" />
-        <option value="$PROJECT_DIR$/src/app/js/mindgame.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/promptLoop.js" />
-        <option value="$PROJECT_DIR$/src/app/js/game/game.js" />
-        <option value="$PROJECT_DIR$/src/app/js/game/game.things.js" />
-        <option value="$PROJECT_DIR$/gulpfile.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/writers.js" />
-        <option value="$PROJECT_DIR$/src/app/js/game/game.routines.js" />
-        <option value="$PROJECT_DIR$/src/app/js/game/game.predicates.js" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.state.js" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.logic.js" />
-        <option value="$PROJECT_DIR$/bower_components/angularjs-breakpoint/js/breakpoint.js" />
-        <option value="$PROJECT_DIR$/src/app/less/scenery.less" />
-        <option value="$PROJECT_DIR$/src/app/stories/theHouse.txt" />
-        <option value="$PROJECT_DIR$/src/app/stories/theHouse/objects.txt" />
-        <option value="$PROJECT_DIR$/src/app/stories/theHouse/events.txt" />
-        <option value="$PROJECT_DIR$/src/app/stories/theHouse/rooms.txt" />
-        <option value="$PROJECT_DIR$/src/app/stories/theHouse/dialogs.txt" />
-        <option value="$PROJECT_DIR$/src/app/less/userInput.less" />
-        <option value="$PROJECT_DIR$/src/app/less/logItem.less" />
-        <option value="$PROJECT_DIR$/src/app/js/services/commands.js" />
-        <option value="$PROJECT_DIR$/src/app/less/global.less" />
-        <option value="$PROJECT_DIR$/roadmap.md" />
-        <option value="$PROJECT_DIR$/src/app/static/index.html" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js" />
-        <option value="$PROJECT_DIR$/src/app/stories/theHouse/theHouse.txt" />
-        <option value="$PROJECT_DIR$/src/app/stories/theHouse/things.txt" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/game.js" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/build/static/js/all.js" />
-        <option value="$PROJECT_DIR$/build/static/js/loadScript.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/loadScript.js" />
-        <option value="$PROJECT_DIR$/src/app/js/services/loadPageScripts.js" />
-        <option value="$PROJECT_DIR$/build/static/js/game.js" />
-        <option value="$PROJECT_DIR$/build/static/js/bigmess.runtime.js" />
         <option value="$PROJECT_DIR$/build/static/index.html" />
-        <option value="$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js" />
+        <option value="$PROJECT_DIR$/src/app/static/index.html" />
+        <option value="$PROJECT_DIR$/src/app/stories/theHouse/dialogs.txt" />
+        <option value="$PROJECT_DIR$/src/app/js/module.js" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
         <option value="$PROJECT_DIR$/src/app/js/services/loadGameScripts.js" />
+        <option value="$PROJECT_DIR$/src/app/js/services/loadScript.js" />
+        <option value="$PROJECT_DIR$/build/static/js/yarn.script.js" />
+        <option value="$PROJECT_DIR$/build/static/js/all.js" />
+        <option value="$PROJECT_DIR$/src/app/js/yarn/yarn.js" />
+        <option value="$PROJECT_DIR$/src/app/js/yarn/yarn.script.js" />
       </list>
     </option>
   </component>
@@ -133,82 +356,10 @@
   <component name="JsBuildToolPackageJson" detection-done="true" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
-    <gulpfiles>
-      <GulpfileState>
-        <gulpfile-path>$PROJECT_DIR$/gulpfile.js</gulpfile-path>
-        <tasks>
-          <GulpTaskState>
-            <task-name>build</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>clean</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>cleanAfterBuild</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>compileLess</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>compressJS</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>compressJSVendors</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>copyAssets</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>copyBowerComponents</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>copyJs</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>copyLess</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>copyStatic</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>copyStories</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>dev</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>server</task-name>
-          </GulpTaskState>
-          <GulpTaskState>
-            <task-name>watch</task-name>
-          </GulpTaskState>
-        </tasks>
-      </GulpfileState>
-    </gulpfiles>
   </component>
-  <component name="PhpServers">
-    <servers />
-  </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="width" value="1280" />
     <option name="height" value="800" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>Blade files</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -235,6 +386,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -292,6 +445,80 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stories" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theHouse" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="html" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -312,6 +539,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -415,7 +668,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="directives" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="splash" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -441,65 +698,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="bigMess" />
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yarn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bower_components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value=".script&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/bigMess/bigmess.script.js&#10;index&#9;FILE&#9;file:///Users/mathieu/dev/yarn/build/static/index.html&#10;loadScr&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadScript.js&#10;loadSc&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadScript.js&#10;loadScript&#9;FILE&#9;file:///Users/mathieu/dev/yarn/build/static/js/loadScript.js&#10;loadPageScripts&#9;null&#9;null&#10;loadPageScriptsloadPageScripts&#9;null&#9;null&#10;loadGameScripts&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadGameScripts.js&#10;loadPage&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadPageScripts.js&#10;load&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadGameScripts.js&#10;thehou&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouse/theHouse.txt&#10;logI&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/logItem.less&#10;main&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/main.less&#10;userin&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/userInput.less&#10;bigmess&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/bigMess/bigmess.js&#10;with&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouseWithEvents.txt&#10;globa&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/global.less&#10;the&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouse.txt&#10;theh&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouse.txt&#10;game.js&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/game.js&#10;glob&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/global.less&#10;house&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouse.txt&#10;State&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/bigMess/bigmess.state.js&#10;logic&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/bigMess/bigmess.logic.js&#10;runtime&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/bigMess/bigmess.runtime.js&#10;hou&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouse.txt&#10;scene&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/scenery.less&#10;loa&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadGameScripts.js&#10;gulp&#9;FILE&#9;file:///Users/mathieu/dev/yarn/gulpfile.js&#10;game.&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/game.js&#10;storyLog&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/directives/storyLog/storyLog.js&#10;global&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/global.less&#10;mind&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/mindgame.js&#10;logi&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/directives/storyLog/logItem.js&#10;logIT&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/logItem.less&#10;sce&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/scenery.less&#10;theHo&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouse.txt&#10;logit&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/less/logItem.less&#10;promptL&#9;null&#9;null&#10;command&#9;FILE&#9;file:///Users/mathieu/dev/yarn/build/static/js/commands.js&#10;commands&#9;FILE&#9;file:///Users/mathieu/dev/yarn/build/static/js/commands.js&#10;txt&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouseWithEvents.txt&#10;event&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/test-onEvent.txt" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.deploy.options" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="FullScreen" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/app/stories/theHouse" />
-      <recent name="$PROJECT_DIR$/src/app/js/game" />
-      <recent name="$PROJECT_DIR$/src/app" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/app/js/services" />
-      <recent name="$PROJECT_DIR$/src/app/stories" />
-      <recent name="$PROJECT_DIR$/src/app/js/game" />
-      <recent name="$PROJECT_DIR$/src/app/js/bigMess" />
-      <recent name="$PROJECT_DIR$/src/app/js/directives/" />
-    </key>
+    <property name="SearchEverywhereHistoryKey" value="loadScript&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadScript.js&#10;loadPage&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadPageScripts.js&#10;loadGam&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadGameScripts.js&#10;gulp&#9;FILE&#9;file:///Users/mathieu/dev/yarn/gulpfile.js&#10;modul&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/module.js&#10;yarn.js&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/yarn/yarn.runtime.js&#10;loadGa&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/js/services/loadGameScripts.js&#10;index&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/static/index.html&#10;theHouse&#9;FILE&#9;file:///Users/mathieu/dev/yarn/src/app/stories/theHouse/theHouse.txt" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
-    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
-      <BehatRunner />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-      <command value="run-script" />
-      <scripts />
-      <envs />
       <method />
     </configuration>
   </component>
@@ -508,257 +734,119 @@
     <configuration />
   </component>
   <component name="TaskManager">
-    <task id="LOCAL-00001">
-      <created>1446339686791</created>
+    <task id="LOCAL-00001" summary="Import system completed!!!!">
+      <created>1447545480645</created>
       <option name="number" value="00001" />
       <option name="project" value="LOCAL" />
-      <updated>1447043558763</updated>
+      <updated>1447545480645</updated>
     </task>
-    <task id="LOCAL-00002" summary="Made watches more targetted for CSS, JS, Statics, Stories">
-      <created>1446347327834</created>
-      <option name="number" value="00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1446347327834</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Refactored runtime with sctructured handlers in preparation for multiple modes">
-      <created>1446349005628</created>
-      <option name="number" value="00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1446349005628</updated>
-    </task>
-    <task id="LOCAL-00004" summary="added mode attribute in scope">
-      <created>1446349612436</created>
-      <option name="number" value="00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1446349612437</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Added parsing of &quot;when&quot; state in the runtime!">
-      <created>1446357781172</created>
-      <option name="number" value="00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1446357781172</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Added support for scenery images and thing images">
-      <created>1446423680844</created>
-      <option name="number" value="00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1446423680844</updated>
-    </task>
-    <task id="Default" summary="Default task">
-      <changelist id="94d96aae-7a74-44a0-b850-8b1f25077655" name="Default" comment="" />
-      <created>1446429074664</created>
-      <option name="number" value="Default" />
-      <updated>1446429074664</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Refactored code into routines">
-      <created>1446435463338</created>
-      <option name="number" value="00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1446435463338</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Tweak to style for scrolling divs and scenery">
-      <created>1446435715088</created>
-      <option name="number" value="00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1446435715088</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Added stub for event triggers">
-      <created>1446438579152</created>
-      <option name="number" value="00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1446438579152</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Working event/trigger mechanic.">
-      <created>1446441849446</created>
-      <option name="number" value="00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1446441849446</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Fix for the breakpoint lib not working properly on iOS">
-      <created>1446525427163</created>
-      <option name="number" value="00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1446525427163</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Fix for the breakpoint lib not working properly on iOS">
-      <created>1446912624185</created>
-      <option name="number" value="00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1446912624185</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Separate story in multiple files&#10;Samples for dialogs&#10;">
-      <created>1447037003283</created>
-      <option name="number" value="00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1447037003283</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Clean up roadmap">
-      <created>1447037106237</created>
-      <option name="number" value="00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1447037106237</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Renamed script type to yarn instead of bigMess&#10;">
-      <created>1447038298475</created>
-      <option name="number" value="00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1447038298475</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Script are loaded with the &quot;import&quot; instruction&#10;">
-      <created>1447043494493</created>
-      <option name="number" value="00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1447043494493</updated>
-    </task>
-    <task active="true" id="LOCAL-00017">
-      <changelist id="8675cac1-88bb-4250-a49d-16abe75b533b" name="Make sure the game imports script sequencially and runs only after all scripts are loaded" comment="" />
-      <created>1447043503136</created>
-      <option name="number" value="00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1447043558765</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Added git repository address in the package file.">
-      <created>1447082264580</created>
-      <option name="number" value="00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1447082264580</updated>
-    </task>
-    <option name="localTasksCounter" value="19" />
-    <option name="clearContext" value="false" />
-    <option name="createBranch" value="false" />
+    <option name="localTasksCounter" value="2" />
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24313408" sideWeight="0.3019608" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24313408" sideWeight="0.69803923" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3369863" sideWeight="0.5193861" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.49353796" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3041096" sideWeight="0.4022617" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37945205" sideWeight="0.45476574" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3041096" sideWeight="0.59773827" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.46122777" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25121164" sideWeight="0.246063" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25121164" sideWeight="0.753937" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18032786" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37978142" sideWeight="0.4806139" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30327868" sideWeight="0.64216477" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34657535" sideWeight="0.49030694" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18671875" sideWeight="0.5069307" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18671875" sideWeight="0.5069307" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23510723" sideWeight="0.32718122" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3369863" sideWeight="0.5193861" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23510723" sideWeight="0.32718122" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3369863" sideWeight="0.4806139" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3041096" sideWeight="0.64216477" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21324718" sideWeight="0.22047244" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21324718" sideWeight="0.77952754" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33561644" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18671875" sideWeight="0.5069307" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
-  </component>
-  <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
-      <collection />
-    </option>
-    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-      <collection />
-    </option>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+    </layout>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Made watches more targetted for CSS, JS, Statics, Stories" />
-    <MESSAGE value="Refactored runtime with sctructured handlers in preparation for multiple modes" />
-    <MESSAGE value="added mode attribute in scope" />
-    <MESSAGE value="Added parsing of &quot;when&quot; state in the runtime!" />
-    <MESSAGE value="Added support for scenery images and thing images" />
-    <MESSAGE value="Refactored code into routines" />
-    <MESSAGE value="Tweak to style for scrolling divs and scenery" />
-    <MESSAGE value="Added stub for event triggers" />
-    <MESSAGE value="Working event/trigger mechanic." />
-    <MESSAGE value="Fix for the breakpoint lib not working properly on iOS" />
-    <MESSAGE value="Separate story in multiple files&#10;Samples for dialogs&#10;" />
-    <MESSAGE value="Clean up roadmap" />
-    <MESSAGE value="Renamed script type to yarn instead of bigMess&#10;" />
-    <MESSAGE value="Script are loaded with the &quot;import&quot; instruction&#10;" />
-    <MESSAGE value="Added git repository address in the package file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added git repository address in the package file." />
+    <MESSAGE value="Import system completed!!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Import system completed!!!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.logic.js</url>
-          <line>22</line>
+          <url>file://$PROJECT_DIR$/src/app/js/yarn/yarn.logic.js</url>
+          <line>25</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouseWithEvents.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse-withBeginEnd.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31120333">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.state.predicate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.state.syntax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.state.thing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="19" selection-start-line="66" selection-start-column="19" selection-end-line="66" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.state.actionHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.logic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadPageScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/src/app/js/services/promptLoop.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -766,237 +854,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/services/commands.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21875">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.state.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+          <caret line="4" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.state.assertion.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-          <folding />
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.node.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="4" selection-start-line="71" selection-start-column="4" selection-end-line="71" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadPageScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/bower_components/angular-animate/bower.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
+    <entry file="file://$PROJECT_DIR$/src/app/less/global.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.034013607">
+          <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="4" selection-start-line="71" selection-start-column="4" selection-end-line="71" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadPageScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/src/app/less/logItem.less">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="4" selection-start-line="71" selection-start-column="4" selection-end-line="71" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadPageScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/static/js/all.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17247707">
-          <caret line="1885" column="38" selection-start-line="1885" selection-start-column="38" selection-end-line="1885" selection-end-column="38" />
-          <folding>
-            <marker date="1447170801000" expanded="true" signature="103264:103415" placeholder="..." />
-            <marker date="1447170801000" expanded="true" signature="103367:103415" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3010949">
-          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.026223777">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1009,42 +914,218 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/module.js">
+    <entry file="file://$PROJECT_DIR$/src/app/static/metadata.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.19736843">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/static/html/app.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27972028">
+          <caret line="8" column="34" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/js/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.40625">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/services/scenery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.105882354">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/js/controllers/root.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="39" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.047923323">
+          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/static/js/loadScript.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/directives/splash/splash.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43568465">
-          <caret line="14" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.50319487">
+          <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/directives/splash/splashService.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="56" selection-start-line="25" selection-start-column="51" selection-end-line="25" selection-end-column="56" />
+          <caret line="0" column="24" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadMetadata.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28753993">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.pointer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="162" column="47" selection-start-line="162" selection-start-column="44" selection-end-line="162" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.cursor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.ast.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44924405">
+          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/services/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25917926">
+          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/less/splash.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44419134">
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse/events.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.105882354">
+          <caret line="3" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse/rooms.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21176471">
+          <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse/things.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3882353">
+          <caret line="11" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse/theHouse.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49411765">
+          <caret line="14" column="39" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse/dialogs.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28235295">
+          <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bower.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/static/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.291667">
+          <caret line="17" column="52" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4114713">
+          <caret line="11" column="65" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25">
+          <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/static/metadata.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13157895">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.runtime.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.90625">
+          <caret line="165" column="51" selection-start-line="165" selection-start-column="51" selection-end-line="165" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6770833">
+          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32894737">
+          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/static/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5855263">
+          <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -1052,75 +1133,15 @@
     <entry file="file://$PROJECT_DIR$/src/app/js/services/loadPageScripts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/static/js/game.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-          <folding>
-            <marker date="1447043422000" expanded="true" signature="662:813" placeholder="{...}" />
-            <marker date="1447043422000" expanded="true" signature="689:782" placeholder="{...}" />
-            <marker date="1447043422000" expanded="true" signature="700:776" placeholder="//..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse1b.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouseWithEvents.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse-withBeginEnd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31120333">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/stories/theHouse2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/static/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49126637">
-          <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.runtime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3692946">
-          <caret line="277" column="34" selection-start-line="277" selection-start-column="28" selection-end-line="277" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/static/js/bigmess.runtime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33186814">
-          <caret line="277" column="36" selection-start-line="277" selection-start-column="28" selection-end-line="277" selection-end-column="36" />
+          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1128,23 +1149,243 @@
     <entry file="file://$PROJECT_DIR$/src/app/js/services/loadScript.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/bigMess/bigmess.script.js">
+    <entry file="file://$PROJECT_DIR$/build/static/js/yarn.script.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="30" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
+          <caret line="83" column="26" selection-start-line="83" selection-start-column="26" selection-end-line="83" selection-end-column="26" />
+          <folding>
+            <marker date="1447563643000" expanded="true" signature="666:680" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="2548:3255" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="2673:3243" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="2809:3227" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="2831:2991" placeholder="//..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/static/js/all.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.9259257">
+          <caret line="28" column="11" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="34" />
+          <folding>
+            <marker date="1447563643000" expanded="true" signature="152:1075" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="175:1055" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="186:282" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="435:609" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="517:572" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="620:733" placeholder="/** Parse a text into various semantic parts to be consumed by Yarn ...*/" />
+            <marker date="1447563643000" expanded="true" signature="775:1048" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="953:1036" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="2817:5853" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="2935:5850" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="2961:3081" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="3139:3361" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="3185:3349" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="3392:3911" placeholder="{&quot;default&quot;: &quot;appendInstruction&quot;...}" />
+            <marker date="1447563643000" expanded="true" signature="4132:4263" placeholder="/** Compile an Abstract Syntax Tree from a series of tokens ...*/" />
+            <marker date="1447563643000" expanded="true" signature="4314:4842" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="4473:4801" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="4524:4753" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="4881:5821" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="5064:5117" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="5177:5251" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="5315:5393" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="5456:5533" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="5583:5639" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="5687:5741" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="10426:13806" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="10541:13803" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="10570:10651" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="10798:10867" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="10918:10989" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="11035:11101" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="11262:11392" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="11549:12234" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="11731:12090" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="11749:11906" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="12096:12199" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="12288:12609" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="12326:12369" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="12382:12534" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="12678:13354" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="12869:13210" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="12887:13026" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="13216:13319" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="13411:13564" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="13619:13772" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="13694:13737" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="18753:20553" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="18862:20549" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="18902:19011" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="19066:19246" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="19129:19194" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="19317:20418" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="19500:20321" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="19682:20244" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="19889:20101" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="20107:20226" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="20327:20408" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="23333:24889" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="23438:24885" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="23484:23627" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="23671:24220" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="23804:23971" placeholder="..." />
+            <marker date="1447563643000" expanded="true" signature="23915:23971" placeholder="..." />
+            <marker date="1447563643000" expanded="true" signature="24291:24331" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="24374:24628" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="24494:24549" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="24675:24746" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="27351:37158" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="27466:37154" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="27477:27586" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="27614:30777" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="27692:27994" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="28153:28259" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="28298:28490" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="28529:28677" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="28716:28808" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="28848:30181" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="29101:30138" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="29169:29244" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="29250:30120" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="29604:29770" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="29776:29921" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="30243:30352" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="30405:30478" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="30536:30630" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="30832:36390" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="31267:36380" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="31333:31441" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="31494:34121" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="31541:31667" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="31698:31824" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="31855:31978" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="32009:32131" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="32176:32349" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="32380:32497" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="32528:32647" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="32678:32799" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="32830:33497" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="32885:33162" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="33197:33475" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="33529:33652" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="33683:33803" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="33834:33953" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="33984:34103" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="34166:34343" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="34214:34325" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="34389:34754" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="34436:34736" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="34491:34714" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="34799:34975" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="34846:34957" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35020:35196" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35067:35178" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35238:35414" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35285:35396" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35455:35631" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35502:35613" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35672:35900" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="35740:35882" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="36076:36305" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="36145:36287" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="36439:37122" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="36676:37041" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="51047:64150" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="51167:64146" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="51197:51281" placeholder="{&quot;when&quot;: true...}" />
+            <marker date="1447563643000" expanded="true" signature="51293:51501" placeholder="/** Runtime class user to execute the ast with the state ...*/" />
+            <marker date="1447563643000" expanded="true" signature="51553:51839" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="51849:51967" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="51993:52034" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="52290:52421" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="52568:52718" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="52763:52840" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="52885:53002" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="53012:53063" placeholder="/** Start to execute the AST ...*/" />
+            <marker date="1447563643000" expanded="true" signature="53108:53213" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="53268:63785" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="53360:57522" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="53411:53703" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="53534:53596" placeholder="{&quot;this&quot;: &quot;root&quot;...}" />
+            <marker date="1447563643000" expanded="true" signature="53756:54729" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="53778:53890" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="53941:54083" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="54123:54217" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="54256:54350" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="54356:54464" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="54515:54582" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="54781:55092" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="54879:54945" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="55150:57302" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="55515:55777" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="55630:55657" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="55815:56118" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="55890:55998" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="56124:57251" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="56522:57036" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="56580:57008" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="57042:57229" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="57357:57508" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="57552:62026" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="57603:57906" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="57697:57888" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="57959:58880" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="58095:58237" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="58277:58371" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="58410:58504" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="58510:58618" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="58666:58733" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="58932:59240" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="58981:59047" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="59298:61806" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="59412:59645" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="59651:61755" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="60276:60413" placeholder="//..." />
+            <marker date="1447563643000" expanded="true" signature="60455:61281" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="60513:61253" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="60910:61147" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="61287:61695" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="61441:61667" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="61861:62012" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62108:62486" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62159:62178" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62231:62250" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62302:62321" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62379:62398" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62453:62472" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62513:62702" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62830:62879" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="62885:63437" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="63200:63422" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="63587:63656" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="63838:64113" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="63943:64076" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="82590:83257" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="82744:83257" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="82773:83103" placeholder="{...}" />
+            <marker date="1447563643000" expanded="true" signature="83243:83257" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/js/services/loadGameScripts.js">
+    <entry file="file://$PROJECT_DIR$/src/app/js/yarn/yarn.script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.84024894">
-          <caret line="49" column="5" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.28125">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
           <folding />
         </state>
       </provider>

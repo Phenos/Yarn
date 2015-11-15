@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "bower install --config.interactive=false && gulp build",
+    "postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node_modules/gulp/bin/gulp  build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
   "dependencies": {

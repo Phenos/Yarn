@@ -39,6 +39,8 @@ var config = {
         javascriptVendorsSource: [
             "./bower_components/angular/angular.js",
             "./bower_components/angular-animate/angular-animate.js",
+            "./bower_components/uri.js/src/URI.js",
+            "./bower_components/angular-uri/angular-uri.js",
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
             "./bower_components/angular-scroll-glue/src/scrollglue.js",
             "./bower_components/angular-hotkeys/build/hotkeys.js",

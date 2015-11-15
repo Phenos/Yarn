@@ -13,7 +13,7 @@ Dialog #BobIsInTheBathroom:
     can reply #reply_I_dont_know,
     can reply #sorryImLaving,
     can reply #hereToBrushMyTeeth.
-
+w
     Dialog #reply_I_dont_know:
         #You say "I dont know... what are YOU doing here?",
         jump to #BobIsShaving.

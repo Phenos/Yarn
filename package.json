@@ -1,11 +1,12 @@
 {
   "name": "yarn",
-  "version": "0.0.11",
+  "version": "0.0.14",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "postinstall": "bower install --config.interactive=false && gulp build",
+    "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
   "dependencies": {
     "ejs": "2.3.3",

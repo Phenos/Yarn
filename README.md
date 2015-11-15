@@ -1,5 +1,7 @@
 
-# Yarn : Plateform for interacive story-telling
+# Yarn
+
+## Plateform for interacive story-telling
 
 Yarn is an online software patform for writing and playing interactive stories.
 

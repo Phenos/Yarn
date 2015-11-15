@@ -1,13 +1,12 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 var using = require('gulp-using');
-var clean = require('gulp-clean');
-var browserSync = require('browser-sync');
 var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var bump = require('gulp-bump');
+var del = require('del');
 
 var config = {
     server: {
@@ -118,7 +117,7 @@ gulp.task('dev', gulp.series(
 function bumpTask() {
     return gulp.src(['bower.json', 'package.json', 'src/app/static/metadata.json'], {base: '.'})
         .pipe(using())
-        .pipe(bump({type:'patch'}))
+        .pipe(bump({type: 'patch'}))
         .pipe(gulp.dest('./'), cwd);
 }
 
@@ -184,18 +183,15 @@ function copyLess() {
 }
 
 function cleanTask() {
-    return gulp.src(paths.clean, {read: false})
-        .pipe(using())
-        .pipe(clean());
+    return del(paths.clean);
 }
 
 function cleanAfterTask() {
-    return gulp.src(paths.cleanAfter, {read: false})
-        .pipe(using())
-        .pipe(clean());
+    return del(paths.cleanAfter);
 }
 
 function serverTask(callback) {
+    var browserSync = require('browser-sync');
     browserSync.init({
         server: {
             baseDir: config.server.root

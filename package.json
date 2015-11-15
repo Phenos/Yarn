@@ -4,14 +4,26 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "gulp": "./node_modules/gulp/bin/gulp",
     "start": "node server.js",
-    "postinstall": "bower install --config.interactive=false && gulp build",
+    "postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
   "dependencies": {
+    "bower": "latest",
+    "del": "^2.1.0",
     "ejs": "2.3.3",
     "express": "4.13.3",
-    "gulp-bump": "^1.0.0"
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-bump": "^1.0.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.0.3",
+    "gulp-serve": "^1.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.4.2",
+    "gulp-using": "0.0.1",
+    "gulp-watch": "^4.3.5"
   },
   "engines": {
     "node": "0.12.2"
@@ -23,15 +35,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.9.11",
-    "gulp": "gulpjs/gulp#4.0",
-    "gulp-clean": "^0.3.1",
-    "gulp-concat": "^2.6.0",
-    "gulp-less": "^3.0.3",
-    "gulp-serve": "^1.2.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.4.2",
-    "gulp-using": "0.0.1",
-    "gulp-watch": "^4.3.5"
+    "browser-sync": "^2.9.11"
   }
 }

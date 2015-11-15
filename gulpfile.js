@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 var using = require('gulp-using');
-var browserSync = require('browser-sync');
 var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
@@ -192,6 +191,7 @@ function cleanAfterTask() {
 }
 
 function serverTask(callback) {
+    var browserSync = require('browser-sync');
     browserSync.init({
         server: {
             baseDir: config.server.root

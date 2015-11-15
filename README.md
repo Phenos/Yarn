@@ -1,4 +1,4 @@
-[Yarn](doc/images/logo-253px.png)
+[Yarn](https://raw.githubusercontent.com/Phenos/Yarn/master/doc/images/logo-253px.png)
 
 # Yarn
 

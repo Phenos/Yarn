@@ -1,8 +1,8 @@
-[Yarn](https://raw.githubusercontent.com/Phenos/Yarn/master/doc/images/logo-253px.png)
+[![Yarn](https://raw.githubusercontent.com/Phenos/Yarn/master/doc/images/logo-253px.png)]
 
 # Yarn
 
-[ ![Codeship Status for Phenos/Yarn](https://codeship.com/projects/e6fa1bf0-691c-0133-c43d-666650db048e/status?branch=master)](https://codeship.com/projects/114404)
+[![Codeship Status for Phenos/Yarn](=]https://codeship.com/projects/e6fa1bf0-691c-0133-c43d-666650db048e/status?branch=master)](https://codeship.com/projects/114404)
 
 ## Plateform for interacive story-telling
 

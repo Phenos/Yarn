@@ -8,6 +8,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var bump = require('gulp-bump');
 var del = require('del');
 
+var browserSync;
+
 var config = {
     server: {
         host: 'localhost',
@@ -39,6 +41,7 @@ var config = {
             "./bower_components/angular/angular.js",
             "./bower_components/angular-animate/angular-animate.js",
             "./bower_components/uri.js/src/URI.js",
+            "./bower_components/angular-audio/app/angular.audio.js",
             "./bower_components/angular-uri/angular-uri.js",
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
             "./bower_components/angular-scroll-glue/src/scrollglue.js",
@@ -191,7 +194,7 @@ function cleanAfterTask() {
 }
 
 function serverTask(callback) {
-    var browserSync = require('browser-sync');
+    browserSync = require('browser-sync');
     browserSync.init({
         server: {
             baseDir: config.server.root

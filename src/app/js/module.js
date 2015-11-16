@@ -1,4 +1,5 @@
 angular.module('mindgame', [
+    'ngAudio',
     'angular-uri',
     'ngAnimate',
     'yarn',

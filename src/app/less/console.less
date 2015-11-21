@@ -1,0 +1,84 @@
+@import "vars.less";
+
+console {
+    display: block;
+    .isMobileWidth & {
+        padding: 0 0 0 0;
+        font-size: 1.2em;
+    }
+    margin: 0 0 0 0;
+    position: absolute;
+    height: 100vh;
+    right: 0;
+    width: 50vw;
+    border-top: 3px solid #888;
+    background: #f6f6f6;
+    z-index: 1000;
+    font-size: 0.8em;
+    font-weight: 400;
+    font-family: sans-serif;
+    overflow: hidden;
+
+    logscroll {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+    }
+
+    logs {
+        display: block;
+        margin-top: 2em;
+        margin-bottom: 8em;
+
+        log {
+            display: block;
+            margin: 0 50px;
+            padding: 0.4em 0;
+            color: #333;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+
+            a:visited,
+            a:link,
+            a {
+                color: #ff9;
+                text-decoration: none;
+                font-weight: 400;
+            }
+            strong {
+                //color: #987;
+                font-weight: 600;
+            }
+
+            .isMobileWidth & {
+                margin-right: 0.2em !important;
+                margin-left: 0.2em !important;
+            }
+
+            &.is-log {
+                font-weight: 300;
+                //color: #765;
+
+            }
+            &.is-error {
+                letter-spacing: 0.06em;
+                font-style: italic;
+                color: #990000;
+                //color: #a98;
+            }
+            &.is-command {
+                color: #008800;
+                font-weight: bold;
+            }
+            &.is-debug {
+            }
+        }
+
+    }
+
+}

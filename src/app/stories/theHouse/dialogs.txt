@@ -8,12 +8,15 @@
 
 //---[ Bathroom Argument with Bob ]-----------------------
 
+If #Bob knows #BigSecret:
+
+
 Dialog #BobIsInTheBathroom:
     #Bob says "Hu... hi there. What are you doing here?",
     can reply #reply_I_dont_know,
-    can reply #sorryImLaving,
+    can reply once #sorryImLaving,
     can reply #hereToBrushMyTeeth.
-w
+
     Dialog #reply_I_dont_know:
         #You say "I dont know... what are YOU doing here?",
         jump to #BobIsShaving.
@@ -28,6 +31,8 @@ w
 
 Dialog #BobIsShaving:
     #Bob says "I'm shaving... leave me alone!",
+    #Bob has already said #BobIsShaving,
+    #You knows #BigSecret,
     can reply #sorryImLaving,
     can reply #hereToBrushMyTeeth,
     can say nothing

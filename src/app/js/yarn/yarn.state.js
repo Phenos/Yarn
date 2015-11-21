@@ -83,7 +83,6 @@
                     value = "[undefined]";
                 } else if (typeof obj === "object") {
                     value = obj.label || obj.id;
-                    console.log('--------->>>>-', value, obj);
                 } else {
                     value = obj;
                 }

@@ -14,9 +14,10 @@
             controller: ConsoleController
         };
 
-        function ConsoleController(yConsole, $scope, $element, $compile, $window) {
+        function ConsoleController(yConsole, $scope, $element, $compile, $window, $timeout) {
 
             var logsElem = $element.find("logs");
+            var logscrollElem = $element.find("logscroll");
 
             $element.on("scroll", function(e) {
                 e.stopPropagation();
@@ -37,6 +38,9 @@
                 scope.type = type;
                 var logElem = $compile('<log type="type" text="text"></log>')(scope);
                 logsElem.append(logElem);
+                $timeout(function () {
+                    logscrollElem[0].scrollTop = logscrollElem[0].scrollHeight;
+                });
             };
 
             yConsole.register(this);

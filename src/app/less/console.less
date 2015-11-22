@@ -2,10 +2,6 @@
 
 console {
     display: block;
-    .isMobileWidth & {
-        padding: 0 0 0 0;
-        font-size: 1.2em;
-    }
     margin: 0 0 0 0;
     position: absolute;
     height: 100vh;
@@ -19,6 +15,11 @@ console {
     font-family: sans-serif;
     overflow: hidden;
 
+    .isMobileWidth & {
+        padding: 0 0 0 0;
+        font-size: 1.2em;
+    }
+
     logscroll {
         display: block;
         position: absolute;
@@ -28,7 +29,6 @@ console {
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
-
     }
 
     logs {
@@ -41,7 +41,7 @@ console {
             margin: 0 50px;
             padding: 0.4em 0;
             color: #333;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 
             a:visited,
             a:link,
@@ -51,7 +51,6 @@ console {
                 font-weight: 400;
             }
             strong {
-                //color: #987;
                 font-weight: 600;
             }
 
@@ -62,18 +61,13 @@ console {
 
             &.is-log {
                 font-weight: 300;
-                //color: #765;
-
             }
             &.is-error {
                 letter-spacing: 0.06em;
-                font-style: italic;
-                color: #990000;
-                //color: #a98;
+                color: #FF6666;
             }
             &.is-command {
                 color: #4444DD;
-                //font-weight: bold;
                 font-size: 1.2em;
             }
             &.is-debug {

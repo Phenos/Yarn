@@ -3,7 +3,6 @@
 
 ## Next
 
-- Run "commands" from command line
 - Run yarn script from command live
 
 ## More

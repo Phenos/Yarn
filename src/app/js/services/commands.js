@@ -12,7 +12,8 @@ function commands(storyLogService,
         move: moveCommand,
         look: lookCommand,
         take: takeCommand,
-        inventory: inventoryCommand,
+        showInventory: showInventoryCommand,
+        inventory: logInventoryCommand,
         state: stateCommand,
         tree: treeCommand,
         tokens: tokensCommand,
@@ -24,9 +25,10 @@ function commands(storyLogService,
         var command = commands[text];
         if (command) {
             yConsole.command("> " + text);
-            command();
+            command(text);
         } else {
-            storyLog.error("Sorry... unknown command : " + text);
+            yConsole.command("> " + text);
+            yConsole.error("Sorry... unknown command!");
         }
     };
 
@@ -105,7 +107,7 @@ function commands(storyLogService,
         yConsole.log("Available commands: <em>help</em>, <em>inventory</em>, <em>state</em>, <em>tree</em>, <em>tokens</em>");
     }
 
-    function inventoryCommand() {
+    function showInventoryCommand() {
         var itemList;
         var thingsInInventory = game.state.resolve("You.hasInInventory");
         if (thingsInInventory.length) {
@@ -124,6 +126,28 @@ function commands(storyLogService,
             storyLog.log(message.join(""));
         } else {
             storyLog.error("You have nothing in inventory!");
+        }
+    }
+
+    function logInventoryCommand() {
+        var itemList;
+        var thingsInInventory = game.state.resolve("You.hasInInventory");
+        if (thingsInInventory.length) {
+            itemList = [];
+            thingsInInventory.forEach(function (thing) {
+                var label = thing.resolveValue("isNamed");
+                itemList.push(label);
+            });
+            var message = [
+                "You have ",
+                thingsInInventory.length,
+                " item in inventory: <a href='#'>",
+                itemList.join("</a>, <a href='#'>"),
+                "</a>."
+            ];
+            yConsole.log(message.join(""));
+        } else {
+            yConsole.log("You have nothing in inventory!");
         }
     }
 

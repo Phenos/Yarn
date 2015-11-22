@@ -12,7 +12,7 @@ Import "/stories/theHouse/rooms.txt".
 
 Import "/stories/theHouse/events.txt".
 
-Import "/stories/theHouse/dialogs.txt".
+// Import "/stories/theHouse/dialogs.txt".
 
 // Setup how you start
 #You is an @actor, is named "You", is in the #Kitchen.

@@ -2,7 +2,7 @@
 
     angular.module('mindgame').directive('console', StoryLogDirective);
 
-    function StoryLogDirective() {
+    function StoryLogDirective(commands) {
         return {
             restrict: 'E',
             bindToController: {
@@ -10,22 +10,36 @@
             },
             scope: {},
             controllerAs: 'console',
-            template: '<logscroll><logs></logs></logscroll><user-input on-submit="game.command(text)"></user-input>',
+            template: '<logscroll><logs></logs></logscroll><user-input on-submit="console.command(text)"></user-input>',
             controller: ConsoleController
         };
 
-        function ConsoleController(yConsole, $scope, $element, $compile, $window, $timeout) {
+        function ConsoleController(yConsole, $scope, $document, $compile, $window, $timeout, $element) {
 
             var logsElem = $element.find("logs");
             var logscrollElem = $element.find("logscroll");
 
-            $element.on("scroll", function(e) {
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                e.preventBubble();
-                e.preventDefault();
-                console.log(e);
+            $element.on("mouseup", function () {
+                var selection = getSelectionText();
+                if (!selection) {
+                    $element.find("textarea")[0].focus();
+                }
             });
+
+            // todo: put in a utils service
+            function getSelectionText() {
+                var text = "";
+                if (window.getSelection) {
+                    text = window.getSelection().toString();
+                } else if (document.selection && document.selection.type != "Control") {
+                    text = document.selection.createRange().text;
+                }
+                return text;
+            }
+
+            this.command = function (text) {
+                commands.command(text);
+            };
 
             this.clear = function () {
                 $element.empty();

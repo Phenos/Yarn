@@ -10,7 +10,7 @@
             },
             scope: {},
             controllerAs: 'console',
-            template: '<logscroll><logs></logs></logscroll><user-input on-submit="console.command(text)"></user-input>',
+            template: '<logscroll><logs></logs></logscroll><user-input on-submit="console.onInput(text)"></user-input>',
             controller: ConsoleController
         };
 
@@ -37,8 +37,13 @@
                 return text;
             }
 
-            this.command = function (text) {
-                commands.command(text);
+            this.onInput = function (text) {
+                var trimmed = text.trim();
+                if (trimmed[0] === ":") {
+                    commands.command(trimmed.substr(1));
+                } else {
+                    yConsole.error("Story script not yet supported!")
+                }
             };
 
             this.clear = function () {

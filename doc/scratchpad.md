@@ -19,6 +19,8 @@
 - Ability to resize console with zoom in/out icon
 - Ability to show/hide console
 - Allow multiline inputs with shift-enter
+- Submit on enter only if at end of input
+- Submit on ctrl-enter event in in middle of text
 - Input field grows a little if a lot of text is entered
 - "help command" for each commands
 - Click on icon to re-rerun a command from the log

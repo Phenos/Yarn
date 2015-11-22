@@ -24,10 +24,10 @@ function commands(storyLogService,
     var command = function (text) {
         var command = commands[text];
         if (command) {
-            yConsole.command("> " + text);
+            yConsole.command(":" + text);
             command(text);
         } else {
-            yConsole.command("> " + text);
+            yConsole.command(":" + text);
             yConsole.error("Sorry... unknown command!");
         }
     };
@@ -104,7 +104,7 @@ function commands(storyLogService,
 
     function helpCommand() {
         yConsole.log("The <em>Yarn</em> console allows you tu run commands and change the story.");
-        yConsole.log("Available commands: <em>help</em>, <em>inventory</em>, <em>state</em>, <em>tree</em>, <em>tokens</em>");
+        yConsole.log("Available commands: <em>:help</em>, <em>:inventory</em>, <em>:state</em>, <em>:tree</em>, <em>:tokens</em>");
     }
 
     function showInventoryCommand() {

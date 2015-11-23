@@ -15,13 +15,16 @@ function LogDirective($sce) {
         controller: LogController
     };
 
-    function LogController($scope, $element) {
+    function LogController($scope, $element, $compile) {
         var self = this;
 
         $scope.$watch('log.text', function(value) {
             console.log("element", $element);
+            console.log("value", value);
             $element.addClass("is-" + self.type);
-            $element[0].innerHTML = value;
+            var elem = $compile("<div>" + value + "</div>")($scope);
+            console.log("elem: ", elem);
+            $element.append(elem);
         });
 
     }

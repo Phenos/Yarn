@@ -4,7 +4,7 @@
 The #Kitchen:
     is a @room,
     is named "The Kitchen",
-    has scenery "http://www.tarmints.com/wp-content/uploads/2015/06/round-kitchen-table-with-fabric-chairs-687x1024.jpg",
+    has scenery "http://st.hzcdn.com/simgs/7c31e12f0d89ca26_4-1694/shabby-chic-style-kitchen.jpg",
     links to the #Bedroom,
     links to the #Bathroom,
     links to the #FrontOfTheHouse,

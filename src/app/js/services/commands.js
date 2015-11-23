@@ -12,6 +12,7 @@ function commands(storyLogService,
         move: moveCommand,
         look: lookCommand,
         take: takeCommand,
+        graph: graphCommand,
         showInventory: showInventoryCommand,
         inventory: logInventoryCommand,
         state: stateCommand,
@@ -73,6 +74,10 @@ function commands(storyLogService,
         var html = game.state.html();
         yConsole.debug("Outputing current game state:");
         yConsole.debug(html);
+    }
+
+    function graphCommand() {
+        yConsole.debug('<graph width="800" height="400" thing-is-a="room" predicate="linksto"></graph>');
     }
 
     function treeCommand() {

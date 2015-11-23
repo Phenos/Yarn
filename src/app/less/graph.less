@@ -1,0 +1,47 @@
+graph {
+    display: inline-block;
+    background: #fff;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //width: 50%;
+    //height: 100%;
+    z-index: 100000;
+
+    svg {
+
+    }
+
+    .node {
+
+        text {
+            white-space: nowrap;
+            pointer-events: none;
+            font: 10px sans-serif;
+            fill: #000;
+            text-anchor: middle;
+            font-weight: 200;
+        }
+
+
+        circle {
+            fill: rgba(200, 255, 200, 1);
+            stroke:  rgba(30, 90, 30, 0.5);
+            stroke-width: 4px;
+        }
+    }
+
+    line.link {
+        stroke: rgba(30, 90, 30, 0.5);
+        stroke-width: 10px;
+    }
+
+    text.linklabel {
+        white-space: nowrap;
+        pointer-events: none;
+        font: 12px sans-serif;
+        text-anchor: middle;
+        font-weight: bold;
+        fill: rgba(0, 90, 0, 1);
+    }
+}

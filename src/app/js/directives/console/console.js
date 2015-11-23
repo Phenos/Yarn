@@ -14,7 +14,7 @@
             controller: ConsoleController
         };
 
-        function ConsoleController(yConsole, $scope, $document, $compile, $window, $timeout, $element) {
+        function ConsoleController(yConsole, $scope, $compile, $window, $timeout, $element) {
 
             var logsElem = $element.find("logs");
             var logscrollElem = $element.find("logscroll");

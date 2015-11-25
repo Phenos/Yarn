@@ -3,12 +3,14 @@ angular.module('mindgame').factory('commands', commands);
 function commands(storyLogService,
                   yConsole,
                   hotkeys,
+                  gameService,
                   game) {
 
     var storyLog = storyLogService;
     var state = game.state;
 
     var commands = {
+        load: loadCommand,
         move: moveCommand,
         look: lookCommand,
         take: takeCommand,
@@ -23,10 +25,12 @@ function commands(storyLogService,
 
     // todo: Move commands into a separate directive
     var command = function (text) {
-        var command = commands[text];
+        var args = text.split(" ");
+        var commandStr = args.shift();
+        var command = commands[commandStr];
         if (command) {
             yConsole.command(":" + text);
-            command(text);
+            command(text, args);
         } else {
             yConsole.command(":" + text);
             yConsole.error("Sorry... unknown command!");
@@ -95,6 +99,10 @@ function commands(storyLogService,
     function moveCommand() {
         var isAboutTo = game.state.predicate("isAboutTo");
         state.thing("You").setAssertion(isAboutTo, "move");
+    }
+
+    function loadCommand(command, args) {
+        gameService.loadFromURL(args[0]);
     }
 
     function takeCommand() {

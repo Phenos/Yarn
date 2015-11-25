@@ -3,12 +3,13 @@
 
 ## Next
 
-- Run yarn script from command live
+- ":load http://..." command to load a story from url
+- ":reload" command
+- Trigger reload command (ctrl+r) to reload current story
 
 ## More
 
-- ":load http://..." command to load a story from url
-- Reload command (ctrl+r) to reload current story
+- Run yarn script from command live
 - Output state object as a graph
 - ":list" command to list game elements such as objects, events, dialogs, etc.
 - ":show #reference" to show a specific object

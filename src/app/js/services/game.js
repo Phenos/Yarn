@@ -1,3 +1,5 @@
+"use strict";
+
 angular.module('mindgame').factory('game', gameService);
 
 function gameService(Yarn,

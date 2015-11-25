@@ -141,7 +141,7 @@ function promptLoop(storyLogService,
     promptLoop.addContext("WhatToLookAt", WhatToLookAt);
     promptLoop.addContext("WhatToTake", WhatToTake);
     promptLoop.addContext("WhatToDo", WhatToDo);
-    promptLoop.update();
+    //promptLoop.update();
 
     return promptLoop;
 }

@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var bump = require('gulp-bump');
 var del = require('del');
+var electron = require('electron-connect').server.create();
 
 var browserSync;
 
@@ -46,7 +47,8 @@ var config = {
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
             "./bower_components/angular-scroll-glue/src/scrollglue.js",
             "./bower_components/angular-hotkeys/build/hotkeys.js",
-            "./bower_components/angularjs-breakpoint/breakpoint-0.0.1.js"
+            "./bower_components/angularjs-breakpoint/breakpoint-0.0.1.js",
+            "./bower_components/d3/d3.min.js"
         ],
         javacriptTarget: 'build/static/js',
         bowerComponentsSource: 'bower_components/**',
@@ -102,7 +104,9 @@ gulp.task('copyAssets', gulp.series(
 gulp.task('clean', cleanTask);
 gulp.task('cleanAfterBuild', cleanAfterTask);
 gulp.task('server', serverTask);
+gulp.task('runElectron', runElectronTask);
 gulp.task('watch', watchTask);
+gulp.task('watchElectron', watchElectronTask);
 gulp.task('build', gulp.series(
     'clean',
     'compileLess',
@@ -113,6 +117,11 @@ gulp.task('dev', gulp.series(
     'build',
     'server',
     'watch'
+));
+gulp.task('dev-electron', gulp.series(
+    'build',
+    'runElectron',
+    'watchElectron'
 ));
 
 // -----[ Task Functions ]--------
@@ -162,9 +171,9 @@ function compressJsVendorsTask() {
         .pipe(using())
         .pipe(sourcemaps.init())
         .pipe(sourcemaps.write())
-        .pipe(uglify({
-            mangle: false
-        }))
+        //.pipe(uglify({
+        //    mangle: false
+        //}))
         .pipe(concat('vendors.js'))
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
@@ -206,11 +215,23 @@ function serverTask(callback) {
     callback();
 }
 
+function runElectronTask(callback) {
+    electron.start();
+    callback();
+}
+
 function watchTask() {
     gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
     gulp.watch(paths.watches.js, gulp.series('compressJS', 'copyJs', browserSync.reload));
     gulp.watch(paths.watches.stories, gulp.series('copyStories', browserSync.reload));
     gulp.watch(paths.watches.statics, gulp.series('copyStatic', browserSync.reload));
+}
+
+function watchElectronTask() {
+    gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', electron.reload));
+    gulp.watch(paths.watches.js, gulp.series('compressJS', 'copyJs', electron.reload));
+    gulp.watch(paths.watches.stories, gulp.series('copyStories', electron.reload));
+    gulp.watch(paths.watches.statics, gulp.series('copyStatic', electron.reload));
 }
 
 function lessTask() {

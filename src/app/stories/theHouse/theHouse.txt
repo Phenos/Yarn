@@ -6,13 +6,13 @@
     is described as
     "A story of small complexities and critical trivialities!".
 
-Import "/stories/theHouse/things.txt".
+Import "things.txt".
 
-Import "/stories/theHouse/rooms.txt".
+Import "rooms.txt".
 
-Import "/stories/theHouse/events.txt".
+Import "events.txt".
 
-// Import "/stories/theHouse/dialogs.txt".
+// Import " dialogs.txt".
 
 // Setup how you start
 #You is an @actor, is named "You", is in the #Kitchen.

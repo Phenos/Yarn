@@ -2,10 +2,11 @@
   "name": "yarn",
   "version": "0.0.14",
   "description": "",
-  "main": "server.js",
+  "main": "electron-main.js",
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp",
-    "start": "node server.js",
+    "__Zstart": "node server.js",
+    "___Zstart": "electron electron-main.js",
     "postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
@@ -13,6 +14,7 @@
     "bower": "latest",
     "del": "^2.1.0",
     "ejs": "2.3.3",
+    "electron-connect": "^0.3.3",
     "express": "4.13.3",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-bump": "^1.0.0",
@@ -35,6 +37,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.9.11"
+    "browser-sync": "^2.9.11",
+    "electron-prebuilt": "^0.35.0"
   }
 }

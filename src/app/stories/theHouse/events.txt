@@ -4,3 +4,13 @@ when #You enters the #Bedroom do #FeelTired.
 on #FeelTired:
     #you is #Tired,
     #RedBall is called "Blue ball".
+
+
+when #You obtain #GoldScepter do #BecomeGodlike.
+
+on #BecomeGodLike:
+    #you is called "Zeus",
+    #you is a #God,
+    #you has a#MagicLightningRod,
+    #you is in #TheTempleInTheClouds,
+    #you are #invincible.

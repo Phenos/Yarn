@@ -38,6 +38,8 @@ app.on('ready', function() {
   console.log("Loading electron app : " + url);
   mainWindow.loadUrl(url);
 
+  mainWindow.openDevTools();
+
   // Connect the electron-connect client to server process
   electronConnectClient.create(mainWindow);
 

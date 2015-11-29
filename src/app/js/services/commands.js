@@ -1,3 +1,8 @@
+if (require) {
+    var remote = require('remote');
+    var dialog = remote.require('dialog');
+}
+
 angular.module('mindgame').factory('commands', commands);
 
 function commands(storyLogService,
@@ -29,10 +34,10 @@ function commands(storyLogService,
         var commandStr = args.shift();
         var command = commands[commandStr];
         if (command) {
-            yConsole.command(":" + text);
+            yConsole.command(text);
             command(text, args);
         } else {
-            yConsole.command(":" + text);
+            yConsole.command(text);
             yConsole.error("Sorry... unknown command!");
         }
     };
@@ -102,7 +107,19 @@ function commands(storyLogService,
     }
 
     function loadCommand(command, args) {
-        gameService.loadFromURL(args[0]);
+        var url;
+        console.log("dialog", dialog);
+        if (!args.length && dialog) {
+            url = dialog.showOpenDialog({
+                properties: ['openFile']
+            });
+            if (url) url = "file://" + url;
+        } else {
+            url = args[0];
+        }
+        if (url) {
+            gameService.loadFromURL(url);
+        }
     }
 
     function takeCommand() {
@@ -117,7 +134,7 @@ function commands(storyLogService,
 
     function helpCommand() {
         yConsole.log("The <em>Yarn</em> console allows you tu run commands and change the story.");
-        yConsole.log("Available commands: <em>:help</em>, <em>:inventory</em>, <em>:state</em>, <em>:tree</em>, <em>:tokens</em>");
+        yConsole.log("Available commands: <em>help</em>, <em>load</em>, <em>inventory</em>, <em>state</em>, <em>tree</em>, <em>tokens</em>");
     }
 
     function showInventoryCommand() {

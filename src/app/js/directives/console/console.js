@@ -39,10 +39,10 @@
 
             this.onInput = function (text) {
                 var trimmed = text.trim();
-                if (trimmed[0] === ":") {
-                    commands.command(trimmed.substr(1));
-                } else {
+                if (trimmed[0] === ">") {
                     yConsole.error("Story script not yet supported!")
+                } else {
+                    commands.command(trimmed);
                 }
             };
 

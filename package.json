@@ -1,8 +1,15 @@
 {
   "name": "yarn",
+  "productName": "Yarn",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "electronVersion": "0.35.0",
   "version": "0.0.14",
   "description": "",
-  "main": "electron-main.js",
+  "main": "build/main.js",
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp",
     "__Zstart": "node server.js",
@@ -38,6 +45,7 @@
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.9.11",
-    "electron-prebuilt": "^0.35.0"
+    "electron-prebuilt": "^0.35.0",
+    "gulp-electron": "0.0.9"
   }
 }

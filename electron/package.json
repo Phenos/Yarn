@@ -1,0 +1,24 @@
+{
+  "name": "yarn",
+  "productName": "Yarn",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "electronVersion": "0.35.0",
+  "version": "0.0.14",
+  "main": "main.js",
+  "___scripts": {
+    "start": "echo \" what !! \" && electron ."
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "dependencies": {
+    "electron-connect": "^0.3.3"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.35.0"
+  }
+}

@@ -1,5 +1,12 @@
 'use strict';
+/*
 
+ Main Application Files for Electron App
+
+ */
+console.log("Starting electron app from main.js");
+
+var log = console.log;
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var electronConnectClient = require('electron-connect').client;
@@ -34,7 +41,7 @@ app.on('ready', function() {
   });
 
   // and load the index.html of the app.
-  var url = 'file://' + __dirname + '/build/static/index.html';
+  var url = 'file://' + __dirname + '/static/index.html';
   console.log("Loading electron app : " + url);
   mainWindow.loadUrl(url);
 
@@ -54,4 +61,19 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
 });
+
+app.on( 'gpu-process-crashed',           function(){ log( 'gpu-process-crashed'           ); } );
+app.on( 'select-certificate',            function(){ log( 'select-certificate'            ); } );
+app.on( 'activate-with-no-open-windows', function(){ log( 'activate-with-no-open-windows' ); } );
+app.on( 'before-quit',                   function(){ log( 'before-quit'                   ); } );
+app.on( 'browser-window-blur',           function(){ log( 'browser-window-blur'           ); } );
+app.on( 'browser-window-focus',          function(){ log( 'browser-window-focus'          ); } );
+app.on( 'open-file',                     function(){ log( 'open-file'                     ); } );
+app.on( 'open-url',                      function(){ log( 'open-url'                      ); } );
+app.on( 'quit',                          function(){ log( 'quit'                          ); } );
+app.on( 'ready',                         function(){ log( 'ready'                         ); } );
+app.on( 'will-finish-launching',         function(){ log( 'will-finish-launching'         ); } );
+app.on( 'will-quit',                     function(){ log( 'will-quit'                     ); } );
+app.on( 'window-all-closed',             function(){ log( 'window-all-closed'             ); } );

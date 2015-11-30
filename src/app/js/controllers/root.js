@@ -10,6 +10,7 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
     if (require) {
         var remote = require('remote');
         var Menu = remote.Menu;
+        var app = remote.app;
     }
 
 

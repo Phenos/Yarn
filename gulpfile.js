@@ -7,9 +7,11 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var bump = require('gulp-bump');
 var del = require('del');
-var electron = require('electron-connect').server.create();
+var electronConnect = require('electron-connect');
+var electron = require('gulp-electron');
 
 var browserSync;
+var electronServer;
 
 var config = {
     server: {
@@ -25,6 +27,7 @@ var config = {
         distTempLess: 'build/static/less-temp',
         less: 'src/app/less/**/*.less',
         staticSource: 'src/app/static/**',
+        electronSource: 'electron/**',
         storiesSource: 'src/app/stories/**',
         javascriptSource: [
             "src/app/js/yarn/yarn.js",
@@ -86,6 +89,7 @@ var paths = config.paths;
 gulp.task('bump', bumpTask);
 gulp.task('compileLess', lessTask);
 gulp.task('copyStatic', copyStaticTask);
+gulp.task('copyElectronSrc', copyElectronSrcTask);
 gulp.task('copyStories', copyStoriesTask);
 gulp.task('copyBowerComponents', copyBowerComponents);
 gulp.task('copyLess', copyLess);
@@ -104,6 +108,7 @@ gulp.task('copyAssets', gulp.series(
 gulp.task('clean', cleanTask);
 gulp.task('cleanAfterBuild', cleanAfterTask);
 gulp.task('server', serverTask);
+gulp.task('electron', electronTask);
 gulp.task('runElectron', runElectronTask);
 gulp.task('watch', watchTask);
 gulp.task('watchElectron', watchElectronTask);
@@ -120,6 +125,7 @@ gulp.task('dev', gulp.series(
 ));
 gulp.task('dev-electron', gulp.series(
     'build',
+    'copyElectronSrc',
     'runElectron',
     'watchElectron'
 ));
@@ -138,6 +144,12 @@ function copyStaticTask() {
     return gulp.src(paths.staticSource)
         .pipe(using())
         .pipe(gulp.dest(paths.staticRoot, cwd));
+}
+function copyElectronSrcTask() {
+    // Copy electron related source to build folder
+    return gulp.src(paths.electronSource)
+        .pipe(using())
+        .pipe(gulp.dest(paths.buildRoot, cwd));
 }
 
 function copyStoriesTask() {
@@ -215,8 +227,55 @@ function serverTask(callback) {
     callback();
 }
 
+function electronTask() {
+
+    var packageJson = require('./package.json');
+
+    // todo: Copy "/electron" sources to ./build
+
+    // todo: Figure out where the root SHOULD be
+    return gulp.src(".")
+        .pipe(electron({
+            src: './build',
+            packageJson: packageJson,
+            release: './release',
+            cache: './cache',
+            version: 'v0.35.2',
+            packaging: true,
+            platforms: ['darwin-x64'],
+            //platforms: ['win32-ia32', 'darwin-x64'],
+            platformResources: {
+                darwin: {
+                    CFBundleDisplayName: packageJson.name,
+                    CFBundleIdentifier: packageJson.name,
+                    CFBundleName: packageJson.name,
+                    CFBundleVersion: packageJson.version,
+                    icon: 'src/app/static/app-icons/yarn-icon.icns'
+                },
+                win: {
+                    "version-string": packageJson.version,
+                    "file-version": packageJson.version,
+                    "product-version": packageJson.version,
+                    "icon": 'src/app/static/app-icons/yarn-icon.ico'
+                }
+            }
+        }))
+        .pipe(gulp.dest("."));
+
+}
+
 function runElectronTask(callback) {
-    electron.start();
+    var path = process.cwd() + "/build/";
+    console.log("electron cwd path: " + path);
+    electronServer = electronConnect.server.create({
+        //port: 30081
+        //path : "package.json",
+        //path : "./build/package.json",
+        //spawnOpt : {
+        //    cwd: path
+        //}
+    });
+    electronServer.start();
     callback();
 }
 
@@ -228,10 +287,10 @@ function watchTask() {
 }
 
 function watchElectronTask() {
-    gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', electron.reload));
-    gulp.watch(paths.watches.js, gulp.series('compressJS', 'copyJs', electron.reload));
-    gulp.watch(paths.watches.stories, gulp.series('copyStories', electron.reload));
-    gulp.watch(paths.watches.statics, gulp.series('copyStatic', electron.reload));
+    gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', electronServer.reload));
+    gulp.watch(paths.watches.js, gulp.series('compressJS', 'copyJs', electronServer.reload));
+    gulp.watch(paths.watches.stories, gulp.series('copyStories', electronServer.reload));
+    gulp.watch(paths.watches.statics, gulp.series('copyStatic', electronServer.reload));
 }
 
 function lessTask() {

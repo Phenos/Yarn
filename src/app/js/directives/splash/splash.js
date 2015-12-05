@@ -10,7 +10,7 @@ function SplashDirective() {
             metadata: "="
         },
         controllerAs: 'splash',
-        template: '<div class="splash" ng-show="visible"><div class="splash-content" ng-show="visible"><img class="splash-logo" src="./images/logo-253px-onDark.png"><p>v{{ metadata.version }}</p><p>Loading...</p><div></div>',
+        template: '<div class="splash" ng-show="visible"><div class="splash-content" ng-show="visible"><img class="splash-logo" src="./images/logo-253px-onDark.png"><p>v{{ metadata.version }}</p><div></div>',
         controller: SplashController
     };
 

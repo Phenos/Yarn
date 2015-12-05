@@ -41,10 +41,11 @@
         gameService.register(controller);
 
 
-        var ambientSound = ngAudio.load("./sounds/166187__drminky__creepy-dungeon-ambience.mp3");
-        // todo: Load sound ambience from story
-        ambientSound.play();
-        ambientSound.loop = true;
+        // todo: bring back embiant loop
+        //var ambientSound = ngAudio.load("./sounds/166187__drminky__creepy-dungeon-ambience.mp3");
+        //// todo: Load sound ambience from story
+        //ambientSound.play();
+        //ambientSound.loop = true;
 
 
         function loadFromURL(url) {

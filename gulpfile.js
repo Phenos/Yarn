@@ -43,6 +43,7 @@ var config = {
         ],
         javascriptVendorsSource: [
             "./bower_components/angular/angular.js",
+            "./bower_components/angular-local-storage/dist/angular-local-storage.min.js",
             "./bower_components/angular-animate/angular-animate.js",
             "./bower_components/uri.js/src/URI.js",
             "./bower_components/angular-audio/app/angular.audio.js",
@@ -275,6 +276,7 @@ function runElectronTask(callback) {
         //    cwd: path
         //}
     });
+
     electronServer.start();
     callback();
 }

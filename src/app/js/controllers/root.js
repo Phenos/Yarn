@@ -137,6 +137,5 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
         yConsole.log("Welcome to <strong>Yarn</strong> <em>v" + metadata.version + "</em>");
         yConsole.log('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
     });
-    gameController.loadFromPage();
 
 }

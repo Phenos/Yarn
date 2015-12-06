@@ -11,6 +11,7 @@ function YarnService(State, Logic, Script) {
         //todo : SCRIPT LOADED SHOULD NOT BE INJECTED AS ARG
         //this.scriptLoader = scriptLoader;
 
+        this.script = null;
         this.scripts = [];
         this.state = new State();
         this.logic = new Logic(this.state, this.scripts);
@@ -27,12 +28,14 @@ function YarnService(State, Logic, Script) {
          * Parse a text into various semantic parts to be consumed by Yarn
          * @param text
          */
+        //todo: map exactly where script source is loaded
         this.load = function (text, url) {
-            var script = new Script();
-            this.scripts.push(script);
             console.log("yarn.load");
+            var script = new Script();
+            if (!this.script) this.script = script;
+            this.scripts.push(script);
             return script.load(text, url).then(function (v) {
-                console.log("?", v);
+                console.log("script.load.then", v);
                 return script;
             });
         };

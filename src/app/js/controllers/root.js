@@ -109,8 +109,13 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
     Menu.setApplicationMenu(menu);
 
     function menuItemLoadScript() {
+        // todo: This code is duplicated... make common
         var url = dialog.showOpenDialog({
-            properties: ['openFile']
+            properties: ['openFile'],
+            filters: [
+                { name: 'Yarn script', extensions: ['yarn'] }
+                //{ name: 'All Files', extensions: ['*'] }
+            ]
         });
         if (url) {
             url = "file://" + url;

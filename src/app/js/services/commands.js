@@ -108,10 +108,15 @@ function commands(storyLogService,
 
     function loadCommand(command, args) {
         var url;
+        // todo: This code is duplicated... make common
         console.log("dialog", dialog);
         if (!args.length && dialog) {
             url = dialog.showOpenDialog({
-                properties: ['openFile']
+                properties: ['openFile'],
+                filters: [
+                    { name: 'Yarn script', extensions: ['yarn'] }
+                    //{ name: 'All Files', extensions: ['*'] }
+                ]
             });
             if (url) url = "file://" + url;
         } else {
@@ -121,6 +126,7 @@ function commands(storyLogService,
             gameService.loadFromURL(url);
         }
     }
+
 
     function takeCommand() {
         var isAboutTo = game.state.predicate("isAboutTo");

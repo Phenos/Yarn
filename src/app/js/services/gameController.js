@@ -1,10 +1,8 @@
 (function () {
-
     "use strict";
 
     angular.module('mindgame').factory('gameController', gameController);
     angular.module('mindgame').factory('gameService', gameService);
-
 
     function gameService() {
         var controller = null;
@@ -24,17 +22,15 @@
         }
     }
 
-//todo: should this be the main game controller ?
+    //todo: should this be the main game controller ?
     function gameController(game,
                             loadScript,
-                            loadPageScripts,
                             writers,
                             promptLoop,
                             splashService,
                             gameService) {
 
         var controller = {
-            loadFromPage: loadFromPage,
             loadFromURL: loadFromURL
         };
         gameService.register(controller);
@@ -54,17 +50,6 @@
                 return onSuccess([script]);
             });
         }
-
-        function loadFromPage() {
-            // Load all game scipts
-            return loadPageScripts('yarn')
-                .then(onSuccess, onFail);
-        }
-
-        function onFail(error) {
-            console.log("Fail????? BOOOM!!! ", error);
-        }
-
 
         /**
          * Called once all files are loaded (including imports)

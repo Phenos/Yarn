@@ -101,6 +101,12 @@
             return $q.all(promises);
         };
 
+        Script.prototype.resolveRelativeURI = function resolveRelativeURI(uri) {
+            var resolvedURI = URI(uri).absoluteTo(this.url);
+            console.log(resolvedURI);
+            return resolvedURI;
+        };
+
         return Script;
     }
 

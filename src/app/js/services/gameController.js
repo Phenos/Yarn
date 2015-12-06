@@ -31,7 +31,6 @@
                             writers,
                             promptLoop,
                             splashService,
-                            ngAudio,
                             gameService) {
 
         var controller = {

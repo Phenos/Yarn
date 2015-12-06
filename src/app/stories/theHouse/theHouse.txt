@@ -10,7 +10,7 @@ Import "things.txt".
 
 Import "rooms.txt".
 
-Import "events.txt".
+// Import "events.txt".
 
 // Import " dialogs.txt".
 

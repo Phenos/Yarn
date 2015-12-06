@@ -21,6 +21,7 @@
     "angular-animate": "~1.4.7",
     "angular-uri": "~0.2.0",
     "angular-audio": "~1.7.1",
-    "d3": "~3.5.9"
+    "d3": "~3.5.9",
+    "angular-local-storage": "~0.2.3"
   }
 }

@@ -6,13 +6,13 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
 
 
 
+    // todo: Put menu setup in separate service
 
     if (require) {
         var remote = require('remote');
         var Menu = remote.Menu;
         var app = remote.app;
     }
-
 
     var mainMenuTemplate = [
         {
@@ -126,10 +126,6 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
     function menuItemDevTools() {
         remote.getCurrentWindow().openDevTools();
     }
-
-
-
-
 
 
     $scope.metadata = metadata;

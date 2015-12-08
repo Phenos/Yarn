@@ -1,13 +1,9 @@
 {
   "name": "yarn",
   "productName": "Yarn",
-  "author": {
-    "name": "",
-    "email": "",
-    "url": ""
-  },
+  "author": "",
   "electronVersion": "0.35.0",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "",
   "main": "build/main.js",
   "scripts": {
@@ -41,7 +37,6 @@
     "type": "git",
     "url": "https://github.com/Phenos/Yarn.git"
   },
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.9.11",

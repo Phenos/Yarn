@@ -2,7 +2,13 @@
 angular.module('mindgame').controller('root', rootController);
 
 
-function rootController(metadata, gameController, $scope, yConsole, loadMetadata, rememberLastStory) {
+function rootController(metadata,
+                        gameController,
+                        $scope,
+                        yConsole,
+                        loadMetadata,
+                        rememberLastStory,
+                        electronDevTools) {
 
 
 
@@ -125,7 +131,7 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
     }
 
     function menuItemDevTools() {
-        remote.getCurrentWindow().openDevTools();
+        electronDevTools.toggle();
     }
 
 
@@ -141,5 +147,7 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
         console.log("WAHT???", rememberedStory);
         gameController.loadFromURL(rememberedStory);
     }
+
+    electronDevTools.remember();
 
 }

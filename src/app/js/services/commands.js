@@ -9,7 +9,8 @@ function commands(storyLogService,
                   yConsole,
                   hotkeys,
                   gameService,
-                  game) {
+                  game,
+                  rememberLastStory) {
 
     var storyLog = storyLogService;
     var state = game.state;
@@ -123,6 +124,7 @@ function commands(storyLogService,
             url = args[0];
         }
         if (url) {
+            rememberLastStory.remember(url);
             gameService.loadFromURL(url);
         }
     }

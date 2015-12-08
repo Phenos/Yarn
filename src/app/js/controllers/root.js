@@ -2,7 +2,7 @@
 angular.module('mindgame').controller('root', rootController);
 
 
-function rootController(metadata, gameController, $scope, yConsole, loadMetadata) {
+function rootController(metadata, gameController, $scope, yConsole, loadMetadata, rememberLastStory) {
 
 
 
@@ -119,6 +119,7 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
         });
         if (url) {
             url = "file://" + url;
+            rememberLastStory.remember(url);
             gameController.loadFromURL(url);
         }
     }
@@ -133,5 +134,12 @@ function rootController(metadata, gameController, $scope, yConsole, loadMetadata
         yConsole.log("Welcome to <strong>Yarn</strong> <em>v" + metadata.version + "</em>");
         yConsole.log('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
     });
+
+    // Reload the story that was previously loaded
+    var rememberedStory = rememberLastStory.get();
+    if (rememberedStory) {
+        console.log("WAHT???", rememberedStory);
+        gameController.loadFromURL(rememberedStory);
+    }
 
 }

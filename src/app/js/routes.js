@@ -16,8 +16,7 @@
 
     // todo: Put config in separate file
     function config($stateProvider,
-                    $urlRouterProvider,
-                    localStorageServiceProvider) {
+                    $urlRouterProvider) {
 
 
         $urlRouterProvider.otherwise('/');
@@ -36,10 +35,6 @@
             templateUrl: './html/app.html',
             controller: 'root'
         });
-
-        // Setup local storage api
-        localStorageServiceProvider.setPrefix('yarn');
-        localStorageServiceProvider.setStorageType('localStorage');
 
     }
 })();

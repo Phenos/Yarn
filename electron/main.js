@@ -43,7 +43,7 @@ app.on('ready', function() {
   // and load the index.html of the app.
   var url = 'file://' + __dirname + '/static/index.html';
   console.log("Loading electron app : " + url);
-  mainWindow.loadUrl(url);
+  mainWindow.loadURL(url);
 
   mainWindow.openDevTools();
 

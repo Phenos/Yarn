@@ -1,5 +1,5 @@
 angular.module('mindgame', [
-    'LocalStorageModule',
+    'ngStorage',
     'ngAudio',
     'angular-uri',
     'ngAnimate',

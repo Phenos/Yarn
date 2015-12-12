@@ -144,7 +144,6 @@ function rootController(metadata,
     // Reload the story that was previously loaded
     var rememberedStory = rememberLastStory.get();
     if (rememberedStory) {
-        console.log("WAHT???", rememberedStory);
         gameController.loadFromURL(rememberedStory);
     }
 

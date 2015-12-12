@@ -17,6 +17,7 @@
     "bower": "latest",
     "del": "^2.1.0",
     "ejs": "2.3.3",
+    "electron-builder": "^2.4.0",
     "electron-connect": "^0.3.3",
     "express": "4.13.3",
     "gulp": "gulpjs/gulp#4.0",

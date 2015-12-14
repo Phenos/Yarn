@@ -48,7 +48,7 @@ function rootController(metadata,
                     label: 'Close',
                     accelerator: 'CmdOrCtrl+W',
                     role: 'close'
-                },
+                }
             ]
         }
     ];
@@ -123,7 +123,9 @@ function rootController(metadata,
                 //{ name: 'All Files', extensions: ['*'] }
             ]
         });
+
         if (url) {
+            // Replace windows back slashes to forward slashes
             url = "file://" + url;
             rememberLastStory.remember(url);
             gameController.loadFromURL(url);

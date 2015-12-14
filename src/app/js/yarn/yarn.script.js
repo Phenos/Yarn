@@ -75,7 +75,16 @@
         };
 
         Script.prototype.importNode = function (node) {
-            var url = URI(node.value).absoluteTo(this.url);
+            //todo: this code is duplicated... make unique with .resolveRelativeURL
+            // hack to protect windows drive letters in the path
+            var tmpBaseURI = this.url;
+            tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
+            tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
+            tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
+            console.log("importing: ", node.value);
+            console.log("relative to uri: ", tmpBaseURI);
+            var url = URI(node.value).absoluteTo(tmpBaseURI);
+            url = url.toString().replace("stupid_hack2/", ":/");
             return loadScript(url).then(function (loadedScript) {
                 var script = new Script();
                 return script.load(loadedScript.source, loadedScript.url).then(function () {
@@ -102,7 +111,14 @@
         };
 
         Script.prototype.resolveRelativeURI = function resolveRelativeURI(uri) {
-            var resolvedURI = URI(uri).absoluteTo(this.url);
+            var tmpBaseURI = this.url;
+            tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
+            tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
+            tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
+            console.log("importing: ", uri);
+            console.log("relative to uri: ", tmpBaseURI);
+            var resolvedURI = URI(uri).absoluteTo(tmpBaseURI);
+            resolvedURI = resolvedURI.toString().replace("stupid_hack2/", ":/");
             console.log(resolvedURI);
             return resolvedURI;
         };

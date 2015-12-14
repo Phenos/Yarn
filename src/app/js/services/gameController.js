@@ -43,7 +43,8 @@
         //ambientSound.loop = true;
 
 
-        function loadFromURL(url) {
+        function loadFromURL(_url) {
+            var url = _url.replace(/\\/g, "/");
             console.log("loadFromURL : ", url);
             return loadScript(url).then(function (script) {
                 console.log("wah?", script);

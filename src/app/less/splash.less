@@ -12,11 +12,37 @@ splash {
         top: 0;
         left: 0;
         height: 100vh;
-        width: 100vw;
-        background: #000;
+        width: 50vw;
+
         z-index: 9999;
 
-        .splash-content{
+        .splash-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+
+            background: #000 url('../images/splash/splash-bg.png');
+            background-size: cover;
+            filter: blur(3px);
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+
+        }
+        .splash-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+
+            background: rgba(0, 0, 0, 0.6);
+
+        }
+
+        .splash-content {
             position: absolute;
             width: 100%;
             top: 50vh;
@@ -27,8 +53,8 @@ splash {
             color: #fff;
 
             &.ng-hide {
-                -webkit-transition:all ease-out 0.4s;
-                transition:all ease-out 0.4s;
+                -webkit-transition: all ease-out 0.4s;
+                transition: all ease-out 0.4s;
                 margin-top: -35vh;
             }
 
@@ -39,9 +65,9 @@ splash {
         }
 
         &.ng-hide {
-            -webkit-transition:all ease-out 0.4s;
-            transition:all ease-out 0.4s;
-            opacity:0;
+            -webkit-transition: all ease-out 0.4s;
+            transition: all ease-out 0.4s;
+            opacity: 0;
         }
     }
 }

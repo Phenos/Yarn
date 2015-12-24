@@ -121,10 +121,11 @@ function promptLoop(storyLogService,
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to do ?";
+            // todo: These actions
             prompt.option("Move", "move");
             prompt.option("Look", "look");
             prompt.option("Take", "take");
-            prompt.option("Inventory", "inventory");
+            prompt.option("Inventory", "showInventory");
         };
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhatToDo");
@@ -140,7 +141,7 @@ function promptLoop(storyLogService,
     promptLoop.addContext("WhatToLookAt", WhatToLookAt);
     promptLoop.addContext("WhatToTake", WhatToTake);
     promptLoop.addContext("WhatToDo", WhatToDo);
-    promptLoop.update();
+    //promptLoop.update();
 
     return promptLoop;
 }

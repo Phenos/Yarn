@@ -9,7 +9,7 @@ function UserInputDirective() {
         },
         scope: {},
         controllerAs: 'userInput',
-        template: '<form><input ng-keypress="userInput.keypress($event)" ng-model="userInput.text" type="text" /><button ng-click="userInput.submit()">Go</button></form>',
+        template: '<form><textarea placeholder="Type in your command or script" ng-keypress="userInput.keypress($event)" ng-model="userInput.text"></textarea><button ng-click="userInput.submit()">Run</button></form>',
         controller: UserInputController
     };
 
@@ -27,7 +27,7 @@ function UserInputDirective() {
             //console.log("this.submit!!!", this.text);
             this.onSubmit({text: this.text});
             this.text = "";
-            $element.find("input")[0].focus();
+            $element.find("textarea")[0].focus();
         };
     }
 }

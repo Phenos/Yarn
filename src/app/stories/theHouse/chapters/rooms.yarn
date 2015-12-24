@@ -4,7 +4,7 @@
 The #Kitchen:
     is a @room,
     is named "The Kitchen",
-    has scenery "http://www.tarmints.com/wp-content/uploads/2015/06/round-kitchen-table-with-fabric-chairs-687x1024.jpg",
+    has scenery "./images/rooms/kitchen.jpg",
     links to the #Bedroom,
     links to the #Bathroom,
     links to the #FrontOfTheHouse,
@@ -18,7 +18,7 @@ The #Kitchen:
 
 The #FrontOfTheHouse:
     is a @room,
-    has scenery "http://imagesus.homeaway.com/mda01/88a8ac99-f663-4391-ab51-2ba9d64bee10.1.10",
+    has scenery "./images/rooms/frontOfTheHouse.jpg",
     is named "Front of the house",
     has in it a #RedSoccerBall,
     links to #kitchen,
@@ -29,7 +29,7 @@ The #Bedroom:
     is named "The Bedroom",
     links to the #Kitchen,
     links to #BedSideTable,
-    has scenery "http://rilane.com/wp-content/uploads/2014/07/Sensual-Bedroom-with-Concrete-Walls.jpg",
+    has scenery "./images/rooms/bedroom.jpg",
     is described as
         "The bedroom is dark and bare of any furniture
         except a large bed and a small wooden nighstand.".
@@ -38,7 +38,7 @@ The #Bathroom:
     is a @room,
     is named "The Bathroom",
     links to the #Kitchen,
-    has scenery "https://s-media-cache-ak0.pinimg.com/originals/5f/b8/6a/5fb86a242e1b2ab86f269a26a9420be2.jpg",
+    has scenery "./images/rooms/bathroom.jpg",
     is described as
         "The bathroom is small perfectly cubic room covered with while tiles
         dark brass fittings. It is equiped with all the classic bathroom items.
@@ -49,13 +49,14 @@ The #BedSideTable:
     is named "Bedside Table",
     links to #Bedroom,
     links to #BedsideTableDrawer,
-    has scenery "http://www.oldpaintdesign.com/wp-content/uploads/2011/09/cynthia_bedside_table.jpg",
+    has scenery "./images/rooms/bedsideTable.jpg",
     is described as "A small wooden bedside table, with a drawer... you should look in the drawer".
 
 The #BedsideTableDrawer:
     is a @room,
     is named "Bedside Table Drawer",
-    has scenery "http://www.haunt.co.nz/sites/default/files/product-images/french%20antique%20Directoire%20buffet%20drawer%20open.jpg",
+    has scenery "./images/rooms/BedsideTableDrawer.jpg",
     links to #BedSideTable,
     is described as "Your in the drawer... it's a little cramped. It's you and a flashlight",
     has a #FlashLight.
+

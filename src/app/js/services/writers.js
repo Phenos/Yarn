@@ -32,7 +32,8 @@ function writers(storyLogService,
         //console.log("Your in room ", room);
         if (room) {
             var scenery = room.resolveValue("hasScenery");
-            if (scenery) sceneryService.change(scenery);
+            var url = game.script.resolveRelativeURI(scenery);
+            if (url) sceneryService.change(url);
 
             var label = room.resolveValue("isNamed");
             storyLog.heading(label);
@@ -50,7 +51,8 @@ function writers(storyLogService,
             var label = thing.resolveValue("isNamed");
             var description = thing.resolveValue("isDescribedAs");
             var image = thing.resolveValue("hasImage");
-            if (image) storyLog.thingImage(image);
+            var resolvedURI = game.script.resolveRelativeURI(image);
+            if (image) storyLog.thingImage(resolvedURI);
             if (label) storyLog.subHeading(label);
             if (description) storyLog.log(description);
         }

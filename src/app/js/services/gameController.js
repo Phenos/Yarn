@@ -4,7 +4,7 @@
     angular.module('mindgame').factory('gameController', gameController);
     angular.module('mindgame').factory('gameService', gameService);
 
-    function gameService() {
+    function gameService(yConsole) {
         var controller = null;
 
         function register(ctrl) {
@@ -27,6 +27,7 @@
                             loadScript,
                             writers,
                             promptLoop,
+                            yConsole,
                             splashService,
                             gameService) {
 
@@ -44,10 +45,13 @@
 
 
         function loadFromURL(_url) {
+
             var url = _url.replace(/\\/g, "/");
-            console.log("loadFromURL : ", url);
+            yConsole.log("Loading story from : " + url);
+
             return loadScript(url).then(function (script) {
-                console.log("wah?", script);
+                yConsole.log("Completed loading story!");
+
                 return onSuccess([script]);
             });
         }

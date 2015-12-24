@@ -45,41 +45,46 @@
 
 
         function loadFromURL(_url) {
-
             var url = _url.replace(/\\/g, "/");
-            yConsole.log("Loading story from : " + url);
+            yConsole.log("Loading story from : " + _url);
+            return loadScript(url).then(onSuccess, onError);
 
-            return loadScript(url).then(function (script) {
-                yConsole.log("Completed loading story!");
+            function onError() {
+                yConsole.error("Failed to load story from this location: <a target='_blank' href='" + url + "'>" + url + "</a>");
+                yConsole.hint("This error can happen when either the address of the story file is not correct or the file has been moved or deleted. You can check the address for mistakes or check your connection.");
+            }
 
-                return onSuccess([script]);
-            });
-        }
+            /**
+             * Called once all files are loaded (including imports)
+             */
+            function onSuccess(script) {
+                //console.info("Game script loaded successfully", script);
 
-        /**
-         * Called once all files are loaded (including imports)
-         */
-        function onSuccess(scripts) {
-            console.info("Game script loaded successfully", scripts);
+                game.load(script.source, script.url).then(onSuccess, onError);
 
-            if (scripts.length) {
-                game.load(scripts[0].source, scripts[0].url).then(function (script) {
-                    console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
-                    console.log("script WHOO", script);
+                function onSuccess(script) {
+                    //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
+                    //console.log("script WHOO", script);
+                    yConsole.success("Successfully loaded the story script");
+                    yConsole.log("Running the story");
 
+                    // todo: this .run should be a promise and show a success or error message in the game console
                     script.run(game.state);
 
-                    console.log("======[ SHOULD HAVE ENDED RUN ]=======");
+                    //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
                     splashService.hide();
                     writers
                         .LogStoryIntroduction()
                         .DescribeWhereYouAre();
                     promptLoop.update();
 
-                });
+                }
+                function onError (request) {
+                    yConsole.error("Failed to load story asset from : " + request.config.url);
+                    yConsole.hint("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
+                }
+
             }
-
-
         }
 
         return controller;

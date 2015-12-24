@@ -146,7 +146,7 @@ function rootController(metadata,
 
     function doWelcomeMessage(metadata) {
         yConsole.log("Welcome to <strong>Yarn!</strong> <em>v" + metadata.version + "</em>");
-        yConsole.log('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
+        yConsole.hint('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
     }
 
     function doLoadRememberedStory() {

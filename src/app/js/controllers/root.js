@@ -11,7 +11,6 @@ function rootController(metadata,
                         electronDevTools) {
 
 
-
     // todo: Put menu setup in separate service
 
     if (require) {
@@ -138,17 +137,25 @@ function rootController(metadata,
 
 
     $scope.metadata = metadata;
-    loadMetadata().then(function (metadata) {
-        yConsole.log("Welcome to <strong>Yarn!</strong> <em>v" + metadata.version + "</em>");
-        yConsole.log('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
-    });
+    loadMetadata().then(onGameReady);
 
-    // Reload the story that was previously loaded
-    var rememberedStory = rememberLastStory.get();
-    if (rememberedStory) {
-        gameController.loadFromURL(rememberedStory);
+    function onGameReady(metadata) {
+        doWelcomeMessage(metadata);
+        doLoadRememberedStory();
     }
 
-    electronDevTools.remember();
+    function doWelcomeMessage(metadata) {
+        yConsole.log("Welcome to <strong>Yarn!</strong> <em>v" + metadata.version + "</em>");
+        yConsole.hint('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
+    }
+
+    function doLoadRememberedStory() {
+        // Reload the story that was previously loaded
+        var rememberedStory = rememberLastStory.get();
+        if (rememberedStory) {
+            gameController.loadFromURL(rememberedStory);
+        }
+        electronDevTools.remember();
+    }
 
 }

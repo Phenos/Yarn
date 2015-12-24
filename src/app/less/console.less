@@ -47,9 +47,8 @@ console {
             a:visited,
             a:link,
             a {
-                color: #ff9;
-                text-decoration: none;
-                font-weight: 400;
+                color: inherit;
+                text-decoration: underline;
             }
             strong {
                 font-weight: 600;
@@ -63,9 +62,18 @@ console {
             &.is-log {
                 font-weight: 300;
             }
+            &.is-hint {
+                font-weight: 300;
+                font-size: 0.9em;
+                color: #6666CC;
+            }
             &.is-error {
                 letter-spacing: 0.06em;
                 color: #FF6666;
+            }
+            &.is-success {
+                letter-spacing: 0.06em;
+                color: #33BB33;
             }
             &.is-command {
                 color: #4444DD;

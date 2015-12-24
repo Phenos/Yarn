@@ -30,7 +30,15 @@ function yConsoleService() {
         };
 
         this.error = function (text) {
-            yConsole.write(text, "error");
+            yConsole.write("✖ " + text, "error");
+        };
+
+        this.success = function (text) {
+            yConsole.write("✔ " + text, "success");
+        };
+
+        this.hint = function (text) {
+            yConsole.write("<strong>Hint: </strong> " + text, "hint");
         };
 
         this.command = function (text) {

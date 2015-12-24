@@ -163,13 +163,13 @@ function copyStoriesTask() {
 function copyJsTask() {
     // Copy js folder
     return gulp.src(paths.javascriptSource)
-        .pipe(using())
+        //.pipe(using())
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
 
 function compressJsTask() {
     return gulp.src(paths.javascriptSource)
-        .pipe(using())
+        //.pipe(using())
         .pipe(sourcemaps.init())
         .pipe(sourcemaps.write())
         //.pipe(uglify({

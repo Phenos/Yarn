@@ -9,7 +9,7 @@ console.log("Starting electron app from main.js");
 var log = console.log;
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
-var electronConnectClient = require('electron-connect').client;
+//var electronConnectClient = require('electron-connect').client;
 
 // Report crashes to our server.
 //require('crash-reporter').start();
@@ -48,7 +48,7 @@ app.on('ready', function() {
   //mainWindow.openDevTools();
 
   // Connect the electron-connect client to server process
-  electronConnectClient.create(mainWindow);
+  //electronConnectClient.create(mainWindow);
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();

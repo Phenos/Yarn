@@ -1,16 +1,19 @@
 {
   "name": "yarn",
   "productName": "Yarn",
-  "author": "",
-  "electronVersion": "0.35.0",
+  "author": {
+    "name": "Mathieu Sylvain",
+    "email": "mathieu.sylvain@phenos.ca",
+    "url": "http://phenos.ca/"
+  },
+  "electronVersion": "0.36.0",
   "version": "0.0.15",
   "description": "",
   "main": "build/main.js",
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp",
-    "__Zstart": "node server.js",
-    "___Zstart": "electron electron-main.js",
-    "___postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
+    "__start": "node server.js",
+    "__postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
   "dependencies": {

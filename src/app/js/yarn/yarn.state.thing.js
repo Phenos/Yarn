@@ -3,6 +3,7 @@
 
     angular.module('yarn').factory('Thing', ThingService);
 
+    // todo: BAD DESIGN: Major refactoring, This class should not need to use the "state" parent object
     function ThingService() {
 
         /**

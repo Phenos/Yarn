@@ -11,9 +11,22 @@
             this.things = {};
             this.predicates = {};
             this.syntaxes = {};
+            // todo: Make configurable
+            // todo: Layers should be instances of Layer class
+            // Top layers have priority when resolving assertions
+            this.layers = [{
+                id: "session",
+                static: false
+            }, {
+                id: "world",
+                static: true
+            }];
+            // todo: ability to set current layer by it's id
+            this.layerSetup = ["world", "session"];
+            this.currentLayer = "world";
         }
 
-        State.prototype.getPredicates = function(tokens) {
+        State.prototype.getPredicates = function (tokens) {
             var self = this;
             var predicates = [];
             tokens.forEach(function (token) {
@@ -49,6 +62,7 @@
         };
 
         State.prototype.html = function () {
+            var self = this;
             var html = [];
 
             html.push("<div class='assertions'>");
@@ -60,6 +74,8 @@
                 html.push(getStringFromThingOrValue(assertion.predicate));
                 html.push("</span><span class='object " + getTypeFromThingOrValue(assertion.object) + "'>");
                 html.push(getStringFromThingOrValue(assertion.object));
+                html.push("</span><span class='truth'>");
+                html.push("=" + assertion.valueLayer(self.layerSetup) + ":" + assertion.value(self.layerSetup));
                 html.push("</span></div>");
             });
             html.push("</div><hr /><div>");
@@ -98,7 +114,7 @@
                     value = "isThing"
                 } else {
                     type = typeof obj;
-                    type = "is" + type.substr(0,1).toUpperCase() + type.substr(1);
+                    type = "is" + type.substr(0, 1).toUpperCase() + type.substr(1);
                     value = type;
                 }
                 return value;
@@ -172,7 +188,6 @@
                 if (foundActionHandler[0]) {
                     actionHandler = foundActionHandler[0].object;
                 } else {
-                    // Create a new assertion
                     actionHandler = new ActionHandler(subject, predicate, object, doReference);
                     this.actionHandlers.push(actionHandler);
                 }
@@ -208,8 +223,8 @@
                 if (foundAssertions[0]) {
                     assertion = foundAssertions[0].object;
                 } else {
-                    // Create a new assertion
-                    assertion = new Assertion(subject, predicate, object, this);
+                    // Create a new assertion and set it to "true" for the current state layer
+                    assertion = new Assertion(subject, predicate, object).set(true, this.currentLayer);
                     this.assertions.push(assertion);
                 }
             } else {
@@ -219,6 +234,7 @@
             return assertion;
         };
 
+        // todo: Take in account layers
         State.prototype.removeAssertions = function (subject, predicate, object) {
             // Look for matching assertions
             // todo: use built indexes instead of itterating trough all predicates
@@ -234,7 +250,14 @@
 
 
         // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
+        /**
+         * Get the topmost assertion from layered states
+         * @param subject
+         * @param predicate
+         * @returns {Array}
+         */
         State.prototype.getAssertion = function (subject, predicate) {
+            var self = this;
             var assertion;
             var foundAssertions = [];
 
@@ -244,7 +267,9 @@
                 this.assertions.forEach(function (assertion) {
                     if (assertion.subject === subject &&
                         assertion.predicate === predicate) {
-                        foundAssertions.push(assertion);
+                        if (assertion.value(self.layerSetup) === true) {
+                            foundAssertions.push(assertion);
+                        }
                     }
                 });
             } else {
@@ -252,6 +277,9 @@
             }
 
             return foundAssertions;
+        };
+        // TODO: Add support for getting assertion for a specific layer
+        State.prototype.getAssertionByLayer = function (subject, predicate, layer) {
         };
 
         State.prototype.getActionHandler = function (subject, predicate, object) {
@@ -273,7 +301,6 @@
 
             return foundActionHandler;
         };
-
 
 
         /**

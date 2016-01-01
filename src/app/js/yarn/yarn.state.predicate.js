@@ -10,6 +10,7 @@
          * @param id
          * @constructor
          */
+        // todo: BAD DESIGN: Major refactoring, This class should not need to use the "yarn" parent object
         function Predicate(_id, type, yarn) {
             var id = _id.toLowerCase();
             this.id = id;

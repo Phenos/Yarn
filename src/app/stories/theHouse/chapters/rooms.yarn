@@ -27,6 +27,7 @@ The #FrontOfTheHouse:
 The #Bedroom:
     is a @room,
     is named "The Bedroom",
+    has in it a #BedSideTable,
     links to the #Kitchen,
     links to #BedSideTable,
     has scenery "./images/rooms/bedroom.jpg",
@@ -46,6 +47,7 @@ The #Bathroom:
         "
 The #BedSideTable:
     is a @room,
+    is a @thing,
     is named "Bedside Table",
     links to #Bedroom,
     links to #BedsideTableDrawer,

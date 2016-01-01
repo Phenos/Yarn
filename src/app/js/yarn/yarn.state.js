@@ -27,9 +27,9 @@
         State.prototype.resolve = function (expression, _thing) {
             var thing = _thing;
             var allResolved = [];
+            var tokens = expression.split(".");
             // If a thing was not supplied as a starting point, use the first token as the thing id
             if (!thing) {
-                var tokens = expression.split(".");
                 var thingId = tokens.shift();
                 if (thingId) thing = this.thing(thingId);
             }
@@ -236,11 +236,10 @@
         // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
         State.prototype.getAssertion = function (subject, predicate) {
             var assertion;
-            var foundAssertions;
+            var foundAssertions = [];
 
             if (predicate && subject) {
                 // Look for an existing assertion
-                foundAssertions = [];
                 // todo: use built indexes instead of itterating trough all predicates
                 this.assertions.forEach(function (assertion) {
                     if (assertion.subject === subject &&

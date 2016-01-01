@@ -70,6 +70,8 @@
 
                     // todo: this .run should be a promise and show a success or error message in the game console
                     script.run(game.state);
+                    // Change the current state layer to the current session.
+                    game.state.currentLayer = "session";
 
                     //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
                     splashService.hide();

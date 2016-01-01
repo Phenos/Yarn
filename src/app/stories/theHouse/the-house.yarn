@@ -16,5 +16,5 @@ Import "./chapters/rooms.yarn".
 
 // Setup how you start
 #You is an @actor, is named "You", is in the #Kitchen.
-#You has in inventory a #PlasticSpoon.
+//#You has in inventory a #PlasticSpoon.
 

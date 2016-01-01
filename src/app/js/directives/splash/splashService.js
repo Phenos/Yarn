@@ -13,7 +13,7 @@ function splashService() {
 
     function register(ctrl) {
         splashController = ctrl;
-        console.log('splashController', splashController);
+        //console.log('splashController', splashController);
         if (hidden) splashController.hide();
     }
 

@@ -17,7 +17,6 @@ function electronDevTools($localStorage) {
 
         this.open = function () {
             var a = remote.getCurrentWindow().openDevTools();
-            console.log("a", a);
             $localStorage.electronDevTools.isOpen = true;
         };
 

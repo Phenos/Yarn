@@ -49,7 +49,7 @@
         };
 
         Script.prototype.processImports = function (ast) {
-            console.info("Parsing AST for imports");
+            //console.log("Parsing AST for imports");
             //console.log("ast", ast);
             return this.parseNode(ast.root);
         };
@@ -81,8 +81,7 @@
             tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
             tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
             tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
-            console.log("importing: ", node.value);
-            console.log("relative to uri: ", tmpBaseURI);
+            //console.log("Importing: ", node.value, "relative to uri: ", tmpBaseURI);
             var url = URI(node.value).absoluteTo(tmpBaseURI);
             url = url.toString().replace("stupid_hack2/", ":/");
             return loadScript(url).then(function (loadedScript) {
@@ -94,7 +93,7 @@
                     node.type = "instruction";
                     node.value = "@imported";
                     node.set = script.ast.root.set;
-                    console.info("Grafted imported AST into parent AST")
+                    //console.log("Grafted imported AST into parent AST")
                 });
             });
         };

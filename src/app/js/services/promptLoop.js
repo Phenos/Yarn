@@ -73,7 +73,6 @@ function promptLoop(storyLogService,
             prompt.question = "What do you want to take ?";
             var thingsInRoom = state.resolve("You.isIn.hasInIt");
             var thingsThatAreInventory = [];
-            console.trace("thingsInRoom", thingsInRoom);
 
             // Todo: YUCK... Find a better way to do these checks!!!!!
             thingsInRoom.forEach(function (thing) {
@@ -81,7 +80,6 @@ function promptLoop(storyLogService,
                 var isInventoryItem = false;
                 var thingsThatAre = thing.resolve("isA");
                 thingsThatAre.forEach(function (thing) {
-                    console.trace("is a", thing.id);
                     if (thing === state.thing("InventoryItem")) isInventoryItem = true;
                 });
                 if (isInventoryItem) thingsThatAreInventory.push(thing);
@@ -123,7 +121,7 @@ function promptLoop(storyLogService,
 
             // Enable the move action if there are places to move to
             var linksToCurrentRoom = state.resolve("You.isIn.linksTo");
-            console.log("linksToCurrentRoom", linksToCurrentRoom);
+            //console.log("linksToCurrentRoom", linksToCurrentRoom);
             if (linksToCurrentRoom.length) {
                 prompt.option("Move", "move");
             }
@@ -131,7 +129,7 @@ function promptLoop(storyLogService,
             // Enable the look action for if the room contains objects
             // with descriptions
             var thingsInRoom = state.resolve("You.isIn.hasInIt");
-            console.log("thingsInRoom", thingsInRoom);
+            //console.log("thingsInRoom", thingsInRoom);
             var thingsInRoomWithDescriptions = state.predicate("isDescribedAs").filterThings(thingsInRoom);
             if (thingsInRoomWithDescriptions.length) {
                 prompt.option("Look", "look");

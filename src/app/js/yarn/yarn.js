@@ -30,12 +30,12 @@ function YarnService(State, Logic, Script) {
          */
         //todo: map exactly where script source is loaded
         this.load = function (text, url) {
-            console.log("yarn.load");
+            //console.log("yarn.load");
             var script = new Script();
             if (!this.script) this.script = script;
             this.scripts.push(script);
             return script.load(text, url).then(function (v) {
-                console.log("script.load.then", v);
+                //console.log("script.load.then", v);
                 return script;
             });
         };

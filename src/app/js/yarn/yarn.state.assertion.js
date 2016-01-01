@@ -22,7 +22,7 @@
 
         // todo: value.value is confusing... find better taxonomy/syntax
         Assertion.prototype.set = function (value, layerId) {
-            console.log("===+++", value, layerId, this);
+            //console.log("===+++", value, layerId, this);
             if (!this.states[layerId])
                 this.states[layerId] = new State(value, layerId);
             this.states[layerId].value = value;

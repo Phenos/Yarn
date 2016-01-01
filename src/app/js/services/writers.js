@@ -51,8 +51,11 @@ function writers(storyLogService,
             var label = thing.resolveValue("isNamed");
             var description = thing.resolveValue("isDescribedAs");
             var image = thing.resolveValue("hasImage");
-            var resolvedURI = game.script.resolveRelativeURI(image);
-            if (image) storyLog.thingImage(resolvedURI);
+            if (image) {
+                storyLog.thingImage(
+                    game.script.resolveRelativeURI(image)
+                );
+            }
             if (label) storyLog.subHeading(label);
             if (description) storyLog.log(description);
         }

@@ -112,14 +112,18 @@
 
         Script.prototype.resolveRelativeURI = function resolveRelativeURI(uri) {
             var tmpBaseURI = this.url;
-            tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
-            tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
-            tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
-            console.log("importing: ", uri);
-            console.log("relative to uri: ", tmpBaseURI);
-            var resolvedURI = URI(uri).absoluteTo(tmpBaseURI);
-            resolvedURI = resolvedURI.toString().replace("stupid_hack2/", ":/");
-            console.log(resolvedURI);
+            if (uri) {
+                // todo: refactore this hack into a seprate function/filter
+                // HACK to accound for difference in path resolution between windows an osx
+                tmpBaseURI = tmpBaseURI.replace("file://", "*stupid_hack1*");
+                tmpBaseURI = tmpBaseURI.replace(":/", "stupid_hack2/");
+                tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
+                //console.log("relative to uri: ", tmpBaseURI);
+                var resolvedURI = URI(uri).absoluteTo(tmpBaseURI);
+                resolvedURI = resolvedURI.toString().replace("stupid_hack2/", ":/");
+            } else {
+                resolvedURI = uri;
+            }
             return resolvedURI;
         };
 

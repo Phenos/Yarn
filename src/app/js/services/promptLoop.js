@@ -77,7 +77,6 @@ function promptLoop(storyLogService,
 
             // Todo: YUCK... Find a better way to do these checks!!!!!
             thingsInRoom.forEach(function (thing) {
-                console.trace("thing", thing.id);
                 // Check if item is an InventoryItem
                 var isInventoryItem = false;
                 var thingsThatAre = thing.resolve("isA");
@@ -121,11 +120,36 @@ function promptLoop(storyLogService,
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to do ?";
-            // todo: These actions
-            prompt.option("Move", "move");
-            prompt.option("Look", "look");
-            prompt.option("Take", "take");
-            prompt.option("Inventory", "showInventory");
+
+            // Enable the move action if there are places to move to
+            var linksToCurrentRoom = state.resolve("You.isIn.linksTo");
+            console.log("linksToCurrentRoom", linksToCurrentRoom);
+            if (linksToCurrentRoom.length) {
+                prompt.option("Move", "move");
+            }
+
+            // Enable the look action for if the room contains objects
+            // with descriptions
+            var thingsInRoom = state.resolve("You.isIn.hasInIt");
+            console.log("thingsInRoom", thingsInRoom);
+            var thingsInRoomWithDescriptions = state.predicate("isDescribedAs").filterThings(thingsInRoom);
+            if (thingsInRoomWithDescriptions.length) {
+                prompt.option("Look", "look");
+            }
+
+            // Enable the "take" option if there are inventory items
+            // in the current room
+            var roomContents = state.resolve("You.isIn.hasInIt");
+            var inventoryInCurrentRoom = state.predicate("isA").filterThings(roomContents, state.thing("InventoryItem"));
+            if (inventoryInCurrentRoom.length) {
+                prompt.option("Take", "take");
+            }
+
+            // Enable the "inventory" action if the user has inventory
+            var inventoryItems = state.resolve("You.hasInInventory");
+            if (inventoryItems.length) {
+                prompt.option("Inventory", "showInventory");
+            }
         };
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhatToDo");

@@ -135,7 +135,6 @@
 
                     } else if (node.value === "@imported") {
 
-console.log("hooo.... found an imported node");
                         //runtime.stack.push("default", {
                         //    "this": "root"
                         //});

@@ -8,7 +8,7 @@
         var controller = null;
 
         function register(ctrl) {
-            console.log("register", ctrl);
+            //console.log("register", ctrl);
             controller = ctrl;
         }
 

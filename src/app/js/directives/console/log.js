@@ -19,11 +19,11 @@ function LogDirective($sce) {
         var self = this;
 
         $scope.$watch('log.text', function(value) {
-            console.log("element", $element);
-            console.log("value", value);
+            //console.log("element", $element);
+            //console.log("value", value);
             $element.addClass("is-" + self.type);
             var elem = $compile("<div>" + value + "</div>")($scope);
-            console.log("elem: ", elem);
+            //console.log("elem: ", elem);
             $element.append(elem);
         });
 

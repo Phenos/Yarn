@@ -13,9 +13,10 @@ function gamePedicates(game) {
         .syntax("is authored by");
 
     // The Action the user what about to make (ex.: Move, Look, etc)
-    state
+    var isAboutTo = state
         .predicate("isAboutTo")
         .syntax("is about to");
+    isAboutTo.uniqueSubject = true;
 
     // What something is of a kind
     state
@@ -56,7 +57,7 @@ function gamePedicates(game) {
         .syntax("is also described as");
 
     // When something is in a place
-    state
+    var isIn = state
         .predicate("isIn")
         .syntax("is in the")
         .syntax("is inside the")
@@ -70,6 +71,7 @@ function gamePedicates(game) {
         .syntax("are in")
         .syntax("are inside")
         .syntax("are at");
+    isIn.uniqueSubject = true;
 
     // When something has something else. Ex.: Kitchen has a Kitchen Table
     state

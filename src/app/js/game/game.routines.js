@@ -12,9 +12,8 @@ function gameRoutines(game) {
         var isIn = game.state.predicate("isIn");
         var you = game.state.thing("You");
         if (room) {
-            you
-                .removeAssertions(isIn)
-                .setAssertion(isIn, room);
+            you.removeAssertions(isIn);
+            you.setAssertion(isIn, room);
         }
         // TODO : Trigger movesFrom
         game.logic.trigger(you, "movesTo", room);
@@ -25,9 +24,14 @@ function gameRoutines(game) {
     game.logic.register("aboutTo", aboutTo);
     function aboutTo(aboutToId) {
         var isAboutTo = game.state.predicate("isAboutTo");
-        game.state.thing("You").removeAssertions(isAboutTo);
         if (aboutToId) {
             game.state.thing("You").setAssertion(isAboutTo, aboutToId);
+            console.log("ABOUT TO >> ", aboutTo);
+        } else {
+            game.state.negate(
+                game.state.thing("You").getAssertion(isAboutTo)
+            );
+            console.log("CLEARED ABOUT TO !!! ");
         }
         return true;
     }

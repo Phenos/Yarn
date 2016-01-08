@@ -16,6 +16,7 @@
             this.id = id;
             this.label = id;
             this.type = type;
+            this.uniqueSubject = false;
     
             /**
              * Define a new syntax for this predicate

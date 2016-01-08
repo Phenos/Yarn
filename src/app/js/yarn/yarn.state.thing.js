@@ -24,14 +24,12 @@
             return this.state.getAssertion(this, predicate);
         };
 
-        Thing.prototype.setAssertion = function (predicate, object) {
-            this.state.setAssertion(this, predicate, object);
-            return this;
+        Thing.prototype.setAssertion = function (predicate, object, value) {
+            return this.state.setAssertion(this, predicate, object, value);
         };
 
         Thing.prototype.removeAssertions = function (predicate, object) {
-            this.state.removeAssertions(this, predicate, object);
-            return this;
+            return this.state.removeAssertions(this, predicate, object);
         };
 
         /**

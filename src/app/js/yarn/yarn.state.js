@@ -24,7 +24,24 @@
             // todo: ability to set current layer by it's id
             this.layerSetup = ["world", "session"];
             this.currentLayer = "world";
+            this.localState = null;
         }
+
+        State.prototype.restoreFromLocalState = function(localState) {
+            var self = this;
+            this.localState = localState;
+            angular.forEach(this.localState.assertions, function (assertion) {
+                var newAssertion;
+                newAssertion = self.setAssertion(
+                    self.thing(assertion.subject),
+                    self.predicate(assertion.predicate),
+                    self.thing(assertion.object),
+                    assertion.value
+                );
+                console.log("Restoring assertion from localState", assertion, newAssertion);
+
+            });
+        };
 
         State.prototype.getPredicates = function (tokens) {
             var self = this;
@@ -77,6 +94,7 @@
                 html.push("</span><span class='truth'>");
                 html.push("=" + assertion.valueLayer(self.layerSetup) + ":" + assertion.value(self.layerSetup));
                 html.push("</span></div>");
+                console.log("asssss", assertion);
             });
             html.push("</div><hr /><div>");
             this.actionHandlers.forEach(function (actionHandler) {
@@ -97,6 +115,8 @@
                 var value;
                 if (typeof obj === "undefined") {
                     value = "[undefined]";
+                } else if (obj === null) {
+                    value = "[null]";
                 } else if (typeof obj === "object") {
                     value = obj.label || obj.id;
                 } else {
@@ -129,10 +149,10 @@
          */
         State.prototype.thing = function (_id) {
             var thing;
+            if (!_id) return null;
+
             var id = _id.toLowerCase();
 
-            if (!id)
-                throw("Things must have an id");
             thing = this.things[id];
             if (!thing) {
                 thing = new Thing(id, this);
@@ -203,29 +223,55 @@
          * @param subject
          * @param predicate
          * @param object
+         * @param value
          * @returns {*}
          */
-        State.prototype.setAssertion = function (subject, predicate, object) {
+        State.prototype.setAssertion = function (subject, predicate, object, value) {
             var assertion;
             var foundAssertions;
+            var valueOveride = true;
+            if (value === false) valueOveride = false;
 
             if (predicate && subject) {
                 // Look for an existing assertion
                 foundAssertions = [];
                 // todo: use built indexes instead of itterating trough all predicates
                 this.assertions.forEach(function (assertion) {
-                    if (assertion.subject === subject &&
-                        assertion.predicate === predicate &&
-                        assertion.object === object) {
-                        foundAssertions.push(assertion);
+                    if (assertion.predicate.uniqueSubject) {
+                        if (assertion.subject === subject &&
+                            assertion.predicate === predicate) {
+                            foundAssertions = [assertion];
+                        }
+                    } else {
+                        if (assertion.subject === subject &&
+                            assertion.predicate === predicate &&
+                            assertion.object === object) {
+                            foundAssertions.push(assertion);
+                        }
                     }
                 });
                 if (foundAssertions[0]) {
-                    assertion = foundAssertions[0].object;
+                    assertion = foundAssertions[0];
+                    // If it is an assertion predicate whish is unique per subject
+                    // override with the project object reference
+                    if (assertion.predicate.uniqueSubject) {
+                        //debugger;
+                        assertion.object = object;
+                    }
                 } else {
                     // Create a new assertion and set it to "true" for the current state layer
-                    assertion = new Assertion(subject, predicate, object).set(true, this.currentLayer);
+                    assertion = new Assertion(subject, predicate, object);
                     this.assertions.push(assertion);
+                }
+                assertion.set(valueOveride, this.currentLayer);
+
+                // If the current layer is for "session", store the assertion in the
+                // localStorage provider
+                if (this.currentLayer === "session") {
+                    console.log("this.localState", this.localState);
+                    if (this.localState) {
+                        this.localState.assertions[assertion.id()] = assertion.toJSON(this.layerSetup);
+                    }
                 }
             } else {
                 console.warn("Impossible to create assertion without at least a subject and a predicate.")
@@ -234,7 +280,22 @@
             return assertion;
         };
 
+        State.prototype.negate = function (assertion) {
+            var self = this;
+            var assertions = [];
+            if (angular.isArray(assertion)) {
+                assertions = assertion;
+            } else if (angular.isObject(assertion)) {
+                assertions = [assertion]
+            }
+            assertions.forEach(function (assertion) {
+                assertion.set(false, self.currentLayer);
+            })
+        };
+
         // todo: Take in account layers
+        // todo: Handle case when assertion was persisted in localStorage
+        // todo: Handle case when asseetion has uniqueSubject predicate
         State.prototype.removeAssertions = function (subject, predicate, object) {
             // Look for matching assertions
             // todo: use built indexes instead of itterating trough all predicates
@@ -247,7 +308,6 @@
             });
             return this;
         };
-
 
         // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
         /**

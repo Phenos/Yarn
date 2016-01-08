@@ -20,6 +20,32 @@
             this.states = {};
         }
 
+        Assertion.prototype.id = function() {
+            var objectId = "";
+            var subjectId = "";
+            if (this.subject) subjectId = this.subject.id || "";
+            if (!this.predicate.uniqueSubject) {
+                if (this.object) objectId = this.object.id || "";
+            }
+            var id = [subjectId, this.predicate.id, objectId].join("-");
+            console.log("id", id);
+            return id;
+        };
+
+        Assertion.prototype.toJSON = function(layers) {
+            var json = {};
+            if (this.subject) {
+                json.subject = this.subject.id;
+            }
+            if (this.predicate) json.predicate = this.predicate.id;
+            if (this.object) {
+                json.object = this.object.id;
+            }
+            json.value = this.value(layers);
+            console.log("json", json);
+            return json;
+        };
+
         // todo: value.value is confusing... find better taxonomy/syntax
         Assertion.prototype.set = function (value, layerId) {
             //console.log("===+++", value, layerId, this);
@@ -35,9 +61,12 @@
          * @returns {boolean}
          */
         Assertion.prototype.value = function (layers) {
-            var topState = this.getTopState(layers);
+            if (!layers) throw "Your must prodive an array of layers to obtain a value!";
             var isTrue = false;
+            var topState = this.getTopState(layers);
+            console.log("=== Assertion", this, topState);
             if (topState && topState.value) isTrue = true;
+            console.trace("isTrue", isTrue, layers);
             return isTrue;
         };
 

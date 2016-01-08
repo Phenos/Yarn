@@ -104,7 +104,9 @@ function commands(storyLogService,
 
     function moveCommand() {
         var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, "move");
+        console.log("Move command !!!");
+        var isAboutToAssertion = state.thing("You").setAssertion(isAboutTo, state.thing("move"));
+        console.log("isAboutToAssertion", isAboutToAssertion);
     }
 
     function loadCommand(command, args) {
@@ -132,12 +134,12 @@ function commands(storyLogService,
 
     function takeCommand() {
         var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, "take");
+        state.thing("You").setAssertion(isAboutTo, state.thing("take"));
     }
 
     function lookCommand() {
         var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, "look");
+        state.thing("You").setAssertion(isAboutTo, state.thing("look"));
     }
 
     function helpCommand() {

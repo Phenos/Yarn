@@ -3,7 +3,7 @@ angular.module('mindgame').factory('electronDevTools', electronDevTools);
 
 function electronDevTools($localStorage) {
 
-    if (require) {
+    if (typeof require !== "undefined") {
         var remote = require('remote');
     }
 

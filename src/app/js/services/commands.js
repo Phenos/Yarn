@@ -1,4 +1,4 @@
-if (require) {
+if (typeof require !== "undefined") {
     var remote = require('remote');
     var dialog = remote.require('dialog');
 }
@@ -113,7 +113,7 @@ function commands(storyLogService,
         var url;
         // todo: This code is duplicated... make common
         console.log("dialog", dialog);
-        if (!args.length && dialog) {
+        if (!args.length && typeof require !== "undefined") {
             url = dialog.showOpenDialog({
                 properties: ['openFile'],
                 filters: [

@@ -45,6 +45,7 @@ var config = {
             "./bower_components/angular/angular.js",
             "./bower_components/ngstorage/ngStorage.min.js",
             "./bower_components/angular-animate/angular-animate.js",
+            "./bower_components/angular-material/angular-material.js",
             "./bower_components/uri.js/src/URI.js",
             "./bower_components/angular-audio/app/angular.audio.js",
             "./bower_components/angular-uri/angular-uri.js",

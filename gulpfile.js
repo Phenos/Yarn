@@ -42,7 +42,11 @@ var config = {
             "src/app/js/directives/**/*.js"
         ],
         javascriptVendorsSource: [
-            "./bower_components/ace-builds/src-min-noconflict/ace.js",
+            "./bower_components/ace-builds/src-noconflict/ace.js",
+            "./bower_components/ace-builds/src-noconflict/ext-language_tools.js",
+            "./bower_components/ace-builds/src-noconflict/mode-javascript.js",
+            "./bower_components/ace-builds/src-noconflict/theme-tomorrow.js",
+            //"./bower_components/ace-builds/src-min-noconflict/worker-javascript.js",
             "./bower_components/angular/angular.js",
             "./bower_components/angular-aria/angular-aria.js",
             "./bower_components/ngstorage/ngStorage.min.js",
@@ -307,3 +311,5 @@ function lessTask() {
 
 
 // ------[ The End! --------
+
+

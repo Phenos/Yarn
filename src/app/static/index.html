@@ -34,7 +34,22 @@
         <scenery></scenery>
     </div>
     <div flex="60" layout="column">
-        <div ui-ace flex="60">
+        <div ui-ace="{
+            require: [
+                'ace/ext/language_tools',
+                'ace/theme/tomorrow',
+                'ace/mode/javascript'
+            ],
+            useWrapMode : false,
+            mode: 'javascript',
+            theme: 'tomorrow',
+            advanced: {
+                  enableSnippets: false,
+                  enableBasicAutocompletion: true,
+                  enableLiveAutocompletion: true
+            }
+        }" flex="60">
+
 
 /* STORY DETAILS */
 

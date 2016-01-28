@@ -26,8 +26,20 @@
 </head>
 <body scroll-glue="false"
       breakpoint="{{ breakpoints }}">
-<div ui-view></div>
-<scenery></scenery>
-<console></console>
+
+
+<div layout="row">
+    <div flex="40">
+        <div ui-view></div>
+        <scenery></scenery>
+    </div>
+    <div flex="60" layout="column">
+        <div flex="60">
+            EDITOR GOES HERE
+        </div>
+        <console flex="40"></console>
+    </div>
+</div>
+
 </body>
 </html>

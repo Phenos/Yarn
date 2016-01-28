@@ -24,88 +24,100 @@
     <script src="./js/vendors.js"></script>
     <script src="./js/all.js"></script>
 </head>
-<body scroll-glue="false"
-      breakpoint="{{ breakpoints }}">
+<body layout="row" scroll-glue="false" breakpoint="{{ breakpoints }}">
+    <div layout="column" flex="100">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings">
+                    <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
+                </md-button>
+                <h2>
+                    <span>Yarn Studio</span>
+                </h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-content flex style="" layout="row">
+
+                <div flex="40" layout="column">
+                    <div layout="row" flex="100" class="player" ui-view></div>
+                    <scenery></scenery>
+                </div>
+                <div flex="60" layout="column">
+                    <div class="editor" ui-ace="{
+                        require: [
+                            'ace/ext/language_tools',
+                            'ace/theme/tomorrow',
+                            'ace/mode/javascript'
+                        ],
+                        useWrapMode : false,
+                        mode: 'javascript',
+                        theme: 'tomorrow',
+                        advanced: {
+                              enableSnippets: false,
+                              enableBasicAutocompletion: true,
+                              enableLiveAutocompletion: true
+                        }
+                    }" flex="60">
 
 
-<div layout="row">
-    <div flex="40">
-        <div ui-view></div>
-        <scenery></scenery>
+        /* STORY DETAILS */
+
+        @story is called "Julia's three good rocks",
+            has id "threeGoodRocks-v1",
+            is described as
+            "Julie has found three good rocks, but which of them is the best rock?".
+
+        /* THE HERO */
+
+        #You
+          is an @actor,
+          is named "Julia",
+          is in #TheBackyard.
+
+        /* THE PLACES */
+
+        #TheBackyard:
+          is a #Room,
+          is called "The Backyard",
+          is described as "Julia's backyard is small but it's ok, because Julia is also very small.
+          The grass is full of pretty yellow dandelions and the sandbox has been well dried by the mornind sun.
+          It's a beautifull day",
+          has in it a #SwingSet.
+
+        /* OBJECTS */
+
+        #SwingSet:
+            is a #thing,
+            is called "Swing Set",
+            has image "http://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2013/7/12/1/BPF_original_double-swing-set-transitional_beauty_shot-2_h.jpg.rend.hgtvcom.1280.960.jpeg",
+            is described as "The metal poles of the two seat swing set are gleaming from their new coat of bright red paint.".
+
+        #TheSandbox:
+            is a #room,
+            is called "Sandbox",
+            is described as "The small meter wide sandbox is turtle shaped and green...
+                like green turtles. Julia loves turtles. She sure wished she had a turtle.".
+
+        #TheBackyard links to #TheSandbox.
+        #TheSandbox links to #TheBackyard.
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                    <console flex="40"></console>
+                </div>
+
+        </md-content>
     </div>
-    <div flex="60" layout="column">
-        <div class="editor" ui-ace="{
-            require: [
-                'ace/ext/language_tools',
-                'ace/theme/tomorrow',
-                'ace/mode/javascript'
-            ],
-            useWrapMode : false,
-            mode: 'javascript',
-            theme: 'tomorrow',
-            advanced: {
-                  enableSnippets: false,
-                  enableBasicAutocompletion: true,
-                  enableLiveAutocompletion: true
-            }
-        }" flex="60">
-
-
-/* STORY DETAILS */
-
-@story is called "Julia's three good rocks",
-    has id "threeGoodRocks-v1",
-    is described as
-    "Julie has found three good rocks, but which of them is the best rock?".
-
-/* THE HERO */
-
-#You
-  is an @actor,
-  is named "Julia",
-  is in #TheBackyard.
-
-/* THE PLACES */
-
-#TheBackyard:
-  is a #Room,
-  is called "The Backyard",
-  is described as "Julia's backyard is small but it's ok, because Julia is also very small.
-  The grass is full of pretty yellow dandelions and the sandbox has been well dried by the mornind sun.
-  It's a beautifull day",
-  has in it a #SwingSet.
-
-/* OBJECTS */
-
-#SwingSet:
-    is a #thing,
-    is called "Swing Set",
-    has image "http://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2013/7/12/1/BPF_original_double-swing-set-transitional_beauty_shot-2_h.jpg.rend.hgtvcom.1280.960.jpeg",
-    is described as "The metal poles of the two seat swing set are gleaming from their new coat of bright red paint.".
-
-#TheSandbox:
-    is a #room,
-    is called "Sandbox",
-    is described as "The small meter wide sandbox is turtle shaped and green...
-        like green turtles. Julia loves turtles. She sure wished she had a turtle.".
-
-#TheBackyard links to #TheSandbox.
-#TheSandbox links to #TheBackyard.
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-        <console flex="40"></console>
-    </div>
-</div>
 
 </body>
 </html>

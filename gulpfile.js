@@ -42,6 +42,7 @@ var config = {
             "src/app/js/directives/**/*.js"
         ],
         javascriptVendorsSource: [
+            "./bower_components/ace-builds/src-min-noconflict/ace.js",
             "./bower_components/angular/angular.js",
             "./bower_components/angular-aria/angular-aria.js",
             "./bower_components/ngstorage/ngStorage.min.js",
@@ -50,6 +51,7 @@ var config = {
             "./bower_components/uri.js/src/URI.js",
             "./bower_components/angular-audio/app/angular.audio.js",
             "./bower_components/angular-uri/angular-uri.js",
+            "./bower_components/angular-ui-ace/ui-ace.js",
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
             "./bower_components/angular-scroll-glue/src/scrollglue.js",
             "./bower_components/angular-hotkeys/build/hotkeys.js",

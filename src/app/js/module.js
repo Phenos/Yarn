@@ -7,6 +7,7 @@ angular.module('mindgame', [
     'ngMaterial',
     'yarn',
     'ui.router',
+    'ui.ace',
     'luegg.directives',
     'cfp.hotkeys',
     'breakpointApp'

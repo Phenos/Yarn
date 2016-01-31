@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('mindgame').directive('storyLog', StoryLogDirective);
+    angular.module('yarn').directive('storyLog', StoryLogDirective);
 
     function StoryLogDirective() {
         return {

@@ -3,7 +3,7 @@ if (typeof require !== "undefined") {
     var dialog = remote.require('dialog');
 }
 
-angular.module('mindgame').factory('commands', commands);
+angular.module('yarn').factory('commands', commands);
 
 function commands(storyLogService,
                   yConsole,

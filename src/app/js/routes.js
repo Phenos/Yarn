@@ -2,9 +2,9 @@
     'use strict';
 
 
-    angular.module('mindgame').config(config);
+    angular.module('yarn').config(config);
 
-    angular.module('mindgame').run(function ($rootScope) {
+    angular.module('yarn').run(function ($rootScope) {
         $rootScope.breakpoints = {
             0: 'isMobileWidth',
             480: 'isMobileLandscapeWidth',

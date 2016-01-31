@@ -12,7 +12,7 @@
   "main": "build/main.js",
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp",
-    "__start": "node server.js",
+    "start": "node ./api/server/server.js",
     "__postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },

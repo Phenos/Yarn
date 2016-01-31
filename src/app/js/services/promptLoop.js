@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('promptLoop', promptLoop);
+angular.module('yarn').factory('promptLoop', promptLoop);
 
 function promptLoop(storyLogService,
                     commands,

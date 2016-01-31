@@ -24,6 +24,7 @@
     "d3": "~3.5.10",
     "ngstorage": "~0.3.10",
     "angular-material": "~1.0.3",
-    "angular-ui-ace": "bower"
+    "angular-ui-ace": "bower",
+    "angular-resource": "~1.4.9"
   }
 }

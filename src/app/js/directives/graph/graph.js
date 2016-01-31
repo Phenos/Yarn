@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('mindgame').directive('graph', GraphDirective);
+    angular.module('yarn').directive('graph', GraphDirective);
 
     function GraphDirective(game) {
         return {

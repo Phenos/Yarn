@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('yConsole', yConsoleService);
+angular.module('yarn').factory('yConsole', yConsoleService);
 
 function yConsoleService() {
 

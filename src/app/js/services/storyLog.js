@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('storyLogService', storyLogService);
+angular.module('yarn').factory('storyLogService', storyLogService);
 
 function storyLogService() {
 

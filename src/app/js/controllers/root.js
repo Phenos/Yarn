@@ -1,8 +1,10 @@
 "use strict";
-angular.module('mindgame').controller('root', rootController);
+angular.module('yarn').controller('root', rootController);
 
 
-function rootController(metadata,
+function rootController(User,
+                        Story,
+                        metadata,
                         gameController,
                         $scope,
                         yConsole,
@@ -27,14 +29,14 @@ function rootController(metadata,
                         label: 'Load Script', click: menuItemLoadScript
                     }
                 ]
-            },{
+            }, {
                 label: "View",
                 submenu: [
                     {
                         label: 'Developer Tools', click: menuItemDevTools
                     }
                 ]
-            },{
+            }, {
                 label: 'Window',
                 role: 'window',
                 submenu: [
@@ -118,7 +120,7 @@ function rootController(metadata,
             var url = dialog.showOpenDialog({
                 properties: ['openFile'],
                 filters: [
-                    { name: 'Yarn script', extensions: ['yarn'] }
+                    {name: 'Yarn script', extensions: ['yarn']}
                     //{ name: 'All Files', extensions: ['*'] }
                 ]
             });
@@ -146,6 +148,30 @@ function rootController(metadata,
     }
 
     function doWelcomeMessage(metadata) {
+
+
+        console.log("------------------------");
+        console.log("User.isAuthenticated()", User.isAuthenticated());
+        console.log("User.getCurrentId()", User.getCurrentId());
+        console.log("User.email", User.email);
+        console.log("User", User);
+
+        var filter = { filter: { where: { /* id: 0 */ } } };
+        var story = Story.find(
+            filter,
+            function(list) {
+                console.log("RESULT: list", list);
+            },
+            function(errorResponse) {
+                console.log("RESULT: errorResponse", errorResponse);
+            }
+        );
+        console.log("story: ", story.$promise);
+        story.$promise.then(function (a, b) {
+            console.log("story2: ", a, b);
+        });
+
+
         yConsole.log("Welcome to <strong>Yarn!</strong> <em>v" + metadata.version + "</em>");
         yConsole.hint('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
     }

@@ -1,0 +1,20 @@
+
+/*
+
+The and prefix should be recognized as syntactic sugar for an easyer read
+
+*/
+
+BurnYourselfReaction (
+    1. Immediatly trigger YouBurnYourselfDialog.
+    2. You
+        are marked by TheFire
+        loose Health [3]
+)
+
+// -- vs --
+
+BurnYourselfReaction (
+    1. Immediatly trigger YouBurnYourselfDialog.
+    2. You are marked by TheFire and decrease Health [3].
+)

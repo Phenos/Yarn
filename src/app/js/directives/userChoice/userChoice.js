@@ -1,4 +1,4 @@
-angular.module('mindgame').directive('userChoice', UserChoiceDirective);
+angular.module('yarn').directive('userChoice', UserChoiceDirective);
 
 function UserChoiceDirective(ngAudio) {
     return {

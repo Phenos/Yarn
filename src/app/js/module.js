@@ -1,12 +1,13 @@
-angular.module('mindgame', [
+angular.module('yarn', [
+    'ngResource',
     'ngStorage',
     'ngAria',
     'ngAudio',
     'angular-uri',
     'ngAnimate',
     'ngMaterial',
-    'yarn',
     'ui.router',
+    'lbServices',
     'ui.ace',
     'luegg.directives',
     'cfp.hotkeys',

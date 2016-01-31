@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('sceneryService', sceneryService);
+angular.module('yarn').factory('sceneryService', sceneryService);
 
 function sceneryService() {
 

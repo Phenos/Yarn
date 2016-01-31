@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('mindgame').factory('game', gameService);
+angular.module('yarn').factory('game', gameService);
 
 function gameService(Yarn,
                      gamePedicates,

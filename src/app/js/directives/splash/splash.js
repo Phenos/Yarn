@@ -1,4 +1,4 @@
-angular.module('mindgame').directive('splash', SplashDirective);
+angular.module('yarn').directive('splash', SplashDirective);
 
 function SplashDirective() {
     return {

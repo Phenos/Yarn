@@ -1,8 +1,8 @@
 (function () {
     "use strict";
 
-    angular.module('mindgame').factory('gameController', gameController);
-    angular.module('mindgame').factory('gameService', gameService);
+    angular.module('yarn').factory('gameController', gameController);
+    angular.module('yarn').factory('gameService', gameService);
 
     function gameService(yConsole) {
         var controller = null;

@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('loadMetadata', loadMetadata);
+angular.module('yarn').factory('loadMetadata', loadMetadata);
 
 function loadMetadata($http) {
 

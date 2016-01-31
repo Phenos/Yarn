@@ -1,4 +1,4 @@
-angular.module('mindgame').directive('userInput', UserInputDirective);
+angular.module('yarn').directive('userInput', UserInputDirective);
 
 function UserInputDirective() {
     return {

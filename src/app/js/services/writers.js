@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('writers', writers);
+angular.module('yarn').factory('writers', writers);
 
 // TODO:  storyLog and state are ASYNC ????
 

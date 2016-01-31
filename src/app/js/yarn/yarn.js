@@ -1,7 +1,5 @@
 "use strict";
 
-var yarn = angular.module('yarn', []);
-
 angular.module('yarn').factory('Yarn', YarnService);
 
 function YarnService(State, Logic, Script) {

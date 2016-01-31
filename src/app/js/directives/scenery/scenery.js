@@ -1,4 +1,4 @@
-angular.module('mindgame').directive('scenery', SceneryDirective);
+angular.module('yarn').directive('scenery', SceneryDirective);
 
 function SceneryDirective() {
     return {

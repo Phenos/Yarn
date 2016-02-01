@@ -6,6 +6,7 @@ function rootController(User,
                         Story,
                         metadata,
                         gameController,
+                        $http,
                         $scope,
                         yConsole,
                         loadMetadata,
@@ -156,20 +157,39 @@ function rootController(User,
         console.log("User.email", User.email);
         console.log("User", User);
 
-        var filter = { filter: { where: { /* id: 0 */ } } };
-        var story = Story.find(
-            filter,
-            function(list) {
-                console.log("RESULT: list", list);
-            },
-            function(errorResponse) {
-                console.log("RESULT: errorResponse", errorResponse);
-            }
-        );
-        console.log("story: ", story.$promise);
-        story.$promise.then(function (a, b) {
-            console.log("story2: ", a, b);
-        });
+        //$http({
+        //    method: 'GET',
+        //    url: '/auth/account/json'
+        //}).then(function (res) {
+        //
+        //    console.log("USER: JSON FOUND!");
+        //    if (res.data.username) {
+        //        console.log("USER: FOUND: ", res.data.username);
+        //        console.log("USER: Data ", res);
+        //        credentials = res.data.profiles[0].credentials;
+        //        console.log("USER: Using credentials: ", credentials);
+        //    } else {
+        //        console.log("USER: No user logged in", res);
+        //    }
+        //}, function (res) {
+        //    console.log("USER: JSON NOT FOUND! FAIL!", res);
+        //});
+
+
+        //var filter = {filter: {where: {/* id: 0 */}}};
+        //var story = Story.find(
+        //    filter,
+        //    function (list) {
+        //        console.log("RESULT: list", list);
+        //    },
+        //    function (errorResponse) {
+        //        console.log("RESULT: errorResponse", errorResponse);
+        //    }
+        //);
+        //console.log("story: ", story.$promise);
+        //story.$promise.then(function (a, b) {
+        //    console.log("story2: ", a, b);
+        //});
 
 
         yConsole.log("Welcome to <strong>Yarn!</strong> <em>v" + metadata.version + "</em>");

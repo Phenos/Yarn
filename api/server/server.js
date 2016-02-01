@@ -87,7 +87,7 @@ for(var s in config) {
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
 
-app.get('/', function (req, res, next) {
+app.get('/home', function (req, res, next) {
   res.render('pages/index', {user:
   req.user,
     url: req.url

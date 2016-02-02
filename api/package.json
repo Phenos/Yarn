@@ -7,6 +7,7 @@
     "pretest": "jshint ."
   },
   "dependencies": {
+    "aws-sdk": "^2.2.33",
     "body-parser": "^1.14.2",
     "compression": "^1.0.3",
     "connect-ensure-login": "^0.1.1",
@@ -23,6 +24,7 @@
     "passport": "^0.3.2",
     "passport-oauth2": "^1.1.2",
     "passport-twitter": "^1.0.4",
+    "s3": "^4.4.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {

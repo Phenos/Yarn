@@ -47,6 +47,33 @@ var appRoot = __dirname;
 console.log("Loading api app from :" + appRoot);
 
 
+// Inject the current user in the context
+app.use(loopback.context());
+app.use(loopback.token());
+app.use(function setCurrentUser(req, res, next) {
+  if (!req.accessToken) {
+    return next();
+  }
+  app.models.user.findById(req.accessToken.userId, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(new Error('No user with this access token was found.'));
+    }
+    //console.log("found user", user);
+    var loopbackContext = loopback.getCurrentContext();
+    if (loopbackContext) {
+      loopbackContext.set('currentUser', user);
+    } else {
+      console.log("no current context?");
+    }
+    next();
+  });
+});
+
+
+
 app.start = function () {
   app.set('port', (process.env.PORT || 5000));
   //
@@ -227,6 +254,11 @@ app.get('/auth/logout', function (req, res, next) {
   req.logout();
   res.redirect('/');
 });
+
+
+
+
+
 
 // -- Mount static files here--
 // All static middleware should be registered at the end, as all requests

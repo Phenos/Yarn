@@ -37,33 +37,7 @@
 
 </head>
 <body layout="row" scroll-glue="false" breakpoint="{{ breakpoints }}">
-    <div layout="column" flex="100">
-
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <md-button class="md-icon-button" aria-label="Settings">
-                    <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
-                </md-button>
-                <h2>
-                    <span>Yarn Studio</span>
-                </h2>
-                <span flex></span>
-            </div>
-        </md-toolbar>
-        <md-content flex style="" layout="row">
-
-                <div flex="40" layout="column">
-                    <div layout="row" flex="100" class="player" ui-view></div>
-                    <scenery></scenery>
-                </div>
-                <div flex="60" layout="column">
-                    <editor layout="column" flex="60"></editor>
-                    <console flex="40"></console>
-                </div>
-
-        </md-content>
-    </div>
+    <div layout="column" flex="100" ui-view></div>
     <support-chat></support-chat>
-
 </body>
 </html>

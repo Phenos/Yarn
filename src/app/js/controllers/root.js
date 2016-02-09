@@ -2,16 +2,26 @@
 angular.module('yarn').controller('root', rootController);
 
 
-function rootController(User,
-                        Story,
+function rootController(Story,
+                        user,
                         metadata,
                         gameController,
-                        $http,
                         $scope,
                         yConsole,
-                        loadMetadata,
                         rememberLastStory,
                         electronDevTools) {
+
+
+
+
+    if (user) {
+        console.log("Loading default story file for user");
+        console.log(user);
+    } else {
+        console.log("NO USER IN SCOPE???");
+    }
+
+
 
 
     // todo: Put menu setup in separate service
@@ -141,56 +151,10 @@ function rootController(User,
     }
 
     $scope.metadata = metadata;
-    loadMetadata().then(onGameReady);
-
-    function onGameReady(metadata) {
-        doWelcomeMessage(metadata);
-        doLoadRememberedStory();
-    }
+    doWelcomeMessage(metadata);
+    doLoadRememberedStory();
 
     function doWelcomeMessage(metadata) {
-
-
-        console.log("------------------------");
-        console.log("User.isAuthenticated()", User.isAuthenticated());
-        console.log("User.getCurrentId()", User.getCurrentId());
-        console.log("User.email", User.email);
-        console.log("User", User);
-
-        //$http({
-        //    method: 'GET',
-        //    url: '/auth/account/json'
-        //}).then(function (res) {
-        //
-        //    console.log("USER: JSON FOUND!");
-        //    if (res.data.username) {
-        //        console.log("USER: FOUND: ", res.data.username);
-        //        console.log("USER: Data ", res);
-        //        credentials = res.data.profiles[0].credentials;
-        //        console.log("USER: Using credentials: ", credentials);
-        //    } else {
-        //        console.log("USER: No user logged in", res);
-        //    }
-        //}, function (res) {
-        //    console.log("USER: JSON NOT FOUND! FAIL!", res);
-        //});
-
-
-        //var filter = {filter: {where: {/* id: 0 */}}};
-        //var story = Story.find(
-        //    filter,
-        //    function (list) {
-        //        console.log("RESULT: list", list);
-        //    },
-        //    function (errorResponse) {
-        //        console.log("RESULT: errorResponse", errorResponse);
-        //    }
-        //);
-        //console.log("story: ", story.$promise);
-        //story.$promise.then(function (a, b) {
-        //    console.log("story2: ", a, b);
-        //});
-
 
         yConsole.log("Welcome to <strong>Yarn!</strong> <em>v" + metadata.version + "</em>");
         yConsole.hint('Type <strong>CTRL+H</strong> or enter "<strong>help</strong>" in the command-line bellow to see available commands!')
@@ -208,5 +172,6 @@ function rootController(User,
         }
         electronDevTools.remember();
     }
+
 
 }

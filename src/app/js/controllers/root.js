@@ -11,7 +11,6 @@ function rootController(Story,
                         rememberLastStory,
                         electronDevTools) {
 
-
     // todo: Put menu setup in separate service
 
     if (typeof require !== "undefined") {
@@ -166,12 +165,26 @@ function rootController(Story,
         }, failure);
     }
 
+
+
     findOrCreateUserStory(user, function (story) {
-        console.log("Default sotry found", story)
-        $scope.editorContent = story.content;
+        console.log("Default sotry found", story);
+        $scope.currentStory = story;
     }, function (error) {
         console.log("Failed while getting the default user story", error);
     });
+
+    $scope.saveAndRun = function(e) {
+        $scope.currentStory.$save(
+            function () {
+                console.log("Story saved!");
+            },
+            function (error) {
+                console.error("Problem while saving the story", error);
+            }
+        )
+    };
+
 
 
     $scope.metadata = metadata;

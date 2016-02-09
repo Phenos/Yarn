@@ -3,6 +3,13 @@
     class="editor"
     ui-ace="editor.options"
     ng-model="editor.source"></div>
+<md-toolbar>
+    <span flex></span>
+    <div class="md-toolbar-tools">
+        <md-button ng-click="editor.saveAndRun()" class="md-raised" aria-label="Save and run">Save and Run</md-button>
+    </div>
+</md-toolbar>
+
 <!--
 
     /* ---[ EMBEDED VERSION ] ---*/

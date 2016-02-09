@@ -1,15 +1,39 @@
-<div class="main-ui" flex="100">
-    <story-log></story-log>
-    <user-choice
-            ng-show="game.question"
-            on-choose="game.choose(value)"
-            question="game.question"
-            options="game.options"
-    ></user-choice>
-    <!--<div class="ellipsis">-->
-        <!--<span class="one">▸</span>-->
-        <!--<span class="two">▸</span>-->
-        <!--<span class="three">▸</span>-->
-    <!--​</div>-->
-    <splash visible="true" metadata="metadata"></splash>
-</div>
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
+        </md-button>
+        <h2>
+            <span>Yarn Studio</span>
+        </h2>
+        <span flex></span>
+    </div>
+</md-toolbar>
+<md-content flex style="" layout="row">
+
+    <div flex="40" layout="column">
+        <div layout="row" flex="100" class="player">
+            <div class="main-ui" flex="100">
+                <story-log></story-log>
+                <user-choice
+                        ng-show="game.question"
+                        on-choose="game.choose(value)"
+                        question="game.question"
+                        options="game.options"
+                ></user-choice>
+                <!--<div class="ellipsis">-->
+                <!--<span class="one">▸</span>-->
+                <!--<span class="two">▸</span>-->
+                <!--<span class="three">▸</span>-->
+                <!--​</div>-->
+                <splash visible="true" metadata="metadata"></splash>
+            </div>
+        </div>
+        <scenery></scenery>
+    </div>
+    <div flex="60" layout="column">
+        <editor layout="column" flex="60"></editor>
+        <console flex="40"></console>
+    </div>
+
+</md-content>

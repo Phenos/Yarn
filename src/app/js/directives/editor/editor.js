@@ -6,7 +6,8 @@
         return {
             restrict: 'E',
             bindToController: {
-                ready: "&"
+                ready: "&",
+                source: "="
             },
             scope: {},
             controllerAs: 'editor',
@@ -14,24 +15,24 @@
             controller: EditorController
         };
 
-        function EditorController(Story) {
+        function EditorController(Story, $scope) {
             var self = this;
+            var aceEditor;
 
             Story.potato({}, function(err, data) {
                 self.text = data;
                 console.log("story : ", data);
             });
 
-            this.text = "";
 
-            var aceEditor;
             function aceLoaded(_editor) {
-                console.log("aceLoaded");
+                console.log("Editor loaded");
                 aceEditor = _editor;
+                aceEditor.setValue("...");
             }
 
             function aceChanged(e) {
-                console.log("aceChanged");
+                //console.log("aceChanged");
             }
 
             this.options = {

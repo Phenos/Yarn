@@ -6,6 +6,7 @@
         return {
             restrict: 'E',
             bindToController: {
+                saveAndRun: "&",
                 ready: "&",
                 source: "="
             },

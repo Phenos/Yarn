@@ -2063,6 +2063,41 @@ module.factory(
           url: urlBase + "/stories/change-stream",
           method: "POST"
         },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Story#potato
+         * @methodOf lbServices.Story
+         *
+         * @description
+         *
+         * A potato method.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * A potatoe object with options!
+         */
+        "potato": {
+          url: urlBase + "/stories/potato",
+          method: "POST"
+        }
       }
     );
 

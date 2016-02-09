@@ -58,6 +58,9 @@
                     var command = token[3];
                     var tokenString = token[1];
                     var tokenHandler = TokenHandlers[command];
+                    if (!tokenHandler) {
+                        console.error("tokenHandler not found for token : ", tokenString);
+                    }
                     tokenHandler(cursor, tokenString);
                 });
 

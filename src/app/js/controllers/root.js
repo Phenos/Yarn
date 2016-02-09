@@ -176,8 +176,10 @@ function rootController(Story,
 
     $scope.saveAndRun = function(e) {
         $scope.currentStory.$save(
-            function () {
+            function (story) {
                 console.log("Story saved!");
+                var url = "http://storage.yarnstudio.io/" + user.username + "/story.yarn.txt";
+                gameController.loadFromSource(story.content, url);
             },
             function (error) {
                 console.error("Problem while saving the story", error);

@@ -109,7 +109,7 @@
         Pointer.prototype.tokenize = function (text) {
             var pointer = this;
             var cycle = 0;
-            var maxCycle = 10000;
+            var maxCycle = 100000;
 
             var numeric = "0123456789";
             var numericExtended = numeric + ".";
@@ -118,6 +118,9 @@
             var alphaNumExtended = alphaNum + "-_";
 
             pointer.text = text;
+
+            // Read the first character!
+            this.read();
 
             while (!pointer.isEnded()) {
 

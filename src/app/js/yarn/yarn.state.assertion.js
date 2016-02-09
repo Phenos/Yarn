@@ -64,9 +64,9 @@
             if (!layers) throw "Your must prodive an array of layers to obtain a value!";
             var isTrue = false;
             var topState = this.getTopState(layers);
-            console.log("=== Assertion", this, topState);
+            //console.log("=== Assertion", this, topState);
             if (topState && topState.value) isTrue = true;
-            console.trace("isTrue", isTrue, layers);
+            //console.trace("isTrue", isTrue, layers);
             return isTrue;
         };
 

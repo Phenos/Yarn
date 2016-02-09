@@ -14,6 +14,7 @@
     <div flex="40" layout="column">
         <div layout="row" flex="100" class="player">
             <div class="main-ui" flex="100">
+                <scenery></scenery>
                 <story-log></story-log>
                 <user-choice
                         ng-show="game.question"
@@ -29,7 +30,6 @@
                 <splash visible="true" metadata="metadata"></splash>
             </div>
         </div>
-        <scenery></scenery>
     </div>
     <div flex="60" layout="column">
         <editor save-and-run="saveAndRun()" source="currentStory.content" layout="column" flex="60"></editor>

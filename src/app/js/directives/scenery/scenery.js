@@ -15,7 +15,7 @@ function SceneryDirective() {
         //console.log("screnery directive loaded!");
 
         sceneryService.onChange( function (image) {
-            //console.log("Changing the scenere: ", image);
+            console.log("Changing the scenere: ", image);
             //console.log($element);
             $element.css("background-image", "url(" + image + ")");
         });

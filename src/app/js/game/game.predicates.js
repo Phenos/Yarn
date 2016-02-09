@@ -39,22 +39,25 @@ function gamePedicates(game) {
         .syntax("is");
 
     // What something is called
-    state
+    var isCalled = state
         .predicate("isNamed")
         .syntax("is titled")
         .syntax("is named")
         .syntax("is called");
+    isCalled.uniqueSubject = true;
 
     // What something is described as when looked at
-    state
+    var isDescribedAs = state
         .predicate("isDescribedAs")
         .syntax("is described")
         .syntax("is described as");
+    isDescribedAs.uniqueSubject = true;
 
-    state
+    var isAlsoDescribedAs = state
         .predicate("isAlsoDescribedAs")
         .syntax("is also described")
         .syntax("is also described as");
+    isAlsoDescribedAs.uniqueSubject = true;
 
     // When something is in a place
     var isIn = state

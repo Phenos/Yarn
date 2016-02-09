@@ -168,7 +168,7 @@ function rootController(Story,
 
 
     findOrCreateUserStory(user, function (story) {
-        console.log("Default sotry found", story);
+        console.log("Default story found", story);
         $scope.currentStory = story;
     }, function (error) {
         console.log("Failed while getting the default user story", error);

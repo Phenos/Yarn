@@ -1,6 +1,9 @@
 
 # Console
 
+- Sample story at : http://storage.yarnstudio.io/twitter.YarnStudioGames/story.yarn.txt
+
+
 ## Next
 
 - ":load http://..." command to load a story from url

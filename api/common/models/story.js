@@ -16,32 +16,29 @@ module.exports = function (Story) {
                 //endpoint: "storage.yarnstudio.io"
             }
         });
+        var username = currentUser.username;
+        var storyPath = username + "/story.yarn.txt";
         var s3Params = {
-            Key: "test/3rocks.yarn.txt",
+            Key: storyPath,
             Bucket: "storage.yarnstudio.io"
         };
-        console.log("Streaming from S3");
+        console.log("Streaming from S3 : " + storyPath);
         var stream = s3client.downloadStream(s3Params);
         var data = "";
-        console.log("1");
         stream.on('error', function(err) {
             console.error("unable to download:", err.stack);
             callback(err);
         });
-        console.log("2");
         stream.on('data', function(chunck) {
-            console.log("A");
             data = data + chunck;
         });
-        console.log("3");
         stream.on('end', function() {
+            console.log("Story loaded from S3");
             callback(null, {
-                potato: true,
                 options: options,
                 story: data
             });
         });
-        console.log("B");
 
 
     };
@@ -63,7 +60,7 @@ module.exports = function (Story) {
                 arg: 'options', type: 'object', root: true,
                 description: 'A potatoe object with options!'
             },
-            http: {verb: 'post'}
+            http: {verb: 'get'}
         }
     );
 

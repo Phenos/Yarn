@@ -15,24 +15,15 @@
             controller: EditorController
         };
 
-        function EditorController(Story, $scope) {
-            var self = this;
+        function EditorController() {
             var aceEditor;
-
-            Story.potato({}, function(err, data) {
-                self.text = data;
-                console.log("story : ", data);
-            });
-
 
             function aceLoaded(_editor) {
                 console.log("Editor loaded");
                 aceEditor = _editor;
-                aceEditor.setValue("...");
             }
 
             function aceChanged(e) {
-                //console.log("aceChanged");
             }
 
             this.options = {

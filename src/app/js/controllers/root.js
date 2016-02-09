@@ -12,18 +12,6 @@ function rootController(Story,
                         electronDevTools) {
 
 
-
-
-    if (user) {
-        console.log("Loading default story file for user");
-        console.log(user);
-    } else {
-        console.log("NO USER IN SCOPE???");
-    }
-
-
-
-
     // todo: Put menu setup in separate service
 
     if (typeof require !== "undefined") {
@@ -149,6 +137,42 @@ function rootController(Story,
         }
 
     }
+
+
+    // Try to load a story for the current user...
+    // if non exists, a default one is created
+    function findOrCreateUserStory(user, success, failure) {
+        if (user) {
+            Story.findOne({where: { user: user.username }}, function(story) {
+                success(story);
+            }, function (err) {
+                console.log("No story found", err);
+                createDefaultStory(user, success, failure);
+            });
+        } else {
+            console.log("No user found. No story will be loaded by default.")
+        }
+    }
+
+    function createDefaultStory(user, success, failure) {
+        console.log("Creating default story for user");
+        Story.create({
+            guid: "123456789",
+            username: user.username,
+            content: "!!!POTATOE!!!"
+        }, function(story) {
+            console.log("Default story created: ", story);
+            success(null, story);
+        }, failure);
+    }
+
+    findOrCreateUserStory(user, function (story) {
+        console.log("Default sotry found", story)
+        $scope.editorContent = story.content;
+    }, function (error) {
+        console.log("Failed while getting the default user story", error);
+    });
+
 
     $scope.metadata = metadata;
     doWelcomeMessage(metadata);

@@ -10,7 +10,7 @@
             },
             scope: {},
             controllerAs: 'console',
-            template: '<logscroll><logs></logs></logscroll><user-input text="" on-submit="console.onInput(text)"></user-input>',
+            templateUrl: './html/console.html',
             controller: ConsoleController
         };
 

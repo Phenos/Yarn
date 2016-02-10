@@ -211,7 +211,11 @@ function rootController(Story,
         gameController.loadFromSource(story.content, url);
     }
 
+    $scope.avatar = user.profiles[0].profile.photos[0].value;
+    $scope.username = user.profiles[0].profile.displayName;
+
     $scope.metadata = metadata;
+
     doWelcomeMessage(metadata);
     doLoadRememberedStory();
 

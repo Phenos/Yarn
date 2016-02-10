@@ -1,12 +1,21 @@
-<md-toolbar>
+<md-toolbar class="toolbar">
     <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings">
+        <md-button class="md-icon-button">
             <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
         </md-button>
         <h2>
             <span>Yarn Studio</span>
         </h2>
         <span flex></span>
+        <md-button class="md-button">
+            <span>
+                {{ username }}
+            </span>
+        </md-button>
+        <img ng-src="{{ avatar }}"
+             alt="{{ username }}"
+             class="avatar">
+
     </div>
 </md-toolbar>
 <md-content flex style="" layout="row">

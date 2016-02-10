@@ -10,11 +10,15 @@ Import "./chapters/things.yarn".
 
 Import "./chapters/rooms.yarn".
 
+// Import "./chapters/events_test.yarn".
+
 // Import "./chapters/events.yarn".
 
 // Import "./chapters/dialogs.yarn".
 
 // Setup how you start
+
 #You is an @actor, is named "You", is in the #Kitchen.
-//#You has in inventory a #PlasticSpoon.
+
+// #You has in inventory a #PlasticSpoon.
 

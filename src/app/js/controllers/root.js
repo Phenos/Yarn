@@ -7,6 +7,7 @@ function rootController(Story,
                         metadata,
                         gameController,
                         $scope,
+                        $mdDialog,
                         yConsole,
                         rememberLastStory,
                         electronDevTools) {
@@ -142,7 +143,7 @@ function rootController(Story,
     // if non exists, a default one is created
     function findOrCreateUserStory(user, success, failure) {
         if (user) {
-            Story.findOne({where: { user: user.username }}, function(story) {
+            Story.findOne({where: {user: user.username}}, function (story) {
                 success(story);
             }, function (err) {
                 console.log("No story found", err);
@@ -159,12 +160,11 @@ function rootController(Story,
             guid: "123456789",
             username: user.username,
             content: "!!!POTATOE!!!"
-        }, function(story) {
+        }, function (story) {
             console.log("Default story created: ", story);
-            success(null, story);
+            success(story);
         }, failure);
     }
-
 
 
     findOrCreateUserStory(user, function (story) {
@@ -174,20 +174,42 @@ function rootController(Story,
         console.log("Failed while getting the default user story", error);
     });
 
-    $scope.saveAndRun = function(e) {
+    $scope.saveAndRun = function () {
+        saveStory(function (story) {
+            runStory(story);
+        }, function() {
+            $mdDialog.show(
+                $mdDialog
+                    .alert()
+                    //.parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Oups!')
+                    .textContent('A problem occured while saving your story. Your changes were not saved.')
+                    .ok('Ok')
+                    //.targetEvent(ev)
+            );
+        })
+    };
+
+    function saveStory(success, failure) {
+        console.log($scope.currentStory);
         $scope.currentStory.$save(
             function (story) {
                 console.log("Story saved!");
-                var url = "http://storage.yarnstudio.io/" + user.username + "/story.yarn.txt";
-                gameController.loadFromSource(story.content, url);
+                if (success) success(story);
             },
             function (error) {
                 console.error("Problem while saving the story", error);
+                if (failure) failure(error);
             }
         )
-    };
+    }
 
-
+    function runStory(story) {
+        var url = "http://storage.yarnstudio.io/" + user.username + "/story.yarn.txt";
+        rememberLastStory.forget();
+        gameController.loadFromSource(story.content, url);
+    }
 
     $scope.metadata = metadata;
     doWelcomeMessage(metadata);

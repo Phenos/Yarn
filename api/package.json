@@ -20,6 +20,7 @@
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.1.0",
     "loopback-component-passport": "^2.0.0",
+    "loopback-connector-postgresql": "^2.4.0",
     "loopback-datasource-juggler": "^2.39.0",
     "passport": "^0.3.2",
     "passport-oauth2": "^1.1.2",

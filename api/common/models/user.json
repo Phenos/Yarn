@@ -4,6 +4,12 @@
   "base": "User",
   "properties": {},
   "validations": [],
+  "options": {
+    "postgresql": {
+      "schema": "yarn",
+      "table": "user"
+    }
+  },
   "relations": {
     "accessTokens": {
       "type": "hasMany",

@@ -4,6 +4,12 @@
   "base": "AccessToken",
   "properties": {},
   "validations": [],
+  "options": {
+    "postgresql": {
+      "schema": "yarn",
+      "table": "access-token"
+    }
+  },
   "relations": {
     "user": {
       "type": "belongsTo",

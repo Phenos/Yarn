@@ -35,7 +35,7 @@
                     'ace/mode/javascript'
                 ],
                 workerPath: './bower_components/ace-builds/src-noconflict/',
-                useWrapMode : false,
+                useWrapMode : true,
                 useWorker: false,
                 mode: 'javascript',
                 theme: 'tomorrow',

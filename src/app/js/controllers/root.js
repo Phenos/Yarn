@@ -10,8 +10,10 @@ function rootController(Story,
                         $window,
                         $mdDialog,
                         $mdSidenav,
+                        $mdMedia,
                         yConsole,
                         rememberLastStory,
+                        $localStorage,
                         electronDevTools) {
 
     // todo: Put menu setup in separate service
@@ -220,21 +222,62 @@ function rootController(Story,
 
     $scope.metadata = metadata;
 
-    doWelcomeMessage(metadata);
-    doLoadRememberedStory();
-
 
     $scope.openSidenav = function () {
-        $mdSidenav("leftSidebar")
-            .open()
-            .then(function () {
-                console.log("Nav bar is opened!");
-            });
+        $mdSidenav("leftSidebar").open();
+    };
+    $scope.closeSidenav = function () {
+        $mdSidenav("leftSidebar").close();
     };
 
     $scope.logout = function () {
         $window.location.href = "/auth/logout";
     };
+
+    $scope.openAboutPrototypeDialog = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+
+        $mdSidenav("leftSidebar").close();
+
+        $mdDialog.show({
+                controller: aboutPrototypeDialogController,
+                templateUrl: './html/aboutPrototypeDialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                fullscreen: useFullScreen
+            });
+
+        $scope.$watch(function() {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+
+        function aboutPrototypeDialogController($scope, $mdDialog) {
+            $scope.close = function() {
+                $mdDialog.cancel();
+            };
+        }
+    };
+
+
+    doWelcomeMessage(metadata);
+    doLoadRememberedStory();
+    openAboutDialogIfFirstTime();
+
+    function openAboutDialogIfFirstTime() {
+        var maxCount = 3;
+        if (!$localStorage.numberOfTimeAboutDialogIsOpened) {
+            $localStorage.numberOfTimeAboutDialogIsOpened = 1;
+        } else {
+            $localStorage.numberOfTimeAboutDialogIsOpened ++;
+        }
+        if ($localStorage.numberOfTimeAboutDialogIsOpened <= maxCount) {
+            $scope.openAboutPrototypeDialog();
+        }
+
+    }
 
     function doWelcomeMessage(metadata) {
 

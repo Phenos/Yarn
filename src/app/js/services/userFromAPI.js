@@ -18,7 +18,8 @@ function userFromAPI($http, $window) {
             } else {
                 console.log("USER: NOT FOUND: Redirecting to twitter auth gateway");
                 // User is not logged in... redirect.
-                $window.location.href = "/auth/twitter";
+                //$window.location.href = "/auth/twitter";
+                $window.location.href = "/login";
             }
             return user;
         }

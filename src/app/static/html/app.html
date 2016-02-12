@@ -1,6 +1,6 @@
 <md-toolbar class="toolbar">
     <div class="md-toolbar-tools">
-        <md-button class="md-icon-button">
+        <md-button ng-click="openSidenav()" class="md-icon-button">
             <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
         </md-button>
         <h2>
@@ -18,31 +18,39 @@
 
     </div>
 </md-toolbar>
-<md-content flex style="" layout="row">
-
-    <div flex="40" layout="column">
-        <div layout="row" flex="100" class="player">
-            <div class="main-ui" flex="100">
-                <scenery></scenery>
-                <story-log></story-log>
-                <user-choice
-                        ng-show="game.question"
-                        on-choose="game.choose(value)"
-                        question="game.question"
-                        options="game.options"
-                ></user-choice>
-                <!--<div class="ellipsis">-->
-                <!--<span class="one">▸</span>-->
-                <!--<span class="two">▸</span>-->
-                <!--<span class="three">▸</span>-->
-                <!--​</div>-->
-                <splash visible="true" metadata="metadata"></splash>
+<md-sidenav style="z-index:100" class="md-sidenav-left md-whiteframe-z2" md-component-id="leftSidebar">
+    <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">Yarn Studio</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-button ng-click="logout()" class="md-primary">
+            Logout
+        </md-button>
+    </md-content>
+</md-sidenav>
+<md-content style="z-index:5" flex _flex="100" _layout="row">
+        <md-content flex="40" layout="column">
+            <div layout="row" flex="100" class="player">
+                <div class="main-ui" flex="100">
+                    <scenery></scenery>
+                    <story-log></story-log>
+                    <user-choice
+                            ng-show="game.question"
+                            on-choose="game.choose(value)"
+                            question="game.question"
+                            options="game.options"
+                    ></user-choice>
+                    <!--<div class="ellipsis">-->
+                    <!--<span class="one">▸</span>-->
+                    <!--<span class="two">▸</span>-->
+                    <!--<span class="three">▸</span>-->
+                    <!--​</div>-->
+                    <splash visible="true" metadata="metadata"></splash>
+                </div>
             </div>
-        </div>
-    </div>
-    <div flex="60" layout="column">
-        <editor save-and-run="saveAndRun()" source="currentStory.content" layout="column" flex="60"></editor>
-        <console flex="40"></console>
-    </div>
-
+        </md-content>
+        <md-section flex="60" layout="column">
+            <editor save-and-run="saveAndRun()" source="currentStory.content" layout="column" flex="60"></editor>
+            <console flex="40"></console>
+        </md-section>
 </md-content>

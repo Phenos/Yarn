@@ -7,7 +7,9 @@ function rootController(Story,
                         metadata,
                         gameController,
                         $scope,
+                        $window,
                         $mdDialog,
+                        $mdSidenav,
                         yConsole,
                         rememberLastStory,
                         electronDevTools) {
@@ -205,6 +207,8 @@ function rootController(Story,
         )
     }
 
+
+
     function runStory(story) {
         var url = "http://storage.yarnstudio.io/" + user.username + "/story.yarn.txt";
         rememberLastStory.forget();
@@ -218,6 +222,19 @@ function rootController(Story,
 
     doWelcomeMessage(metadata);
     doLoadRememberedStory();
+
+
+    $scope.openSidenav = function () {
+        $mdSidenav("leftSidebar")
+            .open()
+            .then(function () {
+                console.log("Nav bar is opened!");
+            });
+    };
+
+    $scope.logout = function () {
+        $window.location.href = "/auth/logout";
+    };
 
     function doWelcomeMessage(metadata) {
 

@@ -236,19 +236,38 @@ app.post('/login', function (req, res) {
     });
 });
 
-// HAck to de-obfuscate cookies ?
+// No going trough this anymore...
 app.get('/auth/login', function (req, res, next) {
     //workaround for loopback-password
     //without this angular-loopback would make incorrect authorization header
-    res.cookie('access-token-plain', req.signedCookies['access_token']);
-    res.cookie('userId-plain', req.user.id);
-    res.cookie('username-plain', req.user.username);
-    res.redirect('/#auth/login');
+
+    // HAck to de-obfuscate cookies ?
+    //res.cookie('access-token-plain', req.signedCookies['access_token']);
+    //res.cookie('userId-plain', req.user.id);
+    //res.cookie('username-plain', req.user.username);
+
+    res.redirect('/');
 });
 
 app.get('/auth/logout', function (req, res, next) {
     req.logout();
-    res.redirect('/');
+    var ctx = loopback.getCurrentContext();
+    var currentUser = ctx.get('currentUser');
+    if (currentUser) {
+
+        //console.log(currentUser);
+        console.log("Logging out ?");
+
+        //currentUser.logout();
+        res.clearCookie('access_token');
+        res.clearCookie('userId');
+
+        console.log("And then back ?");
+        res.redirect('/login');
+    } else {
+        console.log("Wtf?");
+        res.redirect('/wtf');
+    }
 });
 
 

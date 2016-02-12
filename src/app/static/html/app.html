@@ -63,6 +63,10 @@
     </md-content>
 </md-sidenav>
 <md-content style="z-index:5" flex _flex="100" _layout="row">
+    <md-section flex="60" layout="column">
+        <editor save-and-run="saveAndRun()" source="currentStory.content" layout="column" flex="60"></editor>
+        <console flex="40"></console>
+    </md-section>
     <md-content flex="40" layout="column">
         <div layout="row" flex="100" class="player">
             <div class="main-ui" flex="100">
@@ -83,8 +87,4 @@
             </div>
         </div>
     </md-content>
-    <md-section flex="60" layout="column">
-        <editor save-and-run="saveAndRun()" source="currentStory.content" layout="column" flex="60"></editor>
-        <console flex="40"></console>
-    </md-section>
 </md-content>

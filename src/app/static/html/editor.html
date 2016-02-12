@@ -1,12 +1,15 @@
 <div
-    flex="100"
-    class="editor"
-    ui-ace="editor.options"
-    ng-model="editor.source"></div>
+        flex="100"
+        class="editor"
+        ui-ace="editor.options"
+        ng-model="editor.source"></div>
 <md-toolbar>
-    <span flex></span>
     <div class="md-toolbar-tools">
-        <md-button ng-click="editor.saveAndRun()" class="md-raised" aria-label="Save and run">Save and Run</md-button>
+        <span flex></span>
+        <md-button ng-click="editor.saveAndRun()" class="md-raised" aria-label="Save and run">
+            <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
+            Run
+        </md-button>
     </div>
 </md-toolbar>
 

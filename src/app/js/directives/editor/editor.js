@@ -22,6 +22,7 @@
             function aceLoaded(_editor) {
                 console.log("Editor loaded");
                 aceEditor = _editor;
+                //aceEditor.getSession().setUseWorker(false);
             }
 
             function aceChanged(e) {
@@ -33,7 +34,9 @@
                     'ace/theme/tomorrow',
                     'ace/mode/javascript'
                 ],
+                workerPath: './bower_components/ace-builds/src-noconflict/',
                 useWrapMode : false,
+                useWorker: false,
                 mode: 'javascript',
                 theme: 'tomorrow',
                 advanced: {
@@ -41,6 +44,7 @@
                     enableBasicAutocompletion: true,
                     enableLiveAutocompletion: true
                 },
+                //useWorker
                 onLoad: aceLoaded,
                 onChange: aceChanged
             }

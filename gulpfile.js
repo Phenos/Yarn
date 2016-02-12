@@ -47,6 +47,7 @@ var config = {
         javascriptVendorsSource: [
             "./bower_components/ace-builds/src-noconflict/ace.js",
             "./bower_components/ace-builds/src-noconflict/ext-language_tools.js",
+            "./bower_components/ace-builds/src-noconflict/worker-javascript.js",
             "./bower_components/ace-builds/src-noconflict/mode-javascript.js",
             "./bower_components/ace-builds/src-noconflict/theme-tomorrow.js",
             "./bower_components/angular/angular.js",

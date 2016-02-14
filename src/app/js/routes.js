@@ -21,6 +21,26 @@
 
         $urlRouterProvider.otherwise('/');
 
+        $stateProvider.state('WebIDE', {
+            url: '/editor',
+            resolve: {
+                "metadata": function (loadMetadata) {
+                    return loadMetadata().then(function (metadata) {
+                        return metadata;
+                    });
+                },
+                "user": function (userFromAPI) {
+                    return userFromAPI().then(function (user) {
+                        return user;
+                    });
+                }
+            },
+            controllerAs: 'webIDE',
+            bindToController: {},
+            templateUrl: './html/webIDE.html',
+            controller: 'webIDE'
+        });
+
         $stateProvider.state('root', {
             url: '/',
             resolve: {

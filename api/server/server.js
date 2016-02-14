@@ -254,19 +254,15 @@ app.get('/auth/logout', function (req, res, next) {
     var ctx = loopback.getCurrentContext();
     var currentUser = ctx.get('currentUser');
     if (currentUser) {
-
-        //console.log(currentUser);
-        console.log("Logging out ?");
-
+        console.log("Logging out");
         //currentUser.logout();
         res.clearCookie('access_token');
         res.clearCookie('userId');
 
-        console.log("And then back ?");
-        res.redirect('/login');
+        res.redirect('/');
     } else {
         console.log("Wtf?");
-        res.redirect('/wtf');
+        res.redirect('/logoutError');
     }
 });
 

@@ -3,13 +3,14 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Halant', serif;
+    font-family: 'Source Sans Pro', sans-serif;
     background: #000;
     overflow: hidden;
 }
 
 
 .main-ui {
+    font-family: 'Halant', serif;
     position: relative;
     //top: 0;
     //left: 0;
@@ -21,9 +22,42 @@ body {
     overflow-y: auto;
 }
 
-[ui-view] {
-    //z-index: 1000;
+.md-open-menu-container {
+    md-menu-content {
+        padding: 0 !important;
+    }
 }
+md-sidenav {
+    md-content {
+        padding: 0 !important;
+        md-divider,
+        md-menu-item {
+            padding: 0 !important;
+        }
+    }
+    md-icon {
+        color: #000;
+    }
+    md-toolbar {
+        background-color: #444 !important;
+    }
+}
+
+md-toolbar.toolbar {
+    background-color: #000 !important;
+    .md-toolbar-tools {
+        padding: 0;
+    }
+    .md-button {
+        text-transform: none;
+        font-size: 0.9em;
+        span {
+            padding: 0 0.3em;
+        }
+    }
+}
+
+
 
 .testGrid {
     position: relative;
@@ -50,6 +84,11 @@ body {
             border-bottom: 1px dotted rgba(255, 255, 255, 0.12);
         }
     }
+}
+
+.versionNumber {
+    font-size: 0.9em;
+    color: #888;
 }
 
 .tree {

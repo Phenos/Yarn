@@ -16,6 +16,8 @@ function WebIDEController(Story,
                         $localStorage,
                         electronDevTools) {
 
+    $scope.user = user;
+
     // todo: Put menu setup in separate service
 
     if (typeof require !== "undefined") {

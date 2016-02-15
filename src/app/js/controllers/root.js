@@ -2,16 +2,14 @@
 angular.module('yarn').controller('root', rootController);
 
 
-function rootController(Story,
-                        user,
-                        metadata,
+function rootController(user,
                         gameController,
+                        metadata,
                         $scope,
                         $window,
                         $mdDialog,
                         $mdSidenav,
                         $mdMedia,
-                        yConsole,
                         rememberLastStory,
                         $localStorage,
                         electronDevTools) {
@@ -22,12 +20,6 @@ function rootController(Story,
         gameController.loadFromSource(story.content, url);
     }
 
-    if (user && user.username) {
-        $scope.avatar = user.profiles[0].profile.photos[0].value;
-        $scope.username = user.profiles[0].profile.displayName;
-    }
-    $scope.metadata = metadata;
-
 
     function redirectToLogin() {
         $window.location.href = "/login";
@@ -35,19 +27,14 @@ function rootController(Story,
 
 
     $scope.openProfileMenu = function () {
-
-    }
-
-    $scope.openSidenav = function () {
-        $mdSidenav("leftSidebar").open();
-    };
-    $scope.closeSidenav = function () {
-        $mdSidenav("leftSidebar").close();
     };
 
     $scope.logout = function () {
         $window.location.href = "/auth/logout";
     };
+
+    $scope.user = user;
+    $scope.metadata = metadata;
 
     $scope.openAboutPrototypeDialog = function (ev) {
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;

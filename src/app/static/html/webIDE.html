@@ -1,73 +1,13 @@
-<md-toolbar class="toolbar">
-    <div class="md-toolbar-tools">
-        <md-button ng-click="openSidenav()" class="md-icon-button">
-            <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
-        </md-button>
-        <h2>
-            Yarn Studio
-        </h2>
-        <span flex></span>
-        <md-button class="md-button">
-            <span>
-                {{ username }}
-            </span>
-        </md-button>
-        <img ng-src="{{ avatar }}"
-             alt="{{ username }}"
-             class="avatar">
-
-    </div>
-</md-toolbar>
-<md-sidenav style="z-index:100" class="md-sidenav-left md-whiteframe-z2" md-component-id="leftSidebar">
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <md-button ng-click="closeSidenav()" class="md-icon-button">
-                <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
-            </md-button>
-            <h2>Menu</h2>
-        </div>
-    </md-toolbar>
-    <md-content layout-padding>
-                <md-menu-item>
-                    <md-button ng-click="openAboutPrototypeDialog()">
-                        <md-icon md-svg-icon="/svg-icons/question.svg" md-menu-align-target></md-icon>
-                        About this prototype!
-                    </md-button>
-                </md-menu-item>
-                <md-divider></md-divider>
-                <md-menu-item>
-                    <md-button ng-href="http://www.yarnstudio.io/yarnscript-language/" target="_blank">
-                        <md-icon md-svg-icon="/svg-icons/documentation.svg" md-menu-align-target></md-icon>
-                        Documentation
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-href="http://www.yarnstudio.io/" target="_blank">
-                        <md-icon md-svg-icon="/svg-icons/blog.svg" md-menu-align-target></md-icon>
-                        News and Development Blog
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-href="https://twitter.com/YarnStudioGames" target="_blank">
-                        <md-icon md-svg-icon="/svg-icons/twitter.svg" md-menu-align-target></md-icon>
-                        Follow Us on Twitter
-                    </md-button>
-                </md-menu-item>
-                <md-divider></md-divider>
-                <md-menu-item>
-                    <md-button ng-click="logout()">
-                        <md-icon md-svg-icon="/svg-icons/logout.svg" md-menu-align-target></md-icon>
-                        Logout
-                    </md-button>
-                </md-menu-item>
-    </md-content>
-</md-sidenav>
-<md-content style="z-index:5" flex _flex="100" _layout="row">
-    <md-section flex="60" layout="column">
+<editor-sidebar></editor-sidebar>
+<md-content style="z-index:5" flex layout="row">
+    <md-section flex="50" layout="column" class="IDE">
+        <editor-toolbar user="user"></editor-toolbar>
         <editor save-and-run="saveAndRun()" source="currentStory.content" layout="column" flex="60"></editor>
         <console flex="40"></console>
     </md-section>
-    <md-content flex="40" layout="column">
+    <md-content flex="50" layout="column">
+        <toolbar user="user"></toolbar>
+        <sidebar metadata="metadata"></sidebar>
         <div layout="row" flex="100" class="player">
             <div class="main-ui" flex="100">
                 <scenery></scenery>

@@ -1,0 +1,66 @@
+<md-toolbar class="toolbar">
+    <div class="md-toolbar-tools">
+        <div
+            flex="30"
+            layout="row"
+            layout-align="start center">
+            <md-button
+                    ng-click="toolbar.openSidebar()"
+                    class="md-icon-button"
+                    aria-label="Open menu">
+                <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
+            </md-button>
+        </div>
+        <div flex="40"
+             layout="row"
+             layout-align="center center">
+            <md-icon flex="100" style="width: auto; height: 1.4em;"
+                     md-svg-icon="/svg-icons/logo-name-small-white.svg"></md-icon>
+        </div>
+        <div flex="30"
+             layout="row"
+             layout-align="end center">
+            <span flex="90"></span>
+            <span flex
+                  layout="row"
+                  layout-align="end center"
+                  ng-if="username">
+                <md-menu flex md-position-mode="target-right target">
+                    <md-button
+                            style="min-width: 0; padding: 0;"
+                            ng-click="$mdOpenMenu($event)"
+                            class="md-raised"
+                            aria-label="Profile menu">
+                        <img ng-src="{{ avatar }}"
+                             alt="{{ username }}"
+                             class="avatar">
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item>
+                            <span>{{ username }}</span>
+                            <img ng-src="{{ avatar }}"
+                                 alt="{{ username }}"
+                                 class="avatar">
+                        </md-menu-item>
+                        <md-divider></md-divider>
+                        <md-menu-item>
+                            <md-button ng-click="logout()">
+                                <md-icon md-svg-icon="/svg-icons/logout.svg"></md-icon>
+                                Logout
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </span>
+            <span flex="100"
+                  layout="row"
+                  layout-align="end center"
+                  ng-if="!username">
+                <md-button ng-href="/auth/twitter">
+                    Login
+                    <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                </md-button>
+            </span>
+        </div>
+    </div>
+</md-toolbar>

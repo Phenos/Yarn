@@ -3,17 +3,24 @@ editor {
 
     .ace_editor {
 
-        background-color: #eeeeee;
+        .ace_content {
+            background-color: #f4f4f4;
+            opacity: 0.8;
+        }
         font-size: 0.8em !important;
 
         .ace_gutter {
-            background-color: #dddddd;
+            background-color: #eee;
+            opacity: 0.8;
         }
 
         &.ace_focus {
-            background-color: #ffffff;
+            .ace_content {
+                background-color: #fff;
+                opacity: 1;
+            }
             .ace_gutter {
-                background-color: #eeeeee;
+                opacity: 1;
             }
         }
     }

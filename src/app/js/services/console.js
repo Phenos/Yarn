@@ -4,11 +4,13 @@ angular.module('yarn').factory('yConsole', yConsoleService);
  * Buffered console logging service
  * @returns {Logger}
  */
-function yConsoleService() {
+function yConsoleService(ngAudio) {
 
     var buffer = [];
+    var errorSound = ngAudio.load("./sounds/error.mp3");
 
     function Logger() {
+
 
         var yConsole = {
             write: mockFunction("write"),
@@ -46,6 +48,7 @@ function yConsoleService() {
         };
 
         this.error = function (text) {
+            errorSound.play();
             yConsole.write("✖ " + text, "error");
         };
 

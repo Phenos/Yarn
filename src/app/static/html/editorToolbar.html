@@ -12,9 +12,19 @@
                     </button>
                     <md-menu-content>
                         <md-menu-item>
-                            <md-button ng-click="ctrl.sampleAction('share', $event)">
-                                Run
+                            <md-button ng-click="toolbar.IDE.saveAndRun()">
+                                Save and Run
                                 <span class="md-alt-text"> {{ 'M-Enter' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.IDE.save()">
+                                Save
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.IDE.run()">
+                                Run
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>

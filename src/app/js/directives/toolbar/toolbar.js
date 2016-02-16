@@ -21,6 +21,10 @@ function ToolbarDirective() {
             $scope.username = this.user.profiles[0].profile.displayName;
         }
 
+        this.logout = function () {
+            $window.location.href = "/auth/logout";
+        };
+
         this.openSidebar = function() {
             sidebar.open();
         }

@@ -3,7 +3,7 @@
     <md-section flex="50" layout="column" class="IDE">
         <editor-toolbar user="user"></editor-toolbar>
         <div flex="{{ editorFlexHeight }}" layout="row">
-            <editor save-and-run="saveAndRun()" source="currentStory.content" layout="column" flex></editor>
+            <editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor>
         </div>
         <div flex="{{ consoleFlexHeight}}" layout="row">
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>

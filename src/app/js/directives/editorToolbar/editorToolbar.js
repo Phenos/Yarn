@@ -16,6 +16,7 @@ angular.module('yarn').filter('keyboardShortcut', function($window) {
             return last ? key : abbreviations[key];
         }).join(seperator);
     };
+
 });
 
 function EditorToolbarDirective() {
@@ -32,10 +33,9 @@ function EditorToolbarDirective() {
         controller: EditorToolbarController
     };
 
-    function EditorToolbarController(editorSidebar) {
+    function EditorToolbarController(IDE) {
 
-        this.openSidebar = function() {
-            editorSidebar.open();
-        }
+        this.IDE = IDE;
+
     }
 }

@@ -1,8 +1,8 @@
 (function () {
 
-    angular.module('yarn').directive('console', StoryLogDirective);
+    angular.module('yarn').directive('console', ConsoleDirective);
 
-    function StoryLogDirective(commands) {
+    function ConsoleDirective(commands) {
         return {
             restrict: 'E',
             bindToController: {
@@ -66,6 +66,11 @@
             };
 
             this.write = function (text, type) {
+                if (type === "error") {
+                    console.error("YARN: ", text);
+                } else {
+                    console.log("YARN: " + type, text);
+                }
                 var scope = $scope.$new();
                 scope.text = text;
                 scope.type = type;

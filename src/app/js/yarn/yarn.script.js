@@ -76,14 +76,21 @@
 
         Script.prototype.importNode = function (node) {
             //todo: this code is duplicated... make unique with .resolveRelativeURL
-            // hack to protect windows drive letters in the path
+
             var tmpBaseURI = this.url;
-            tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
-            tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
-            tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
+
+            // hack to protect windows drive letters in the path
+            //tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
+            //tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
+            //tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
+
+
             //console.log("Importing: ", node.value, "relative to uri: ", tmpBaseURI);
-            var url = URI(node.value).absoluteTo(tmpBaseURI);
-            url = url.toString().replace("stupid_hack2/", ":/");
+            var url = URI(node.value).absoluteTo(tmpBaseURI).toString();
+
+            // hack to protect windows drive letters in the path
+            //url = url.toString().replace("stupid_hack2/", ":/");
+
             return loadScript(url).then(function (loadedScript) {
                 var script = new Script();
                 return script.load(loadedScript.source, loadedScript.url).then(function () {
@@ -110,16 +117,21 @@
         };
 
         Script.prototype.resolveRelativeURI = function resolveRelativeURI(uri) {
+            var resolvedURI = "";
             var tmpBaseURI = this.url;
             if (uri) {
                 // todo: refactore this hack into a seprate function/filter
+
                 // HACK to accound for difference in path resolution between windows an osx
-                tmpBaseURI = tmpBaseURI.replace("file://", "*stupid_hack1*");
-                tmpBaseURI = tmpBaseURI.replace(":/", "stupid_hack2/");
-                tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
+                //tmpBaseURI = tmpBaseURI.replace("file://", "*stupid_hack1*");
+                //tmpBaseURI = tmpBaseURI.replace(":/", "stupid_hack2/");
+                //tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
+
                 //console.log("relative to uri: ", tmpBaseURI);
-                var resolvedURI = URI(uri).absoluteTo(tmpBaseURI);
-                resolvedURI = resolvedURI.toString().replace("stupid_hack2/", ":/");
+                resolvedURI = URI(uri).absoluteTo(tmpBaseURI).toString();
+
+                // HACK to accound for difference in path resolution between windows an osx
+                //resolvedURI = resolvedURI.toString().replace("stupid_hack2/", "://");
             } else {
                 resolvedURI = uri;
             }

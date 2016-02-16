@@ -7,7 +7,8 @@ function rootController(user,
                         $scope,
                         $mdSidenav,
                         yConsole,
-                        welcomeMessage) {
+                        welcomeMessage,
+                        stories) {
 
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.metadata = metadata; // todo: metadata should be a service
@@ -24,6 +25,8 @@ function rootController(user,
     $scope.closeSidenav = function () {
         $mdSidenav("leftSidebar").close();
     };
+
+    stories.playDefault();
 
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();

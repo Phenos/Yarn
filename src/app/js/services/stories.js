@@ -1,11 +1,20 @@
 angular.module('yarn').factory('stories', StoriesService);
 
 function StoriesService(Story,
-                        yConsole) {
+                        yConsole,
+                        rememberLastStory,
+                        gameController) {
+
 
     var service = {
+        defaultStoryURL: "http://storage.yarnstudio.io/welcome/story.yarn.txt",
         currentStory: null,
         currentUser: null
+    };
+
+    service.playDefault = function () {
+        var storyURL = rememberLastStory.get() || service.defaultStoryURL;
+        gameController.loadFromURL(storyURL);
     };
 
     // Try to load a story for the current user...

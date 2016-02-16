@@ -1,0 +1,22 @@
+<form layout="row" flex>
+    <md-input-container flex="90" class="md-block">
+        <textarea
+                placeholder="Enter a command"
+                ng-keypress="userInput.keypress($event)"
+                ng-model="userInput.text"
+                ng-focus="userInput.focus()"
+                ng-blur="userInput.blur()"
+                md-select-on-focus></textarea>
+    </md-input-container>
+    <div
+            class="executeButton"
+            flex="10"
+    >
+        <md-button
+            class="md-fab md-mini md-primary"
+            ng-click="userInput.submit()"
+            aria-label="Execute">
+            <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
+        </md-button>
+    </div>
+</form>

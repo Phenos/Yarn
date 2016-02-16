@@ -47,7 +47,7 @@ function commands(storyLogService,
     hotkeys.add({
         combo: 'ctrl+1',
         description: 'Output the current state',
-        //allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         callback: function () {
             console.log("command state");
             command("state");
@@ -56,7 +56,7 @@ function commands(storyLogService,
     hotkeys.add({
         combo: 'ctrl+2',
         description: 'Output the execution tree',
-        //allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         callback: function () {
             command("tree");
         }
@@ -64,7 +64,7 @@ function commands(storyLogService,
     hotkeys.add({
         combo: 'ctrl+3',
         description: 'Outputing script parsing',
-        //allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         callback: function () {
             command("tokens");
         }

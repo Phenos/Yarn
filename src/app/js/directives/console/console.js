@@ -6,9 +6,13 @@
         return {
             restrict: 'E',
             bindToController: {
+                onEscapeFocus: '&',
+                onFocus: '&',
                 ready: "&"
             },
             scope: {},
+            replace: true,
+            transclude: true,
             controllerAs: 'console',
             templateUrl: './html/console.html',
             controller: ConsoleController
@@ -36,6 +40,16 @@
                 }
                 return text;
             }
+
+            this.onInputEscapeFocus = function () {
+                console.log("console.onInputEscapeFocus");
+                this.onEscapeFocus();
+            };
+
+            this.onInputFocus = function () {
+                console.log("console.onInputFocus");
+                this.onFocus();
+            };
 
             this.onInput = function (text) {
                 var trimmed = text.trim();

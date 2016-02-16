@@ -3,20 +3,24 @@ angular.module('yarn').controller('webIDE', WebIDEController);
 
 
 function WebIDEController(Story,
-                        user,
-                        metadata,
-                        gameController,
-                        $scope,
-                        $window,
-                        $mdDialog,
-                        $mdSidenav,
-                        $mdMedia,
-                        yConsole,
-                        rememberLastStory,
-                        $localStorage,
-                        electronDevTools) {
+                          user,
+                          metadata,
+                          gameController,
+                          $scope,
+                          $window,
+                          $mdDialog,
+                          $mdSidenav,
+                          $mdMedia,
+                          yConsole,
+                          rememberLastStory,
+                          $localStorage,
+                          editorService,
+                          electronDevTools) {
 
     $scope.user = user;
+
+    $scope.editorFlexHeight = 75;
+    $scope.consoleFlexHeight = 25;
 
     // todo: Put menu setup in separate service
 
@@ -183,7 +187,7 @@ function WebIDEController(Story,
     $scope.saveAndRun = function () {
         saveStory(function (story) {
             runStory(story);
-        }, function() {
+        }, function () {
             $mdDialog.show(
                 $mdDialog
                     .alert()
@@ -192,7 +196,7 @@ function WebIDEController(Story,
                     .title('Oups!')
                     .textContent('A problem occured while saving your story. Your changes were not saved.')
                     .ok('Ok')
-                    //.targetEvent(ev)
+                //.targetEvent(ev)
             );
         })
     };
@@ -210,7 +214,6 @@ function WebIDEController(Story,
             }
         )
     }
-
 
 
     function runStory(story) {
@@ -242,22 +245,22 @@ function WebIDEController(Story,
         $mdSidenav("leftSidebar").close();
 
         $mdDialog.show({
-                controller: aboutPrototypeDialogController,
-                templateUrl: './html/aboutPrototypeDialog.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose:true,
-                fullscreen: useFullScreen
-            });
+            controller: aboutPrototypeDialogController,
+            templateUrl: './html/aboutPrototypeDialog.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        });
 
-        $scope.$watch(function() {
+        $scope.$watch(function () {
             return $mdMedia('xs') || $mdMedia('sm');
-        }, function(wantsFullScreen) {
+        }, function (wantsFullScreen) {
             $scope.customFullscreen = (wantsFullScreen === true);
         });
 
         function aboutPrototypeDialogController($scope, $mdDialog) {
-            $scope.close = function() {
+            $scope.close = function () {
                 $mdDialog.cancel();
             };
         }
@@ -273,13 +276,24 @@ function WebIDEController(Story,
         if (!$localStorage.numberOfTimeAboutDialogIsOpened) {
             $localStorage.numberOfTimeAboutDialogIsOpened = 1;
         } else {
-            $localStorage.numberOfTimeAboutDialogIsOpened ++;
+            $localStorage.numberOfTimeAboutDialogIsOpened++;
         }
         if ($localStorage.numberOfTimeAboutDialogIsOpened <= maxCount) {
             $scope.openAboutPrototypeDialog();
         }
 
     }
+
+    $scope.onConsoleEscapeFocus = function () {
+        $scope.editorFlexHeight = 75;
+        $scope.consoleFlexHeight = 25;
+        editorService.focus();
+    };
+
+    $scope.onConsoleFocus = function () {
+        $scope.editorFlexHeight = 25;
+        $scope.consoleFlexHeight = 75;
+    };
 
     function doWelcomeMessage(metadata) {
 

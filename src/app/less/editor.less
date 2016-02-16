@@ -1,3 +1,20 @@
 editor {
     padding: 20px 20px 5px 20px;
+
+    .ace_editor {
+
+        background-color: #eeeeee;
+        font-size: 0.8em !important;
+
+        .ace_gutter {
+            background-color: #dddddd;
+        }
+
+        &.ace_focus {
+            background-color: #ffffff;
+            .ace_gutter {
+                background-color: #eeeeee;
+            }
+        }
+    }
 }

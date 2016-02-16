@@ -14,7 +14,7 @@ function ToolbarDirective() {
         controller: ToolbarController
     };
 
-    function ToolbarController(sidebar, $scope) {
+    function ToolbarController(sidebar, $scope, $window) {
 
         if (this.user && this.user.username) {
             $scope.avatar = this.user.profiles[0].profile.photos[0].value;

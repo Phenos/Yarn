@@ -1,6 +1,7 @@
 angular.module('yarn').factory('stories', StoriesService);
 
-function StoriesService(Story) {
+function StoriesService(Story,
+                        yConsole) {
 
     var service = {
         currentStory: null,
@@ -37,6 +38,21 @@ function StoriesService(Story) {
             service.currentUser = user;
             success(story);
         }, failure);
+    };
+
+    service.save = function (success, failure) {
+        service.currentStory.$save(
+            function (story) {
+                console.log("Story saved");
+                yConsole.success("Story saved");
+                if (success) success(story);
+            },
+            function (error, b) {
+                yConsole.error("A problem occured while trying to save the story.");
+                console.error("A problem occured while trying to save the story.", error);
+                if (failure) failure(error);
+            }
+        )
     };
 
     return service;

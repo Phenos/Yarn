@@ -52,8 +52,12 @@
 
 
         function loadFromURL(_url) {
-            var url = _url.replace(/\\/g, "/");
-            yConsole.log("Loading story from : " + _url);
+
+            // hack to protect windows drive letters in the path
+            //var url = _url.replace(/\\/g, "//");
+            var url = _url;
+
+            yConsole.log("Loading story from : " + url);
             return loadScript(url).then(onSuccess, onError);
 
             function onError() {
@@ -105,7 +109,10 @@
         }
 
         function loadFromSource(source, _baseURL) {
-            var baseURL = _baseURL.replace(/\\/g, "/");
+
+            // hack to protect windows drive letters in the path
+            //var baseURL = _baseURL.replace(/\\/g, "//");
+            var baseURL = _baseURL;
 
             yConsole.log("Loading story from source");
             console.log("Story source: ", source);

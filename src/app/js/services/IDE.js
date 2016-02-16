@@ -69,17 +69,7 @@ function IDEService(stories,
 
     service.save = function (success, failure) {
         console.log(stories.currentStory);
-        stories.currentStory.$save(
-            function (story) {
-                console.log("Story saved!");
-                if (success) success(story);
-            },
-            function (error, b) {
-                yConsole.error("A problem occured while trying to save the story.");
-                console.error("A problem occured while trying to save the story.", error, b);
-                if (failure) failure(error);
-            }
-        )
+        stories.save(success, failure);
     };
 
 

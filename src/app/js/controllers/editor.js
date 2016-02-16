@@ -26,6 +26,7 @@ function WebIDEController(stories,
     // We load the story from the user, or ensure that a default one exists
     stories.findOrCreateUserStory(user, function (story) {
         $scope.currentStory = story;
+
     });
 
 

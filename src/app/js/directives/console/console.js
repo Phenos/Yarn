@@ -1,16 +1,20 @@
 (function () {
 
-    angular.module('mindgame').directive('console', StoryLogDirective);
+    angular.module('yarn').directive('console', ConsoleDirective);
 
-    function StoryLogDirective(commands) {
+    function ConsoleDirective(commands) {
         return {
             restrict: 'E',
             bindToController: {
+                onEscapeFocus: '&',
+                onFocus: '&',
                 ready: "&"
             },
             scope: {},
+            replace: true,
+            transclude: true,
             controllerAs: 'console',
-            template: '<logscroll><logs></logs></logscroll><user-input on-submit="console.onInput(text)"></user-input>',
+            templateUrl: './html/console.html',
             controller: ConsoleController
         };
 
@@ -37,6 +41,16 @@
                 return text;
             }
 
+            this.onInputEscapeFocus = function () {
+                console.log("console.onInputEscapeFocus");
+                this.onEscapeFocus();
+            };
+
+            this.onInputFocus = function () {
+                console.log("console.onInputFocus");
+                this.onFocus();
+            };
+
             this.onInput = function (text) {
                 var trimmed = text.trim();
                 if (trimmed[0] === ">") {
@@ -52,6 +66,11 @@
             };
 
             this.write = function (text, type) {
+                if (type === "error") {
+                    console.error("YARN: ", text);
+                } else {
+                    console.log("YARN: " + type, text);
+                }
                 var scope = $scope.$new();
                 scope.text = text;
                 scope.type = type;

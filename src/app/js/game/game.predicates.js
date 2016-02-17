@@ -1,5 +1,5 @@
 "use strict";
-angular.module('mindgame').factory('gamePedicates', function() {
+angular.module('yarn').factory('gamePedicates', function() {
     return gamePedicates;
 });
 
@@ -13,9 +13,10 @@ function gamePedicates(game) {
         .syntax("is authored by");
 
     // The Action the user what about to make (ex.: Move, Look, etc)
-    state
+    var isAboutTo = state
         .predicate("isAboutTo")
         .syntax("is about to");
+    isAboutTo.uniqueSubject = true;
 
     // What something is of a kind
     state
@@ -38,25 +39,28 @@ function gamePedicates(game) {
         .syntax("is");
 
     // What something is called
-    state
+    var isCalled = state
         .predicate("isNamed")
         .syntax("is titled")
         .syntax("is named")
         .syntax("is called");
+    isCalled.uniqueSubject = true;
 
     // What something is described as when looked at
-    state
+    var isDescribedAs = state
         .predicate("isDescribedAs")
         .syntax("is described")
         .syntax("is described as");
+    isDescribedAs.uniqueSubject = true;
 
-    state
+    var isAlsoDescribedAs = state
         .predicate("isAlsoDescribedAs")
         .syntax("is also described")
         .syntax("is also described as");
+    isAlsoDescribedAs.uniqueSubject = true;
 
     // When something is in a place
-    state
+    var isIn = state
         .predicate("isIn")
         .syntax("is in the")
         .syntax("is inside the")
@@ -70,6 +74,7 @@ function gamePedicates(game) {
         .syntax("are in")
         .syntax("are inside")
         .syntax("are at");
+    isIn.uniqueSubject = true;
 
     // When something has something else. Ex.: Kitchen has a Kitchen Table
     state

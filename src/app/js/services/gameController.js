@@ -1,8 +1,8 @@
 (function () {
     "use strict";
 
-    angular.module('mindgame').factory('gameController', gameController);
-    angular.module('mindgame').factory('gameService', gameService);
+    angular.module('yarn').factory('gameController', gameController);
+    angular.module('yarn').factory('gameService', gameService);
 
     function gameService(yConsole) {
         var controller = null;
@@ -16,8 +16,13 @@
             controller.loadFromURL(url);
         }
 
+        function loadFromSource(source, baseURL) {
+            controller.loadFromSource(source, baseURL);
+        }
+
         return {
             register: register,
+            loadFromSource: loadFromSource,
             loadFromURL: loadFromURL
         }
     }
@@ -29,10 +34,12 @@
                             promptLoop,
                             yConsole,
                             splashService,
-                            gameService) {
+                            gameService,
+                            $localStorage) {
 
         var controller = {
-            loadFromURL: loadFromURL
+            loadFromURL: loadFromURL,
+            loadFromSource: loadFromSource
         };
         gameService.register(controller);
 
@@ -45,8 +52,12 @@
 
 
         function loadFromURL(_url) {
-            var url = _url.replace(/\\/g, "/");
-            yConsole.log("Loading story from : " + _url);
+
+            // hack to protect windows drive letters in the path
+            //var url = _url.replace(/\\/g, "//");
+            var url = _url;
+
+            yConsole.log("Loading story from : " + url);
             return loadScript(url).then(onSuccess, onError);
 
             function onError() {
@@ -69,9 +80,17 @@
                     yConsole.log("Running the story");
 
                     // todo: this .run should be a promise and show a success or error message in the game console
+                    // Change the current state layer to the static world (should be the default anyways).
+                    game.state.currentLayer = "world";
                     script.run(game.state);
+
                     // Change the current state layer to the current session.
                     game.state.currentLayer = "session";
+
+                    // Restore session state layer from localStorage
+                    if (!$localStorage.localState) $localStorage.localState = {};
+                    game.restoreFromLocalState($localStorage.localState);
+
 
                     //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
                     splashService.hide();
@@ -87,6 +106,54 @@
                 }
 
             }
+        }
+
+        function loadFromSource(source, _baseURL) {
+
+            // hack to protect windows drive letters in the path
+            //var baseURL = _baseURL.replace(/\\/g, "//");
+            var baseURL = _baseURL;
+
+            yConsole.log("Loading story from source");
+            console.log("Story source: ", source);
+
+            game.load(source, baseURL).then(onSuccess, onError);
+
+            // TODO:  THIS METHOD IS A TOTAL DUPLICATE!!!! BEURK
+            function onSuccess(script) {
+                //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
+                //console.log("script WHOO", script);
+                yConsole.success("Successfully loaded the story script");
+                yConsole.log("Running the story");
+
+                // todo: this .run should be a promise and show a success or error message in the game console
+                // Change the current state layer to the static world (should be the default anyways).
+                game.state.currentLayer = "world";
+                script.run(game.state);
+
+                // Change the current state layer to the current session.
+                game.state.currentLayer = "session";
+
+                // Restore session state layer from localStorage
+                if (!$localStorage.localState) $localStorage.localState = {};
+                game.restoreFromLocalState($localStorage.localState);
+
+
+                //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
+                splashService.hide();
+                writers
+                    .LogStoryIntroduction()
+                    .DescribeWhereYouAre();
+                promptLoop.update();
+
+            }
+
+            // TODO:  THIS METHOD IS A TOTAL DUPLICATE!!!! BEURK
+            function onError (request) {
+                yConsole.error("Failed to load story asset from : " + request.config.url);
+                yConsole.hint("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
+            }
+
         }
 
         return controller;

@@ -1,0 +1,50 @@
+{
+  "name": "story",
+  "plural": "stories",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "yarn",
+      "table": "story"
+    }
+  },
+  "properties": {
+    "guid": {
+      "type": "string",
+      "required": true,
+      "postgresql": {
+        "columnName": "guid",
+        "dataType": "character varying",
+        "dataLength": 64,
+        "nullable": "YES"
+      }
+    },
+    "username": {
+      "type": "string",
+      "required": true,
+      "postgresql": {
+        "columnName": "username",
+        "dataType": "character varying",
+        "dataLength": 64,
+        "nullable": "YES"
+      }
+    },
+    "content": {
+      "type": "string",
+      "required": true,
+      "postgresql": {
+        "columnName": "content",
+        "dataType": "character varying",
+        "dataLength": 1048576,
+        "nullable": "YES"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+  ],
+  "methods": {}
+}

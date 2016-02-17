@@ -1,6 +1,6 @@
 {
   "name": "bigmess",
-  "version": "0.0.14",
+  "version": "0.15",
   "authors": [
     "mathieu <mathieu.sylvain@phenos.ca>"
   ],
@@ -22,6 +22,9 @@
     "angular-uri": "~0.2.0",
     "angular-audio": "~1.7.1",
     "d3": "~3.5.10",
-    "ngstorage": "~0.3.10"
+    "ngstorage": "~0.3.10",
+    "angular-material": "~1.0.3",
+    "angular-ui-ace": "bower",
+    "angular-resource": "~1.4.9"
   }
 }

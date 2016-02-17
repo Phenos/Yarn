@@ -1,0 +1,53 @@
+<div
+        flex="100"
+        class="editor md-whiteframe-2dp"
+        ui-ace="editor.options"
+        ng-model="editor.source"></div>
+
+<!--
+
+/* ---[ EMBEDED VERSION ] ---*/
+
+/* STORY DETAILS */
+
+@story is called "Julia's three good rocks",
+    has id "threeGoodRocks-v1",
+    is described as
+    "Julie has found three good rocks, but which of them is the best rock?".
+
+/* THE HERO */
+
+#You
+    is an @actor,
+    is named "Julia",
+    is in #TheBackyard.
+
+/* THE PLACES */
+
+#TheBackyard:
+    is a #Room,
+    is called "The Backyard",
+    is described as "Julia's backyard is small but it's ok, because Julia is also very small.
+    The grass is full of pretty yellow dandelions and the sandbox has been well dried by the mornind sun.
+    It's a beautifull day",
+    has in it a #SwingSet.
+
+/* OBJECTS */
+
+#SwingSet:
+    is a #thing,
+    is called "Swing Set",
+    has image
+    "http://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2013/7/12/1/BPF_original_double-swing-set-transitional_beauty_shot-2_h.jpg.rend.hgtvcom.1280.960.jpeg",
+    is described as "The metal poles of the two seat swing set are gleaming from their new coat of bright red paint.".
+
+#TheSandbox:
+    is a #room,
+    is called "Sandbox",
+    is described as "The small meter wide sandbox is turtle shaped and green...
+    like green turtles. Julia loves turtles. She sure wished she had a turtle.".
+
+#TheBackyard links to #TheSandbox.
+#TheSandbox links to #TheBackyard.
+
+-->

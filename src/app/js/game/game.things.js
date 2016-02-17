@@ -1,5 +1,5 @@
 "use strict";
-angular.module('mindgame').factory('gameThings', function() {
+angular.module('yarn').factory('gameThings', function() {
     return gameThings;
 });
 

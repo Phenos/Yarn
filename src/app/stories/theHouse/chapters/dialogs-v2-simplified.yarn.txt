@@ -1,0 +1,89 @@
+
+Bob:
+    is an Actor,
+    is named "Bob",
+    has image "http://www.lazyliteratus.com/wp-content/uploads/2011/05/crazy_old_man-236x300.jpg",
+    is in the Bathroom,
+    default dialog is BobIsInTheBathroom.
+
+/*
+---[ Bathroom Argument with Bob ]-----------------------
+
+Syntax:
+
+    DialogObjectName is a dialog by ActorSayingThis.
+
+    DialogObjectName is a dialog by TheNarrator. /* TheNarrator being a reserved object? Necessary? */
+
+    DialogObjectName says "The actual text of the dialog".
+
+    DialogObjectName replied by OtherDialogObject.
+
+    DialogObjectName replied once by OtherDialogObject.
+
+    DialogObjectName followed by OtherDialogObject.
+
+    DialogObjectName is followed by Nothing. /* to end the discussion */
+
+
+*/
+
+BobIsInTheBathroom: is a Dialog, by Bob,
+    says "Hu... hi there. What are you doing here?",
+    [1] replied by Reply_I_dont_know,
+    [2] replied once by SorryImLaving,
+    [3] replied by HereToBrushMyTeeth.
+
+Reply_I_dont_know:
+    is a Dialog,
+    by you,
+    says "I dont know... what are YOU doing here?",
+    followed by BobIsShaving.
+
+SorryImLaving is a Dialog by you:
+    says "Ho, sorry, I'm leaving!",
+    followed by LeavingBobAlone.
+
+HereToBrushMyTeeth is a Dialog:
+    by You
+    says "I'm just here to brush my teeth, can you leave?",
+    followed by ImBrushingMyTeeth.
+
+BobIsShaving is a Dialog by Bob:
+    says "I'm shaving... leave me alone!", /* THIS LINE SHOULD TEST THE IMPLICIT ASSERTION OF BobIsShaving is a dialog */
+    triggers LearnBobsBigSecret. /* THIS LINE SHOULD TEST THE IMPLICIT ASSERTION OF LearnBobsBigSecret is a trigger */
+    [1] replied by SorryImLaving, /* THIS LINE SHOULD TEST THE IMPLICIT ASSERTION OF sorryImLaving is a dialog */
+    [2] replied by HereToBrushMyTeeth,
+    [3] replied by Nothing
+
+/* Affect a state change */
+
+BobsBigSecret is a knowledgeItem.
+LearnBobsBigSecret (
+    Bob has already said BobIsShaving.
+    You learn BobsBigSecret.
+)
+
+/* Should work without comas ?  */
+
+LeavingBobAlone is a Dialog by Bob
+    says "Yeah.. that's it, leave now."
+
+ImBrushingMyTeeth:
+    is a Dialog,
+    by Bob,
+    says "I'm ALSO brushing my teeth... how about YOU leave!!!",
+    followed by BobFlexes
+
+BobFlexes: is a Dialog, by TheNarrator,
+    says "Bob flexes his muscles, cracks his knuckles and pushes you out of the bathroom!".
+
+
+
+
+
+
+
+
+
+

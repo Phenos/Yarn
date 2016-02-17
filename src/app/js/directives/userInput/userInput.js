@@ -1,25 +1,66 @@
-angular.module('mindgame').directive('userInput', UserInputDirective);
+angular.module('yarn').directive('userInput', UserInputDirective);
 
 function UserInputDirective() {
     return {
         restrict: 'E',
         bindToController: {
             text: '=',
+            onFocus: '&',
+            onEscapeFocus: '&',
             onSubmit: '&'
         },
         scope: {},
         controllerAs: 'userInput',
-        template: '<form><textarea placeholder="Type in your command or script" ng-keypress="userInput.keypress($event)" ng-model="userInput.text"></textarea><button ng-click="userInput.submit()">Run</button></form>',
+        templateUrl: './html/userInput.html',
         controller: UserInputController
     };
 
-    function UserInputController($scope, $element) {
+    function UserInputController($scope, $element, hotkeys) {
         var self = this;
+
+        this.hasFocus = false;
+
+        hotkeys.bindTo($scope)
+            .add({
+                combo: 'esc',
+                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                description: 'Focus back to the editor',
+                callback: function () {
+                    self.toggleFocus();
+                }
+        });
 
         this.keypress = function (event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 self.submit();
+                this.focus();
+            }
+        };
+
+        this.toggleFocus = function () {
+            if (this.hasFocus) {
+                this.blur();
+            } else {
+                this.focus();
+            }
+        };
+
+        this.focus = function () {
+            if (!this.hasFocus) {
+                console.log("console in!");
+                $element.find("textarea")[0].focus();
+                this.hasFocus = true;
+                this.onFocus();
+            }
+        };
+
+        this.blur = function () {
+            if (this.hasFocus) {
+                console.log("console out!");
+                $element.find("textarea")[0].blur();
+                this.hasFocus = false;
+                this.onEscapeFocus();
             }
         };
 
@@ -27,7 +68,7 @@ function UserInputDirective() {
             //console.log("this.submit!!!", this.text);
             this.onSubmit({text: this.text});
             this.text = "";
-            $element.find("textarea")[0].focus();
+            this.focus();
         };
     }
 }

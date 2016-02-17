@@ -1,24 +1,42 @@
-angular.module('mindgame').factory('yConsole', yConsoleService);
+angular.module('yarn').factory('yConsole', yConsoleService);
 
-function yConsoleService() {
+/**
+ * Buffered console logging service
+ * @returns {Logger}
+ */
+function yConsoleService(ngAudio) {
+
+    var buffer = [];
+    var errorSound = ngAudio.load("./sounds/error.mp3");
 
     function Logger() {
 
+
         var yConsole = {
-            log: mockFunction,
-            debug: mockFunction,
-            error: mockFunction,
-            write: mockFunction,
-            command: mockFunction,
-            clear: mockFunction
+            write: mockFunction("write"),
+            clear: mockFunction("clear")
         };
 
-        function mockFunction() {
-            console.error("Console not ready yet...");
+        // Mock function that buffer function calls until the console is ready
+        function mockFunction(fn) {
+            return function () {
+                buffer.push([fn, arguments])
+            }
         }
 
         this.register = function (directive) {
             yConsole = directive;
+            this.flushBuffer();
+        };
+
+        this.flushBuffer = function() {
+            var fnCall;
+            var fn;
+            while (buffer.length) {
+                fnCall = buffer.shift();
+                fn = yConsole[fnCall[0]];
+                fn.apply(yConsole, fnCall[1]);
+            }
         };
 
         this.log = function (text) {
@@ -30,6 +48,7 @@ function yConsoleService() {
         };
 
         this.error = function (text) {
+            errorSound.play();
             yConsole.write("✖ " + text, "error");
         };
 

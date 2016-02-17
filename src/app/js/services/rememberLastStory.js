@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('rememberLastStory', rememberLastStory);
+angular.module('yarn').factory('rememberLastStory', rememberLastStory);
 
 function rememberLastStory($localStorage) {
 

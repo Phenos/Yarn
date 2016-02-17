@@ -1,8 +1,9 @@
-angular.module('mindgame').factory('writers', writers);
+angular.module('yarn').factory('writers', writers);
 
 // TODO:  storyLog and state are ASYNC ????
 
-function writers(storyLogService,
+function writers(yConsole,
+                 storyLogService,
                  game,
                  sceneryService) {
 
@@ -41,6 +42,9 @@ function writers(storyLogService,
             if (description) storyLog.log(description);
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");
+            yConsole.error("Your hero is nowhere to be found!");
+            yConsole.hint("For the story to start, you must place you hero in a room.");
+            yConsole.hint("Ex.: #You is in #YourBedroom.");
         }
         return this;
     }

@@ -1,4 +1,4 @@
-<html ng-app="mindgame">
+<html ng-app="yarn">
 <head>
     <title>Yarn Demo</title>
     <meta charset="UTF-8">
@@ -21,13 +21,24 @@
     <!-- todo : Add ability to inject stylesheets individually -->
     <link rel="stylesheet" type='text/css' href="./styles/all.css"/>
     <!-- todo : Add ability to inject scripts individually -->
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <script src="./js/vendors.js"></script>
     <script src="./js/all.js"></script>
+    <script src="./client-sdk/lb-services.js"></script>
+
+    <!--Start of Zopim Live Chat Script-->
+    <script type="text/javascript">
+        window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+                d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+        _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+            $.src="//v2.zopim.com/?3g7itxtqWDInMt8o7AQGPbVTSo3LDMIY";z.t=+new Date;$.
+                    type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+    </script>
+    <!--End of Zopim Live Chat Script-->
+
 </head>
-<body scroll-glue="false"
-      breakpoint="{{ breakpoints }}">
-<div ui-view></div>
-<scenery></scenery>
-<console></console>
+<body layout="row" scroll-glue="false" breakpoint="{{ breakpoints }}">
+    <section layout="column" flex ui-view></section>
+    <support-chat></support-chat>
 </body>
 </html>

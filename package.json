@@ -7,12 +7,12 @@
     "url": "http://phenos.ca/"
   },
   "electronVersion": "0.36.0",
-  "version": "0.0.15",
+  "version": "0.15.0",
   "description": "",
   "main": "build/main.js",
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp",
-    "__start": "node server.js",
+    "start": "node ./api/server/server.js",
     "__postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
@@ -46,6 +46,7 @@
     "browser-sync": "^2.9.11",
     "electron-packager": "^5.1.1",
     "electron-prebuilt": "^0.35.0",
-    "gulp-electron": "0.0.9"
+    "gulp-electron": "0.0.9",
+    "gulp-shell": "^0.5.2"
   }
 }

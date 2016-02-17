@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var bump = require('gulp-bump');
 var del = require('del');
+var shell = require('gulp-shell');
 var electronConnect = require('electron-connect');
 var electron = require('gulp-electron');
 
@@ -15,6 +16,7 @@ var electronServer;
 
 var config = {
     server: {
+        proxy: "localhost:5000",
         host: 'localhost',
         root: 'build/static',
         port: 8001
@@ -30,10 +32,11 @@ var config = {
         electronSource: 'electron/**',
         storiesSource: 'src/app/stories/**',
         javascriptSource: [
-            "src/app/js/yarn/yarn.js",
-            "src/app/js/yarn/**/*.js",
             "src/app/js/module.js",
             "src/app/js/routes.js",
+            "src/app/js/config.js",
+            "src/app/js/yarn/yarn.js",
+            "src/app/js/yarn/**/*.js",
             "src/app/js/game/game.predicates.js",
             "src/app/js/game/game.routines.js",
             "src/app/js/game/game.things.js",
@@ -42,12 +45,21 @@ var config = {
             "src/app/js/directives/**/*.js"
         ],
         javascriptVendorsSource: [
+            "./bower_components/ace-builds/src-noconflict/ace.js",
+            "./bower_components/ace-builds/src-noconflict/ext-language_tools.js",
+            "./bower_components/ace-builds/src-noconflict/worker-javascript.js",
+            "./bower_components/ace-builds/src-noconflict/mode-javascript.js",
+            "./bower_components/ace-builds/src-noconflict/theme-tomorrow.js",
             "./bower_components/angular/angular.js",
+            "./bower_components/angular-resource/angular-resource.js",
+            "./bower_components/angular-aria/angular-aria.js",
             "./bower_components/ngstorage/ngStorage.min.js",
             "./bower_components/angular-animate/angular-animate.js",
+            "./bower_components/angular-material/angular-material.js",
             "./bower_components/uri.js/src/URI.js",
             "./bower_components/angular-audio/app/angular.audio.js",
             "./bower_components/angular-uri/angular-uri.js",
+            "./bower_components/angular-ui-ace/ui-ace.js",
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
             "./bower_components/angular-scroll-glue/src/scrollglue.js",
             "./bower_components/angular-hotkeys/build/hotkeys.js",
@@ -109,6 +121,7 @@ gulp.task('copyAssets', gulp.series(
 gulp.task('clean', cleanTask);
 gulp.task('cleanAfterBuild', cleanAfterTask);
 gulp.task('server', serverTask);
+gulp.task('api', apiTask);
 gulp.task('electron', electronTask);
 gulp.task('runElectron', runElectronTask);
 gulp.task('watch', watchTask);
@@ -218,14 +231,26 @@ function cleanAfterTask() {
 function serverTask(callback) {
     browserSync = require('browser-sync');
     browserSync.init({
-        server: {
-            baseDir: config.server.root
-        },
+        reloadDebounce: 2000,
+        minify: false,
+        //server: {
+        //    baseDir: config.server.root
+        //},
+        proxy: config.server.proxy,
         host: config.server.host,
         port: config.server.port
 
     });
     callback();
+}
+
+function apiTask() {
+return gulp.src('*.js', {read: false})
+    .pipe(shell([
+        'npm start'
+    ], {
+        templateData: {}
+    }))
 }
 
 function electronTask() {
@@ -303,3 +328,5 @@ function lessTask() {
 
 
 // ------[ The End! --------
+
+

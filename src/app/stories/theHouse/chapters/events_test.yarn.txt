@@ -1,0 +1,65 @@
+ /*
+
+Types of instructions:
+    - Predicates
+    - #Object
+    - Assertion
+    - @Set of Assertions
+    - Functions  do()  when()  inc()  if()
+
+*/
+
+/* ########################################################################### */
+
+set @TheRoomMakesYouTired:
+    happens when @YouEnterTheBedroom,
+    #you is #Tired,
+    #narrator says "This room makes you feel suddenly tired, very tired."
+
+set @YouEnterTheBedroom:
+    #You enter the #Bedroom,
+    #TimeOfDay is Night.
+
+/*
+ ###########################################################################
+ Example: Upon detecting set of valid assertions, apply a new set of assertions
+*/
+
+set @TheGatesOpen:
+    happens when @OpenTheGatesWithTheRod,
+    #narrator says
+        "The gates open and reveil a divine light which blinds
+        you and leaves you unconcious",
+    #chapter ends with #success
+
+set @TheGatesFailToOpen:
+    happens when @FailsOpeningGateWithTheRod,
+    #narrator says
+        "The gates rattle, but dont seam to budge...
+        they are still firmly locked"
+
+set @BecomeGodLike:
+    happens when @HasAllScepterParts,
+    #you is called "Zeus",
+    #you is a #God,
+    #you has a#MagicLightningRod,
+    #you are #invincible,
+    #narrator says
+        "As you assemble the scepter you feel an amazing power and feel invincible. You
+        now obtain the Magic Lightning Rod. The rod speaks to you and says 'Use to open
+        the gates of eternity'!".
+
+set @HasAllScepterParts:
+    #you has #GoldScepterHandle,
+    #you has #ScepterRuby,
+    #you has #MagicLeatherStrap
+
+
+set @SucceedOpeningGateWithTheRod:
+    #MagicLightningRod is used with #GatesOfEternity,
+    #GatesOfEternity is #unlocked.
+
+set @FailsOpeningGateWithTheRod:
+    #MagicLightningRod is used with #GatesOfEternity,
+    #GatesOfEternity is #locked.
+

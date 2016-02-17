@@ -1,4 +1,4 @@
-angular.module('mindgame').directive('splash', SplashDirective);
+angular.module('yarn').directive('splash', SplashDirective);
 
 function SplashDirective() {
     return {
@@ -10,7 +10,7 @@ function SplashDirective() {
             metadata: "="
         },
         controllerAs: 'splash',
-        template: '<div class="splash" ng-show="visible"><div class="splash-bg"></div><div class="splash-mask"></div><div class="splash-content" ng-show="visible"><img class="splash-logo" src="./images/logo-253px-onDark.png"><p>v{{ metadata.version }}</p><div></div>',
+        templateUrl: './html/splash.html',
         controller: SplashController
     };
 

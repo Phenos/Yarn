@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('promptLoop', promptLoop);
+angular.module('yarn').factory('promptLoop', promptLoop);
 
 function promptLoop(storyLogService,
                     commands,
@@ -13,7 +13,8 @@ function promptLoop(storyLogService,
     function WhereToGo(context) {
         context.when = function (state) {
             var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo === "move";
+            console.log("isAboutTo =====>", isAboutTo);
+            return isAboutTo && isAboutTo.id === "move";
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "Where do you want to go ?";
@@ -40,7 +41,7 @@ function promptLoop(storyLogService,
     function WhatToLookAt(context) {
         context.when = function (state) {
             var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo === "look";
+            return isAboutTo && isAboutTo.id === "look";
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";
@@ -67,7 +68,7 @@ function promptLoop(storyLogService,
     function WhatToTake(context) {
         context.when = function (state) {
             var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo === "take";
+            return isAboutTo && isAboutTo.id === "take";
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to take ?";
@@ -95,8 +96,7 @@ function promptLoop(storyLogService,
             }
         };
         context.answer = function answer(promptLoop, option) {
-            var isAboutTo = state.predicate("isAboutTo");
-            state.thing("You").removeAssertions(isAboutTo);
+            logic.routines.aboutTo("");
 
             if (option) {
                 // todo: Find sexier api for removing an assertion

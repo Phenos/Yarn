@@ -1,30 +1,25 @@
-
 @import "vars.less";
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Halant', serif;
     background: #000;
     overflow: hidden;
 }
-
+body, button, select, html, textarea, input {
+    font-family: 'Source Sans Pro', sans-serif;
+}
 
 .main-ui {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 50vw;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.5);
+    font-family: 'Halant', serif;
+    position: relative;
+    z-index: 50;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-[ui-view] {
-    z-index: 1000;
-}
+
+
 
 .testGrid {
     position: relative;
@@ -53,11 +48,12 @@ body {
     }
 }
 
+
 .tree {
 
     .node {
         position: relative;
-        padding: 0.2em 0 0 0em;
+        padding: 0.2em 0 0 0;
         margin: 0.1em 0 0 0;
         .label {
             display: block;
@@ -92,7 +88,7 @@ body {
     font-size: 1em;
 
     .assertion {
-        padding: 4px 0px;
+        padding: 4px 0;
         .subject {
             padding: 0 10px 0 0;
         }
@@ -137,6 +133,7 @@ body {
 
 
 user-choice {
+
     display: block;
     text-align: center;
     margin: 0.5em 5em 10em 5em;
@@ -149,9 +146,12 @@ user-choice {
     h3 {
         font-size: 1.4em;
         margin-bottom: 0.5em;
-        font-weight: 200;
+        font-weight: 400;
         text-align: center;
         color: #fff;
+
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+
     }
 
     ul {
@@ -179,12 +179,12 @@ user-choice {
 
                 &:hover {
                     top: -1px;
-                    box-shadow: 0 7px 8px 0px rgba(0,0,0,0.2);
+                    box-shadow: 0 7px 8px 0 rgba(0,0,0,0.2);
                     background: #fff;
                 }
                 &:active {
                     top: 2px;
-                    box-shadow: 0 4px 8px 0px rgba(0,0,0,0.2);
+                    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
                 }
             }
         }

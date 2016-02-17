@@ -1,0 +1,84 @@
+
+#Bob:
+    is an @actor,
+    is named "Bob",
+    has image "http://www.lazyliteratus.com/wp-content/uploads/2011/05/crazy_old_man-236x300.jpg",
+    is in the #Bathroom,
+    default dialog is #BobIsInTheBathroom.
+
+/*
+---[ Bathroom Argument with Bob ]-----------------------
+
+Syntax:
+    #DialogObjectName is a #dialog by #ActorSayingThis
+    #DialogObjectName is a #dialog by #TheNarrator (#TheNarrator being a reserved object? Necessary?)
+    #DialogObjectName says "The actual text of the dialog"
+    #DialogObjectName replied by #OtherDialogObject
+    #DialogObjectName replied once by #OtherDialogObject
+    #DialogObjectName followed by #OtherDialogObject
+    #DialogObjectName is followed by #nothing (to end the discussion)
+
+
+*/
+
+#BobIsInTheBathroom: is a #dialog, by #Bob,
+    says "Hu... hi there. What are you doing here?",
+    [1] replied by #reply_I_dont_know,
+    [2] replied once by #sorryImLaving,
+    [3] replied by #hereToBrushMyTeeth.
+
+#reply_I_dont_know:
+    is a #dialog,
+    by #you,
+    says "I dont know... what are YOU doing here?",
+    followed by #BobIsShaving.
+
+#sorryImLaving is a #dialog by #you:
+    says "Ho, sorry, I'm leaving!",
+    followed by #LeavingBobAlone.
+
+#hereToBrushMyTeeth is a #dialog:
+    by #You
+    says "I'm just here to brush my teeth, can you leave?",
+    followed by #ImBrushingMyTeeth.
+
+#BobIsShaving is a #dialog by #Bob:
+    says "I'm shaving... leave me alone!",  (THIS LINE SHOULD TEST THE IMPLICIT ASSERTION OF #BobIsShaving is a #dialog)
+    triggers #LearnBobsBigSecret. (THIS LINE SHOULD TEST THE IMPLICIT ASSERTION OF #LearnBobsBigSecret is a #trigger)
+    [1] replied by #sorryImLaving, (THIS LINE SHOULD TEST THE IMPLICIT ASSERTION OF #sorryImLaving is a #dialog)
+    [2] replied by #hereToBrushMyTeeth,
+    [3] replied by #nothing
+
+/* Affect a state change */
+
+#LearnBobsBigSecret is a #trigger (
+    #Bob has already said #BobIsShaving,
+    #You know #BobsBigSecret.
+    #BobsBigSecret is a #knowledgeItem.
+)
+
+/* Should work without comas ?  */
+
+#LeavingBobAlone is a #dialog by #Bob
+    says "Yeah.. that's it, leave now.",
+
+
+
+#ImBrushingMyTeeth:
+    is a #dialog,
+    by #Bob,
+    says "I'm ALSO brushing my teeth... how about YOU leave!!!",
+    followed by #BobFlexes
+
+#BobFlexes: is a #dialog, by #TheNarrato,
+    says "Bob flexes his muscles, cracks his knuckles and pushes you out of the bathroom!".
+
+
+
+
+
+
+
+
+
+

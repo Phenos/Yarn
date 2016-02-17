@@ -1,9 +1,9 @@
-angular.module('mindgame').factory('electronDevTools', electronDevTools);
+angular.module('yarn').factory('electronDevTools', electronDevTools);
 
 
 function electronDevTools($localStorage) {
 
-    if (require) {
+    if (typeof require !== "undefined") {
         var remote = require('remote');
     }
 

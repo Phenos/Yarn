@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('loadPageScripts', loadPageScripts);
+angular.module('yarn').factory('loadPageScripts', loadPageScripts);
 
 function loadPageScripts(loadScript,
                          $document,

@@ -13,7 +13,6 @@ function rootController(user,
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.metadata = metadata; // todo: metadata should be a service
 
-
     // Show a welcome message in the yarn console
     yConsole.log("Welcome to <strong>YarnStudio!</strong>");
     yConsole.hint('Enter "<strong>help</strong>" in the command-line bellow to see available commands!');

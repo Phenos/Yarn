@@ -12,28 +12,20 @@
                     </button>
                     <md-menu-content>
                         <md-menu-item>
-                            <md-button ng-click="toolbar.hideConsole()">
-                                Close
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-                <!--
-                <md-menu>
-                    <button ng-click="$mdOpenMenu()">
-                        Commands
-                    </button>
-                    <md-menu-content>
-                        <md-menu-item>
-                            <md-button ng-click="toolbar.consoleClear()">
+                            <md-button ng-click="toolbar.clearConsole()">
                                 Clear
                                 <span class="md-alt-text"> {{ 'M-K' | keyboardShortcut }}</span>
                             </md-button>
                         </md-menu-item>
+                        <md-divider></md-divider>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.hideConsole()">
+                                Close
+                                <span class="md-alt-text"> {{ 'M-Esc' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
                     </md-menu-content>
                 </md-menu>
-                -->
-
             </md-menu-bar>
         </div>
         <div flex>

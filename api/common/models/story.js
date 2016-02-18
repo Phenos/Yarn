@@ -10,10 +10,9 @@ module.exports = function (Story) {
 
         var s3client = s3.createClient({
             s3Options: {
-                accessKeyId: 'AKIAIODEGQD5KBXPZQCA',
-                secretAccessKey: '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',
-                region: "us-west-2"
-                //endpoint: "storage.yarnstudio.io"
+                accessKeyId: process.env.S3_accessKeyId,
+                secretAccessKey: process.env.S3_secretAccessKey,
+                region: process.env.S3_region
             }
         });
         var username = currentUser.username;

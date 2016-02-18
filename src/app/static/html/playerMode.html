@@ -1,11 +1,11 @@
 <md-content style="z-index:5" flex layout="row">
-    <md-section flex="50" layout="column" class="IDE">
+    <md-section ng-show="sidebarIsVisible" flex="50" layout="column" class="IDE">
         <console-toolbar user="user"></console-toolbar>
         <div flex="100" layout="row">
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
     </md-section>
-    <md-content flex="50" layout="column">
+    <md-content flex layout="column">
         <toolbar user="user"></toolbar>
         <sidebar metadata="metadata"></sidebar>
         <scenery></scenery>

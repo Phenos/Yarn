@@ -25,11 +25,10 @@ var bodyParser = require('body-parser');
  */
 var flash = require('express-flash');
 
-
 // Load the provider configurations
 var config = {};
 try {
-    config = require('./providers.json');
+    config = require('./providers.js');
 } catch (err) {
     console.error('Please configure your passport strategy in `providers.json`.');
     console.trace(err);

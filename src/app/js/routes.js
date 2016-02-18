@@ -18,10 +18,9 @@
     function config($stateProvider,
                     $urlRouterProvider) {
 
-
         $urlRouterProvider.otherwise('/');
 
-        $stateProvider.state('WebIDE', {
+        $stateProvider.state('editorMode', {
             url: '/editor',
             resolve: {
                 "metadata": function (loadMetadata) {
@@ -35,13 +34,13 @@
                     });
                 }
             },
-            controllerAs: 'webIDE',
+            controllerAs: 'editorMode',
             bindToController: {},
-            templateUrl: './html/webIDE.html',
-            controller: 'webIDE'
+            templateUrl: './html/editorMode.html',
+            controller: 'editorMode'
         });
 
-        $stateProvider.state('root', {
+        $stateProvider.state('playerMode', {
             url: '/',
             resolve: {
                 "metadata": function (loadMetadata) {
@@ -55,10 +54,10 @@
                     });
                 }
             },
-            controllerAs: 'root',
+            controllerAs: 'playerMode',
             bindToController: {},
-            templateUrl: './html/app.html',
-            controller: 'root'
+            templateUrl: './html/playerMode.html',
+            controller: 'playerMode'
         });
 
     }

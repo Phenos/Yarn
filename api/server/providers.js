@@ -1,4 +1,4 @@
-{
+module.exports = {
   "twitter": {
     "provider": "twitter",
     "authScheme": "oauth",
@@ -6,11 +6,10 @@
     "callbackURL": "/auth/twitter/callback",
     "authPath": "/auth/twitter",
     "callbackPath": "/auth/twitter/callback",
-    "__OLD__successRedirect": "/auth/account",
     "successRedirect": "/",
     "failureRedirect": "/login",
-    "consumerKey": "t11Ylh8AxfW0XNUgE65ipDxC5",
-    "consumerSecret": "dtCuYnfIM3TBGlFSeCEpevZumCnQ7wdB3TT9a8WuhDDII0zJh8",
+    "consumerKey": process.env.TWITTER_consumerKey,
+    "consumerSecret": process.env.TWITTER_consumerSecret,
     "failureFlash": true
   }
-}
+};

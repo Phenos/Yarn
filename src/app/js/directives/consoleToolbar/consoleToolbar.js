@@ -14,12 +14,13 @@ function ConsoleToolbarDirective() {
         controller: ConsoleToolbarController
     };
 
-    function ConsoleToolbarController(consoleService) {
-        this.hideConsole = function() {
+    function ConsoleToolbarController(consoleService,
+                                      playerModeService) {
+        this.hideConsole = function () {
             playerModeService.hideConsole();
         };
 
-        this.clearConsole = function() {
+        this.clearConsole = function () {
             consoleService.clear();
         }
     }

@@ -1,30 +1,36 @@
 angular.module('yarn').directive('sidebar', SidebarDirective);
-angular.module('yarn').factory('sidebar', sidebarService);
+angular.module('yarn').factory('sidebarService', sidebarService);
 
 function SidebarDirective() {
     return {
         restrict: 'E',
-        //bindToController: {
-        //    metadata: "="
-        //},
-        scope: false,
+        bindToController: {
+            metadata: "=",
+            onOpenConsole: "&"
+        },
+        scope: true,
         replace: true,
-        //transclude: true,
+        transclude: true,
         controllerAs: 'sidebar',
         templateUrl: './html/sidebar.html',
         controller: SidebarController
     };
 
-    function SidebarController(sidebar, $mdSidenav) {
-        sidebar.register(this);
+    function SidebarController(sidebarService, $mdSidenav) {
+        var self = this;
+
+        sidebarService.register(this);
+
+        this.openConsole = function () {
+            console.log("sidebar.openClose");
+            self.onOpenConsole();
+        };
 
         this.open = function () {
-            console.log("open");
             $mdSidenav("leftSidebar").open();
         };
 
         this.close = function () {
-            console.log("close");
             $mdSidenav("leftSidebar").close();
         };
 

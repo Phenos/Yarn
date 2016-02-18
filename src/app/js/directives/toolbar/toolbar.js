@@ -14,7 +14,7 @@ function ToolbarDirective() {
         controller: ToolbarController
     };
 
-    function ToolbarController(sidebar, $scope, $window) {
+    function ToolbarController(sidebarService, $scope, $window) {
 
         if (this.user && this.user.username) {
             $scope.avatar = this.user.profiles[0].profile.photos[0].value;
@@ -26,7 +26,7 @@ function ToolbarDirective() {
         };
 
         this.openSidebar = function() {
-            sidebar.open();
+            sidebarService.open();
         }
     }
 }

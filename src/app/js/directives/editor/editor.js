@@ -29,8 +29,6 @@
             function aceLoaded(_editor) {
                 console.log("Editor loaded");
                 aceEditor = _editor;
-                //console.log("aceEditor", aceEditor);
-                //aceEditor.getSession().setUseWorker(false);
             }
 
             function aceChanged(e) {
@@ -52,7 +50,6 @@
                     enableBasicAutocompletion: true,
                     enableLiveAutocompletion: true
                 },
-                //useWorker
                 onLoad: aceLoaded,
                 onChange: aceChanged
             }

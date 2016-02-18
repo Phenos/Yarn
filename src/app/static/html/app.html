@@ -1,27 +1,29 @@
-<toolbar user="user"></toolbar>
-<sidebar metadata="metadata"></sidebar>
-<scenery></scenery>
-<md-content style="z-index:5" flex _flex="100" _layout="row">
-    <md-content flex="100" layout="column">
-        <div layout="row" flex="100" class="player">
-            <div class="main-ui" flex="100">
-                <story-log></story-log>
-                <user-choice
-                        ng-show="game.question"
-                        on-choose="game.choose(value)"
-                        question="game.question"
-                        options="game.options"
-                ></user-choice>
-                <!--<div class="ellipsis">-->
-                <!--<span class="one">▸</span>-->
-                <!--<span class="two">▸</span>-->
-                <!--<span class="three">▸</span>-->
-                <!--​</div>-->
-                <splash visible="true" metadata="metadata"></splash>
-            </div>
+<md-content style="z-index:5" flex layout="row">
+    <md-section flex="50" layout="column" class="IDE">
+        <console-toolbar user="user"></console-toolbar>
+        <div flex="100" layout="row">
+            <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
+    </md-section>
+    <md-content flex="50" layout="column">
+        <toolbar user="user"></toolbar>
+        <sidebar metadata="metadata"></sidebar>
+        <scenery></scenery>
+        <md-content style="z-index:5">
+            <md-content flex="100" layout="column">
+                <div layout="row" flex="100" class="player">
+                    <div class="main-ui" flex="100">
+                        <story-log></story-log>
+                        <user-choice
+                                ng-show="game.question"
+                                on-choose="game.choose(value)"
+                                question="game.question"
+                                options="game.options"
+                        ></user-choice>
+                        <splash visible="true" metadata="metadata"></splash>
+                    </div>
+                </div>
+            </md-content>
+        </md-content>
     </md-content>
 </md-content>
-<div ng-hide="true">
-    <console></console>
-</div>

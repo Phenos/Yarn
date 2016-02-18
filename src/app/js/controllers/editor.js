@@ -25,8 +25,12 @@ function WebIDEController(stories,
 
     // We load the story from the user, or ensure that a default one exists
     stories.findOrCreateUserStory(user, function (story) {
+        yConsole.log("Loaded a story in the editor");
         $scope.currentStory = story;
-
+    }, function (err) {
+        yConsole.log("No story can be loaded in the editor. You can only edit your own stories when you are logged in.");
+        yConsole.log("Until then you can still use the console to enter commands and affect your game session.");
+        $scope.currentStory = null;
     });
 
 
@@ -48,8 +52,10 @@ function WebIDEController(stories,
     Height permutation between Console and Editor on focus events
 
      */
-    $scope.editorFlexHeight = 75;
-    $scope.consoleFlexHeight = 25;
+    $scope.editorFlexHeight_default = 75;
+    $scope.consoleFlexHeight_default = 25;
+    $scope.editorFlexHeight = $scope.editorFlexHeight_default ;
+    $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
     $scope.onConsoleEscapeFocus = function () {
         $scope.editorFlexHeight = 75;
         $scope.consoleFlexHeight = 25;

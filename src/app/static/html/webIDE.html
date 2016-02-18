@@ -1,20 +1,19 @@
-<editor-sidebar></editor-sidebar>
 <md-content style="z-index:5" flex layout="row">
     <md-section flex="50" layout="column" class="IDE">
         <editor-toolbar user="user"></editor-toolbar>
-        <div flex="{{ editorFlexHeight }}" layout="row">
+        <div ng-if="currentStory" flex="{{ editorFlexHeight }}" layout="row">
             <editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor>
         </div>
-        <div flex="{{ consoleFlexHeight}}" layout="row">
+        <div flex="{{ currentStory ? consoleFlexHeight : 100 }}" layout="row">
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
     </md-section>
     <md-content flex="50" layout="column">
         <toolbar user="user"></toolbar>
         <sidebar metadata="metadata"></sidebar>
-        <div layout="row" flex="100" class="player">
+        <scenery></scenery>
+        <div layout="row" style="z-index:5" flex="100" class="player">
             <div class="main-ui" flex="100">
-                <scenery></scenery>
                 <story-log></story-log>
                 <user-choice
                         ng-show="game.question"

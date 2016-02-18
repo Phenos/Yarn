@@ -1,8 +1,8 @@
 "use strict";
-angular.module('yarn').controller('root', rootController);
+angular.module('yarn').controller('playerMode', playerModeController);
 
 
-function rootController(user,
+function playerModeController(user,
                         metadata,
                         $scope,
                         $mdSidenav,

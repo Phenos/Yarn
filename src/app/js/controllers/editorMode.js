@@ -1,8 +1,8 @@
 "use strict";
-angular.module('yarn').controller('webIDE', WebIDEController);
+angular.module('yarn').controller('editorMode', editorModeController);
 
 
-function WebIDEController(stories,
+function editorModeController(stories,
                           user,
                           metadata,
                           $scope,

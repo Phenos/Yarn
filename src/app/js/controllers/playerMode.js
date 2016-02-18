@@ -10,7 +10,19 @@ function playerModeController(user,
                               yConsole,
                               welcomeMessage,
                               stories,
-                              playerModeService) {
+                              playerModeService,
+                              hotkeys) {
+
+
+    hotkeys.bindTo($scope)
+        .add({
+            combo: 'mod+esc',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            description: 'Show/Hide the console',
+            callback: function () {
+                playerModeService.toggleConsole();
+            }
+        });
 
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.metadata = metadata; // todo: metadata should be a service
@@ -51,7 +63,7 @@ function playerModeController(user,
 
 }
 
-function PlayerModeService($localStorage) {
+function PlayerModeService($localStorage, consoleService) {
     var service = {
         scope: null
     };
@@ -70,10 +82,19 @@ function PlayerModeService($localStorage) {
         service.consoleIsVisible = $localStorage.consoleIsVisible;
     }
 
+    service.toggleConsole = function () {
+        if (service.consoleIsVisible) {
+            service.hideConsole();
+        } else {
+            service.showConsole();
+        }
+    };
+
     service.showConsole = function () {
         console.log("showSidebar");
         service.scope.closeSidenav();
         service.consoleIsVisible = true;
+        consoleService.focus();
         $localStorage.consoleIsVisible = true;
     };
     service.hideConsole = function () {

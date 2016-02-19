@@ -1,35 +1,41 @@
-if (typeof require !== "undefined") {
-    var remote = require('remote');
-    var dialog = remote.require('dialog');
-}
+// LEGACY CODE FOR ELECTRON
+//if (typeof require !== "undefined") {
+//    var remote = require('remote');
+//}
 
 angular.module('yarn').factory('commands', commands);
 
-function commands(storyLogService,
-                  yConsole,
-                  hotkeys,
-                  gameService,
-                  game,
-                  rememberLastStory) {
+function commands(yConsole,
+                  clearCommand,
+                  loadCommand,
+                  movePlayerCommand,
+                  lookPlayerCommand,
+                  takePlayerCommand,
+                  inventoryPlayerCommand,
+                  graphCommand,
+                  inventoryCommand,
+                  stateCommand,
+                  treeCommand,
+                  tokensCommand,
+                  helpCommand) {
 
-    var storyLog = storyLogService;
-    var state = game.state;
-
+    // todo: command should be injected somewhere else
+    // todo: apply injection patter to cleanCommand first
     var commands = {
+        playerMove: movePlayerCommand,
+        playerLook: lookPlayerCommand,
+        playerTake: takePlayerCommand,
+        playerInventory: inventoryPlayerCommand,
+        clear: clearCommand,
         load: loadCommand,
-        move: moveCommand,
-        look: lookCommand,
-        take: takeCommand,
         graph: graphCommand,
-        showInventory: showInventoryCommand,
-        inventory: logInventoryCommand,
+        inventory: inventoryCommand,
         state: stateCommand,
         tree: treeCommand,
         tokens: tokensCommand,
         help: helpCommand
     };
 
-    // todo: Move commands into a separate directive
     var command = function (text) {
         var args = text.split(" ");
         var commandStr = args.shift();
@@ -38,131 +44,10 @@ function commands(storyLogService,
             yConsole.command(text);
             command(text, args);
         } else {
-            yConsole.command(text);
-            yConsole.error("Sorry... unknown command!");
+            yConsole.error("Unknown command : " + text);
+            yConsole.hint("Use the <srong>help</srong> to see a list of available commands");
         }
     };
-
-    hotkeys.add({
-        combo: 'ctrl+h',
-        description: 'Help',
-        callback: function () {
-            command("help");
-        }
-    });
-
-    //todo: Create a class for commands
-
-    function stateCommand() {
-        var html = game.state.html();
-        yConsole.debug("Outputing current game state:");
-        yConsole.debug(html);
-    }
-
-    function graphCommand() {
-        yConsole.debug('<graph width="800" height="400" thing-is-a="room" predicate="linksto"></graph>');
-    }
-
-    function treeCommand() {
-        var html = game.scripts[0].ast.html();
-        yConsole.debug("Outputing execution tree:");
-        yConsole.debug(html);
-    }
-
-    function tokensCommand() {
-        var html = game.scripts[0].pointer.html();
-        yConsole.debug("Outputing script parsing:");
-        yConsole.debug(html);
-    }
-
-    function moveCommand() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        console.log("Move command !!!");
-        var isAboutToAssertion = state.thing("You").setAssertion(isAboutTo, state.thing("move"));
-        console.log("isAboutToAssertion", isAboutToAssertion);
-    }
-
-    function loadCommand(command, args) {
-        var url;
-        // todo: This code is duplicated... make common
-        console.log("dialog", dialog);
-        if (!args.length && typeof require !== "undefined") {
-            url = dialog.showOpenDialog({
-                properties: ['openFile'],
-                filters: [
-                    { name: 'Yarn script', extensions: ['yarn'] }
-                    //{ name: 'All Files', extensions: ['*'] }
-                ]
-            });
-            if (url) url = "file://" + url;
-        } else {
-            url = args[0];
-        }
-        if (url) {
-            rememberLastStory.remember(url);
-            gameService.loadFromURL(url);
-        }
-    }
-
-
-    function takeCommand() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, state.thing("take"));
-    }
-
-    function lookCommand() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, state.thing("look"));
-    }
-
-    function helpCommand() {
-        yConsole.log("The <em>Yarn</em> console allows you tu run commands and change the story.");
-        yConsole.log("Available commands: <em>help</em>, <em>load</em>, <em>inventory</em>, <em>state</em>, <em>tree</em>, <em>tokens</em>");
-    }
-
-    function showInventoryCommand() {
-        var itemList;
-        var thingsInInventory = game.state.resolve("You.hasInInventory");
-        if (thingsInInventory.length) {
-            itemList = [];
-            thingsInInventory.forEach(function (thing) {
-                var label = thing.resolveValue("isNamed");
-                itemList.push(label);
-            });
-            var message = [
-                "You have ",
-                thingsInInventory.length,
-                " item in inventory: <a href='#'>",
-                itemList.join("</a>, <a href='#'>"),
-                "</a>."
-            ];
-            storyLog.log(message.join(""));
-        } else {
-            storyLog.error("You have nothing in inventory!");
-        }
-    }
-
-    function logInventoryCommand() {
-        var itemList;
-        var thingsInInventory = game.state.resolve("You.hasInInventory");
-        if (thingsInInventory.length) {
-            itemList = [];
-            thingsInInventory.forEach(function (thing) {
-                var label = thing.resolveValue("isNamed");
-                itemList.push(label);
-            });
-            var message = [
-                "You have ",
-                thingsInInventory.length,
-                " item in inventory: <a href='#'>",
-                itemList.join("</a>, <a href='#'>"),
-                "</a>."
-            ];
-            yConsole.log(message.join(""));
-        } else {
-            yConsole.log("You have nothing in inventory!");
-        }
-    }
 
     return {
         command: command

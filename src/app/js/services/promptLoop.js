@@ -146,7 +146,7 @@ function promptLoop(storyLogService,
             // Enable the "inventory" action if the user has inventory
             var inventoryItems = state.resolve("You.hasInInventory");
             if (inventoryItems.length) {
-                prompt.option("Inventory", "showInventory");
+                prompt.option("Inventory", "playerInventory");
             }
         };
         context.answer = function answer(promptLoop, option) {

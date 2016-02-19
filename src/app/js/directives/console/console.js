@@ -56,7 +56,7 @@
             this.focus = function () {
                 console.log("focus!!!");
                 $timeout(function () {
-                    $element.find("textarea")[0].focus();
+                    $element.find("input")[0].focus();
                 }, 200);
             };
 

@@ -43,33 +43,6 @@ function commands(storyLogService,
         }
     };
 
-    // todo: Move hotkey into a separate directive
-    hotkeys.add({
-        combo: 'ctrl+1',
-        description: 'Output the current state',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            console.log("command state");
-            command("state");
-        }
-    });
-    hotkeys.add({
-        combo: 'ctrl+2',
-        description: 'Output the execution tree',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            command("tree");
-        }
-    });
-    hotkeys.add({
-        combo: 'ctrl+3',
-        description: 'Outputing script parsing',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            command("tokens");
-        }
-    });
-
     hotkeys.add({
         combo: 'ctrl+h',
         description: 'Help',

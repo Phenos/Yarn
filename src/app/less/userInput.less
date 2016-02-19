@@ -1,8 +1,10 @@
 user-input {
-
+    .inputContainer {
+        padding-top: 5px;
+    }
     form {
-        margin: 0px;
-        padding: 0px 20px;
+        margin: 0;
+        padding: 0 20px;
 
         .executeButton {
             min-width: 60px;
@@ -18,15 +20,32 @@ user-input {
             }
         }
 
-        textarea {
-            font-size: 1.3em;
-
-            &:focus {
-                background-color: #fff;
-                padding-left: 5px;
-            }
-        }
 
     }
 }
 
+.md-autocomplete-suggestions {
+    li {
+        height: 60px !important;
+        line-height: normal;
+        font-size: 1em;
+    }
+    .autocomplete-match {
+        margin: 0;
+        padding: 10px 10px 0 0;
+        font-family: 'Source Sans Pro', sans-serif;
+
+        .autocomplete-command {
+            color: #4444DD;
+            font-weight: bold;
+            margin: 0 0 3px 0;
+            padding: 0;
+        }
+        .autocomplete-description {
+            font-size: 0.9em;
+            margin: 0;
+            padding: 0;
+            color: #222;
+        }
+    }
+}

@@ -3,7 +3,7 @@ angular.module('yarn').factory('inventoryCommand', inventoryCommand);
 function inventoryCommand(yConsole,
                           game) {
 
-    return function inventoryCommand() {
+    function handler() {
         var itemList;
         var thingsInInventory = game.state.resolve("You.hasInInventory");
 
@@ -24,6 +24,14 @@ function inventoryCommand(yConsole,
         } else {
             yConsole.error("The player has nothing in inventory!");
         }
+    }
+
+    return {
+        name: "inventory",
+        shortDescription: "Show the players inventory",
+        longDescription:
+        "Obtain a list of all objects currently in the players inventory.",
+        handler: handler
     }
 
 }

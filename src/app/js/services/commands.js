@@ -4,45 +4,18 @@
 //}
 
 angular.module('yarn').factory('commands', commands);
+angular.module('yarn').factory('commandsRegistry', commandsRegistry);
 
 function commands(yConsole,
-                  clearCommand,
-                  loadCommand,
-                  movePlayerCommand,
-                  lookPlayerCommand,
-                  takePlayerCommand,
-                  inventoryPlayerCommand,
-                  graphCommand,
-                  inventoryCommand,
-                  stateCommand,
-                  treeCommand,
-                  tokensCommand,
-                  helpCommand) {
-
-    // todo: command should be injected somewhere else
-    // todo: apply injection patter to cleanCommand first
-    var commands = {
-        playerMove: movePlayerCommand,
-        playerLook: lookPlayerCommand,
-        playerTake: takePlayerCommand,
-        playerInventory: inventoryPlayerCommand,
-        clear: clearCommand,
-        load: loadCommand,
-        graph: graphCommand,
-        inventory: inventoryCommand,
-        state: stateCommand,
-        tree: treeCommand,
-        tokens: tokensCommand,
-        help: helpCommand
-    };
+                  commandsRegistry) {
 
     var command = function (text) {
         var args = text.split(" ");
         var commandStr = args.shift();
-        var command = commands[commandStr];
+        var command = commandsRegistry.match(commandStr);
         if (command) {
             yConsole.command(text);
-            command(text, args);
+            command.handler(text, args);
         } else {
             yConsole.error("Unknown command : " + text);
             yConsole.hint("Use the <srong>help</srong> to see a list of available commands");
@@ -55,5 +28,44 @@ function commands(yConsole,
 
 }
 
+function commandsRegistry(hotkeys,
+                          $injector) {
+    var service = {};
 
+    service.commands = [];
+
+    service.register = function (command) {
+        service.commands.push(command);
+
+        hotkeys.add({
+            combo: command.keystroke,
+            description: command.shortDescription,
+            callback: function () {
+                command(command.name);
+            }
+        });
+
+    };
+
+    service.match = function (commandName) {
+        var match = null;
+
+        angular.forEach(service.commands, function (command) {
+            if (command.name === commandName) match = command;
+        });
+
+        return match;
+    };
+
+    service.load = function (commands) {
+        console.log("Loading commands into command registry", commands);
+        angular.forEach(commands, function (commandName) {
+            console.log(commandName);
+            var command = $injector.get(commandName);
+            service.register(command);
+        });
+    };
+
+    return service;
+}
 

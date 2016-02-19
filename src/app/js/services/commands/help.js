@@ -4,10 +4,9 @@
 
     function command(yConsole, commandsRegistry) {
 
-        function handler(command, args) {
+        function handler(commandName, args) {
 
-
-            if (args.length === 0) {
+            if (!args || !args.length === 0) {
                 genericHelp();
             } else if (args.length === 1) {
                 if (args[0] === "all") {

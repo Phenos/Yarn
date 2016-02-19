@@ -22,7 +22,7 @@
             //"takePlayerCommand",
             //"inventoryPlayerCommand",
             //"graphCommand",
-            //"inventoryCommand",
+            "inventoryCommand",
             //"stateCommand",
             //"treeCommand",
             //"tokensCommand",

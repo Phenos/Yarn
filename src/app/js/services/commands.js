@@ -37,13 +37,15 @@ function commandsRegistry(hotkeys,
     service.register = function (command) {
         service.commands.push(command);
 
-        hotkeys.add({
-            combo: command.keystroke,
-            description: command.shortDescription,
-            callback: function () {
-                command.handler(command.name);
-            }
-        });
+        if (command.keystroke) {
+            hotkeys.add({
+                combo: command.keystroke,
+                description: command.shortDescription,
+                callback: function () {
+                    command.handler(command.name);
+                }
+            });
+        }
 
     };
 

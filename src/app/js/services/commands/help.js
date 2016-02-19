@@ -15,7 +15,8 @@
                     specificHelp(args[0]);
                 }
             } else if (args.length > 1) {
-                yConsole.error("Invalid number of arguments");
+                yConsole.error("Invalid number of arguments.");
+                yConsole.hint("The help command takes a single argument, which is the name of another command.");
             }
         }
 

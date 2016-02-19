@@ -5,6 +5,7 @@ angular.module('yarn', [
     'ngAudio',
     'angular-uri',
     'ngAnimate',
+    'ngSanitize',
     'ngMaterial',
     'ui.router',
     'lbServices',

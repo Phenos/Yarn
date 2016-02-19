@@ -1,6 +1,8 @@
 (function () {
 
     angular.module('yarn').directive('console', ConsoleDirective);
+    angular.module('yarn').factory('consoleService', consoleService);
+
 
     function ConsoleDirective(commands) {
         return {
@@ -18,7 +20,28 @@
             controller: ConsoleController
         };
 
-        function ConsoleController(yConsole, $scope, $compile, $window, $timeout, $element) {
+        function ConsoleController(consoleService,
+                                   yConsole,
+                                   $scope,
+                                   $compile,
+                                   $window,
+                                   $timeout,
+                                   $element,
+                                   hotkeys) {
+
+            var self = this;
+
+            hotkeys.bindTo($scope)
+                .add({
+                    combo: 'mod+k',
+                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                    description: 'Clear the console',
+                    callback: function () {
+                        self.clear();
+                    }
+                });
+
+            consoleService.register(this);
 
             var logsElem = $element.find("logs");
             var logscrollElem = $element.find("logscroll");
@@ -26,9 +49,16 @@
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
                 if (!selection) {
-                    $element.find("textarea")[0].focus();
+                    self.focus();
                 }
             });
+
+            this.focus = function () {
+                console.log("focus!!!");
+                $timeout(function () {
+                    $element.find("input")[0].focus();
+                }, 200);
+            };
 
             // todo: put in a utils service
             function getSelectionText() {
@@ -61,8 +91,8 @@
             };
 
             this.clear = function () {
-                $element.empty();
-                $window.scroll(0, 0);
+                var logElement = $element.find("logs");
+                logElement.empty();
             };
 
             this.write = function (text, type) {
@@ -84,6 +114,27 @@
             yConsole.register(this);
 
         }
+
+    }
+
+    function consoleService() {
+        var service = {};
+        var controller;
+
+
+        service.register = function (_controller) {
+            controller = _controller;
+        };
+
+        service.focus = function () {
+            controller.focus()
+        };
+
+        service.clear = function () {
+            controller.clear()
+        };
+
+        return service;
     }
 
 })();

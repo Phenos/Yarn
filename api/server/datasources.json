@@ -1,13 +1,2 @@
 {
-  "db": {
-    "connector": "postgresql",
-    "name": "db",
-    "host": "ec2-107-20-136-89.compute-1.amazonaws.com",
-    "port": "5432",
-    "database": "deb2iihl7fip5f",
-    "username": "lspkzjshfpxden",
-    "password": "nt6SeT1o0pb-GFScplfxwUnK2K",
-    "debug": true,
-    "ssl": true
-  }
 }

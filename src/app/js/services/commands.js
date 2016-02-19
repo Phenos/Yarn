@@ -41,7 +41,7 @@ function commandsRegistry(hotkeys,
             combo: command.keystroke,
             description: command.shortDescription,
             callback: function () {
-                command(command.name);
+                command.handler(command.name);
             }
         });
 

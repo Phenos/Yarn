@@ -6,4 +6,5 @@ angular.module('yarn').config(function (LoopBackResourceProvider) {
 
     // Change the URL where to access the LoopBack REST API server
     LoopBackResourceProvider.setUrlBase('/api');
+
 });

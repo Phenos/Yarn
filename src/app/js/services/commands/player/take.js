@@ -1,10 +1,12 @@
 angular.module('yarn').factory('takePlayerCommand', takePlayerCommand);
 
-function takePlayerCommand(game) {
+function takePlayerCommand(game,
+                           promptLoop) {
 
     function handler() {
         var isAboutTo = game.state.predicate("isAboutTo");
         game.state.thing("You").setAssertion(isAboutTo, game.state.thing("take"));
+        promptLoop.update();
     }
 
     return {

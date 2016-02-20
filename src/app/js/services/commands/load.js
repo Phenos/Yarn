@@ -5,14 +5,14 @@ function loadCommand(yConsole,
                  rememberLastStory) {
 
     function handler(command, args) {
-        var url;
+        var url = args && args[0];
 
         if (url) {
             rememberLastStory.remember(url);
             gameService.loadFromURL(url);
         } else {
             yConsole.error("Invalid or missing argument");
-            yConsole.hint(
+            yConsole.tip(
                 "The <strong>load</strong> command requires that you enter a valid url to load from.<br/>" +
                 "Example: load http://someserver.com/some-file.yarn.txt")
         }

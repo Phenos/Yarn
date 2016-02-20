@@ -5,8 +5,7 @@
     background: #dddddd;
     z-index: 1000;
     font-size: 1em;
-    font-weight: 600;
-    //font-family: sans-serif;
+    font-weight: 400;
     overflow: hidden;
     min-height: 60px;
 
@@ -33,6 +32,7 @@
 
         log {
             display: block;
+            position: relative;
             margin: 0 20px;
             padding: 0.4em 0;
             color: #333;
@@ -48,6 +48,13 @@
                 font-weight:800;
             }
 
+            log-icon {
+                position: absolute;
+                font-size: 0.7em;
+                left: -1.3em;
+                top: 1em;
+            }
+
             .isMobileWidth & {
                 margin-right: 0.2em !important;
                 margin-left: 0.2em !important;
@@ -56,22 +63,28 @@
             &.is-log {
                 font-weight: 400;
             }
-            &.is-hint {
+            &.is-tip {
                 font-weight: 400;
-                font-size: 0.9em;
-                color: #6666CC;
+                log-icon,
+                strong {
+                    color: #6666CC;
+                }
+                log-icon {
+                    font-size: 1.2em;
+                    left: -0.9em;
+                    top: 0.1em;
+                    color: #6666CC;
+                }
             }
             &.is-error {
                 letter-spacing: 0.06em;
-                color: #FF6666;
+                color: #CC3333;
             }
             &.is-success {
-                letter-spacing: 0.06em;
-                color: #33BB33;
+                //letter-spacing: 0.06em;
+                color: #229922;
             }
             &.is-command {
-                color: #4444DD;
-                font-size: 1.2em;
             }
             &.is-debug {
             }

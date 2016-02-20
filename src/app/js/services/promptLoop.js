@@ -13,7 +13,7 @@ function promptLoop(storyLogService,
     function WhereToGo(context) {
         context.when = function (state) {
             var isAboutTo = state.resolveValue("You.isAboutTo");
-            console.log("isAboutTo =====>", isAboutTo);
+            //console.log("isAboutTo =====>", isAboutTo);
             return isAboutTo && isAboutTo.id === "move";
         };
         context.question = function (promptLoop, prompt) {
@@ -123,7 +123,7 @@ function promptLoop(storyLogService,
             var linksToCurrentRoom = state.resolve("You.isIn.linksTo");
             //console.log("linksToCurrentRoom", linksToCurrentRoom);
             if (linksToCurrentRoom.length) {
-                prompt.option("Move", "move");
+                prompt.option("Move", "playerMove");
             }
 
             // Enable the look action for if the room contains objects
@@ -132,7 +132,7 @@ function promptLoop(storyLogService,
             //console.log("thingsInRoom", thingsInRoom);
             var thingsInRoomWithDescriptions = state.predicate("isDescribedAs").filterThings(thingsInRoom);
             if (thingsInRoomWithDescriptions.length) {
-                prompt.option("Look", "look");
+                prompt.option("Look", "playerLook");
             }
 
             // Enable the "take" option if there are inventory items
@@ -140,7 +140,7 @@ function promptLoop(storyLogService,
             var roomContents = state.resolve("You.isIn.hasInIt");
             var inventoryInCurrentRoom = state.predicate("isA").filterThings(roomContents, state.thing("InventoryItem"));
             if (inventoryInCurrentRoom.length) {
-                prompt.option("Take", "take");
+                prompt.option("Take", "playerTake");
             }
 
             // Enable the "inventory" action if the user has inventory

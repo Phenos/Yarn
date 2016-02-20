@@ -62,7 +62,7 @@
             longDescription:
                 "To obtain help on any specific command, you can add another command name as an argument.<br/>" +
                 "Ex.: <strong>help inventory</strong>",
-            autocompletePreview: "help <em>someCommand</em>",
+            autocompletePreview: "help | help <em>someCommand</em> | help all",
             autocompleteText: "help ",
             handler: handler
         };

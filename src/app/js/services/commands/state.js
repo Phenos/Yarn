@@ -3,18 +3,16 @@ angular.module('yarn').factory('stateCommand', stateCommand);
 function stateCommand(yConsole,
                       game) {
 
-    return function stateCommand() {
+    function handler() {
         var html = game.state.html();
         yConsole.debug("Outputing current game state:");
         yConsole.debug(html);
     }
+
     return {
-        name: "help",
-        keystroke: "ctrl+h",
-        shortDescription: "Show console help",
-        longDescription:
-        "To obtain help on any specific command, you can add another command name as an argument.<br/>" +
-        "Ex.: <strong>help inventory</strong>",
+        name: "state",
+        shortDescription: "Show the current game state as a list of assertions",
+        longDescription: "Show the current game state as a list of assertions",
         handler: handler
     };
 

@@ -4,7 +4,7 @@ function loadCommand(yConsole,
                  gameService,
                  rememberLastStory) {
 
-    return function (command, args) {
+    function handler(command, args) {
         var url;
 
         if (url) {
@@ -17,13 +17,16 @@ function loadCommand(yConsole,
                 "Example: load http://someserver.com/some-file.yarn.txt")
         }
     }
+
     return {
-        name: "help",
-        keystroke: "ctrl+h",
-        shortDescription: "Show console help",
+        name: "load",
+        shortDescription: "Load a story from a web address",
         longDescription:
-        "To obtain help on any specific command, you can add another command name as an argument.<br/>" +
-        "Ex.: <strong>help inventory</strong>",
+        "Load a story from a web address passed as the first argument.<br />" +
+        "The load command will first clear any other story already loaded.<br />" +
+        "Ex.: <strong>load http://somewhere.com/some-file.yarn.txt</strong>",
+        autocompletePreview: "load <em>http://somewhere.com/some-file.yarn.txt</em>",
+        autocompleteText: "load ",
         handler: handler
     };
 

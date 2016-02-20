@@ -10,7 +10,6 @@ function SidebarDirective() {
         },
         scope: true,
         replace: true,
-        transclude: true,
         controllerAs: 'sidebar',
         templateUrl: './html/sidebar.html',
         controller: SidebarController

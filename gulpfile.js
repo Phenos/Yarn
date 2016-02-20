@@ -32,9 +32,9 @@ var config = {
         electronSource: 'electron/**',
         storiesSource: 'src/app/stories/**',
         javascriptSource: [
-            "src/app/js/module.js",
-            "src/app/js/routes.js",
-            "src/app/js/config.js",
+            "src/app/js/config/module.js",
+            "src/app/js/config/routes.js",
+            "src/app/js/config/config.js",
             "src/app/js/yarn/yarn.js",
             "src/app/js/yarn/**/*.js",
             "src/app/js/game/game.predicates.js",

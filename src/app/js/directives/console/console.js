@@ -14,7 +14,6 @@
             },
             scope: {},
             replace: true,
-            transclude: true,
             controllerAs: 'console',
             templateUrl: './html/console.html',
             controller: ConsoleController
@@ -24,7 +23,6 @@
                                    yConsole,
                                    $scope,
                                    $compile,
-                                   $window,
                                    $timeout,
                                    $element,
                                    hotkeys) {

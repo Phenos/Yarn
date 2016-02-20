@@ -27,7 +27,7 @@
             this.localState = null;
         }
 
-        State.prototype.restoreFromLocalState = function(localState) {
+        State.prototype.restoreFromLocalState = function (localState) {
             var self = this;
             this.localState = localState;
             angular.forEach(this.localState.assertions, function (assertion) {
@@ -76,71 +76,6 @@
             //console.log('State.resolved', resolved);
             if (resolved.length) value = resolved[0];
             return value;
-        };
-
-        State.prototype.html = function () {
-            var self = this;
-            var html = [];
-
-            html.push("<div class='assertions'>");
-            this.assertions.forEach(function (assertion) {
-                html.push("<div class='assertion'>");
-                html.push("<span class='subject " + getTypeFromThingOrValue(assertion.subject) + "'>");
-                html.push(getStringFromThingOrValue(assertion.subject));
-                html.push("</span><span class='predicate'>");
-                html.push(getStringFromThingOrValue(assertion.predicate));
-                html.push("</span><span class='object " + getTypeFromThingOrValue(assertion.object) + "'>");
-                html.push(getStringFromThingOrValue(assertion.object));
-                html.push("</span><span class='truth'>");
-                html.push("=" + assertion.valueLayer(self.layerSetup) + ":" + assertion.value(self.layerSetup));
-                html.push("</span></div>");
-                console.log("asssss", assertion);
-            });
-            html.push("</div><hr /><div>");
-            this.actionHandlers.forEach(function (actionHandler) {
-                html.push("<div class='assertion'>");
-                html.push("<span class='subject " + getTypeFromThingOrValue(actionHandler.subject) + "'>");
-                html.push(getStringFromThingOrValue(actionHandler.subject));
-                html.push("</span><span class='predicate'>");
-                html.push(getStringFromThingOrValue(actionHandler.predicate));
-                html.push("</span><span class='object " + getTypeFromThingOrValue(actionHandler.object) + "'>");
-                html.push(getStringFromThingOrValue(actionHandler.object));
-                html.push("</span>+<span class='doReference " + getTypeFromThingOrValue(actionHandler.do) + "'>");
-                html.push(getStringFromThingOrValue(actionHandler.do));
-                html.push("</span></div>");
-            });
-            html.push("</div>");
-
-            function getStringFromThingOrValue(obj) {
-                var value;
-                if (typeof obj === "undefined") {
-                    value = "[undefined]";
-                } else if (obj === null) {
-                    value = "[null]";
-                } else if (typeof obj === "object") {
-                    value = obj.label || obj.id;
-                } else {
-                    value = obj;
-                }
-                return value;
-            }
-
-            function getTypeFromThingOrValue(obj) {
-                var value;
-                var type;
-                if (typeof obj === "undefined") {
-                    value = "isUndefined";
-                } else if (typeof obj === "object") {
-                    value = "isThing"
-                } else {
-                    type = typeof obj;
-                    type = "is" + type.substr(0, 1).toUpperCase() + type.substr(1);
-                    value = type;
-                }
-                return value;
-            }
-
-            return html.join("");
         };
 
         /**
@@ -267,17 +202,27 @@
 
                 // If the current layer is for "session", store the assertion in the
                 // localStorage provider
-                if (this.currentLayer === "session") {
-                    console.log("this.localState", this.localState);
-                    if (this.localState) {
-                        this.localState.assertions[assertion.id()] = assertion.toJSON(this.layerSetup);
-                    }
-                }
+                this.persistAssertion(assertion);
             } else {
                 console.warn("Impossible to create assertion without at least a subject and a predicate.")
             }
 
             return assertion;
+        };
+
+        /**
+         * Persist an assertion to localState for it "session" state layer (aka localStorage)
+         * If the session layer is empty, the assertion is removed
+         */
+        State.prototype.persistAssertion = function(assertion) {
+            if (this.localState) {
+                var json = assertion.toJSON(this.layerSetup, "session");
+                if (json) {
+                    this.localState.assertions[assertion.id()] = json;
+                } else {
+                    delete this.localState.assertions[assertion.id()];
+                }
+            }
         };
 
         State.prototype.negate = function (assertion) {
@@ -290,13 +235,15 @@
             }
             assertions.forEach(function (assertion) {
                 assertion.set(false, self.currentLayer);
-            })
+                self.persistAssertion(assertion);
+            });
+
         };
 
         // todo: Take in account layers
         // todo: Handle case when assertion was persisted in localStorage
         // todo: Handle case when asseetion has uniqueSubject predicate
-        State.prototype.removeAssertions = function (subject, predicate, object) {
+        State.prototype.removeAssertions = function (subject, predicate, object, layerId) {
             // Look for matching assertions
             // todo: use built indexes instead of itterating trough all predicates
             this.assertions = this.assertions.filter(function (assertion) {
@@ -304,15 +251,40 @@
                 if (subject && Object.is(object, assertion.subject)) keep = false;
                 if (predicate && Object.is(predicate, assertion.predicate)) keep = false;
                 if (object && Object.is(object, assertion.object)) keep = false;
+                if (layerId) {
+                    angular.forEach(assertion.states, function (state) {
+                        // If a layerId has been provided and it matches
+                        // that state
+                        if (state.layerId === layerId) {
+
+                        }
+                    });
+                }
                 return keep;
             });
             return this;
         };
 
+        // todo: Take in account layers
+        // todo: Handle case when assertion was persisted in localStorage
+        // todo: Handle case when asseetion has uniqueSubject predicate
+        State.prototype.removeAssertionsLayer = function (layerId) {
+            var self = this;
+            // Look for matching assertions
+            // todo: use built indexes instead of itterating trough all predicates
+            if (layerId) {
+                angular.forEach(this.assertions, function (assertion) {
+                    assertion.removeState(layerId);
+                    self.persistAssertion(assertion);
+                });
+            }
+            return this;
+        };
+
         // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
         /**
-         * Get the topmost assertion from layered states
-         * @param subject
+             * Get the topmost assertion from layered states
+             * @param subject
          * @param predicate
          * @returns {Array}
          */

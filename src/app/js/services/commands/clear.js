@@ -7,12 +7,17 @@ function clearCommand($localStorage,
     var clearableItems = {
         "session": {
             name: "session",
-            description: "Clear the current player session from the game state",
-            handler: clearLocalStorage
+            description: "Clear the current player session from the game state.",
+            handler: clearSession
+        },
+        "world": {
+            name: "world",
+            description: "Clear the world state, without clearing the game session state.",
+            handler: clearWorld
         },
         "localstorage": {
             name: "localstorage",
-            description: "Clear the localStorage from the browser",
+            description: "Clear the localStorage from the browser.",
             handler: clearLocalStorage
         },
         "all": {
@@ -62,8 +67,20 @@ function clearCommand($localStorage,
         yConsole.success("Local storage memory cleared.");
     }
 
+    function clearSession() {
+        game.state.removeAssertionsLayer('session');
+        yConsole.success("Game session is clear. Story is back at beginning.");
+    }
+
+    function clearWorld() {
+        game.state.removeAssertionsLayer('world');
+        yConsole.success("World state is cleared. This story world is now empty.");
+    }
+
     function clearAll() {
         clearItems([
+            "world",
+            "session",
             "localstorage"
         ]);
     }

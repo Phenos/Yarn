@@ -32,17 +32,28 @@
             return id;
         };
 
-        Assertion.prototype.toJSON = function(layers) {
+        /**
+         * Output a assesions as JSON for a single state layer
+         * @param layers
+         * @param layerId
+         * @returns {{}}
+         */
+        Assertion.prototype.toJSON = function(layers, layerId) {
             var json = {};
-            if (this.subject) {
-                json.subject = this.subject.id;
+            var hasSessionLayer = this.valueLayer([layerId]);
+            if (hasSessionLayer) {
+                if (this.subject) {
+                    json.subject = this.subject.id;
+                }
+                if (this.predicate) json.predicate = this.predicate.id;
+                if (this.object) {
+                    json.object = this.object.id;
+                }
+                json.value = this.value([layerId]);
+            } else {
+                json = false;
             }
-            if (this.predicate) json.predicate = this.predicate.id;
-            if (this.object) {
-                json.object = this.object.id;
-            }
-            json.value = this.value(layers);
-            console.log("json", json);
+            //console.log("json", json);
             return json;
         };
 
@@ -93,6 +104,18 @@
             });
             return topState;
         };
+
+        Assertion.prototype.removeState = function (layerId) {
+            var self = this;
+            angular.forEach(self.states, function (state, index) {
+                // If a layerId has been provided and it matches
+                // that state
+                if (state.layerId === layerId) {
+                    delete self.states[index];
+                }
+            });
+        };
+
 
         function State(value, layerId) {
             this.value = value;

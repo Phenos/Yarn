@@ -6,7 +6,7 @@
 
         function handler(commandName, args) {
 
-            if (!args || !args.length === 0) {
+            if (!args || args.length === 0) {
                 genericHelp();
             } else if (args.length === 1) {
                 if (args[0] === "all") {
@@ -35,12 +35,12 @@
         function genericHelp() {
             var commandsList = [];
             angular.forEach(commandsRegistry.commands, function (command) {
-                commandsList.push(command.name);
+                commandsList.push("<strong>" + command.name + "</strong>");
             });
 
             yConsole.log(
                 "You can user the following command from this console: <br/>" +
-                commandsList.join(",")
+                commandsList.join(", ")
             );
         }
         function verboseHelp() {
@@ -62,6 +62,8 @@
             longDescription:
                 "To obtain help on any specific command, you can add another command name as an argument.<br/>" +
                 "Ex.: <strong>help inventory</strong>",
+            autocompletePreview: "help <em>someCommand</em>",
+            autocompleteText: "help ",
             handler: handler
         };
 

@@ -7,21 +7,6 @@ function loadCommand(yConsole,
     return function (command, args) {
         var url;
 
-        // LEGACY CODE FOR ELCTRON BUILD
-        //// to do: This code is duplicated... make common
-        //if (!args.length && typeof require !== "undefined") {
-        //    url = dialog.showOpenDialog({
-        //        properties: ['openFile'],
-        //        filters: [
-        //            {name: 'Yarn script', extensions: ['yarn']}
-        //            //{ name: 'All Files', extensions: ['*'] }
-        //        ]
-        //    });
-        //    if (url) url = "file://" + url;
-        //} else {
-        //    url = args[0];
-        //}
-
         if (url) {
             rememberLastStory.remember(url);
             gameService.loadFromURL(url);
@@ -32,5 +17,14 @@ function loadCommand(yConsole,
                 "Example: load http://someserver.com/some-file.yarn.txt")
         }
     }
+    return {
+        name: "help",
+        keystroke: "ctrl+h",
+        shortDescription: "Show console help",
+        longDescription:
+        "To obtain help on any specific command, you can add another command name as an argument.<br/>" +
+        "Ex.: <strong>help inventory</strong>",
+        handler: handler
+    };
 
 }

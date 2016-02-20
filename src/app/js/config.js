@@ -8,3 +8,30 @@ angular.module('yarn').config(function (LoopBackResourceProvider) {
     LoopBackResourceProvider.setUrlBase('/api');
 
 });
+
+angular.module('yarn').run(function ($rootScope,
+                                     commandsRegistry) {
+    $rootScope.breakpoints = {
+        0: 'isMobileWidth',
+        480: 'isMobileLandscapeWidth',
+        641: 'isTabletWidth',
+        1025: 'isDesktopWidth',
+        1281: 'isWidescreenLayout'
+    };
+
+    commandsRegistry.load([
+        "movePlayerCommand",
+        "lookPlayerCommand",
+        "takePlayerCommand",
+        "inventoryPlayerCommand",
+        //"clearCommand",
+        //"loadCommand",
+        //"graphCommand",
+        "inventoryCommand",
+        //"stateCommand",
+        //"treeCommand",
+        //"tokensCommand",
+        "helpCommand"
+    ]);
+
+});

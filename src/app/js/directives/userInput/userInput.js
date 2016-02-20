@@ -1,6 +1,6 @@
 angular.module('yarn').directive('userInput', UserInputDirective);
-angular.module('yarn').filter('rawHtml', ['$sce', function($sce){
-    return function(val) {
+angular.module('yarn').filter('rawHtml', ['$sce', function ($sce) {
+    return function (val) {
         return $sce.trustAsHtml(val);
     };
 }]);
@@ -34,7 +34,7 @@ function UserInputDirective() {
                 callback: function () {
                     self.toggleFocus();
                 }
-        });
+            });
 
         //todo: command definitions should be in a separate service
         this.getAutoCompleteMatches = function (searchText) {
@@ -52,10 +52,25 @@ function UserInputDirective() {
             var results = [];
 
             angular.forEach(commands, function (command) {
-                var isMatch = command.name.trim().indexOf(
-                    searchText.trim()
-                ) === 0;
-                if (isMatch) results.push(command);
+                var _name = command.name.trim().toLowerCase();
+                var _searchText = searchText.trim().toLowerCase();
+                var matched = false;
+
+                // Any match that "start with"
+                if (_name.indexOf(_searchText) === 0) {
+                    // Add on top (is a better match)
+                    results.unshift(command);
+                    matched = true;
+                }
+
+                //Any later match for 3 char at least
+                if (!matched &&
+                    (_name.indexOf(_searchText) >= 1) &&
+                    (_searchText.length > 2)
+                ) {
+                    // Add at bottom
+                    results.push(command);
+                }
             });
 
             return results;

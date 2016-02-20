@@ -1,7 +1,8 @@
 angular.module('yarn').factory('inventoryPlayerCommand', inventoryPlayerCommand);
 
 function inventoryPlayerCommand(game,
-                          storyLogService) {
+                                storyLogService,
+                                promptLoop) {
 
     function handler() {
         var itemList;
@@ -24,14 +25,14 @@ function inventoryPlayerCommand(game,
         } else {
             storyLogService.error("You have nothing in inventory!");
         }
+        promptLoop.update();
     }
 
     return {
         name: "playerInventory",
         shortDescription: "Trigger the player's <strong>inventory</strong> command",
-        longDescription:
-            "Trigger the player's <strong>inventory</strong> command. Same as if the player had" +
-            "click the <strong>inventory</strong> button.<br/>",
+        longDescription: "Trigger the player's <strong>inventory</strong> command. Same as if the player had" +
+        "click the <strong>inventory</strong> button.<br/>",
         handler: handler
     };
 

@@ -49,19 +49,19 @@ function yConsoleService(ngAudio) {
 
         this.error = function (text) {
             errorSound.play();
-            yConsole.write("✖ " + text, "error");
+            yConsole.write("<log-icon>✖</log-icon>" + text, "error");
         };
 
         this.success = function (text) {
-            yConsole.write("✔ " + text, "success");
+            yConsole.write("<log-icon>✔</log-icon>" + text, "success");
         };
 
-        this.hint = function (text) {
-            yConsole.write("<strong>Hint: </strong> " + text, "hint");
+        this.tip = function (text) {
+            yConsole.write("<log-icon>⬩</log-icon><strong>Tip: </strong> " + text, "tip");
         };
 
         this.command = function (text) {
-            yConsole.write(text, "command");
+            yConsole.write("<span command>" + text + "</span>", "command");
         };
 
         this.clear = function () {

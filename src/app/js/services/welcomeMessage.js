@@ -2,7 +2,7 @@
 angular.module('yarn').factory('welcomeMessage', WelcomeMessageService);
 
 function WelcomeMessageService($mdDialog,
-                               $mdSidenav,
+                               sidebarService,
                                $localStorage) {
 
     var numberOfTimeToOpen = 3;
@@ -12,7 +12,7 @@ function WelcomeMessageService($mdDialog,
 
     service.open = function (ev) {
 
-        $mdSidenav("leftSidebar").close();
+        sidebarService.close();
 
         $mdDialog.show({
             controller: WelcomeMessageController,

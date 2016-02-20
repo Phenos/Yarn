@@ -1,6 +1,6 @@
 angular.module('yarn').factory('writers', writers);
 
-// TODO:  storyLog and state are ASYNC ????
+// TODO:  Make storyLog and state ASYNC ????
 
 function writers(yConsole,
                  storyLogService,
@@ -43,8 +43,9 @@ function writers(yConsole,
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");
             yConsole.error("Your hero is nowhere to be found!");
-            yConsole.hint("For the story to start, you must place you hero in a room.");
-            yConsole.hint("Ex.: #You is in #YourBedroom.");
+            yConsole.tip(
+                "For the story to start, you must place you hero in a room.<br/>" +
+                "Ex.: #You is in #YourBedroom.");
         }
         return this;
     }
@@ -77,9 +78,9 @@ function writers(yConsole,
 
     return {
         DescribeThingTakenInInventory: DescribeThingTakenInInventory,
-        DescribeThing:DescribeThing,
-        DescribeWhereYouAre:DescribeWhereYouAre,
-        LogStoryIntroduction:LogStoryIntroduction
+        DescribeThing: DescribeThing,
+        DescribeWhereYouAre: DescribeWhereYouAre,
+        LogStoryIntroduction: LogStoryIntroduction
     };
 
 }

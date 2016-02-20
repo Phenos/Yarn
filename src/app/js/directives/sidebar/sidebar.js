@@ -41,12 +41,12 @@ function sidebarService() {
     var controller;
 
     function open() {
-        console.log(".open");
+        //console.log(".open");
         if (controller) controller.open();
     }
 
     function close() {
-        console.log(".close");
+        //console.log(".close");
         if (controller) controller.close();
     }
 

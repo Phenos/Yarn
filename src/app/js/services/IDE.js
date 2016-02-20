@@ -88,7 +88,7 @@ function IDEService(stories,
             gameController.loadFromURL(rememberedStory);
         } else {
             yConsole.log("No story to load from either memory or url");
-            yConsole.hint("To load a story you can use the LOAD command. Ex.: LOAD http://somtehing.com/yourStoryFile.txt");
+            yConsole.tip("To load a story you can use the LOAD command. Ex.: LOAD http://somtehing.com/yourStoryFile.txt");
         }
         //electronDevTools.remember();
     };

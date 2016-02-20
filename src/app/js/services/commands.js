@@ -18,7 +18,7 @@ function commands(yConsole,
             command.handler(text, args);
         } else {
             yConsole.error("Unknown command : " + text);
-            yConsole.hint("Use the <srong>help</srong> to see a list of available commands");
+            yConsole.tip("Use the <srong>help</srong> to see a list of available commands");
         }
     };
 
@@ -60,9 +60,8 @@ function commandsRegistry(hotkeys,
     };
 
     service.load = function (commands) {
-        console.log("Loading commands into command registry", commands);
+        //console.log("Loading commands into command registry", commands);
         angular.forEach(commands, function (commandName) {
-            console.log(commandName);
             var command = $injector.get(commandName);
             service.register(command);
         });

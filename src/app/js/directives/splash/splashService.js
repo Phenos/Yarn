@@ -3,7 +3,7 @@ angular.module('yarn').factory('splashService', splashService);
 function splashService() {
     var splashController;
     var hidden = false;
-    console.log("Splash service loaded");
+    //console.log("Splash service loaded");
 
     function hide() {
         hidden = true;

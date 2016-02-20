@@ -26,7 +26,7 @@ function YarnService(State, Logic, Script) {
 
         this.restoreFromLocalState = function (localState) {
             var localStateObj;
-            console.log("restoreFromLocalState", localState);
+            //console.log("restoreFromLocalState", localState);
             if (!localState[this.id]) localState[this.id] = {};
             localStateObj = localState[this.id];
             if (!localStateObj.assertions) localStateObj.assertions = {};

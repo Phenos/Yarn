@@ -19,7 +19,7 @@ function editorModeController(stories,
 
     // Show a welcome message in the yarn console
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
-    yConsole.hint('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
+    yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
     IDE.register($scope);
 

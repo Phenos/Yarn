@@ -62,7 +62,7 @@
 
             function onError() {
                 yConsole.error("Failed to load story from this location: <a target='_blank' href='" + url + "'>" + url + "</a>");
-                yConsole.hint("This error can happen when either the address of the story file is not correct or the file has been moved or deleted. You can check the address for mistakes or check your connection.");
+                yConsole.tip("This error can happen when either the address of the story file is not correct or the file has been moved or deleted. You can check the address for mistakes or check your connection.");
             }
 
             /**
@@ -102,7 +102,7 @@
                 }
                 function onError (request) {
                     yConsole.error("Failed to load story asset from : " + request.config.url);
-                    yConsole.hint("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
+                    yConsole.tip("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
                 }
 
             }
@@ -151,7 +151,7 @@
             // TODO:  THIS METHOD IS A TOTAL DUPLICATE!!!! BEURK
             function onError (request) {
                 yConsole.error("Failed to load story asset from : " + request.config.url);
-                yConsole.hint("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
+                yConsole.tip("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
             }
 
         }

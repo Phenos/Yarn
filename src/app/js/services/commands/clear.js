@@ -5,6 +5,11 @@ function clearCommand($localStorage,
                       game) {
 
     var clearableItems = {
+        "session": {
+            name: "session",
+            description: "Clear the current player session from the game state",
+            handler: clearLocalStorage
+        },
         "localstorage": {
             name: "localstorage",
             description: "Clear the localStorage from the browser",
@@ -30,7 +35,7 @@ function clearCommand($localStorage,
 
     function handler(command, args) {
         if (!args || args.length === 0) {
-            yConsole.hint(
+            yConsole.tip(
                 "Here is the list of things you can clear:<br/>" +
                 getClearableItemsDescriptions()
             );
@@ -41,12 +46,13 @@ function clearCommand($localStorage,
     }
 
     function clearItems(items) {
-        angular.forEach(items, function (item) {
-            var handler = clearableItems[item];
-            if (handler) {
-                handler();
+        angular.forEach(items, function (_itemName) {
+            var itemName = _itemName.toLowerCase();
+            var item = clearableItems[itemName];
+            if (item) {
+                item.handler();
             } else {
-                yConsole.error("[" + item + "] is not something that can be cleared from memory.");
+                yConsole.error("[" + itemName + "] is not something that can be cleared from memory.");
             }
         });
     }
@@ -58,7 +64,7 @@ function clearCommand($localStorage,
 
     function clearAll() {
         clearItems([
-            "localStrorage"
+            "localstorage"
         ]);
     }
 

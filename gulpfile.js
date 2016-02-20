@@ -62,7 +62,6 @@ var config = {
             "./bower_components/angular-uri/angular-uri.js",
             "./bower_components/angular-ui-ace/ui-ace.js",
             "./bower_components/angular-ui-router/release/angular-ui-router.js",
-            "./bower_components/angular-scroll-glue/src/scrollglue.js",
             "./bower_components/angular-hotkeys/build/hotkeys.js",
             "./bower_components/angularjs-breakpoint/breakpoint-0.0.1.js",
             "./bower_components/d3/d3.min.js"

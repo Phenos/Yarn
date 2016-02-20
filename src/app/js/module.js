@@ -10,7 +10,6 @@ angular.module('yarn', [
     'ui.router',
     'lbServices',
     'ui.ace',
-    'luegg.directives',
     'cfp.hotkeys',
     'breakpointApp'
 ]);

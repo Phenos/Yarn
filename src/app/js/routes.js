@@ -1,35 +1,7 @@
 (function () {
     'use strict';
 
-
     angular.module('yarn').config(config);
-
-    angular.module('yarn').run(function ($rootScope,
-                                         commandsRegistry) {
-        $rootScope.breakpoints = {
-            0: 'isMobileWidth',
-            480: 'isMobileLandscapeWidth',
-            641: 'isTabletWidth',
-            1025: 'isDesktopWidth',
-            1281: 'isWidescreenLayout'
-        };
-
-        commandsRegistry.load([
-            //"clearCommand",
-            //"loadCommand",
-            //"movePlayerCommand",
-            //"lookPlayerCommand",
-            //"takePlayerCommand",
-            //"inventoryPlayerCommand",
-            //"graphCommand",
-            "inventoryCommand",
-            //"stateCommand",
-            //"treeCommand",
-            //"tokensCommand",
-            "helpCommand"
-        ]);
-
-    });
 
     // todo: Put config in separate file
     function config($stateProvider,

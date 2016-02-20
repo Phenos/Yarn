@@ -21,7 +21,7 @@ function UserInputDirective() {
         controller: UserInputController
     };
 
-    function UserInputController($scope, $element, hotkeys) {
+    function UserInputController($scope, $element, hotkeys, commandsRegistry) {
         var self = this;
 
         this.hasFocus = false;
@@ -38,7 +38,18 @@ function UserInputDirective() {
 
         //todo: command definitions should be in a separate service
         this.getAutoCompleteMatches = function (searchText) {
-            var commands = {
+            var commands = [];
+
+            angular.forEach(commandsRegistry.commands, function (_command) {
+                var command = {};
+                command.name = _command.name;
+                command.description = _command.shortDescription;
+                command.display = _command.autocompletePreview || _command.name;
+                command.autocomplete = _command.autocompleteText || _command.name;
+                commands.push(command);
+            });
+
+            var _commands = {
                 "help" : {
                     display: "help",
                     autocomplete: "help",
@@ -78,8 +89,9 @@ function UserInputDirective() {
 
             var results = [];
 
-            angular.forEach(commands, function (command, key) {
-                var isMatch = key.trim().indexOf(
+            angular.forEach(commands, function (command) {
+                console.log(command);
+                var isMatch = command.name.trim().indexOf(
                     searchText.trim()
                 ) === 0;
                 if (isMatch) results.push(command);

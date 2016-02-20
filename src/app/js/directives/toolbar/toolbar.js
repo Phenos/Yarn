@@ -8,7 +8,6 @@ function ToolbarDirective() {
         },
         scope: {},
         replace: true,
-        transclude: true,
         controllerAs: 'toolbar',
         templateUrl: './html/toolbar.html',
         controller: ToolbarController

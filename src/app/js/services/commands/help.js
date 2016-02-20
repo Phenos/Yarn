@@ -24,7 +24,7 @@
             var command = commandsRegistry.match(commandName);
             if (command) {
                 yConsole.log(
-                    "<strong>" + command.name + " command</strong><br/><br/>" +
+                    "<span command>" + command.name + "</span><strong>command</strong><br/><br/>" +
                     command.longDescription
                 );
             } else {
@@ -35,7 +35,7 @@
         function genericHelp() {
             var commandsList = [];
             angular.forEach(commandsRegistry.commands, function (command) {
-                commandsList.push("<strong>" + command.name + "</strong>");
+                commandsList.push("<span command>" + command.name + "</span>");
             });
 
             yConsole.log(
@@ -46,7 +46,7 @@
         function verboseHelp() {
             var commandsList = [];
             angular.forEach(commandsRegistry.commands, function (command) {
-                commandsList.push("<strong>" + command.name + "</strong> : " + command.shortDescription);
+                commandsList.push("<span command>" + command.name + "</span> : " + command.shortDescription);
             });
 
             yConsole.log(
@@ -61,8 +61,8 @@
             shortDescription: "Show console help",
             longDescription:
                 "To obtain help on any specific command, you can add another command name as an argument.<br/>" +
-                "Ex.: <strong>help inventory</strong>",
-            autocompletePreview: "help | help <em>someCommand</em> | help all",
+                "Ex.: <span command>help inventory</span>",
+            autocompletePreview: "<span command>help</span> | help <em>someCommand</em> | <span command>help all</span>",
             autocompleteText: "help ",
             handler: handler
         };

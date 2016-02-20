@@ -33,8 +33,8 @@ function playerModeController(user,
     /*
      Show a welcome message in the yarn console
      */
-    yConsole.log("Welcome to <strong>YarnStudio!</strong>");
-    yConsole.hint('Enter "<strong>help</strong>" in the command-line bellow to see available commands!');
+    yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
+    yConsole.hint('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
     // Register with the service
     playerModeService.register($scope);

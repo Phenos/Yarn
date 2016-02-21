@@ -20,8 +20,13 @@
             controller.loadFromSource(source, baseURL);
         }
 
+        function updateStoryLog() {
+            controller.updateStoryLog();
+        }
+
         return {
             register: register,
+            updateStoryLog: updateStoryLog,
             loadFromSource: loadFromSource,
             loadFromURL: loadFromURL
         }
@@ -39,8 +44,10 @@
 
         var controller = {
             loadFromURL: loadFromURL,
-            loadFromSource: loadFromSource
+            loadFromSource: loadFromSource,
+            updateStoryLog: updateStoryLog
         };
+
         gameService.register(controller);
 
 
@@ -94,10 +101,7 @@
 
                     //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
                     splashService.hide();
-                    writers
-                        .LogStoryIntroduction()
-                        .DescribeWhereYouAre();
-                    promptLoop.update();
+                    updateStoryLog();
 
                 }
                 function onError (request) {
@@ -106,6 +110,13 @@
                 }
 
             }
+        }
+
+        function updateStoryLog() {
+            writers
+                .LogStoryIntroduction()
+                .DescribeWhereYouAre();
+            promptLoop.update();
         }
 
         function loadFromSource(source, _baseURL) {
@@ -141,10 +152,7 @@
 
                 //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
                 splashService.hide();
-                writers
-                    .LogStoryIntroduction()
-                    .DescribeWhereYouAre();
-                promptLoop.update();
+                updateStoryLog();
 
             }
 

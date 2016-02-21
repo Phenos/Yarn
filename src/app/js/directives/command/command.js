@@ -11,7 +11,8 @@
         function link(scope, element, attrs, controller) {
             element.on('click', function (e) {
                 e.preventDefault();
-                commands.command(element.text());
+                var cmd = attrs.command || element.text();
+                commands.command(cmd);
             });
         }
     }

@@ -3,6 +3,7 @@ angular.module('yarn').factory('writers', writers);
 // TODO:  Make storyLog and state ASYNC ????
 
 function writers(yConsole,
+                 consoleHelper,
                  storyLogService,
                  game,
                  sceneryService) {
@@ -28,6 +29,18 @@ function writers(yConsole,
 
     // Describe where you are at the beginning
     function DescribeWhereYouAre(justMoved) {
+        // First log in the console
+        var youIsInAssertion = state.getAssertions(
+            state.thing("you"),
+            state.predicate("isIn")
+        );
+        if (youIsInAssertion.length) {
+            yConsole.log(
+                consoleHelper.assertion2log(youIsInAssertion[0])
+            )
+        }
+
+        // Then log in the player
         storyLog.clear();
         var room = state.resolveValue("you.isIn");
         //console.log("Your in room ", room);

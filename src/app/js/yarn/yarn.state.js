@@ -243,23 +243,14 @@
         // todo: Take in account layers
         // todo: Handle case when assertion was persisted in localStorage
         // todo: Handle case when asseetion has uniqueSubject predicate
-        State.prototype.removeAssertions = function (subject, predicate, object, layerId) {
+        State.prototype.removeAssertions = function (subject, predicate, object) {
             // Look for matching assertions
             // todo: use built indexes instead of itterating trough all predicates
             this.assertions = this.assertions.filter(function (assertion) {
                 var keep = true;
-                if (subject && Object.is(object, assertion.subject)) keep = false;
+                if (subject && Object.is(subject, assertion.subject)) keep = false;
                 if (predicate && Object.is(predicate, assertion.predicate)) keep = false;
                 if (object && Object.is(object, assertion.object)) keep = false;
-                if (layerId) {
-                    angular.forEach(assertion.states, function (state) {
-                        // If a layerId has been provided and it matches
-                        // that state
-                        if (state.layerId === layerId) {
-
-                        }
-                    });
-                }
                 return keep;
             });
             return this;
@@ -310,6 +301,20 @@
 
             return foundAssertions;
         };
+
+
+        State.prototype.getAssertions = function (subject, predicate, object) {
+            var foundAssertions = this.assertions.filter(function (assertion) {
+                var keep = true;
+                if (subject && !Object.is(subject, assertion.subject)) keep = false;
+                if (predicate && !Object.is(predicate, assertion.predicate)) keep = false;
+                if (object && !Object.is(object, assertion.object)) keep = false;
+                return keep;
+            });
+
+            return foundAssertions;
+        };
+
         // TODO: Add support for getting assertion for a specific layer
         State.prototype.getAssertionByLayer = function (subject, predicate, layer) {
         };

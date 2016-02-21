@@ -1,4 +1,5 @@
 angular.module('yarn').factory('yConsole', yConsoleService);
+angular.module('yarn').factory('consoleHelper', consoleHelper);
 
 /**
  * Buffered console logging service
@@ -76,5 +77,28 @@ function yConsoleService(ngAudio) {
 }
 
 
+function consoleHelper() {
+    var service = {};
 
+    service.assertion2log = function (assertion) {
+        var log = [];
+        var object = assertion.object;
+        var subject = assertion.subject;
+        log.push("<span command='inspect " + subject.id + " '>" + subject.id + "</span> ");
+        log.push(assertion.predicate.label);
+        if (object) {
+            if (angular.isObject(object)) {
+                log.push(" <span command='inspect " + object.id + " '>" + object.id + "</span>");
+            } else if (typeof object === "string") {
+                log.push(' "' + object + '"');
+            } else if (typeof object === "number") {
+                log.push(' ' + object);
+            }
+        }
+        log.push("<br/>");
+        return log.join("");
+    };
+
+    return service;
+}
 

@@ -54,7 +54,7 @@ function inspectCommand($localStorage,
                     return !assertion.isUniqueAndFalse();
                 });
 
-                log.push("The object <span command>" + thing.id + "</span> has ");
+                log.push("The object <span command='inspect " + thing.id + "'>" + thing.id + "</span> has ");
 
                 if (assertions.length === 0) {
                     log.push("no assertions.");

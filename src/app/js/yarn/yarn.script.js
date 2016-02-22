@@ -56,7 +56,7 @@
 
         Script.prototype.parseNode = function (node) {
             var self = this;
-            if (node.type === "instruction" && node.value === "Import") {
+            if (node.type === "instruction" && node.value === "import") {
                 return self.importSet(node.set);
             } else {
                 return self.parseSet(node.set);

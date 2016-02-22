@@ -113,9 +113,11 @@
 
             var numeric = "0123456789";
             var numericExtended = numeric + ".";
-            var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            var lowerAlpha = "abcdefghijklmnopqrstuvwxyz";
+            var upperAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var alpha = upperAlpha + lowerAlpha;
             var alphaNum = alpha + numeric;
-            var alphaNumExtended = alphaNum + "-_";
+            var alphaNumExtended = alphaNum + "_";
 
             pointer.text = text;
 
@@ -131,7 +133,12 @@
                 }
 
                 if (pointer.state() === "default") {
-                    if (pointer.chr === '"') {
+                    if (upperAlpha.indexOf(pointer.chr) >= 0) {
+                        pointer
+                            .flush()
+                            .state("camelCase");
+                        continue;
+                    } else if (pointer.chr === '"') {
                         pointer.startSingleCharBlock("doubleQuote");
                         continue;
                     } else if (pointer.chr === "'") {
@@ -228,6 +235,7 @@
                         continue;
                     }
                 } else if (
+                    pointer.state() === "camelCase" ||
                     pointer.state() === "hash" ||
                     pointer.state() === "at" ||
                     pointer.state() === "dollar"

@@ -57,7 +57,7 @@ The_Black_Pebble is a Thing
     has an Image "black-pebble"
     has a Description
         "It is the smoothest and blackest pebble you have ever seen."
-jk
+
 //--- STEP 1 : Events when touching the flame ---//
 
 // Trigger when you touch the blue fire for the first time
@@ -78,10 +78,10 @@ Burning_Yourself is a Change (
 
 // When changing the "Health" assertion, we use a formula
 // to add 3 to the current health
-Blue_Flame_Hit is a Formula {
+Blue_Flame_Hit is a Formula (
     affects Health
     decrease by 3
-}
+)
 
 Burning_Yourself_Dialog is a Dialog by The_Narrator
     has Text "As you reach to the flame with your hands, it suddenly leaps thoward your

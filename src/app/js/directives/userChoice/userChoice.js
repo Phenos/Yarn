@@ -39,5 +39,7 @@ function UserChoiceDirective() {
             console.log("onChoose!");
             self.onChoose({value: value});
         };
+
+        promptLoop.update();
     }
 }

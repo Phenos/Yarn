@@ -130,10 +130,10 @@
                 // If a layerId has been provided and it matches
                 // that state
                 if (state.layerId === layerId) {
-                    console.log("deleted state ", layerId, index);
+                    //console.log("deleted state ", layerId, index);
                     delete self.states[index];
                 } else {
-                    console.log("keep state ", layerId, index);
+                    //console.log("keep state ", layerId, index);
                 }
             });
         };

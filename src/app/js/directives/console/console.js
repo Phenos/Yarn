@@ -69,12 +69,12 @@
             }
 
             this.onInputEscapeFocus = function () {
-                console.log("console.onInputEscapeFocus");
+                //console.log("console.onInputEscapeFocus");
                 this.onEscapeFocus();
             };
 
             this.onInputFocus = function () {
-                console.log("console.onInputFocus");
+                //console.log("console.onInputFocus");
                 this.onFocus();
             };
 

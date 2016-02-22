@@ -27,6 +27,7 @@
             "doubleQuote": "appendValue",
             "colon": "startArguments",
             "hash": "appendReference",
+            "camelCase": "appendReference",
             "at": "appendConstant",
             "comma": "nextArgument",
             "linebreak": "ignore",

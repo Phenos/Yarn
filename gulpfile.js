@@ -45,6 +45,8 @@ var config = {
             "src/app/js/directives/**/*.js"
         ],
         javascriptVendorsSource: [
+            "./bower_components/lodash/dist/lodash.min.js",
+            "./bower_components/postal.js/lib/postal.js",
             "./bower_components/ace-builds/src-noconflict/ace.js",
             "./bower_components/ace-builds/src-noconflict/ext-language_tools.js",
             "./bower_components/ace-builds/src-noconflict/worker-javascript.js",

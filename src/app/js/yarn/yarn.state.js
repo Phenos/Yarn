@@ -8,7 +8,9 @@
                           Thing,
                           Syntax,
                           Predicate,
-                          layerSetup) {
+                          layerSetup,
+                          consoleHelper,
+                          yConsole) {
 
         function State() {
             this.assertions = [];
@@ -241,6 +243,12 @@
                 // Not that it is possible that the assertion is already
                 // set to this value anyways.
                 chosenAssertion.set(valueOveride, this.currentLayer);
+
+                postal.publish({
+                    channel: "state",
+                    topic: "setAssertion",
+                    data: chosenAssertion
+                });
 
                 // If the current layer is for "session", store the assertion in the
                 // localStorage provider

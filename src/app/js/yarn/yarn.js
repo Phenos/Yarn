@@ -2,9 +2,14 @@
 
 angular.module('yarn').factory('Yarn', YarnService);
 
-function YarnService(State, Logic, Script) {
+function YarnService(State,
+                     Logic,
+                     Script,
+                     yConsole,
+                     consoleHelper) {
 
     function Yarn() {
+        var self = this;
 
         //todo : SCRIPT LOADED SHOULD NOT BE INJECTED AS ARG
         //this.scriptLoader = scriptLoader;
@@ -15,6 +20,18 @@ function YarnService(State, Logic, Script) {
         this.logic = new Logic(this.state, this.scripts);
         this.localState = {};
         this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
+
+
+        postal.subscribe({
+            channel: "state",
+            topic: "setAssertion",
+            callback: function(assertion, envelope) {
+                // If the story has started, log state changes to the console
+                if (self.step() > 0) {
+                    yConsole.log("Changed: " + consoleHelper.assertion2log(assertion));
+                }
+            }
+        });
 
         this.run = function () {
             var self = this;
@@ -70,8 +87,8 @@ function YarnService(State, Logic, Script) {
 
             if (increment && typeof(increment) === "number") {
                 count = count + increment;
+                story.setAssertion(hasStepped, count);
             }
-            story.setAssertion(hasStepped, count);
 
             return count;
         }

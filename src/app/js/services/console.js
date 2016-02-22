@@ -5,10 +5,9 @@ angular.module('yarn').factory('consoleHelper', consoleHelper);
  * Buffered console logging service
  * @returns {Logger}
  */
-function yConsoleService(ngAudio) {
+function yConsoleService(soundEffects) {
 
     var buffer = [];
-    var errorSound = ngAudio.load("./sounds/error.mp3");
 
     function Logger() {
 
@@ -49,7 +48,7 @@ function yConsoleService(ngAudio) {
         };
 
         this.error = function (text) {
-            errorSound.play();
+            soundEffects.error();
             yConsole.write("<log-icon>✖</log-icon>" + text, "error");
         };
 

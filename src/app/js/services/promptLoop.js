@@ -3,7 +3,8 @@ angular.module('yarn').factory('promptLoop', promptLoop);
 function promptLoop(storyLogService,
                     commands,
                     game,
-                    writers) {
+                    writers,
+                    yConsole) {
 
     var storyLog = storyLogService;
 

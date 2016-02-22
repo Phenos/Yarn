@@ -67,7 +67,6 @@ function inspectCommand($localStorage,
                 });
                 yConsole.log(log.join(""));
 
-
             } else {
                 item = inspectionItems[itemName];
                 if (item) {

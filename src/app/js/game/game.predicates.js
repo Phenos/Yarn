@@ -12,6 +12,12 @@ function gamePedicates(game) {
         .syntax("is created by")
         .syntax("is authored by");
 
+    // How many steps have been take (game cycle steps)
+    var hasStepped = state
+        .predicate("hasStepped")
+        .syntax("has stepped");
+    hasStepped.uniqueSubject = true;
+
     // The Action the user what about to make (ex.: Move, Look, etc)
     var isAboutTo = state
         .predicate("isAboutTo")

@@ -2,10 +2,10 @@
     "use strict";
     angular.module('yarn').factory('AST', ASTService);
 
-    function ASTService(Cursor, Node, $q) {
+    function ASTService(yConsole, Cursor, Node, $q) {
 
         function AST() {
-            this.root = new Node("symbol", "root");
+            this.root = new Node("root", "root");
             this.cursor = new Cursor().start(this.root);
         }
 
@@ -59,9 +59,11 @@
                     var tokenString = token[1];
                     var tokenHandler = TokenHandlers[command];
                     if (!tokenHandler) {
-                        console.error("tokenHandler not found for token : ", tokenString);
+                        console.error("Invalid token found during compilation : ", token);
+                        yConsole.error("Invalid token found during compilation : " + token[2]);
+                    } else {
+                        tokenHandler(cursor, tokenString);
                     }
-                    tokenHandler(cursor, tokenString);
                 });
 
                 resolve(self);

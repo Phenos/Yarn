@@ -26,6 +26,7 @@ function SidebarDirective() {
         this.openConsole = function () {
             console.log("sidebar.openClose");
             self.onOpenConsole();
+            self.closeAll();
         };
 
         this.openStoryMenu = function () {
@@ -36,6 +37,14 @@ function SidebarDirective() {
             $mdSidenav("storySidebar").close();
         };
 
+        this.openAuthorMenu = function () {
+            $mdSidenav("authorSidebar").open();
+        };
+
+        this.closeAuthorMenu = function () {
+            $mdSidenav("authorSidebar").close();
+        };
+
         this.restartStory = function () {
             commands.command("restart");
             self.closeAll();
@@ -44,6 +53,7 @@ function SidebarDirective() {
         this.closeAll = function () {
             self.close();
             self.closeStoryMenu();
+            self.closeAuthorMenu();
         };
 
         this.open = function () {

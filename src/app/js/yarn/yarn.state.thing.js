@@ -4,7 +4,7 @@
     angular.module('yarn').factory('Thing', ThingService);
 
     // todo: BAD DESIGN: Major refactoring, This class should not need to use the "state" parent object
-    function ThingService() {
+    function ThingService(layerSetup) {
 
         /**
          * A "thing" in the graph
@@ -12,7 +12,7 @@
          * @constructor
          */
         function Thing(_id, state) {
-            this.id =_id.toLowerCase();
+            this.id = _id.toLowerCase();
             this.state = state;
         }
 
@@ -40,6 +40,8 @@
             return this.id;
         };
 
+        // NOTE: Important: This function will ignore any assertions made
+        // when the predicate is "uniqueSubject" and is false
         Thing.prototype.resolve = function (expression) {
             var thingInContext = this;
             var tokens = expression.split(".");
@@ -51,6 +53,12 @@
                 //console.log('predicate', predicate);
                 if (thingInContext) {
                     assertions = thingInContext.getAssertion(predicate);
+
+                    // Filter out any "uniqueSubject" assertions that are false
+                    assertions = assertions.filter(function (assertion) {
+                        return !assertion.isUniqueAndFalse();
+                    });
+
                     if (assertions.length) {
                         //console.log('assertion', assertion[0].object);
                         // If it is the last predicate, return multiple value
@@ -64,7 +72,6 @@
                             thingInContext = assertions[0].object;
                         }
                     } else {
-                        //console.log('context nulled');
                         thingInContext = null;
                     }
                 }

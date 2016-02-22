@@ -152,7 +152,9 @@ function promptLoop(storyLogService,
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhatToDo");
             // todo: this should be injected instead of taken from parent scope
-            commands.command(option.value);
+            if (option && option.value) {
+                commands.command(option.value);
+            }
         };
     }
 

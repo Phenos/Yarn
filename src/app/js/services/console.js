@@ -77,7 +77,7 @@ function yConsoleService(ngAudio) {
 }
 
 
-function consoleHelper() {
+function consoleHelper(layerSetup) {
     var service = {};
 
     service.assertion2log = function (assertion) {
@@ -90,13 +90,38 @@ function consoleHelper() {
             if (angular.isObject(object)) {
                 log.push(" <span command='inspect " + object.id + " '>" + object.id + "</span>");
             } else if (typeof object === "string") {
-                log.push(' "' + object + '"');
+                if (
+                    object.substr(0, 5) === "http:" ||
+                    object.substr(0, 6) === "https:" ||
+                    object.substr(0, 2) === "./" ||
+                    object.substr(0, 2) === "//"
+                ) {
+                    log.push(' "<a href=' + object + '>' + object + '</a>"');
+                } else {
+                    log.push(' "' + object + '"');
+                }
             } else if (typeof object === "number") {
                 log.push(' ' + object);
             }
         }
-        log.push("<br/>");
-        return log.join("");
+
+        var topState = assertion.getTopState(layerSetup);
+        if (topState) {
+            log.push("<span class='truthStatement'>");
+            log.push(" (is " + assertion.value(layerSetup) + " in " + assertion.valueLayer(layerSetup) + ")");
+            log.push("</span>");
+            return log.join("");
+        } else {
+            // TODO: Implement an option to also show empty assertions ... ??? why ???
+            // Maybe it's not even supposed to still be there ?
+            // Or it depends if we are taking all layers in account in fetching the TopState ?
+            // For now we just dont show them
+            log.push("<span class='truthStatement'>");
+            log.push(" (is not true anywhere)");
+            log.push("</span>");
+            return "";
+        }
+
     };
 
     return service;

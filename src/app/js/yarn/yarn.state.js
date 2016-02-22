@@ -3,7 +3,12 @@
 
     angular.module('yarn').factory('State', StateService);
 
-    function StateService(Assertion, ActionHandler, Thing, Syntax, Predicate) {
+    function StateService(Assertion,
+                          ActionHandler,
+                          Thing,
+                          Syntax,
+                          Predicate,
+                          layerSetup) {
 
         function State() {
             this.assertions = [];
@@ -22,7 +27,7 @@
                 static: true
             }];
             // todo: ability to set current layer by it's id
-            this.layerSetup = ["world", "session"];
+            this.layerSetup = layerSetup;
             this.currentLayer = "world";
             this.localState = null;
         }
@@ -31,15 +36,13 @@
             var self = this;
             this.localState = localState;
             angular.forEach(this.localState.assertions, function (assertion) {
-                var newAssertion;
-                newAssertion = self.setAssertion(
+                var newAssertion = self.setAssertion(
                     self.thing(assertion.subject),
                     self.predicate(assertion.predicate),
                     self.thing(assertion.object),
                     assertion.value
                 );
-                console.log("Restoring assertion from localState", assertion, newAssertion);
-
+                //console.log("Restoring assertion from localState", assertion, newAssertion);
             });
         };
 
@@ -162,59 +165,98 @@
          * @returns {*}
          */
         State.prototype.setAssertion = function (subject, predicate, object, value) {
-            var assertion;
-            var foundAssertions;
+            console.log("State.setAssertion", subject, predicate, object, value);
+            var self = this;
+
+            // The set of assertions to negate first
+            var foundAssertions = [];
+            // The choses assertion to receive the new state
+            var chosenAssertion;
+            // If no "value" argument is specified we use "true" for the truth statement
             var valueOveride = true;
+            // Check is a trully "false" value is specified
             if (value === false) valueOveride = false;
 
-            if (predicate && subject) {
-                // Look for an existing assertion
-                foundAssertions = [];
-                // todo: use built indexes instead of itterating trough all predicates
-                this.assertions.forEach(function (assertion) {
-                    if (assertion.predicate.uniqueSubject) {
+            // First, verify that we have at least a subject and a predicate
+            // Otherwise the assertions would not assert anything
+            if (subject && predicate) {
+
+                // Look for existing assertions that match the criteria
+                // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
+                // Instead we negate all the ones we dont need anymore
+                if (predicate.uniqueSubject) {
+                    this.assertions.forEach(function (assertion) {
+                        // If it is a "uniqueSubject" predicate, match assertions
+                        // by subject and predicate only
                         if (assertion.subject === subject &&
                             assertion.predicate === predicate) {
-                            foundAssertions = [assertion];
+                            foundAssertions.push(assertion);
                         }
-                    } else {
+
+                        // When the predicate is "uniqueSubject"
+                        // we re-test to see if the assertion is a perfect candidate
+                        // to receive the new value
+                        if (assertion.subject === subject &&
+                            assertion.predicate === predicate &&
+                            assertion.object === object) {
+                            chosenAssertion = assertion;
+                        }
+                    });
+
+                } else {
+                    this.assertions.forEach(function (assertion) {
+                        // Otherwise, match assertions on all 3 criteras
+                        // subject, predicate and object
                         if (assertion.subject === subject &&
                             assertion.predicate === predicate &&
                             assertion.object === object) {
                             foundAssertions.push(assertion);
+                            // When the predicate is not "uniqueSubject"
+                            // any mathing assertion can be choses to
+                            // receive the value
+                            chosenAssertion = assertion;
                         }
-                    }
-                });
-                if (foundAssertions[0]) {
-                    assertion = foundAssertions[0];
-                    // If it is an assertion predicate whish is unique per subject
-                    // override with the project object reference
-                    if (assertion.predicate.uniqueSubject) {
-                        //debugger;
-                        assertion.object = object;
-                    }
-                } else {
-                    // Create a new assertion and set it to "true" for the current state layer
-                    assertion = new Assertion(subject, predicate, object);
-                    this.assertions.push(assertion);
+                    });
                 }
-                assertion.set(valueOveride, this.currentLayer);
+
+                // By default, negate all pre-existing assertions
+                // This will ensure that any duplicate assertion will be removed
+                // (possible if errors have been made)
+                // But more importantly, it negates any assertion to be negated
+                // because the predicate is "uniqueSubject"
+                foundAssertions.forEach(function (assertion) {
+                    console.log("negating assertion: ", assertion);
+                    self.negate(assertion);
+                    self.persistAssertion(assertion);
+                });
+
+                if (!chosenAssertion) {
+                    // No pre-existing assertions were found, so creating a fresh one
+                    chosenAssertion = new Assertion(subject, predicate, object);
+                    console.log("creating a new assertion: ", chosenAssertion);
+                    this.assertions.push(chosenAssertion);
+                }
+
+                // The correct assertion is then assigned it's truth value
+                // Not that it is possible that the assertion is already
+                // set to this value anyways.
+                chosenAssertion.set(valueOveride, this.currentLayer);
 
                 // If the current layer is for "session", store the assertion in the
                 // localStorage provider
-                this.persistAssertion(assertion);
+                this.persistAssertion(chosenAssertion);
             } else {
                 console.warn("Impossible to create assertion without at least a subject and a predicate.")
             }
 
-            return assertion;
+            return chosenAssertion;
         };
 
         /**
          * Persist an assertion to localState for it "session" state layer (aka localStorage)
          * If the session layer is empty, the assertion is removed
          */
-        State.prototype.persistAssertion = function(assertion) {
+        State.prototype.persistAssertion = function (assertion) {
             if (this.localState) {
                 var json = assertion.toJSON(this.layerSetup, "session");
                 if (json) {
@@ -228,12 +270,13 @@
         State.prototype.negate = function (assertion) {
             var self = this;
             var assertions = [];
+            // Recreate an array of assertions if a single assertion was passed
             if (angular.isArray(assertion)) {
                 assertions = assertion;
             } else if (angular.isObject(assertion)) {
                 assertions = [assertion]
             }
-            assertions.forEach(function (assertion) {
+            angular.forEach(assertions, function (assertion) {
                 assertion.set(false, self.currentLayer);
                 self.persistAssertion(assertion);
             });
@@ -244,25 +287,29 @@
         // todo: Handle case when assertion was persisted in localStorage
         // todo: Handle case when asseetion has uniqueSubject predicate
         State.prototype.removeAssertions = function (subject, predicate, object) {
+            var self = this;
             // Look for matching assertions
             // todo: use built indexes instead of itterating trough all predicates
-            this.assertions = this.assertions.filter(function (assertion) {
+
+
+            // DOING: Negate assertions insead of removing them...
+
+            angular.forEach(this.assertions, function (assertion) {
                 var keep = true;
                 if (subject && Object.is(subject, assertion.subject)) keep = false;
                 if (predicate && Object.is(predicate, assertion.predicate)) keep = false;
                 if (object && Object.is(object, assertion.object)) keep = false;
-                return keep;
+                if (!keep) {
+                    self.negate(assertion);
+                }
             });
+
             return this;
         };
 
-        // todo: Take in account layers
-        // todo: Handle case when assertion was persisted in localStorage
-        // todo: Handle case when asseetion has uniqueSubject predicate
         State.prototype.removeAssertionsLayer = function (layerId) {
             var self = this;
             // Look for matching assertions
-            // todo: use built indexes instead of itterating trough all predicates
             if (layerId) {
                 angular.forEach(this.assertions, function (assertion) {
                     assertion.removeState(layerId);
@@ -274,8 +321,8 @@
 
         // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
         /**
-             * Get the topmost assertion from layered states
-             * @param subject
+         * Get the topmost assertion from layered states
+         * @param subject
          * @param predicate
          * @returns {Array}
          */

@@ -45,8 +45,15 @@ function inspectCommand($localStorage,
 
             var thing = game.state.thing(itemName);
             if (thing) {
-                console.trace("!");
+
+                // TODO: Add argument to ALSO output assertions that have been negated
+                // Currently only the "true" assertions are shown
+
                 assertions = game.state.getAssertions(thing);
+                assertions = assertions.filter(function (assertion) {
+                    return !assertion.isUniqueAndFalse();
+                });
+
                 log.push("The object <span command>" + thing.id + "</span> has ");
 
                 if (assertions.length === 0) {
@@ -54,10 +61,13 @@ function inspectCommand($localStorage,
                 } else {
                     log.push(assertions.length + " assertions:<br/>");
                 }
+
                 angular.forEach(assertions, function (assertion) {
-                    log.push(consoleHelper.assertion2log(assertion));
+                    log.push(consoleHelper.assertion2log(assertion) + "<br/>");
                 });
                 yConsole.log(log.join(""));
+
+
             } else {
                 item = inspectionItems[itemName];
                 if (item) {
@@ -70,8 +80,7 @@ function inspectCommand($localStorage,
     }
 
     function inspectObject() {
-        $localStorage.$reset();
-        yConsole.success("Local storage memory cleared.");
+
     }
 
 

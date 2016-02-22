@@ -2,7 +2,8 @@
     "use strict";
     angular.module('yarn').factory('Runtime', RuntimeService);
 
-    function RuntimeService(Cursor) {
+    function RuntimeService(Cursor,
+                            yConsole) {
 
         var runtimeModes = {
             "when": true,
@@ -101,7 +102,8 @@
                     } else if (node.variant === "constant") {
                         returnValue = runtime.state.thing(node.value);
                     } else {
-                        console.warn("Unknown node variant [" + node.variant + "]");
+                        console.error("Compilation error: Unknown node variant [" + node.variant + "]", node);
+                        yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value+ "]");
                     }
                     runtime.stack.push("default", {
                         "this": returnValue
@@ -152,8 +154,14 @@
                             args.forEach(function (arg) {
                                 //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
                                 var currentThis = runtime.stack.head().values.this;
-                                var assertion = runtime.state.setAssertion(currentThis, predicate, arg);
-                                //console.log("created assetion: ", assertion);
+                                if (currentThis) {
+                                    var assertion = runtime.state.setAssertion(currentThis, predicate, arg);
+                                    //console.log("created assetion: ", assertion);
+                                } else {
+                                    // Nothing to do!
+                                    // Probably because a naked predicate such as "the" has been used on
+                                    // the root node.
+                                }
                             });
                         } else {
                             var currentThis = runtime.stack.head().values.this;
@@ -163,7 +171,8 @@
                     return null;
                 },
                 "fallback": function (runtime, node) {
-                    console.warn("Set ignored, unrecognised node type [" + node.type + "]", node);
+                    console.error("Compilation error: Set ignored, unrecognised node type [" + node.type + "]", node);
+                    yConsole.error("Compilation error: Set ignored, unrecognised node type [" + node.type + "]");
                     return null;
                 }
             };
@@ -188,7 +197,8 @@
                     } else if (node.variant === "constant") {
                         returnValue = runtime.state.thing(node.value);
                     } else {
-                        console.warn("Unknown node variant [" + node.variant + "]");
+                        console.error("Compilation error: Unknown node variant [" + node.variant + "]", node);
+                        yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value+ "]");
                     }
                     runtime.stack.push("when", {
                         "this": returnValue
@@ -258,7 +268,8 @@
                     return null;
                 },
                 "fallback": function (runtime, node) {
-                    console.warn("Set ignored, unrecognised node type [" + node.type + "]", node);
+                    console.error("Compilation error: Set ignored, unrecognised node type [" + node.type + "]", node);
+                    yConsole.error("Compilation error: Set ignored, unrecognised node type [" + node.type + "]");
                     return null;
                 }
             };

@@ -10,7 +10,7 @@ function loadScript($http) {
         };
 
         function then(response) {
-            console.info("Loaded script: ", response.config.url);
+            //console.info("Loaded script: ", response.config.url);
             return {
                 source: response.data,
                 url: url

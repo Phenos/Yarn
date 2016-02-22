@@ -53,6 +53,8 @@
 
 
         function loadFromURL(_url) {
+            game.state.removeAssertionsLayer('session');
+            game.state.removeAssertionsLayer('world');
 
             // hack to protect windows drive letters in the path
             //var url = _url.replace(/\\/g, "//");

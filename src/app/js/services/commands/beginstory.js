@@ -1,17 +1,19 @@
-angular.module('yarn').factory('restartCommand', restartCommand);
+angular.module('yarn').factory('beginStoryCommand', beginStoryCommand);
 
-function restartCommand(yConsole, game, gameService) {
+function beginStoryCommand(yConsole,
+                           game,
+                           writers) {
 
     function handler() {
-        game.state.removeAssertionsLayer('session');
-        gameService.updateStoryLog();
-        yConsole.success("Story restarted");
+        game.logic.routines.step();
+        writers.DescribeWhereYouAre(true);
+        yConsole.log("First step taken");
     }
 
     return {
-        name: "restart",
-        shortDescription: "Clear the game session and restart the story.",
-        longDescription: "Clear the game session and restart the story.",
+        name: "beginstory",
+        shortDescription: "Begin the story",
+        longDescription: "Begin the story by taking the first game step, thus leaving the coverpage.",
         handler: handler
     };
 

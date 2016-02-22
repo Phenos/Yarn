@@ -84,7 +84,8 @@
                     //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
                     //console.log("script WHOO", script);
                     yConsole.success("Successfully loaded the story script");
-                    yConsole.log("Running the story");
+                    yConsole.log("Running the <span command='inspect story'>story</span>");
+
 
                     // todo: this .run should be a promise and show a success or error message in the game console
                     // Change the current state layer to the static world (should be the default anyways).
@@ -135,7 +136,7 @@
                 //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
                 //console.log("script WHOO", script);
                 yConsole.success("Successfully loaded the story script");
-                yConsole.log("Running the story");
+                yConsole.log("Running the <span command='inspect story'>story</span>");
 
                 // todo: this .run should be a promise and show a success or error message in the game console
                 // Change the current state layer to the static world (should be the default anyways).

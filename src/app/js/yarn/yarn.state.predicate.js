@@ -33,6 +33,14 @@
 
         }
 
+        Predicate.prototype.isUniqueSubject = function (value) {
+            if (angular.isUndefined(value)) {
+                return this.uniqueSubject;
+            } else {
+                this.uniqueSubject = value;
+                return this;
+            }
+        };
 
         /**
          * Filter an array of things depending if they have a matching predicate and object

@@ -4,6 +4,8 @@
     angular.module('yarn').factory('gameController', gameController);
     angular.module('yarn').factory('gameService', gameService);
 
+    // Game Controller and Service are REDUNDANT
+
     function gameService() {
         var controller = null;
 
@@ -48,6 +50,7 @@
         };
 
         gameService.register(controller);
+
 
         function loadFromURL(_url) {
 

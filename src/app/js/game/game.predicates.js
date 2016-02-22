@@ -1,28 +1,42 @@
 "use strict";
-angular.module('yarn').factory('gamePedicates', function() {
+angular.module('yarn').factory('gamePedicates', function () {
     return gamePedicates;
 });
 
 function gamePedicates(game) {
     var state = game.state;
 
-    // What something is of a kind
+
+    state
+        .predicate("hasVersion")
+        .syntax("has version")
+        .syntax("version")
+        .syntax("is version")
+        .isUniqueSubject(true);
+
+    state
+        .predicate("hasCoverpage")
+        .syntax("has coverpage")
+        .syntax("coverpage")
+        .isUniqueSubject(true);
+
     state
         .predicate("isAuthoredBy")
         .syntax("is created by")
-        .syntax("is authored by");
+        .syntax("is authored by")
+        .isUniqueSubject(true);
 
     // How many steps have been take (game cycle steps)
     var hasStepped = state
         .predicate("hasStepped")
-        .syntax("has stepped");
-    hasStepped.uniqueSubject = true;
+        .syntax("has stepped")
+        .isUniqueSubject(true);
 
     // The Action the user what about to make (ex.: Move, Look, etc)
     var isAboutTo = state
         .predicate("isAboutTo")
-        .syntax("is about to");
-    isAboutTo.uniqueSubject = true;
+        .syntax("is about to")
+        .isUniqueSubject(true);
 
     // What something is of a kind
     state
@@ -118,7 +132,6 @@ function gamePedicates(game) {
      Create the Action predicates
      =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
      */
-
 
 
     // Something uses something else

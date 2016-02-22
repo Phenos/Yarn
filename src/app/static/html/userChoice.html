@@ -1,9 +1,12 @@
 <div>
     <h3 class="question" ng-bind="userChoice.question"></h3>
-    <ul>
-        <li ng-repeat="option in userChoice.options">
-            <a href="#" ng-click="userChoice.choose(option.value); $event.preventDefault();" ng-bind="option.label"></a>
-        </li>
-    </ul>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-button
+                ng-repeat="option in userChoice.options"
+                class="md-raised"
+                ng-click="$event.preventDefault(); userChoice.choose(option.value);"
+                ng-bind="option.label">
+        </md-button>
+    </section>
 </div>
 

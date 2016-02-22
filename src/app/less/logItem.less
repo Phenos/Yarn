@@ -35,6 +35,22 @@
         }
     }
 
+    &.is-image {
+        .fadeIn();
+        font-size: 1.2em;
+        margin: 1em 1em;
+        font-weight: 400;
+        text-align: center;
+        .isMobileWidth & {
+            margin: 0.5em 0.2em !important;
+        }
+        img {
+            .defaultShadow();
+            max-width: 600px;
+            width: 80%;
+        }
+    }
+
     &.is-error {
         .fadeOut();
         font-size: 0.9em;

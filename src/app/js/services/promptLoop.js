@@ -11,6 +11,72 @@ function promptLoop(storyLogService,
     var state = game.state;
     var logic = game.logic;
 
+
+    function Coverpage(context) {
+        context.when = function (state) {
+            return game.step() === 0;
+        };
+
+        context.question = function (promptLoop, prompt) {
+            prompt.question = "Do you want to begin this story";
+            prompt.option("Begin story", "playerStart");
+        };
+
+        context.answer = function answer(promptLoop, option) {
+            //console.trace(".answer for WhatToDo");
+            // todo: this should be injected instead of taken from parent scope
+            if (option && option.value === "playerStart") {
+                commands.command("beginstory");
+            }
+        };
+    }
+
+    function WhatToDo(context) {
+        context.when = function (state) {
+            return game.step() > 0;
+        };
+        context.question = function (promptLoop, prompt) {
+            prompt.question = "What do you want to do ?";
+
+            // Enable the move action if there are places to move to
+            var linksToCurrentRoom = state.resolve("You.isIn.linksTo");
+            //console.log("linksToCurrentRoom", linksToCurrentRoom);
+            if (linksToCurrentRoom.length) {
+                prompt.option("Move", "playerMove");
+            }
+
+            // Enable the look action for if the room contains objects
+            // with descriptions
+            var thingsInRoom = state.resolve("You.isIn.hasInIt");
+            //console.log("thingsInRoom", thingsInRoom);
+            var thingsInRoomWithDescriptions = state.predicate("isDescribedAs").filterThings(thingsInRoom);
+            if (thingsInRoomWithDescriptions.length) {
+                prompt.option("Look", "playerLook");
+            }
+
+            // Enable the "take" option if there are inventory items
+            // in the current room
+            var roomContents = state.resolve("You.isIn.hasInIt");
+            var inventoryInCurrentRoom = state.predicate("isA").filterThings(roomContents, state.thing("InventoryItem"));
+            if (inventoryInCurrentRoom.length) {
+                prompt.option("Take", "playerTake");
+            }
+
+            // Enable the "inventory" action if the user has inventory
+            var inventoryItems = state.resolve("You.hasInInventory");
+            if (inventoryItems.length) {
+                prompt.option("Inventory", "playerInventory");
+            }
+        };
+        context.answer = function answer(promptLoop, option) {
+            //console.trace(".answer for WhatToDo");
+            // todo: this should be injected instead of taken from parent scope
+            if (option && option.value) {
+                commands.command(option.value);
+            }
+        };
+    }
+
     function WhereToGo(context) {
         context.when = function (state) {
             var isAboutTo = state.resolveValue("You.isAboutTo");
@@ -113,52 +179,6 @@ function promptLoop(storyLogService,
         };
     }
 
-    function WhatToDo(context) {
-        context.when = function (state) {
-            return true;
-        };
-        context.question = function (promptLoop, prompt) {
-            prompt.question = "What do you want to do ?";
-
-            // Enable the move action if there are places to move to
-            var linksToCurrentRoom = state.resolve("You.isIn.linksTo");
-            //console.log("linksToCurrentRoom", linksToCurrentRoom);
-            if (linksToCurrentRoom.length) {
-                prompt.option("Move", "playerMove");
-            }
-
-            // Enable the look action for if the room contains objects
-            // with descriptions
-            var thingsInRoom = state.resolve("You.isIn.hasInIt");
-            //console.log("thingsInRoom", thingsInRoom);
-            var thingsInRoomWithDescriptions = state.predicate("isDescribedAs").filterThings(thingsInRoom);
-            if (thingsInRoomWithDescriptions.length) {
-                prompt.option("Look", "playerLook");
-            }
-
-            // Enable the "take" option if there are inventory items
-            // in the current room
-            var roomContents = state.resolve("You.isIn.hasInIt");
-            var inventoryInCurrentRoom = state.predicate("isA").filterThings(roomContents, state.thing("InventoryItem"));
-            if (inventoryInCurrentRoom.length) {
-                prompt.option("Take", "playerTake");
-            }
-
-            // Enable the "inventory" action if the user has inventory
-            var inventoryItems = state.resolve("You.hasInInventory");
-            if (inventoryItems.length) {
-                prompt.option("Inventory", "playerInventory");
-            }
-        };
-        context.answer = function answer(promptLoop, option) {
-            //console.trace(".answer for WhatToDo");
-            // todo: this should be injected instead of taken from parent scope
-            if (option && option.value) {
-                commands.command(option.value);
-            }
-        };
-    }
-
     // Create an instant of the promptLoop
     var promptLoop = new PromptLoop(state);
 
@@ -166,6 +186,7 @@ function promptLoop(storyLogService,
     promptLoop.addContext("WhatToLookAt", WhatToLookAt);
     promptLoop.addContext("WhatToTake", WhatToTake);
     promptLoop.addContext("WhatToDo", WhatToDo);
+    promptLoop.addContext("Coverpage", Coverpage);
     //promptLoop.update();
 
     return promptLoop;

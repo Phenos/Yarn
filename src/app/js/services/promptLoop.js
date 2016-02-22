@@ -85,21 +85,31 @@ function promptLoop(storyLogService,
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "Where do you want to go ?";
+
             var rooms = state.resolve("you.isIn.linksTo");
             //console.log('rooms', rooms);
             rooms.forEach(function (room) {
                 var label = room.resolveValue("isNamed");
                 prompt.option(label, room.id);
             });
+
+            var backOption = prompt.option("Back", "back");
+            backOption.iconId = "back";
+            backOption.iconOnly = true;
+
         };
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhereToDo");
             // todo: this should be injected instead of taken from parent scope
-            logic.routines.aboutTo("");
-            if (logic.routines.move(option.value)) {
-                writers.DescribeWhereYouAre(true);
+            if (option.value === "back") {
+                logic.routines.aboutTo("");
             } else {
-                storyLog.error("Failed to find this room [%s]", option.value);
+                logic.routines.aboutTo("");
+                if (logic.routines.move(option.value)) {
+                    writers.DescribeWhereYouAre(true);
+                } else {
+                    storyLog.error("Failed to find this room [%s]", option.value);
+                }
             }
         };
         return promptLoop;
@@ -265,11 +275,14 @@ Prompt.prototype.option = function (label, value) {
     var option = new Option(label, value);
     this.options.push(option);
     this.optionsRef[value] = option;
+    return option;
 };
 
 function Option(label, value) {
     this.label = label;
     this.value = value;
+    this.iconId = "";
+    this.iconOnly = false;
 }
 
 

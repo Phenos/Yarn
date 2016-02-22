@@ -29,6 +29,51 @@ function writers(yConsole,
 
     // Describe where you are at the beginning
     function DescribeWhereYouAre(justMoved) {
+        if (game.step() === 0) {
+            return DescribeCoverpage();
+        } else {
+            return DescribeRoom();
+        }
+    }
+
+    function DescribeCoverpage() {
+        var story = state.thing("Story");
+
+
+        storyLog.clear();
+
+        // Show the story title
+        var storyIsCalled = story.resolveValue("isNamed");
+        if (storyIsCalled) {
+            storyLog.heading(storyIsCalled);
+        }
+
+        // Set the scenery
+        var scenery = story.resolveValue("hasScenery");
+        var coverpage = story.resolveValue("hasCoverpage");
+        var scenery_url = scenery && game.script.resolveRelativeURI(scenery);
+        var coverpage_url = coverpage && game.script.resolveRelativeURI(coverpage);
+        var url = scenery_url || coverpage_url || false;
+        if (url) sceneryService.change(url);
+
+        if (coverpage) {
+            storyLog.image(coverpage_url);
+        }
+
+        var description = story.resolveValue("isDescribedAs");
+        if (description) {
+            storyLog.log("“&nbsp;" + description + "&nbsp;”");
+        }
+
+        var author = story.resolveValue("isAuthoredBy");
+        if (author) {
+            storyLog.log("by " + author);
+        }
+
+        return this;
+    }
+
+    function DescribeRoom() {
         // First log in the console
         var youIsInAssertion = state.getAssertions(
             state.thing("you"),
@@ -92,6 +137,8 @@ function writers(yConsole,
     return {
         DescribeThingTakenInInventory: DescribeThingTakenInInventory,
         DescribeThing: DescribeThing,
+        DescribeRoom: DescribeRoom,
+        DescribeCoverpage: DescribeCoverpage,
         DescribeWhereYouAre: DescribeWhereYouAre,
         LogStoryIntroduction: LogStoryIntroduction
     };

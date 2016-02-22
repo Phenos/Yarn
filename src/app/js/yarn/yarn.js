@@ -54,6 +54,29 @@ function YarnService(State, Logic, Script) {
                 return script;
             });
         };
+
+        this.step = function(increment) {
+            var state = this.state;
+            var count = 0;
+            var story = state.thing("Story");
+            var hasStepped = state.predicate("hasStepped");
+
+            var assertions = story.getAssertion(hasStepped);
+            if (assertions.length) {
+                if (typeof assertions[0].object === "number") {
+                    count = assertions[0].object;
+                }
+            }
+
+            if (increment && typeof(increment) === "number") {
+                count = count + increment;
+            }
+            story.setAssertion(hasStepped, count);
+
+            return count;
+        }
+
+
     }
 
     return Yarn;

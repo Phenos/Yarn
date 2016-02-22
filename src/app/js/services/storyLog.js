@@ -21,6 +21,10 @@ function storyLogService() {
             storyLog.write(text, "log");
         };
 
+        this.image = function (url) {
+            storyLog.write("<img src='" + url + "' alt='coverpage'>", "image");
+        };
+
         this.debug = function (text) {
             storyLog.write(text, "debug");
         };

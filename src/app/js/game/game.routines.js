@@ -44,18 +44,8 @@ function gameRoutines(game) {
      */
     logic.register("step", step);
     function step() {
-        var count = 0;
-        var story = state.thing("Story");
-        var hasStepped = state.predicate("hasStepped");
-
-        var assertions = story.getAssertion(hasStepped);
-        if (assertions.length) {
-            if (typeof assertions[0].object === "number") {
-                count = assertions[0].object;
-            }
-        }
-        count++;
-        story.setAssertion(hasStepped, count);
+        var story = game.state.thing("story");
+        var count = game.step(1);
         logic.trigger(story, "hasStepped", count);
         return true;
     }

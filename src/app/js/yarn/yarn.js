@@ -61,6 +61,10 @@ function YarnService(State,
             //console.log("yarn.load");
             var script = new Script();
 
+            if (url) {
+                script.url = url;
+            }
+
             // Use url as initial ID (can be overwritted in yarn script)
             if (!this.id) this.id = url;
 

@@ -13,7 +13,11 @@ function SceneryDirective() {
 
     function SceneryController(sceneryService, $element) {
         sceneryService.onChange(function (image) {
-            $element.css("background-image", "url(" + image + ")");
+            if (image) {
+                $element.css("background-image", "url(" + image + ")");
+            } else {
+                $element.css("background-image", "none");
+            }
         });
     }
 }

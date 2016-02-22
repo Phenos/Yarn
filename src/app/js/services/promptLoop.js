@@ -215,10 +215,10 @@ function promptLoop(storyLogService,
     promptLoop.addContext("Coverpage", Coverpage);
     //promptLoop.update();
 
+    console.log("Created a new prompt loop", promptLoop);
+
     return promptLoop;
 }
-
-
 
 
 function PromptLoop(state) {
@@ -226,7 +226,9 @@ function PromptLoop(state) {
     this.contexts = [];
     this.contextsRef = [];
     this.currentPrompt = null;
-    this.updatePromptUI = function() {};
+    this.updatePromptUI = function () {
+        //console.warn("Oups, UI prompted before ayone is listening!")
+    };
 }
 
 PromptLoop.prototype.onUpdate = function (onUpdatePrompt) {

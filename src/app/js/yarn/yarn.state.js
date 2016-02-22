@@ -278,7 +278,6 @@
         State.prototype.persistAssertion = function (assertion) {
             if (this.localState) {
                 var json = assertion.toJSON(this.layerSetup, "session");
-                console.log("======= json =======> ", json);
                 if (json) {
                     this.localState.assertions[assertion.id()] = json;
                 } else {

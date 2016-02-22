@@ -93,11 +93,13 @@
             };
 
             this.write = function (text, type) {
-                if (type === "error") {
-                    console.error("YARN: ", text);
-                } else {
-                    console.log("YARN: " + type + " : " + text.substring(0, 80), [text]);
-                }
+
+                // Log Yarn console to the browser console
+                //if (type === "error") {
+                //    console.error("YARN: ", text);
+                //} else {
+                //    console.log("YARN: " + type + " : " + text.substring(0, 80), [text]);
+                //}
                 var scope = $scope.$new();
                 scope.text = text;
                 scope.type = type;

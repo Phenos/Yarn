@@ -5,6 +5,7 @@
                 ng-repeat="option in userChoice.options"
                 ng-class="(option.iconOnly) ? 'md-fab md-mini' : 'md-raised'"
                 ng-click="$event.preventDefault(); userChoice.choose(option.value);"
+                aria-label="option.label"
         >
             <md-icon
                     ng-if="option.iconId"

@@ -54,7 +54,12 @@ function writers(yConsole,
         var scenery_url = scenery && game.script.resolveRelativeURI(scenery);
         var coverpage_url = coverpage && game.script.resolveRelativeURI(coverpage);
         var url = scenery_url || coverpage_url || false;
-        if (url) sceneryService.change(url);
+
+        if (url) {
+            sceneryService.change(url);
+        } else {
+            sceneryService.clear();
+        }
 
         if (coverpage) {
             storyLog.image(coverpage_url);
@@ -92,7 +97,11 @@ function writers(yConsole,
         if (room) {
             var scenery = room.resolveValue("hasScenery");
             var url = game.script.resolveRelativeURI(scenery);
-            if (url) sceneryService.change(url);
+            if (url) {
+                sceneryService.change(url);
+            } else {
+                sceneryService.clear();
+            }
 
             var label = room.resolveValue("isNamed");
             storyLog.heading(label);

@@ -17,8 +17,12 @@ function sceneryService() {
         image = _image;
         onChangeFn(image);
     }
+    function clear() {
+        change("");
+    }
 
     return {
+        clear: clear,
         change: change,
         onChange: onChange
     };

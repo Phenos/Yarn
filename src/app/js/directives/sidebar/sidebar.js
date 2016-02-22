@@ -15,7 +15,10 @@ function SidebarDirective() {
         controller: SidebarController
     };
 
-    function SidebarController(sidebarService, $mdSidenav) {
+    function SidebarController(sidebarService,
+                               $mdSidenav,
+                               welcomeMessage,
+                               commands) {
         var self = this;
 
         sidebarService.register(this);
@@ -23,6 +26,24 @@ function SidebarDirective() {
         this.openConsole = function () {
             console.log("sidebar.openClose");
             self.onOpenConsole();
+        };
+
+        this.openStoryMenu = function () {
+            $mdSidenav("storySidebar").open();
+        };
+
+        this.closeStoryMenu = function () {
+            $mdSidenav("storySidebar").close();
+        };
+
+        this.restartStory = function () {
+            commands.command("restart");
+            self.closeAll();
+        };
+
+        this.closeAll = function () {
+            self.close();
+            self.closeStoryMenu();
         };
 
         this.open = function () {
@@ -33,6 +54,9 @@ function SidebarDirective() {
             $mdSidenav("leftSidebar").close();
         };
 
+        this.openWelcomeMessage = function() {
+            welcomeMessage.open();
+        }
 
     }
 }

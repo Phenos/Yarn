@@ -3,7 +3,7 @@
 
     angular.module('yarn').factory('Assertion', AssertionService);
 
-    function AssertionService() {
+    function AssertionService(layerSetup) {
 
         /**
          * An assertion about things in the graph
@@ -28,7 +28,6 @@
                 if (this.object) objectId = this.object.id || "";
             }
             var id = [subjectId, this.predicate.id, objectId].join("-");
-            console.log("id", id);
             return id;
         };
 
@@ -57,12 +56,12 @@
             return json;
         };
 
-        // todo: value.value is confusing... find better taxonomy/syntax
         Assertion.prototype.set = function (value, layerId) {
-            //console.log("===+++", value, layerId, this);
-            if (!this.states[layerId])
+            if (this.states[layerId]) {
+                this.states[layerId].value = value;
+            } else {
                 this.states[layerId] = new State(value, layerId);
-            this.states[layerId].value = value;
+            }
             return this;
         };
 
@@ -88,6 +87,15 @@
             return layerId;
         };
 
+        Assertion.prototype.isUniqueAndFalse = function () {
+            var value;
+            value = (
+                this.predicate.uniqueSubject &&
+                this.value(layerSetup) === false
+            );
+            return value;
+        };
+
         /**
          * Return the top most state according to a sequence of layers, the first layer being the lowest priority
          * @param {Array} layers
@@ -95,13 +103,17 @@
          */
         Assertion.prototype.getTopState = function (layers) {
             var self = this;
-            var topState;
-            angular.forEach(layers, function (layerId) {
-                var state = self.states[layerId];
-                if (state && state.value) {
-                    topState = state;
-                }
-            });
+            var topState = null;
+            if (angular.isArray(layers)) {
+                angular.forEach(layers, function (layerId) {
+                    var state = self.states[layerId];
+                    if (state) {
+                        topState = state;
+                    }
+                });
+            } else {
+                console.error("LayerSetup must be an array... maybe you failed to inject layerSetup! idiot!")
+            }
             return topState;
         };
 
@@ -111,7 +123,10 @@
                 // If a layerId has been provided and it matches
                 // that state
                 if (state.layerId === layerId) {
+                    console.log("deleted state ", layerId, index);
                     delete self.states[index];
+                } else {
+                    console.log("keep state ", layerId, index);
                 }
             });
         };

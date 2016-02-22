@@ -96,7 +96,7 @@
                 if (type === "error") {
                     console.error("YARN: ", text);
                 } else {
-                    console.log("YARN: " + type, text);
+                    console.log("YARN: " + type + " : " + text.substring(0, 80), [text]);
                 }
                 var scope = $scope.$new();
                 scope.text = text;

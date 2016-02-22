@@ -1,6 +1,7 @@
 angular.module('yarn').factory('stateCommand', stateCommand);
 
 function stateCommand(yConsole,
+                      consoleHelper,
                       game) {
 
     function handler() {
@@ -15,20 +16,14 @@ function stateCommand(yConsole,
 
         html.push("<div class='assertions'>");
         state.assertions.forEach(function (assertion) {
-            var topState = assertion.getTopState(state.layerSetup);
-            if (topState) {
-                itemCount++;
-                html.push("<div class='assertion'>");
-                html.push("<span class='subject " + getTypeFromThingOrValue(assertion.subject) + "'>");
-                html.push(getStringFromThingOrValue(assertion.subject));
-                html.push("</span><span class='predicate'>");
-                html.push(getStringFromThingOrValue(assertion.predicate));
-                html.push("</span><span class='object " + getTypeFromThingOrValue(assertion.object) + "'>");
-                html.push(getStringFromThingOrValue(assertion.object));
-                html.push("</span><span class='truth'>");
-                html.push("=" + assertion.valueLayer(state.layerSetup) + ":" + assertion.value(state.layerSetup));
-                html.push("</span></div>");
-            }
+            itemCount++;
+            var log = [];
+
+            log.push("<div class='assertion'>");
+            log.push(consoleHelper.assertion2log(assertion));
+
+            log.push("</div>");
+            html.push(log.join(""));
         });
         html.push("</div><hr /><div>");
         state.actionHandlers.forEach(function (actionHandler) {

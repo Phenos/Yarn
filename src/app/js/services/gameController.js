@@ -4,7 +4,7 @@
     angular.module('yarn').factory('gameController', gameController);
     angular.module('yarn').factory('gameService', gameService);
 
-    function gameService(yConsole) {
+    function gameService() {
         var controller = null;
 
         function register(ctrl) {

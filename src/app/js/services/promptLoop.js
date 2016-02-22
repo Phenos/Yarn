@@ -94,7 +94,7 @@ function promptLoop(storyLogService,
             });
 
             var backOption = prompt.option("Back", "back");
-            backOption.iconId = "back";
+            backOption.iconId = "close";
             backOption.iconOnly = true;
 
         };
@@ -130,12 +130,20 @@ function promptLoop(storyLogService,
                     prompt.option(label, thing.id);
                 });
             }
+
+            var backOption = prompt.option("Back", "back");
+            backOption.iconId = "close";
+            backOption.iconOnly = true;
         };
         context.answer = function answer(promptLoop, option) {
-            logic.routines.aboutTo("");
             if (option) {
-                var thing = state.thing(option.value);
-                writers.DescribeThing(thing);
+                if (option.value === "back") {
+                    logic.routines.aboutTo("");
+                } else {
+                    logic.routines.aboutTo("");
+                    var thing = state.thing(option.value);
+                    writers.DescribeThing(thing);
+                }
             } else {
                 storyLog.error("Nothing to look at here!");
             }
@@ -171,17 +179,25 @@ function promptLoop(storyLogService,
                     prompt.option(label, thing.id);
                 });
             }
+
+            var backOption = prompt.option("Back", "back");
+            backOption.iconId = "close";
+            backOption.iconOnly = true;
+
         };
         context.answer = function answer(promptLoop, option) {
-            logic.routines.aboutTo("");
-
             if (option) {
-                // todo: Find sexier api for removing an assertion
-                // todo: Implement "unique" assertions... such as when someone is
-                var thing = state.thing(option.value);
-                var hasInInventory = state.predicate("hasInInventory");
-                state.thing("You").setAssertion(hasInInventory, thing);
-                writers.DescribeThingTakenInInventory(thing);
+                if (option.value === "back") {
+                    logic.routines.aboutTo("");
+                } else {
+                    logic.routines.aboutTo("");
+                    // todo: Find sexier api for removing an assertion
+                    // todo: Implement "unique" assertions... such as when someone is
+                    var thing = state.thing(option.value);
+                    var hasInInventory = state.predicate("hasInInventory");
+                    state.thing("You").setAssertion(hasInInventory, thing);
+                    writers.DescribeThingTakenInInventory(thing);
+                }
             } else {
                 storyLog.error("Sorry, nothing to take here!");
             }

@@ -38,10 +38,21 @@
             var self = this;
             this.localState = localState;
             angular.forEach(this.localState.assertions, function (assertion) {
+                var object = null;
+                if (typeof(assertion.object) === "number") {
+                    object = assertion.object;
+                } else if (typeof(assertion.object) === "string") {
+                    if (assertion.object.indexOf("@id:") === 0) {
+                        object = self.thing(assertion.object.substring(4));
+                    } else {
+                        object = assertion.object;
+                    }
+                }
+
                 var newAssertion = self.setAssertion(
                     self.thing(assertion.subject),
                     self.predicate(assertion.predicate),
-                    self.thing(assertion.object),
+                    object,
                     assertion.value
                 );
                 //console.log("Restoring assertion from localState", assertion, newAssertion);
@@ -267,6 +278,7 @@
         State.prototype.persistAssertion = function (assertion) {
             if (this.localState) {
                 var json = assertion.toJSON(this.layerSetup, "session");
+                console.log("======= json =======> ", json);
                 if (json) {
                     this.localState.assertions[assertion.id()] = json;
                 } else {

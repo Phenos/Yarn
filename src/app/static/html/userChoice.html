@@ -3,9 +3,15 @@
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
         <md-button
                 ng-repeat="option in userChoice.options"
-                class="md-raised"
+                ng-class="(option.iconOnly) ? 'md-fab md-mini' : 'md-raised'"
                 ng-click="$event.preventDefault(); userChoice.choose(option.value);"
-                ng-bind="option.label">
+        >
+            <md-icon
+                    ng-if="option.iconId"
+                    md-svg-icon="/svg-icons/{{ option.iconId }}.svg"></md-icon>
+            <span
+                    ng-if="!option.iconOnly"
+                    ng-bind="option.label"></span>
         </md-button>
     </section>
 </div>

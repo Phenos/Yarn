@@ -45,8 +45,15 @@
                     json.subject = this.subject.id;
                 }
                 if (this.predicate) json.predicate = this.predicate.id;
+
                 if (this.object) {
-                    json.object = this.object.id;
+                    if (typeof(this.object) === "number") {
+                        json.object = this.object;
+                    } else if (typeof(this.object) === "string") {
+                        json.object = this.object;
+                    } else {
+                        json.object = "@id:" + this.object.id;
+                    }
                 }
                 json.value = this.value([layerId]);
             } else {

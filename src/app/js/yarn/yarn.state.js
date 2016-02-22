@@ -165,7 +165,7 @@
          * @returns {*}
          */
         State.prototype.setAssertion = function (subject, predicate, object, value) {
-            console.log("State.setAssertion", subject, predicate, object, value);
+            //console.log("State.setAssertion", subject, predicate, object, value);
             var self = this;
 
             // The set of assertions to negate first
@@ -225,7 +225,7 @@
                 // But more importantly, it negates any assertion to be negated
                 // because the predicate is "uniqueSubject"
                 foundAssertions.forEach(function (assertion) {
-                    console.log("negating assertion: ", assertion);
+                    //console.log("negating assertion: ", assertion);
                     self.negate(assertion);
                     self.persistAssertion(assertion);
                 });
@@ -233,7 +233,7 @@
                 if (!chosenAssertion) {
                     // No pre-existing assertions were found, so creating a fresh one
                     chosenAssertion = new Assertion(subject, predicate, object);
-                    console.log("creating a new assertion: ", chosenAssertion);
+                    //console.log("creating a new assertion: ", chosenAssertion);
                     this.assertions.push(chosenAssertion);
                 }
 

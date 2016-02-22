@@ -8,7 +8,6 @@
         var controller = null;
 
         function register(ctrl) {
-            //console.log("register", ctrl);
             controller = ctrl;
         }
 
@@ -49,14 +48,6 @@
         };
 
         gameService.register(controller);
-
-
-        // todo: bring back embiant loop
-        //var ambientSound = ngAudio.load("./sounds/166187__drminky__creepy-dungeon-ambience.mp3");
-        //// todo: Load sound ambience from story
-        //ambientSound.play();
-        //ambientSound.loop = true;
-
 
         function loadFromURL(_url) {
 
@@ -170,5 +161,4 @@
     }
 
 })();
-
 

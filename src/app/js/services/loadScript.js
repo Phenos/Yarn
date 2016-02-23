@@ -6,7 +6,8 @@ function loadScript($http) {
 
         var config = {
             method: 'GET',
-            url: url
+            url: url + "?random=" + Math.random(),
+            cache: false
         };
 
         function then(response) {

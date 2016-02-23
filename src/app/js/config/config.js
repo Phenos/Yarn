@@ -9,6 +9,8 @@ angular.module('yarn').config(function (LoopBackResourceProvider) {
 
 });
 
+
+
 angular.module('yarn').run(function ($rootScope,
                                      commandsRegistry) {
     $rootScope.breakpoints = {

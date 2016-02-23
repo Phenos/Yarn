@@ -18,9 +18,10 @@
             this.predicate = predicate;
             this.object = object;
             this.states = {};
+            this.parent = null;
         }
 
-        Assertion.prototype.id = function() {
+        Assertion.prototype.id = function () {
             var objectId = "";
             var subjectId = "";
             if (this.subject) subjectId = this.subject.id || "";
@@ -37,7 +38,7 @@
          * @param layerId
          * @returns {{}}
          */
-        Assertion.prototype.toJSON = function(layers, layerId) {
+        Assertion.prototype.toJSON = function (layers, layerId) {
             var json = {};
             var hasSessionLayer = this.valueLayer([layerId]);
             if (hasSessionLayer) {
@@ -63,11 +64,12 @@
             return json;
         };
 
-        Assertion.prototype.set = function (value, layerId) {
-            if (this.states[layerId]) {
-                this.states[layerId].value = value;
+        Assertion.prototype.set = function (value, layerId, parentId) {
+            var stateId = layerId + "-" + (parentId || "");
+            if (this.states[stateId]) {
+                this.states[stateId].value = value;
             } else {
-                this.states[layerId] = new State(value, layerId);
+                this.states[stateId] = new State(value, layerId, parentId);
             }
             return this;
         };
@@ -108,15 +110,24 @@
          * @param {Array} layers
          * @returns {object}
          */
-        Assertion.prototype.getTopState = function (layers) {
+        Assertion.prototype.getTopState = function (layers, parentId) {
             var self = this;
             var topState = null;
+            //TODO: REALLY NOT PERFORMANT
             if (angular.isArray(layers)) {
                 angular.forEach(layers, function (layerId) {
-                    var state = self.states[layerId];
-                    if (state) {
-                        topState = state;
-                    }
+                    angular.forEach(self.states, function (state) {
+                        var match = true;
+                        if (state.layerId !== layerId) match = false;
+                        if (parentId) {
+                            if (state.parentId !== parentId) match = false;
+                        } else {
+                            // If not parent Id is supplied, then we discard any
+                            // state that might have a parent id
+                            if (state.parentId) match = false;
+                        }
+                        if (match) topState = state;
+                    });
                 });
             } else {
                 console.error("LayerSetup must be an array... maybe you failed to inject layerSetup! idiot!")
@@ -124,24 +135,26 @@
             return topState;
         };
 
-        Assertion.prototype.removeState = function (layerId) {
+        Assertion.prototype.removeState = function (layerId, parentId) {
             var self = this;
             angular.forEach(self.states, function (state, index) {
-                // If a layerId has been provided and it matches
-                // that state
-                if (state.layerId === layerId) {
+                var shouldDelete = true;
+
+                if (layerId && layerId !== state.layerId) shouldDelete = false;
+                if (parentId && parentId !== state.parentId) shouldDelete = false;
+
+                if (shouldDelete) {
                     //console.log("deleted state ", layerId, index);
                     delete self.states[index];
-                } else {
-                    //console.log("keep state ", layerId, index);
                 }
             });
         };
 
 
-        function State(value, layerId) {
+        function State(value, layerId, parentId) {
             this.value = value;
             this.layerId = layerId;
+            this.parentId = parentId;
         }
 
         return Assertion;

@@ -99,12 +99,15 @@
                         //console.log("VALUE variant:", node.value);
                     } else if (node.variant === "reference") {
                         returnValue = runtime.state.thing(node.value);
+                        node.resolvedTo = returnValue;
                     } else if (node.variant === "constant") {
-                        returnValue = runtime.state.thing(node.value);
+                        console.error("Constants not supported yet! : " + node.value);
+                        //returnValue = runtime.state.thing(node.value);
                     } else {
                         console.error("Compilation error: Unknown node variant [" + node.variant + "]", node);
                         yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value+ "]");
                     }
+
                     runtime.stack.push("default", {
                         "this": returnValue
                     });
@@ -126,6 +129,7 @@
                     var predicate;
                     var args;
                     var mode;
+                    var createdAssertions = [];
                     // First, test if the instruction is for a mode change or a predicate
                     var modeHandler = modes[node.value.trim().toLowerCase()];
                     if (modeHandler) {
@@ -155,7 +159,9 @@
                                 //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
                                 var currentThis = runtime.stack.head().values.this;
                                 if (currentThis) {
-                                    var assertion = runtime.state.setAssertion(currentThis, predicate, arg);
+                                    createdAssertions.push(
+                                        runtime.state.setAssertion(currentThis, predicate, arg)
+                                    );
                                     //console.log("created assetion: ", assertion);
                                 } else {
                                     // Nothing to do!
@@ -165,7 +171,26 @@
                             });
                         } else {
                             var currentThis = runtime.stack.head().values.this;
-                            runtime.state.setAssertion(currentThis, predicate);
+                            createdAssertions.push(
+                                runtime.state.setAssertion(currentThis, predicate)
+                            );
+                        }
+
+                        // Check if the assertion needs to be assigned a parent Thing
+                        var parentScope = runtime.stack.parent();
+                        //if (parentScope) parentScope = runtime.stack.parent();
+                        if (parentScope && createdAssertions.length > 0) {
+                            var parentObject = parentScope.values.this;
+                            if ((parentObject && parentObject.constructor.name) === "Thing") {
+                                var headObject = runtime.stack.head().values["this"];
+                                if (parentObject && parentObject !== headObject) {
+                                    // Assertions are give their parent object!
+                                    console.log("Ading parent to Thing : ", 1);
+                                    angular.forEach(createdAssertions, function (assertion) {
+                                        assertion.set(true, runtime.state.currentLayer, parentObject.id);
+                                    });
+                                }
+                            }
                         }
                     }
                     return null;
@@ -177,6 +202,7 @@
                 }
             };
 
+            // TODO: Get rid of whenMode....
             var whenMode = {
                 "root": function (runtime, node) {
                     // Nothing to do really with the root instruction!
@@ -232,6 +258,8 @@
 
                         // Identify which predicate corresponds to this instruction
                         predicate = runtime.state.predicate(node.value);
+                        node.resolvedTo = predicate;
+
                         // Run the child set of node to be used by the predicate
                         args = runtime.runSet(node.set);
 

@@ -144,8 +144,11 @@
                     } else if (pointer.chr === "'") {
                         pointer.startSingleCharBlock("singleQuote");
                         continue;
-                    } else if (pointer.chr === "{") {
-                        pointer.startSingleCharBlock("mustache");
+                    } else if (pointer.chr === "(") {
+                        pointer.endPunctuationToken("startParen");
+                        continue;
+                    } else if (pointer.chr === ")") {
+                        pointer.endPunctuationToken("endParen");
                         continue;
                     } else if (pointer.chr === "[") {
                         pointer.startSingleCharBlock("bracket");
@@ -215,11 +218,6 @@
                     }
                 } else if (pointer.state() === "singleQuote") {
                     if (pointer.chr === "'") {
-                        pointer.endSingleCharBlock();
-                        continue;
-                    }
-                } else if (pointer.state() === "mustache") {
-                    if (pointer.chr === "}") {
                         pointer.endSingleCharBlock();
                         continue;
                     }

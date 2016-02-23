@@ -109,7 +109,6 @@ function consoleHelper(layerSetup) {
             log.push("<span class='truthStatement'>");
             log.push(" (is " + assertion.value(layerSetup) + " in " + assertion.valueLayer(layerSetup) + ")");
             log.push("</span>");
-            return log.join("");
         } else {
             // TODO: Implement an option to also show empty assertions ... ??? why ???
             // Maybe it's not even supposed to still be there ?
@@ -118,8 +117,12 @@ function consoleHelper(layerSetup) {
             log.push("<span class='truthStatement'>");
             log.push(" (is not true anywhere)");
             log.push("</span>");
-            return "";
+            // RESET ALL
+            log = [];
         }
+
+        return log.join("");
+
 
     };
 

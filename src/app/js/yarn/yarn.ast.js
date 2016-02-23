@@ -21,6 +21,8 @@
         var TokenCommands = {
             "default": "appendInstruction",
             "period": "endSequence",
+            "startParen": "startSubset",
+            "endParen": "endSubset",
             "multiLinebreak": "endSequence",
             "numeric": "appendValue",
             "singleQuote": "appendValue",
@@ -94,6 +96,12 @@
             },
             "nextArgument": function (cursor) {
                 cursor.nextArgument();
+            },
+            "startSubset": function (cursor) {
+                cursor.startSubset();
+            },
+            "endSubset": function (cursor) {
+                cursor.endSubset();
             },
             "ignore": function (cursor, tokenString) {
             }

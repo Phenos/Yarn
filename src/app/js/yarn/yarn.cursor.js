@@ -96,6 +96,47 @@
             return this;
         };
 
+        Cursor.prototype.endSequence = function () {
+            while (this.size() > 1 && !this.head().subSetOpen) {
+                this.pop();
+            }
+
+            // if the next sequence starts with a value following an instruction
+            // this will prevent the value from being "absorbed" by the instruction
+            this.sequenceBroken = true;
+            return this;
+        };
+
+
+        Cursor.prototype.startSubset = function () {
+            console.log("!!!!!!!!!!!!!!!! START SUBSET !!!!!!!!!!!")
+            this.sequenceBroken = false;
+            var node = this.head().set.last();
+            this.push(node);
+
+            node.subSetOpen = true;
+
+            return this;
+        };
+        Cursor.prototype.endSubset = function () {
+            while (this.size() > 1 && !this.head().subSetOpen) {
+                this.pop();
+            }
+
+            // If the node was openned by a subset (parens)
+            // We then mark the node as not having an open subset anymore
+            if (this.head().subSetOpen) {
+                this.head().subSetOpen = false;
+                console.log("!!!!!!!!!!!!!!!! CLOSING SUBSET !!!!!!!!!!!")
+            }
+
+            // if the next sequence starts with a value following an instruction
+            // this will prevent the value from being "absorbed" by the instruction
+            this.sequenceBroken = true;
+            return this;
+        };
+
+
         Cursor.prototype.nextArgument = function () {
             this.sequenceBroken = true;
             if (this.size() > 1) {

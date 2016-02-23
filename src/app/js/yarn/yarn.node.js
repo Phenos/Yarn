@@ -8,6 +8,7 @@
             this.variant = variant;
             this.value = value;
             this.set = new Set();
+            this.resolvedTo = null; // To which object or predicate the node has resolved to
         }
 
         Node.prototype.html = function () {

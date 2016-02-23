@@ -79,7 +79,7 @@ function yConsoleService(soundEffects) {
 function consoleHelper(layerSetup) {
     var service = {};
 
-    service.assertion2log = function (assertion) {
+    service.assertion2log = function (assertion, parentThing) {
         var log = [];
         var object = assertion.object;
         var subject = assertion.subject;
@@ -104,10 +104,11 @@ function consoleHelper(layerSetup) {
             }
         }
 
-        var topState = assertion.getTopState(layerSetup);
+
+        var topState = assertion.getTopState(layerSetup, parentThing);
         if (topState) {
             log.push("<span class='truthStatement'>");
-            log.push(" (is " + assertion.value(layerSetup) + " in " + assertion.valueLayer(layerSetup) + ")");
+            log.push(" (is " + assertion.value(layerSetup) + " in " + assertion.valueLayer(layerSetup) + ":" + assertion.states.length + ")");
             log.push("</span>");
         } else {
             // TODO: Implement an option to also show empty assertions ... ??? why ???

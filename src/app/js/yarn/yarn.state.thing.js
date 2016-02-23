@@ -14,6 +14,7 @@
         function Thing(_id, state) {
             this.id = _id.toLowerCase();
             this.state = state;
+            this.childStates = [];
         }
 
         /**
@@ -30,6 +31,16 @@
 
         Thing.prototype.removeAssertions = function (predicate, object) {
             return this.state.removeAssertions(this, predicate, object);
+        };
+
+        Thing.prototype.attachToState = function (state) {
+            this.childStates.push(state);
+        };
+
+        Thing.prototype.dettachFromState = function (state) {
+            this.childstates = this.childstates.filter(function (childState) {
+                return !(childState === state);
+            });
         };
 
         /**

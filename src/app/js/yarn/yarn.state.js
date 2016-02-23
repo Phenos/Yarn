@@ -8,9 +8,7 @@
                           Thing,
                           Syntax,
                           Predicate,
-                          layerSetup,
-                          consoleHelper,
-                          yConsole) {
+                          layerSetup) {
 
         function State() {
             this.assertions = [];
@@ -177,7 +175,7 @@
          * @param value
          * @returns {*}
          */
-        State.prototype.setAssertion = function (subject, predicate, object, value) {
+        State.prototype.setAssertion = function (subject, predicate, object, value, parent) {
             //console.log("State.setAssertion", subject, predicate, object, value);
             var self = this;
 
@@ -245,7 +243,8 @@
 
                 if (!chosenAssertion) {
                     // No pre-existing assertions were found, so creating a fresh one
-                    chosenAssertion = new Assertion(subject, predicate, object);
+                    console.log("parent", parent);
+                    chosenAssertion = new Assertion(subject, predicate, object, parent);
                     //console.log("creating a new assertion: ", chosenAssertion);
                     this.assertions.push(chosenAssertion);
                 }
@@ -253,7 +252,7 @@
                 // The correct assertion is then assigned it's truth value
                 // Not that it is possible that the assertion is already
                 // set to this value anyways.
-                chosenAssertion.set(valueOveride, this.currentLayer);
+                chosenAssertion.set(valueOveride, this.currentLayer, parent);
 
                 postal.publish({
                     channel: "state",

@@ -17,7 +17,7 @@
             this.subject = subject;
             this.predicate = predicate;
             this.object = object;
-            this.states = {};
+            this.states = [];
             this.parent = null;
         }
 
@@ -64,14 +64,30 @@
             return json;
         };
 
-        Assertion.prototype.set = function (value, layerId, parentId) {
-            var stateId = layerId + "-" + (parentId || "");
-            if (this.states[stateId]) {
-                this.states[stateId].value = value;
+        Assertion.prototype.set = function (value, layerId, parentThing) {
+            if (parentThing) {
+                console.log("parentThing", this);
+            }
+            var alreadyExistingState = this.get(layerId, parentThing);
+            if (alreadyExistingState) {
+                alreadyExistingState.value = value;
             } else {
-                this.states[stateId] = new State(value, layerId, parentId);
+                this.states.push(
+                    new State(this, value, layerId, parentThing)
+                );
             }
             return this;
+        };
+
+        Assertion.prototype.get = function (layerId, parentThing) {
+            var returnValue = null;
+            var foundStates = this.states.filter(function (state) {
+                return (layerId === state.layerId && parentThing === (state.parent || null))
+            });
+            if (foundStates.length) {
+                returnValue = foundStates[0];
+            }
+            return returnValue;
         };
 
         /**
@@ -110,7 +126,7 @@
          * @param {Array} layers
          * @returns {object}
          */
-        Assertion.prototype.getTopState = function (layers, parentId) {
+        Assertion.prototype.getTopState = function (layers, parentThing) {
             var self = this;
             var topState = null;
             //TODO: REALLY NOT PERFORMANT
@@ -119,43 +135,62 @@
                     angular.forEach(self.states, function (state) {
                         var match = true;
                         if (state.layerId !== layerId) match = false;
-                        if (parentId) {
-                            if (state.parentId !== parentId) match = false;
+                        if (parentThing) {
+                            if (state.parent !== parentThing) match = false;
                         } else {
                             // If not parent Id is supplied, then we discard any
                             // state that might have a parent id
-                            if (state.parentId) match = false;
+                            if (state.parent) match = false;
                         }
-                        if (match) topState = state;
+
+                        if (match) {
+                            topState = state;
+                        }
                     });
                 });
             } else {
-                console.error("LayerSetup must be an array... maybe you failed to inject layerSetup! idiot!")
+                console.error("LayerSetup must be an array... maybe you failed to inject layerSetup?  layerSetup = " + layerSetup);
             }
             return topState;
         };
 
-        Assertion.prototype.removeState = function (layerId, parentId) {
+        Assertion.prototype.removeState = function (layerId, parentThing) {
             var self = this;
-            angular.forEach(self.states, function (state, index) {
+            self.states = self.states.filter(function (state, index) {
                 var shouldDelete = true;
 
                 if (layerId && layerId !== state.layerId) shouldDelete = false;
-                if (parentId && parentId !== state.parentId) shouldDelete = false;
+                if (parentThing && parentThing !== state.parentThing) shouldDelete = false;
 
                 if (shouldDelete) {
                     //console.log("deleted state ", layerId, index);
-                    delete self.states[index];
+                    self.state.dettachFromParent();
                 }
+
+                return !shouldDelete;
             });
         };
 
 
-        function State(value, layerId, parentId) {
+        function State(assertion, value, layerId, parentThing) {
+            this.assertion = assertion;
             this.value = value;
             this.layerId = layerId;
-            this.parentId = parentId;
+            this.parent = null;
+            if (parentThing) this.attachToParent(parentThing);
         }
+
+        State.prototype.attachToParent = function(parentThing) {
+            this.parent = parentThing;
+            parentThing.attachToState(this);
+        };
+
+        State.prototype.dettachFromParent = function() {
+            if (this.parent) {
+                this.parent.dettachFromState(this);
+                this.parent = null;
+            }
+        };
 
         return Assertion;
     }

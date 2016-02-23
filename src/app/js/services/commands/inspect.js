@@ -65,6 +65,17 @@ function inspectCommand($localStorage,
                 angular.forEach(assertions, function (assertion) {
                     log.push(consoleHelper.assertion2log(assertion) + "<br/>");
                 });
+
+                if (thing.childStates.length) {
+                    log.push("<strong>Has " + thing.childStates.length + " child assertions:</strong><br/>");
+                    angular.forEach(thing.childStates, function (state) {
+                        log.push(
+                            "&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            consoleHelper.assertion2log(state.assertion, thing) +
+                            "<br/>")
+                    });
+                }
+
                 yConsole.log(log.join(""));
 
             } else {

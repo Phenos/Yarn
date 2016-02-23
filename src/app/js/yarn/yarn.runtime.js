@@ -148,6 +148,20 @@
                         //runtime.stack.pop();
 
                     } else {
+                        var parent;
+                        var parentObject;
+                        // Check if the assertion needs to be assigned a parent Thing
+                        var parentScope = runtime.stack.parent();
+                        //if (parentScope) parentScope = runtime.stack.parent();
+                        if (parentScope) {
+                            parentObject = parentScope.values.this;
+                            if ((parentObject && parentObject.constructor.name) === "Thing") {
+                                var headObject = runtime.stack.head().values["this"];
+                                if (parentObject && parentObject !== headObject) {
+                                    parent = parentObject;
+                                }
+                            }
+                        }
 
                         // Identify which predicate corresponds to this instruction
                         predicate = runtime.state.predicate(node.value);
@@ -160,7 +174,7 @@
                                 var currentThis = runtime.stack.head().values.this;
                                 if (currentThis) {
                                     createdAssertions.push(
-                                        runtime.state.setAssertion(currentThis, predicate, arg)
+                                        runtime.state.setAssertion(currentThis, predicate, arg, null, parent)
                                     );
                                     //console.log("created assetion: ", assertion);
                                 } else {
@@ -172,26 +186,10 @@
                         } else {
                             var currentThis = runtime.stack.head().values.this;
                             createdAssertions.push(
-                                runtime.state.setAssertion(currentThis, predicate)
+                                runtime.state.setAssertion(currentThis, predicate, null, null, parent)
                             );
                         }
 
-                        // Check if the assertion needs to be assigned a parent Thing
-                        var parentScope = runtime.stack.parent();
-                        //if (parentScope) parentScope = runtime.stack.parent();
-                        if (parentScope && createdAssertions.length > 0) {
-                            var parentObject = parentScope.values.this;
-                            if ((parentObject && parentObject.constructor.name) === "Thing") {
-                                var headObject = runtime.stack.head().values["this"];
-                                if (parentObject && parentObject !== headObject) {
-                                    // Assertions are give their parent object!
-                                    console.log("Ading parent to Thing : ", 1);
-                                    angular.forEach(createdAssertions, function (assertion) {
-                                        assertion.set(true, runtime.state.currentLayer, parentObject.id);
-                                    });
-                                }
-                            }
-                        }
                     }
                     return null;
                 },

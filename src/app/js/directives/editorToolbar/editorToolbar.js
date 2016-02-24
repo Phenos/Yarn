@@ -1,6 +1,6 @@
-angular.module('yarn').directive('editorToolbar', EditorToolbarDirective);
+yarn.directive('editorToolbar', EditorToolbarDirective);
 
-angular.module('yarn').filter('keyboardShortcut', function($window) {
+yarn.filter('keyboardShortcut', function($window) {
     return function(str) {
         if (!str) return;
         var keys = str.split('-');

@@ -1,4 +1,4 @@
-angular.module('yarn').factory('electronDevTools', electronDevTools);
+yarn.factory('electronDevTools', electronDevTools);
 
 
 function electronDevTools($localStorage) {

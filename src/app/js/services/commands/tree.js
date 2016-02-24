@@ -1,4 +1,4 @@
-angular.module('yarn').factory('treeCommand', treeCommand);
+yarn.factory('treeCommand', treeCommand);
 
 function treeCommand(yConsole,
                      game) {

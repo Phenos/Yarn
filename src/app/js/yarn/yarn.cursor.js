@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    angular.module('yarn').factory('Cursor', CursorService);
+    yarn.factory('Cursor', CursorService);
 
     function CursorService(Node) {
 

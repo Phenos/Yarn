@@ -1,5 +1,5 @@
-angular.module('yarn').directive('userInput', UserInputDirective);
-angular.module('yarn').filter('rawHtml', ['$sce', function ($sce) {
+yarn.directive('userInput', UserInputDirective);
+yarn.filter('rawHtml', ['$sce', function ($sce) {
     return function (val) {
         return $sce.trustAsHtml(val);
     };

@@ -1,4 +1,4 @@
-angular.module('yarn').factory('loadPageScripts', loadPageScripts);
+yarn.factory('loadPageScripts', loadPageScripts);
 
 function loadPageScripts(loadScript,
                          $document,

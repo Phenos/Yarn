@@ -1,5 +1,5 @@
 
-angular.module('yarn').config(function (LoopBackResourceProvider) {
+yarn.config(function (LoopBackResourceProvider) {
     console.log("Loading app configuration");
     // Use a custom auth header instead of the default 'Authorization'
     //LoopBackResourceProvider.setAuthHeader('X-Access-Token');
@@ -11,7 +11,7 @@ angular.module('yarn').config(function (LoopBackResourceProvider) {
 
 
 
-angular.module('yarn').run(function ($rootScope,
+yarn.run(function ($rootScope,
                                      commandsRegistry) {
     $rootScope.breakpoints = {
         0: 'isMobileWidth',

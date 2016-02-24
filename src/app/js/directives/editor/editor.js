@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('yarn').directive('editor', EditorDirective);
-    angular.module('yarn').factory('editorService', editorService);
+    yarn.directive('editor', EditorDirective);
+    yarn.factory('editorService', editorService);
 
     function EditorDirective() {
         return {

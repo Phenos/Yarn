@@ -1,4 +1,4 @@
-angular.module('yarn').factory('userFromAPI', userFromAPI);
+yarn.factory('userFromAPI', userFromAPI);
 
 function userFromAPI($http, $window) {
 

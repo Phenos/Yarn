@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('yarn').directive('command', CommandDirective);
+    yarn.directive('command', CommandDirective);
 
     function CommandDirective(commands) {
         return {

@@ -1,4 +1,4 @@
-angular.module('yarn').directive('userChoice', UserChoiceDirective);
+yarn.directive('userChoice', UserChoiceDirective);
 
 function UserChoiceDirective() {
     return {

@@ -1,4 +1,4 @@
-angular.module('yarn').factory('tokensCommand', tokensCommand);
+yarn.factory('tokensCommand', tokensCommand);
 
 function tokensCommand(yConsole,
                        game) {

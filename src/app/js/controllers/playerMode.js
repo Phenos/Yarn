@@ -1,6 +1,6 @@
 "use strict";
-angular.module('yarn').controller('playerMode', playerModeController);
-angular.module('yarn').factory('playerModeService', PlayerModeService);
+yarn.controller('playerMode', playerModeController);
+yarn.factory('playerModeService', PlayerModeService);
 
 
 function playerModeController(user,

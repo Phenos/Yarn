@@ -1,4 +1,4 @@
-angular.module('yarn').directive('splash', SplashDirective);
+yarn.directive('splash', SplashDirective);
 
 function SplashDirective() {
     return {

@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('yarn').factory('Predicate', PredicateService);
+    yarn.factory('Predicate', PredicateService);
 
     function PredicateService() {
 

@@ -1,4 +1,4 @@
-angular.module('yarn').factory('takePlayerCommand', takePlayerCommand);
+yarn.factory('takePlayerCommand', takePlayerCommand);
 
 function takePlayerCommand(game,
                            promptLoop) {

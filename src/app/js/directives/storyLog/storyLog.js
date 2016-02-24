@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('yarn').directive('storyLog', StoryLogDirective);
+    yarn.directive('storyLog', StoryLogDirective);
 
     function StoryLogDirective() {
         return {

@@ -1,5 +1,5 @@
-angular.module('yarn').factory('yConsole', yConsoleService);
-angular.module('yarn').factory('consoleHelper', consoleHelper);
+yarn.factory('yConsole', yConsoleService);
+yarn.factory('consoleHelper', consoleHelper);
 
 /**
  * Buffered console logging service
@@ -79,7 +79,7 @@ function yConsoleService(soundEffects) {
 function consoleHelper(layerSetup) {
     var service = {};
 
-    service.assertion2log = function (assertion, parentThing) {
+    service.assertion2log = function (assertion, parentThing, evenIfFalse) {
         var log = [];
         var object = assertion.object;
         var subject = assertion.subject;
@@ -110,17 +110,11 @@ function consoleHelper(layerSetup) {
             log.push("<span class='truthStatement'>");
             log.push(" (is " + assertion.value(layerSetup) + " in " + assertion.valueLayer(layerSetup) + ":" + assertion.states.length + ")");
             log.push("</span>");
-        } else {
-            // TODO: Implement an option to also show empty assertions ... ??? why ???
-            // Maybe it's not even supposed to still be there ?
-            // Or it depends if we are taking all layers in account in fetching the TopState ?
-            // For now we just dont show them
-            log.push("<span class='truthStatement'>");
-            log.push(" (is not true anywhere)");
-            log.push("</span>");
-            // RESET ALL
-            log = [];
         }
+
+        // Dont return anything if there is no value set for any situation
+        // Unless it is requested
+        if (!topState && !evenIfFalse) log = [];
 
         return log.join("");
 

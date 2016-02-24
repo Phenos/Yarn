@@ -1,4 +1,4 @@
-angular.module('yarn').factory('IDE', IDEService);
+yarn.factory('IDE', IDEService);
 
 /**
  * Service for handling IDE/editor operations

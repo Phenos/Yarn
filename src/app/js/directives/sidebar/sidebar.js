@@ -1,5 +1,5 @@
-angular.module('yarn').directive('sidebar', SidebarDirective);
-angular.module('yarn').factory('sidebarService', sidebarService);
+yarn.directive('sidebar', SidebarDirective);
+yarn.factory('sidebarService', sidebarService);
 
 function SidebarDirective() {
     return {

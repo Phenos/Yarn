@@ -3,8 +3,8 @@
 //    var remote = require('remote');
 //}
 
-angular.module('yarn').factory('commands', commands);
-angular.module('yarn').factory('commandsRegistry', commandsRegistry);
+yarn.factory('commands', commands);
+yarn.factory('commandsRegistry', commandsRegistry);
 
 function commands(yConsole,
                   commandsRegistry) {

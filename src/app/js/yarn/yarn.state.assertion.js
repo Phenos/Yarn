@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('yarn').factory('Assertion', AssertionService);
+    yarn.factory('Assertion', AssertionService);
 
     function AssertionService(layerSetup) {
 

@@ -1,4 +1,4 @@
-angular.module('yarn').factory('loadMetadata', loadMetadata);
+yarn.factory('loadMetadata', loadMetadata);
 
 function loadMetadata($http) {
 

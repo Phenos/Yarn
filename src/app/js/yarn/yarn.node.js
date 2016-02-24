@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    angular.module('yarn').factory('Node', NodeService);
+    yarn.factory('Node', NodeService);
 
     function NodeService() {
         function Node(type, value, variant) {

@@ -1,6 +1,6 @@
 (function(){
     "use strict";
-    angular.module('yarn').factory('Pointer', PointerService);
+    yarn.factory('Pointer', PointerService);
 
 
     function PointerService() {

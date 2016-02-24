@@ -109,7 +109,6 @@
 
 
         Cursor.prototype.startSubset = function () {
-            console.log("!!!!!!!!!!!!!!!! START SUBSET !!!!!!!!!!!")
             this.sequenceBroken = false;
             var node = this.head().set.last();
             this.push(node);
@@ -127,7 +126,6 @@
             // We then mark the node as not having an open subset anymore
             if (this.head().subSetOpen) {
                 this.head().subSetOpen = false;
-                console.log("!!!!!!!!!!!!!!!! CLOSING SUBSET !!!!!!!!!!!")
             }
 
             // if the next sequence starts with a value following an instruction

@@ -128,9 +128,15 @@ yarn.service('gamePedicates', function (state) {
          */
 
 
+        // Something triggers something else
+        state
+            .predicate("trigger")
+            .syntax("trigger")
+            .syntax("triggers");
+
         // Something uses something else
         state
-            .predicate("use", "action")
+            .predicate("use")
             .syntax("use")
             .syntax("uses")
             .syntax("use the")
@@ -140,7 +146,7 @@ yarn.service('gamePedicates', function (state) {
 
         // Something uses something else
         state
-            .predicate("movesTo", "action")
+            .predicate("movesTo")
             .syntax("moves to")
             .syntax("moves into")
             .syntax("goes to")

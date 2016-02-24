@@ -76,6 +76,13 @@
                     new AssertionState(this, value, layerId, parentThing)
                 );
             }
+
+            postal.publish({
+                channel: "state",
+                topic: "setAssertion",
+                data: this
+            });
+
             return this;
         };
 
@@ -95,8 +102,8 @@
          * @param {Array} layers
          * @returns {boolean}
          */
-        Assertion.prototype.value = function (layers) {
-            if (!layers) throw "Your must prodive an array of layers to obtain a value!";
+        Assertion.prototype.value = function (_layers) {
+            var layers = _layers || layerSetup;
             var isTrue = false;
             var topState = this.getTopState(layers);
             //console.log("=== Assertion", this, topState);
@@ -105,7 +112,8 @@
             return isTrue;
         };
 
-        Assertion.prototype.valueLayer = function (layers) {
+        Assertion.prototype.valueLayer = function (_layers) {
+            var layers = _layers || layerSetup;
             var topState = this.getTopState(layers);
             var layerId = "";
             if (topState) layerId = topState.layerId;
@@ -123,13 +131,15 @@
 
         /**
          * Return the top most state according to a sequence of layers, the first layer being the lowest priority
-         * @param {Array} layers
+         * @param _layers
+         * @param parentThing
          * @returns {object}
          */
-        Assertion.prototype.getTopState = function (layers, parentThing) {
+        Assertion.prototype.getTopState = function (_layers, parentThing) {
+            var layers = _layers || layerSetup;
             var self = this;
             var topState = null;
-            //TODO: REALLY NOT PERFORMANT
+            //TODO: REALLY NOT PERFORMANT, TOO MANY CAAALLLLLS
             if (angular.isArray(layers)) {
                 angular.forEach(layers, function (layerId) {
                     angular.forEach(self.states, function (state) {
@@ -146,6 +156,7 @@
                         if (match) {
                             topState = state;
                         }
+
                     });
                 });
             } else {

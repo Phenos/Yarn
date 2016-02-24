@@ -4,6 +4,8 @@ yarn.service('gameRoutines', function (state,
 
     return function () {
 
+        // todo: TAKE and LOOK should be here also ?
+
         // Move the player to another room
         logic.register("move", move);
         function move(roomId) {
@@ -40,12 +42,11 @@ yarn.service('gameRoutines', function (state,
         /**
          * Increment the game session step counter
          */
+        // todo: get rid of the register and instead use dependency injection
         logic.register("step", step);
         function step() {
-            var story = state.thing("story");
-            var count = state.step(1);
-            var hasStepped = state.predicate("hasStepped");
-            events.trigger(story, hasStepped, count);
+            state.step(1);
+            events.process();
             return true;
         }
 

@@ -1,9 +1,9 @@
 yarn.factory('restartCommand', restartCommand);
 
-function restartCommand(yConsole, game, gameService) {
+function restartCommand(yConsole, state, gameService) {
 
     function handler() {
-        game.state.removeAssertionsLayer('session');
+        state.removeAssertionsLayer('session');
         gameService.updateStoryLog();
         yConsole.success("Story restarted");
     }

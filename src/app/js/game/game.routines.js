@@ -1,9 +1,8 @@
-"use strict";
-yarn.factory('gameRoutines', function (logic,
+yarn.service('gameRoutines', function (state,
+                                       logic,
                                        events) {
 
-    return function gameRoutines(game) {
-        var state = game.state;
+    return function () {
 
         // Move the player to another room
         logic.register("move", move);
@@ -43,9 +42,9 @@ yarn.factory('gameRoutines', function (logic,
          */
         logic.register("step", step);
         function step() {
-            var story = game.state.thing("story");
-            var count = game.step(1);
-            var hasStepped = game.state.predicate("hasStepped");
+            var story = state.thing("story");
+            var count = state.step(1);
+            var hasStepped = state.predicate("hasStepped");
             events.trigger(story, hasStepped, count);
             return true;
         }

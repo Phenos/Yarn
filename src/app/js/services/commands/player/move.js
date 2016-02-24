@@ -1,11 +1,11 @@
 yarn.factory('movePlayerCommand', movePlayerCommand);
 
-function movePlayerCommand(game,
+function movePlayerCommand(state,
                            promptLoop) {
 
     function handler() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        game.state.thing("You").setAssertion(isAboutTo, game.state.thing("move"));
+        var isAboutTo = state.predicate("isAboutTo");
+        state.thing("You").setAssertion(isAboutTo, state.thing("move"));
         promptLoop.update();
     }
 

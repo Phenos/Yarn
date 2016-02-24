@@ -2,7 +2,7 @@ yarn.factory('clearCommand', clearCommand);
 
 function clearCommand($localStorage,
                       yConsole,
-                      game) {
+                      state) {
 
     var clearableItems = {
         "session": {
@@ -47,7 +47,6 @@ function clearCommand($localStorage,
         } else if (args.length > 0) {
             clearItems(args)
         }
-        console.log(game.state);
     }
 
     function clearItems(items) {
@@ -68,12 +67,12 @@ function clearCommand($localStorage,
     }
 
     function clearSession() {
-        game.state.removeAssertionsLayer('session');
+        state.removeAssertionsLayer('session');
         yConsole.success("Game session is clear. Story is back at beginning.");
     }
 
     function clearWorld() {
-        game.state.removeAssertionsLayer('world');
+        state.removeAssertionsLayer('world');
         yConsole.success("World state is cleared. This story world is now empty.");
     }
 

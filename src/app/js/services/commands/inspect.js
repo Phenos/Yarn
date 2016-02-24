@@ -1,9 +1,8 @@
 yarn.factory('inspectCommand', inspectCommand);
 
-function inspectCommand($localStorage,
+function inspectCommand(state,
                         yConsole,
-                        consoleHelper,
-                        game) {
+                        consoleHelper) {
 
     var inspectionItems = {
         "object": {
@@ -33,7 +32,7 @@ function inspectCommand($localStorage,
         } else if (args.length > 0) {
             inspectItems(args)
         }
-        console.log(game.state);
+        console.log(state);
     }
 
     function inspectItems(items) {
@@ -43,13 +42,13 @@ function inspectCommand($localStorage,
             var log = [];
             var itemName = _itemName.toLowerCase();
 
-            var thing = game.state.thing(itemName);
+            var thing = state.thing(itemName);
             if (thing) {
 
                 // TODO: Add argument to ALSO output assertions that have been negated
                 // Currently only the "true" assertions are shown
 
-                assertions = game.state.getAssertions(thing);
+                assertions = state.getAssertions(thing);
                 assertions = assertions.filter(function (assertion) {
                     return !assertion.isUniqueAndFalse();
                 });

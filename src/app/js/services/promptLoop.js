@@ -2,18 +2,16 @@ yarn.factory('promptLoop', promptLoop);
 
 function promptLoop(storyLogService,
                     commands,
-                    game,
                     logic,
-                    writers) {
+                    writers,
+                    state) {
 
+    //todo: refactor service for proper name
     var storyLog = storyLogService;
 
-    var state = game.state;
-
-
     function Coverpage(context) {
-        context.when = function (state) {
-            return game.step() === 0;
+        context.when = function () {
+            return state.step() === 0;
         };
 
         context.question = function (promptLoop, prompt) {
@@ -31,8 +29,8 @@ function promptLoop(storyLogService,
     }
 
     function WhatToDo(context) {
-        context.when = function (state) {
-            return game.step() > 0;
+        context.when = function () {
+            return state.step() > 0;
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to do ?";
@@ -77,7 +75,7 @@ function promptLoop(storyLogService,
     }
 
     function WhereToGo(context) {
-        context.when = function (state) {
+        context.when = function () {
             var isAboutTo = state.resolveValue("You.isAboutTo");
             //console.log("isAboutTo =====>", isAboutTo);
             return isAboutTo && isAboutTo.id === "move";
@@ -115,7 +113,7 @@ function promptLoop(storyLogService,
     }
 
     function WhatToLookAt(context) {
-        context.when = function (state) {
+        context.when = function () {
             var isAboutTo = state.resolveValue("You.isAboutTo");
             return isAboutTo && isAboutTo.id === "look";
         };
@@ -150,7 +148,7 @@ function promptLoop(storyLogService,
     }
 
     function WhatToTake(context) {
-        context.when = function (state) {
+        context.when = function () {
             var isAboutTo = state.resolveValue("You.isAboutTo");
             return isAboutTo && isAboutTo.id === "take";
         };
@@ -205,7 +203,7 @@ function promptLoop(storyLogService,
     }
 
     // Create an instant of the promptLoop
-    var promptLoop = new PromptLoop(state);
+    var promptLoop = new PromptLoop();
 
     promptLoop.addContext("WhereToDo", WhereToGo);
     promptLoop.addContext("WhatToLookAt", WhatToLookAt);
@@ -220,8 +218,7 @@ function promptLoop(storyLogService,
 }
 
 
-function PromptLoop(state) {
-    this.state = state;
+function PromptLoop() {
     this.contexts = [];
     this.contextsRef = [];
     this.currentPrompt = null;
@@ -241,7 +238,7 @@ PromptLoop.prototype.update = function (dontUpdateUI) {
 
     function findContext(context) {
         var found;
-        if (context.when(self.state)) found = context;
+        if (context.when()) found = context;
         return found;
     }
 

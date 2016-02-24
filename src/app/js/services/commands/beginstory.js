@@ -1,11 +1,11 @@
 yarn.factory('beginStoryCommand', beginStoryCommand);
 
 function beginStoryCommand(yConsole,
-                           game,
+                           logic,
                            writers) {
 
     function handler() {
-        game.logic.routines.step();
+        logic.routines.step();
         writers.DescribeWhereYouAre(true);
         yConsole.log("First step taken");
     }

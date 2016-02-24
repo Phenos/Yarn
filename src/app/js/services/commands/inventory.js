@@ -1,11 +1,11 @@
 yarn.factory('inventoryCommand', inventoryCommand);
 
 function inventoryCommand(yConsole,
-                          game) {
+                          state) {
 
     function handler() {
         var itemList;
-        var thingsInInventory = game.state.resolve("You.hasInInventory");
+        var thingsInInventory = state.resolve("You.hasInInventory");
 
         if (thingsInInventory.length) {
             itemList = [];

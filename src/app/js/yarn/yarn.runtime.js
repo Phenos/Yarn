@@ -2,7 +2,8 @@
     "use strict";
     yarn.factory('Runtime', RuntimeService);
 
-    function RuntimeService(Cursor,
+    function RuntimeService(state,
+                            Cursor,
                             yConsole) {
 
         /**
@@ -12,9 +13,8 @@
          * @constructor
          * @return {string}
          */
-        function Runtime(ast, state) {
+        function Runtime(ast) {
             this.ast = ast;
-            this.state = state;
             this.cursor = new Cursor();
             this.stack = new Stack();
         }
@@ -84,11 +84,11 @@
                         returnValue = node.value;
                         //console.log("VALUE variant:", node.value);
                     } else if (node.variant === "reference") {
-                        returnValue = runtime.state.thing(node.value);
+                        returnValue = state.thing(node.value);
                         node.resolvedTo = returnValue;
                     } else if (node.variant === "constant") {
                         console.error("Constants not supported yet! : " + node.value);
-                        //returnValue = runtime.state.thing(node.value);
+                        //returnValue = state.thing(node.value);
                     } else {
                         console.error("Compilation error: Unknown node variant [" + node.variant + "]", node);
                         yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value+ "]");
@@ -135,7 +135,7 @@
                         }
 
                         // Identify which predicate corresponds to this instruction
-                        predicate = runtime.state.predicate(node.value);
+                        predicate = state.predicate(node.value);
                         // Run the child set of node to be used by the predicate
                         args = runtime.runSet(node.set);
                         // Create assertion from predicate
@@ -145,7 +145,7 @@
                                 var currentThis = runtime.stack.head().values.this;
                                 if (currentThis) {
                                     createdAssertions.push(
-                                        runtime.state.setAssertion(currentThis, predicate, arg, null, parent)
+                                        state.setAssertion(currentThis, predicate, arg, null, parent)
                                     );
                                     //console.log("created assetion: ", assertion);
                                 } else {
@@ -157,7 +157,7 @@
                         } else {
                             var currentThis = runtime.stack.head().values.this;
                             createdAssertions.push(
-                                runtime.state.setAssertion(currentThis, predicate, null, null, parent)
+                                state.setAssertion(currentThis, predicate, null, null, parent)
                             );
                         }
 

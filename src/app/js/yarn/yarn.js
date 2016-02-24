@@ -1,4 +1,4 @@
-yarn.service('yarn', function (State,
+yarn.service('yarn', function (state,
                                Script,
                                yConsole,
                                consoleHelper) {
@@ -6,13 +6,8 @@ yarn.service('yarn', function (State,
     function Yarn() {
         var self = this;
 
-        //todo : SCRIPT LOADED SHOULD NOT BE INJECTED AS ARG
-        //this.scriptLoader = scriptLoader;
-
         this.script = null;
         this.scripts = [];
-        this.state = new State();
-
         this.localState = {};
         this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
 
@@ -22,16 +17,15 @@ yarn.service('yarn', function (State,
             topic: "setAssertion",
             callback: function (assertion, envelope) {
                 // If the story has started, log state changes to the console
-                if (self.step() > 0) {
+                if (state.step() > 0) {
                     yConsole.log("Changed: " + consoleHelper.assertion2log(assertion));
                 }
             }
         });
 
         this.run = function () {
-            var self = this;
             this.scripts.forEach(function (script) {
-                script.run(self.state);
+                script.run();
             });
             return this;
         };
@@ -43,7 +37,7 @@ yarn.service('yarn', function (State,
             localStateObj = localState[this.id];
             if (!localStateObj.assertions) localStateObj.assertions = {};
 
-            this.state.restoreFromLocalState(localStateObj);
+            state.restoreFromLocalState(localStateObj);
         };
 
         /**
@@ -70,28 +64,6 @@ yarn.service('yarn', function (State,
                 return script;
             });
         };
-
-        this.step = function (increment) {
-            var state = this.state;
-            var count = 0;
-            var story = state.thing("Story");
-            var hasStepped = state.predicate("hasStepped");
-
-            var assertions = story.getAssertion(hasStepped);
-            if (assertions.length) {
-                if (typeof assertions[0].object === "number") {
-                    count = assertions[0].object;
-                }
-            }
-
-            if (increment && typeof(increment) === "number") {
-                count = count + increment;
-                story.setAssertion(hasStepped, count);
-            }
-
-            return count;
-        }
-
 
     }
 

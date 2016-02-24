@@ -346,7 +346,7 @@
          * Get or create a new type of predicate
          * @param _id
          */
-        State.prototype.predicate = function (_id, type) {
+        State.prototype.predicate = function (_id) {
             var id = _id.toLowerCase();
             var predicate;
             var syntax;
@@ -359,7 +359,7 @@
             if (syntax) predicate = syntax.predicate;
 
             if (!predicate) {
-                predicate = new Predicate(id, type, this);
+                predicate = new Predicate(id, this);
                 //console.log("Created new predicate", predicate);
                 this.predicates[id] = predicate;
                 this.syntaxes[id] = new Syntax(id, predicate);

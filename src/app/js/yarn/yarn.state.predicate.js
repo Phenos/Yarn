@@ -7,15 +7,16 @@
 
         /**
          * A type of predicate used to make assertions
-         * @param id
+         * @param _id
+         * @param type
+         * @param yarn
          * @constructor
          */
         // todo: BAD DESIGN: Major refactoring, This class should not need to use the "yarn" parent object
-        function Predicate(_id, type, yarn) {
+        function Predicate(_id, yarn) {
             var id = _id.toLowerCase();
             this.id = id;
             this.label = id;
-            this.type = type;
             this.uniqueSubject = false;
     
             /**

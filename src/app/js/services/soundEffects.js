@@ -7,7 +7,7 @@
 
         var tapSound = ngAudio.load("./sounds/tap.mp3");
         function tap() {
-            tapSound.volume = 0.7;
+            tapSound.volume = 0.2;
             tapSound.currentTime = 0.01;
             tapSound.play();
         }

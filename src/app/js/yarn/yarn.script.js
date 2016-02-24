@@ -32,16 +32,8 @@
         };
 
         Script.prototype.run = function (state) {
-            var self = this;
-
-            this.runtime = new Runtime(this.ast, state, onModeChange);
+            this.runtime = new Runtime(this.ast, state);
             this.runtime.run();
-
-            function onModeChange(mode, node){
-                console.log("Keeping reference to [" + node.value + "]", mode, node);
-                var nodeReferenceId = node.value;
-                self.references[nodeReferenceId.toLowerCase()] = node;
-            }
         };
 
         Script.prototype.compile = function (tokens) {
@@ -55,12 +47,13 @@
         };
 
         Script.prototype.parseNode = function (node) {
-            var self = this;
+            var returnValue;
             if (node.type === "instruction" && node.value === "import") {
-                return self.importSet(node.set);
+                returnValue = this.importSet(node.set);
             } else {
-                return self.parseSet(node.set);
+                returnValue = this.parseSet(node.set);
             }
+            return returnValue;
         };
 
         Script.prototype.importSet = function (set) {

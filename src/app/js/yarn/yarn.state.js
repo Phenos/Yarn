@@ -243,7 +243,7 @@
 
                 if (!chosenAssertion) {
                     // No pre-existing assertions were found, so creating a fresh one
-                    console.log("parent", parent);
+                    //console.log("parent", parent);
                     chosenAssertion = new Assertion(subject, predicate, object, parent);
                     //console.log("creating a new assertion: ", chosenAssertion);
                     this.assertions.push(chosenAssertion);

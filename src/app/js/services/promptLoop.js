@@ -215,7 +215,7 @@ function promptLoop(storyLogService,
     promptLoop.addContext("Coverpage", Coverpage);
     //promptLoop.update();
 
-    console.log("Created a new prompt loop", promptLoop);
+    //console.log("Created a new prompt loop", promptLoop);
 
     return promptLoop;
 }

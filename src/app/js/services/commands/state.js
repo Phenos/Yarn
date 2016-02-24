@@ -2,10 +2,10 @@ yarn.factory('stateCommand', stateCommand);
 
 function stateCommand(yConsole,
                       consoleHelper,
-                      game) {
+                      state) {
 
     function handler() {
-        var html = stateToHTML(game.state);
+        var html = stateToHTML(state);
 
         yConsole.debug(html);
     }

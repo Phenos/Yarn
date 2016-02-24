@@ -4,11 +4,12 @@
     yarn.factory('Thing', ThingService);
 
     // todo: BAD DESIGN: Major refactoring, This class should not need to use the "state" parent object
-    function ThingService(layerSetup) {
+    function ThingService() {
 
         /**
          * A "thing" in the graph
          * @param _id
+         * @param state
          * @constructor
          */
         function Thing(_id, state) {

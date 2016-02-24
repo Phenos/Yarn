@@ -35,6 +35,7 @@
 
     //todo: should this be the main game controller ?
     function gameController(game,
+                            state,
                             loadScript,
                             writers,
                             promptLoop,
@@ -53,8 +54,8 @@
 
 
         function loadFromURL(_url) {
-            game.state.removeAssertionsLayer('session');
-            game.state.removeAssertionsLayer('world');
+            state.removeAssertionsLayer('session');
+            state.removeAssertionsLayer('world');
 
             // hack to protect windows drive letters in the path
             //var url = _url.replace(/\\/g, "//");
@@ -84,11 +85,11 @@
 
                     // todo: this .run should be a promise and show a success or error message in the game console
                     // Change the current state layer to the static world (should be the default anyways).
-                    game.state.currentLayer = "world";
-                    script.run(game.state);
+                    state.currentLayer = "world";
+                    script.run();
 
                     // Change the current state layer to the current session.
-                    game.state.currentLayer = "session";
+                    state.currentLayer = "session";
 
                     // Restore session state layer from localStorage
                     if (!$localStorage.localState) $localStorage.localState = {};
@@ -136,11 +137,11 @@
 
                 // todo: this .run should be a promise and show a success or error message in the game console
                 // Change the current state layer to the static world (should be the default anyways).
-                game.state.currentLayer = "world";
-                script.run(game.state);
+                state.currentLayer = "world";
+                script.run();
 
                 // Change the current state layer to the current session.
-                game.state.currentLayer = "session";
+                state.currentLayer = "session";
                 console.log("A!");
                 // Restore session state layer from localStorage
                 if (!$localStorage.localState) $localStorage.localState = {};

@@ -31,8 +31,8 @@
             });
         };
 
-        Script.prototype.run = function (state) {
-            this.runtime = new Runtime(this.ast, state);
+        Script.prototype.run = function () {
+            this.runtime = new Runtime(this.ast);
             this.runtime.run();
         };
 

@@ -3,7 +3,7 @@
 
     yarn.directive('graph', GraphDirective);
 
-    function GraphDirective(game) {
+    function GraphDirective(state) {
         return {
             restrict: 'E',
             bindToController: {
@@ -31,8 +31,8 @@
             $timeout(buildGraph, 100);
             function buildGraph() {
 
-                var things = game.state.things;
-                var assertions = game.state.assertions;
+                var things = state.things;
+                var assertions = state.assertions;
                 var nodes = [];
                 var nodesIndex = {};
                 var links = [];

@@ -73,7 +73,7 @@
                 alreadyExistingState.value = value;
             } else {
                 this.states.push(
-                    new State(this, value, layerId, parentThing)
+                    new AssertionState(this, value, layerId, parentThing)
                 );
             }
             return this;
@@ -172,7 +172,7 @@
         };
 
 
-        function State(assertion, value, layerId, parentThing) {
+        function AssertionState(assertion, value, layerId, parentThing) {
             this.assertion = assertion;
             this.value = value;
             this.layerId = layerId;
@@ -180,12 +180,12 @@
             if (parentThing) this.attachToParent(parentThing);
         }
 
-        State.prototype.attachToParent = function(parentThing) {
+        AssertionState.prototype.attachToParent = function(parentThing) {
             this.parent = parentThing;
             parentThing.attachToState(this);
         };
 
-        State.prototype.dettachFromParent = function() {
+        AssertionState.prototype.dettachFromParent = function() {
             if (this.parent) {
                 this.parent.dettachFromState(this);
                 this.parent = null;

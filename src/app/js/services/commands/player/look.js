@@ -1,11 +1,11 @@
 yarn.factory('lookPlayerCommand', lookPlayerCommand);
 
-function lookPlayerCommand(game,
+function lookPlayerCommand(state,
                            promptLoop) {
 
     function handler() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        game.state.thing("You").setAssertion(isAboutTo, game.state.thing("look"));
+        var isAboutTo = state.predicate("isAboutTo");
+        state.thing("You").setAssertion(isAboutTo, state.thing("look"));
         promptLoop.update();
     }
 

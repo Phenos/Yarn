@@ -1,22 +1,12 @@
-"use strict";
-yarn.factory('gameThings', function() {
-    return gameThings;
+yarn.factory('gameThings', function(state) {
+
+    return function gameThings() {
+
+        state.thing("player");
+        state.thing("person");
+        state.thing("room");
+        state.thing("object");
+    }
+
 });
 
-function gameThings(game) {
-    // Player
-    game.state
-        .thing("player");
-
-    // Persons
-    game.state
-        .thing("person");
-
-    // Places
-    game.state
-        .thing("room");
-
-    // Objects (as in "object" in the game)
-    game.state
-        .thing("object");
-}

@@ -1,15 +1,12 @@
 yarn.factory('writers', writers);
 
-// TODO:  Make storyLog and state ASYNC ????
-
 function writers(yConsole,
-                 consoleHelper,
                  storyLogService,
                  game,
+                 state,
                  sceneryService) {
 
     var storyLog = storyLogService;
-    var state = game.state;
 
     // Story welcome message and introduction
     // todo: Output specially styled titles for story and chapters
@@ -29,7 +26,7 @@ function writers(yConsole,
 
     // Describe where you are at the beginning
     function DescribeWhereYouAre(justMoved) {
-        if (game.step() === 0) {
+        if (state.step() === 0) {
             return DescribeCoverpage();
         } else {
             return DescribeRoom();

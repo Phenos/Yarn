@@ -199,12 +199,6 @@ yarn.service('state', function (Assertion,
             // set to this value anyways.
             chosenAssertion.set(valueOveride, this.currentLayer, parent);
 
-            postal.publish({
-                channel: "state",
-                topic: "setAssertion",
-                data: chosenAssertion
-            });
-
             // If the current layer is for "session", store the assertion in the
             // localStorage provider
             this.persistAssertion(chosenAssertion);

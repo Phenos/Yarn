@@ -14,18 +14,6 @@
             this.things = {};
             this.predicates = {};
             this.syntaxes = {};
-            // todo: Make configurable
-            // todo: Layers should be instances of Layer class
-            // Top layers have priority when resolving assertions
-            this.layers = [{
-                id: "session",
-                static: false
-            }, {
-                id: "world",
-                static: true
-            }];
-            // todo: ability to set current layer by it's id
-            this.layerSetup = layerSetup;
             this.currentLayer = "world";
             this.localState = null;
         }
@@ -238,7 +226,7 @@
          */
         State.prototype.persistAssertion = function (assertion) {
             if (this.localState) {
-                var json = assertion.toJSON(this.layerSetup, "session");
+                var json = assertion.toJSON(layerSetup, "session");
                 if (json) {
                     this.localState.assertions[assertion.id()] = json;
                 } else {
@@ -317,7 +305,7 @@
                 this.assertions.forEach(function (assertion) {
                     if (assertion.subject === subject &&
                         assertion.predicate === predicate) {
-                        if (assertion.value(self.layerSetup) === true) {
+                        if (assertion.value(layerSetup) === true) {
                             foundAssertions.push(assertion);
                         }
                     }

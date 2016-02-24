@@ -21,7 +21,7 @@
         };
 
         Logic.prototype.trigger = function (subject, event, object) {
-            console.log("Triggering events : ", event);
+            //console.log("Triggering events : ", event);
             // Get the propper predicate
             var predicate = this.state.predicate(event);
             if (predicate) {
@@ -35,14 +35,14 @@
                     if (referenceNode) {
                         this.script.runtime.runNode(referenceNode);
                         // TODO Execute the node found
-                        console.log("FOUND!!!!!", referenceNode);
+                        //console.log("FOUND!!!!!", referenceNode);
                     } else {
-                        console.log("No 'on' node reference found for " + actionHandler.do.id);
+                        //console.log("No 'on' node reference found for " + actionHandler.do.id);
                     }
                 }
 
 
-                console.log("actionHandler", actionHandler);
+                //console.log("actionHandler", actionHandler);
             } else {
                 console.log("Unknown action predicate: ", event);
             }

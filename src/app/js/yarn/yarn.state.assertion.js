@@ -66,7 +66,7 @@
 
         Assertion.prototype.set = function (value, layerId, parentThing) {
             if (parentThing) {
-                console.log("parentThing", this);
+                //console.log("parentThing", this);
             }
             var alreadyExistingState = this.get(layerId, parentThing);
             if (alreadyExistingState) {
@@ -164,7 +164,7 @@
 
                 if (shouldDelete) {
                     //console.log("deleted state ", layerId, index);
-                    self.state.dettachFromParent();
+                    state.dettachFromParent();
                 }
 
                 return !shouldDelete;

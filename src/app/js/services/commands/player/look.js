@@ -1,4 +1,4 @@
-angular.module('yarn').factory('lookPlayerCommand', lookPlayerCommand);
+yarn.factory('lookPlayerCommand', lookPlayerCommand);
 
 function lookPlayerCommand(game,
                            promptLoop) {

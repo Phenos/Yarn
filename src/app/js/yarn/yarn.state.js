@@ -1,10 +1,9 @@
 (function () {
     "use strict";
 
-    angular.module('yarn').factory('State', StateService);
+    yarn.factory('State', StateService);
 
     function StateService(Assertion,
-                          ActionHandler,
                           Thing,
                           Syntax,
                           Predicate,
@@ -12,7 +11,6 @@
 
         function State() {
             this.assertions = [];
-            this.actionHandlers = [];
             this.things = {};
             this.predicates = {};
             this.syntaxes = {};
@@ -129,42 +127,6 @@
                 this.syntaxes[text] = syntax;
             }
             return syntax;
-        };
-
-        /**
-         * Get a new Action Handler
-         * @param subject
-         * @param predicate
-         * @param object
-         * @param doReference
-         * @returns {*}
-         */
-        State.prototype.setActionHandler = function (subject, predicate, object, doReference) {
-            var actionHandler;
-            var foundActionHandler;
-
-            if (predicate && subject) {
-                // Look for an existing assertion
-                foundActionHandler = [];
-                // todo: use built indexes instead of itterating trough all predicates
-                this.actionHandlers.forEach(function (actionHandler) {
-                    if (actionHandler.subject === subject &&
-                        actionHandler.predicate === predicate &&
-                        actionHandler.object === object) {
-                        foundActionHandler.push(actionHandler);
-                    }
-                });
-                if (foundActionHandler[0]) {
-                    actionHandler = foundActionHandler[0].object;
-                } else {
-                    actionHandler = new ActionHandler(subject, predicate, object, doReference);
-                    this.actionHandlers.push(actionHandler);
-                }
-            } else {
-                console.warn("Impossible to create an Action Handler' type of assertion without at least a subject and a predicate.")
-            }
-
-            return actionHandler;
         };
 
         /**
@@ -379,31 +341,6 @@
 
             return foundAssertions;
         };
-
-        // TODO: Add support for getting assertion for a specific layer
-        State.prototype.getAssertionByLayer = function (subject, predicate, layer) {
-        };
-
-        State.prototype.getActionHandler = function (subject, predicate, object) {
-            var foundActionHandler;
-
-            if (predicate && subject && object) {
-                // Look for an existing assertion
-                // todo: use built indexes instead of itterating trough all predicates
-                this.actionHandlers.forEach(function (actionHandler) {
-                    if (actionHandler.subject === subject &&
-                        actionHandler.predicate === predicate &&
-                        actionHandler.object === object) {
-                        foundActionHandler = actionHandler;
-                    }
-                });
-            } else {
-                console.warn("Impossible to ensure a single actionHandler without at least a subject, predicate and object.")
-            }
-
-            return foundActionHandler;
-        };
-
 
         /**
          * Get or create a new type of predicate

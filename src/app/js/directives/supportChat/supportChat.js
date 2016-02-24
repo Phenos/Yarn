@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('yarn').directive('supportChat', SupportChatDirective);
+    yarn.directive('supportChat', SupportChatDirective);
 
     function SupportChatDirective() {
         return {

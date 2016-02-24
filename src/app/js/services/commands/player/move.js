@@ -1,4 +1,4 @@
-angular.module('yarn').factory('movePlayerCommand', movePlayerCommand);
+yarn.factory('movePlayerCommand', movePlayerCommand);
 
 function movePlayerCommand(game,
                            promptLoop) {

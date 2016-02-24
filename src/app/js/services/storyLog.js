@@ -1,4 +1,4 @@
-angular.module('yarn').factory('storyLogService', storyLogService);
+yarn.factory('storyLogService', storyLogService);
 
 function storyLogService() {
 

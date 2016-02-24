@@ -1,6 +1,6 @@
 (function() {
 
-angular.module('yarn').directive('log', LogDirective);
+yarn.directive('log', LogDirective);
 
 function LogDirective($sce) {
     return {

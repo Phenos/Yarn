@@ -1,5 +1,5 @@
 "use strict";
-angular.module('yarn').factory('welcomeMessage', WelcomeMessageService);
+yarn.factory('welcomeMessage', WelcomeMessageService);
 
 function WelcomeMessageService($mdDialog,
                                sidebarService,

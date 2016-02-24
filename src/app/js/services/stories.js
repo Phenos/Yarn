@@ -1,4 +1,4 @@
-angular.module('yarn').factory('stories', StoriesService);
+yarn.factory('stories', StoriesService);
 
 function StoriesService(Story,
                         yConsole,

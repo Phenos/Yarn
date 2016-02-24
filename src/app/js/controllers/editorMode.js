@@ -1,5 +1,5 @@
 "use strict";
-angular.module('yarn').controller('editorMode', editorModeController);
+yarn.controller('editorMode', editorModeController);
 
 
 function editorModeController(stories,

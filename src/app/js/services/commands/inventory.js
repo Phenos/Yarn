@@ -1,4 +1,4 @@
-angular.module('yarn').factory('inventoryCommand', inventoryCommand);
+yarn.factory('inventoryCommand', inventoryCommand);
 
 function inventoryCommand(yConsole,
                           game) {

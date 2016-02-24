@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    angular.module('yarn').factory('AST', ASTService);
+    yarn.factory('AST', ASTService);
 
     function ASTService(yConsole, Cursor, Node, $q) {
 

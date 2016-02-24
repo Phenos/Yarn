@@ -1,4 +1,4 @@
-angular.module('yarn').factory('restartCommand', restartCommand);
+yarn.factory('restartCommand', restartCommand);
 
 function restartCommand(yConsole, game, gameService) {
 

@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('yarn').directive('console', ConsoleDirective);
-    angular.module('yarn').factory('consoleService', consoleService);
+    yarn.directive('console', ConsoleDirective);
+    yarn.factory('consoleService', consoleService);
 
 
     function ConsoleDirective(commands) {

@@ -1,4 +1,4 @@
-angular.module('yarn').factory('rememberLastStory', rememberLastStory);
+yarn.factory('rememberLastStory', rememberLastStory);
 
 function rememberLastStory($localStorage) {
 

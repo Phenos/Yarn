@@ -1,4 +1,4 @@
-angular.module('yarn').factory('loadScript', loadScript);
+yarn.factory('loadScript', loadScript);
 
 function loadScript($http) {
 

@@ -1,4 +1,4 @@
-angular.module('yarn').factory('writers', writers);
+yarn.factory('writers', writers);
 
 // TODO:  Make storyLog and state ASYNC ????
 

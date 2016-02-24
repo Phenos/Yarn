@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('yarn').factory('Script', ScriptService);
+    yarn.factory('Script', ScriptService);
 
     function ScriptService(Pointer, AST, Runtime, $q, loadScript, URI) {
 

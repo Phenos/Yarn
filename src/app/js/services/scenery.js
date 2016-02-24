@@ -1,4 +1,4 @@
-angular.module('yarn').factory('sceneryService', sceneryService);
+yarn.factory('sceneryService', sceneryService);
 
 function sceneryService() {
 

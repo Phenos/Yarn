@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('yarn').factory('helpCommand', command);
+    yarn.factory('helpCommand', command);
 
     function command(yConsole, commandsRegistry) {
 

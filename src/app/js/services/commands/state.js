@@ -1,4 +1,4 @@
-angular.module('yarn').factory('stateCommand', stateCommand);
+yarn.factory('stateCommand', stateCommand);
 
 function stateCommand(yConsole,
                       consoleHelper,

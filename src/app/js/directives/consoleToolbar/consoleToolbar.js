@@ -1,4 +1,4 @@
-angular.module('yarn').directive('consoleToolbar', ConsoleToolbarDirective);
+yarn.directive('consoleToolbar', ConsoleToolbarDirective);
 
 function ConsoleToolbarDirective() {
     return {

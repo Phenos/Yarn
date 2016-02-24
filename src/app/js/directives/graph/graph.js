@@ -1,7 +1,7 @@
 
 (function () {
 
-    angular.module('yarn').directive('graph', GraphDirective);
+    yarn.directive('graph', GraphDirective);
 
     function GraphDirective(game) {
         return {

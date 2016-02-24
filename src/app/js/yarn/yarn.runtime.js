@@ -1,6 +1,6 @@
 (function (Cursor) {
     "use strict";
-    angular.module('yarn').factory('Runtime', RuntimeService);
+    yarn.factory('Runtime', RuntimeService);
 
     function RuntimeService(Cursor,
                             yConsole) {

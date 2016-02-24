@@ -1,8 +1,8 @@
 (function () {
     "use strict";
 
-    angular.module('yarn').factory('gameController', gameController);
-    angular.module('yarn').factory('gameService', gameService);
+    yarn.factory('gameController', gameController);
+    yarn.factory('gameService', gameService);
 
     // Game Controller and Service are REDUNDANT
 

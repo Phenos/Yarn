@@ -1,4 +1,4 @@
-angular.module('yarn').factory('inventoryPlayerCommand', inventoryPlayerCommand);
+yarn.factory('inventoryPlayerCommand', inventoryPlayerCommand);
 
 function inventoryPlayerCommand(game,
                                 storyLogService,

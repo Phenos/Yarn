@@ -1,4 +1,4 @@
-angular.module('yarn').factory('loadCommand', loadCommand);
+yarn.factory('loadCommand', loadCommand);
 
 function loadCommand(yConsole,
                  gameService,

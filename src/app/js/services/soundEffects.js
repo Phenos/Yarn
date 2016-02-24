@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('yarn').factory('soundEffects', soundEffects);
+    yarn.factory('soundEffects', soundEffects);
 
     function soundEffects(ngAudio) {
 

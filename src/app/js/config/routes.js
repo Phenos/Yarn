@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('yarn').config(config);
+    yarn.config(config);
 
     // todo: Put config in separate file
     function config($stateProvider,

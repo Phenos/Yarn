@@ -1,4 +1,4 @@
-angular.module('yarn').directive('scenery', SceneryDirective);
+yarn.directive('scenery', SceneryDirective);
 
 function SceneryDirective() {
     return {

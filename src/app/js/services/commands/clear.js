@@ -1,4 +1,4 @@
-angular.module('yarn').factory('clearCommand', clearCommand);
+yarn.factory('clearCommand', clearCommand);
 
 function clearCommand($localStorage,
                       yConsole,

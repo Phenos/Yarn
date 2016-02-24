@@ -1,4 +1,4 @@
-angular.module('yarn').filter('keyboardShortcut', keyboardShortcutFilter);
+yarn.filter('keyboardShortcut', keyboardShortcutFilter);
 
 function keyboardShortcutFilter($window) {
 

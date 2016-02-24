@@ -1,15 +1,14 @@
-angular.module('yarn').factory('promptLoop', promptLoop);
+yarn.factory('promptLoop', promptLoop);
 
 function promptLoop(storyLogService,
                     commands,
                     game,
-                    writers,
-                    yConsole) {
+                    logic,
+                    writers) {
 
     var storyLog = storyLogService;
 
     var state = game.state;
-    var logic = game.logic;
 
 
     function Coverpage(context) {

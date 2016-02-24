@@ -1,4 +1,4 @@
-angular.module('yarn').factory('splashService', splashService);
+yarn.factory('splashService', splashService);
 
 function splashService() {
     var splashController;

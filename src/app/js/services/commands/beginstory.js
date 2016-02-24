@@ -1,4 +1,4 @@
-angular.module('yarn').factory('beginStoryCommand', beginStoryCommand);
+yarn.factory('beginStoryCommand', beginStoryCommand);
 
 function beginStoryCommand(yConsole,
                            game,

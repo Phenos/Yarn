@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('yarn').factory('Syntax', SyntaxService);
+    yarn.factory('Syntax', SyntaxService);
 
     function SyntaxService() {
 

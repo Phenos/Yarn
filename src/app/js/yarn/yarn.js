@@ -1,12 +1,7 @@
-"use strict";
-
-angular.module('yarn').factory('Yarn', YarnService);
-
-function YarnService(State,
-                     Logic,
-                     Script,
-                     yConsole,
-                     consoleHelper) {
+yarn.service('yarn', function (State,
+                               Script,
+                               yConsole,
+                               consoleHelper) {
 
     function Yarn() {
         var self = this;
@@ -17,7 +12,7 @@ function YarnService(State,
         this.script = null;
         this.scripts = [];
         this.state = new State();
-        this.logic = new Logic(this.state, this.scripts);
+
         this.localState = {};
         this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
 
@@ -25,7 +20,7 @@ function YarnService(State,
         postal.subscribe({
             channel: "state",
             topic: "setAssertion",
-            callback: function(assertion, envelope) {
+            callback: function (assertion, envelope) {
                 // If the story has started, log state changes to the console
                 if (self.step() > 0) {
                     yConsole.log("Changed: " + consoleHelper.assertion2log(assertion));
@@ -56,7 +51,7 @@ function YarnService(State,
          * @param text
          * @param url
          */
-        //todo: map exactly where script source is loaded
+            //todo: map exactly where script source is loaded
         this.load = function (text, url) {
             //console.log("yarn.load");
             var script = new Script();
@@ -76,7 +71,7 @@ function YarnService(State,
             });
         };
 
-        this.step = function(increment) {
+        this.step = function (increment) {
             var state = this.state;
             var count = 0;
             var story = state.thing("Story");
@@ -100,8 +95,8 @@ function YarnService(State,
 
     }
 
-    return Yarn;
-}
+    return new Yarn();
+});
 
 
 

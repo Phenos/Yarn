@@ -1,4 +1,4 @@
-angular.module('yarn').factory('graphCommand', graphCommand);
+yarn.factory('graphCommand', graphCommand);
 
 function graphCommand(yConsole) {
 

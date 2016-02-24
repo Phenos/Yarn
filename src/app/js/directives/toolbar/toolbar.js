@@ -1,4 +1,4 @@
-angular.module('yarn').directive('toolbar', ToolbarDirective);
+yarn.directive('toolbar', ToolbarDirective);
 
 function ToolbarDirective() {
     return {

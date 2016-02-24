@@ -1,4 +1,4 @@
-angular.module('yarn').factory('inspectCommand', inspectCommand);
+yarn.factory('inspectCommand', inspectCommand);
 
 function inspectCommand($localStorage,
                         yConsole,

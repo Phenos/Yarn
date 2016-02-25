@@ -1,4 +1,5 @@
-yarn.service('yarn', function (state,
+yarn.service('yarn', function (postal,
+                               state,
                                Script,
                                yConsole,
                                consoleHelper) {

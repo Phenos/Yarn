@@ -3,7 +3,7 @@ yarn.factory('stories', StoriesService);
 function StoriesService(Story,
                         yConsole,
                         rememberLastStory,
-                        gameController) {
+                        gameService) {
 
 
     var service = {
@@ -14,7 +14,7 @@ function StoriesService(Story,
 
     service.playDefault = function () {
         var storyURL = rememberLastStory.get() || service.defaultStoryURL;
-        gameController.loadFromURL(storyURL);
+        gameService.loadFromURL(storyURL);
     };
 
     // Try to load a story for the current user...

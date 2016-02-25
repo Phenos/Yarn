@@ -2,6 +2,7 @@ yarn.factory('writers', function (yarn,
                                   yConsole,
                                   storyLog,
                                   state,
+                                  script,
                                   sceneryService) {
 
     // Story welcome message and introduction
@@ -46,8 +47,8 @@ yarn.factory('writers', function (yarn,
         // Set the scenery
         var scenery = story.resolveValue("hasScenery");
         var coverpage = story.resolveValue("hasCoverpage");
-        var scenery_url = scenery && yarn.script.resolveRelativeURI(scenery);
-        var coverpage_url = coverpage && yarn.script.resolveRelativeURI(coverpage);
+        var scenery_url = scenery && script.resolveRelativeURI(scenery);
+        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
         var url = scenery_url || coverpage_url || false;
 
         if (url) {
@@ -80,7 +81,7 @@ yarn.factory('writers', function (yarn,
         //console.log("Your in room ", room);
         if (room) {
             var scenery = room.resolveValue("hasScenery");
-            var url = yarn.script.resolveRelativeURI(scenery);
+            var url = script.resolveRelativeURI(scenery);
             if (url) {
                 sceneryService.change(url);
             } else {
@@ -109,7 +110,7 @@ yarn.factory('writers', function (yarn,
             var image = thing.resolveValue("hasImage");
             if (image) {
                 storyLog.thingImage(
-                    yarn.script.resolveRelativeURI(image)
+                    script.resolveRelativeURI(image)
                 );
             }
             if (label) storyLog.subHeading(label);

@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var bump = require('gulp-bump');
 var del = require('del');
+var inject = require('gulp-inject');
 var shell = require('gulp-shell');
 var electronConnect = require('electron-connect');
 var electron = require('gulp-electron');
@@ -103,11 +104,13 @@ gulp.task('copyElectronSrc', copyElectronSrcTask);
 gulp.task('copyLess', copyLess);
 gulp.task('copyJs', copyJsTask);
 gulp.task('compressJS', compressJsTask);
+gulp.task('injectJsFiles', injectJsFilesTask);
 gulp.task('compressJSVendors', compressJsVendorsTask);
 gulp.task('copyAssets', gulp.series(
     'copyStatic',
     'compressJSVendors',
-    'compressJS',
+    //'compressJS',
+    'injectJsFiles',
     'copyJs',
     'copyLess'
 ));
@@ -130,6 +133,10 @@ gulp.task('dev', gulp.series(
     'server',
     'watch'
 ));
+gulp.task('devServerless', gulp.series(
+    'build',
+    'watch'
+));
 gulp.task('dev-electron', gulp.series(
     'build',
     'copyElectronSrc',
@@ -137,7 +144,23 @@ gulp.task('dev-electron', gulp.series(
     'watchElectron'
 ));
 
+
 // -----[ Task Functions ]--------
+
+
+function injectJsFilesTask() {
+
+    return gulp.src(paths.staticRoot + '/index-template/index.html')
+        .pipe(inject(gulp.src(paths.javascriptSource, {
+            read: false
+        }), {
+            ignorePath: ['src/', 'app/'],
+            addPrefix: ''
+        }))
+        .pipe(using())
+        .pipe(gulp.dest(paths.staticRoot), cwd);
+}
+
 
 function bumpTask() {
     return gulp.src(['bower.json', 'package.json', 'src/app/static/metadata.json'], {base: '.'})
@@ -161,7 +184,9 @@ function copyElectronSrcTask() {
 
 function copyJsTask() {
     // Copy js folder
-    return gulp.src(paths.javascriptSource)
+    return gulp.src(paths.javascriptSource, {
+            base: "src/app/js/"
+        })
         //.pipe(using())
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
@@ -169,8 +194,8 @@ function copyJsTask() {
 function compressJsTask() {
     return gulp.src(paths.javascriptSource)
         //.pipe(using())
-        //.pipe(sourcemaps.init())
-        //.pipe(sourcemaps.write())
+        .pipe(sourcemaps.init())
+        .pipe(sourcemaps.write())
         //.pipe(uglify({
         //    mangle: false
         //}))
@@ -220,12 +245,12 @@ function serverTask(callback) {
 }
 
 function apiTask() {
-return gulp.src('*.js', {read: false})
-    .pipe(shell([
-        'npm start'
-    ], {
-        templateData: {}
-    }))
+    return gulp.src('*.js', {read: false})
+        .pipe(shell([
+            'npm start'
+        ], {
+            templateData: {}
+        }))
 }
 
 function electronTask() {
@@ -279,6 +304,11 @@ function runElectronTask(callback) {
 }
 
 function watchTask() {
+    if (!browserSync) {
+        var browserSync = {
+            reload: function () {}
+        }
+    }
     gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
     gulp.watch(paths.watches.js, gulp.series('compressJS', 'copyJs', browserSync.reload));
     gulp.watch(paths.watches.statics, gulp.series('copyStatic', browserSync.reload));

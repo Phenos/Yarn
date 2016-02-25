@@ -1,9 +1,19 @@
 <div>
     <h3 class="question" ng-bind="userChoice.question"></h3>
-    <ul>
-        <li ng-repeat="option in userChoice.options">
-            <a href="#" ng-click="userChoice.choose(option.value); $event.preventDefault();" ng-bind="option.label"></a>
-        </li>
-    </ul>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-button
+                ng-repeat="option in userChoice.options"
+                ng-class="(option.iconOnly) ? 'md-fab md-mini' : 'md-raised'"
+                ng-click="$event.preventDefault(); userChoice.choose(option.value);"
+                aria-label="option.label"
+        >
+            <md-icon
+                    ng-if="option.iconId"
+                    md-svg-icon="/svg-icons/{{ option.iconId }}.svg"></md-icon>
+            <span
+                    ng-if="!option.iconOnly"
+                    ng-bind="option.label"></span>
+        </md-button>
+    </section>
 </div>
 

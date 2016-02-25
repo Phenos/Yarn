@@ -1,6 +1,6 @@
 {
   "name": "bigmess",
-  "version": "0.0.14",
+  "version": "0.15",
   "authors": [
     "mathieu <mathieu.sylvain@phenos.ca>"
   ],
@@ -13,13 +13,24 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.7",
+    "angular": "~1.4.8",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
-    "angular-scroll-glue": "~2.0.6",
     "angular-ui-router": "~0.2.15",
     "angularjs-breakpoint": "*",
-    "angular-animate": "~1.4.7",
+    "angular-animate": "~1.4.8",
     "angular-uri": "~0.2.0",
-    "angular-audio": "~1.7.1"
+    "angular-audio": "~1.7.1",
+    "d3": "~3.5.10",
+    "ngstorage": "~0.3.10",
+    "angular-material": "~1.0.3",
+    "angular-ui-ace": "bower",
+    "angular-resource": "~1.4.9",
+    "angular-sanitize": "~1.5.0",
+    "postal.js": "postal#~1.0.8",
+    "lodash": "~4.5.1"
+  },
+  "resolutions": {
+    "lodash": "~4.5.1",
+    "angular": "1.4.9"
   }
 }

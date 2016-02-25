@@ -1,19 +1,20 @@
-angular.module('mindgame').factory('loadScript', loadScript);
+yarn.factory('loadScript', loadScript);
 
 function loadScript($http) {
 
-    function loadScript (src) {
-        //console.log(scriptTag);
+    function loadScript (url) {
+
         var config = {
             method: 'GET',
-            url: src
+            url: url + "?random=" + Math.random(),
+            cache: false
         };
 
         function then(response) {
-            console.info("Loaded script: ", response.config.url);
+            //console.info("Loaded script: ", response.config.url);
             return {
                 source: response.data,
-                url: src
+                url: url
             };
         }
 

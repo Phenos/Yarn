@@ -1,9 +1,9 @@
-angular.module('mindgame').factory('splashService', splashService);
+yarn.factory('splashService', splashService);
 
 function splashService() {
     var splashController;
     var hidden = false;
-    console.log("Splash service loaded");
+    //console.log("Splash service loaded");
 
     function hide() {
         hidden = true;
@@ -13,7 +13,7 @@ function splashService() {
 
     function register(ctrl) {
         splashController = ctrl;
-        console.log('splashController', splashController);
+        //console.log('splashController', splashController);
         if (hidden) splashController.hide();
     }
 

@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('loadMetadata', loadMetadata);
+yarn.factory('loadMetadata', loadMetadata);
 
 function loadMetadata($http) {
 
@@ -10,7 +10,7 @@ function loadMetadata($http) {
         };
 
         function then(response) {
-            console.info("Loaded metadata from : ", response.config.url, response.data);
+            //console.info("Loaded metadata from : ", response.config.url, response.data);
             return response.data;
         }
 

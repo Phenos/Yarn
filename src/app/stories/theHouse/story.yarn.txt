@@ -1,0 +1,24 @@
+
+
+@story is called 'The Small House',
+    has id "theHouse-v1",
+    has scenery "./images/scenery/cabin-in-the-wood.jpg",
+    is described as
+    "A story of small complexities and critical trivialities!".
+
+Import "./chapters/things.yarn.txt".
+
+Import "./chapters/rooms.yarn.txt".
+
+// Import "./chapters/events_test.yarn.txt".
+
+// Import "./chapters/events.yarn.txt".
+
+// Import "./chapters/dialogs.yarn.txt".
+
+// Setup how you start
+
+#You is an @actor, is named "You", is in the #Kitchen.
+
+// #You has in inventory a #PlasticSpoon.
+

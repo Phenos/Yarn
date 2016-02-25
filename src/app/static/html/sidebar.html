@@ -1,0 +1,100 @@
+<div class="sidebar">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="leftSidebar">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button
+                    ng-click="sidebar.close()"
+                    class="md-icon-button"
+                    aria-label="Close menu">
+                    <md-icon md-svg-icon="/svg-icons/back.svg"></md-icon>
+                </md-button>
+                <h2>Menu</h2>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding>
+            <md-menu-item>
+                <md-button ng-click="sidebar.openWelcomeMessage()">
+                    <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
+                    <span>About this prototype</span>
+                    <span class="versionNumber">- v{{ metadata.version }}</span>
+                </md-button>
+            </md-menu-item>
+            <md-divider></md-divider>
+            <md-menu-item>
+                <md-button ng-click="sidebar.openStoryMenu()" aria-label="Story menu">
+                    <md-icon md-svg-icon="/svg-icons/story.svg"></md-icon>
+                    Story
+                    <md-icon class="subMenuIcon" md-svg-icon="/svg-icons/submenu.svg"></md-icon>
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="sidebar.openAuthorMenu()" aria-label="Author tools menu">
+                    <md-icon md-svg-icon="/svg-icons/author.svg"></md-icon>
+                    Author tools
+                    <md-icon class="subMenuIcon" md-svg-icon="/svg-icons/submenu.svg"></md-icon>
+                </md-button>
+            </md-menu-item>
+            <md-divider></md-divider>
+            <md-menu-item>
+                <md-button ng-href="http://www.yarnstudio.io/" target="_blank">
+                    <md-icon md-svg-icon="/svg-icons/blog.svg"></md-icon>
+                    News and Development Blog
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-href="https://twitter.com/YarnStudioGames" target="_blank">
+                    <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                    Follow Us on Twitter
+                </md-button>
+            </md-menu-item>
+        </md-content>
+    </md-sidenav>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="storySidebar">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button
+                        ng-click="sidebar.closeStoryMenu()"
+                        class="md-icon-button"
+                        aria-label="Close story menu">
+                    <md-icon md-svg-icon="/svg-icons/back.svg"></md-icon>
+                </md-button>
+                <h2>Story</h2>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding>
+            <md-menu-item>
+                <md-button ng-click="sidebar.restartStory()">
+                    <md-icon md-svg-icon="/svg-icons/restart.svg"></md-icon>
+                    <span>Restart</span>
+                </md-button>
+            </md-menu-item>
+        </md-content>
+    </md-sidenav>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="authorSidebar">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button
+                        ng-click="sidebar.closeAuthorMenu()"
+                        class="md-icon-button"
+                        aria-label="Close story menu">
+                    <md-icon md-svg-icon="/svg-icons/back.svg"></md-icon>
+                </md-button>
+                <h2>Author Tools</h2>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding>
+            <md-menu-item>
+                <md-button ng-click="sidebar.openConsole()" aria-label="Open console">
+                    <md-icon md-svg-icon="/svg-icons/console.svg"></md-icon>
+                    Console
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-href="#/editor" aria-label="Editor Mode">
+                    <md-icon md-svg-icon="/svg-icons/editor.svg"></md-icon>
+                    Editor
+                </md-button>
+            </md-menu-item>
+        </md-content>
+    </md-sidenav>
+</div>

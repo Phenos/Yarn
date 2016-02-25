@@ -1,0 +1,99 @@
+
+.console {
+    display: block;
+    position: relative;
+    background: #dddddd;
+    z-index: 1000;
+    font-size: 0.8em;
+    font-weight: 400;
+    overflow: hidden;
+    min-height: 60px;
+
+    .isMobileWidth & {
+        padding: 0 0 0 0;
+        font-size: 1.2em;
+    }
+
+    logscroll {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    logs {
+        display: block;
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+        log {
+            display: block;
+            position: relative;
+            margin: 0 20px;
+            padding: 0.4em 0;
+            color: #333;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+            a:visited,
+            a:link,
+            a {
+                color: inherit;
+                text-decoration: underline;
+            }
+            strong {
+                font-weight:800;
+            }
+
+            log-icon {
+                position: absolute;
+                font-size: 0.7em;
+                left: -1.3em;
+                top: 1em;
+            }
+
+            .isMobileWidth & {
+                margin-right: 0.2em !important;
+                margin-left: 0.2em !important;
+            }
+
+            &.is-log {
+                font-weight: 400;
+            }
+            &.is-tip {
+                font-weight: 400;
+                log-icon,
+                strong {
+                    color: #6666CC;
+                }
+                log-icon {
+                    font-size: 1.2em;
+                    left: -0.9em;
+                    top: 0.1em;
+                    color: #6666CC;
+                }
+            }
+            &.is-error {
+                letter-spacing: 0.06em;
+                color: #CC3333;
+            }
+            &.is-success {
+                //letter-spacing: 0.06em;
+                color: #229922;
+            }
+            &.is-command {
+            }
+            &.is-debug {
+            }
+
+            .truthStatement {
+                opacity: 0.5;
+            }
+        }
+
+    }
+
+}

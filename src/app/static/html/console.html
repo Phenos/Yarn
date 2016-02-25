@@ -1,0 +1,15 @@
+<div class="console" layout="column" flex="100">
+    <div flex="100" style="position: relative;">
+        <logscroll>
+            <logs></logs>
+        </logscroll>
+    </div>
+    <user-input
+            layout="row"
+            style="min-height: 65px;"
+            text=""
+            on-escape-focus="console.onInputEscapeFocus()"
+            on-focus="console.onInputFocus()"
+            on-submit="console.onInput(text)">
+    </user-input>
+</div>

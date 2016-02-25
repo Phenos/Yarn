@@ -1,0 +1,64 @@
+
+// Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
+
+The #Kitchen:
+    is a @room,
+    is named "The Kitchen",
+    has scenery "./images/rooms/kitchen.jpg",
+    links to the #Bedroom,
+    links to the #Bathroom,
+    links to the #FrontOfTheHouse,
+    has in it the #KitchenTable,
+    has in it the #RedPill,
+    is described as
+        "The <a href='#kitchen'>kitchen</a> is a small modern room with black countertops,
+        white cabinets, basic appliances and a kitchen table. There are two doors leading
+        to a bedroom and a bathroom. The is also a red pill on the table *wink* *wink* .
+        <br/>You see <strong>no</strong> exits!".
+
+The #FrontOfTheHouse:
+    is a @room,
+    has scenery "./images/rooms/frontOfTheHouse.jpg",
+    is named "Front of the house",
+    has in it a #RedSoccerBall,
+    links to #kitchen,
+    is described as "You see a car, your garage and a great big lawn. On the lawn there is a red soccer ball.".
+
+The #Bedroom:
+    is a @room,
+    is named "The Bedroom",
+    has in it a #BedSideTable,
+    links to the #Kitchen,
+    links to #BedSideTable,
+    has scenery "./images/rooms/bedroom.jpg",
+    is described as
+        "The bedroom is dark and bare of any furniture
+        except a large bed and a small wooden nighstand.".
+
+The #Bathroom:
+    is a @room,
+    is named "The Bathroom",
+    links to the #Kitchen,
+    has scenery "./images/rooms/bathroom.jpg",
+    is described as
+        "The bathroom is small perfectly cubic room covered with while tiles
+        dark brass fittings. It is equiped with all the classic bathroom items.
+        Everything is very very very clean. And it smells like the ocean breeze. And there is also a man called Bob in here!!!
+        "
+The #BedSideTable:
+    is a @room,
+    is a @thing,
+    is named "Bedside Table",
+    links to #Bedroom,
+    links to #BedsideTableDrawer,
+    has scenery "./images/rooms/bedsideTable.jpg",
+    is described as "A small wooden bedside table, with a drawer... you should look in the drawer".
+
+The #BedsideTableDrawer:
+    is a @room,
+    is named "Bedside Table Drawer",
+    has scenery "./images/rooms/BedsideTableDrawer.jpg",
+    links to #BedSideTable,
+    is described as "Your in the drawer... it's a little cramped. It's you and a flashlight",
+    has a #FlashLight.
+

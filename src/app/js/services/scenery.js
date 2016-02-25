@@ -1,4 +1,4 @@
-angular.module('mindgame').factory('sceneryService', sceneryService);
+yarn.factory('sceneryService', sceneryService);
 
 function sceneryService() {
 
@@ -7,15 +7,22 @@ function sceneryService() {
 
     // todo: allo more flexible event hooks with a true "bind" syntax
     function onChange(fn) {
+        //console.log("Registered scenery directive");
         onChangeFn = fn;
-    }
-
-    function change(_image) {
-        image = _image;
         onChangeFn(image);
     }
 
+    function change(_image) {
+        //console.log("Changing scenery to : ", _image);
+        image = _image;
+        onChangeFn(image);
+    }
+    function clear() {
+        change("");
+    }
+
     return {
+        clear: clear,
         change: change,
         onChange: onChange
     };

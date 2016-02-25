@@ -1,27 +1,32 @@
-
 @import "vars.less";
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Halant', serif;
     background: #000;
+    overflow: hidden;
 }
-
+body, button, select, html, textarea, input {
+    font-family: 'Source Sans Pro', sans-serif;
+}
 
 .main-ui {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 100vh;
-    width: 100vw;
-    padding-bottom: 30vh;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.4);
+    font-family: 'Halant', serif;
+    position: relative;
+    z-index: 50;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-[ui-view] {
-    z-index: 1000;
+
+.subMenuIcon {
+    position: absolute;
+    top: 1em;
+    right: 0;
+    font-size: 1em;
+    color: #666 !important;
+    width: 20px !important;
+    height: 20px !important;
 }
 
 .testGrid {
@@ -30,7 +35,6 @@ body {
 
     width: auto;
     border-collapse: collapse;
-    color: #ddd;
 
     thead {
         td {
@@ -52,11 +56,12 @@ body {
     }
 }
 
+
 .tree {
 
     .node {
         position: relative;
-        padding: 0.2em 0 0 0em;
+        padding: 0.2em 0 0 0;
         margin: 0.1em 0 0 0;
         .label {
             display: block;
@@ -78,116 +83,9 @@ body {
         }
         .set {
             margin: 0.2em 0 0 0.1em;
-            padding: 0 0 0 2em;
+            padding: 0 0 0 1em;
             border-left: 1px dotted #ccc;
         }
     }
 }
-
-
-/* ------------------------------------ */
-
-.assertions {
-    font-size: 1em;
-
-    .assertion {
-        padding: 4px 0px;
-        .subject {
-            padding: 0 10px 0 0;
-        }
-        .predicate {
-            padding: 0 10px 0 0;
-            color: #888888;
-        }
-        .object {
-            padding: 0 10px 0 0;
-        }
-
-        .isUndefined,
-        .isUnknown {
-            color: #992222;
-            font-weight: bold;
-        }
-
-        .isThing {
-            font-weight: bold;
-            color: #333399;
-            &:before {
-                content: "#";
-            }
-        }
-        .isString {
-            color: #339933;
-            font-style: italic;
-            &:before {
-                content: "\"";
-            }
-            &:after {
-                content: "\"";
-            }
-        }
-        .isNumber {
-            &:before {
-                content: "#";
-            }
-        }
-    }
-}
-
-
-user-choice {
-    display: block;
-    text-align: center;
-    margin: 0.5em 5em 10em 5em;
-
-    .isMobileWidth & {
-        margin: 0.5em 0.5em 10em 0.5em;
-        font-size: 1.2em;
-    }
-
-    h3 {
-        font-size: 1.4em;
-        margin-bottom: 0.5em;
-        font-weight: 200;
-        text-align: center;
-        color: #fff;
-    }
-
-    ul {
-        padding: 0;
-        margin: 0;
-        li {
-            padding: 0;
-            margin: 0;
-            display: inline-block;
-            list-style: none;
-            a {
-                position: relative;
-                display: block;
-                padding: 6px 20px;
-                margin: 10px 10px;
-                .isMobileWidth & {
-                    font-size: 1.2em;
-                    padding: 0.3em 0.7em;
-                    margin: 0.3em 0.3em;
-                }
-                text-decoration: none;
-                color: #000;
-                background: #ddd;
-                .defaultShadow();
-
-                &:hover {
-                    top: -1px;
-                    box-shadow: 0 7px 8px 0px rgba(0,0,0,0.2);
-                    background: #fff;
-                }
-                &:active {
-                    top: 2px;
-                    box-shadow: 0 4px 8px 0px rgba(0,0,0,0.2);
-                }
-            }
-        }
-    }
-}
-
 

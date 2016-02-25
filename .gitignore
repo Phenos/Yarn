@@ -5,6 +5,8 @@ bower_components/
 
 build/
 dist/
+cache/
+release/
 ### OSX template
 .DS_Store
 .AppleDouble
@@ -46,6 +48,10 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+
+# Ignore Electron build files
+cache
+release
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt

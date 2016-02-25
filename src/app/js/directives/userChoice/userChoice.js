@@ -1,6 +1,6 @@
-angular.module('mindgame').directive('userChoice', UserChoiceDirective);
+yarn.directive('userChoice', UserChoiceDirective);
 
-function UserChoiceDirective(ngAudio) {
+function UserChoiceDirective() {
     return {
         restrict: 'E',
         bindToController: {
@@ -14,10 +14,8 @@ function UserChoiceDirective(ngAudio) {
         controller: UserChoiceController
     };
 
-    function UserChoiceController(promptLoop) {
+    function UserChoiceController(promptLoop, soundEffects) {
         var self = this;
-
-        var clickSound = ngAudio.load("./sounds/click.mp3");
 
         promptLoop.onUpdate( function (promptLoop) {
             // Load the appropriate prompt and setup the ui with the prompt
@@ -28,7 +26,7 @@ function UserChoiceDirective(ngAudio) {
                 self.question = prompt.question;
                 self.options = prompt.options;
                 self.choose = function (value) {
-                    clickSound.play();
+                    soundEffects.tap();
                     prompt.answer(promptLoop, value);
                     promptLoop.update();
                 };
@@ -41,5 +39,7 @@ function UserChoiceDirective(ngAudio) {
             console.log("onChoose!");
             self.onChoose({value: value});
         };
+
+        promptLoop.update();
     }
 }

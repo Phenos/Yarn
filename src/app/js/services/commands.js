@@ -1,114 +1,21 @@
-angular.module('mindgame').factory('commands', commands);
+yarn.factory('commands', commands);
+yarn.factory('commandsRegistry', commandsRegistry);
 
-function commands(storyLogService,
-                  hotkeys,
-                  game) {
+function commands(yConsole,
+                  commandsRegistry) {
 
-    var storyLog = storyLogService;
-    var state = game.state;
-
-    var commands = {
-        move: moveCommand,
-        look: lookCommand,
-        take: takeCommand,
-        inventory: inventoryCommand,
-        state: stateCommand,
-        tree: treeCommand,
-        tokens: tokensCommand
-    };
-
-    // todo: Move commands into a separate directive
     var command = function (text) {
-        var command = commands[text];
+        var args = text.split(" ");
+        var commandStr = args.shift();
+        var command = commandsRegistry.match(commandStr);
         if (command) {
-            command();
+            yConsole.command(text);
+            command.handler(args, text);
         } else {
-            storyLog.error("Sorry... unknown command : " + text);
+            yConsole.error("Unknown command : " + text);
+            yConsole.tip("Use the <srong>help</srong> to see a list of available commands");
         }
     };
-
-    // todo: Move hotkey into a separate directive
-    hotkeys.add({
-        combo: 'ctrl+1',
-        description: 'Output the current state',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            command("state");
-        }
-    });
-    hotkeys.add({
-        combo: 'ctrl+2',
-        description: 'Output the execution tree',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            command("tree");
-        }
-    });
-    hotkeys.add({
-        combo: 'ctrl+3',
-        description: 'Outputing script parsing',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            command("tokens");
-        }
-    });
-
-    //todo: Create a class for commands
-
-    function stateCommand() {
-        var html = game.state.html();
-        storyLog.debug("Outputing current game state:");
-        storyLog.debug(html);
-    }
-
-    function treeCommand() {
-        var html = game.script.ast.html();
-        storyLog.debug("Outputing execution tree:");
-        storyLog.debug(html);
-    }
-
-    function tokensCommand() {
-        var html = game.script.pointer.html();
-        storyLog.debug("Outputing script parsing:");
-        storyLog.debug(html);
-    }
-
-    function moveCommand() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, "move");
-    }
-
-    function takeCommand() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, "take");
-    }
-
-    function lookCommand() {
-        var isAboutTo = game.state.predicate("isAboutTo");
-        state.thing("You").setAssertion(isAboutTo, "look");
-    }
-
-    function inventoryCommand() {
-        var itemList;
-        var thingsInInventory = game.state.resolve("You.hasInInventory");
-        if (thingsInInventory.length) {
-            itemList = [];
-            thingsInInventory.forEach(function (thing) {
-                var label = thing.resolveValue("isNamed");
-                itemList.push(label);
-            });
-            var message = [
-                "You have ",
-                thingsInInventory.length,
-                " item in inventory: <a href='#'>",
-                itemList.join("</a>, <a href='#'>"),
-                "</a>."
-            ];
-            storyLog.log(message.join(""));
-        } else {
-            storyLog.error("You have nothing in inventory!");
-        }
-    }
 
     return {
         command: command
@@ -116,5 +23,45 @@ function commands(storyLogService,
 
 }
 
+function commandsRegistry(hotkeys,
+                          $injector) {
+    var service = {};
 
+    service.commands = [];
+
+    service.register = function (command) {
+        service.commands.push(command);
+
+        if (command.keystroke) {
+            hotkeys.add({
+                combo: command.keystroke,
+                description: command.shortDescription,
+                callback: function () {
+                    command.handler(command.name);
+                }
+            });
+        }
+
+    };
+
+    service.match = function (commandName) {
+        var match = null;
+
+        angular.forEach(service.commands, function (command) {
+            if (command.name === commandName) match = command;
+        });
+
+        return match;
+    };
+
+    service.load = function (commands) {
+        //console.log("Loading commands into command registry", commands);
+        angular.forEach(commands, function (commandName) {
+            var command = $injector.get(commandName);
+            service.register(command);
+        });
+    };
+
+    return service;
+}
 

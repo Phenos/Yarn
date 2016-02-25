@@ -1,0 +1,36 @@
+
+The #PlasticSpoon:
+    is an @InventoryItem,
+    has image "./images/things/plastic-spoon.jpg",
+    is named "Plastic Spoon".
+
+
+The #RedSoccerBall:
+    is a @Thing,
+    is called "Red Soccer Ball",
+    is a @InventoryItem,
+    has image "./images/things/red-soccer-ball.jpg",
+    is described as "The soccer ball is red and turquoise. It smells like banana."
+
+The #RedPill:
+    is a @Thing,
+    is a @InventoryItem,
+    is called "Red Pill",
+    has image "./images/things/red-pill.png",
+    is described as "Juste a red pill... It's nothing suspicious and looks delicious."
+
+The #KitchenTable:
+    is a @Thing,
+    has image "./images/things/kitchen-table.jpg",
+    is called "Kitchen Table",
+    is described as
+        "This round kitchen table is made of dark maple and has four chairs.
+        It has two diner covers already layed out on it."
+
+The #FlashLight:
+    is named "Flashlight",
+    is a @thing,
+    is an @InventoryItem,
+    has image "./images/things/flashlight.jpg",
+    is described as "A yellow plastic standard ordinary boring flashlight... looks cheap. Probably from Walmart".
+

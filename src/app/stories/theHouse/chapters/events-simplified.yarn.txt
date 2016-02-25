@@ -1,0 +1,34 @@
+
+/*
+When the hero goes in the bedroom he gets tired as a side
+effect of the room being hauted by the old lady.
+*/
+EnteringTheBedroom (You enter TheBedRoom) triggers FeelingTired.
+FeelingTired (
+    You are Tired.
+    RedBall is called "The tiresome red ball".
+)
+
+
+
+BecomeAGod is triggered by ObtainingTheScepter.
+/* or the "reverse" predicate of */
+ObtainingTheScepter triggers BecomeAGod.
+
+
+/* or the combined syntax of */
+
+ObtainingTheScepter (
+    You obtain the GoldScepter
+) triggers BecomeAGod.
+
+BecomeAGod (
+    You:
+        are called "Zeus",
+        are a God,
+        have a MagicLightningRod,
+        are in TheTempleInTheClouds,
+        are invincible.
+)
+
+

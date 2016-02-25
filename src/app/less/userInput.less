@@ -1,59 +1,51 @@
 user-input {
-    //display: none;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    margin: 0 0 1px 0;
-    z-index: 1000;
-
-    //-webkit-box-shadow: 0 -10px 14px -6px rgba(0,0,0,0.2);
-    //-moz-box-shadow: 0 -10px 14px -6px rgba(0,0,0,0.2);
-    box-shadow: 0 -10px 24px 0px rgba(0,0,0,0.1);
-
+    .inputContainer {
+        padding-top: 5px;
+    }
     form {
-        position: relative;
-        padding: 20px 20px;
         margin: 0;
-    }
-
-    input[type=text] {
-        .inputShadow();
-        padding-left: 20px;
-        width: 100%;
-        height: 2em;
-        border: none;
-        background: #ffffff;
-        color: #444444;
-        font-size: 1.3em;
-
-        &:focus,
-        &:hover {
-            .inputShadowActive();
-            outline: none;
-        }
-    }
-    button {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: #dddddd;
-        height: 2em;
-        border: none;
-        font-size: 1.3em;
         padding: 0 20px;
-    }
 
-    .inputShadow {
-        -webkit-box-shadow: 0 6px 10px -6px rgba(0,0,0,0.2);
-        -moz-box-shadow: 0 6px 10px -6px rgba(0,0,0,0.2);
-        box-shadow: 0 6px 10px -6px rgba(0,0,0,0.2);
-    }
-    .inputShadowActive {
-        -webkit-box-shadow: 0 6px 14px -6px rgba(0,0,0,0.4);
-        -moz-box-shadow: 0 6px 14px -6px rgba(0,0,0,0.4);
-        box-shadow: 0 6px 14px -6px rgba(0,0,0,0.4);
+        .executeButton {
+            min-width: 60px;
+
+            button {
+                background-color: #017E00 !important;
+
+                md-icon {
+                    width: 20px;
+                    height: 20px;
+                    padding-left: 4px;
+                }
+            }
+        }
+
+
     }
 }
 
+.md-autocomplete-suggestions {
+    li {
+        height: 60px !important;
+        line-height: normal;
+        font-size: 1em;
+    }
+    .autocomplete-match {
+        margin: 0;
+        padding: 10px 10px 0 0;
+        font-family: 'Source Sans Pro', sans-serif;
+
+        .autocomplete-command {
+            color: #4444DD;
+            font-weight: bold;
+            margin: 0 0 3px 0;
+            padding: 0;
+        }
+        .autocomplete-description {
+            font-size: 0.9em;
+            margin: 0;
+            padding: 0;
+            color: #222;
+        }
+    }
+}

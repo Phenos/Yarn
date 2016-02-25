@@ -1,0 +1,35 @@
+
+when #You enters the #Bedroom do #FeelTired.
+
+on #FeelTired:
+    #you is #Tired,
+    #RedBall is called "Blue ball".
+
+
+$BecomeAGod is triggered by $ObtainingTheScepter.
+
+/* or the "reverse" predicate of */
+$ObtainingTheScepter triggers $ObtainTheScepter.
+
+
+#ObtainingTheScepter (#You obtain #GoldScepter )
+
+/* or the combined syntax of *?
+
+#ObtainingTheScepter (
+    #You obtain #GoldScepter
+) triggers #BecomeAGod.
+
+BecomeAGod (
+    #you:
+        is called "Zeus",
+        is a #God,
+        has a #MagicLightningRod,
+        is in #TheTempleInTheClouds,
+        are #invincible.
+)
+
+#ObtainingTheScepter (
+    #You obtain #GoldScepter
+)
+

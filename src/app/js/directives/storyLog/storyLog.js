@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('mindgame').directive('storyLog', StoryLogDirective);
+    yarn.directive('storyLog', StoryLogDirective);
 
     function StoryLogDirective() {
         return {
@@ -14,7 +14,7 @@
             controller: StoryLogController
         };
 
-        function StoryLogController(storyLogService, $scope, $element, $compile, $window) {
+        function StoryLogController(storyLog, $scope, $element, $compile, $window) {
 
             this.clear = function () {
                 $element.empty();
@@ -29,7 +29,7 @@
                 $element.append(logItemEl);
             };
 
-            storyLogService.register(this);
+            storyLog.register(this);
 
         }
     }

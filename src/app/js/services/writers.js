@@ -1,13 +1,9 @@
-angular.module('mindgame').factory('writers', writers);
-
-// TODO:  storyLog and state are ASYNC ????
-
-function writers(storyLogService,
-                 game,
-                 sceneryService) {
-
-    var storyLog = storyLogService;
-    var state = game.state;
+yarn.factory('writers', function (yarn,
+                                  yConsole,
+                                  storyLog,
+                                  state,
+                                  script,
+                                  sceneryService) {
 
     // Story welcome message and introduction
     // todo: Output specially styled titles for story and chapters
@@ -26,13 +22,71 @@ function writers(storyLogService,
 
 
     // Describe where you are at the beginning
-    function DescribeWhereYouAre(justMoved) {
+    function DescribeWhereYouAre() {
+        var returnFn;
+        if (state.step() === 0) {
+            returnFn = describeCoverpage();
+        } else {
+            returnFn = describeRoom();
+        }
+        return returnFn;
+    }
+
+    function describeCoverpage() {
+        var story = state.thing("Story");
+
+
         storyLog.clear();
+
+        // Show the story title
+        var storyIsCalled = story.resolveValue("isNamed");
+        if (storyIsCalled) {
+            storyLog.heading(storyIsCalled);
+        }
+
+        // Set the scenery
+        var scenery = story.resolveValue("hasScenery");
+        var coverpage = story.resolveValue("hasCoverpage");
+        var scenery_url = scenery && script.resolveRelativeURI(scenery);
+        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
+        var url = scenery_url || coverpage_url || false;
+
+        if (url) {
+            sceneryService.change(url);
+        } else {
+            sceneryService.clear();
+        }
+
+        if (coverpage) {
+            storyLog.image(coverpage_url);
+        }
+
+        var description = story.resolveValue("isDescribedAs");
+        if (description) {
+            storyLog.log("“&nbsp;" + description + "&nbsp;”");
+        }
+
+        var author = story.resolveValue("isAuthoredBy");
+        if (author) {
+            storyLog.log("by " + author);
+        }
+
+        return this;
+    }
+
+    function describeRoom() {
+        storyLog.clear();
+
         var room = state.resolveValue("you.isIn");
         //console.log("Your in room ", room);
         if (room) {
             var scenery = room.resolveValue("hasScenery");
-            if (scenery) sceneryService.change(scenery);
+            var url = script.resolveRelativeURI(scenery);
+            if (url) {
+                sceneryService.change(url);
+            } else {
+                sceneryService.clear();
+            }
 
             var label = room.resolveValue("isNamed");
             storyLog.heading(label);
@@ -40,6 +94,10 @@ function writers(storyLogService,
             if (description) storyLog.log(description);
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");
+            yConsole.error("Your hero is nowhere to be found!");
+            yConsole.tip(
+                "For the story to start, you must place you hero in a room.<br/>" +
+                "Ex.: #You is in #YourBedroom.");
         }
         return this;
     }
@@ -50,7 +108,11 @@ function writers(storyLogService,
             var label = thing.resolveValue("isNamed");
             var description = thing.resolveValue("isDescribedAs");
             var image = thing.resolveValue("hasImage");
-            if (image) storyLog.thingImage(image);
+            if (image) {
+                storyLog.thingImage(
+                    script.resolveRelativeURI(image)
+                );
+            }
             if (label) storyLog.subHeading(label);
             if (description) storyLog.log(description);
         }
@@ -68,12 +130,16 @@ function writers(storyLogService,
 
     return {
         DescribeThingTakenInInventory: DescribeThingTakenInInventory,
-        DescribeThing:DescribeThing,
-        DescribeWhereYouAre:DescribeWhereYouAre,
-        LogStoryIntroduction:LogStoryIntroduction
+        DescribeThing: DescribeThing,
+        DescribeRoom: describeRoom,
+        DescribeCoverpage: describeCoverpage,
+        DescribeWhereYouAre: DescribeWhereYouAre,
+        LogStoryIntroduction: LogStoryIntroduction
     };
 
-}
+});
+
+
 
 
 

@@ -1,6 +1,6 @@
 (function() {
 
-angular.module('mindgame').directive('logItem', LogItemDirective);
+yarn.directive('logItem', LogItemDirective);
 
 function LogItemDirective($sce) {
     return {

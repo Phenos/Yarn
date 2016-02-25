@@ -1,9 +1,13 @@
 scenery {
     display: block;
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     padding: 0;
+
     background-repeat: no-repeat;
     background-position: center center;
     // TOTO: User mixin for vendor prefix
@@ -18,12 +22,21 @@ scenery {
         -o-background-size: auto 100%;
     }
 
-    //background-attachment: fixed;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
 
 
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    -moz-filter: blur(8px);
-    -o-filter: blur(8px);
-    z-index: -1;
+    .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+
+        background: rgba(0, 0, 0, 0.4);
+
+    }
+
 }

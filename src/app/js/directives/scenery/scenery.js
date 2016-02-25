@@ -1,4 +1,4 @@
-angular.module('mindgame').directive('scenery', SceneryDirective);
+yarn.directive('scenery', SceneryDirective);
 
 function SceneryDirective() {
     return {
@@ -12,12 +12,12 @@ function SceneryDirective() {
     };
 
     function SceneryController(sceneryService, $element) {
-        console.log("screnery directive loader!");
-
-        sceneryService.onChange( function (image) {
-            console.log("Changing the scenere: ", image);
-            $element.css("background-image", "url(" + image + ")");
-            console.log($element);
+        sceneryService.onChange(function (image) {
+            if (image) {
+                $element.css("background-image", "url(" + image + ")");
+            } else {
+                $element.css("background-image", "none");
+            }
         });
     }
 }

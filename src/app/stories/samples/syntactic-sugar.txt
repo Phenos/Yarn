@@ -1,0 +1,20 @@
+/*
+    Instead of having to describe complexe objects in a
+    repetitive manner. The language should allow various
+    variations to make the language more natural.
+
+    All those variations should result in the same graph.
+*/
+
+// Defining a room with a name
+The_Dark_Room is a Room.
+The_Dark_Room has a Name "A Dark Room".
+The_Dark_Room has a Description "This is a dark room with no lights and nothing visible in it!!!".
+
+// Chaining the assertions with command and the "and" word
+The_Dark_Room is a Room, has a Name "A Dark Room"
+    and has a Description "This is a dark room with no lights and nothing visible in it!!!".
+
+// Using a predicate as "contractions"
+The_Dark_Room is a Room called "A Dark Room" and is described as
+    "This is a dark room with no lights and nothing visible in it!!!".

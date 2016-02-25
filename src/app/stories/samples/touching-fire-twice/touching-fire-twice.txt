@@ -1,0 +1,123 @@
+/*
+
+# THE "TOUCHING FIRE TWICE" SCENARIO:
+
+A magical blue flame is on the floor. If the player touches it he burns his hand.
+The player can get burn only once, after which he is "marked" for
+later use in the story. Also, touching the blue fire drops your health by 3 points
+
+Touching the flame a second time will extinguish it, and the black pebble that was under
+the flame can be taken into inventory.
+
+## This scenario demonstrates:
+
+- Triggers and state changes
+- Different triggers on repeated actions
+- Negation assertions with the "!" operator
+- The use of assertion ordering with the [1] notation
+- Modifying attributes
+
+*/
+//--- Story Info --- //
+
+Story
+    has a Name "Touching the blue flame"
+    has an Author "Mathieu Sylvain"
+    has a Description
+        "Sample story for conditionnal triggers on repeated action."
+
+//--- Initial setup of the room and the blue flame ---//
+
+You
+    are an Actor
+    have Health 4
+
+Health is an Attribute
+    has a Label "Health"
+    is of format Numeric
+
+The_Dark_Room is a Room
+    has a Name "A Dark Room"
+    has a Scenery "blue-flame.png"
+    has a Description
+        "You are in a room... just a small dark room with no doors.
+        A blue flame is shimmering on the floor".
+
+The_Fire is a Thing
+    has a Name "A Blue Fire"
+    is Touchable
+    is in The_Dark_Room
+    has a Description
+        "A small shimmering blue flame resting on the floor,
+        seamingly attached to a smooth black pebble."
+
+The_Black_Pebble is a Thing
+    has a Name "The Blackest Pebble"
+    is an Inventory
+    has an Image "black-pebble"
+    has a Description
+        "It is the smoothest and blackest pebble you have ever seen."
+
+//--- STEP 1 : Events when touching the flame ---//
+
+// Trigger when you touch the blue fire for the first time
+// Note: The "touch" assertion is a momentary state when the user touches anything.
+// Also, here we test for a custom negative assertion using the "!" operator
+Touch_The_Fire is a Condition (
+    You touch The_Fire, !are marked by The_Fire.
+) triggers Burning_Yourself.
+
+// When you touch the fire we make a few changes to the state before outputing the narration
+// Note: The "Immediatly" object is used to trigger another state change immediatly after it is applied
+
+Burning_Yourself is a Change (
+    1. Immediatly trigger Burning_Yourself_Dialog.
+    2. You are marked by The_Fire
+        and is affected by Blue_Flame_Hit.
+)
+
+// When changing the "Health" assertion, we use a formula
+// to add 3 to the current health
+Blue_Flame_Hit is a Formula (
+    affects Health
+    decrease by 3
+)
+
+Burning_Yourself_Dialog is a Dialog by The_Narrator
+    has Text "As you reach to the flame with your hands, it suddenly leaps thoward your
+        hand and you feel a hot sting. Your quickly take your hand away with the faint
+        smell of roaster pork floating in the air. You hand now has a star shapped burn mark.
+        You feel like you havesomehow been marked."
+
+
+//--- STEP 2 : Events when touching the flame a second time ---//
+
+
+// Once the player is marked with the custome predicte,
+// we can trigger a different dialog when you touch it again
+Touching_The_Fire_When_Marked is a Condition (
+    You touch The_Fire and are marked by The_Fire.
+)
+
+Put_Out_The_Flame is a Change (
+    // We switch the The blue flame for the black pebble
+    TheBlueFlame is not in The_Dark_Room.
+    The_Black_Pebble in in The_Dark_Room.
+    Immediatly trigger Blue_Flame_Disapears.  // ???? SHOULD Dialogs also use the "trigger" predicate ????
+) triggered when Touching_The_Fire_When_Marked. // The "triggered by" and "triggered when" are synonyms
+
+Blue_Flame_Disapears is a Dialog by The_Narrator
+    has Text "As you near you hand to the fire you see the
+        flame twitch... suddenly disapears,
+        recoiling back into the black pebble.
+        Brushing your finger on the pebble reveals
+        it is very cold to the touch."
+
+
+
+
+
+
+
+
+

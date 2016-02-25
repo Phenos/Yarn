@@ -1,0 +1,52 @@
+<md-toolbar style="height:80px" class="editorToolbar md-menu-toolbar" layout="row">
+    <div flex="100" layout="row">
+        <md-toolbar-filler layout layout-align="center center">
+            <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
+        </md-toolbar-filler>
+        <div>
+            <h2 class="md-toolbar-tools">Sample-Story.yarn</h2>
+            <md-menu-bar>
+                <md-menu>
+                    <button ng-click="$mdOpenMenu()">
+                        Story
+                    </button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.IDE.saveAndRun()">
+                                Save and Run
+                                <span class="md-alt-text"> {{ 'M-Enter' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.IDE.save()">
+                                Save
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.IDE.run()">
+                                Run
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+
+            </md-menu-bar>
+        </div>
+    </div>
+    <!--
+        <md-button
+                ng-click="toolbar.openSidebar()"
+                class="md-icon-button"
+                aria-label="Open menu">
+            <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
+        </md-button>
+
+            <md-button ng-click="editor.openShare()" class="md-icon-button" aria-label="Share">
+                <md-icon md-svg-icon="/svg-icons/share.svg"></md-icon>
+            </md-button>
+            <md-button ng-click="editor.saveAndRun()" class="md-icon-button" aria-label="Run">
+                <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
+            </md-button>
+    -->
+
+</md-toolbar>

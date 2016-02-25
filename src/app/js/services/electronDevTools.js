@@ -2,7 +2,7 @@ yarn.factory('electronDevTools', electronDevTools);
 
 
 function electronDevTools($localStorage) {
-
+/*
     if (typeof require !== "undefined") {
         var remote = require('remote');
     }
@@ -45,6 +45,6 @@ function electronDevTools($localStorage) {
 
     }
 
-
     return new electronDevTools();
+ */
 }

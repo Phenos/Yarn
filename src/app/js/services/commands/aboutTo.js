@@ -8,7 +8,7 @@ yarn.service('aboutToCommand',
             "<span command='aboutTo take'>take</span>, " +
             "<span command='aboutTo use'>use</span>.";
 
-        function handler(command, args) {
+        function handler(args) {
             var state = args[0];
             if (args.length) {
                 if (state) {

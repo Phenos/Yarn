@@ -15,7 +15,7 @@ function commands(yConsole,
         var command = commandsRegistry.match(commandStr);
         if (command) {
             yConsole.command(text);
-            command.handler(text, args);
+            command.handler(args, text);
         } else {
             yConsole.error("Unknown command : " + text);
             yConsole.tip("Use the <srong>help</srong> to see a list of available commands");

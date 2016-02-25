@@ -1,6 +1,6 @@
 yarn.factory('userFromAPI', userFromAPI);
 
-function userFromAPI($http, $window) {
+function userFromAPI($http) {
 
     function loadUserFromAPI () {
         //console.log(scriptTag);

@@ -58,7 +58,7 @@ function StoriesService(Story,
                 yConsole.success("Story saved");
                 if (success) success(story);
             },
-            function (error, b) {
+            function (error) {
                 yConsole.error("A problem occured while trying to save the story.");
                 console.error("A problem occured while trying to save the story.", error);
                 if (failure) failure(error);

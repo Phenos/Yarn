@@ -4,7 +4,7 @@ yarn.factory('useCommand', function (yConsole,
                                      logic,
                                      writers) {
 
-    function handler(command, args) {
+    function handler(args) {
         if (args.length) {
             var object = state.thing(args[0], true);
             if (object) {
@@ -15,7 +15,7 @@ yarn.factory('useCommand', function (yConsole,
                 // todo: In the tip, list the objects that can be used in the room
             }
         } else {
-            yConsole.tip("You must provide a subject as the first argument.")
+            yConsole.tip("You must provide a subject as the first argument.");
             // todo: In the tip, list the objects that can be used in the room
         }
     }

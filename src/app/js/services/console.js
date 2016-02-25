@@ -70,9 +70,7 @@ function yConsoleService(soundEffects) {
 
     }
 
-    var logger = new Logger();
-
-    return logger;
+    return new Logger();
 }
 
 

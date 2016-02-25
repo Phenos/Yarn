@@ -1,8 +1,3 @@
-// LEGACY CODE FOR ELECTRON
-//if (typeof require !== "undefined") {
-//    var remote = require('remote');
-//}
-
 yarn.factory('commands', commands);
 yarn.factory('commandsRegistry', commandsRegistry);
 

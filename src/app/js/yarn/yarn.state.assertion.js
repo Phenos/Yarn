@@ -65,22 +65,25 @@
         };
 
         Assertion.prototype.set = function (value, layerId, parentThing) {
+            var assertionState;
             if (parentThing) {
                 //console.log("parentThing", this);
             }
-            var alreadyExistingState = this.get(layerId, parentThing);
-            if (alreadyExistingState) {
-                alreadyExistingState.value = value;
+            var assertionState = this.get(layerId, parentThing);
+            if (assertionState) {
+                assertionState.value = value;
             } else {
-                this.states.push(
-                    new AssertionState(this, value, layerId, parentThing)
-                );
+                assertionState = new AssertionState(this, value, layerId, parentThing);
+                this.states.push(assertionState);
             }
 
             postal.publish({
                 channel: "state",
                 topic: "setAssertion",
-                data: this
+                data: {
+                    assertion: this,
+                    state: assertionState
+                }
             });
 
             return this;

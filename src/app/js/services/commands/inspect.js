@@ -32,7 +32,7 @@ function inspectCommand(state,
         } else if (args.length > 0) {
             inspectItems(args)
         }
-        console.log(state);
+        //console.log(state);
     }
 
     function inspectItems(items) {

@@ -41,37 +41,34 @@ yarn.service('gamePedicates', function (state) {
         // What something is of a kind
         state
             .predicate("hasScenery")
-            .syntax("has scenery");
+            .syntax("has scenery")
+            .isUniqueSubject(true);
 
         state
             .predicate("hasImage")
-            .syntax("has image");
-
-        // What something has an attribute
-        state
-            .predicate("is")
-            .syntax("is");
+            .syntax("has image")
+            .isUniqueSubject(true);
 
         // What something is called
         var isCalled = state
             .predicate("isNamed")
             .syntax("is titled")
             .syntax("is named")
-            .syntax("is called");
-        isCalled.uniqueSubject = true;
+            .syntax("is called")
+            .isUniqueSubject(true);
 
         // What something is described as when looked at
         var isDescribedAs = state
             .predicate("isDescribedAs")
             .syntax("is described")
-            .syntax("is described as");
-        isDescribedAs.uniqueSubject = true;
+            .syntax("is described as")
+            .isUniqueSubject(true);
 
         var isAlsoDescribedAs = state
             .predicate("isAlsoDescribedAs")
             .syntax("is also described")
-            .syntax("is also described as");
-        isAlsoDescribedAs.uniqueSubject = true;
+            .syntax("is also described as")
+            .isUniqueSubject(true);
 
         // When something is in a place
         var isIn = state
@@ -87,8 +84,8 @@ yarn.service('gamePedicates', function (state) {
             .syntax("are at the")
             .syntax("are in")
             .syntax("are inside")
-            .syntax("are at");
-        isIn.uniqueSubject = true;
+            .syntax("are at")
+            .isUniqueSubject(true);
 
         // When something has something else. Ex.: Kitchen has a Kitchen Table
         state
@@ -119,6 +116,13 @@ yarn.service('gamePedicates', function (state) {
             .predicate("this")
             .syntax("that")
             .syntax("the");
+
+        state
+            .predicate("isUsable")
+            .syntax("is usable")
+            .syntax("can be used")
+            .syntax("is usable with")
+            .syntax("can be used with");
 
 
         /*

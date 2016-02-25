@@ -1,19 +1,14 @@
-yarn.service('gameService', function (yarn,
-                                      state,
-                                      loadScript,
-                                      writers,
-                                      promptLoop,
-                                      yConsole,
-                                      splashService,
-                                      player,
-                                      $localStorage) {
+yarn.service('loader', function (yarn,
+                                 state,
+                                 loadScript,
+                                 yConsole,
+                                 splashService,
+                                 player,
+                                 $localStorage) {
 
-    var service = {
-        loadFromURL: loadFromURL,
-        loadFromSource: loadFromSource
-    };
+    var service = {};
 
-    function loadFromURL(_url) {
+    service.fromURL = function fromURL(_url) {
         state.removeAssertionsLayer('session');
         state.removeAssertionsLayer('world');
 
@@ -66,16 +61,9 @@ yarn.service('gameService', function (yarn,
             }
 
         }
-    }
+    };
 
-    function updateStoryLog() {
-        writers
-            .LogStoryIntroduction()
-            .DescribeWhereYouAre();
-        promptLoop.update();
-    }
-
-    function loadFromSource(source, _baseURL) {
+    service.fromSource = function fromSource(source, _baseURL) {
 
         // hack to protect windows drive letters in the path
         //var baseURL = _baseURL.replace(/\\/g, "//");
@@ -119,7 +107,7 @@ yarn.service('gameService', function (yarn,
             yConsole.tip("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
         }
 
-    }
+    };
 
     return service;
 

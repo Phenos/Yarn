@@ -1,12 +1,10 @@
 yarn.service('game', function (yarn,
                                gamePedicates,
-                               gameRoutines,
-                               gameThings) {
+                               gameRoutines) {
 
     // Load various configuration modules
     gamePedicates(yarn);
     gameRoutines(yarn);
-    gameThings(yarn);
 
     return yarn;
 });

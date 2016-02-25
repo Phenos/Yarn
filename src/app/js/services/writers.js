@@ -2,7 +2,6 @@ yarn.factory('writers', writers);
 
 function writers(yConsole,
                  storyLog,
-                 game,
                  state,
                  sceneryService) {
 
@@ -48,8 +47,8 @@ function writers(yConsole,
         // Set the scenery
         var scenery = story.resolveValue("hasScenery");
         var coverpage = story.resolveValue("hasCoverpage");
-        var scenery_url = scenery && game.script.resolveRelativeURI(scenery);
-        var coverpage_url = coverpage && game.script.resolveRelativeURI(coverpage);
+        var scenery_url = scenery && yarn.script.resolveRelativeURI(scenery);
+        var coverpage_url = coverpage && yarn.script.resolveRelativeURI(coverpage);
         var url = scenery_url || coverpage_url || false;
 
         if (url) {
@@ -82,7 +81,7 @@ function writers(yConsole,
         //console.log("Your in room ", room);
         if (room) {
             var scenery = room.resolveValue("hasScenery");
-            var url = game.script.resolveRelativeURI(scenery);
+            var url = yarn.script.resolveRelativeURI(scenery);
             if (url) {
                 sceneryService.change(url);
             } else {
@@ -111,7 +110,7 @@ function writers(yConsole,
             var image = thing.resolveValue("hasImage");
             if (image) {
                 storyLog.thingImage(
-                    game.script.resolveRelativeURI(image)
+                    yarn.script.resolveRelativeURI(image)
                 );
             }
             if (label) storyLog.subHeading(label);

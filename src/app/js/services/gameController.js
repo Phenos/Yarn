@@ -34,7 +34,7 @@
     }
 
     //todo: should this be the main game controller ?
-    function gameController(game,
+    function gameController(yarn,
                             state,
                             loadScript,
                             writers,
@@ -75,7 +75,7 @@
             function onSuccess(script) {
                 //console.info("Game script loaded successfully", script);
 
-                game.load(script.source, script.url).then(onSuccess, onError);
+                yarn.load(script.source, script.url).then(onSuccess, onError);
 
                 function onSuccess(script) {
                     //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
@@ -93,7 +93,7 @@
 
                     // Restore session state layer from localStorage
                     if (!$localStorage.localState) $localStorage.localState = {};
-                    game.restoreFromLocalState($localStorage.localState);
+                    yarn.restoreFromLocalState($localStorage.localState);
 
                     //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
                     splashService.hide();
@@ -125,11 +125,10 @@
             yConsole.log("Loading story from source");
             console.log("Story source: ", source);
 
-            game.load(source, baseURL).then(onSuccess, onError);
+            yarn.load(source, baseURL).then(onSuccess, onError);
 
             // TODO:  THIS METHOD IS A TOTAL DUPLICATE!!!! BEURK
             function onSuccess(script) {
-                console.log("OnSuccess ???!");
                 //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
                 //console.log("script WHOO", script);
                 yConsole.success("Successfully loaded the story script");
@@ -145,7 +144,7 @@
                 console.log("A!");
                 // Restore session state layer from localStorage
                 if (!$localStorage.localState) $localStorage.localState = {};
-                game.restoreFromLocalState($localStorage.localState);
+                yarn.restoreFromLocalState($localStorage.localState);
 
                 console.log("B");
 

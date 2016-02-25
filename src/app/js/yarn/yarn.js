@@ -2,7 +2,9 @@ yarn.service('yarn', function (postal,
                                state,
                                Script,
                                yConsole,
-                               consoleHelper) {
+                               consoleHelper,
+                               gamePedicates,
+                               gameRoutines) {
 
     function Yarn() {this.script = null;
         this.scripts = [];
@@ -64,7 +66,13 @@ yarn.service('yarn', function (postal,
 
     }
 
-    return new Yarn();
+    var yarn = new Yarn();
+
+    //todo: Refactor this by... ?
+    gamePedicates(yarn);
+    gameRoutines(yarn);
+
+    return yarn;
 });
 
 

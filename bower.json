@@ -28,5 +28,9 @@
     "angular-sanitize": "~1.5.0",
     "postal.js": "postal#~1.0.8",
     "lodash": "~4.5.1"
+  },
+  "resolutions": {
+    "lodash": "~4.5.1",
+    "angular": "1.4.9"
   }
 }

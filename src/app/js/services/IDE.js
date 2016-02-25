@@ -90,7 +90,6 @@ function IDEService(stories,
             yConsole.log("No story to load from either memory or url");
             yConsole.tip("To load a story you can use the LOAD command. Ex.: LOAD http://somtehing.com/yourStoryFile.txt");
         }
-        //electronDevTools.remember();
     };
 
     return service;

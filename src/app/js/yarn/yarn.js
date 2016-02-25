@@ -3,10 +3,7 @@ yarn.service('yarn', function (state,
                                yConsole,
                                consoleHelper) {
 
-    function Yarn() {
-        var self = this;
-
-        this.script = null;
+    function Yarn() {this.script = null;
         this.scripts = [];
         this.localState = {};
         this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
@@ -15,10 +12,10 @@ yarn.service('yarn', function (state,
         postal.subscribe({
             channel: "state",
             topic: "setAssertion",
-            callback: function (assertion, envelope) {
+            callback: function (data) {
                 // If the story has started, log state changes to the console
-                if (state.step() > 0) {
-                    yConsole.log("Changed: " + consoleHelper.assertion2log(assertion));
+                if (state.step() > 0 && data.state.value === true) {
+                    yConsole.log("Changed: " + consoleHelper.assertion2log(data.assertion));
                 }
             }
         });
@@ -59,8 +56,7 @@ yarn.service('yarn', function (state,
 
             if (!this.script) this.script = script;
             this.scripts.push(script);
-            return script.load(text, url).then(function (v) {
-                //console.log("script.load.then", v);
+            return script.load(text, url).then(function () {
                 return script;
             });
         };

@@ -77,17 +77,22 @@ yarn.service('state', function (Assertion,
      * Get or create a new thing
      * @param _id
      */
-    State.prototype.thing = function (_id) {
-        var thing;
-        if (!_id) return null;
+    State.prototype.thing = function (_id, dontAutoCreate) {
+        var thing = null;
+        if (_id) {
+            var id = _id.toLowerCase();
+            thing = this.things[id];
+            if (!thing) {
+                if (dontAutoCreate) {
+                    thing = null;
+                } else {
+                    thing = new Thing(id, this);
+                    this.things[id] = thing;
+                }
+            }
 
-        var id = _id.toLowerCase();
-
-        thing = this.things[id];
-        if (!thing) {
-            thing = new Thing(id, this);
-            this.things[id] = thing;
         }
+
         return thing;
     };
 

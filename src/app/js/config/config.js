@@ -22,15 +22,15 @@ yarn.run(function ($rootScope,
     };
 
     commandsRegistry.load([
-        "movePlayerCommand",
-        "lookPlayerCommand",
-        "takePlayerCommand",
         "inventoryPlayerCommand",
         "beginStoryCommand",
         "inspectCommand",
+        "aboutToCommand",
         "clearCommand",
         "loadCommand",
         "graphCommand",
+        "useCommand",
+        "moveCommand",
         "restartCommand",
         "inventoryCommand",
         "stateCommand",

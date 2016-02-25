@@ -16,13 +16,13 @@ function promptLoop(storyLogService,
 
         context.question = function (promptLoop, prompt) {
             prompt.question = "Do you want to begin this story";
-            prompt.option("Begin story", "playerStart");
+            prompt.option("Begin story", "beginstory");
         };
 
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhatToDo");
             // todo: this should be injected instead of taken from parent scope
-            if (option && option.value === "playerStart") {
+            if (option && option.value === "beginstory") {
                 commands.command("beginstory");
             }
         };
@@ -39,7 +39,7 @@ function promptLoop(storyLogService,
             var linksToCurrentRoom = state.resolve("You.isIn.linksTo");
             //console.log("linksToCurrentRoom", linksToCurrentRoom);
             if (linksToCurrentRoom.length) {
-                prompt.option("Move", "playerMove");
+                prompt.option("Move", "aboutTo move");
             }
 
             // Enable the look action for if the room contains objects
@@ -48,15 +48,24 @@ function promptLoop(storyLogService,
             //console.log("thingsInRoom", thingsInRoom);
             var thingsInRoomWithDescriptions = state.predicate("isDescribedAs").filterThings(thingsInRoom);
             if (thingsInRoomWithDescriptions.length) {
-                prompt.option("Look", "playerLook");
+                prompt.option("Look", "aboutTo look");
             }
+
+            // Fetch room contents for Look and Use
+            var roomContents = state.resolve("You.isIn.hasInIt");
 
             // Enable the "take" option if there are inventory items
             // in the current room
-            var roomContents = state.resolve("You.isIn.hasInIt");
             var inventoryInCurrentRoom = state.predicate("isA").filterThings(roomContents, state.thing("InventoryItem"));
             if (inventoryInCurrentRoom.length) {
-                prompt.option("Take", "playerTake");
+                prompt.option("Take", "aboutTo take");
+            }
+
+            // Enable the "use" option if there are inventory items
+            // in the current room
+            var usableItemInCurrentRoom = state.predicate("can be used").filterThings(roomContents);
+            if (usableItemInCurrentRoom.length) {
+                prompt.option("Use", "aboutTo use");
             }
 
             // Enable the "inventory" action if the user has inventory
@@ -98,15 +107,9 @@ function promptLoop(storyLogService,
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhereToDo");
             // todo: this should be injected instead of taken from parent scope
-            if (option.value === "back") {
-                logic.routines.aboutTo("");
-            } else {
-                logic.routines.aboutTo("");
-                if (logic.routines.move(option.value)) {
-                    writers.DescribeWhereYouAre(true);
-                } else {
-                    storyLog.error("Failed to find this room [%s]", option.value);
-                }
+            logic.routines.aboutTo("");
+            if (option.value !== "back") {
+                commands.command("move " + option.value);
             }
         };
         return promptLoop;
@@ -143,6 +146,40 @@ function promptLoop(storyLogService,
                 }
             } else {
                 storyLog.error("Nothing to look at here!");
+            }
+        };
+    }
+
+    function WhatToUse(context) {
+        context.when = function () {
+            var isAboutTo = state.resolveValue("You.isAboutTo");
+            return isAboutTo && isAboutTo.id === "use";
+        };
+        context.question = function (promptLoop, prompt) {
+            prompt.question = "What do you want to use ?";
+            var thingsInRoom = state.resolve("You.isIn.hasInIt");
+            //console.log('thingsInRoom', thingsInRoom);
+            if (thingsInRoom.length) {
+                thingsInRoom.forEach(function (thing) {
+                    var label = thing.resolveValue("isNamed");
+                    prompt.option(label, thing.id);
+                });
+            }
+
+            var backOption = prompt.option("Back", "back");
+            backOption.iconId = "close";
+            backOption.iconOnly = true;
+        };
+        context.answer = function answer(promptLoop, option) {
+            if (option) {
+                if (option.value === "back") {
+                    logic.routines.aboutTo("");
+                } else {
+                    logic.routines.aboutTo("");
+                    commands.command("use " + option.value);
+                }
+            } else {
+                storyLog.error("Nothing to user here!");
             }
         };
     }
@@ -188,8 +225,11 @@ function promptLoop(storyLogService,
                     logic.routines.aboutTo("");
                 } else {
                     logic.routines.aboutTo("");
+
                     // todo: Find sexier api for removing an assertion
                     // todo: Implement "unique" assertions... such as when someone is
+
+                    // todo: Put this into a "take" command
                     var thing = state.thing(option.value);
                     var hasInInventory = state.predicate("hasInInventory");
                     state.thing("You").setAssertion(hasInInventory, thing);
@@ -205,6 +245,8 @@ function promptLoop(storyLogService,
     // Create an instant of the promptLoop
     var promptLoop = new PromptLoop();
 
+    // NOTE: The order is important here. The "WhatToDo" must be after other options
+    promptLoop.addContext("WhatToUse", WhatToUse);
     promptLoop.addContext("WhereToDo", WhereToGo);
     promptLoop.addContext("WhatToLookAt", WhatToLookAt);
     promptLoop.addContext("WhatToTake", WhatToTake);

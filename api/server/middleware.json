@@ -12,6 +12,11 @@
       }
     }
   },
+  "customStatic": {
+    "loopback#static": {
+      "params": "$!../../build/static"
+    }
+  },
   "session": {},
   "auth": {},
   "parse": {},
@@ -23,9 +28,6 @@
     }
   },
   "files": {
-    "loopback#static": {
-      "params": "$!../../build/static"
-    }
   },
   "final": {
     "loopback#urlNotFound": {}

@@ -1,7 +1,7 @@
 yarn.factory('loadCommand', loadCommand);
 
 function loadCommand(yConsole,
-                     gameService,
+                     loader,
                      rememberLastStory) {
 
     function handler(command, args) {
@@ -9,7 +9,7 @@ function loadCommand(yConsole,
 
         if (url) {
             rememberLastStory.remember(url);
-            gameService.loadFromURL(url);
+            loader.fromURL(url);
         } else {
             yConsole.error("Invalid or missing argument");
             yConsole.tip(

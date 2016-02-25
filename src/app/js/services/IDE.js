@@ -8,7 +8,7 @@ function IDEService(stories,
                     rememberLastStory,
                     $mdDialog,
                     yConsole,
-                    gameService) {
+                    loader) {
 
     var service = {};
 
@@ -76,7 +76,7 @@ function IDEService(stories,
     service.run = function () {
         var url = "http://storage.yarnstudio.io/" + stories.currentUser.username + "/story.yarn.txt";
         rememberLastStory.forget();
-        gameService.loadFromSource(stories.currentStory.content, url);
+        loader.fromSource(stories.currentStory.content, url);
     };
 
 
@@ -85,7 +85,7 @@ function IDEService(stories,
         var rememberedStory = rememberLastStory.get();
         if (rememberedStory) {
             yConsole.log("Story address found in memory");
-            gameService.loadFromURL(rememberedStory);
+            loader.fromURL(rememberedStory);
         } else {
             yConsole.log("No story to load from either memory or url");
             yConsole.tip("To load a story you can use the LOAD command. Ex.: LOAD http://somtehing.com/yourStoryFile.txt");

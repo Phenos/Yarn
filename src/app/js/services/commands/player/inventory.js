@@ -1,7 +1,7 @@
 yarn.factory('inventoryPlayerCommand', inventoryPlayerCommand);
 
 function inventoryPlayerCommand(state,
-                                storyLogService,
+                                storyLog,
                                 promptLoop) {
 
     function handler() {
@@ -21,9 +21,9 @@ function inventoryPlayerCommand(state,
                 itemList.join("</a>, <a href='#'>"),
                 "</a>."
             ];
-            storyLogService.log(message.join(""));
+            storyLog.log(message.join(""));
         } else {
-            storyLogService.error("You have nothing in inventory!");
+            storyLog.error("You have nothing in inventory!");
         }
         promptLoop.update();
     }

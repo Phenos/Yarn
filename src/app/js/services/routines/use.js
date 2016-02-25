@@ -1,16 +1,14 @@
-yarn.service("useRoutine", function (state) {
+yarn.service("useRoutine", function (state,
+                                     events,
+                                     stepRoutine) {
 
-    function useRoutine(aboutToId) {
-        var isAboutTo = state.predicate("isAboutTo");
-        if (aboutToId) {
-            state.thing("You").setAssertion(isAboutTo, state.thing(aboutToId));
-            //console.log("ABOUT TO >> ", aboutTo);
-        } else {
-            state.negate(
-                state.thing("You").getAssertion(isAboutTo)
-            );
-            //console.log("CLEARED ABOUT TO !!! ");
-        }
+    function useRoutine(object) {
+        // todo: first test if the object is usable
+        var subject = state.thing("You");
+        var use = state.predicate("use");
+        events.trigger(subject, use, object);
+        stepRoutine();
+
         return true;
     }
 

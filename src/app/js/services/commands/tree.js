@@ -1,10 +1,8 @@
-yarn.factory('treeCommand', treeCommand);
-
-function treeCommand(yConsole,
-                     game) {
+yarn.factory('treeCommand', function (yConsole,
+                                      yarn) {
 
     function handler() {
-        var html = game.scripts[0].ast.html();
+        var html = yarn.scripts[0].ast.html();
         yConsole.debug("Outputing execution tree:");
         yConsole.debug(html);
     }
@@ -16,4 +14,5 @@ function treeCommand(yConsole,
         handler: handler
     };
 
-}
+});
+

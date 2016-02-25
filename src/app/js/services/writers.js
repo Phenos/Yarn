@@ -1,9 +1,8 @@
-yarn.factory('writers', writers);
-
-function writers(yConsole,
-                 storyLog,
-                 state,
-                 sceneryService) {
+yarn.factory('writers', function (yarn,
+                                  yConsole,
+                                  storyLog,
+                                  state,
+                                  sceneryService) {
 
     // Story welcome message and introduction
     // todo: Output specially styled titles for story and chapters
@@ -137,7 +136,9 @@ function writers(yConsole,
         LogStoryIntroduction: LogStoryIntroduction
     };
 
-}
+});
+
+
 
 
 

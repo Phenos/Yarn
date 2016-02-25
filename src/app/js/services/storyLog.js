@@ -1,4 +1,4 @@
-yarn.factory('storyLogService', storyLogService);
+yarn.factory('storyLog', storyLogService);
 
 function storyLogService() {
 

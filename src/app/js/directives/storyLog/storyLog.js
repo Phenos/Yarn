@@ -14,7 +14,7 @@
             controller: StoryLogController
         };
 
-        function StoryLogController(storyLogService, $scope, $element, $compile, $window) {
+        function StoryLogController(storyLog, $scope, $element, $compile, $window) {
 
             this.clear = function () {
                 $element.empty();
@@ -29,7 +29,7 @@
                 $element.append(logItemEl);
             };
 
-            storyLogService.register(this);
+            storyLog.register(this);
 
         }
     }

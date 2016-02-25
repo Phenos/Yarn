@@ -1,12 +1,10 @@
 yarn.factory('writers', writers);
 
 function writers(yConsole,
-                 storyLogService,
+                 storyLog,
                  game,
                  state,
                  sceneryService) {
-
-    var storyLog = storyLogService;
 
     // Story welcome message and introduction
     // todo: Output specially styled titles for story and chapters

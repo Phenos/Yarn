@@ -1,6 +1,4 @@
-yarn.factory('storyLog', storyLogService);
-
-function storyLogService() {
+yarn.factory('storyLog', function () {
 
     function Logger() {
 
@@ -55,11 +53,10 @@ function storyLogService() {
         this.clear = function () {
             storyLog.clear();
         };
-
     }
 
     return new Logger();
-}
+});
 
 
 

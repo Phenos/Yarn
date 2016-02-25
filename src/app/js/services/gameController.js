@@ -5,12 +5,12 @@ yarn.service('gameService', function (yarn,
                                       promptLoop,
                                       yConsole,
                                       splashService,
+                                      player,
                                       $localStorage) {
 
     var service = {
         loadFromURL: loadFromURL,
-        loadFromSource: loadFromSource,
-        updateStoryLog: updateStoryLog
+        loadFromSource: loadFromSource
     };
 
     function loadFromURL(_url) {
@@ -55,9 +55,8 @@ yarn.service('gameService', function (yarn,
                 if (!$localStorage.localState) $localStorage.localState = {};
                 yarn.restoreFromLocalState($localStorage.localState);
 
-                //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
                 splashService.hide();
-                updateStoryLog();
+                player.update();
 
             }
 

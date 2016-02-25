@@ -14,7 +14,7 @@
   },
   "customStatic": {
     "loopback#static": {
-      "params": "$!../../build/static"
+      "params": "$!../build/static"
     }
   },
   "session": {},

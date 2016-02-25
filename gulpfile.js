@@ -11,6 +11,7 @@ var inject = require('gulp-inject');
 var shell = require('gulp-shell');
 var electronConnect = require('electron-connect');
 var electron = require('gulp-electron');
+var embedTemplates = require('gulp-angular-embed-templates');
 
 var browserSync;
 var electronServer;
@@ -147,7 +148,6 @@ gulp.task('dev-electron', gulp.series(
 
 // -----[ Task Functions ]--------
 
-
 function injectJsFilesTask() {
 
     return gulp.src(paths.staticRoot + '/index-template/index.html')
@@ -187,6 +187,9 @@ function copyJsTask() {
     return gulp.src(paths.javascriptSource, {
             base: "src/app/js/"
         })
+        .pipe(embedTemplates({
+            basePath: paths.staticRoot
+        }))
         //.pipe(using())
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }

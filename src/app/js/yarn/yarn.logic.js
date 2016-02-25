@@ -1,19 +1,19 @@
-yarn.service('logic', function () {
+yarn.service('logic', function (aboutToRoutine,
+                                moveRoutine,
+                                useRoutine,
+                                stepRoutine) {
 
-    function Logic() {
-        this.routines = {};
-    }
-
-    Logic.prototype.register = function (id, fn) {
-        var self = this;
-
-        function routine() {
-            return fn.apply(self, arguments);
-        }
-
-        this.routines[id] = routine;
+    var routines = {
+        aboutTo: aboutToRoutine,
+        move: moveRoutine,
+        use: useRoutine,
+        step: stepRoutine
     };
 
-    return new Logic();
+    routines.aboutTo = aboutToRoutine;
+
+    return {
+        routines: routines
+    };
 });
 

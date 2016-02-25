@@ -39,6 +39,8 @@ var config = {
         ],
         javascriptVendorsSource: [
             "./bower_components/angular/angular.min.js",
+            "./bower_components/jquery/dist/jquery.min.js",
+            "./bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js",
             "./bower_components/lodash/dist/lodash.min.js",
             "./bower_components/postal.js/lib/postal.min.js",
             "./bower_components/ace-builds/src-noconflict/ace.js",

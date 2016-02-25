@@ -32,6 +32,7 @@ yarn.service('events', function (state,
                     angular.forEach(object.childStates, function (assertionState) {
                         var assertion = assertionState.assertion;
                         assertion.set(true, "session");
+                        state.persistAssertion(assertion);
                         console.log("setting assertions", assertion);
                     });
 

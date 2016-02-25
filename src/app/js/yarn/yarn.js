@@ -3,10 +3,10 @@ yarn.service('yarn', function (postal,
                                Script,
                                yConsole,
                                consoleHelper,
-                               gamePedicates,
-                               gameRoutines) {
+                               gamePedicates) {
 
-    function Yarn() {this.script = null;
+    function Yarn() {
+        this.script = null;
         this.scripts = [];
         this.localState = {};
         this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
@@ -70,7 +70,6 @@ yarn.service('yarn', function (postal,
 
     //todo: Refactor this by... ?
     gamePedicates(yarn);
-    gameRoutines(yarn);
 
     return yarn;
 });

@@ -1,8 +1,8 @@
 yarn.factory('loadCommand', loadCommand);
 
 function loadCommand(yConsole,
-                 gameService,
-                 rememberLastStory) {
+                     gameService,
+                     rememberLastStory) {
 
     function handler(command, args) {
         var url = args && args[0];
@@ -21,8 +21,7 @@ function loadCommand(yConsole,
     return {
         name: "load",
         shortDescription: "Load a story from a web address",
-        longDescription:
-        "Load a story from a web address passed as the first argument.<br />" +
+        longDescription: "Load a story from a web address passed as the first argument.<br />" +
         "The load command will first clear any other story already loaded.<br />" +
         "Ex.: <strong>load http://somewhere.com/some-file.yarn.txt</strong>",
         autocompletePreview: "load <em>http://somewhere.com/some-file.yarn.txt</em>",

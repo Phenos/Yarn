@@ -38,8 +38,6 @@ var config = {
             "src/app/js/yarn/yarn.js",
             "src/app/js/yarn/**/*.js",
             "src/app/js/game/game.predicates.js",
-            "src/app/js/game/game.routines.js",
-            "src/app/js/game/game.things.js",
             "src/app/js/controllers/**/*.js",
             "src/app/js/services/**/*.js",
             "src/app/js/directives/**/*.js"

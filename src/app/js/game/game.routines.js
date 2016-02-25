@@ -34,33 +34,6 @@ yarn.service('gameRoutines', function (state,
         });
 
 
-        // Set what action the player is "about to do"
-        logic.register("aboutTo", aboutTo);
-        function aboutTo(aboutToId) {
-            var isAboutTo = state.predicate("isAboutTo");
-            if (aboutToId) {
-                state.thing("You").setAssertion(isAboutTo, state.thing(aboutToId));
-                //console.log("ABOUT TO >> ", aboutTo);
-            } else {
-                state.negate(
-                    state.thing("You").getAssertion(isAboutTo)
-                );
-                //console.log("CLEARED ABOUT TO !!! ");
-            }
-            return true;
-        }
-
-        /**
-         * Increment the game session step counter
-         */
-            // todo: get rid of the register and instead use dependency injection
-        logic.register("step", step);
-        function step() {
-            state.step(1);
-            events.process();
-            return true;
-        }
-
     }
 
 });

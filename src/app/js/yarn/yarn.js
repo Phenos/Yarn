@@ -1,16 +1,15 @@
 yarn.service('yarn', function (postal,
                                state,
-                               Script,
+                               script,
                                yConsole,
                                consoleHelper,
                                gamePedicates) {
 
     function Yarn() {
-        this.script = null;
-        this.scripts = [];
+
         this.localState = {};
         this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
-
+        this.scripts = [];
 
         postal.subscribe({
             channel: "state",
@@ -48,7 +47,6 @@ yarn.service('yarn', function (postal,
             //todo: map exactly where script source is loaded
         this.load = function (text, url) {
             //console.log("yarn.load");
-            var script = new Script();
 
             if (url) {
                 script.url = url;
@@ -57,7 +55,6 @@ yarn.service('yarn', function (postal,
             // Use url as initial ID (can be overwritted in yarn script)
             if (!this.id) this.id = url;
 
-            if (!this.script) this.script = script;
             this.scripts.push(script);
             return script.load(text, url).then(function () {
                 return script;

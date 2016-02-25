@@ -46,6 +46,7 @@
     "browser-sync": "^2.9.11",
     "electron-packager": "^5.1.1",
     "electron-prebuilt": "^0.35.0",
+    "gulp-angular-embed-templates": "^2.2.0",
     "gulp-electron": "0.0.9",
     "gulp-inject": "^3.0.0",
     "gulp-shell": "^0.5.2"

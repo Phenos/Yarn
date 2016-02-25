@@ -17,12 +17,12 @@ breakpointApp.directive('breakpoint', ['$window', '$rootScope', function ($windo
             angular.element($window).bind('load', setWindowSize);
             //console.log("YEAG!");
 
-            scope.$watch('breakpoint.windowSize', function (windowWidth, oldValue) {
+            scope.$watch('breakpoint.windowSize', function (windowWidth) {
                 setClass(windowWidth);
             });
 
             scope.$watch('breakpoint.class', function (newClass, oldClass) {
-                if (newClass != oldClass) broadcastEvent(oldClass);
+                if (newClass !== oldClass) broadcastEvent(oldClass);
             });
 
             function broadcastEvent(oldClass) {
@@ -41,8 +41,10 @@ breakpointApp.directive('breakpoint', ['$window', '$rootScope', function ($windo
             function setClass(windowWidth) {
                 var breakpointClass = breakpoints[Object.keys(breakpoints)[0]];
                 for (var breakpoint in breakpoints) {
-                    if (breakpoint < windowWidth) breakpointClass = breakpoints[breakpoint];
-                    element.removeClass(breakpoints[breakpoint]);
+                    if (breakpoints.hasOwnProperty(breakpoint)) {
+                        if (breakpoint < windowWidth) breakpointClass = breakpoints[breakpoint];
+                        element.removeClass(breakpoints[breakpoint]);
+                    }
                 }
                 element.addClass(breakpointClass);
                 scope.breakpoint.class = breakpointClass;

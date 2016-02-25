@@ -38,7 +38,7 @@ function clearCommand($localStorage,
         return clearableItemsDescriptions.join("");
     }
 
-    function handler(command, args) {
+    function handler(args) {
         if (!args || args.length === 0) {
             yConsole.tip(
                 "Here is the list of things you can clear:<br/>" +

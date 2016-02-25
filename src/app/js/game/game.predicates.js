@@ -1,6 +1,7 @@
 yarn.service('gamePedicates', function (state) {
 
     return function () {
+
         state
             .predicate("hasVersion")
             .syntax("has version")
@@ -21,13 +22,13 @@ yarn.service('gamePedicates', function (state) {
             .isUniqueSubject(true);
 
         // How many steps have been take (game cycle steps)
-        var hasStepped = state
+        state
             .predicate("hasStepped")
             .syntax("has stepped")
             .isUniqueSubject(true);
 
         // The Action the user what about to make (ex.: Move, Look, etc)
-        var isAboutTo = state
+        state
             .predicate("isAboutTo")
             .syntax("is about to")
             .isUniqueSubject(true);
@@ -50,7 +51,7 @@ yarn.service('gamePedicates', function (state) {
             .isUniqueSubject(true);
 
         // What something is called
-        var isCalled = state
+        state
             .predicate("isNamed")
             .syntax("is titled")
             .syntax("is named")
@@ -58,20 +59,20 @@ yarn.service('gamePedicates', function (state) {
             .isUniqueSubject(true);
 
         // What something is described as when looked at
-        var isDescribedAs = state
+        state
             .predicate("isDescribedAs")
             .syntax("is described")
             .syntax("is described as")
             .isUniqueSubject(true);
 
-        var isAlsoDescribedAs = state
+        state
             .predicate("isAlsoDescribedAs")
             .syntax("is also described")
             .syntax("is also described as")
             .isUniqueSubject(true);
 
         // When something is in a place
-        var isIn = state
+        state
             .predicate("isIn")
             .syntax("is in the")
             .syntax("is inside the")
@@ -161,5 +162,6 @@ yarn.service('gamePedicates', function (state) {
             .syntax("enters the")
             .syntax("enters in")
             .syntax("enters into");
+
     }
 });

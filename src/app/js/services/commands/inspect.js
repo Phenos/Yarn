@@ -23,7 +23,7 @@ function inspectCommand(state,
         return inspectablleItemsDescriptions.join("");
     }
 
-    function handler(command, args) {
+    function handler(args) {
         if (!args || args.length === 0) {
             yConsole.tip(
                 "Here is the list of things you can inspect:<br/>" +

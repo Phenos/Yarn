@@ -23,15 +23,17 @@ function writers(yConsole,
 
 
     // Describe where you are at the beginning
-    function DescribeWhereYouAre(justMoved) {
+    function DescribeWhereYouAre() {
+        var returnFn;
         if (state.step() === 0) {
-            return DescribeCoverpage();
+            returnFn = describeCoverpage();
         } else {
-            return DescribeRoom();
+            returnFn = describeRoom();
         }
+        return returnFn;
     }
 
-    function DescribeCoverpage() {
+    function describeCoverpage() {
         var story = state.thing("Story");
 
 
@@ -73,7 +75,7 @@ function writers(yConsole,
         return this;
     }
 
-    function DescribeRoom() {
+    function describeRoom() {
         storyLog.clear();
 
         var room = state.resolveValue("you.isIn");
@@ -130,8 +132,8 @@ function writers(yConsole,
     return {
         DescribeThingTakenInInventory: DescribeThingTakenInInventory,
         DescribeThing: DescribeThing,
-        DescribeRoom: DescribeRoom,
-        DescribeCoverpage: DescribeCoverpage,
+        DescribeRoom: describeRoom,
+        DescribeCoverpage: describeCoverpage,
         DescribeWhereYouAre: DescribeWhereYouAre,
         LogStoryIntroduction: LogStoryIntroduction
     };

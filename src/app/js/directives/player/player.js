@@ -1,4 +1,4 @@
-yarn.directive('player', function (metadata) {
+yarn.directive('player', function () {
     return {
         restrict: 'E',
         bindToController: {},
@@ -8,7 +8,7 @@ yarn.directive('player', function (metadata) {
         controller: playerController
     };
 
-    function playerController($scope, $element, writers, promptLoop, player) {
+    function playerController($scope, $element, $mdSidenav, sidebar, writers, promptLoop, player) {
 
 
         this.onStoryLogClear = function () {
@@ -24,17 +24,15 @@ yarn.directive('player', function (metadata) {
             promptLoop.update();
         };
 
-        this.metadata = metadata;
-
         /*
          Side navigation visibility
          */
         this.openSidenav = function () {
-            $mdSidenav("leftSidebar").open();
+            sidebar.open();
         };
 
         this.closeSidenav = function () {
-            $mdSidenav("leftSidebar").close();
+            sidebar.close();
         };
 
     }

@@ -15,9 +15,9 @@ function ConsoleToolbarDirective() {
     };
 
     function ConsoleToolbarController(consoleService,
-                                      playerModeService) {
+                                      playerMode) {
         this.hideConsole = function () {
-            playerModeService.hideConsole();
+            playerMode.hideConsole();
         };
 
         this.clearConsole = function () {

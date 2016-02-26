@@ -10,6 +10,15 @@ yarn.service("player", function () {
         if (service.controller) service.controller.refresh();
     };
 
+    service.closeSidenav = function () {
+        //console.log("closeSidenav");
+        if (service.controller) service.controller.closeSidenav();
+    };
+
+    service.openSidenav = function () {
+        if (service.controller) service.controller.openSidenav();
+    };
+
     return service;
 
 });

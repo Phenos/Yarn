@@ -1,6 +1,6 @@
 "use strict";
 yarn.controller('playerMode', playerModeController);
-yarn.factory('playerModeService', PlayerModeService);
+yarn.factory('playerMode', PlayerModeService);
 
 
 function playerModeController(user,
@@ -8,7 +8,7 @@ function playerModeController(user,
                               yConsole,
                               welcomeMessage,
                               stories,
-                              playerModeService,
+                              playerMode,
                               hotkeys) {
 
     hotkeys.bindTo($scope)
@@ -17,14 +17,11 @@ function playerModeController(user,
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
             description: 'Show/Hide the console',
             callback: function () {
-                playerModeService.toggleConsole();
+                playerMode.toggleConsole();
             }
         });
 
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
-
-    // Service for playerMode UI interaction
-    $scope.playerModeService = playerModeService;
 
     /*
      Show a welcome message in the yarn console
@@ -33,7 +30,7 @@ function playerModeController(user,
     yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
     // Register with the service
-    playerModeService.register($scope);
+    playerMode.register($scope);
 
     // Play the default story
     stories.playDefault();
@@ -43,27 +40,33 @@ function playerModeController(user,
 
 }
 
-function PlayerModeService($localStorage, consoleService) {
+function PlayerModeService($localStorage, consoleService, player) {
     var service = {
         scope: null
     };
 
     service.register = function (scope) {
         service.scope = scope;
+        scope.consoleIsVisible = service.consoleIsVisible;
     };
-
 
     /*
      Console visibility
      */
     service.consoleIsVisible = false;
 
-    if (!angular.isUndefined($localStorage.consoleIsVisible)) {
-        service.consoleIsVisible = $localStorage.consoleIsVisible;
+    function consoleIsVisible(value) {
+        if (!angular.isUndefined(value)) {
+            service.consoleIsVisible = value;
+            if (service.scope) service.scope.consoleIsVisible = value;
+        }
+        return service.consoleIsVisible;
     }
 
+    consoleIsVisible($localStorage.consoleIsVisible);
+
     service.toggleConsole = function () {
-        if (service.consoleIsVisible) {
+        if (consoleIsVisible) {
             service.hideConsole();
         } else {
             service.showConsole();
@@ -71,16 +74,14 @@ function PlayerModeService($localStorage, consoleService) {
     };
 
     service.showConsole = function () {
-        console.log("showSidebar");
-        service.scope.closeSidenav();
-        service.consoleIsVisible = true;
+        //console.log("showConsole");
+        player.closeSidenav();
+        $localStorage.consoleIsVisible = consoleIsVisible(true);
         consoleService.focus();
-        $localStorage.consoleIsVisible = true;
     };
     service.hideConsole = function () {
-        console.log("hideSidebar");
-        service.consoleIsVisible = false;
-        $localStorage.consoleIsVisible = false;
+        //console.log("hideConsole");
+        $localStorage.consoleIsVisible = consoleIsVisible(false);
     };
 
     return service;

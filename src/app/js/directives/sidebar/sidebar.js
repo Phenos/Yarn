@@ -1,11 +1,7 @@
-yarn.directive('sidebar', SidebarDirective);
-yarn.factory('sidebarService', sidebarService);
-
-function SidebarDirective() {
+yarn.directive('sidebar', function SidebarDirective() {
     return {
         restrict: 'E',
         bindToController: {
-            onOpenConsole: "&"
         },
         scope: true,
         replace: true,
@@ -14,25 +10,30 @@ function SidebarDirective() {
         controller: SidebarController
     };
 
-    function SidebarController(sidebarService,
+    function SidebarController(sidebar,
                                $mdSidenav,
                                welcomeMessage,
                                commands,
-                               metadata) {
+                               metadata,
+                               playerMode) {
         var self = this;
+
+        this.showConsole = function () {
+            playerMode.showConsole();
+        };
 
         metadata.then(function (metadata) {
             this.metadata = metadata
         });
 
-        sidebarService.register(this);
+        sidebar.register(this);
 
-        this.openConsole = function () {
-            console.log("sidebar.openClose");
-            self.onOpenConsole();
-            self.closeAll();
-        };
-
+        //this.openConsole = function () {
+        //    console.log("sidebar.openConsole");
+        //    player.openConsole();
+        //    self.closeAll();
+        //};
+        //
         this.openStoryMenu = function () {
             $mdSidenav("storySidebar").open();
         };
@@ -66,16 +67,17 @@ function SidebarDirective() {
 
         this.close = function () {
             $mdSidenav("leftSidebar").close();
+            $mdSidenav("authorSidebar").close();
         };
 
-        this.openWelcomeMessage = function() {
+        this.openWelcomeMessage = function () {
             welcomeMessage.open();
         }
 
     }
-}
+});
 
-function sidebarService() {
+yarn.factory('sidebar', function sidebarService() {
     var controller;
 
     function open() {
@@ -97,4 +99,4 @@ function sidebarService() {
         open: open,
         close: close
     }
-}
+});

@@ -39,9 +39,13 @@
         };
 
         Thing.prototype.dettachFromState = function (state) {
-            this.childstates = this.childstates.filter(function (childState) {
-                return !(childState === state);
+            var kept = [];
+            angular.forEach(this.childstates, function (childState) {
+                if (childState === state) {
+                    kept.push(childState);
+                }
             });
+            this.childstates = kept;
         };
 
         /**

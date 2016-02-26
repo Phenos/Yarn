@@ -328,23 +328,29 @@ yarn.service('state', function (Assertion,
      * Get or create a new type of predicate
      * @param _id
      */
-    State.prototype.predicate = function (_id) {
-        var id = _id.toLowerCase();
+    State.prototype.predicate = function (_id, dontAutoCreate) {
         var predicate;
         var syntax;
+        if (typeof(_id) === "string") {
+            var id = _id.toLowerCase();
 
-        if (!id)
-            throw("Assertions must have an id");
+            if (!id)
+                throw("Assertions must have an id");
 
-        // Resolve the predicate from the syntax
-        syntax = this.syntaxes[id];
-        if (syntax) predicate = syntax.predicate;
+            // Resolve the predicate from the syntax
+            syntax = this.syntaxes[id];
+            if (syntax) predicate = syntax.predicate;
 
-        if (!predicate) {
-            predicate = new Predicate(id, this);
-            //console.log("Created new predicate", predicate);
-            this.predicates[id] = predicate;
-            this.syntaxes[id] = new Syntax(id, predicate);
+            if (!predicate) {
+                if (dontAutoCreate) {
+                    predicate = null;
+                } else {
+                    predicate = new Predicate(id, this);
+                    //console.log("Created new predicate", predicate);
+                    this.predicates[id] = predicate;
+                    this.syntaxes[id] = new Syntax(id, predicate);
+                }
+            }
         }
         return predicate;
     };

@@ -14,11 +14,11 @@ yarn.config(function (LoopBackResourceProvider) {
 yarn.run(function ($rootScope,
                                      commandsRegistry) {
     $rootScope.breakpoints = {
-        0: 'isMobileWidth',
-        480: 'isMobileLandscapeWidth',
-        641: 'isTabletWidth',
-        1025: 'isDesktopWidth',
-        1281: 'isWidescreenLayout'
+        //0: 'isMobileWidth',
+        //480: 'isMobileLandscapeWidth',
+        //641: 'isTabletWidth',
+        //1025: 'isDesktopWidth',
+        //1281: 'isWidescreenLayout'
     };
 
     commandsRegistry.load([

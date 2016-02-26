@@ -8,26 +8,5 @@
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
     </md-section>
-    <md-content flex="50" layout="column">
-        <scenery></scenery>
-        <toolbar user="user"></toolbar>
-        <sidebar metadata="metadata"></sidebar>
-        <div layout="row" style="z-index:5" flex="100" class="player">
-            <div class="main-ui" flex="100">
-                <story-log></story-log>
-                <user-choice
-                        ng-show="game.question"
-                        on-choose="game.choose(value)"
-                        question="game.question"
-                        options="game.options"
-                ></user-choice>
-                <!--<div class="ellipsis">-->
-                <!--<span class="one">▸</span>-->
-                <!--<span class="two">▸</span>-->
-                <!--<span class="three">▸</span>-->
-                <!--​</div>-->
-                <splash visible="true" metadata="metadata"></splash>
-            </div>
-        </div>
-    </md-content>
+    <player flex="50" layout="column"></player>
 </md-content>

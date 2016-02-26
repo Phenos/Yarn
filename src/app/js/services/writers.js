@@ -5,24 +5,8 @@ yarn.factory('writers', function (yarn,
                                   script,
                                   sceneryService) {
 
-    // Story welcome message and introduction
-    // todo: Output specially styled titles for story and chapters
-    function LogStoryIntroduction() {
-        var story = state.thing("story");
-        var storyTitle = state.resolveValue("story.isNamed");
-
-        if (storyTitle) storyLog.heading(storyTitle);
-
-        var storyDescription = state.resolveValue("story.isDescribedAs");
-        if (storyDescription) storyLog.subHeading(storyDescription);
-        // todo: Output specially styled separators
-        storyLog.divider();
-        return this;
-    }
-
-
     // Describe where you are at the beginning
-    function DescribeWhereYouAre() {
+    function describeWhereYouAre() {
         var returnFn;
         if (state.step() === 0) {
             returnFn = describeCoverpage();
@@ -103,7 +87,7 @@ yarn.factory('writers', function (yarn,
     }
 
     // Describe where you are at the beginning
-    function DescribeThing(thing) {
+    function describeThing(thing) {
         if (thing) {
             var label = thing.resolveValue("isNamed");
             var description = thing.resolveValue("isDescribedAs");
@@ -120,7 +104,7 @@ yarn.factory('writers', function (yarn,
     }
 
     // Describe where you are at the beginning
-    function DescribeThingTakenInInventory(thing) {
+    function describeThingTakenInInventory(thing) {
         if (thing) {
             var label = thing.resolveValue("isNamed");
             if (label) storyLog.log("You took the " + label);
@@ -129,12 +113,11 @@ yarn.factory('writers', function (yarn,
     }
 
     return {
-        DescribeThingTakenInInventory: DescribeThingTakenInInventory,
-        DescribeThing: DescribeThing,
-        DescribeRoom: describeRoom,
-        DescribeCoverpage: describeCoverpage,
-        DescribeWhereYouAre: DescribeWhereYouAre,
-        LogStoryIntroduction: LogStoryIntroduction
+        describeThingTakenInInventory: describeThingTakenInInventory,
+        describeThing: describeThing,
+        describeRoom: describeRoom,
+        describeCoverpage: describeCoverpage,
+        describeWhereYouAre: describeWhereYouAre
     };
 
 });

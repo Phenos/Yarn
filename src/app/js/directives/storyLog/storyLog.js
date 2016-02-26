@@ -6,19 +6,19 @@
         return {
             restrict: 'E',
             bindToController: {
+                onClear: "&",
                 ready: "&"
             },
             scope: {},
             controllerAs: 'storyLog',
-            //template: '<div class="logItems">{{ userInput.text }}</div>',
             controller: StoryLogController
         };
 
-        function StoryLogController(storyLog, $scope, $element, $compile, $window) {
+        function StoryLogController(storyLog, $scope, $element, $compile) {
 
             this.clear = function () {
                 $element.empty();
-                $window.scroll(0, 0);
+                this.onClear();
             };
 
             this.write = function (text, type) {

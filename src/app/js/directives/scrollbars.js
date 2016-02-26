@@ -1,13 +1,16 @@
 yarn.directive('scrollbars', function () {
     return {
         restrict: 'EA',
-        //bindToController: {},
-        //scope: {},
         controller: scrollbarsController
     };
 
-    function scrollbarsController($element) {
-        console.log("$element[0]", $element[0]);
-        jQuery($element[0]).perfectScrollbar({});
+    function scrollbarsController($scope, $element) {
+        var container = jQuery($element[0]);
+
+        $scope.$on("refreshScrollbars", function () {
+            container.perfectScrollbar('update');
+        });
+
+        container.perfectScrollbar({});
     }
 });

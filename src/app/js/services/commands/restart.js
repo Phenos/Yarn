@@ -6,7 +6,7 @@ function restartCommand(yConsole,
 
     function handler() {
         state.removeAssertionsLayer('session');
-        player.update();
+        player.refresh();
         yConsole.success("Story restarted");
     }
 

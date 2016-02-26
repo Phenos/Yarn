@@ -6,7 +6,7 @@ function beginStoryCommand(yConsole,
 
     function handler() {
         logic.routines.step();
-        writers.DescribeWhereYouAre(true);
+        writers.describeWhereYouAre(true);
         yConsole.log("First step taken");
     }
 

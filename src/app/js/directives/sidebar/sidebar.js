@@ -5,7 +5,6 @@ function SidebarDirective() {
     return {
         restrict: 'E',
         bindToController: {
-            metadata: "=",
             onOpenConsole: "&"
         },
         scope: true,
@@ -18,8 +17,13 @@ function SidebarDirective() {
     function SidebarController(sidebarService,
                                $mdSidenav,
                                welcomeMessage,
-                               commands) {
+                               commands,
+                               metadata) {
         var self = this;
+
+        metadata.then(function (metadata) {
+            this.metadata = metadata
+        });
 
         sidebarService.register(this);
 

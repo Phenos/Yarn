@@ -3,11 +3,7 @@ yarn.directive('userChoice', UserChoiceDirective);
 function UserChoiceDirective() {
     return {
         restrict: 'E',
-        bindToController: {
-            question: '=',
-            options: '=',
-            onChoose: '&'
-        },
+        bindToController: {},
         scope: {},
         controllerAs: 'userChoice',
         templateUrl: './html/userChoice.html',
@@ -34,11 +30,6 @@ function UserChoiceDirective() {
                 console.error("OUPS!!!... no prompt were found!!!");
             }
         });
-
-        this.choose = function (value) {
-            console.log("onChoose!");
-            self.onChoose({value: value});
-        };
 
         promptLoop.update();
     }

@@ -31,7 +31,7 @@ yarn.service("lookPrompt", function (writers,
                 } else {
                     logic.routines.aboutTo("");
                     var thing = state.thing(option.value);
-                    writers.DescribeThing(thing);
+                    writers.describeThing(thing);
                 }
             } else {
                 storyLog.error("Nothing to look at here!");

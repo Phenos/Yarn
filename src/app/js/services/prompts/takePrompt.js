@@ -55,7 +55,7 @@ yarn.service("takePrompt", function (logic,
                     var thing = state.thing(option.value);
                     var hasInInventory = state.predicate("hasInInventory");
                     state.thing("You").setAssertion(hasInInventory, thing);
-                    writers.DescribeThingTakenInInventory(thing);
+                    writers.describeThingTakenInInventory(thing);
                 }
             } else {
                 storyLog.error("Sorry, nothing to take here!");

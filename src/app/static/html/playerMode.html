@@ -5,27 +5,5 @@
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
     </md-section>
-    <md-content flex="1" layout="column">
-        <scenery></scenery>
-        <sidebar metadata="metadata" on-open-console="showSidebar()"></sidebar>
-        <toolbar user="user"></toolbar>
-        <md-content
-                style="z-index:5; position: relative;"
-                layout="row"
-                flex="100"
-                class="player"
-                scrollbars
-        >
-            <div class="main-ui" flex="100">
-                <story-log></story-log>
-                <user-choice
-                        ng-show="game.question"
-                        on-choose="game.choose(value)"
-                        question="game.question"
-                        options="game.options"
-                ></user-choice>
-                <splash visible="true" metadata="metadata"></splash>
-            </div>
-        </md-content>
-    </md-content>
+    <player flex="1" layout="column"></player>
 </md-content>

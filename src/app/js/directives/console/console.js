@@ -10,6 +10,7 @@
             bindToController: {
                 onEscapeFocus: '&',
                 onFocus: '&',
+                onClear: '&',
                 ready: "&"
             },
             scope: {},
@@ -90,9 +91,12 @@
             this.clear = function () {
                 var logElement = $element.find("logs");
                 logElement.empty();
+
+                this.onClear();
             };
 
             this.write = function (text, type) {
+                $scope.$emit("refreshScrollbars");
 
                 // Log Yarn console to the browser console
                 //if (type === "error") {

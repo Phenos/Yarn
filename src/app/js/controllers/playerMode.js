@@ -4,15 +4,12 @@ yarn.factory('playerModeService', PlayerModeService);
 
 
 function playerModeController(user,
-                              metadata,
                               $scope,
-                              $mdSidenav,
                               yConsole,
                               welcomeMessage,
                               stories,
                               playerModeService,
                               hotkeys) {
-
 
     hotkeys.bindTo($scope)
         .add({
@@ -25,7 +22,6 @@ function playerModeController(user,
         });
 
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
-    $scope.metadata = metadata; // todo: metadata should be a service
 
     // Service for playerMode UI interaction
     $scope.playerModeService = playerModeService;
@@ -38,22 +34,6 @@ function playerModeController(user,
 
     // Register with the service
     playerModeService.register($scope);
-    /*
-     Side navigation visibility
-     */
-    $scope.openSidenav = function () {
-        $mdSidenav("leftSidebar").open();
-    };
-
-    $scope.closeSidenav = function () {
-        $mdSidenav("leftSidebar").close();
-    };
-
-
-    $scope.showSidebar = function () {
-        console.log("showSidebar");
-        playerModeService.showConsole();
-    };
 
     // Play the default story
     stories.playDefault();

@@ -51,7 +51,7 @@ yarn.service('loader', function (yarn,
                 yarn.restoreFromLocalState($localStorage.localState);
 
                 splashService.hide();
-                player.update();
+                player.refresh();
 
             }
 

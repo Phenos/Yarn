@@ -4,9 +4,7 @@ yarn.controller('editorMode', editorModeController);
 
 function editorModeController(stories,
                           user,
-                          metadata,
                           $scope,
-                          $mdSidenav,
                           IDE,
                           yConsole,
                           editorService,
@@ -14,8 +12,6 @@ function editorModeController(stories,
 
     $scope.IDE = IDE;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
-    $scope.metadata = metadata; // todo: metadata should be a service
-
 
     // Show a welcome message in the yarn console
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
@@ -32,14 +28,6 @@ function editorModeController(stories,
         yConsole.log("Until then you can still use the console to enter commands and affect your game session.");
         $scope.currentStory = null;
     });
-
-
-    $scope.openSidenav = function () {
-        $mdSidenav("leftSidebar").open();
-    };
-    $scope.closeSidenav = function () {
-        $mdSidenav("leftSidebar").close();
-    };
 
     // Check if a previously opened story should be loaded
     IDE.loadRememberedStory();
@@ -65,8 +53,5 @@ function editorModeController(stories,
         $scope.editorFlexHeight = 25;
         $scope.consoleFlexHeight = 75;
     };
-
-
-
 
 }

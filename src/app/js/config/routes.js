@@ -12,11 +12,6 @@
         $stateProvider.state('editorMode', {
             url: '/editor',
             resolve: {
-                "metadata": function (loadMetadata) {
-                    return loadMetadata().then(function (metadata) {
-                        return metadata;
-                    });
-                },
                 "user": function (userFromAPI) {
                     return userFromAPI().then(function (user) {
                         return user;
@@ -32,11 +27,6 @@
         $stateProvider.state('playerMode', {
             url: '/',
             resolve: {
-                "metadata": function (loadMetadata) {
-                    return loadMetadata().then(function (metadata) {
-                        return metadata;
-                    });
-                },
                 "user": function (userFromAPI) {
                     return userFromAPI().then(function (user) {
                         return user;

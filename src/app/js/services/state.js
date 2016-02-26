@@ -123,6 +123,7 @@ yarn.service('state', function (Assertion,
      * @param predicate
      * @param object
      * @param value
+     * @param parent
      * @returns {*}
      */
     State.prototype.setAssertion = function (subject, predicate, object, value, parent) {
@@ -185,11 +186,17 @@ yarn.service('state', function (Assertion,
             // (possible if errors have been made)
             // But more importantly, it negates any assertion to be negated
             // because the predicate is "uniqueSubject"
-            foundAssertions.forEach(function (assertion) {
-                //console.log("negating assertion: ", assertion);
-                self.negate(assertion);
-                self.persistAssertion(assertion);
-            });
+            // If a parent has been supplied, dont negate any assertios first
+            if (!parent) {
+                console.log("NEGATING: ", foundAssertions);
+                foundAssertions.forEach(function (assertion) {
+                    //console.log("negating assertion: ", assertion);
+                    self.negate(assertion);
+                    self.persistAssertion(assertion);
+                });
+            } else {
+                console.log("NOT negating: ", foundAssertions);
+            }
 
             if (!chosenAssertion) {
                 // No pre-existing assertions were found, so creating a fresh one

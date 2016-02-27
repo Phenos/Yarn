@@ -8,7 +8,29 @@ yarn.service('gamePedicates', function (state) {
             .syntax("version")
             .syntax("is version")
             .isUniqueSubject(true);
+/*
+// todo: Allow defining predicates in Yarn Script
 
+HasVersion
+    is a Predicate,
+    is a UniqueSubject
+    is titled "Version",
+    is described as "Set a version number. Typically used on a Story.
+    has syntax "has version",
+    has syntax "version",
+    has syntax "is version".
+
+//todo: But ultimately, this should be an Attribute like so
+
+Version
+    is an Attribute,
+    is titled "Version",
+    is Mandatory,
+    is described as "A version number. Typically used on a Story.
+
+Story has a Version.
+
+ */
         state
             .predicate("hasCoverpage")
             .syntax("has coverpage")
@@ -24,21 +46,33 @@ yarn.service('gamePedicates', function (state) {
         // How many steps have been take (game cycle steps)
         state
             .predicate("hasStepped")
+            .syntax("have stepped")
             .syntax("has stepped")
             .isUniqueSubject(true);
 
         // The Action the user what about to make (ex.: Move, Look, etc)
         state
             .predicate("isAboutTo")
+            .syntax("are about to")
             .syntax("is about to")
             .isUniqueSubject(true);
 
         // What something is of a kind
         state
             .predicate("isA")
+            .syntax("are an")
+            .syntax("are a")
             .syntax("is an")
             .syntax("is a");
+/*
 
+IsA is a Predicate,
+    has syntax "are an",
+    has syntax "are a",
+    has syntax "is an",
+    has syntax "is a".
+
+*/
         // What something is of a kind
         state
             .predicate("hasScenery")
@@ -53,6 +87,9 @@ yarn.service('gamePedicates', function (state) {
         // What something is called
         state
             .predicate("isNamed")
+            .syntax("are titled")
+            .syntax("are named")
+            .syntax("are called")
             .syntax("is titled")
             .syntax("is named")
             .syntax("is called")
@@ -61,12 +98,16 @@ yarn.service('gamePedicates', function (state) {
         // What something is described as when looked at
         state
             .predicate("isDescribedAs")
+            .syntax("are described")
+            .syntax("are described as")
             .syntax("is described")
             .syntax("is described as")
             .isUniqueSubject(true);
 
         state
             .predicate("isAlsoDescribedAs")
+            .syntax("are also described")
+            .syntax("are also described as")
             .syntax("is also described")
             .syntax("is also described as")
             .isUniqueSubject(true);
@@ -129,9 +170,11 @@ yarn.service('gamePedicates', function (state) {
 
         state
             .predicate("isUsable")
+            .syntax("are usable")
+            .syntax("are usable with")
             .syntax("is usable")
-            .syntax("can be used")
             .syntax("is usable with")
+            .syntax("can be used")
             .syntax("can be used with");
 
 

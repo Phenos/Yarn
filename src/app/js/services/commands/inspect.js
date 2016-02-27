@@ -62,6 +62,9 @@ function inspectCommand(state,
                 }
 
                 angular.forEach(assertions, function (assertion) {
+
+                    // TODO: Dont show assertions that are under a parent (AFTER REFACTOR)
+
                     log.push(consoleHelper.assertion2log(assertion) + "<br/>");
                 });
 

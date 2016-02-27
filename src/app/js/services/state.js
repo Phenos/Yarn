@@ -126,7 +126,7 @@ yarn.service('state', function (Assertion,
      * @param parent
      * @returns {*}
      */
-    State.prototype.setAssertion = function (subject, predicate, object, value, parent) {
+    State.prototype.setAssertion = function (subject, predicate, object, value, parent, layerId) {
         //console.log("State.setAssertion", subject, predicate, object, value);
         var self = this;
 
@@ -188,14 +188,12 @@ yarn.service('state', function (Assertion,
             // because the predicate is "uniqueSubject"
             // If a parent has been supplied, dont negate any assertios first
             if (!parent) {
-                console.log("NEGATING: ", foundAssertions);
+                //console.log("NEGATING: ", foundAssertions);
                 foundAssertions.forEach(function (assertion) {
                     //console.log("negating assertion: ", assertion);
                     self.negate(assertion);
                     self.persistAssertion(assertion);
                 });
-            } else {
-                console.log("NOT negating: ", foundAssertions);
             }
 
             if (!chosenAssertion) {
@@ -209,7 +207,7 @@ yarn.service('state', function (Assertion,
             // The correct assertion is then assigned it's truth value
             // Not that it is possible that the assertion is already
             // set to this value anyways.
-            chosenAssertion.set(valueOveride, this.currentLayer, parent);
+            chosenAssertion.set(valueOveride, layerId || this.currentLayer, parent);
 
             // If the current layer is for "session", store the assertion in the
             // localStorage provider

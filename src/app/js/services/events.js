@@ -1,7 +1,6 @@
 yarn.service('events', function (state,
                                  Assertion,
-                                 yConsole,
-                                 consoleHelper) {
+                                 yConsole) {
 
     function Events() {
     }
@@ -18,7 +17,7 @@ yarn.service('events', function (state,
             var subject = assertion.subject;
 
             if (subject && object) {
-                console.log("Testing : ", consoleHelper.assertion2log(assertion));
+                //console.log("Testing : ", consoleHelper.assertion2log(assertion));
 
                 angular.forEach(subject.childStates, function (assertionState) {
                     var assertion = assertionState.assertion;
@@ -28,11 +27,11 @@ yarn.service('events', function (state,
                 });
                 //console.log("Found conditionAssertions", conditionAssertions);
                 if (allConditionsAreTrue) {
-                    console.log("triggering " + object.is);
+                    //console.log("triggering " + object.is);
                     angular.forEach(object.childStates, function (assertionState) {
                         var assertion = assertionState.assertion;
                         state.setAssertion(assertion.subject, assertion.predicate, assertion.object, true);
-                        console.log("setting assertions", assertion);
+                        //console.log("setting assertions", assertion);
                     });
 
                 }
@@ -44,8 +43,7 @@ yarn.service('events', function (state,
     };
 
     Events.prototype.trigger = function (subject, predicate, object) {
-        var assertion = state.setAssertion(subject, predicate, object);
-        assertion.set(true, "step");
+        var assertion = state.setAssertion(subject, predicate, object, null, null, "step");
     };
 
     return new Events();

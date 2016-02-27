@@ -1,5 +1,6 @@
 yarn.service("defaultPrompt", function (commands,
-                                        state) {
+                                        state,
+                                        stateHelpers) {
 
     function defaultPrompt(context) {
 
@@ -17,27 +18,27 @@ yarn.service("defaultPrompt", function (commands,
                 prompt.option("Move", "aboutTo move");
             }
 
-            // Enable the look action for if the room contains objects
-            // with descriptions
-            var thingsInRoom = state.resolve("You.isIn.hasInIt");
+            // Enable the look action for if the room contains Things
+            var room = state.resolve("You.isIn");
+            var thingsInRoom = stateHelpers.thingsInRoom(room[0]);
             //console.log("thingsInRoom", thingsInRoom);
             var thingsInRoomWithDescriptions = state.predicate("isDescribedAs").filterThings(thingsInRoom);
             if (thingsInRoomWithDescriptions.length) {
                 prompt.option("Look", "aboutTo look");
             }
 
-            // Fetch room contents for Look and Use
-            var roomContents = state.resolve("You.isIn.hasInIt");
 
             // Enable the "take" option if there are inventory items
             // in the current room
-            var inventoryInCurrentRoom = state.predicate("isA").filterThings(roomContents, state.thing("InventoryItem"));
-            if (inventoryInCurrentRoom.length) {
+            var room = state.resolve("You.isIn");
+            var inventoryInRoom = stateHelpers.inventoryInRoom(room[0]);
+            if (inventoryInRoom.length) {
                 prompt.option("Take", "aboutTo take");
             }
 
             // Enable the "use" option if there are inventory items
             // in the current room
+            var roomContents = state.resolve("You.isIn.hasInIt");
             var usableItemInCurrentRoom = state.predicate("can be used").filterThings(roomContents);
             if (usableItemInCurrentRoom.length) {
                 prompt.option("Use", "aboutTo use");

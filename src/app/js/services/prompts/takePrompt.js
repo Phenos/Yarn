@@ -1,7 +1,8 @@
 yarn.service("takePrompt", function (logic,
                                      writers,
                                      commands,
-                                     state) {
+                                     state,
+                                     stateHelpers) {
 
     function takePrompt(context) {
 
@@ -12,24 +13,13 @@ yarn.service("takePrompt", function (logic,
 
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to take ?";
-            var thingsInRoom = state.resolve("You.isIn.hasInIt");
-            var thingsThatAreInventory = [];
 
-            // Todo: YUCK... Find a better way to do these checks!!!!!
-            thingsInRoom.forEach(function (thing) {
-                // Check if item is an InventoryItem
-                var isInventoryItem = false;
-                var thingsThatAre = thing.resolve("isA");
-                thingsThatAre.forEach(function (thing) {
-                    if (thing === state.thing("InventoryItem")) isInventoryItem = true;
-                });
-                if (isInventoryItem) thingsThatAreInventory.push(thing);
-            });
-
+            var room = state.resolve("You.isIn");
+            var thingsToTake = stateHelpers.inventoryInRoom(room[0]);
 
             //console.log('thingsInRoom', thingsInRoom);
-            if (thingsThatAreInventory.length) {
-                thingsThatAreInventory.forEach(function (thing) {
+            if (thingsToTake.length) {
+                thingsToTake.forEach(function (thing) {
                     var label = thing.resolveValue("isNamed");
                     prompt.option(label, "take " + thing.id);
                 });

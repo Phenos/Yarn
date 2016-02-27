@@ -20,6 +20,7 @@ yarn.factory('takeCommand', function (yConsole,
     return {
         name: "take",
         shortDescription: "Take an object in inventory.",
+        //todo: better description and hinting
         longDescription: 'Take an object in inventory.',
         handler: handler
     };

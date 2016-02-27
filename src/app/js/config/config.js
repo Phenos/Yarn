@@ -1,4 +1,3 @@
-
 yarn.config(function (LoopBackResourceProvider) {
     console.log("Loading app configuration");
     // Use a custom auth header instead of the default 'Authorization'
@@ -10,9 +9,9 @@ yarn.config(function (LoopBackResourceProvider) {
 });
 
 
-
 yarn.run(function ($rootScope,
-                                     commandsRegistry) {
+                   commandsRegistry) {
+
     $rootScope.breakpoints = {
         //0: 'isMobileWidth',
         //480: 'isMobileLandscapeWidth',

@@ -1,7 +1,8 @@
 yarn.service("lookPrompt", function (writers,
                                      logic,
                                      commands,
-                                     state) {
+                                     state,
+                                     stateHelpers) {
 
     function lookPrompt(context) {
 
@@ -11,8 +12,12 @@ yarn.service("lookPrompt", function (writers,
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";
-            var thingsInRoom = state.resolve("You.isIn.hasInIt");
+
+            var room = state.resolve("You.isIn");
+            var thingsInRoom = stateHelpers.thingsInRoom(room[0]);
+
             //console.log('thingsInRoom', thingsInRoom);
+
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
                     var label = thing.resolveValue("isNamed");

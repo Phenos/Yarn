@@ -77,7 +77,6 @@ yarn.service('gamePedicates', function (state) {
             .syntax("is in the")
             .syntax("is inside the")
             .syntax("is at the")
-            .syntax("is in")
             .syntax("is inside")
             .syntax("is at")
             .syntax("are in the")
@@ -86,8 +85,13 @@ yarn.service('gamePedicates', function (state) {
             .syntax("are in")
             .syntax("are inside")
             .syntax("are at")
+            .syntax("is in")
             .isUniqueSubject(true);
 
+        //todo: Bring back "contains" either when when "reverse" assertions are possible
+        //      or with a better model for "what' in what"
+        //      untile then user "is in"
+        /*
         // When something has something else. Ex.: Kitchen has a Kitchen Table
         state
             .predicate("hasInIt")
@@ -98,6 +102,7 @@ yarn.service('gamePedicates', function (state) {
             .syntax("has in it a")
             .syntax("has in it")
             .syntax("has a");
+        */
 
         // When something has something else. Ex.: Kitchen has a Kitchen Table
         state

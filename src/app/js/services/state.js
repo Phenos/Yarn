@@ -380,7 +380,6 @@ yarn.service('state', function (Assertion,
         return count;
     };
 
-
     return new State();
 
 });

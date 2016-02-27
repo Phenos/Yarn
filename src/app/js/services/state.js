@@ -235,6 +235,8 @@ yarn.service('state', function (Assertion,
     };
 
     State.prototype.negate = function (assertion) {
+        //console.log("negating: ", assertion.id(), assertion);
+        //if (assertion.id() === "toilet-isin-") debugger;
         var self = this;
         var assertions = [];
         // Recreate an array of assertions if a single assertion was passed

@@ -43,7 +43,7 @@
             consoleService.register(this);
 
             var logsElem = $element.find("logs");
-            var logscrollElem = $element.find("logscroll");
+            var logscrollElem = $element.find("md-content");
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();

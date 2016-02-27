@@ -20,6 +20,7 @@ yarn.service("takeRoutine", function (state,
             writers.describeThingTakenInInventory(object);
 
             var wasInAssertions = state.getAssertions(object, isIn);
+            console.log("wasInAssertions", wasInAssertions);
             angular.forEach(wasInAssertions, function (assertion) {
                 state.negate(assertion);
             });

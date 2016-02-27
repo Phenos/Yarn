@@ -6,12 +6,12 @@ yarn.service("thingsInRoomHelper", function (state) {
 
         var isIn = state.predicate("isIn");
         var thingsInRoomAssertions = state.getAssertions(null, isIn, room);
-        console.log("thingsInRoomAssertions", isIn, room, thingsInRoomAssertions);
+        //console.log("thingsInRoomAssertions", isIn, room, thingsInRoomAssertions);
         var thingsInRoom = [];
         angular.forEach(thingsInRoomAssertions, function (assertion) {
-            thingsInRoom.push(assertion.subject);
+            if (assertion.value())
+                thingsInRoom.push(assertion.subject);
         });
-        console.log("--------thingsInRoom-", thingsInRoom);
 
         angular.forEach(thingsInRoom, function (thing) {
             // Check if item is an InventoryItem

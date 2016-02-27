@@ -5,10 +5,11 @@ yarn.service("inventoryInRoomHelper", function (state) {
 
         var isIn = state.predicate("isIn");
         var thingsInRoomAssertions = state.getAssertions(null, isIn, room);
-        console.log("thingsInRoomAssertions", isIn, room, thingsInRoomAssertions);
+        //console.log("thingsInRoomAssertions", isIn, room, thingsInRoomAssertions);
         var thingsInRoom = [];
         angular.forEach(thingsInRoomAssertions, function (assertion) {
-            thingsInRoom.push(assertion.subject);
+            if (assertion.value())
+                thingsInRoom.push(assertion.subject);
         });
 
         // Todo: YUCK... Find a better way to do these checks!!!!!

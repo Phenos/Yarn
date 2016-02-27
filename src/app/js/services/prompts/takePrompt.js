@@ -31,7 +31,7 @@ yarn.service("takePrompt", function (logic,
             if (thingsThatAreInventory.length) {
                 thingsThatAreInventory.forEach(function (thing) {
                     var label = thing.resolveValue("isNamed");
-                    prompt.option(label, thing.id);
+                    prompt.option(label, "take " + thing.id);
                 });
             }
 
@@ -42,20 +42,10 @@ yarn.service("takePrompt", function (logic,
         };
 
         context.answer = function answer(promptLoop, option) {
+            logic.routines.aboutTo("");
             if (option) {
-                if (option.value === "back") {
-                    logic.routines.aboutTo("");
-                } else {
-                    logic.routines.aboutTo("");
-
-                    // todo: Find sexier api for removing an assertion
-                    // todo: Implement "unique" assertions... such as when someone is
-
-                    // todo: Put this into a "take" command
-                    var thing = state.thing(option.value);
-                    var hasInInventory = state.predicate("hasInInventory");
-                    state.thing("You").setAssertion(hasInInventory, thing);
-                    writers.describeThingTakenInInventory(thing);
+                if (option.value !== "back") {
+                    commands.command(option.value);
                 }
             } else {
                 storyLog.error("Sorry, nothing to take here!");

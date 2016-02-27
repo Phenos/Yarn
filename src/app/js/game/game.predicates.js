@@ -91,8 +91,12 @@ yarn.service('gamePedicates', function (state) {
         // When something has something else. Ex.: Kitchen has a Kitchen Table
         state
             .predicate("hasInIt")
+            .syntax("contains")
+            .syntax("contains a")
+            .syntax("contains the")
             .syntax("has in it the")
             .syntax("has in it a")
+            .syntax("has in it")
             .syntax("has a");
 
         // When something has something else. Ex.: Kitchen has a Kitchen Table
@@ -162,6 +166,12 @@ yarn.service('gamePedicates', function (state) {
             .syntax("enters the")
             .syntax("enters in")
             .syntax("enters into");
+
+        state
+            .predicate("take")
+            .syntax("took")
+            .syntax("has taken")
+            .syntax("takes");
 
     }
 });

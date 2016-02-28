@@ -1,19 +1,24 @@
 yarn.service('state', function (Assertion,
+                                Assertions,
                                 Thing,
                                 Syntax,
                                 Predicate,
-                                layerSetup) {
+                                layerSetup,
+                                guid) {
 
     function State() {
-        this.assertions = [];
+        this.assertions = new Assertions();
         this.things = {};
         this.predicates = {};
         this.syntaxes = {};
         this.currentLayer = "world";
         this.localState = null;
+        this.guid = guid();
     }
 
     State.prototype.restoreFromLocalState = function (localState) {
+        return false;
+
         var self = this;
         this.localState = localState;
         angular.forEach(this.localState.assertions, function (assertion) {
@@ -47,30 +52,6 @@ yarn.service('state', function (Assertion,
             predicates.push(predicate);
         });
         return predicates;
-    };
-
-    State.prototype.resolve = function (expression, _thing) {
-        var thing = _thing;
-        var allResolved = [];
-        var tokens = expression.split(".");
-        // If a thing was not supplied as a starting point, use the first token as the thing id
-        if (!thing) {
-            var thingId = tokens.shift();
-            if (thingId) thing = this.thing(thingId);
-        }
-        if (thing && tokens.length) {
-            allResolved = thing.resolve(tokens.join("."));
-        }
-        return allResolved;
-    };
-
-
-    State.prototype.resolveValue = function (expression) {
-        var value;
-        var resolved = this.resolve(expression);
-        //console.log('State.resolved', resolved);
-        if (resolved.length) value = resolved[0];
-        return value;
     };
 
     /**
@@ -118,27 +99,51 @@ yarn.service('state', function (Assertion,
     };
 
     /**
+     * Get or create a new type of predicate
+     * @param _id
+     */
+    State.prototype.predicate = function (_id, dontAutoCreate) {
+        var predicate;
+        var syntax;
+        if (typeof(_id) === "string") {
+            var id = _id.toLowerCase();
+
+            if (!id)
+                throw("Assertions must have an id");
+
+            // Resolve the predicate from the syntax
+            syntax = this.syntaxes[id];
+            if (syntax) predicate = syntax.predicate;
+
+            if (!predicate) {
+                if (dontAutoCreate) {
+                    predicate = null;
+                } else {
+                    predicate = new Predicate(id, this);
+                    //console.log("Created new predicate", predicate);
+                    this.predicates[id] = predicate;
+                    this.syntaxes[id] = new Syntax(id, predicate);
+                }
+            }
+        }
+        return predicate;
+    };
+
+    /**
      * Get a new assertion
      * @param subject
      * @param predicate
      * @param object
      * @param value
      * @param parent
+     * @param layer
      * @returns {*}
      */
-    State.prototype.setAssertion = function (subject, predicate, object, value, parent, layerId) {
+    State.prototype.setAssertion = function (subject, predicate, object, value, parent, layer) {
         //console.log("State.setAssertion", subject, predicate, object, value);
         var self = this;
 
         // The set of assertions to negate first
-        var foundAssertions = [];
-        // The choses assertion to receive the new state
-        var chosenAssertion;
-        // If no "value" argument is specified we use "true" for the truth statement
-        var valueOveride = true;
-        // Check is a trully "false" value is specified
-        if (value === false) valueOveride = false;
-
         // First, verify that we have at least a subject and a predicate
         // Otherwise the assertions would not assert anything
         if (subject && predicate) {
@@ -181,37 +186,14 @@ yarn.service('state', function (Assertion,
                 });
             }
 
-            // By default, negate all pre-existing assertions
-            // This will ensure that any duplicate assertion will be removed
-            // (possible if errors have been made)
-            // But more importantly, it negates any assertion to be negated
-            // because the predicate is "uniqueSubject"
-            // If a parent has been supplied, dont negate any assertios first
-            if (!parent) {
-                //console.log("NEGATING: ", foundAssertions);
-                foundAssertions.forEach(function (assertion) {
-                    //console.log("negating assertion: ", assertion);
-                    self.negate(assertion);
-                    self.persistAssertion(assertion);
-                });
-            }
+            var assertion = new Assertion(subject, predicate, object, layer, parent, value);
+            this.assertions.add(assertion);
 
-            if (!chosenAssertion) {
-                // No pre-existing assertions were found, so creating a fresh one
-                //console.log("parent", parent);
-                chosenAssertion = new Assertion(subject, predicate, object, parent);
-                //console.log("creating a new assertion: ", chosenAssertion);
-                this.assertions.push(chosenAssertion);
-            }
 
-            // The correct assertion is then assigned it's truth value
-            // Not that it is possible that the assertion is already
-            // set to this value anyways.
-            chosenAssertion.set(valueOveride, layerId || this.currentLayer, parent);
-
+            // todo: bring back after
             // If the current layer is for "session", store the assertion in the
             // localStorage provider
-            this.persistAssertion(chosenAssertion);
+            //this.persistAssertion(chosenAssertion);
         } else {
             console.warn("Impossible to create assertion without at least a subject and a predicate.")
         }
@@ -225,7 +207,7 @@ yarn.service('state', function (Assertion,
      */
     State.prototype.persistAssertion = function (assertion) {
         if (this.localState) {
-            var json = assertion.toJSON(layerSetup, "session");
+            var json = assertion.toJSON();
             if (json) {
                 this.localState.assertions[assertion.id()] = json;
             } else {
@@ -235,8 +217,6 @@ yarn.service('state', function (Assertion,
     };
 
     State.prototype.negate = function (assertion) {
-        //console.log("negating: ", assertion.id(), assertion);
-        //if (assertion.id() === "toilet-isin-") debugger;
         var self = this;
         var assertions = [];
         // Recreate an array of assertions if a single assertion was passed
@@ -246,120 +226,11 @@ yarn.service('state', function (Assertion,
             assertions = [assertion]
         }
         angular.forEach(assertions, function (assertion) {
-            assertion.set(false, self.currentLayer);
+            if (assertion.value()) {
+                assertion.value(false);
+            }
             self.persistAssertion(assertion);
         });
-
-    };
-
-    // todo: Take in account layers
-    // todo: Handle case when assertion was persisted in localStorage
-    // todo: Handle case when asseetion has uniqueSubject predicate
-    State.prototype.removeAssertions = function (subject, predicate, object) {
-        var self = this;
-        // Look for matching assertions
-        // todo: use built indexes instead of itterating trough all predicates
-
-
-        // DOING: Negate assertions insead of removing them...
-
-        angular.forEach(this.assertions, function (assertion) {
-            var keep = true;
-            if (subject && Object.is(subject, assertion.subject)) keep = false;
-            if (predicate && Object.is(predicate, assertion.predicate)) keep = false;
-            if (object && Object.is(object, assertion.object)) keep = false;
-            if (!keep) {
-                self.negate(assertion);
-            }
-        });
-
-        return this;
-    };
-
-    State.prototype.removeAssertionsLayer = function (layerId) {
-        var self = this;
-        // Look for matching assertions
-        if (layerId) {
-            angular.forEach(this.assertions, function (assertion) {
-                assertion.removeState(layerId);
-                self.persistAssertion(assertion);
-            });
-        }
-        return this;
-    };
-
-    // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
-    /**
-     * Get the topmost assertion from layered states
-     * @param subject
-     * @param predicate
-     * @returns {Array}
-     */
-    State.prototype.getAssertion = function (subject, predicate) {
-        var self = this;
-        var assertion;
-        var foundAssertions = [];
-
-        if (predicate && subject) {
-            // Look for an existing assertion
-            // todo: use built indexes instead of itterating trough all predicates
-            this.assertions.forEach(function (assertion) {
-                if (assertion.subject === subject &&
-                    assertion.predicate === predicate) {
-                    if (assertion.value(layerSetup) === true) {
-                        foundAssertions.push(assertion);
-                    }
-                }
-            });
-        } else {
-            console.warn("Impossible to find assertion without at least a subject and a predicate.")
-        }
-
-        return foundAssertions;
-    };
-
-
-    State.prototype.getAssertions = function (subject, predicate, object) {
-        var foundAssertions = this.assertions.filter(function (assertion) {
-            var keep = true;
-            if (subject && !Object.is(subject, assertion.subject)) keep = false;
-            if (predicate && !Object.is(predicate, assertion.predicate)) keep = false;
-            if (object && !Object.is(object, assertion.object)) keep = false;
-            return keep;
-        });
-
-        return foundAssertions;
-    };
-
-    /**
-     * Get or create a new type of predicate
-     * @param _id
-     */
-    State.prototype.predicate = function (_id, dontAutoCreate) {
-        var predicate;
-        var syntax;
-        if (typeof(_id) === "string") {
-            var id = _id.toLowerCase();
-
-            if (!id)
-                throw("Assertions must have an id");
-
-            // Resolve the predicate from the syntax
-            syntax = this.syntaxes[id];
-            if (syntax) predicate = syntax.predicate;
-
-            if (!predicate) {
-                if (dontAutoCreate) {
-                    predicate = null;
-                } else {
-                    predicate = new Predicate(id, this);
-                    //console.log("Created new predicate", predicate);
-                    this.predicates[id] = predicate;
-                    this.syntaxes[id] = new Syntax(id, predicate);
-                }
-            }
-        }
-        return predicate;
     };
 
     State.prototype.step = function (increment) {
@@ -383,6 +254,7 @@ yarn.service('state', function (Assertion,
     };
 
     return new State();
+
 
 });
 

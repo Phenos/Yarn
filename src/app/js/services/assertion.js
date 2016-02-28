@@ -5,114 +5,57 @@ yarn.factory('Assertion', function (layerSetup, postal) {
      * @param subject
      * @param predicate
      * @param object
+     * @param layer
+     * @param parent
+     * @param value
      * @constructor
      */
-    function Assertion(subject, predicate, object) {
-        this.subject = subject;
-        this.predicate = predicate;
-        this.object = object;
-        this.states = [];
-        this.parent = null;
+    function Assertion(subject, predicate, object, layer, parent, value) {
+        this.subject = subject || null;
+        this.predicate = predicate || null;
+        this.object = object || null;
+        this.layer = layer || null; // The id of a layer
+        this._value = true; // A value (true, false)
+        this.parent = parent || null; // A parent object
+
+        this.value(value);
     }
 
     Assertion.prototype.id = function () {
-        var objectId = "";
-        var subjectId = "";
-        if (this.subject) subjectId = this.subject.id || "";
-        if (!this.predicate.uniqueSubject) {
-            if (this.object) objectId = this.object.id || "";
-        }
-        return [subjectId, this.predicate.id, objectId].join("-");
+        var obj = this.toJSON();
+        return [obj.subject, obj.predicate, obj.object, obj.layer, obj.group].join("-");
     };
 
     /**
-     * Output a assesions as JSON for a single state layer
-     * @param layers
-     * @param layerId
+     * Output a assesions as JSON
      * @returns {{}}
      */
-    Assertion.prototype.toJSON = function (layers, layerId) {
-        var json = {};
-        var hasSessionLayer = this.valueLayer([layerId]);
-        if (hasSessionLayer) {
-            if (this.subject) {
-                json.subject = this.subject.id;
-            }
-            if (this.predicate) json.predicate = this.predicate.id;
-
-            if (this.object) {
-                if (typeof(this.object) === "number") {
-                    json.object = this.object;
-                } else if (typeof(this.object) === "string") {
-                    json.object = this.object;
-                } else {
-                    json.object = "@id:" + this.object.id;
-                }
-            }
-            json.value = this.value([layerId]);
-        } else {
-            json = false;
+    Assertion.prototype.toJSON = function () {
+        return {
+            subject: (this.subject && this.subject.id) || "x",
+            predicate: (this.predicate && this.predicate.id) || "x",
+            object: (this.object && this.object.id) || "x",
+            layer: this.layer || "x",
+            group: (this.group && this.group.id) || "x"
         }
-        //console.log("json", json);
-        return json;
     };
 
-    Assertion.prototype.set = function (value, layerId, parentThing) {
-        if (parentThing) {
-            //console.log("parentThing", this);
-        }
-        var assertionState = this.get(layerId, parentThing);
-        if (assertionState) {
-            assertionState.value = value;
-        } else {
-            assertionState = new AssertionState(this, value, layerId, parentThing);
-            this.states.push(assertionState);
-        }
+
+    /**
+     * Set and get the value of the assertion
+     * @param value
+     * @returns {Assertion}
+     */
+    Assertion.prototype.value = function (value) {
+        if (!angular.isUndefined(this._value)) this.value = value;
 
         postal.publish({
             channel: "state",
             topic: "setAssertion",
-            data: {
-                assertion: this,
-                state: assertionState
-            }
+            data: this
         });
 
-        return this;
-    };
-
-    Assertion.prototype.get = function (layerId, parentThing) {
-        var returnValue = null;
-        var foundStates = this.states.filter(function (state) {
-            return (layerId === state.layerId && parentThing === (state.parent || null))
-        });
-        if (foundStates.length) {
-            returnValue = foundStates[0];
-        }
-        return returnValue;
-    };
-
-    /**
-     * Return a truth value according to a sequence of layers, the first layer being the lowest priority
-     * @param {Array} _layers
-     * @returns {boolean}
-     */
-    Assertion.prototype.value = function (_layers) {
-        var layers = _layers || layerSetup;
-        var isTrue = false;
-        var topState = this.getTopState(layers);
-        //console.log("=== Assertion", this, topState);
-        if (topState && topState.value) isTrue = true;
-        //console.trace("isTrue", isTrue, layers);
-        return isTrue;
-    };
-
-    Assertion.prototype.valueLayer = function (_layers) {
-        var layers = _layers || layerSetup;
-        var topState = this.getTopState(layers);
-        var layerId = "";
-        if (topState) layerId = topState.layerId;
-        return layerId;
+        return this.value;
     };
 
     Assertion.prototype.isUniqueAndFalse = function () {
@@ -124,80 +67,7 @@ yarn.factory('Assertion', function (layerSetup, postal) {
         return value;
     };
 
-    /**
-     * Return the top most state according to a sequence of layers, the first layer being the lowest priority
-     * @param _layers
-     * @param parentThing
-     * @returns {object}
-     */
-    Assertion.prototype.getTopState = function (_layers, parentThing) {
-        var layers = _layers || layerSetup;
-        var self = this;
-        var topState = null;
-        //TODO: REALLY NOT PERFORMANT, TOO MANY CAAALLLLLS
-        if (angular.isArray(layers)) {
-            angular.forEach(layers, function (layerId) {
-                angular.forEach(self.states, function (state) {
-                    var match = true;
-                    if (state.layerId !== layerId) match = false;
-                    if (parentThing) {
-                        if (state.parent !== parentThing) match = false;
-                    } else {
-                        // If not parent Id is supplied, then we discard any
-                        // state that might have a parent id
-                        if (state.parent) match = false;
-                    }
-
-                    if (match) {
-                        topState = state;
-                    }
-
-                });
-            });
-        } else {
-            console.error("LayerSetup must be an array... maybe you failed to inject layerSetup?  layerSetup = " + layerSetup);
-        }
-        return topState;
-    };
-
-    Assertion.prototype.removeState = function (layerId, parentThing) {
-        var self = this;
-        self.states = self.states.filter(function (state) {
-            var shouldDelete = true;
-
-            if (layerId && layerId !== state.layerId) shouldDelete = false;
-            if (parentThing && parentThing !== state.parentThing) shouldDelete = false;
-
-            if (shouldDelete) {
-                //console.log("deleted state ", layerId, index);
-                state.dettachFromParent();
-            }
-
-            return !shouldDelete;
-        });
-    };
-
-
-    function AssertionState(assertion, value, layerId, parentThing) {
-        this.assertion = assertion;
-        this.value = value;
-        this.layerId = layerId;
-        this.parent = null;
-        if (parentThing) this.attachToParent(parentThing);
-    }
-
-    AssertionState.prototype.attachToParent = function (parentThing) {
-        this.parent = parentThing;
-        parentThing.attachToState(this);
-    };
-
-    AssertionState.prototype.dettachFromParent = function () {
-        if (this.parent) {
-            this.parent.dettachFromState(this);
-            this.parent = null;
-        }
-    };
-
     return Assertion;
-});
+})
+;
 

@@ -9,8 +9,8 @@ yarn.service('loader', function (yarn,
     var service = {};
 
     service.fromURL = function fromURL(_url) {
-        state.removeAssertionsLayer('session');
-        state.removeAssertionsLayer('world');
+        state.assertions.removeLayer('session');
+        state.assertions.removeLayer('world');
 
         // hack to protect windows drive letters in the path
         //var url = _url.replace(/\\/g, "//");

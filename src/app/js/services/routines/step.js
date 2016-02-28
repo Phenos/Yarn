@@ -7,7 +7,7 @@ yarn.service("stepRoutine", function (events,
     function stepRoutine() {
         state.step(1);
         events.process();
-        state.removeAssertionsLayer("step");
+        state.assertions.removeLayer("step");
         return true;
     }
 

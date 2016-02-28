@@ -6,8 +6,15 @@ yarn.service("moveRoutine", function (state,
         var isIn = state.predicate("isIn");
         var you = state.thing("You");
         if (room) {
-            you.removeAssertions(isIn);
-            you.setAssertion(isIn, room);
+            // Remove current position
+            var currentIsIn = state.assertions.find({
+                subject: you,
+                predicate: isIn,
+                layer: state.currentLayer,
+                parent: null
+            });
+            state.assertions.remove(currentIsIn);
+            state.setAssertion(you, isIn, room, true, null, state.currentLayer);
         }
         // TODO : Trigger movesFrom
         var movesTo = state.predicate("movesTo");

@@ -4,22 +4,20 @@ yarn.service("takeRoutine", function (state,
                                       writers) {
 
     function takeRoutine(object) {
-        /*
-
-         state.thing("You").setAssertion(hasInInventory, object);
-
-         */
         if (object) {
             var hasInInventory = state.predicate("hasInInventory");
             var isIn = state.predicate("isIn");
             var you = state.thing("You");
-            you.setAssertion(hasInInventory, object);
+            you.createAssertion(hasInInventory, object);
 
             // Put item in inventory and log it to the player
-            you.setAssertion(hasInInventory, object);
+            you.createAssertion(hasInInventory, object);
             writers.describeThingTakenInInventory(object);
 
-            var wasInAssertions = state.getAssertions(object, isIn);
+            var wasInAssertions = state.assertions.find({
+                subject: object,
+                predicate: isIn
+            });
             console.log("wasInAssertions", wasInAssertions);
             angular.forEach(wasInAssertions, function (assertion) {
                 state.negate(assertion);

@@ -17,8 +17,6 @@ yarn.service('state', function (Assertion,
     }
 
     State.prototype.restoreFromLocalState = function (localState) {
-        return false;
-
         var self = this;
         this.localState = localState;
         angular.forEach(this.localState.assertions, function (assertion) {
@@ -33,11 +31,13 @@ yarn.service('state', function (Assertion,
                 }
             }
 
-            var newAssertion = self.setAssertion(
+            self.createAssertion(
                 self.thing(assertion.subject),
                 self.predicate(assertion.predicate),
-                object,
-                assertion.value
+                object, {
+                    value: assertion.value
+                }
+
             );
             //console.log("Restoring assertion from localState", assertion, newAssertion);
         });
@@ -134,15 +134,12 @@ yarn.service('state', function (Assertion,
      * @param subject
      * @param predicate
      * @param object
-     * @param value
-     * @param parent
-     * @param layer
+     * @param options
      * @returns {*}
      */
-    State.prototype.setAssertion = function (subject, predicate, object, value, parent, layer) {
-        //console.log("State.setAssertion", subject, predicate, object, value);
-        var self = this;
-
+    State.prototype.createAssertion = function (subject, predicate, object, options) {
+        var chosenAssertion = [];
+        var foundAssertions = [];
         // The set of assertions to negate first
         // First, verify that we have at least a subject and a predicate
         // Otherwise the assertions would not assert anything
@@ -186,7 +183,7 @@ yarn.service('state', function (Assertion,
                 });
             }
 
-            var assertion = new Assertion(subject, predicate, object, layer, parent, value);
+            var assertion = new Assertion(subject, predicate, object, options);
             this.assertions.add(assertion);
 
 
@@ -247,7 +244,7 @@ yarn.service('state', function (Assertion,
 
         if (increment && typeof(increment) === "number") {
             count = count + increment;
-            story.setAssertion(hasStepped, count);
+            this.createAssertion(story, hasStepped, count);
         }
 
         return count;

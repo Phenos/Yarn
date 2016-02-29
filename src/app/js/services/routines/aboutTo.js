@@ -4,6 +4,7 @@ yarn.service("aboutToRoutine", function (state) {
         var isAboutTo = state.predicate("isAboutTo");
         if (aboutToId) {
             state.thing("You").setAssertion(isAboutTo, state.thing(aboutToId));
+            state.createAssertion()
             //console.log("ABOUT TO >> ", aboutTo);
         } else {
             state.negate(

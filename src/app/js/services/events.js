@@ -30,7 +30,9 @@ yarn.service('events', function (state,
                     //console.log("triggering " + object.is);
                     angular.forEach(object.childStates, function (assertionState) {
                         var assertion = assertionState.assertion;
-                        state.setAssertion(assertion.subject, assertion.predicate, assertion.object, true);
+                        state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
+                            value: true
+                        });
                         //console.log("setting assertions", assertion);
                     });
 
@@ -43,7 +45,9 @@ yarn.service('events', function (state,
     };
 
     Events.prototype.trigger = function (subject, predicate, object) {
-        var assertion = state.setAssertion(subject, predicate, object, null, null, "step");
+        state.createAssertion(subject, predicate, object, {
+            layer: "step"
+        });
     };
 
     return new Events();

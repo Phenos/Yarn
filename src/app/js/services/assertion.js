@@ -10,15 +10,16 @@ yarn.factory('Assertion', function (layerSetup, postal) {
      * @param value
      * @constructor
      */
-    function Assertion(subject, predicate, object, layer, parent, value) {
+    function Assertion(subject, predicate, object, options) {
+        var options = options || {};
         this.subject = subject || null;
         this.predicate = predicate || null;
         this.object = object || null;
-        this.layer = layer || null; // The id of a layer
+        this.layer = options.layer || null; // The id of a layer
         this._value = true; // A value (true, false)
-        this.parent = parent || null; // A parent object
+        this.parent = options.parent || null; // A parent object
 
-        this.value(value);
+        this.value(options.value);
     }
 
     Assertion.prototype.id = function () {

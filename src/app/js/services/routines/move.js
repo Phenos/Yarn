@@ -14,7 +14,9 @@ yarn.service("moveRoutine", function (state,
                 parent: null
             });
             state.assertions.remove(currentIsIn);
-            state.setAssertion(you, isIn, room, true, null, state.currentLayer);
+            state.createAssertion(you, isIn, room, {
+                layer: state.currentLayer
+            });
         }
         // TODO : Trigger movesFrom
         var movesTo = state.predicate("movesTo");

@@ -145,7 +145,9 @@
                                 var currentThis = runtime.stack.head().values.this;
                                 if (currentThis) {
                                     createdAssertions.push(
-                                        state.setAssertion(currentThis, predicate, arg, null, parent)
+                                        state.createAssertion(currentThis, predicate, arg, {
+                                            parent: parent
+                                        })
                                     );
                                     //console.log("created assetion: ", assertion);
                                 } else {
@@ -157,7 +159,9 @@
                         } else {
                             var currentThis = runtime.stack.head().values.this;
                             createdAssertions.push(
-                                state.setAssertion(currentThis, predicate, null, null, parent)
+                                state.createAssertion(currentThis, predicate, null, {
+                                    parent: parent
+                                })
                             );
                         }
 

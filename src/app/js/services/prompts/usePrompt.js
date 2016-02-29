@@ -6,17 +6,31 @@ yarn.service("usePrompt", function (logic,
     function usePrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo && isAboutTo.id === "use";
+            var isAboutToObj = state.resolveOne({
+                subject: state.thing("you"),
+                predicate: state.thing("isAboutTo")
+            });
+            return isAboutToObj && isAboutToObj.id === "use";
         };
 
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to use ?";
-            var thingsInRoom = state.resolve("You.isIn.hasInIt");
+
+            var room = state.resolveOne({
+                subject: state.thing("you"),
+                predicate: state.predicate("inIn")
+            });
+            var thingsInRoom = state.resolveAll({
+                predicate: state.predicate("inIn"),
+                object: room
+            });
             //console.log('thingsInRoom', thingsInRoom);
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
-                    var label = thing.resolveValue("isNamed");
+                    var label = state.resolveOne({
+                        subject: thing,
+                        predicate: state.predicate("isNamed")
+                    });
                     prompt.option(label, thing.id);
                 });
             }

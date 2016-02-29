@@ -83,7 +83,7 @@ yarn.service("Assertions", function () {
         return matches;
     };
 
-// todo: Too complex ... should be simplified or cut appart
+    // todo: Too complex ... should be simplified or cut appart
     function match(assertion, criterias) {
         var matchedValue;
         var isMatch = true;
@@ -91,18 +91,21 @@ yarn.service("Assertions", function () {
         if (!assertion) isMatch = false;
 
         if (!angular.isUndefined(criterias.subject)) {
+            if (angular.isString(criterias.subject)) criterias.subject = criterias.subject.toLowerCase();
             matchedValue = null;
             if (assertion.subject !== null) matchedValue = (assertion.subject && assertion.subject.id) || "";
             if (matchedValue !== criterias.subject) isMatch = false;
         }
 
         if (isMatch && !angular.isUndefined(criterias.predicate)) {
+            if (angular.isString(criterias.predicate)) criterias.predicate = criterias.predicate.toLowerCase();
             matchedValue = null;
             if (assertion.predicate !== null) matchedValue = (assertion.predicate && assertion.predicate.id) || "";
             if (matchedValue !== criterias.predicate) isMatch = false;
         }
 
         if (isMatch && !angular.isUndefined(criterias.object)) {
+            if (angular.isString(criterias.object)) criterias.object = criterias.object.toLowerCase();
             matchedValue = null;
             if (assertion.object !== null) matchedValue = (assertion.object && assertion.object.id) || "";
             if (matchedValue !== criterias.object) isMatch = false;

@@ -57,6 +57,7 @@ yarn.service('state', function (Assertion,
     /**
      * Get or create a new thing
      * @param _id
+     * @param dontAutoCreate
      */
     State.prototype.thing = function (_id, dontAutoCreate) {
         var thing = null;
@@ -129,17 +130,64 @@ yarn.service('state', function (Assertion,
         return predicate;
     };
 
+    State.prototype.resolveAll = function resolveAll(criterias) {
+        var foundObjects = [];
+        if (criterias && (criterias.subject && criterias.predicate) || (criterias.object && criterias.predicate)) {
+            var foundObjectsSets = {};
+            console.log("length.... ", this.assertions.all().length);
+
+            // Exclused parented assertions unless already specified
+            if (angular.isUndefined(criterias.parent)) criterias.parent = null;
+            var assertions = this.assertions.find(criterias);
+
+            // Sort assertion by layerSetup
+            assertions = assertions.sort(function (a, b) {
+                var aPriority = layerSetup.indexOf(a.layer);
+                var bPriority = layerSetup.indexOf(b.layer);
+                return aPriority > bPriority;
+            });
+
+            // Check if the item to be resolved is the object or the subject
+            var typeToResolve = (criterias.object) ? "subject" : "object";
+
+            // Split all assertion by their unique thing to be resolved
+            assertions.forEach(function (assertion) {
+                var foundObjectSet;
+                if (assertion[typeToResolve]) {
+                    foundObjectSet = foundObjectsSets[assertion[typeToResolve].id];
+                    if (!foundObjectSet) foundObjectSet = foundObjectsSets[assertion[typeToResolve].id] = [];
+                    foundObjectSet.push(assertion);
+                }
+            });
+
+            angular.forEach(foundObjectsSets, function (foundObjectSet) {
+                var topAssertion = foundObjectSet[foundObjectSet.length -1];
+                if (topAssertion.value()) foundObjects.push(topAssertion[typeToResolve]);
+            });
+
+        }
+
+        console.log("foundObjects", foundObjects);
+        return foundObjects;
+    };
+
+    State.prototype.resolveOne = function (criterias) {
+        var objs = this.resolveAll(criterias);
+        return objs.length && objs[0];
+    };
+
+
     /**
      * Get a new assertion
      * @param subject
      * @param predicate
      * @param object
-     * @param options
+     * @param _options
      * @returns {*}
      */
     State.prototype.createAssertion = function (subject, predicate, object, _options) {
         var options = _options || {};
-        //console.log("State.createAssertion", subject, predicate, object, options);
+        console.log("State.createAssertion", subject, predicate, object, options);
         var chosenAssertion = [];
         var foundAssertions = [];
         // The set of assertions to negate first

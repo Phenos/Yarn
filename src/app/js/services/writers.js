@@ -17,20 +17,35 @@ yarn.factory('writers', function (yarn,
     }
 
     function describeCoverpage() {
-        var story = state.thing("Story");
 
+        var story = state.thing("Story");
 
         storyLog.clear();
 
         // Show the story title
-        var storyIsCalled = story.resolveValue("isNamed");
+        console.trace();
+
+        var storyIsCalled = state.resolveOne({
+            subject: "Story",
+            predicate: "isNamed"
+        });
+
         if (storyIsCalled) {
             storyLog.heading(storyIsCalled);
         }
 
         // Set the scenery
-        var scenery = story.resolveValue("hasScenery");
-        var coverpage = story.resolveValue("hasCoverpage");
+        var scenery = state.resolveOne({
+            subject: "Story",
+            predicate: "hasScenery"
+        });
+
+        var coverpage = state.resolveOne({
+            subject: "Story",
+            predicate: "hasCoverpage"
+        });
+
+
         var scenery_url = scenery && script.resolveRelativeURI(scenery);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
         var url = scenery_url || coverpage_url || false;
@@ -45,12 +60,18 @@ yarn.factory('writers', function (yarn,
             storyLog.image(coverpage_url);
         }
 
-        var description = story.resolveValue("isDescribedAs");
+        var description = state.resolveOne({
+            subject: "Story",
+            predicate: "isDescribedAs"
+        });
         if (description) {
             storyLog.log("“&nbsp;" + description + "&nbsp;”");
         }
 
-        var author = story.resolveValue("isAuthoredBy");
+        var author = state.resolveOne({
+            subject: "Story",
+            predicate: "isAuthoredBy"
+        });
         if (author) {
             storyLog.log("by " + author);
         }

@@ -6,8 +6,9 @@ yarn.service('events', function (state,
     }
 
     Events.prototype.process = function () {
-        var trigger = state.predicate("triggers");
-        var triggerAssertions = state.getAssertions(null, trigger, null);
+        var triggerAssertions = state.assertions.find({
+            predicate: "triggers"
+        });
         //console.log("found triggerAssertions", triggerAssertions);
         angular.forEach(triggerAssertions, function (assertion) {
             // Fetch the list of assertions to be used as triggers

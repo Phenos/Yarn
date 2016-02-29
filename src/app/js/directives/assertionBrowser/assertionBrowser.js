@@ -64,7 +64,8 @@
 
     }
 
-    function assertionBrowserService(hotkeys,
+    function assertionBrowserService($rootScope,
+                                     hotkeys,
                                      $mdDialog) {
 
         var service = {
@@ -73,11 +74,10 @@
 
         var controller;
 
-        service.register = function (_controller, scope) {
+        service.register = function (_controller) {
             controller = _controller;
 
-            hotkeys.bindTo(scope)
-                .add({
+            hotkeys.bindTo($rootScope).add({
                     combo: 'mod+b',
                     allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
                     description: 'Open assertion browser',

@@ -4,6 +4,7 @@ yarn.factory('playerMode', PlayerModeService);
 
 
 function playerModeController(user,
+                              $rootScope,
                               $scope,
                               yConsole,
                               welcomeMessage,
@@ -11,7 +12,7 @@ function playerModeController(user,
                               playerMode,
                               hotkeys) {
 
-    hotkeys.bindTo($scope)
+    hotkeys.bindTo($rootScope)
         .add({
             combo: 'mod+esc',
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
@@ -66,7 +67,7 @@ function PlayerModeService($localStorage, consoleService, player) {
     consoleIsVisible($localStorage.consoleIsVisible);
 
     service.toggleConsole = function () {
-        if (consoleIsVisible) {
+        if (service.consoleIsVisible) {
             service.hideConsole();
         } else {
             service.showConsole();

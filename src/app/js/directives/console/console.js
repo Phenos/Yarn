@@ -23,6 +23,7 @@
         function ConsoleController(consoleService,
                                    yConsole,
                                    $scope,
+                                   $rootScope,
                                    $compile,
                                    $timeout,
                                    $element,
@@ -30,7 +31,7 @@
 
             var self = this;
 
-            hotkeys.bindTo($scope)
+            hotkeys.bindTo($rootScope)
                 .add({
                     combo: 'mod+k',
                     allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],

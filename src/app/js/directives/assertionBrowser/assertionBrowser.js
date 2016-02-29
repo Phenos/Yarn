@@ -19,7 +19,7 @@
     }
 
 
-    function assertionBrowserGridDirective(state) {
+    function assertionBrowserGridDirective() {
         return {
             restrict: 'E',
             bindToController: {
@@ -33,22 +33,29 @@
 
         function AssertionBrowserGridController() {
 
-            this.gridOptions = {
+            this.options = {
                 enableFiltering: true,
                 columnDefs: [
                     {
                         field: 'subject.text()',
                         displayName: 'subject'
-                        //filter: {
-                        //    condition: uiGridConstants.filter.ENDS_WITH,
-                        //    placeholder: 'ends with'
-                        //}
                     },
-                    {field: 'predicate.label', displayName: 'predicate'},
-                    {field: 'object', displayName: 'object'},
-                    {field: 'layer', displayName: 'layer'},
-                    {field: 'parent', displayName: 'parent'},
-                    {field: '_value', displayName: 'value'}
+                    {
+                        field: 'predicate.label',
+                        displayName: 'predicate'},
+                    {
+                        field: 'object',
+                        displayName: 'object'},
+                    {
+                        field: 'layer',
+                        displayName: 'layer'},
+                    {
+                        field: 'parent',
+                        displayName: 'parent'},
+                    {
+                        field: '_value',
+                        displayName: 'value'
+                    }
                 ],
                 data: this.data
             };
@@ -81,24 +88,26 @@
         };
 
         service.open = function () {
-            service.isOpen = false;
+            service.isOpen = true;
             $mdDialog.show({
-                controller: AssertionBrowserWindowController,
                 templateUrl: './html/assertionBrowserWindow.html',
                 parent: angular.element(document.body),
                 //targetEvent: ev,
                 clickOutsideToClose: true,
-                fullscreen: true
+                controller: function ($scope, state, assertionBrowser) {
+                    $scope.data = state.assertions.all();
+                    $scope.close = function () {
+                        assertionBrowser.close()
+                    };
+                }
             });
 
-            function AssertionBrowserWindowController($scope, state) {
-                $scope.data = state.assertions.all()
-            }
+
         };
 
         service.close = function () {
+            $mdDialog.cancel();
             service.isOpen = false;
-            $mdDialog.close();
         };
 
         service.toggle = function () {

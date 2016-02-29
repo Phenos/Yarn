@@ -137,14 +137,24 @@ yarn.service('state', function (Assertion,
      * @param options
      * @returns {*}
      */
-    State.prototype.createAssertion = function (subject, predicate, object, options) {
+    State.prototype.createAssertion = function (subject, predicate, object, _options) {
+        var options = _options || {};
+        //console.log("State.createAssertion", subject, predicate, object, options);
         var chosenAssertion = [];
         var foundAssertions = [];
         // The set of assertions to negate first
         // First, verify that we have at least a subject and a predicate
         // Otherwise the assertions would not assert anything
+
+        // If not layer is provided, we set the "currentLayer"
+        if (!options.layer) {
+            options.layer = this.currentLayer;
+        }
+
+
         if (subject && predicate) {
 
+            /*
             // Look for existing assertions that match the criteria
             // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
             // Instead we negate all the ones we dont need anymore
@@ -182,6 +192,7 @@ yarn.service('state', function (Assertion,
                     }
                 });
             }
+            */
 
             var assertion = new Assertion(subject, predicate, object, options);
             this.assertions.add(assertion);
@@ -232,10 +243,13 @@ yarn.service('state', function (Assertion,
 
     State.prototype.step = function (increment) {
         var count = 0;
+        // todo: refactor: use a service instead of state.thing
+        // ex.:   var story = things("Story")
+        // ex.:   var hasStepped = predicates("hasStepped")
         var story = this.thing("Story");
         var hasStepped = this.predicate("hasStepped");
 
-        var assertions = story.getAssertion(hasStepped);
+        var assertions = this.assertions.find(story, hasStepped);
         if (assertions.length) {
             if (typeof assertions[0].object === "number") {
                 count = assertions[0].object;

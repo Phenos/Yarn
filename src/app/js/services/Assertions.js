@@ -1,4 +1,4 @@
-yarn.service("Assertions", function() {
+yarn.service("Assertions", function () {
 
     function Assertions() {
         this._all = [];
@@ -9,12 +9,16 @@ yarn.service("Assertions", function() {
     };
 
     Assertions.prototype.get = function (id) {
+        var found;
         var assertion;
         for (var i = 0; i < this._all.length; i++) {
             assertion = this._all[i];
-            if (assertion.id() === id) break;
+            if (assertion.id() === id) {
+                found = assertion;
+                break;
+            }
         }
-        return assertion;
+        return found;
     };
 
     Assertions.prototype.count = function () {
@@ -29,24 +33,24 @@ yarn.service("Assertions", function() {
      */
     Assertions.prototype.add = function (assertion) {
         var self = this;
-        var assertions = [];
+        var assertions = ensureArray(assertion);
         var addedAssertions = [];
-        var existingAssertion;
-        if (!existingAssertion) {
-            assertions = ensureArray(assertion);
-            assertions.forEach(function (assertion) {
-                if (assertion) {
-                    existingAssertion = self.get(assertion.id());
-                    if (existingAssertion) {
-                        existingAssertion.value(assertion.value());
-                        addedAssertions.push(existingAssertion);
-                    } else {
-                        self._all.push(assertion);
-                        addedAssertions.push(assertion);
-                    }
+
+        assertions.forEach(function (assertion) {
+            var existingAssertion;
+            if (assertion) {
+                existingAssertion = self.get(assertion.id());
+                //console.log(assertion.id());
+                //console.log("existingAssertion", existingAssertion);
+                if (existingAssertion) {
+                    existingAssertion.value(assertion.value());
+                    addedAssertions.push(existingAssertion);
+                } else {
+                    self._all.push(assertion);
+                    addedAssertions.push(assertion);
                 }
-            });
-        }
+            }
+        });
         return addedAssertions;
     };
 
@@ -62,10 +66,10 @@ yarn.service("Assertions", function() {
     };
 
     Assertions.prototype.removeLayer = function (layer) {
-        var assertions = this.assertions.find({
+        var assertions = this.find({
             layer: layer
         });
-        this.assertions.remove(assertions);
+        this.remove(assertions);
         return this;
     };
 
@@ -79,7 +83,7 @@ yarn.service("Assertions", function() {
         return matches;
     };
 
-    // todo: Too complex ... should be simplified or cut appart
+// todo: Too complex ... should be simplified or cut appart
     function match(assertion, criterias) {
         var matchedValue;
         var isMatch = true;
@@ -127,5 +131,6 @@ yarn.service("Assertions", function() {
     }
 
     return Assertions;
-});
+})
+;
 

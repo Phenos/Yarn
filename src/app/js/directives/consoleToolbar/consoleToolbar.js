@@ -14,10 +14,15 @@ function ConsoleToolbarDirective() {
         controller: ConsoleToolbarController
     };
 
-    function ConsoleToolbarController(consoleService,
+    function ConsoleToolbarController(assertionBrowser,
+                                      consoleService,
                                       playerMode) {
         this.hideConsole = function () {
             playerMode.hideConsole();
+        };
+
+        this.openAssertionBrowser = function () {
+            assertionBrowser.open();
         };
 
         this.clearConsole = function () {

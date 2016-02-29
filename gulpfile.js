@@ -149,8 +149,8 @@ function apiTask() {
 
 function watchTask() {
     gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
-    gulp.watch(paths.watches.js, gulp.series('compressJS', 'copyJs', browserSync.reload));
-    gulp.watch(paths.watches.statics, gulp.series('copyStatic', browserSync.reload));
+    gulp.watch(paths.watches.js, gulp.series('copyJs', browserSync.reload));
+    gulp.watch(paths.watches.statics, gulp.series('copyStatic', 'copyJs', browserSync.reload));
 }
 
 function lessTask() {

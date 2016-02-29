@@ -5,19 +5,17 @@ yarn.factory('Assertion', function (layerSetup, postal) {
      * @param subject
      * @param predicate
      * @param object
-     * @param layer
-     * @param parent
-     * @param value
+     * @param options
      * @constructor
      */
     function Assertion(subject, predicate, object, options) {
-        var options = options || {};
+        var _options = options || {};
         this.subject = subject || null;
         this.predicate = predicate || null;
         this.object = object || null;
-        this.layer = options.layer || null; // The id of a layer
+        this.layer = _options.layer || null; // The id of a layer
         this._value = true; // A value (true, false)
-        this.parent = options.parent || null; // A parent object
+        this.parent = _options.parent || null; // A parent object
 
         this.value(options.value);
     }
@@ -48,7 +46,7 @@ yarn.factory('Assertion', function (layerSetup, postal) {
      * @returns {Assertion}
      */
     Assertion.prototype.value = function (value) {
-        if (!angular.isUndefined(this._value)) this.value = value;
+        if (!angular.isUndefined(value)) this._value = value;
 
         postal.publish({
             channel: "state",
@@ -56,7 +54,7 @@ yarn.factory('Assertion', function (layerSetup, postal) {
             data: this
         });
 
-        return this.value;
+        return this._value;
     };
 
     Assertion.prototype.isUniqueAndFalse = function () {

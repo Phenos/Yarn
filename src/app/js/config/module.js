@@ -8,6 +8,7 @@ var yarn = angular.module('yarn', [
     'angular-uri',
     'ngAnimate',
     'ngSanitize',
+    'ui.grid',
     'ngMaterial',
     'ui.router',
     'lbServices',

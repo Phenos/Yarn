@@ -1,0 +1,17 @@
+<md-dialog aria-label="Assertion Browser" flex="90" ng-cloak layout="column">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Assertion Browser</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-svg-src="./svg-icons/close.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content flex="90" layout="column">
+        <div flex="100" style="position:relative" layout="column">
+            <assertion-browser-grid data="data" flex="100"></assertion-browser-grid>
+        </div>
+    </md-dialog-content>
+</md-dialog>
+

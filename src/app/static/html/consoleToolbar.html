@@ -8,6 +8,19 @@
             <md-menu-bar>
                 <md-menu>
                     <button ng-click="$mdOpenMenu()">
+                        Tools
+                    </button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.openAssertionBrowser()">
+                                Assertion Browser
+                                <span class="md-alt-text"> {{ 'M-A' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-menu>
+                    <button ng-click="$mdOpenMenu()">
                         Options
                     </button>
                     <md-menu-content>

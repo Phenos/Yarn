@@ -33,14 +33,14 @@ gulp.task('build', gulp.series(
     'copyAssets',
     'cleanAfterBuild'
 ));
-gulp.task('dev', gulp.series(
-    'build',
-    'server',
-    'watch'
-));
 gulp.task('devServerless', gulp.series(
     'build',
     'watch'
+));
+gulp.task('dev', gulp.series(
+    'build',
+    'watch',
+    'api'
 ));
 
 
@@ -138,19 +138,17 @@ function serverTask(callback) {
     callback();
 }
 
-function apiTask() {
-    return gulp.src('*.js', {read: false})
-        .pipe($.shell([
-            'npm start'
-        ], {
-            templateData: {}
-        }))
+function apiTask(callback) {
+    var app = require("./server/server.js");
+    app.start();
+    callback();
 }
 
-function watchTask() {
+function watchTask(callback) {
     gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
     gulp.watch(paths.watches.js, gulp.series('copyJs', browserSync.reload));
     gulp.watch(paths.watches.statics, gulp.series('copyStatic', 'copyJs', browserSync.reload));
+    callback();
 }
 
 function lessTask() {

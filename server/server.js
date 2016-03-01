@@ -92,8 +92,11 @@ boot(app, appRoot, function (err) {
     if (err) throw err;
 
     // start the server if `$ node server.js`
-    if (require.main === module)
+    if (require.main === module) {
         app.start();
+    } else {
+        module.exports = app;
+    }
 });
 
 // to support URL-encoded bodies
@@ -274,7 +277,7 @@ app.get('/auth/logout', function (req, res, next) {
 // All static middleware should be registered at the end, as all requests
 // passing the static middleware are hitting the file system
 // Example:
-var path = require('path');
+//var path = require('path');
 //app.use(loopback.static(path.resolve(__dirname, '../../build/static')));
 
 // Requests that get this far won't be handled
@@ -284,6 +287,3 @@ var path = require('path');
 
 // The ultimate error handler.
 app.use(loopback.errorHandler());
-
-
-

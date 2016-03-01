@@ -186,8 +186,10 @@ yarn.service('state', function (Assertion,
      * @returns {*}
      */
     State.prototype.createAssertion = function (subject, predicate, object, _options) {
+        var self = this;
+
         var options = _options || {};
-        console.log("State.createAssertion", subject, predicate, object, options);
+        //console.log("State.createAssertion", subject, predicate, object, options);
         var chosenAssertion = [];
         var foundAssertions = [];
         // The set of assertions to negate first
@@ -199,33 +201,27 @@ yarn.service('state', function (Assertion,
             options.layer = this.currentLayer;
         }
 
-
         if (subject && predicate) {
 
-            /*
             // Look for existing assertions that match the criteria
             // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
             // Instead we negate all the ones we dont need anymore
             if (predicate.uniqueSubject) {
-                this.assertions.forEach(function (assertion) {
-                    // If it is a "uniqueSubject" predicate, match assertions
-                    // by subject and predicate only
-                    if (assertion.subject === subject &&
-                        assertion.predicate === predicate) {
-                        foundAssertions.push(assertion);
-                    }
 
-                    // When the predicate is "uniqueSubject"
-                    // we re-test to see if the assertion is a perfect candidate
-                    // to receive the new value
-                    if (assertion.subject === subject &&
-                        assertion.predicate === predicate &&
-                        assertion.object === object) {
-                        chosenAssertion = assertion;
-                    }
+                // Find exquivalent assertions to be negated
+                var assertionsToNegate = this.assertions.find({
+                    subject: subject.id,
+                    predicate: predicate.id,
+                    layer: this.currentLayer,
+                    parent: null
+                });
+
+                assertionsToNegate.forEach(function (assertion) {
+                    self.negate(assertion);
                 });
 
             } else {
+                /*
                 this.assertions.forEach(function (assertion) {
                     // Otherwise, match assertions on all 3 criteras
                     // subject, predicate and object
@@ -239,8 +235,8 @@ yarn.service('state', function (Assertion,
                         chosenAssertion = assertion;
                     }
                 });
+                */
             }
-            */
 
             var assertion = new Assertion(subject, predicate, object, options);
             this.assertions.add(assertion);
@@ -285,7 +281,9 @@ yarn.service('state', function (Assertion,
             if (assertion.value()) {
                 assertion.value(false);
             }
-            self.persistAssertion(assertion);
+            if (assertion.layer === "session") {
+                self.persistAssertion(assertion);
+            }
         });
     };
 

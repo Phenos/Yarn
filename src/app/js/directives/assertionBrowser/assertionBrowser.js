@@ -69,7 +69,7 @@
                                      $mdDialog) {
 
         var service = {
-            isOpen: false
+            isOpen: true
         };
 
         var controller;

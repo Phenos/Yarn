@@ -16,7 +16,6 @@
     "angular": "~1.4.8",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
     "angular-ui-router": "~0.2.15",
-    "angularjs-breakpoint": "*",
     "angular-animate": "~1.4.8",
     "angular-uri": "~0.2.0",
     "angular-audio": "~1.7.1",

@@ -13,6 +13,5 @@ var yarn = angular.module('yarn', [
     'ui.router',
     'lbServices',
     'ui.ace',
-    'cfp.hotkeys',
-    'breakpointApp'
+    'cfp.hotkeys'
 ]);

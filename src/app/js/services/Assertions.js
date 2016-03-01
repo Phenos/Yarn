@@ -90,7 +90,8 @@ yarn.service("Assertions", function () {
 
         if (!assertion) isMatch = false;
 
-        if (!angular.isUndefined(criterias.subject)) {
+        if (isMatch && !angular.isUndefined(criterias.subject)) {
+            //console.log("subjec: criterias : ", criterias);
             if (angular.isString(criterias.subject)) criterias.subject = criterias.subject.toLowerCase();
             matchedValue = null;
             if (assertion.subject !== null) matchedValue = (assertion.subject && assertion.subject.id) || "";
@@ -124,6 +125,12 @@ yarn.service("Assertions", function () {
         if (isMatch && !angular.isUndefined(criterias.value)) {
             matchedValue = assertion.value;
             if (matchedValue !== criterias.value) isMatch = false;
+        }
+
+        if (isMatch && !angular.isUndefined(criterias.parent)) {
+            //console.log("parent: criterias : ", criterias);
+            matchedValue = (assertion.parent && assertion.parent.id) || null;
+            if (matchedValue !== criterias.parent) isMatch = false;
         }
 
         return isMatch;

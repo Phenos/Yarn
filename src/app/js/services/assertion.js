@@ -18,6 +18,8 @@ yarn.factory('Assertion', function (layerSetup, postal) {
         this.parent = _options.parent || null; // A parent object
 
         this.value(options.value);
+
+        //console.log("created Assertion", this);
     }
 
     Assertion.prototype.id = function () {
@@ -30,12 +32,25 @@ yarn.factory('Assertion', function (layerSetup, postal) {
      * @returns {{}}
      */
     Assertion.prototype.toJSON = function () {
+        function idOrValue(obj) {
+            var value = "";
+            if (!angular.isUndefined(obj)) {
+                if (typeof(obj) === "object" && obj != null) {
+                    value = obj.id;
+                } else {
+                    value = obj;
+                }
+            }
+            return value;
+        }
+
         return {
-            subject: (this.subject && this.subject.id) || "x",
-            predicate: (this.predicate && this.predicate.id) || "x",
-            object: (this.object && this.object.id) || "x",
-            layer: this.layer || "x",
-            group: (this.group && this.group.id) || "x"
+            subject: idOrValue(this.subject),
+            predicate: idOrValue(this.predicate.id),
+            object: idOrValue(this.object),
+            layer: this.layer || "",
+            group: idOrValue(this.group),
+            value: this.value()
         }
     };
 
@@ -46,22 +61,23 @@ yarn.factory('Assertion', function (layerSetup, postal) {
      * @returns {Assertion}
      */
     Assertion.prototype.value = function (value) {
-        if (!angular.isUndefined(value)) this._value = value;
+        if (!angular.isUndefined(value)) {
+            this._value = value;
 
-        postal.publish({
-            channel: "state",
-            topic: "setAssertion",
-            data: this
-        });
+            postal.publish({
+                channel: "state",
+                topic: "setAssertion",
+                data: this
+            });
 
+        }
         return this._value;
     };
 
     Assertion.prototype.isUniqueAndFalse = function () {
-        var value;
-        value = (
+        var value = (
             this.predicate.uniqueSubject &&
-            this.value(layerSetup) === false
+            this.value() === false
         );
         return value;
     };

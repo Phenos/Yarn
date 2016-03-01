@@ -2,15 +2,13 @@ yarn.service("aboutToRoutine", function (state) {
 
     function aboutToRoutine(aboutToId) {
         var isAboutTo = state.predicate("isAboutTo");
+        var you = state.thing("You");
         if (aboutToId) {
-            state.thing("You").setAssertion(isAboutTo, state.thing(aboutToId));
-            state.createAssertion()
-            //console.log("ABOUT TO >> ", aboutTo);
+            state.createAssertion(you, isAboutTo, state.thing(aboutToId));
         } else {
-            state.negate(
-                state.thing("You").getAssertion(isAboutTo)
-            );
-            //console.log("CLEARED ABOUT TO !!! ");
+            state.createAssertion(you, isAboutTo, null, {
+                value: false
+            });
         }
         return true;
     }

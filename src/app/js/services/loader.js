@@ -48,7 +48,7 @@ yarn.service('loader', function (yarn,
 
                 // Restore session state layer from localStorage
                 if (!$localStorage.localState) $localStorage.localState = {};
-                yarn.restoreFromLocalState($localStorage.localState);
+                yarn.restoreFromLocalState();
 
                 splashService.hide();
                 player.refresh();

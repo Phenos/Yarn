@@ -48,7 +48,9 @@ function inspectCommand(state,
                 // TODO: Add argument to ALSO output assertions that have been negated
                 // Currently only the "true" assertions are shown
 
-                assertions = state.getAssertions(thing);
+                assertions = state.assertions.find({
+                    subject: thing.id
+                });
                 assertions = assertions.filter(function (assertion) {
                     return !assertion.isUniqueAndFalse();
                 });
@@ -68,12 +70,16 @@ function inspectCommand(state,
                     log.push(consoleHelper.assertion2log(assertion) + "<br/>");
                 });
 
-                if (thing.childStates.length) {
-                    log.push("<strong>Has " + thing.childStates.length + " child assertions:</strong><br/>");
-                    angular.forEach(thing.childStates, function (state) {
+                var childAssertions = state.assertions.find({
+                    parent: thing.id
+                });
+
+                if (childAssertions.length) {
+                    log.push("<strong>Has " + childAssertions.length + " child assertions:</strong><br/>");
+                    angular.forEach(childAssertions, function (assertion) {
                         log.push(
                             "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            consoleHelper.assertion2log(state.assertion, thing) +
+                            consoleHelper.assertion2log(assertion, thing) +
                             "<br/>")
                     });
                 }

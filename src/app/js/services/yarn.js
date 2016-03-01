@@ -1,4 +1,5 @@
-yarn.service('yarn', function (postal,
+yarn.service('yarn', function ($localStorage,
+                               postal,
                                state,
                                script,
                                yConsole,
@@ -16,8 +17,8 @@ yarn.service('yarn', function (postal,
             topic: "setAssertion",
             callback: function (data) {
                 // If the story has started, log state changes to the console
-                if (state.step() > 0 && data.state.value === true) {
-                    yConsole.log("Changed: " + consoleHelper.assertion2log(data.assertion));
+                if (state.step() > 0 && data.value() === true) {
+                    yConsole.log("Changed: " + consoleHelper.assertion2log(data));
                 }
             }
         });
@@ -29,7 +30,8 @@ yarn.service('yarn', function (postal,
             return this;
         };
 
-        this.restoreFromLocalState = function (localState) {
+        this.restoreFromLocalState = function () {
+            var localState = $localStorage.localState;
             var localStateObj;
             //console.log("restoreFromLocalState", localState);
             if (!localState[this.id]) localState[this.id] = {};

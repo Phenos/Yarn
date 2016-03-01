@@ -82,10 +82,17 @@ yarn.factory('writers', function (yarn,
     function describeRoom() {
         storyLog.clear();
 
-        var room = state.resolveValue("you.isIn");
+        var room = state.resolveOne({
+            subject: "You",
+            predicate: "isIn"
+        });
+
         //console.log("Your in room ", room);
         if (room) {
-            var scenery = room.resolveValue("hasScenery");
+            var scenery = state.resolveOne({
+                subject: room.id,
+                predicate: "hasScenery"
+            });
             var url = script.resolveRelativeURI(scenery);
             if (url) {
                 sceneryService.change(url);
@@ -93,9 +100,16 @@ yarn.factory('writers', function (yarn,
                 sceneryService.clear();
             }
 
-            var label = room.resolveValue("isNamed");
+            var label = state.resolveOne({
+                subject: room.id,
+                predicate: "isNamed"
+            });
             storyLog.heading(label);
-            var description = room.resolveValue("isDescribedAs");
+
+            var description = state.resolveOne({
+                subject: room.id,
+                predicate: "isDescribedAs"
+            });
             if (description) storyLog.log(description);
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");

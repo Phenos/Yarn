@@ -29,21 +29,11 @@ yarn.factory('consoleHelper', function (layerSetup,
             }
         }
 
-
-        var topState = assertion.getTopState(layerSetup, parentThing);
-        if (topState) {
-            log.push("<span class='truthStatement'>");
-            log.push(" (is " + assertion.value(layerSetup) + " in " + assertion.valueLayer(layerSetup) + ":" + assertion.states.length + ")");
-            log.push("</span>");
-        }
-
-        // Dont return anything if there is no value set for any situation
-        // Unless it is requested
-        if (!topState && !evenIfFalse) log = [];
+        log.push("<span class='truthStatement'>");
+        log.push(" (is " + assertion.value() + " in " + assertion.layer + ")");
+        log.push("</span>");
 
         return log.join("");
-
-
     };
 
     return service;

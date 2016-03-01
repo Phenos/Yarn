@@ -192,8 +192,7 @@ IsA is a Predicate,
         state
             .predicate("trigger")
             .syntax("trigger")
-            .syntax("triggers")
-            .isUniqueSubject(true);
+            .syntax("triggers");
 
         // Something uses something else
         state

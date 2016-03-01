@@ -2,30 +2,33 @@
 yarn.service("thingsInRoomHelper", function (state) {
 
     return function thingsInRoom(room) {
-        var foundThings = [];
+        var foundInventory = [];
 
-        var isIn = state.predicate("isIn");
-        var thingsInRoomAssertions = state.getAssertions(null, isIn, room);
-        //console.log("thingsInRoomAssertions", isIn, room, thingsInRoomAssertions);
-        var thingsInRoom = [];
-        angular.forEach(thingsInRoomAssertions, function (assertion) {
-            if (assertion.value())
-                thingsInRoom.push(assertion.subject);
-        });
+        if (room) {
 
-        angular.forEach(thingsInRoom, function (thing) {
-            // Check if item is an InventoryItem
-            var isAThing = false;
-            var thingsThatAre = thing.resolve("isA");
-            thingsThatAre.forEach(function (thing) {
-                if (thing === state.thing("Thing")) {
-                    isAThing = true;
-                }
+            var thingsInRoom = state.resolveAll({
+                predicate: "isIn",
+                object: room.id
             });
-            if (isAThing) foundThings.push(thing);
-        });
 
-        return foundThings;
-    }
+            // Todo: YUCK... Find a better way to do these checks!!!!!
+            thingsInRoom.forEach(function (thing) {
+                // Check if item is an InventoryItem
+                var isThing = false;
+
+                var thingsThatAre = state.resolveAll({
+                    subject: thing.id,
+                    predicate: "isA"
+                });
+                var Thing = state.thing("Thing");
+                thingsThatAre.forEach(function (thing) {
+                    if (thing === Thing) isThing = true;
+                });
+                if (isThing) foundInventory.push(thing);
+            });
+        }
+
+        return foundInventory;
+    };
 
 });

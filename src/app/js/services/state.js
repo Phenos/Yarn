@@ -24,6 +24,10 @@ yarn.service('state', function ($localStorage,
             console.log("Restoring assertion from localState", localAssertions);
             angular.forEach(localAssertions, function (assertion) {
                 var object = null;
+                var subject = null;
+
+                // todo : Refactor the following next two blocks for D.R.Y.
+
                 if (typeof(assertion.object) === "number") {
                     object = assertion.object;
                 } else if (typeof(assertion.object) === "string") {
@@ -34,8 +38,18 @@ yarn.service('state', function ($localStorage,
                     }
                 }
 
+                if (typeof(assertion.subject) === "number") {
+                    object = assertion.subject;
+                } else if (typeof(assertion.subject) === "string") {
+                    if (assertion.subject.indexOf("@id:") === 0) {
+                        subject = self.thing(assertion.subject.substring(4));
+                    } else {
+                        subject = assertion.subject;
+                    }
+                }
+
                 var newAssertion = self.createAssertion(
-                    self.thing(assertion.subject),
+                    subject,
                     self.predicate(assertion.predicate),
                     object, {
                         value: assertion.value
@@ -136,7 +150,7 @@ yarn.service('state', function ($localStorage,
             var foundObjects = [];
             if (criterias && (criterias.subject && criterias.predicate) || (criterias.object && criterias.predicate)) {
                 var foundObjectsSets = {};
-                //console.log("length.... ", this.assertions.all().length);
+                console.log("criterias", criterias);
 
                 // Exclused parented assertions unless already specified
                 if (angular.isUndefined(criterias.parent)) criterias.parent = null;
@@ -173,8 +187,12 @@ yarn.service('state', function ($localStorage,
         };
 
         State.prototype.resolveOne = function (criterias) {
+            var value = null;
             var objs = this.resolveAll(criterias);
-            return objs.length && objs[0];
+            if (objs.length) {
+                value = objs[0];
+            }
+            return value;
         };
 
 
@@ -245,7 +263,7 @@ yarn.service('state', function ($localStorage,
             } else {
                 console.warn("Impossible to create assertion without at least a subject and a predicate.")
             }
-            console.log("created: ", assertion);
+            //console.log("created: ", assertion);
 
             return assertion;
         };
@@ -322,6 +340,5 @@ yarn.service('state', function ($localStorage,
 
 
     }
-)
-;
+);
 

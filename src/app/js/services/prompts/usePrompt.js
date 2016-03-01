@@ -6,11 +6,11 @@ yarn.service("usePrompt", function (logic,
     function usePrompt(context) {
 
         context.when = function () {
-            var isAboutToObj = state.resolveOne({
-                subject: state.thing("you"),
-                predicate: state.thing("isAboutTo")
+            var isAboutTo = state.resolveOne({
+                subject: "you",
+                predicate: "isAboutTo"
             });
-            return isAboutToObj && isAboutToObj.id === "use";
+            return isAboutTo === "use";
         };
 
         context.question = function (promptLoop, prompt) {

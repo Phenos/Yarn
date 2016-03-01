@@ -7,8 +7,11 @@ yarn.service("lookPrompt", function (writers,
     function lookPrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo && isAboutTo.id === "look";
+            var isAboutTo = state.resolveOne({
+                subject: "you",
+                predicate: "isAboutTo"
+            });
+            return isAboutTo === "look";
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";

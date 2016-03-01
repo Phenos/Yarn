@@ -7,20 +7,31 @@ yarn.service("takePrompt", function (logic,
     function takePrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo && isAboutTo.id === "take";
+            var isAboutTo = state.resolveOne({
+                subject: "you",
+                predicate: "isAboutTo"
+            });
+
+            return isAboutTo === "take";
         };
 
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to take ?";
 
-            var room = state.resolve("You.isIn");
-            var thingsToTake = stateHelpers.inventoryInRoom(room[0]);
+            var room = state.resolveOne({
+                subject: "you",
+                predicate: "isIn"
+            });
+
+            var thingsToTake = stateHelpers.inventoryInRoom(room);
 
             //console.log('thingsInRoom', thingsInRoom);
             if (thingsToTake.length) {
                 thingsToTake.forEach(function (thing) {
-                    var label = thing.resolveValue("isNamed");
+                    var label = state.resolveOne({
+                        subject: thing,
+                        predicate: "isNamed"
+                    });
                     prompt.option(label, "take " + thing.id);
                 });
             }

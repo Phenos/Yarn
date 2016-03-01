@@ -27,10 +27,9 @@ yarn.service("defaultPrompt", function (commands,
             }
 
             // Enable the look action for if the room contains Things
-            var thingsInRoom = state.resolveAll({
-                predicate: "isIn",
-                object: room.id
-            });
+            var thingsInRoom = stateHelpers.thingsInRoom(room);
+
+            console.log("thingsInRoom", thingsInRoom);
 
             // Filter out things that dont have a label
             var thingsInRoomWithDescriptions = thingsInRoom.filter(function (thing) {
@@ -38,21 +37,23 @@ yarn.service("defaultPrompt", function (commands,
                     subject: thing,
                     predicate: "isDescribedAs"
                 });
-                return description;
+                console.log("-", thing, description);
+                return typeof(description) === "string";
             });
+            console.log("thingsInRoomWithDescriptions", thingsInRoomWithDescriptions);
 
             if (thingsInRoomWithDescriptions.length) {
                 prompt.option("Look", "aboutTo look");
             }
 
-/*
             // Enable the "take" option if there are inventory items
             // in the current room
-            var room = state.resolve("You.isIn");
-            var inventoryInRoom = stateHelpers.inventoryInRoom(room[0]);
+            var inventoryInRoom = stateHelpers.inventoryInRoom(room);
             if (inventoryInRoom.length) {
                 prompt.option("Take", "aboutTo take");
             }
+
+            /*
 
             // Enable the "use" option if there are inventory items
             // in the current room

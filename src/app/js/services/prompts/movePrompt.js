@@ -5,11 +5,11 @@ yarn.service("movePrompt", function (logic,
     function movePrompt(context) {
 
         context.when = function () {
-            var isAboutToObj = state.resolveOne({
+            var isAboutTo = state.resolveOne({
                 subject: "you",
                 predicate: "isAboutTo"
             });
-            return isAboutToObj === "move";
+            return isAboutTo === "move";
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "Where do you want to go ?";

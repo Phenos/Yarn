@@ -16,59 +16,61 @@ yarn.service("defaultPrompt", function (commands,
                 predicate: "isIn"
             });
 
-            var linkedRooms = state.resolveAll({
-                subject: room.id,
-                predicate: "linksTo"
-            });
-
-            //console.log("linksToCurrentRoom", linksToCurrentRoom);
-            if (linkedRooms.length) {
-                prompt.option("Move", "aboutTo move");
-            }
-
-            // Enable the look action for if the room contains Things
-            var thingsInRoom = stateHelpers.thingsInRoom(room);
-
-            console.log("thingsInRoom", thingsInRoom);
-
-            // Filter out things that dont have a label
-            var thingsInRoomWithDescriptions = thingsInRoom.filter(function (thing) {
-                var description = state.resolveOne({
-                    subject: thing,
-                    predicate: "isDescribedAs"
+            if (room) {
+                var linkedRooms = state.resolveAll({
+                    subject: room.id,
+                    predicate: "linksTo"
                 });
-                console.log("-", thing, description);
-                return typeof(description) === "string";
-            });
-            console.log("thingsInRoomWithDescriptions", thingsInRoomWithDescriptions);
 
-            if (thingsInRoomWithDescriptions.length) {
-                prompt.option("Look", "aboutTo look");
-            }
+                //console.log("linksToCurrentRoom", linksToCurrentRoom);
+                if (linkedRooms.length) {
+                    prompt.option("Move", "aboutTo move");
+                }
 
-            // Enable the "take" option if there are inventory items
-            // in the current room
-            var inventoryInRoom = stateHelpers.inventoryInRoom(room);
-            if (inventoryInRoom.length) {
-                prompt.option("Take", "aboutTo take");
-            }
+                // Enable the look action for if the room contains Things
+                var thingsInRoom = stateHelpers.thingsInRoom(room);
 
-            /*
+                // Filter out things that dont have a label
+                var thingsInRoomWithDescriptions = thingsInRoom.filter(function (thing) {
+                    var description = state.resolveOne({
+                        subject: thing.id,
+                        predicate: "isDescribedAs"
+                    });
+                    return typeof(description) === "string";
+                });
 
-            // Enable the "use" option if there are inventory items
-            // in the current room
-            var roomContents = state.resolve("You.isIn.hasInIt");
-            var usableItemInCurrentRoom = state.predicate("can be used").filterThings(roomContents);
-            if (usableItemInCurrentRoom.length) {
-                prompt.option("Use", "aboutTo use");
+                if (thingsInRoomWithDescriptions.length) {
+                    prompt.option("Look", "aboutTo look");
+                }
+
+                // Enable the "take" option if there are inventory items
+                // in the current room
+                var inventoryInRoom = stateHelpers.inventoryInRoom(room);
+                if (inventoryInRoom.length) {
+                    prompt.option("Take", "aboutTo take");
+                }
+
+                /*
+
+                 // Enable the "use" option if there are inventory items
+                 // in the current room
+                 var roomContents = state.resolve("You.isIn.hasInIt");
+                 var usableItemInCurrentRoom = state.predicate("can be used").filterThings(roomContents);
+                 if (usableItemInCurrentRoom.length) {
+                 prompt.option("Use", "aboutTo use");
+                 }
+                 */
             }
 
             // Enable the "inventory" action if the user has inventory
-            var inventoryItems = state.resolve("You.hasInInventory");
+            var inventoryItems = state.resolveAll({
+                subject: "you",
+                predicate: "hasInInventory"
+            });
+
             if (inventoryItems.length) {
                 prompt.option("Inventory", "playerInventory");
             }
-*/
         };
 
         context.answer = function answer(promptLoop, option) {
@@ -77,7 +79,7 @@ yarn.service("defaultPrompt", function (commands,
             if (option && option.value) {
                 commands.command(option.value);
             }
-            console.log("defaultPrompt Answer: ", option.value);
+            //console.log("defaultPrompt Answer: ", option.value);
         };
 
     }

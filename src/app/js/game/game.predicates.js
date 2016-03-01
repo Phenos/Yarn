@@ -149,11 +149,11 @@ IsA is a Predicate,
         state
             .predicate("hasInInventory")
             .syntax("has in inventory a")
-            .syntax("has in inventoy")
-            .syntax("has inventoy")
+            .syntax("has in inventory")
+            .syntax("has inventory")
             .syntax("have in inventory a")
-            .syntax("have in inventoy")
-            .syntax("have inventoy");
+            .syntax("have in inventory")
+            .syntax("have inventory");
 
         // When a place is linked to another place
         state

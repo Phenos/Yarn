@@ -18,7 +18,7 @@ yarn.service("moveRoutine", function (state,
             //});
             //state.assertions.remove(currentIsIn);
 
-            console.log("room-----", room);
+            //console.log("room-----", room);
             state.createAssertion(you, isIn, room, {
                 layer: state.currentLayer
             });

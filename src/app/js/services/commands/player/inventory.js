@@ -6,12 +6,19 @@ function inventoryPlayerCommand(state,
 
     function handler() {
         var itemList;
-        var thingsInInventory = state.resolve("You.hasInInventory");
+
+        var thingsInInventory = state.resolveAll({
+            subject: "you",
+            predicate: "hasInInventory"
+        });
 
         if (thingsInInventory.length) {
             itemList = [];
             thingsInInventory.forEach(function (thing) {
-                var label = thing.resolveValue("isNamed");
+                var label = state.resolveOne({
+                    subject: thing.id,
+                    predicate: "isNamed"
+                });
                 itemList.push(label);
             });
             var message = [
@@ -25,6 +32,7 @@ function inventoryPlayerCommand(state,
         } else {
             storyLog.error("You have nothing in inventory!");
         }
+
         promptLoop.update();
     }
 

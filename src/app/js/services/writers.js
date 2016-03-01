@@ -18,18 +18,13 @@ yarn.factory('writers', function (yarn,
 
     function describeCoverpage() {
 
-        var story = state.thing("Story");
-
         storyLog.clear();
 
         // Show the story title
-        console.trace();
-
         var storyIsCalled = state.resolveOne({
             subject: "Story",
             predicate: "isNamed"
         });
-
         if (storyIsCalled) {
             storyLog.heading(storyIsCalled);
         }
@@ -86,7 +81,9 @@ yarn.factory('writers', function (yarn,
             subject: "You",
             predicate: "isIn"
         });
-console.log(">>>>> room : ", room);
+
+        console.log("describing room", room);
+
         //console.log("Your in room ", room);
         if (room) {
             var scenery = state.resolveOne({

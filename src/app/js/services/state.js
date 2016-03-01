@@ -4,7 +4,6 @@ yarn.service('state', function ($localStorage,
                                 Thing,
                                 Syntax,
                                 Predicate,
-                                layerSetup,
                                 guid) {
 
         function State() {
@@ -21,7 +20,9 @@ yarn.service('state', function ($localStorage,
             var self = this;
             var localAssertions = ($localStorage.localState &&
                 $localStorage.localState.assertions) || {};
-            console.log("Restoring assertion from localState", localAssertions);
+
+            //console.log("Restoring assertion from localState", localAssertions);
+
             angular.forEach(localAssertions, function (assertion) {
                 var object = null;
                 var subject = null;
@@ -150,17 +151,18 @@ yarn.service('state', function ($localStorage,
             var foundObjects = [];
             if (criterias && (criterias.subject && criterias.predicate) || (criterias.object && criterias.predicate)) {
                 var foundObjectsSets = {};
-                console.log("criterias", criterias);
+                //console.log("criterias", criterias);
 
                 // Exclused parented assertions unless already specified
                 if (angular.isUndefined(criterias.parent)) criterias.parent = null;
+
+                // Match all assertions to the criterias
                 var assertions = this.assertions.find(criterias);
 
-                // Sort assertion by layerSetup
+
+                // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
-                    var aPriority = layerSetup.indexOf(a.layer);
-                    var bPriority = layerSetup.indexOf(b.layer);
-                    return aPriority < bPriority;
+                    return a.weight() > b.weight();
                 });
 
                 // Check if the item to be resolved is the object or the subject
@@ -206,6 +208,7 @@ yarn.service('state', function ($localStorage,
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
             var self = this;
+            var assertionsToNegate;
 
             var options = _options || {};
             //console.log("State.createAssertion", subject, predicate, object, options);
@@ -224,36 +227,45 @@ yarn.service('state', function ($localStorage,
                 // Look for existing assertions that match the criteria
                 // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
                 // Instead we negate all the ones we dont need anymore
-                if (predicate.uniqueSubject) {
+                if (!options.parent) {
+                    if (predicate.uniqueSubject) {
 
-                    // Find exquivalent assertions to be negated
-                    var assertionsToNegate = this.assertions.find({
-                        subject: subject.id,
-                        predicate: predicate.id,
-                        layer: this.currentLayer,
-                        parent: null
-                    });
 
-                    assertionsToNegate.forEach(function (assertion) {
-                        self.negate(assertion);
-                    });
 
-                } else {
-                    /*
-                     this.assertions.forEach(function (assertion) {
-                     // Otherwise, match assertions on all 3 criteras
-                     // subject, predicate and object
-                     if (assertion.subject === subject &&
-                     assertion.predicate === predicate &&
-                     assertion.object === object) {
-                     foundAssertions.push(assertion);
-                     // When the predicate is not "uniqueSubject"
-                     // any mathing assertion can be choses to
-                     // receive the value
-                     chosenAssertion = assertion;
-                     }
-                     });
-                     */
+                        // todo: BUG : This only work because there is only two layer world/session
+                        // Final solution should work down from current layer to lower layers
+
+
+                        // Find exquivalent assertions to be negated
+                        assertionsToNegate = this.assertions.find({
+                            subject: subject.id,
+                            predicate: predicate.id,
+                            //layer: this.currentLayer,
+                            parent: null
+                        });
+
+                        assertionsToNegate.forEach(function (assertion) {
+                            self.negate(assertion);
+                        });
+
+                    } else {
+
+                        // Find exquivalent assertions to be negated
+                        var criterias = {
+                            subject: subject.id,
+                            predicate: predicate.id,
+                            //layer: this.currentLayer,
+                            parent: null
+                        };
+                        if (object) criterias.object = object.id;
+                        assertionsToNegate = this.assertions.find(criterias);
+
+                        assertionsToNegate.forEach(function (assertion) {
+                            self.negate(assertion);
+                        });
+
+                    }
+
                 }
 
                 var assertion = new Assertion(subject, predicate, object, options);
@@ -330,7 +342,7 @@ yarn.service('state', function ($localStorage,
                 var story = this.thing("Story");
                 var hasStepped = this.predicate("hasStepped");
                 var assertion = this.createAssertion(story, hasStepped, count);
-                console.log("====>", assertion);
+                //console.log("====>", assertion);
             }
 
             return count;

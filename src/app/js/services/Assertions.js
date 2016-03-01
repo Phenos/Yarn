@@ -56,11 +56,13 @@ yarn.service("Assertions", function () {
 
     Assertions.prototype.remove = function (assertion) {
         var self = this;
+        var deleted;
         var assertions = ensureArray(assertion);
+        //console.log("Assertion>", self._all.length);
         assertions.forEach(function (toDelete) {
-            self._all.forEach(function (assertion, index, all) {
+            self._all.forEach(function (assertion, index) {
                 if (assertion === toDelete) {
-                    all.splice[index, 1];
+                    deleted = self._all.splice(index, 1);
                 }
             })
         });
@@ -89,29 +91,32 @@ yarn.service("Assertions", function () {
     function match(assertion, criterias) {
         var matchedValue;
         var isMatch = true;
+        var subject = criterias.subject;
+        var predicate = criterias.predicate;
+        var object = criterias.object;
 
         if (!assertion) isMatch = false;
 
-        if (isMatch && !angular.isUndefined(criterias.subject)) {
+        if (isMatch && !angular.isUndefined(subject)) {
             //console.log("subjec: criterias : ", criterias);
-            if (angular.isString(criterias.subject)) criterias.subject = criterias.subject.toLowerCase();
+            if (angular.isString(subject)) subject = subject.toLowerCase();
             matchedValue = null;
             if (assertion.subject !== null) matchedValue = (assertion.subject && assertion.subject.id) || "";
-            if (matchedValue !== criterias.subject) isMatch = false;
+            if (matchedValue !== subject) isMatch = false;
         }
 
-        if (isMatch && !angular.isUndefined(criterias.predicate)) {
-            if (angular.isString(criterias.predicate)) criterias.predicate = criterias.predicate.toLowerCase();
+        if (isMatch && !angular.isUndefined(predicate)) {
+            if (angular.isString(predicate)) predicate = predicate.toLowerCase();
             matchedValue = null;
             if (assertion.predicate !== null) matchedValue = (assertion.predicate && assertion.predicate.id) || "";
-            if (matchedValue !== criterias.predicate) isMatch = false;
+            if (matchedValue !== predicate) isMatch = false;
         }
 
-        if (isMatch && !angular.isUndefined(criterias.object)) {
-            if (angular.isString(criterias.object)) criterias.object = criterias.object.toLowerCase();
+        if (isMatch && !angular.isUndefined(object)) {
+            if (angular.isString(object)) object = object.toLowerCase();
             matchedValue = null;
             if (assertion.object !== null) matchedValue = (assertion.object && assertion.object.id) || "";
-            if (matchedValue !== criterias.object) isMatch = false;
+            if (matchedValue !== object) isMatch = false;
         }
 
         if (isMatch && !angular.isUndefined(criterias.filter)) {

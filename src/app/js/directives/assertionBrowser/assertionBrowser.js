@@ -54,7 +54,10 @@
                         displayName: 'parent'},
                     {
                         field: '_value',
-                        displayName: 'value'
+                        displayName: 'value'},
+                    {
+                        field: 'weight()',
+                        displayName: 'weight'
                     }
                 ],
                 data: this.data

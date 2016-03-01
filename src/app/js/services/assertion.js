@@ -1,4 +1,6 @@
-yarn.factory('Assertion', function (layerSetup, postal) {
+yarn.factory('Assertion', function (layerSetup,
+                                    postal,
+                                    weightAssertion) {
 
     /**
      * An assertion about things in the graph
@@ -72,6 +74,10 @@ yarn.factory('Assertion', function (layerSetup, postal) {
 
         }
         return this._value;
+    };
+
+    Assertion.prototype.weight = function () {
+        return weightAssertion(this);
     };
 
     Assertion.prototype.isUniqueAndFalse = function () {

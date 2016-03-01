@@ -16,14 +16,21 @@ yarn.service("lookPrompt", function (writers,
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";
 
-            var room = state.resolve("You.isIn");
-            var thingsInRoom = stateHelpers.thingsInRoom(room[0]);
+            var room = state.resolveOne({
+                subject: "You",
+                predicate: "isIn"
+            });
+
+            var thingsInRoom = stateHelpers.thingsInRoom(room);
 
             //console.log('thingsInRoom', thingsInRoom);
 
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
-                    var label = thing.resolveValue("isNamed");
+                    var label = state.resolveOne({
+                        subject: thing.id,
+                        predicate: "isNamed"
+                    });
                     prompt.option(label, thing.id);
                 });
             }

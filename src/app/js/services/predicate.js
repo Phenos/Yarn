@@ -20,7 +20,7 @@ yarn.factory('Predicate', function PredicateService() {
          */
         this.syntax = function (text) {
             this.label = text;
-            // todo: refctor this method is calling the parentdirectly instead of using a service or emmiting
+            // todo: refactor this method is calling the parentdirectly instead of using a service or emmiting
             // This prevents the method from being put on the prototype
             yarn.syntax(this, text);
             return this;

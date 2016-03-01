@@ -10,7 +10,7 @@ yarn.service('events', function (state,
             predicate: "trigger"
         });
 
-        console.log("TRIGGERS ---- > ", triggerAssertions);
+        //console.log("TRIGGERS ---- > ", triggerAssertions);
 
         //console.log("found triggerAssertions", triggerAssertions);
         angular.forEach(triggerAssertions, function (assertion) {

@@ -49,7 +49,7 @@ yarn.service("usePrompt", function (logic,
                     commands.command("use " + option.value);
                 }
             } else {
-                storyLog.error("Nothing to user here!");
+                storyLog.error("Nothing to use here!");
             }
         };
 

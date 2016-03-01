@@ -121,9 +121,19 @@ yarn.factory('writers', function (yarn,
     // Describe where you are at the beginning
     function describeThing(thing) {
         if (thing) {
-            var label = thing.resolveValue("isNamed");
-            var description = thing.resolveValue("isDescribedAs");
-            var image = thing.resolveValue("hasImage");
+            var label = state.resolveOne({
+                subject: thing.id,
+                predicate: "isNamed"
+            });
+            var description = state.resolveOne({
+                subject: thing.id,
+                predicate: "isDescribedAs"
+            });
+            var image = state.resolveOne({
+                subject: thing.id,
+                predicate: "hasImage"
+            });
+
             if (image) {
                 storyLog.thingImage(
                     script.resolveRelativeURI(image)
@@ -138,7 +148,10 @@ yarn.factory('writers', function (yarn,
     // Describe where you are at the beginning
     function describeThingTakenInInventory(thing) {
         if (thing) {
-            var label = thing.resolveValue("isNamed");
+            var label = state.resolveOne({
+                subject: thing.id,
+                predicate: "isNamed"
+            });
             if (label) storyLog.log("You took the " + label);
         }
         return this;

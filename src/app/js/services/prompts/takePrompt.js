@@ -29,9 +29,10 @@ yarn.service("takePrompt", function (logic,
             if (thingsToTake.length) {
                 thingsToTake.forEach(function (thing) {
                     var label = state.resolveOne({
-                        subject: thing,
+                        subject: thing.id,
                         predicate: "isNamed"
                     });
+                    console.log(">>>>>", label, thing);
                     prompt.option(label, "take " + thing.id);
                 });
             }

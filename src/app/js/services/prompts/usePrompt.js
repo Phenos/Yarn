@@ -28,7 +28,7 @@ yarn.service("usePrompt", function (logic,
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
                     var label = state.resolveOne({
-                        subject: thing,
+                        subject: thing.id,
                         predicate: state.predicate("isNamed")
                     });
                     prompt.option(label, thing.id);

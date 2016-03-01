@@ -15,3 +15,5 @@ var yarn = angular.module('yarn', [
     'ui.ace',
     'cfp.hotkeys'
 ]);
+
+window.yarn = yarn;

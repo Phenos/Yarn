@@ -15,7 +15,7 @@ yarn.service("takeRoutine", function (state,
             writers.describeThingTakenInInventory(object);
 
             var wasInAssertions = state.assertions.find({
-                subject: object,
+                subject: object.id,
                 predicate: isIn
             });
             console.log("wasInAssertions", wasInAssertions);

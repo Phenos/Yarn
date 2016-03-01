@@ -146,7 +146,7 @@ yarn.service('state', function ($localStorage,
                 assertions = assertions.sort(function (a, b) {
                     var aPriority = layerSetup.indexOf(a.layer);
                     var bPriority = layerSetup.indexOf(b.layer);
-                    return aPriority > bPriority;
+                    return aPriority < bPriority;
                 });
 
                 // Check if the item to be resolved is the object or the subject
@@ -245,6 +245,7 @@ yarn.service('state', function ($localStorage,
             } else {
                 console.warn("Impossible to create assertion without at least a subject and a predicate.")
             }
+            console.log("created: ", assertion);
 
             return assertion;
         };

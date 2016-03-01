@@ -86,7 +86,7 @@ yarn.factory('writers', function (yarn,
             subject: "You",
             predicate: "isIn"
         });
-
+console.log(">>>>> room : ", room);
         //console.log("Your in room ", room);
         if (room) {
             var scenery = state.resolveOne({

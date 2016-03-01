@@ -76,6 +76,7 @@ yarn.service("defaultPrompt", function (commands,
             if (option && option.value) {
                 commands.command(option.value);
             }
+            console.log("defaultPrompt Answer: ", option.value);
         };
 
     }

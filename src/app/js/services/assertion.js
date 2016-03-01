@@ -35,8 +35,8 @@ yarn.factory('Assertion', function (layerSetup, postal) {
         function idOrValue(obj) {
             var value = "";
             if (!angular.isUndefined(obj)) {
-                if (typeof(obj) === "object" && obj != null) {
-                    value = obj.id;
+                if (typeof(obj) === "object" && obj !== null) {
+                    value = "@id:" + obj.id;
                 } else {
                     value = obj;
                 }

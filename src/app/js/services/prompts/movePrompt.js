@@ -9,7 +9,7 @@ yarn.service("movePrompt", function (logic,
                 subject: "you",
                 predicate: "isAboutTo"
             });
-            return isAboutToObj && isAboutToObj.id === "move";
+            return isAboutToObj === "move";
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "Where do you want to go ?";

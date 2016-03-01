@@ -59,7 +59,9 @@ yarn.service("Assertions", function () {
         var assertions = ensureArray(assertion);
         assertions.forEach(function (toDelete) {
             self._all.forEach(function (assertion, index, all) {
-                if (assertion === toDelete) delete all[index];
+                if (assertion === toDelete) {
+                    all.splice[index, 1];
+                }
             })
         });
         return this;

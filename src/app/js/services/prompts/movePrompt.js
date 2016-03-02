@@ -1,6 +1,7 @@
 yarn.service("movePrompt", function (logic,
                                      commands,
-                                     state) {
+                                     state,
+                                     setDefaultOptionsHelper) {
 
     function movePrompt(context) {
 
@@ -36,6 +37,7 @@ yarn.service("movePrompt", function (logic,
             backOption.iconId = "close";
             backOption.iconOnly = true;
 
+            setDefaultOptionsHelper(prompt, true);
         };
         context.answer = function answer(promptLoop, option) {
             // todo: this should be injected instead of taken from parent scope

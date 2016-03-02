@@ -18,7 +18,7 @@ yarn.factory("PromptOption", function () {
                     className = "md-fab";
                 }
             } else {
-                className = 'md-raised';
+                className = 'md-raised wide';
             }
             return className;
         };

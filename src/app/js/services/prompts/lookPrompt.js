@@ -2,7 +2,8 @@ yarn.service("lookPrompt", function (writers,
                                      logic,
                                      commands,
                                      state,
-                                     stateHelpers) {
+                                     stateHelpers,
+                                     setDefaultOptionsHelper) {
 
     function lookPrompt(context) {
 
@@ -38,6 +39,9 @@ yarn.service("lookPrompt", function (writers,
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
             backOption.iconOnly = true;
+
+            setDefaultOptionsHelper(prompt, true);
+
         };
         context.answer = function answer(promptLoop, option) {
             if (option) {

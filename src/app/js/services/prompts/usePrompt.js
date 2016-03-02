@@ -2,7 +2,8 @@ yarn.service("usePrompt", function (stateHelpers,
                                     logic,
                                     storyLog,
                                     commands,
-                                    state) {
+                                    state,
+                                    setDefaultOptionsHelper) {
 
     function usePrompt(context) {
 
@@ -39,6 +40,8 @@ yarn.service("usePrompt", function (stateHelpers,
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
             backOption.iconOnly = true;
+
+            setDefaultOptionsHelper(prompt, true);
         };
 
         context.answer = function answer(promptLoop, option) {

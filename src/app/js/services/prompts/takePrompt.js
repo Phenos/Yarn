@@ -3,7 +3,8 @@ yarn.service("takePrompt", function (logic,
                                      commands,
                                      state,
                                      stateHelpers,
-                                     storyLog) {
+                                     storyLog,
+                                     setDefaultOptionsHelper) {
 
     function takePrompt(context) {
 
@@ -17,7 +18,6 @@ yarn.service("takePrompt", function (logic,
         };
 
         context.question = function (promptLoop, prompt) {
-            prompt.question = "What do you want to take ?";
 
             var room = state.resolveOne({
                 subject: "you",
@@ -28,6 +28,7 @@ yarn.service("takePrompt", function (logic,
 
             //console.log('thingsInRoom', thingsInRoom);
             if (thingsToTake.length) {
+                prompt.question = "What do you want to take ?";
                 thingsToTake.forEach(function (thing) {
                     var label = state.resolveOne({
                         subject: thing.id,
@@ -36,12 +37,15 @@ yarn.service("takePrompt", function (logic,
                     console.log(">>>>>", label, thing);
                     prompt.option(label, "take " + thing.id);
                 });
+            } else {
+                prompt.question = "There is nothing to take here!";
             }
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
             backOption.iconOnly = true;
 
+            setDefaultOptionsHelper(prompt, true);
         };
 
         context.answer = function answer(promptLoop, option) {

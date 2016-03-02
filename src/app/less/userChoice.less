@@ -2,47 +2,58 @@ user-choice {
 
     display: block;
     text-align: center;
-    margin: 0.5em 5em 10em 5em;
+    margin: 0.5em auto 10em auto;
+    width: 80%;
+    max-width: 600px;
 
-    .isMobileWidth & {
-        margin: 0.5em 0.5em 10em 0.5em;
-        font-size: 1.2em;
-    }
+    button {
+        font-family: 'Source Sans Pro', sans-serif !important;
+        text-transform: none !important;
+        font-size: 1em !important;
 
-    button.md-fab {
-        background-color: #fff !important;
-        md-icon {
-            color: #000 !important;
-            width: 32px;
-            height: 32px;
-        }
-    }
-
-    button.md-fab.md-mini {
-        md-icon {
-            color: #000 !important;
-            width: 16px;
-            height: 16px;
-        }
-    }
-
-    button.md-fab.large {
-        box-shadow: none;
-        background-color: rgba(0,0,0,0.3) !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        color: #ddd !important;
 
         &:hover {
-            background-color: rgba(0,0,0,0.4) !important;
+            color: #fff !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
             md-icon {
                 color: #fff !important;
             }
         }
+
         md-icon {
             color: #ccc !important;
-            width: 48px;
-            height: 48px;
         }
-        width: 72px;
-        height: 72px;
+
+        &.wide {
+            width: 95%;
+        }
+
+        &.md-fab {
+            md-icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        &.md-fab.md-mini {
+            md-icon {
+                width: 16px;
+                height: 16px;
+            }
+        }
+        &.md-fab.large {
+            box-shadow: none;
+
+            md-icon {
+                width: 48px;
+                height: 48px;
+            }
+            width: 72px;
+            height: 72px;
+        }
+
     }
 
     h3 {

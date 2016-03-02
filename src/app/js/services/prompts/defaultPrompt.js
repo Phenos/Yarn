@@ -50,16 +50,12 @@ yarn.service("defaultPrompt", function (commands,
                     prompt.option("Take", "aboutTo take");
                 }
 
-                /*
-
-                 // Enable the "use" option if there are inventory items
-                 // in the current room
-                 var roomContents = state.resolve("You.isIn.hasInIt");
-                 var usableItemInCurrentRoom = state.predicate("can be used").filterThings(roomContents);
-                 if (usableItemInCurrentRoom.length) {
-                 prompt.option("Use", "aboutTo use");
-                 }
-                 */
+                // Enable the "use" option if there are inventory items
+                // in the current room
+                var usableItemInCurrentRoom = stateHelpers.usableItemInRoom(room);
+                if (usableItemInCurrentRoom.length) {
+                    prompt.option("Use", "aboutTo use");
+                }
             }
 
             // Enable the "inventory" action if the user has inventory

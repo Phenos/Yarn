@@ -60,6 +60,7 @@ Story has a Version.
         // What something is of a kind
         state
             .predicate("isA")
+            .syntax("is")
             .syntax("are an")
             .syntax("are a")
             .syntax("is an")
@@ -172,12 +173,9 @@ IsA is a Predicate,
             .syntax("the");
 
         state
-            .predicate("isUsable")
-            .syntax("are usable")
+            .predicate("isUsableWith")
             .syntax("are usable with")
-            .syntax("is usable")
             .syntax("is usable with")
-            .syntax("can be used")
             .syntax("can be used with");
 
 

@@ -33,7 +33,7 @@ yarn.service("usePrompt", function (stateHelpers,
                         subject: thing.id,
                         predicate: "isNamed"
                     });
-                    prompt.option(label, thing.id);
+                    prompt.option(label, "use " + thing.id);
                 });
             }
 
@@ -49,8 +49,7 @@ yarn.service("usePrompt", function (stateHelpers,
                 if (option.value === "back") {
                     logic.routines.aboutTo("");
                 } else {
-                    logic.routines.aboutTo("");
-                    commands.command("use " + option.value);
+                    commands.command(option.value);
                 }
             } else {
                 storyLog.error("Nothing to use here!");

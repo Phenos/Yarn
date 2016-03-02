@@ -32,7 +32,7 @@ yarn.service("lookPrompt", function (writers,
                         subject: thing.id,
                         predicate: "isNamed"
                     });
-                    prompt.option(label, thing.id);
+                    prompt.option(label, "look " + thing.id);
                 });
             }
 
@@ -48,12 +48,8 @@ yarn.service("lookPrompt", function (writers,
                 if (option.value === "back") {
                     logic.routines.aboutTo("");
                 } else {
-                    logic.routines.aboutTo("");
-                    var thing = state.thing(option.value);
-                    writers.describeThing(thing);
+                    commands.command(option.value);
                 }
-            } else {
-                storyLog.error("Nothing to look at here!");
             }
         };
 

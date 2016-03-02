@@ -30,7 +30,7 @@ yarn.service("movePrompt", function (logic,
                     subject: room.id,
                     predicate: "isNamed"
                 });
-                prompt.option(label, room.id);
+                prompt.option(label, "move " + room.id);
             });
 
             var backOption = prompt.option("Back", "back");
@@ -43,8 +43,8 @@ yarn.service("movePrompt", function (logic,
             // todo: this should be injected instead of taken from parent scope
             if (option.value === "back") {
                 logic.routines.aboutTo("");
-            } else if (option.value !== "back") {
-                commands.command("move " + option.value);
+            } else {
+                commands.command(option.value);
             }
         };
 

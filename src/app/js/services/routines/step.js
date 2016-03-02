@@ -4,14 +4,12 @@ yarn.service("stepRoutine", function (events,
     /**
      * Increment the game session step counter
      */
-    function stepRoutine() {
+    return function stepRoutine() {
         state.step(1);
-        events.process();
+        var somethingHappened = events.process();
         state.assertions.removeLayer("step");
-        return true;
+        return somethingHappened;
     }
-
-    return stepRoutine;
 
 });
 

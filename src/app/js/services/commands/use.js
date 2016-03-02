@@ -8,8 +8,11 @@ yarn.factory('useCommand', function (yConsole,
         if (args.length) {
             var object = state.thing(args[0], true);
             if (object) {
-                var success = logic.routines.use(object);
-                if (success) writers.describeWhereYouAre(true);
+                var somethingHappened = logic.routines.use(object);
+                console.log("somethingHappened", somethingHappened);
+                if (!somethingHappened) {
+                    writers.nothingHappened(true)
+                }
             } else {
                 yConsole.error("Could not find an object called : " + args[0]);
                 // todo: In the tip, list the objects that can be used in the room

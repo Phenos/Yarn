@@ -146,6 +146,12 @@ yarn.factory('writers', function (yarn,
     }
 
     // Describe where you are at the beginning
+    function nothingHappened() {
+        storyLog.log("Nothing happened!");
+        return this;
+    }
+
+    // Describe where you are at the beginning
     function describeThingTakenInInventory(thing) {
         if (thing) {
             var label = state.resolveOne({
@@ -158,6 +164,7 @@ yarn.factory('writers', function (yarn,
     }
 
     return {
+        nothingHappened: nothingHappened,
         describeThingTakenInInventory: describeThingTakenInInventory,
         describeThing: describeThing,
         describeRoom: describeRoom,

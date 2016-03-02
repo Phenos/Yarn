@@ -9,6 +9,8 @@ yarn.service("defaultPrompt", function (commands,
         };
 
         context.question = function (promptLoop, prompt) {
+            var option;
+
             prompt.question = "What do you want to do ?";
 
             var room = state.resolveOne({
@@ -24,7 +26,10 @@ yarn.service("defaultPrompt", function (commands,
 
                 //console.log("linksToCurrentRoom", linksToCurrentRoom);
                 if (linkedRooms.length) {
-                    prompt.option("Move", "aboutTo move");
+                    option = prompt.option("Move", "aboutTo move");
+                    option.iconId = "move";
+                    option.iconSize = "large";
+                    option.iconOnly = true;
                 }
 
                 // Enable the look action for if the room contains Things
@@ -40,24 +45,34 @@ yarn.service("defaultPrompt", function (commands,
                 });
 
                 if (thingsInRoomWithDescriptions.length) {
-                    prompt.option("Look", "aboutTo look");
+                    option = prompt.option("Look", "aboutTo look");
+                    option.iconId = "look";
+                    option.iconSize = "large";
+                    option.iconOnly = true;
                 }
 
                 // Enable the "take" option if there are inventory items
                 // in the current room
                 var inventoryInRoom = stateHelpers.inventoryInRoom(room);
                 if (inventoryInRoom.length) {
-                    prompt.option("Take", "aboutTo take");
+                    option = prompt.option("Take", "aboutTo take");
+                    option.iconId = "take";
+                    option.iconSize = "large";
+                    option.iconOnly = true;
                 }
 
                 // Enable the "use" option if there are inventory items
                 // in the current room
                 var usableItemInCurrentRoom = stateHelpers.usableItemInRoom(room);
                 if (usableItemInCurrentRoom.length) {
-                    prompt.option("Use", "aboutTo use");
+                    option = prompt.option("Use", "aboutTo use");
+                    option.iconId = "use";
+                    option.iconSize = "large";
+                    option.iconOnly = true;
                 }
             }
 
+            /*
             // Enable the "inventory" action if the user has inventory
             var inventoryItems = state.resolveAll({
                 subject: "you",
@@ -67,11 +82,15 @@ yarn.service("defaultPrompt", function (commands,
             if (inventoryItems.length) {
                 prompt.option("Inventory", "playerInventory");
             }
+            */
         };
 
         context.answer = function answer(promptLoop, option) {
             //console.trace(".answer for WhatToDo");
             // todo: this should be injected instead of taken from parent scope
+            if (option && option.value === "aboutTo take") {
+                commands.command("playerInventory");
+            }
             if (option && option.value) {
                 commands.command(option.value);
             }

@@ -3,7 +3,7 @@
     <section layout="row" layout-align="center center" layout-wrap>
         <md-button
                 ng-repeat="option in userChoice.options"
-                ng-class="(option.iconOnly) ? 'md-fab md-mini' : 'md-raised'"
+                ng-class="option.iconStyle()"
                 ng-click="$event.preventDefault(); userChoice.choose(option.value);"
                 aria-label="option.label"
         >

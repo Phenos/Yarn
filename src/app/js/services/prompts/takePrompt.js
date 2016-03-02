@@ -2,7 +2,8 @@ yarn.service("takePrompt", function (logic,
                                      writers,
                                      commands,
                                      state,
-                                     stateHelpers) {
+                                     stateHelpers,
+                                     storyLog) {
 
     function takePrompt(context) {
 

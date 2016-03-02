@@ -39,8 +39,9 @@ yarn.service("movePrompt", function (logic,
         };
         context.answer = function answer(promptLoop, option) {
             // todo: this should be injected instead of taken from parent scope
-            logic.routines.aboutTo("");
-            if (option.value !== "back") {
+            if (option.value === "back") {
+                logic.routines.aboutTo("");
+            } else if (option.value !== "back") {
                 commands.command("move " + option.value);
             }
         };

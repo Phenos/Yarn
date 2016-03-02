@@ -222,5 +222,9 @@ IsA is a Predicate,
             .syntax("has taken")
             .syntax("takes");
 
+        state
+            .predicate("say")
+            .syntax("says");
+
     }
 });

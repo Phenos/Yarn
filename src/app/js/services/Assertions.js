@@ -115,7 +115,17 @@ yarn.service("Assertions", function () {
         if (isMatch && !angular.isUndefined(object)) {
             if (angular.isString(object)) object = object.toLowerCase();
             matchedValue = null;
-            if (assertion.object !== null) matchedValue = (assertion.object && assertion.object.id) || "";
+            if (assertion.object !== null) {
+                if (typeof(assertion.object) === "object") {
+                    matchedValue = (assertion.object && assertion.object.id) || "";
+                } else {
+                    if (typeof(assertion.object) === "string") {
+                        matchedValue = assertion.object.toLowerCase();
+                    } else {
+                        matchedValue = assertion.object;
+                    }
+                }
+            }
             if (matchedValue !== object) isMatch = false;
         }
 

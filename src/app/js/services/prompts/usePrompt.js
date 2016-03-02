@@ -1,4 +1,5 @@
-yarn.service("usePrompt", function (logic,
+yarn.service("usePrompt", function (stateHelpers,
+                                    logic,
                                     storyLog,
                                     commands,
                                     state) {
@@ -17,19 +18,19 @@ yarn.service("usePrompt", function (logic,
             prompt.question = "What do you want to use ?";
 
             var room = state.resolveOne({
-                subject: state.thing("you"),
-                predicate: state.predicate("inIn")
+                subject: "you",
+                predicate: "isIn"
             });
-            var thingsInRoom = state.resolveAll({
-                predicate: state.predicate("inIn"),
-                object: room
-            });
-            //console.log('thingsInRoom', thingsInRoom);
+
+            var thingsInRoom = stateHelpers.usableItemInRoom(room);
+
+            console.log('thingsInRoom', thingsInRoom);
+
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
                     var label = state.resolveOne({
                         subject: thing.id,
-                        predicate: state.predicate("isNamed")
+                        predicate: "isNamed"
                     });
                     prompt.option(label, thing.id);
                 });

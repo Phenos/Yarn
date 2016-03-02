@@ -82,7 +82,7 @@ yarn.factory('writers', function (yarn,
             predicate: "isIn"
         });
 
-        console.log("describing room", room);
+        //console.log("describing room", room);
 
         //console.log("Your in room ", room);
         if (room) {

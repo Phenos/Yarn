@@ -34,7 +34,7 @@ yarn.service("takePrompt", function (logic,
                         subject: thing.id,
                         predicate: "isNamed"
                     });
-                    console.log(">>>>>", label, thing);
+                    //console.log(">>>>>", label, thing);
                     prompt.option(label, "take " + thing.id);
                 });
             } else {

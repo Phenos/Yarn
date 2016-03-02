@@ -60,17 +60,6 @@ yarn.service('state', function ($localStorage,
             });
         };
 
-        State.prototype.getPredicates = function (tokens) {
-            var self = this;
-            var predicates = [];
-            tokens.forEach(function (token) {
-                var predicate = self.predicate(token);
-                if (!predicate) throw "Unknown predicate [" + token + "] in expression [" + expression + "]";
-                predicates.push(predicate);
-            });
-            return predicates;
-        };
-
         /**
          * Get or create a new thing
          * @param _id
@@ -197,6 +186,37 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
+        State.prototype.resolveValue = function(criterias) {
+            var value = null;
+            if (criterias && (criterias.subject && criterias.predicate)) {
+
+                // Exclused parented assertions
+                criterias.parent = null;
+
+                // If no object is supplied as criteria,
+                // indicate is should match for "no objects"
+                if (!criterias.object) criterias.object = null;
+
+                // Match all assertions to the criterias
+                var assertions = this.assertions.find(criterias);
+
+                //console.log("criterias", criterias);
+                //console.log("assertions", assertions);
+
+                // Sort assertion by weight
+                assertions = assertions.sort(function (a, b) {
+                    return a.weight() > b.weight();
+                });
+
+                var topAssertion = assertions[assertions.length - 1];
+                if (topAssertion) {
+                    value = topAssertion.value();
+                }
+
+            }
+            //console.log("foundObjects", foundObjects);
+            return value;
+        };
 
         /**
          * Get a new assertion

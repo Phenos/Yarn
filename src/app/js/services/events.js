@@ -17,6 +17,7 @@ yarn.service('events', function (state,
         //console.log("found triggerAssertions", triggerAssertions);
         angular.forEach(triggerAssertions, function (assertion) {
             // Fetch the list of assertions to be used as triggers
+            var childAssertions;
             var conditionAssertions = [];
             var allConditionsAreTrue = true;
             var object = assertion.object;
@@ -26,24 +27,31 @@ yarn.service('events', function (state,
             if (subject && object) {
                 //console.log("Testing : ", consoleHelper.assertion2log(assertion));
 
-                if (subject.childStates && subject.childStates.length) {
-                    angular.forEach(subject.childStates, function (assertionState) {
-                        var assertion = assertionState.assertion;
-                        conditionAssertions.push(assertion);
-                        var isTrue = assertion.value();
+                childAssertions = state.assertions.find({
+                    parent: subject.id
+                });
+
+                if (childAssertions.length) {
+                    angular.forEach(childAssertions, function (assertion) {
+                        var isTrue = state.resolveValue({
+                            subject: assertion.subject.id,
+                            predicate: assertion.predicate.id,
+                            object: assertion.object.id
+                        });
+                        //console.log("state.resolveValue(assertion)", isTrue);
                         if (!isTrue) allConditionsAreTrue = false;
                     });
-                    //console.log("Found conditionAssertions", conditionAssertions);
+
                     if (allConditionsAreTrue) {
                         somethingHappened = true;
+                        childAssertions = state.assertions.find({
+                            parent: object.id
+                        });
 
-                        //console.log("triggering " + object.is);
-                        angular.forEach(object.childStates, function (assertionState) {
-                            var assertion = assertionState.assertion;
+                        angular.forEach(childAssertions, function (assertion) {
                             state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
                                 value: true
                             });
-                            //console.log("setting assertions", assertion);
                         });
 
                     }

@@ -25,7 +25,7 @@ yarn.service("usePrompt", function (stateHelpers,
 
             var thingsInRoom = stateHelpers.usableItemInRoom(room);
 
-            console.log('thingsInRoom', thingsInRoom);
+            //console.log('thingsInRoom', thingsInRoom);
 
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {

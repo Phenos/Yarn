@@ -9,7 +9,7 @@ yarn.factory('useCommand', function (yConsole,
             var object = state.thing(args[0], true);
             if (object) {
                 var somethingHappened = logic.routines.use(object);
-                console.log("somethingHappened", somethingHappened);
+                //console.log("somethingHappened", somethingHappened);
                 if (!somethingHappened) {
                     writers.nothingHappened(true)
                 }

@@ -41,7 +41,7 @@ function playerModeController(user,
 
 }
 
-function PlayerModeService($localStorage, consoleService, player) {
+function PlayerModeService($localStorage, consoleService, helpService, player) {
     var service = {
         scope: null
     };
@@ -49,12 +49,14 @@ function PlayerModeService($localStorage, consoleService, player) {
     service.register = function (scope) {
         service.scope = scope;
         scope.consoleIsVisible = service.consoleIsVisible;
+        scope.helpIsVisible = service.helpIsVisible;
     };
 
     /*
      Console visibility
      */
     service.consoleIsVisible = false;
+    service.helpIsVisible = false;
 
     function consoleIsVisible(value) {
         if (!angular.isUndefined(value)) {
@@ -63,8 +65,16 @@ function PlayerModeService($localStorage, consoleService, player) {
         }
         return service.consoleIsVisible;
     }
+    function helpIsVisible(value) {
+        if (!angular.isUndefined(value)) {
+            service.helpIsVisible = value;
+            if (service.scope) service.scope.helpIsVisible = value;
+        }
+        return service.helpIsVisible;
+    }
 
     consoleIsVisible($localStorage.consoleIsVisible);
+    helpIsVisible($localStorage.helpIsVisible);
 
     service.toggleConsole = function () {
         if (service.consoleIsVisible) {
@@ -73,16 +83,30 @@ function PlayerModeService($localStorage, consoleService, player) {
             service.showConsole();
         }
     };
+    service.toggleHelp = function () {
+        if (service.helpIsVisible) {
+            service.hideHelp();
+        } else {
+            service.showHelp();
+        }
+    };
 
     service.showConsole = function () {
-        //console.log("showConsole");
         player.closeSidenav();
         $localStorage.consoleIsVisible = consoleIsVisible(true);
         consoleService.focus();
     };
     service.hideConsole = function () {
-        //console.log("hideConsole");
         $localStorage.consoleIsVisible = consoleIsVisible(false);
+    };
+
+    service.showHelp = function () {
+        player.closeSidenav();
+        $localStorage.helpIsVisible = helpIsVisible(true);
+        helpService.focus();
+    };
+    service.hideHelp = function () {
+        $localStorage.helpIsVisible = helpIsVisible(false);
     };
 
     return service;

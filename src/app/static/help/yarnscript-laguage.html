@@ -1,0 +1,80 @@
+<article>
+    <h1>The YarnScript Language</h1>
+
+    <p>
+        Yarn interactive stories are built using the <em>YarnScript</em> language.
+        Authors can create and edit these YarnScript files from the <em>Yarn Studio Editor</em>.
+    </p>
+
+    <p>Here is a small sample how how the langage looks:</p>
+    <code lang="javascript">
+TheCellar:
+  is a Room,
+  links to BoilerRoom,
+  is called "The Cellar,
+  is described as
+    "This cellar is dark, dusty and dry.
+    A flight of stair go up."
+
+BookCase:
+  is a Thing,
+  is called "Old Bookcase",
+  is described as "An old bookcase with old books.",
+  is in TheCellar.
+</code>
+
+    <p>
+        In this example, the author has created a Cellar room with proper names and
+        descriptions, and added an old bookcase inside it.
+    </p>
+
+    <h2>A "descriptive" language</h2>
+
+    <p>
+        YarnScript is what is called a "Domain Specific Declarative Language".
+        This means two important things:
+    </p>
+    <ul>
+        <li>
+            It has been tailor made for writing interactive stories. It is it's sole purpose.
+        </li>
+        <li>
+            You "describe" your story, instead of programming
+            every instructions and interactions.
+        </li>
+    </ul>
+    <p>
+        In the example above, the description provided is all you need to let the user enter the Cellar,
+        look at the bookcase to see it's description, and then move on to the Boiler Room.
+    </p>
+    <p>
+        <em>The actual gameplay mechanics to let the player move about and looking around are already built-in.</em>
+    </p>
+    <h2>The "Assertions" Structure</h2>
+    <p>
+        While the "Cellar" example look like natural language, it is not. This story fragment follows
+        a very specific and very simple syntax.
+    </p>
+    <p>
+        Everything in a yarn story is build using series of <strong>Assertions</strong>. An assertion
+        is a truth statement about something in your story using a <strong>Subject</strong>,a
+        <strong>Predicate</strong> and usually an <strong>Object</strong>
+    </p>
+    <p>
+        To make things simpler, you can think of assertions as specialized sentences.
+        Here is a series of simple assertions:
+    </p>
+    <code>
+MisterSniffle is a Cat.
+KernelMustard is in the Study.
+BottleOfGin is an InventoryItem.
+    </code>
+    <p>
+        Lets explode the <em>MisterSniffle</em> assertion into it's parts:
+    </p>
+    <ul>
+        <li><strong>Subject</strong>: MisterSniffled</li>
+        <li><strong>Predicate</strong>: is a</li>
+        <li><strong>Object</strong>: Cat</li>
+    </ul>
+</article>

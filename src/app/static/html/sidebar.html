@@ -19,6 +19,12 @@
                     <span class="versionNumber">- v{{ sidebar.metadata.version }}</span>
                 </md-button>
             </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="sidebar.openHelp()">
+                    <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
+                    <span>Help & Documentation</span>
+                </md-button>
+            </md-menu-item>
             <md-divider></md-divider>
             <md-menu-item>
                 <md-button ng-click="sidebar.openStoryMenu()" aria-label="Story menu">

@@ -72,7 +72,11 @@ yarn.directive('sidebar', function SidebarDirective() {
 
         this.openWelcomeMessage = function () {
             welcomeMessage.open();
-        }
+        };
+
+        this.openHelp = function () {
+            playerMode.showHelp();
+        };
 
     }
 });

@@ -7,4 +7,13 @@
         </div>
     </md-section>
     <player flex="100" layout="column"></player>
+    <md-section ng-show="helpIsVisible"
+                md-whiteframe="5"
+                flex="100"
+                layout="column">
+        <help-toolbar></help-toolbar>
+        <div flex="100" layout="row">
+            <help on-escape-focus="onHelpEscapeFocus()" on-focus="onHelpFocus()"></help>
+        </div>
+    </md-section>
 </md-content>

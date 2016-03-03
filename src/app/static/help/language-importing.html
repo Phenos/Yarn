@@ -1,0 +1,42 @@
+<article>
+    <h1>Importing</h1>
+
+    <p>
+        More interactive stories will quickly grow into files with thousands of lines of
+        code. The more thay grow the more unmanageable and confusing the become.
+    </p>
+    <p>
+        So it is a good idea to separate your stories into multiple files. And then
+        import them from your main story file.
+    </p>
+
+    <h2>The @import keyword</h2>
+
+    <p>
+        Here is an example with 3 files. A main file using the "<strong>@import</strong>"
+        keyword to import the other two.
+    </p>
+    <h4>story.yarn.txt</h4>
+<code>
+  Story is called "John's bedroom".
+
+  @import "characters.yarn.txt".
+  @import "bedroom.yarn.txt".
+</code>
+    <h4>characters.yarn.txt</h4>
+<code>
+  John is an Actor,
+  named "John Johnson",
+  is in the Bedroom.
+</code>
+<h4>bedroom.yarn.txt</h4>
+<code>
+  Bedroom is a Room,
+  called "The Bedroom".
+</code>
+
+    <p>
+        <a href="index.html">Back home</a>
+    </p>
+
+</article>

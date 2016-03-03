@@ -1,9 +1,9 @@
 yarn.factory('userFromAPI', userFromAPI);
 
-function userFromAPI($http) {
+function userFromAPI($http, Rollbar) {
 
-    function loadUserFromAPI () {
-        //console.log(scriptTag);
+    function loadUserFromAPI() {
+
         var config = {
             method: 'GET',
             url: '/auth/account/json'
@@ -13,10 +13,28 @@ function userFromAPI($http) {
             var user = {};
             if (res.data.username) {
                 console.log("Authenticated user found: ", res.data.username);
-                console.log("User profile data: ", res.data);
+                console.log("User profile data: ", [res.data]);
                 user = res.data;
+
+                Rollbar.configure({
+                    payload: {
+                        person: {
+                            username: user.username
+                        }
+                    }
+                });
+
             } else {
-                console.log("No authenticated user found.");
+
+                Rollbar.configure({
+                    payload: {
+                        person: {
+                            username: null
+                        }
+                    }
+                });
+
+                console.log("No authenticated user found. Running as guest.");
             }
             return user;
         }

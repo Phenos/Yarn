@@ -24,7 +24,7 @@
                                    $compile,
                                    $scope,
                                    URI) {
-
+            var self = this;
             helpService.register(this);
 
             this.focus = function () {
@@ -68,33 +68,34 @@
                 return $http(config).then(then);
             };
 
+            $element.on("click", function (e) {
+                var target = e.target;
+                //console.log("-", e);
+                if (target.parentElement.tagName === "A") target = target.parentElement;
+                if (target.tagName === "A") {
+                    e.preventDefault();
+                    var $target = angular.element(target);
+                    var href = $target.attr("href");
+                    if (href) {
+                        if (
+                            href.substring(0, 7) !== "http://" &&
+                            href.substring(0, 8) !== "https://"
+                        ) {
+                            self.load(href);
+                        } else {
+                            window.open(href, '_blank');
+
+                        }
+                    }
+
+                }
+            });
+
             this.setContent = function (content) {
-                var self = this;
                 var helpContent = $element.find("help-article");
                 var elem = $compile(content)($scope);
                 helpContent.empty().append(elem);
-                $element.on("click", function (e) {
-                    var target = e.target;
-                    //console.log("-", e);
-                    if (target.parentElement.tagName === "A") target = target.parentElement;
-                    if (target.tagName === "A") {
-                        e.preventDefault();
-                        var $target = angular.element(target);
-                        var href = $target.attr("href");
-                        if (href) {
-                            if (
-                                href.substring(0, 7) !== "http://" &&
-                                href.substring(0, 8) !== "https://"
-                            ) {
-                                self.load(href);
-                            } else {
-                                window.open(href, '_blank');
-
-                            }
-                        }
-
-                    }
-                });
+                $scope.$broadcast("refreshScrollbars");
             };
 
             this.load(this.lastHelpFileLoaded() || "./index.html");

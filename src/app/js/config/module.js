@@ -12,6 +12,7 @@ var yarn = angular.module('yarn', [
     'ngMaterial',
     'ui.router',
     'lbServices',
+    'tandibar/ng-rollbar',
     'ui.ace',
     'cfp.hotkeys'
 ]);

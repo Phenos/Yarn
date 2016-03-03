@@ -8,6 +8,17 @@ yarn.config(function (LoopBackResourceProvider) {
 
 });
 
+yarn.config(function(RollbarProvider) {
+    var roolbarConfig = {
+        accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
+        captureUncaught: true,
+        payload: {
+            environment: 'test'
+        }
+    };
+    console.log("Configured Roolbar Error Reporting", [roolbarConfig]);
+    RollbarProvider.init(roolbarConfig);
+});
 
 yarn.run(function (commandsRegistry) {
 

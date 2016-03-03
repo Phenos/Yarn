@@ -11,7 +11,7 @@ function playerModeController(user,
                               stories,
                               playerMode,
                               hotkeys) {
-    console.log("$rootScope", $rootScope);
+
     hotkeys.bindTo($scope)
         .add({
             combo: 'mod+esc',

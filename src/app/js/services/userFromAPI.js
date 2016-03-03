@@ -16,26 +16,35 @@ function userFromAPI($http, Rollbar) {
                 console.log("User profile data: ", [res.data]);
                 user = res.data;
 
-                Rollbar.configure({
+                var rollbarOptions = {
                     payload: {
                         person: {
-                            username: user.username
+                            id: user.id,
+                            email: user.email
                         }
                     }
-                });
+                };
 
             } else {
 
-                Rollbar.configure({
+                rollbarOptions = {
                     payload: {
                         person: {
-                            username: null
+                            id: "guest",
+                            email: "guest"
                         }
                     }
-                });
+                };
 
                 console.log("No authenticated user found. Running as guest.");
             }
+
+            //console.log("rollbarOptions", rollbarOptions);
+            // todo: The Rollbar.configure from the service is broken
+            // Bypassing to global api for now
+            //Rollbar.configure(rollbarOptions);
+            window.Rollbar.configure(rollbarOptions);
+
             return user;
         }
 

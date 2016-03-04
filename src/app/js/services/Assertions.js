@@ -37,18 +37,20 @@ yarn.service("Assertions", function () {
         var addedAssertions = [];
 
         assertions.forEach(function (assertion) {
-            var existingAssertion;
+            //var existingAssertion;
             if (assertion) {
-                existingAssertion = self.get(assertion.id());
-                //console.log(assertion.id());
-                //console.log("existingAssertion", existingAssertion);
-                if (existingAssertion) {
-                    existingAssertion.value(assertion.value());
-                    addedAssertions.push(existingAssertion);
-                } else {
-                    self._all.push(assertion);
-                    addedAssertions.push(assertion);
-                }
+                //existingAssertion = self.get(assertion.id());
+                ////console.log(assertion.id());
+                ////console.log("existingAssertion", existingAssertion);
+                //if (existingAssertion) {
+                //    existingAssertion.value(assertion.value());
+                //    addedAssertions.push(existingAssertion);
+                //} else {
+                //    self._all.push(assertion);
+                //    addedAssertions.push(assertion);
+                //}
+                self._all.push(assertion);
+                addedAssertions.push(assertion);
             }
         });
         return addedAssertions;

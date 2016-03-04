@@ -14,7 +14,7 @@ yarn.service("inventoryInRoomHelper", function (state) {
                 // Check if item is an InventoryItem
                 var isInventoryItem = state.resolveValue({
                     subject: thing.id,
-                    predicate: "isA",
+                    predicate: "is",
                     object: "InventoryItem"
                 });
                 if (isInventoryItem) foundInventory.push(thing);

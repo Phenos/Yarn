@@ -10,7 +10,7 @@ yarn.service("dialogs", function (state,
             parent: null
         });
 
-        console.log("sayAssertions", sayAssertions);
+        //console.log("sayAssertions", sayAssertions);
 
         angular.forEach(sayAssertions, function (assertion) {
             //console.log("assertion", assertion);
@@ -20,12 +20,10 @@ yarn.service("dialogs", function (state,
                     predicate: assertion.predicate.id,
                     object: assertion.object.id
                 });
-                console.log("monologue", monologue);
-                console.log("monologue", {
-                    subject: assertion.subject.id,
-                    predicate: assertion.predicate.id,
-                    object: assertion.object.id
-                });
+
+                // Then remove the "say" assertion
+                state.assertions.remove(assertion);
+
                 //console.log("object", assertion.object);
                 if (monologue) {
                     storyLog.log(monologue);

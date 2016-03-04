@@ -35,14 +35,6 @@ yarn.service('gamePedicates', function (state) {
             .syntax("is about to")
             .isUniqueSubject(true);
 
-        // What something is of a kind
-        state
-            .predicate("isA")
-            .syntax("is")
-            .syntax("are an")
-            .syntax("are a")
-            .syntax("is an")
-            .syntax("is a");
 /*
 
 IsA is a Predicate,

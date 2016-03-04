@@ -12,8 +12,6 @@ yarn.service('events', function (state,
             predicate: "trigger"
         });
 
-        console.log("TRIGGERS ---- > ", triggerAssertions);
-
         //console.log("found triggerAssertions", triggerAssertions);
         angular.forEach(triggerAssertions, function (assertion) {
             // Fetch the list of assertions to be used as triggers
@@ -47,7 +45,7 @@ yarn.service('events', function (state,
                         childAssertions = state.assertions.find({
                             parent: object.id
                         });
-                        console.log("childAssertions for " + object.id, childAssertions);
+                        //console.log("childAssertions for " + object.id, childAssertions);
                         angular.forEach(childAssertions, function (assertion) {
                             state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
                                 value: assertion.value()

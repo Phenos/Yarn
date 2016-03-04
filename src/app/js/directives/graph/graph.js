@@ -42,7 +42,7 @@
                     throw "Unrefactored";
                     //todo: This has not been refactored yet!
                     var isARoom = false;
-                    var ThingsItIs = thing.resolve("isA");
+                    var ThingsItIs = thing.resolve("is");
                     var label = thing.resolveValue("isNamed");
                     angular.forEach(ThingsItIs, function (thingItIs) {
                         if (thingItIs.id === thingIsA) isARoom = true;

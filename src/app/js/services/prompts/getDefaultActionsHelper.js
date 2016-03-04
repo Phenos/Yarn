@@ -27,7 +27,6 @@ yarn.service("setDefaultOptionsHelper", function (state,
 
             // Enable the look action for if the room contains Things
             var thingsInRoom = stateHelpers.thingsInRoom(room);
-
             // Filter out things that dont have a label
             var thingsInRoomWithDescriptions = thingsInRoom.filter(function (thing) {
                 var description = state.resolveValue({
@@ -37,6 +36,7 @@ yarn.service("setDefaultOptionsHelper", function (state,
                 });
                 return typeof(description) === "string";
             });
+
 
             if (thingsInRoomWithDescriptions.length) {
                 option = prompt.option("Look", "aboutTo look");

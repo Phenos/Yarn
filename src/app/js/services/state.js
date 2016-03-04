@@ -269,18 +269,22 @@ yarn.service('state', function ($localStorage,
                     } else {
 
                         // Find exquivalent assertions to be negated
-                        var criterias = {
-                            subject: subject.id,
-                            predicate: predicate.id,
-                            //layer: this.currentLayer,
-                            parent: null
-                        };
-                        if (object) criterias.object = object.id;
-                        assertionsToNegate = this.assertions.find(criterias);
+                        if (this.currentLayer !== "world") {
+                            var criterias = {
+                                subject: subject.id,
+                                predicate: predicate.id,
+                                layer: this.currentLayer,
+                                parent: null
+                            };
+                            if (object) criterias.object = object.id;
+                            assertionsToNegate = this.assertions.find(criterias);
 
-                        assertionsToNegate.forEach(function (assertion) {
-                            self.negate(assertion);
-                        });
+                            //console.log("Negating: ", assertionsToNegate);
+
+                            assertionsToNegate.forEach(function (assertion) {
+                                self.negate(assertion);
+                            });
+                        }
 
                     }
 
@@ -288,6 +292,7 @@ yarn.service('state', function ($localStorage,
 
                 var assertion = new Assertion(subject, predicate, object, options);
                 this.assertions.add(assertion);
+                //console.log("added: ", assertion);
 
                 this.persistAssertion(assertion);
             } else {

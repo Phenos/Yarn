@@ -10,6 +10,7 @@ yarn.service("thingsInRoomHelper", function (state) {
                 predicate: "isIn",
                 object: room.id
             });
+            //console.log("thingsInRoom", thingsInRoom);
 
             // Todo: YUCK... Find a better way to do these checks!!!!!
             thingsInRoom.forEach(function (thing) {
@@ -18,8 +19,10 @@ yarn.service("thingsInRoomHelper", function (state) {
 
                 var thingsThatAre = state.resolveAll({
                     subject: thing.id,
-                    predicate: "isA"
+                    predicate: "is"
                 });
+                //console.log("thingsThatAre", thingsThatAre, thing.id);
+
                 var Thing = state.thing("Thing");
                 thingsThatAre.forEach(function (thing) {
                     if (thing === Thing) isThing = true;

@@ -26,7 +26,7 @@ yarn.factory('Assertion', function (layerSetup,
 
     Assertion.prototype.id = function () {
         var obj = this.toJSON();
-        return [obj.subject, obj.predicate, obj.object, obj.layer, obj.group].join("-");
+        return [obj.subject, obj.predicate, obj.object, obj.layer, obj.parent].join("-");
     };
 
     /**
@@ -51,7 +51,7 @@ yarn.factory('Assertion', function (layerSetup,
             predicate: idOrValue(this.predicate.id),
             object: idOrValue(this.object),
             layer: this.layer || "",
-            group: idOrValue(this.group),
+            parent: idOrValue(this.parent),
             value: this.value()
         }
     };

@@ -12,13 +12,12 @@ yarn.service('events', function (state,
             predicate: "trigger"
         });
 
-        //console.log("TRIGGERS ---- > ", triggerAssertions);
+        console.log("TRIGGERS ---- > ", triggerAssertions);
 
         //console.log("found triggerAssertions", triggerAssertions);
         angular.forEach(triggerAssertions, function (assertion) {
             // Fetch the list of assertions to be used as triggers
             var childAssertions;
-            var conditionAssertions = [];
             var allConditionsAreTrue = true;
             var object = assertion.object;
             var subject = assertion.subject;
@@ -32,6 +31,7 @@ yarn.service('events', function (state,
                 });
 
                 if (childAssertions.length) {
+                    //console.log("childAssertions", childAssertions);
                     angular.forEach(childAssertions, function (assertion) {
                         var isTrue = state.resolveValue({
                             subject: assertion.subject.id,
@@ -47,15 +47,13 @@ yarn.service('events', function (state,
                         childAssertions = state.assertions.find({
                             parent: object.id
                         });
-
+                        console.log("childAssertions for " + object.id, childAssertions);
                         angular.forEach(childAssertions, function (assertion) {
                             state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                                value: true
+                                value: assertion.value()
                             });
                         });
-
                     }
-
                 }
             } else {
                 yConsole.error("The trigger is not well formed. You must have a complete assertion with a subject and an object.")

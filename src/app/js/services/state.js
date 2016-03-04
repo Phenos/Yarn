@@ -194,6 +194,7 @@ yarn.service('state', function ($localStorage,
                 criterias.parent = null;
 
                 // If no object is supplied as criteria,
+                // If no object is supplied as criteria,
                 // indicate is should match for "no objects"
                 if (!criterias.object) criterias.object = null;
 
@@ -250,11 +251,8 @@ yarn.service('state', function ($localStorage,
                 if (!options.parent) {
                     if (predicate.uniqueSubject) {
 
-
-
                         // todo: BUG : This only work because there is only two layer world/session
                         // Final solution should work down from current layer to lower layers
-
 
                         // Find exquivalent assertions to be negated
                         assertionsToNegate = this.assertions.find({

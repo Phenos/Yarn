@@ -1,5 +1,7 @@
 yarn.service('gamePedicates', function (state) {
 
+    // TODO : Get rid of the concept of isUniqueSubject
+
     return function () {
 
         state

@@ -6,23 +6,29 @@ yarn.service("dialogs", function (state,
     service.process = function process() {
         var sayAssertions = state.assertions.find({
             predicate: "say",
+            object: "Monologue",
             parent: null
         });
 
-        //console.log("sayAssertions", sayAssertions);
+        console.log("sayAssertions", sayAssertions);
 
         angular.forEach(sayAssertions, function (assertion) {
             //console.log("assertion", assertion);
             if (assertion.subject && assertion.predicate && assertion.object) {
-                var isTrue = state.resolveValue({
+                var monologue = state.resolveValue({
                     subject: assertion.subject.id,
                     predicate: assertion.predicate.id,
-                    object: assertion.object
+                    object: assertion.object.id
                 });
-                //console.log("isTrue", isTrue);
+                console.log("monologue", monologue);
+                console.log("monologue", {
+                    subject: assertion.subject.id,
+                    predicate: assertion.predicate.id,
+                    object: assertion.object.id
+                });
                 //console.log("object", assertion.object);
-                if (isTrue) {
-                    storyLog.log(assertion.object);
+                if (monologue) {
+                    storyLog.log(monologue);
                 }
 
             }

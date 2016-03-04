@@ -32,6 +32,12 @@ Story has a Version.
 
  */
         state
+            .predicate("has")
+            .syntax("has a")
+            .syntax("have")
+            .syntax("have a");
+
+        state
             .predicate("hasCoverpage")
             .syntax("has coverpage")
             .syntax("coverpage")

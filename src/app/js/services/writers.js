@@ -21,24 +21,28 @@ yarn.factory('writers', function (yarn,
         storyLog.clear();
 
         // Show the story title
-        var storyIsCalled = state.resolveOne({
+        var storyIsCalled = state.resolveValue({
             subject: "Story",
-            predicate: "isNamed"
+            predicate: "has",
+            object: "Name"
         });
         if (storyIsCalled) {
             storyLog.heading(storyIsCalled);
         }
 
         // Set the scenery
-        var scenery = state.resolveOne({
+        var scenery = state.resolveValue({
             subject: "Story",
-            predicate: "hasScenery"
+            predicate: "has",
+            object: "Scenery"
         });
 
-        var coverpage = state.resolveOne({
+        var coverpage = state.resolveValue({
             subject: "Story",
-            predicate: "hasCoverpage"
+            predicate: "has",
+            object: "Coverpage"
         });
+
 
 
         var scenery_url = scenery && script.resolveRelativeURI(scenery);

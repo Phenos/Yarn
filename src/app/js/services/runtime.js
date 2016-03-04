@@ -78,6 +78,8 @@
                     runtime.stack.pop();
                 },
                 "symbol": function (runtime, node) {
+                    var children;
+
                     //console.log("symbole ", node.value);
                     // Get or create a new thing according to that symbol
                     if (node.variant === "value") {
@@ -94,21 +96,27 @@
                         yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value+ "]");
                     }
 
-                    runtime.stack.push({
+
+                    var frame = {
                         "this": returnValue
-                    });
-                    runtime.runSet(node.set);
+                    };
+                    runtime.stack.push(frame);
+
+                    children = runtime.runSet(node.set);
+
+
                     runtime.stack.pop();
-                    return returnValue;
+                    return [returnValue, children];
                 },
                 "value": function (runtime, node) {
+                    var children;
                     returnValue = node.value;
                     runtime.stack.push({
                         "this": node.value
                     });
-                    runtime.runSet(node.set);
+                    children = runtime.runSet(node.set);
                     runtime.stack.pop();
-                    return returnValue;
+                    return [returnValue, children];
                 },
                 "instruction": function (runtime, node) {
                     //console.log("instruction ", node.value);
@@ -141,12 +149,22 @@
                         // Create assertion from predicate
                         if (args.length) {
                             args.forEach(function (arg) {
+                                var object = arg[0];
+                                var children = arg[1] || [];
+                                var value;
                                 //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
-                                var currentThis = runtime.stack.head().values.this;
+                                var headNode = runtime.stack.head();
+                                var currentThis = headNode.values.this;
                                 if (currentThis) {
+                                    // Before creating the assertion, check if it is followed by values to be assigned
+                                    if (children && children.length) {
+                                        // Currently, only the first value is taken in account and used as a value
+                                        value = children[0][0];
+                                    }
                                     createdAssertions.push(
-                                        state.createAssertion(currentThis, predicate, arg, {
-                                            parent: parent
+                                        state.createAssertion(currentThis, predicate, object, {
+                                            parent: parent,
+                                            value: value
                                         })
                                     );
                                     //console.log("created assetion: ", assertion);
@@ -184,13 +202,17 @@
             return returnValue;
         };
 
+        // Returns an array of arrays containing pairs of [value, children]
         Runtime.prototype.runSet = function (set) {
             var self = this;
             var args = [];
 
             set.nodes.forEach(function (node) {
+                var nodeValue = self.runNode(node);
                 // Return the node value as an argument to be consumed
-                args.push(self.runNode(node));
+                if (nodeValue != null) {
+                    args.push(nodeValue);
+                }
             });
             return args;
         };

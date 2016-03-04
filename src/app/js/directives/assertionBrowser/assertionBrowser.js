@@ -47,14 +47,14 @@
                         field: 'object',
                         displayName: 'object'},
                     {
+                        field: '_value',
+                        displayName: 'value'},
+                    {
                         field: 'layer',
                         displayName: 'layer'},
                     {
                         field: 'parent',
                         displayName: 'parent'},
-                    {
-                        field: '_value',
-                        displayName: 'value'},
                     {
                         field: 'weight()',
                         displayName: 'weight'

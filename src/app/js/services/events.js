@@ -6,13 +6,16 @@ yarn.service('events', function (state,
     }
 
     Events.prototype.process = function () {
+        console.log("Events.process()");
+
         var somethingHappened = false;
+        var setsToBeTriggered = [];
 
         var triggerAssertions = state.assertions.find({
             predicate: "trigger"
         });
 
-        //console.log("found triggerAssertions", triggerAssertions);
+        // First, figure out which assertions set will need to be triggered
         angular.forEach(triggerAssertions, function (assertion) {
             // Fetch the list of assertions to be used as triggers
             var childAssertions;
@@ -31,32 +34,40 @@ yarn.service('events', function (state,
                 if (childAssertions.length) {
                     //console.log("childAssertions", childAssertions);
                     angular.forEach(childAssertions, function (assertion) {
-                        var isTrue = state.resolveValue({
+                        var value = state.resolveValue({
                             subject: assertion.subject.id,
                             predicate: assertion.predicate.id,
                             object: assertion.object.id
                         });
-                        //console.log("state.resolveValue(assertion)", isTrue);
-                        if (!isTrue) allConditionsAreTrue = false;
+                        console.log("value", value);
+                        if (!value === assertion.value()) allConditionsAreTrue = false;
+                        //if (!isTrue) allConditionsAreTrue = false;
                     });
 
                     if (allConditionsAreTrue) {
-                        somethingHappened = true;
-                        childAssertions = state.assertions.find({
-                            parent: object.id
-                        });
-                        //console.log("childAssertions for " + object.id, childAssertions);
-                        angular.forEach(childAssertions, function (assertion) {
-                            state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                                value: assertion.value()
-                            });
-                        });
+                        setsToBeTriggered.push(object);
                     }
                 }
+
             } else {
                 yConsole.error("The trigger is not well formed. You must have a complete assertion with a subject and an object.")
             }
         });
+
+        // Then, we trigger each assertion sets that are supposed to be triggered
+        angular.forEach(setsToBeTriggered, function (object) {
+            somethingHappened = true;
+            var childAssertions = state.assertions.find({
+                parent: object.id
+            });
+            //console.log("childAssertions for " + object.id, childAssertions);
+            angular.forEach(childAssertions, function (assertion) {
+                state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
+                    value: assertion.value()
+                });
+            });
+        });
+
 
         return somethingHappened;
     };

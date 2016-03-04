@@ -152,7 +152,7 @@ yarn.service('state', function ($localStorage,
 
                 // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
-                    return a.weight() > b.weight();
+                    return a.weight() - b.weight();
                 });
 
                 // Check if the item to be resolved is the object or the subject
@@ -172,6 +172,7 @@ yarn.service('state', function ($localStorage,
                     var topAssertion = foundObjectSet[foundObjectSet.length - 1];
                     if (topAssertion.value()) foundObjects.push(topAssertion[typeToResolve]);
                 });
+                //console.log("FOUND: ", foundObjects);
 
             }
             //console.log("foundObjects", foundObjects);
@@ -182,12 +183,15 @@ yarn.service('state', function ($localStorage,
             var value = null;
             var objs = this.resolveAll(criterias);
             if (objs.length) {
-                value = objs[0];
+                // We make sure that the top-most item is taken, in a case where
+                // multiple assertions would have been true, the heaviest one
+                // should be used
+                value = objs[objs.length - 1];
             }
             return value;
         };
 
-        State.prototype.resolveValue = function(criterias) {
+        State.prototype.resolveValue = function (criterias) {
             var value = null;
             if (criterias && (criterias.subject && criterias.predicate)) {
 
@@ -207,7 +211,7 @@ yarn.service('state', function ($localStorage,
 
                 // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
-                    return a.weight() > b.weight();
+                    return a.weight() - b.weight();
                 });
 
                 var topAssertion = assertions[assertions.length - 1];
@@ -250,27 +254,29 @@ yarn.service('state', function ($localStorage,
                 // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
                 // Instead we negate all the ones we dont need anymore
                 if (!options.parent) {
-                    if (predicate.uniqueSubject) {
+                    if (this.currentLayer !== "world") {
+                        if (predicate.uniqueSubject) {
 
-                        // todo: BUG : This only work because there is only two layer world/session
-                        // Final solution should work down from current layer to lower layers
+                            // todo: BUG : This only work because there is only two layer world/session
+                            // Final solution should work down from current layer to lower layers
 
-                        // Find exquivalent assertions to be negated
-                        assertionsToNegate = this.assertions.find({
-                            subject: subject.id,
-                            predicate: predicate.id,
-                            //layer: this.currentLayer,
-                            parent: null
-                        });
+                            // Find exquivalent assertions to be negated
+                            assertionsToNegate = this.assertions.find({
+                                subject: subject.id,
+                                predicate: predicate.id,
+                                layer: this.currentLayer,
+                                parent: null
+                            });
+                            console.log("assertionsToNegate", assertionsToNegate);
 
-                        assertionsToNegate.forEach(function (assertion) {
-                            self.negate(assertion);
-                        });
+                            self.assertions.remove(assertionsToNegate);
+                            self.UnpersistAssertions(assertionsToNegate);
 
-                    } else {
 
-                        // Find exquivalent assertions to be negated
-                        if (this.currentLayer !== "world") {
+
+                        } else {
+
+                            // Find exquivalent assertions to be negated
                             var criterias = {
                                 subject: subject.id,
                                 predicate: predicate.id,
@@ -285,8 +291,8 @@ yarn.service('state', function ($localStorage,
                             assertionsToNegate.forEach(function (assertion) {
                                 self.negate(assertion);
                             });
-                        }
 
+                        }
                     }
 
                 }
@@ -309,6 +315,7 @@ yarn.service('state', function ($localStorage,
          * If the session layer is empty, the assertion is removed
          */
         State.prototype.persistAssertion = function (assertion) {
+            console.log("State.persistAssertion", assertion);
             if (!$localStorage.localState) {
                 $localStorage.localState = {}
             }
@@ -327,6 +334,27 @@ yarn.service('state', function ($localStorage,
                     }
                 }
             }
+        };
+        State.prototype.UnpersistAssertions = function (_assertions) {
+            // todo: refactor: Initialising the localStorage this way is not elegant.... use .ensure() pattern
+            if (!$localStorage.localState) {
+                $localStorage.localState = {}
+            }
+            if (!$localStorage.localState.assertions) {
+                $localStorage.localState.assertions = {}
+            }
+            var localState = $localStorage.localState;
+
+            console.log("State.UnpersistAssertions", _assertions);
+            var assertions = _assertions;
+            if (!angular.isArray(assertions)) assertions = [assertions];
+
+            angular.forEach(assertions, function (assertion) {
+                //console.log("persistAssertion", assertion, assertion.layer);
+                if (assertion.layer === "session") {
+                    delete localState.assertions[assertion.id()];
+                }
+            });
         };
 
         State.prototype.negate = function (assertion) {
@@ -349,23 +377,25 @@ yarn.service('state', function ($localStorage,
         State.prototype.step = function (increment) {
             var count = 0;
             // todo: refactor: use a service instead of state.thing
-            // ex.:   var story = things("Story")
-            // ex.:   var hasStepped = predicates("hasStepped")
-            var hasSteppedCount = this.resolveOne({
+            var stepCount = this.resolveValue({
                 subject: "story",
-                predicate: "hasStepped"
+                predicate: "has",
+                object: "steps"
             });
-            if (hasSteppedCount) {
-                if (typeof hasSteppedCount === "number") {
-                    count = hasSteppedCount;
+            if (stepCount) {
+                if (typeof stepCount === "number") {
+                    count = stepCount;
                 }
             }
 
             if (increment && typeof(increment) === "number") {
                 count = count + increment;
                 var story = this.thing("Story");
-                var hasStepped = this.predicate("hasStepped");
-                var assertion = this.createAssertion(story, hasStepped, count);
+                var steps = this.thing("Steps");
+                var has = this.predicate("has");
+                this.createAssertion(story, has, steps, {
+                    value: count
+                });
                 //console.log("====>", assertion);
             }
 

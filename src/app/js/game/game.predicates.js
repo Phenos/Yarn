@@ -20,14 +20,6 @@ yarn.service('gamePedicates', function (state) {
             .syntax("have an")
             .syntax("has a");
 
-        // How many steps have been take (game cycle steps)
-        // todo: This should be refactored as a property assertion
-        state
-            .predicate("hasStepped")
-            .syntax("have stepped")
-            .syntax("has stepped")
-            .isUniqueSubject(true);
-
         // The Action the user what about to make (ex.: Move, Look, etc)
         state
             .predicate("isAboutTo")

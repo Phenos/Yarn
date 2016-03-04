@@ -30,9 +30,10 @@ yarn.service("setDefaultOptionsHelper", function (state,
 
             // Filter out things that dont have a label
             var thingsInRoomWithDescriptions = thingsInRoom.filter(function (thing) {
-                var description = state.resolveOne({
+                var description = state.resolveValue({
                     subject: thing.id,
-                    predicate: "isDescribedAs"
+                    predicate: "has",
+                    object: "Description"
                 });
                 return typeof(description) === "string";
             });

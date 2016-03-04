@@ -26,9 +26,10 @@ yarn.service("movePrompt", function (logic,
             });
 
             linkedRooms.forEach(function (room) {
-                var label = state.resolveOne({
+                var label = state.resolveValue({
                     subject: room.id,
-                    predicate: "isNamed"
+                    predicate: "has",
+                    object: "Name"
                 });
                 prompt.option(label, "move " + room.id);
             });

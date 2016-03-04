@@ -3,53 +3,23 @@ yarn.service('gamePedicates', function (state) {
     return function () {
 
         state
-            .predicate("hasVersion")
-            .syntax("has version")
-            .syntax("version")
-            .syntax("is version")
-            .isUniqueSubject(true);
-/*
-// todo: Allow defining predicates in Yarn Script
+            .predicate("is")
+            .syntax("is a")
+            .syntax("is an")
+            .syntax("are")
+            .syntax("are a")
+            .syntax("are an");
 
-HasVersion
-    is a Predicate,
-    is a UniqueSubject
-    is titled "Version",
-    is described as "Set a version number. Typically used on a Story.
-    has syntax "has version",
-    has syntax "version",
-    has syntax "is version".
-
-//todo: But ultimately, this should be an Attribute like so
-
-Version
-    is an Attribute,
-    is titled "Version",
-    is Mandatory,
-    is described as "A version number. Typically used on a Story.
-
-Story has a Version.
-
- */
         state
             .predicate("has")
-            .syntax("has a")
+            .syntax("has an")
             .syntax("have")
-            .syntax("have a");
-
-        state
-            .predicate("hasCoverpage")
-            .syntax("has coverpage")
-            .syntax("coverpage")
-            .isUniqueSubject(true);
-
-        state
-            .predicate("isAuthoredBy")
-            .syntax("is created by")
-            .syntax("is authored by")
-            .isUniqueSubject(true);
+            .syntax("have a")
+            .syntax("have an")
+            .syntax("has a");
 
         // How many steps have been take (game cycle steps)
+        // todo: This should be refactored as a property assertion
         state
             .predicate("hasStepped")
             .syntax("have stepped")
@@ -80,44 +50,6 @@ IsA is a Predicate,
     has syntax "is a".
 
 */
-        // What something is of a kind
-        state
-            .predicate("hasScenery")
-            .syntax("has scenery")
-            .isUniqueSubject(true);
-
-        state
-            .predicate("hasImage")
-            .syntax("has image")
-            .isUniqueSubject(true);
-
-        // What something is called
-        state
-            .predicate("isNamed")
-            .syntax("are titled")
-            .syntax("are named")
-            .syntax("are called")
-            .syntax("is titled")
-            .syntax("is named")
-            .syntax("is called")
-            .isUniqueSubject(true);
-
-        // What something is described as when looked at
-        state
-            .predicate("isDescribedAs")
-            .syntax("are described")
-            .syntax("are described as")
-            .syntax("is described")
-            .syntax("is described as")
-            .isUniqueSubject(true);
-
-        state
-            .predicate("isAlsoDescribedAs")
-            .syntax("are also described")
-            .syntax("are also described as")
-            .syntax("is also described")
-            .syntax("is also described as")
-            .isUniqueSubject(true);
 
         // When something is in a place
         state
@@ -171,19 +103,6 @@ IsA is a Predicate,
             .syntax("is open to the")
             .syntax("links to the")
             .syntax("links to");
-
-        // When a place is linked to another place
-        state
-            .predicate("this")
-            .syntax("that")
-            .syntax("the");
-
-        state
-            .predicate("isUsableWith")
-            .syntax("are usable with")
-            .syntax("is usable with")
-            .syntax("can be used with");
-
 
         /*
          =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

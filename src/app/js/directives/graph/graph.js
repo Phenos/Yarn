@@ -39,6 +39,8 @@
                 var radius = 140;
 
                 angular.forEach(things, function (thing) {
+                    throw "Unrefactored";
+                    //todo: This has not been refactored yet!
                     var isARoom = false;
                     var ThingsItIs = thing.resolve("isA");
                     var label = thing.resolveValue("isNamed");

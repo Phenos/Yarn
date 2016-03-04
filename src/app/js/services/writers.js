@@ -59,17 +59,19 @@ yarn.factory('writers', function (yarn,
             storyLog.image(coverpage_url);
         }
 
-        var description = state.resolveOne({
+        var description = state.resolveValue({
             subject: "Story",
-            predicate: "isDescribedAs"
+            predicate: "has",
+            object: "Description"
         });
         if (description) {
             storyLog.log("“&nbsp;" + description + "&nbsp;”");
         }
 
-        var author = state.resolveOne({
+        var author = state.resolveValue({
             subject: "Story",
-            predicate: "isAuthoredBy"
+            predicate: "has",
+            object: "Author"
         });
         if (author) {
             storyLog.log("by " + author);
@@ -90,9 +92,10 @@ yarn.factory('writers', function (yarn,
 
         //console.log("Your in room ", room);
         if (room) {
-            var scenery = state.resolveOne({
+            var scenery = state.resolveValue({
                 subject: room.id,
-                predicate: "hasScenery"
+                predicate: "has",
+                object: "Scenery"
             });
             var url = script.resolveRelativeURI(scenery);
             if (url) {
@@ -101,17 +104,20 @@ yarn.factory('writers', function (yarn,
                 sceneryService.clear();
             }
 
-            var label = state.resolveOne({
+            var label = state.resolveValue({
                 subject: room.id,
-                predicate: "isNamed"
+                predicate: "has",
+                object: "Name"
             });
-            storyLog.heading(label);
+            if (label) storyLog.heading(label);
 
-            var description = state.resolveOne({
+            var description = state.resolveValue({
                 subject: room.id,
-                predicate: "isDescribedAs"
+                predicate: "has",
+                object: "Description"
             });
             if (description) storyLog.log(description);
+
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");
             yConsole.error("Your hero is nowhere to be found!");
@@ -125,17 +131,20 @@ yarn.factory('writers', function (yarn,
     // Describe where you are at the beginning
     function describeThing(thing) {
         if (thing) {
-            var label = state.resolveOne({
+            var label = state.resolveValue({
                 subject: thing.id,
-                predicate: "isNamed"
+                predicate: "has",
+                object: "Name"
             });
-            var description = state.resolveOne({
+            var description = state.resolveValue({
                 subject: thing.id,
-                predicate: "isDescribedAs"
+                predicate: "has",
+                object: "Description"
             });
-            var image = state.resolveOne({
+            var image = state.resolveValue({
                 subject: thing.id,
-                predicate: "hasImage"
+                predicate: "has",
+                object: "Image"
             });
 
             if (image) {

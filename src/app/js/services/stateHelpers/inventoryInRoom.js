@@ -10,18 +10,12 @@ yarn.service("inventoryInRoomHelper", function (state) {
                 object: room.id
             });
 
-            // Todo: YUCK... Find a better way to do these checks!!!!!
             thingsInRoom.forEach(function (thing) {
                 // Check if item is an InventoryItem
-                var isInventoryItem = false;
-
-                var thingsThatAre = state.resolveAll({
+                var isInventoryItem = state.resolveValue({
                     subject: thing.id,
-                    predicate: "isA"
-                });
-                var inventoryItem = state.thing("InventoryItem");
-                thingsThatAre.forEach(function (thing) {
-                    if (thing === inventoryItem) isInventoryItem = true;
+                    predicate: "isA",
+                    object: "InventoryItem"
                 });
                 if (isInventoryItem) foundInventory.push(thing);
             });

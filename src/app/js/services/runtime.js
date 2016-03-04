@@ -90,10 +90,11 @@
                         node.resolvedTo = returnValue;
                     } else if (node.variant === "constant") {
                         console.error("Constants not supported yet! : " + node.value);
-                        //returnValue = state.thing(node.value);
+                    } else if (node.variant === "statement") {
+                        // Nothing to to with compilation statements
                     } else {
                         console.error("Compilation error: Unknown node variant [" + node.variant + "]", node);
-                        yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value+ "]");
+                        yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value + "]");
                     }
 
 
@@ -123,67 +124,72 @@
                     var predicate;
                     var args;
                     var createdAssertions = [];
-                    if (node.value === "@imported") {
-                        //console.log("Running imported node", node);
-                        runtime.runSet(node.set);
-                    } else {
-                        var parent;
-                        var parentObject;
-                        // Check if the assertion needs to be assigned a parent Thing
-                        var parentScope = runtime.stack.parent();
-                        //if (parentScope) parentScope = runtime.stack.parent();
-                        if (parentScope) {
-                            parentObject = parentScope.values.this;
-                            if ((parentObject && parentObject.constructor.name) === "Thing") {
-                                var headObject = runtime.stack.head().values["this"];
-                                if (parentObject && parentObject !== headObject) {
-                                    parent = parentObject;
-                                }
+
+                    var parent;
+                    var parentObject;
+                    // Check if the assertion needs to be assigned a parent Thing
+                    var parentScope = runtime.stack.parent();
+                    //if (parentScope) parentScope = runtime.stack.parent();
+                    if (parentScope) {
+                        parentObject = parentScope.values.this;
+                        if ((parentObject && parentObject.constructor.name) === "Thing") {
+                            var headObject = runtime.stack.head().values["this"];
+                            if (parentObject && parentObject !== headObject) {
+                                parent = parentObject;
                             }
                         }
+                    }
 
-                        // Identify which predicate corresponds to this instruction
-                        predicate = state.predicate(node.value);
-                        // Run the child set of node to be used by the predicate
-                        args = runtime.runSet(node.set);
-                        // Create assertion from predicate
-                        if (args.length) {
-                            args.forEach(function (arg) {
-                                var object = arg[0];
-                                var children = arg[1] || [];
-                                var value;
-                                //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
-                                var headNode = runtime.stack.head();
-                                var currentThis = headNode.values.this;
-                                if (currentThis) {
-                                    // Before creating the assertion, check if it is followed by values to be assigned
-                                    if (children && children.length) {
-                                        // Currently, only the first value is taken in account and used as a value
-                                        value = children[0][0];
-                                    }
+                    // Identify which predicate corresponds to this instruction
+                    predicate = state.predicate(node.value);
+                    // Run the child set of node to be used by the predicate
+                    args = runtime.runSet(node.set);
+                    // Create assertion from predicate
+                    if (args.length) {
+                        args.forEach(function (arg) {
+                            var object = arg[0];
+                            var children = arg[1] || [];
+                            var value;
+                            //todo: Handle "non predicate" instructions such as "this/that", without creating new assertion
+                            var headNode = runtime.stack.head();
+                            var currentThis = headNode.values.this;
+                            if (currentThis) {
+                                // Before creating the assertion, check if it is followed by values to be assigned
+                                if (children && children.length) {
+                                    // Currently, only the first value is taken in account and used as a value
+                                    value = children[0][0];
+                                }
+                                if (typeof(object) === "string") {
+                                    yConsole.error("Invalid assertion, cannot use text as the object: " +
+                                        currentThis.id + " " + predicate.id + " " + object.id);
+                                } else if (typeof(object) === "number") {
+                                    yConsole.error("Invalid assertion, cannot use text as the object: " +
+                                        currentThis.id + " " + predicate.id + " " + object.id);
+                                } else {
                                     createdAssertions.push(
                                         state.createAssertion(currentThis, predicate, object, {
                                             parent: parent,
                                             value: value
                                         })
                                     );
-                                    //console.log("created assetion: ", assertion);
-                                } else {
-                                    // Nothing to do!
-                                    // Probably because a naked predicate such as "the" has been used on
-                                    // the root node.
                                 }
-                            });
+                                //console.log("created assetion: ", assertion);
+                            } else {
+                                yConsole.error("Invalid assertion, missing subject: " + predicate.id);
+                                // Nothing to do!
+                                // Probably because a naked predicate such as "the" has been used on
+                                // the root node.
+                            }
+                        });
+                    } else {
+                        var currentThis = runtime.stack.head().values.this;
+                        if (currentThis) {
+                            yConsole.error("Invalid assertion, missing object: " + currentThis.id + " " + predicate.id);
                         } else {
-                            var currentThis = runtime.stack.head().values.this;
-                            createdAssertions.push(
-                                state.createAssertion(currentThis, predicate, null, {
-                                    parent: parent
-                                })
-                            );
+                            yConsole.error("Invalid assertion, missing subject: " + predicate.id);
                         }
-
                     }
+
                     return null;
                 },
                 "fallback": function (runtime, node) {

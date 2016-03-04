@@ -49,6 +49,9 @@ yarn.service('script', function (Pointer,
     Script.prototype.parseNode = function (node) {
         var returnValue;
         if (node.type === "instruction" && node.value === "import") {
+            node.type = "symbol";
+            node.value = "IMPORT";
+            node.variant = "statement";
             returnValue = this.importSet(node.set);
         } else {
             returnValue = this.parseSet(node.set);
@@ -90,8 +93,9 @@ yarn.service('script', function (Pointer,
                 // Graft the root node of the imported script onto
                 // the node which imported the script
                 // then change the node type to
-                node.type = "instruction";
-                node.value = "@imported";
+                node.type = "symbol";
+                node.value = "IMPORT";
+                node.variant = "statement";
                 node.set = script.ast.root.set;
                 //console.log("Grafted imported AST into parent AST")
             });

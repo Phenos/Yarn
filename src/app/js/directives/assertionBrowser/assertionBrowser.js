@@ -44,7 +44,7 @@
                         field: 'predicate.label',
                         displayName: 'predicate'},
                     {
-                        field: 'object',
+                        field: 'object.text()',
                         displayName: 'object'},
                     {
                         field: '_value',

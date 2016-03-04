@@ -75,6 +75,7 @@ yarn.service('state', function ($localStorage,
                         thing = null;
                     } else {
                         thing = new Thing(id, this);
+                        thing.label(_id);
                         this.things[id] = thing;
                     }
                 }

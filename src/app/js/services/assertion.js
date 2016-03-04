@@ -1,6 +1,8 @@
-yarn.factory('Assertion', function (layerSetup,
+yarn.service('Assertion', function (layerSetup,
                                     postal,
                                     weightAssertion) {
+
+    var internalCounter = 0;
 
     /**
      * An assertion about things in the graph
@@ -12,6 +14,8 @@ yarn.factory('Assertion', function (layerSetup,
      */
     function Assertion(subject, predicate, object, options) {
         var _options = options || {};
+        internalCounter = internalCounter + 1;
+        this.creationIndex = internalCounter;
         this.subject = subject || null;
         this.predicate = predicate || null;
         this.object = object || null;

@@ -18,7 +18,6 @@ function UserChoiceDirective() {
             var prompt = promptLoop.currentPrompt;
             if (prompt) {
                 // Prompt the user with a question
-                // todo: This should be inside a sort of REPL pattern with a handler for each types of context
                 self.question = prompt.question;
                 self.options = prompt.options;
                 self.choose = function (value) {

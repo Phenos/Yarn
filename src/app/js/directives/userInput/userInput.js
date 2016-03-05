@@ -36,7 +36,6 @@ function UserInputDirective() {
                 }
             });
 
-        //todo: command definitions should be in a separate service
         this.getAutoCompleteMatches = function (searchText) {
             var commands = [];
 

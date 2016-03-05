@@ -33,22 +33,6 @@ yarn.service('gamePedicates', function (state) {
             .syntax("are at")
             .syntax("is in");
 
-        //todo: Bring back "contains" either when when "reverse" assertions are possible
-        //      or with a better model for "what' in what"
-        //      untile then user "is in"
-        /*
-        // When something has something else. Ex.: Kitchen has a Kitchen Table
-        state
-            .predicate("hasInIt")
-            .syntax("contains")
-            .syntax("contains a")
-            .syntax("contains the")
-            .syntax("has in it the")
-            .syntax("has in it a")
-            .syntax("has in it")
-            .syntax("has a");
-        */
-
         // When something has something else. Ex.: Kitchen has a Kitchen Table
         state
             .predicate("hasInInventory")

@@ -45,9 +45,6 @@ function inspectCommand(state,
             var thing = state.thing(itemName);
             if (thing) {
 
-                // TODO: Add argument to ALSO output assertions that have been negated
-                // Currently only the "true" assertions are shown
-
                 assertions = state.assertions.find({
                     subject: thing.id
                 });
@@ -61,9 +58,6 @@ function inspectCommand(state,
                 }
 
                 angular.forEach(assertions, function (assertion) {
-
-                    // TODO: Dont show assertions that are under a parent (AFTER REFACTOR)
-
                     log.push(consoleHelper.assertion2log(assertion) + "<br/>");
                 });
 

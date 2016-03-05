@@ -3,7 +3,6 @@
 
     yarn.config(config);
 
-    // todo: Put config in separate file
     function config($stateProvider,
                     $urlRouterProvider) {
 

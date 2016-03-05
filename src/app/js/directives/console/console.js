@@ -4,7 +4,8 @@
     yarn.factory('consoleService', consoleService);
 
 
-    function ConsoleDirective(commands) {
+    function ConsoleDirective(commands,
+                              getSelectionText) {
         return {
             restrict: 'E',
             bindToController: {
@@ -58,17 +59,6 @@
                     $element.find("input")[0].focus();
                 }, 200);
             };
-
-            // todo: put in a utils service
-            function getSelectionText() {
-                var text = "";
-                if (window.getSelection) {
-                    text = window.getSelection().toString();
-                } else if (document.selection && document.selection.type != "Control") {
-                    text = document.selection.createRange().text;
-                }
-                return text;
-            }
 
             this.onInputEscapeFocus = function () {
                 //console.log("console.onInputEscapeFocus");

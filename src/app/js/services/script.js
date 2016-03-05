@@ -74,18 +74,8 @@ yarn.service('script', function (Pointer,
         //todo: this code is duplicated... make unique with .resolveRelativeURL
 
         var tmpBaseURI = this.url;
-
-        // hack to protect windows drive letters in the path
-        //tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
-        //tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
-        //tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
-
-
         //console.log("Importing: ", node.value, "relative to uri: ", tmpBaseURI);
         var url = URI(node.value).absoluteTo(tmpBaseURI).toString();
-
-        // hack to protect windows drive letters in the path
-        //url = url.toString().replace("stupid_hack2/", ":/");
 
         return loadScript(url).then(function (loadedScript) {
             var script = new Script();
@@ -117,18 +107,8 @@ yarn.service('script', function (Pointer,
         var resolvedURI = "";
         var tmpBaseURI = this.url;
         if (uri) {
-            // todo: refactore this hack into a seprate function/filter
-
-            // HACK to accound for difference in path resolution between windows an osx
-            //tmpBaseURI = tmpBaseURI.replace("file://", "*stupid_hack1*");
-            //tmpBaseURI = tmpBaseURI.replace(":/", "stupid_hack2/");
-            //tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
-
             //console.log("relative to uri: ", tmpBaseURI);
             resolvedURI = URI(uri).absoluteTo(tmpBaseURI).toString();
-
-            // HACK to accound for difference in path resolution between windows an osx
-            //resolvedURI = resolvedURI.toString().replace("stupid_hack2/", "://");
         } else {
             resolvedURI = uri;
         }

@@ -6,24 +6,22 @@ yarn.service("moveRoutine", function (state,
         var isIn = state.predicate("isIn");
         var you = state.thing("You");
         if (room) {
+
             // Remove current position
+            var currentIsIn = state.assertions.find({
+                subject: "You",
+                predicate: "isIn",
+                layer: state.currentLayer,
+                parent: null
+            });
+            console.log("REMVOVING: currentIsIn : ", currentIsIn);
+            state.assertions.remove(currentIsIn);
 
-
-
-            //var currentIsIn = state.assertions.find({
-            //    subject: you,
-            //    predicate: isIn,
-            //    layer: state.currentLayer,
-            //    parent: null
-            //});
-            //state.assertions.remove(currentIsIn);
-
-            //console.log("room-----", room);
             state.createAssertion(you, isIn, room, {
                 layer: state.currentLayer
             });
         }
-        // TODO : Trigger movesFrom
+
         var movesTo = state.predicate("movesTo");
         events.trigger(you, movesTo, room);
         stepRoutine();

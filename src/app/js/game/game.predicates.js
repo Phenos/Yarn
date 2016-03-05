@@ -1,7 +1,5 @@
 yarn.service('gamePedicates', function (state) {
 
-    // TODO : Get rid of the concept of isUniqueSubject
-
     return function () {
 
         state
@@ -20,12 +18,12 @@ yarn.service('gamePedicates', function (state) {
             .syntax("have an")
             .syntax("has a");
 
+        // TODO: Make an attribute ? (since there is no unicity enforced anymore ?
         // The Action the user what about to make (ex.: Move, Look, etc)
         state
             .predicate("isAboutTo")
             .syntax("are about to")
-            .syntax("is about to")
-            .isUniqueSubject(true);
+            .syntax("is about to");
 
 /*
 
@@ -37,6 +35,7 @@ IsA is a Predicate,
 
 */
 
+        // TODO: Make an attribute ? (since there is no unicity enforced anymore ?
         // When something is in a place
         state
             .predicate("isIn")
@@ -51,8 +50,7 @@ IsA is a Predicate,
             .syntax("are in")
             .syntax("are inside")
             .syntax("are at")
-            .syntax("is in")
-            .isUniqueSubject(true);
+            .syntax("is in");
 
         //todo: Bring back "contains" either when when "reverse" assertions are possible
         //      or with a better model for "what' in what"

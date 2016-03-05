@@ -11,7 +11,6 @@ yarn.factory('Predicate', function PredicateService() {
         var id = _id.toLowerCase();
         this.id = id;
         this.label = id;
-        this.uniqueSubject = false;
 
         /**
          * Define a new syntax for this predicate
@@ -27,17 +26,6 @@ yarn.factory('Predicate', function PredicateService() {
         }
 
     }
-
-    Predicate.prototype.isUniqueSubject = function (value) {
-        var returnValue;
-        if (angular.isUndefined(value)) {
-            returnValue = this.uniqueSubject;
-        } else {
-            this.uniqueSubject = value;
-            returnValue = this;
-        }
-        return returnValue;
-    };
 
     return Predicate;
 });

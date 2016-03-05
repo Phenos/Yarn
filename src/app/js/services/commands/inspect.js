@@ -51,9 +51,6 @@ function inspectCommand(state,
                 assertions = state.assertions.find({
                     subject: thing.id
                 });
-                assertions = assertions.filter(function (assertion) {
-                    return !assertion.isUniqueAndFalse();
-                });
 
                 log.push("The object <span command='inspect " + thing.id + "'>" + thing.id + "</span> has ");
 

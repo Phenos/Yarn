@@ -248,53 +248,26 @@ yarn.service('state', function ($localStorage,
                 options.layer = this.currentLayer;
             }
 
-            if (subject && predicate) {
+            if (subject && predicate && object) {
 
                 // Look for existing assertions that match the criteria
                 // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
                 // Instead we negate all the ones we dont need anymore
-                if (!options.parent) {
-                    if (this.currentLayer !== "world") {
-                        if (predicate.uniqueSubject) {
+                if (!options.parent && this.currentLayer !== "world") {
+                    // Find exquivalent assertions to be negated
+                    var criterias = {
+                        subject: subject.id,
+                        predicate: predicate.id,
+                        object: object.id,
+                        layer: this.currentLayer,
+                        parent: null
+                    };
 
-                            // todo: BUG : This only work because there is only two layer world/session
-                            // Final solution should work down from current layer to lower layers
+                    // TODO: Update instead of removing then adding addersions ? (risk of duplicates?)
+                    assertionsToNegate = this.assertions.find(criterias);
 
-                            // Find exquivalent assertions to be negated
-                            assertionsToNegate = this.assertions.find({
-                                subject: subject.id,
-                                predicate: predicate.id,
-                                layer: this.currentLayer,
-                                parent: null
-                            });
-                            console.log("assertionsToNegate", assertionsToNegate);
-
-                            self.assertions.remove(assertionsToNegate);
-                            self.UnpersistAssertions(assertionsToNegate);
-
-
-
-                        } else {
-
-                            // Find exquivalent assertions to be negated
-                            var criterias = {
-                                subject: subject.id,
-                                predicate: predicate.id,
-                                layer: this.currentLayer,
-                                parent: null
-                            };
-                            if (object) criterias.object = object.id;
-                            assertionsToNegate = this.assertions.find(criterias);
-
-                            //console.log("Negating: ", assertionsToNegate);
-
-                            assertionsToNegate.forEach(function (assertion) {
-                                self.negate(assertion);
-                            });
-
-                        }
-                    }
-
+                    self.assertions.remove(assertionsToNegate);
+                    self.UnpersistAssertions(assertionsToNegate);
                 }
 
                 var assertion = new Assertion(subject, predicate, object, options);

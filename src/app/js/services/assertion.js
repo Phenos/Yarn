@@ -84,14 +84,6 @@ yarn.service('Assertion', function (layerSetup,
         return weightAssertion(this);
     };
 
-    Assertion.prototype.isUniqueAndFalse = function () {
-        var value = (
-            this.predicate.uniqueSubject &&
-            this.value() === false
-        );
-        return value;
-    };
-
     return Assertion;
 })
 ;

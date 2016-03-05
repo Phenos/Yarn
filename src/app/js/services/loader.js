@@ -12,8 +12,6 @@ yarn.service('loader', function (yarn,
         state.assertions.removeLayer('session');
         state.assertions.removeLayer('world');
 
-        // hack to protect windows drive letters in the path
-        //var url = _url.replace(/\\/g, "//");
         var url = _url;
 
         yConsole.log("Loading story from : " + url);
@@ -64,9 +62,6 @@ yarn.service('loader', function (yarn,
     };
 
     service.fromSource = function fromSource(source, _baseURL) {
-
-        // hack to protect windows drive letters in the path
-        //var baseURL = _baseURL.replace(/\\/g, "//");
         var baseURL = _baseURL;
 
         yConsole.log("Loading story from source");

@@ -125,7 +125,11 @@ IsA is a Predicate,
             .syntax("enters")
             .syntax("enters the")
             .syntax("enters in")
-            .syntax("enters into");
+            .syntax("enters into")
+            .syntax("enter")
+            .syntax("enter the")
+            .syntax("enter in")
+            .syntax("enter into");
 
         state
             .predicate("take")

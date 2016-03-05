@@ -1,7 +1,8 @@
 yarn.service("Assertions", function () {
 
-    function Assertions() {
+    function Assertions(assertions) {
         this._all = [];
+        if (angular.isArray(assertions)) this._all = assertions;
     }
 
     Assertions.prototype.all = function () {
@@ -87,6 +88,37 @@ yarn.service("Assertions", function () {
             if (match(assertion, criterias)) matches.push(assertion);
         });
         return matches;
+    };
+
+    Assertions.prototype.filter = function (criterias) {
+        return new Assertions(this.find(criterias));
+    };
+
+    Assertions.prototype.sortByWeight = function () {
+        this._all = this._all.sort(function (a, b) {
+            return a.weight() - b.weight();
+        });
+        return this;
+    };
+
+    Assertions.prototype.groupByTripple = function () {
+        var trippleGroups = {};
+        var trippleGroupsArray = [];
+        angular.forEach(this._all, function (assertion) {
+            var key = [assertion.object.id, assertion.predicate.id, assertion.object.id].join("-");
+            if (!trippleGroups[key]) trippleGroups[key] = [];
+            trippleGroups[key].push(assertion);
+        });
+        angular.forEach(trippleGroups, function (group) {
+            trippleGroupsArray.push(
+                new Assertions(group)
+            );
+        });
+        return trippleGroupsArray;
+    };
+
+    Assertions.prototype.top = function () {
+        return this._all[this._all.length - 1];
     };
 
     // todo: Too complex ... should be simplified or cut appart

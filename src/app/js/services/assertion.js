@@ -2,6 +2,9 @@ yarn.service('Assertion', function (layerSetup,
                                     postal,
                                     weightAssertion) {
 
+    // TODO: Add a check to see if we are changing value of a static layer
+    // If so, throw an exception
+
     var internalCounter = 0;
 
     /**
@@ -23,7 +26,7 @@ yarn.service('Assertion', function (layerSetup,
         this._value = true; // A value (true, false)
         this.parent = _options.parent || null; // A parent object
 
-        this.value(options.value);
+        this.value(_options.value);
 
         //console.log("created Assertion", this);
     }
@@ -60,6 +63,13 @@ yarn.service('Assertion', function (layerSetup,
         }
     };
 
+    Assertion.prototype.clone = function () {
+        var clone = new Assertion(this.subject, this.predicate, this.object);
+        clone.value(this.value());
+        clone.layer = this.layer;
+        clone.parent = this.parent;
+        return clone;
+    };
 
     /**
      * Set and get the value of the assertion

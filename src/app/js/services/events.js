@@ -72,7 +72,7 @@ yarn.service('events', function (state,
 
 
     Events.prototype.trigger = function (subject, predicate, object) {
-        console.log("Trigger", subject, predicate, object);
+        //console.log("Trigger", subject, predicate, object);
         state.createAssertion(subject, predicate, object, {
             layer: "step"
         });

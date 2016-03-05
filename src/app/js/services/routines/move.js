@@ -7,15 +7,11 @@ yarn.service("moveRoutine", function (state,
         var you = state.thing("You");
         if (room) {
 
-            // Remove current position
-            var currentIsIn = state.assertions.find({
+            // Remove player from current possition
+            state.negate2({
                 subject: "You",
-                predicate: "isIn",
-                layer: state.currentLayer,
-                parent: null
+                predicate: "isIn"
             });
-            console.log("REMVOVING: currentIsIn : ", currentIsIn);
-            state.assertions.remove(currentIsIn);
 
             state.createAssertion(you, isIn, room, {
                 layer: state.currentLayer
@@ -24,6 +20,7 @@ yarn.service("moveRoutine", function (state,
 
         var movesTo = state.predicate("movesTo");
         events.trigger(you, movesTo, room);
+
         stepRoutine();
 
         return true;

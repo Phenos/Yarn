@@ -3,6 +3,15 @@ yarn.service("takeRoutine", function (state,
                                       stepRoutine,
                                       writers) {
 
+/*
+
+
+    TODO: MAKE THIS AS SEXY AS POSSILE
+
+
+*/
+
+
     function takeRoutine(object) {
         if (object) {
             var hasInInventory = state.predicate("hasInInventory");
@@ -13,16 +22,14 @@ yarn.service("takeRoutine", function (state,
             state.createAssertion(you, hasInInventory, object);
             writers.describeThingTakenInInventory(object);
 
-            var wasInAssertions = state.assertions.find({
+
+            state.negate2({
                 subject: object.id,
                 predicate: "isIn"
             });
-            console.log("wasInAssertions", wasInAssertions);
-            angular.forEach(wasInAssertions, function (assertion) {
-                state.negate(assertion);
-            });
 
             var take = state.predicate("take");
+            // todo: Use id instead of object as arguments for Trigger
             events.trigger(you, take, object);
 
             stepRoutine();

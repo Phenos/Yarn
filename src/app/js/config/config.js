@@ -10,7 +10,8 @@ yarn.config(function (LoopBackResourceProvider) {
 
 yarn.config(function(RollbarProvider) {
     var roolbarConfig = {
-        accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
+        //accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
+        accessToken: "INVALID",
         captureUncaught: true,
         payload: {
             environment: 'test'

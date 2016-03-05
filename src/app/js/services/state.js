@@ -233,50 +233,56 @@ yarn.service('state', function ($localStorage,
          * @returns {*}
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
-            var self = this;
-            var assertionsToNegate;
-
             var options = _options || {};
             //console.log("State.createAssertion", subject, predicate, object, options);
-
-            // The set of assertions to negate first
-            // First, verify that we have at least a subject and a predicate
-            // Otherwise the assertions would not assert anything
 
             // If not layer is provided, we set the "currentLayer"
             if (!options.layer) {
                 options.layer = this.currentLayer;
             }
 
-            if (subject && predicate && object) {
+            // If not layer is provided, we set the "currentLayer"
+            if (angular.isUndefined(options.value)) {
+                options.value = true;
+            }
 
-                // Look for existing assertions that match the criteria
-                // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
-                // Instead we negate all the ones we dont need anymore
+            if (subject && predicate && object) {
                 if (!options.parent && this.currentLayer !== "world") {
                     // Find exquivalent assertions to be negated
-                    var criterias = {
+                    this.negate2({
                         subject: subject.id,
                         predicate: predicate.id,
-                        object: object.id,
-                        layer: this.currentLayer,
-                        parent: null
-                    };
-
-                    // TODO: Update instead of removing then adding addersions ? (risk of duplicates?)
-                    assertionsToNegate = this.assertions.find(criterias);
-
-                    self.assertions.remove(assertionsToNegate);
-                    self.UnpersistAssertions(assertionsToNegate);
+                        object: object.id
+                    });
+                }
+                var identicalAssertions = this.assertions.filter({
+                    subject: subject.id,
+                    predicate: predicate.id,
+                    object: object.id,
+                    layer: options.layer,
+                    parent: options.parent
+                });
+                if (identicalAssertions.count() > 0) {
+                    var topAssertion = identicalAssertions.sortByWeight().top();
+                    if (topAssertion.layer === "world") {
+                        // If the top assertion in on the static world layer
+                        // We create a new assertion anyways
+                        var assertion = new Assertion(subject, predicate, object, options);
+                        this.assertions.add(assertion);
+                        this.persistAssertion(assertion);
+                    } else {
+                        // Else we re-use the existing assertion
+                        topAssertion.value(options.value);
+                        this.persistAssertion(topAssertion);
+                    }
+                } else {
+                    var assertion = new Assertion(subject, predicate, object, options);
+                    this.assertions.add(assertion);
+                    this.persistAssertion(assertion);
                 }
 
-                var assertion = new Assertion(subject, predicate, object, options);
-                this.assertions.add(assertion);
-                //console.log("added: ", assertion);
-
-                this.persistAssertion(assertion);
             } else {
-                console.warn("Impossible to create assertion without at least a subject and a predicate.")
+                console.error("Impossible to create an incomplete assertion.", arguments);
             }
             //console.log("created: ", assertion);
 
@@ -318,7 +324,7 @@ yarn.service('state', function ($localStorage,
             }
             var localState = $localStorage.localState;
 
-            console.log("State.UnpersistAssertions", _assertions);
+            //console.log("State.UnpersistAssertions", _assertions);
             var assertions = _assertions;
             if (!angular.isArray(assertions)) assertions = [assertions];
 
@@ -346,6 +352,70 @@ yarn.service('state', function ($localStorage,
                 self.persistAssertion(assertion);
             });
         };
+
+        State.prototype.negate2 = function (criterias) {
+            var self = this;
+
+            if (criterias.layer) throw "Cannot specify layer when negating assertions";
+            if (criterias.parent) throw "Cannot specify parent when negating assertions";
+
+            var groupedAssertions = this.assertions
+                .filter(criterias)
+                .groupByTripple();
+
+            //console.log("groupedAssertions", groupedAssertions);
+
+            angular.forEach(groupedAssertions, function (assertions) {
+                var topAssertion = assertions.sortByWeight().top();
+                // First, we check wether the top assertion is already negative
+                if (topAssertion.value() !== false) {
+                    // Then we check if the topAssertion is on the static world layer
+                    if (topAssertion.layer === "world") {
+                        // If so, we create a new assertion on top to negate it
+                        var newAssertion = topAssertion.clone();
+                        if (self.currentLayer === "world") {
+                            newAssertion.layer = "session";
+                        } else {
+                            newAssertion.layer = self.currentLayer;
+                        }
+                        newAssertion.parent = null;
+                        newAssertion.value(false);
+                        self.assertions.add(newAssertion);
+                        console.log("---------- negate2 ----> created new", newAssertion);
+                        self.persistAssertion(newAssertion);
+                    } else {
+                        // Now we test if we have an underlying layer with a value,
+                        // is so, we re-assign a "false" value to the current assertion
+                        // if not, we can simply delete the assertion
+                        var valueExistsUnder = assertions.count() > 1;
+
+                        if (valueExistsUnder) {
+                            topAssertion.value(false);
+                            self.persistAssertion(topAssertion);
+                            console.log("---------- negate2 ----> reassigned to false", topAssertion);
+                        } else {
+                            self.assertions.remove(topAssertion);
+                            self.UnpersistAssertions(topAssertion);
+                            console.log("---------- negate2 ----> Discarded", topAssertion);
+                        }
+                    }
+                } else {
+                    console.log("---------- negate2 ----> already negative", topAssertion);
+                }
+            });
+
+
+        };
+        /*
+
+
+
+         console.log("wasInAssertions", wasInAssertions);
+         angular.forEach(wasInAssertions, function (assertion) {
+         });
+
+         */
+
 
         State.prototype.step = function (increment) {
             var count = 0;

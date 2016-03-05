@@ -39,10 +39,7 @@ function userFromAPI($http, Rollbar) {
                 console.log("No authenticated user found. Running as guest.");
             }
 
-            //console.log("rollbarOptions", rollbarOptions);
-            // todo: The Rollbar.configure from the service is broken
-            // Bypassing to global api for now
-            //Rollbar.configure(rollbarOptions);
+            // Provide the user context to the error reporting service
             window.Rollbar.configure(rollbarOptions);
 
             return user;

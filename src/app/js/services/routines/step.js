@@ -14,9 +14,6 @@ yarn.service("stepRoutine", function (events,
         // Check if dialogs are supposed to be said
         dialogs.process();
 
-        // todo: detect if the current room has changed and
-        // should be redrawn completely
-
         // Update the scenery in case it has changed
         updateScenery();
 

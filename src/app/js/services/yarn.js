@@ -46,7 +46,6 @@ yarn.service('yarn', function ($localStorage,
          * @param text
          * @param url
          */
-            //todo: map exactly where script source is loaded
         this.load = function (text, url) {
             //console.log("yarn.load");
 
@@ -67,7 +66,6 @@ yarn.service('yarn', function ($localStorage,
 
     var yarn = new Yarn();
 
-    //todo: Refactor this by... ?
     gamePedicates(yarn);
 
     return yarn;

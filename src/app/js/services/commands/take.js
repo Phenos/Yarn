@@ -11,7 +11,6 @@ yarn.factory('takeCommand', function (yConsole,
                 storyLog.flushBuffers();
             } else {
                 yConsole.error("Could not find any object called : " + args[0]);
-                // todo: In the tip, list the objects that can be used in the room
             }
         } else {
             yConsole.tip("You must provide an object name as the first argument.");
@@ -21,7 +20,6 @@ yarn.factory('takeCommand', function (yConsole,
     return {
         name: "take",
         shortDescription: "Take an object in inventory.",
-        //todo: better description and hinting
         longDescription: 'Take an object in inventory.',
         handler: handler
     };

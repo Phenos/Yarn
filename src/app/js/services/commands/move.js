@@ -12,12 +12,9 @@ yarn.factory('moveCommand', function (yConsole,
                 if (success) writers.describeWhereYouAre(true);
             } else {
                 yConsole.error("Could not find any object called : " + args[0]);
-                // todo: In the tip, list the objects that can be used in the room
             }
         } else {
             yConsole.tip("You must provide a room name as the first argument.");
-            // todo: In the tip, list the room that can be used or that are
-            // accessible from the current location
         }
     }
 

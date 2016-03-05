@@ -402,7 +402,6 @@ yarn.service('state', function ($localStorage,
 
         State.prototype.step = function (increment) {
             var count = 0;
-            // todo: refactor: use a service instead of state.thing
             var stepCount = this.resolveValue({
                 subject: "story",
                 predicate: "has",

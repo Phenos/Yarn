@@ -41,7 +41,6 @@ yarn.service("movePrompt", function (logic,
             setDefaultOptionsHelper(prompt, true);
         };
         context.answer = function answer(promptLoop, option) {
-            // todo: this should be injected instead of taken from parent scope
             if (option.value === "back") {
                 logic.routines.aboutTo("");
             } else {

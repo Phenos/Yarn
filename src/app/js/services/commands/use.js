@@ -2,6 +2,7 @@ yarn.factory('useCommand', function (yConsole,
                                      events,
                                      state,
                                      logic,
+                                     storyLog,
                                      writers) {
 
     function handler(args) {
@@ -13,6 +14,7 @@ yarn.factory('useCommand', function (yConsole,
                 if (!somethingHappened) {
                     writers.nothingHappened(true)
                 }
+                storyLog.flushBuffers();
             } else {
                 yConsole.error("Could not find an object called : " + args[0]);
                 // todo: In the tip, list the objects that can be used in the room

@@ -8,6 +8,7 @@ yarn.factory('takeCommand', function (yConsole,
             var object = state.thing(args[0], true);
             if (object) {
                 logic.routines.take(object);
+                storyLog.flushBuffers();
             } else {
                 yConsole.error("Could not find any object called : " + args[0]);
                 // todo: In the tip, list the objects that can be used in the room

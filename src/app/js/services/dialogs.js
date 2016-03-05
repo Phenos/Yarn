@@ -10,7 +10,7 @@ yarn.service("dialogs", function (state,
             parent: null
         });
 
-        //console.log("sayAssertions", sayAssertions);
+        console.log("Dialog > sayAssertions", sayAssertions);
 
         angular.forEach(sayAssertions, function (assertion) {
             //console.log("assertion", assertion);
@@ -26,7 +26,9 @@ yarn.service("dialogs", function (state,
 
                 //console.log("object", assertion.object);
                 if (monologue) {
-                    storyLog.log(monologue);
+                    console.log("Buffering monologue.....");
+                    storyLog.buffer().log(monologue);
+                    //debugger;
                 }
 
             }

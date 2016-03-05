@@ -53,6 +53,7 @@ yarn.service('events', function (state,
         });
 
         // Then, we trigger each assertion sets that are supposed to be triggered
+        console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (object) {
             somethingHappened = true;
             var childAssertions = state.assertions.find({
@@ -72,7 +73,7 @@ yarn.service('events', function (state,
 
 
     Events.prototype.trigger = function (subject, predicate, object) {
-        //console.log("Trigger", subject, predicate, object);
+        console.log("Trigger", subject, predicate, object);
         state.createAssertion(subject, predicate, object, {
             layer: "step"
         });

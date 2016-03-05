@@ -125,6 +125,10 @@ yarn.factory('writers', function (yarn,
                 "For the story to start, you must place you hero in a room.<br/>" +
                 "Ex.: #You is in #YourBedroom.");
         }
+
+        // Before ending, flush the log from any buffered logs
+        storyLog.flushBuffers();
+
         return this;
     }
 

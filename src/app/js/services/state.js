@@ -364,7 +364,7 @@ yarn.service('state', function ($localStorage,
                         newAssertion.parent = null;
                         newAssertion.value(false);
                         self.assertions.add(newAssertion);
-                        console.log("---------- negate2 ----> created new", newAssertion);
+                        //console.log("---------- negate2 ----> created new", newAssertion);
                         self.persistAssertion(newAssertion);
                     } else {
                         // Now we test if we have an underlying layer with a value,
@@ -375,15 +375,15 @@ yarn.service('state', function ($localStorage,
                         if (valueExistsUnder) {
                             topAssertion.value(false);
                             self.persistAssertion(topAssertion);
-                            console.log("---------- negate2 ----> reassigned to false", topAssertion);
+                            //console.log("---------- negate2 ----> reassigned to false", topAssertion);
                         } else {
                             self.assertions.remove(topAssertion);
                             self.UnpersistAssertions(topAssertion);
-                            console.log("---------- negate2 ----> Discarded", topAssertion);
+                            //console.log("---------- negate2 ----> Discarded", topAssertion);
                         }
                     }
                 } else {
-                    console.log("---------- negate2 ----> already negative", topAssertion);
+                    //console.log("---------- negate2 ----> already negative", topAssertion);
                 }
             });
 

@@ -15,9 +15,10 @@ function inventoryPlayerCommand(state,
         if (thingsInInventory.length) {
             itemList = [];
             thingsInInventory.forEach(function (thing) {
-                var label = state.resolveOne({
+                var label = state.resolveValue({
                     subject: thing.id,
-                    predicate: "isNamed"
+                    predicate: "has",
+                    object: "Name"
                 });
                 itemList.push(label);
             });

@@ -62,7 +62,8 @@ function clearCommand($localStorage,
     }
 
     function clearLocalStorage() {
-        $localStorage.$reset();
+        //delete $localStorage.localState;
+        $localStorage.localState = {};
         yConsole.success("Local storage memory cleared.");
     }
 

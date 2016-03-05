@@ -315,7 +315,7 @@ yarn.service('state', function ($localStorage,
          * If the session layer is empty, the assertion is removed
          */
         State.prototype.persistAssertion = function (assertion) {
-            console.log("State.persistAssertion", assertion);
+            //console.log("State.persistAssertion", assertion);
             if (!$localStorage.localState) {
                 $localStorage.localState = {}
             }

@@ -39,11 +39,9 @@ yarn.service('events', function (state,
                             predicate: assertion.predicate.id,
                             object: assertion.object.id
                         });
-                        console.log("value", value);
-                        if (!value === assertion.value()) allConditionsAreTrue = false;
-                        //if (!isTrue) allConditionsAreTrue = false;
+                        if (!(value === assertion.value())) allConditionsAreTrue = false;
                     });
-
+                    //console.log("allConditionsAreTrue", allConditionsAreTrue);
                     if (allConditionsAreTrue) {
                         setsToBeTriggered.push(object);
                     }

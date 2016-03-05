@@ -167,9 +167,10 @@ yarn.factory('writers', function (yarn,
     // Describe where you are at the beginning
     function describeThingTakenInInventory(thing) {
         if (thing) {
-            var label = state.resolveOne({
+            var label = state.resolveValue({
                 subject: thing.id,
-                predicate: "isNamed"
+                predicate: "has",
+                object: "Name"
             });
             if (label) storyLog.log("You took the " + label);
         }

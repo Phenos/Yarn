@@ -30,9 +30,10 @@ yarn.service("takePrompt", function (logic,
             if (thingsToTake.length) {
                 prompt.question = "What do you want to take ?";
                 thingsToTake.forEach(function (thing) {
-                    var label = state.resolveOne({
+                    var label = state.resolveValue({
                         subject: thing.id,
-                        predicate: "isNamed"
+                        predicate: "has",
+                        object: "Name"
                     });
                     //console.log(">>>>>", label, thing);
                     prompt.option(label, "take " + thing.id);

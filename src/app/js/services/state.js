@@ -249,7 +249,7 @@ yarn.service('state', function ($localStorage,
             if (subject && predicate && object) {
                 if (!options.parent && this.currentLayer !== "world") {
                     // Find exquivalent assertions to be negated
-                    this.negate2({
+                    this.negate({
                         subject: subject.id,
                         predicate: predicate.id,
                         object: object.id
@@ -336,24 +336,7 @@ yarn.service('state', function ($localStorage,
             });
         };
 
-        State.prototype.negate = function (assertion) {
-            var self = this;
-            var assertions = [];
-            // Recreate an array of assertions if a single assertion was passed
-            if (angular.isArray(assertion)) {
-                assertions = assertion;
-            } else if (angular.isObject(assertion)) {
-                assertions = [assertion]
-            }
-            angular.forEach(assertions, function (assertion) {
-                if (assertion.value()) {
-                    assertion.value(false);
-                }
-                self.persistAssertion(assertion);
-            });
-        };
-
-        State.prototype.negate2 = function (criterias) {
+        State.prototype.negate = function (criterias) {
             var self = this;
 
             if (criterias.layer) throw "Cannot specify layer when negating assertions";

@@ -8,7 +8,7 @@ yarn.service("moveRoutine", function (state,
         if (room) {
 
             // Remove player from current possition
-            state.negate2({
+            state.negate({
                 subject: "You",
                 predicate: "isIn"
             });

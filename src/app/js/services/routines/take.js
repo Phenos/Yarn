@@ -23,7 +23,7 @@ yarn.service("takeRoutine", function (state,
             writers.describeThingTakenInInventory(object);
 
 
-            state.negate2({
+            state.negate({
                 subject: object.id,
                 predicate: "isIn"
             });

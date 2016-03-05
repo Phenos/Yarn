@@ -8,11 +8,11 @@ yarn.service("usePrompt", function (stateHelpers,
     function usePrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveOne({
-                subject: "you",
-                predicate: "isAboutTo"
-            });
-            return isAboutTo === "use";
+            return "use" === state.resolveValue({
+                    subject: "you",
+                    predicate: "has",
+                    object: "intention"
+                });
         };
 
         context.question = function (promptLoop, prompt) {

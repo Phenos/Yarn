@@ -9,12 +9,11 @@ yarn.service("takePrompt", function (logic,
     function takePrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveOne({
-                subject: "you",
-                predicate: "isAboutTo"
-            });
-
-            return isAboutTo === "take";
+            return "take" === state.resolveValue({
+                    subject: "you",
+                    predicate: "has",
+                    object: "intention"
+                });
         };
 
         context.question = function (promptLoop, prompt) {

@@ -1,8 +1,9 @@
 yarn.factory('lookCommand', function (yConsole,
-                                     events,
-                                     state,
-                                     logic,
-                                     writers) {
+                                      events,
+                                      state,
+                                      logic,
+                                      writers,
+                                      storyLog) {
 
     function handler(args) {
         if (args.length) {

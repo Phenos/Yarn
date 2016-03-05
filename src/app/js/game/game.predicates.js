@@ -18,25 +18,6 @@ yarn.service('gamePedicates', function (state) {
             .syntax("have an")
             .syntax("has a");
 
-        // TODO: Make an attribute ? (since there is no unicity enforced anymore ?
-        // The Action the user what about to make (ex.: Move, Look, etc)
-        state
-            .predicate("isAboutTo")
-            .syntax("are about to")
-            .syntax("is about to");
-
-/*
-
-IsA is a Predicate,
-    has syntax "are an",
-    has syntax "are a",
-    has syntax "is an",
-    has syntax "is a".
-
-*/
-
-        // TODO: Make an attribute ? (since there is no unicity enforced anymore ?
-        // When something is in a place
         state
             .predicate("isIn")
             .syntax("is in the")

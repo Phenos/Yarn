@@ -2,9 +2,6 @@ yarn.service('Assertion', function (layerSetup,
                                     postal,
                                     weightAssertion) {
 
-    // TODO: Add a check to see if we are changing value of a static layer
-    // If so, throw an exception
-
     var internalCounter = 0;
 
     /**

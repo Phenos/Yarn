@@ -121,7 +121,6 @@ yarn.service("Assertions", function () {
         return this._all[this._all.length - 1];
     };
 
-    // todo: Too complex ... should be simplified or cut appart
     function match(assertion, criterias) {
         var matchedValue;
         var isMatch = true;

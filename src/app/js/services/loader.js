@@ -36,7 +36,6 @@ yarn.service('loader', function (yarn,
                 yConsole.success("Successfully loaded the story script");
                 yConsole.log("Running the <span command='inspect story'>story</span>");
 
-                // todo: this .run should be a promise and show a success or error message in the game console
                 // Change the current state layer to the static world (should be the default anyways).
                 state.currentLayer = "world";
                 script.run();
@@ -76,7 +75,6 @@ yarn.service('loader', function (yarn,
             yConsole.success("Successfully loaded the story script");
             yConsole.log("Running the <span command='inspect story'>story</span>");
 
-            // todo: this .run should be a promise and show a success or error message in the game console
             // Change the current state layer to the static world (should be the default anyways).
             state.currentLayer = "world";
             script.run();

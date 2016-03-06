@@ -10,7 +10,6 @@ yarn.service("usableItemInRoomHelper", function (state) {
                 object: room.id
             });
 
-            // Todo: YUCK... Find a better way to do these checks!!!!!
             thingsInRoom.forEach(function (thing) {
                 // Check if item is an InventoryItem
                 var thingIsUsable = state.resolveValue({

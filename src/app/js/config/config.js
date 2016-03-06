@@ -33,6 +33,7 @@ yarn.run(function (commandsRegistry) {
         "loadCommand",
         "graphCommand",
         "useCommand",
+        "refreshCommand",
         "lookCommand",
         "takeCommand",
         "moveCommand",

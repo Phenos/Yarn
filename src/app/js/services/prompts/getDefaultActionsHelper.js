@@ -71,7 +71,10 @@ yarn.service("setDefaultOptionsHelper", function (state,
                 option.iconOnly = true;
             }
 
-
+            option = prompt.option("Clear & refresh", "refresh");
+            option.iconId = "refresh";
+            option.iconSize = "mini";
+            option.iconOnly = true;
 
         }
 

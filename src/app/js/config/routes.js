@@ -1,43 +1,36 @@
-(function () {
-    'use strict';
+yarn.config(function ($stateProvider,
+                      $urlRouterProvider) {
 
-    yarn.config(config);
+    $urlRouterProvider.otherwise('/');
 
-    function config($stateProvider,
-                    $urlRouterProvider) {
+    $stateProvider.state('editorMode', {
+        url: '/editor',
+        resolve: {
+            "user": function (userFromAPI) {
+                return userFromAPI().then(function (user) {
+                    return user;
+                });
+            }
+        },
+        controllerAs: 'editorMode',
+        bindToController: {},
+        templateUrl: './html/editorMode.html',
+        controller: 'editorMode'
+    });
 
-        $urlRouterProvider.otherwise('/');
+    $stateProvider.state('playerMode', {
+        url: '/',
+        resolve: {
+            "user": function (userFromAPI) {
+                return userFromAPI().then(function (user) {
+                    return user;
+                });
+            }
+        },
+        controllerAs: 'playerMode',
+        bindToController: {},
+        templateUrl: './html/playerMode.html',
+        controller: 'playerMode'
+    });
 
-        $stateProvider.state('editorMode', {
-            url: '/editor',
-            resolve: {
-                "user": function (userFromAPI) {
-                    return userFromAPI().then(function (user) {
-                        return user;
-                    });
-                }
-            },
-            controllerAs: 'editorMode',
-            bindToController: {},
-            templateUrl: './html/editorMode.html',
-            controller: 'editorMode'
-        });
-
-        $stateProvider.state('playerMode', {
-            url: '/',
-            resolve: {
-                "user": function (userFromAPI) {
-                    return userFromAPI().then(function (user) {
-                        return user;
-                    });
-                }
-            },
-            controllerAs: 'playerMode',
-            bindToController: {},
-            templateUrl: './html/playerMode.html',
-            controller: 'playerMode'
-        });
-
-    }
-})();
-
+});

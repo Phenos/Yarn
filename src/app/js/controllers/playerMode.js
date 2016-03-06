@@ -1,6 +1,6 @@
 "use strict";
 yarn.controller('playerMode', playerModeController);
-yarn.factory('playerMode', PlayerModeService);
+yarn.service('playerMode', PlayerModeService);
 
 
 function playerModeController(user,

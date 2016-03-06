@@ -1,15 +1,16 @@
 yarn.directive('player', function () {
     return {
         restrict: 'E',
-        bindToController: {},
+        bindToController: {
+            user: "="
+        },
         scope: {},
         controllerAs: 'player',
         templateUrl: './html/player.html',
         controller: playerController
     };
 
-    function playerController($scope, $element, $mdSidenav, sidebar, writers, promptLoop, player) {
-
+    function playerController($scope, $element, sidebar, writers, promptLoop, player) {
 
         this.onStoryLogClear = function () {
             $element.find("md-content")[0].scrollTop = 0;

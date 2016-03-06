@@ -17,8 +17,6 @@ yarn.service('script', function (Pointer,
         this.runtime = null;
     }
 
-    // todo: this should load the scripts itself instead of relying on parent
-
     Script.prototype.load = function (source, url) {
         this.url = url || "";
         this.source = source;
@@ -71,11 +69,7 @@ yarn.service('script', function (Pointer,
     };
 
     Script.prototype.importNode = function (node) {
-        //todo: this code is duplicated... make unique with .resolveRelativeURL
-
-        var tmpBaseURI = this.url;
-        //console.log("Importing: ", node.value, "relative to uri: ", tmpBaseURI);
-        var url = URI(node.value).absoluteTo(tmpBaseURI).toString();
+        var url = this.resolveRelativeURI(node.value);
 
         return loadScript(url).then(function (loadedScript) {
             var script = new Script();

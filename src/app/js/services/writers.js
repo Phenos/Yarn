@@ -111,12 +111,21 @@ yarn.factory('writers', function (yarn,
             });
             if (label) storyLog.heading(label);
 
+            var introduction = state.resolveValue({
+                subject: room.id,
+                predicate: "has",
+                object: "Introduction"
+            });
             var description = state.resolveValue({
                 subject: room.id,
                 predicate: "has",
-                object: "Description"
+                object: "description"
             });
-            if (description) storyLog.log(description);
+            if (introduction) {
+                storyLog.log(introduction);
+            } else if (description) {
+                storyLog.log(description);
+            }
 
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");

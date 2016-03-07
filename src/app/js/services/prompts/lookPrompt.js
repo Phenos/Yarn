@@ -22,6 +22,14 @@ yarn.service("lookPrompt", function (writers,
                 predicate: "isIn"
             });
 
+            // Add the room to the list of objects to inspect
+            var roomName = state.resolveValue({
+                subject: room.id,
+                predicate: "has",
+                object: "Name"
+            });
+            prompt.option(roomName, "look " + room.id);
+
             var thingsInRoom = stateHelpers.thingsInRoom(room);
 
             //console.log('thingsInRoom', thingsInRoom);

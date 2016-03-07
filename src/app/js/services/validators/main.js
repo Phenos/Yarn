@@ -4,12 +4,24 @@ yarn.service("Validator", function (validateStory) {
      * Class for validator
      * @constructor
      */
+
     function Validator() {
-        this.results = [];
+        this.reset();
     }
 
+    Validator.prototype.reset = function () {
+        var blankResults = {
+            pass: [],
+            fail: [],
+            errors: [],
+            warnings: [],
+            all: []
+        };
+        this.results = blankResults;
+    };
+
     Validator.prototype.run = function (state) {
-        this.results = [];
+        this.reset();
         this.validate(validateStory, state);
         return this.results;
     };
@@ -19,7 +31,16 @@ yarn.service("Validator", function (validateStory) {
         angular.forEach(validation.assertions, function (assertion) {
             var passed = assertion.test(state);
             var message = passed ? assertion.pass : assertion.fail;
-            self.results.push(new Result(passed, message, assertion.type));
+            var result = new Result(passed, message, assertion.type);
+            self.results.all.push(result);
+            if (result.passed) {
+                self.results.pass.push(result);
+            } else {
+                self.results.fail.push(result);
+                if (result.type === "error") self.results.errors.push(result);
+                if (result.type === "warning") self.results.warnings.push(result);
+            }
+
         });
     };
 
@@ -56,6 +77,7 @@ yarn.service("ValidatorAssertion", function () {
         this.pass = options.pass;
         this.fail = options.fail;
         this.fn = fn;
+        this.type = options.type || "errror";
     }
 
     ValidatorAssertion.prototype.test = function (state) {

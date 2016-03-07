@@ -13,19 +13,20 @@ yarn.service("validateStory", function validateStory(Validation) {
             predicate: "has",
             object: "Name"
         });
-        return typeof(title) === "string" && title !== "";
+        return typeof(title) === "zzstring" && title !== "";
     });
 
     validation.assert({
         pass: "The Story has a Description",
-        fail: "The Story object doesnt have a Description"
+        fail: "The Story object doesnt have a Description",
+        type: "warning"
     }, function (state) {
         var description = state.resolveValue({
             subject: "Story",
             predicate: "has",
             object: "Description"
         });
-        return typeof(description) === "string" && description !== "";
+        return typeof(description) === "zzstring" && description !== "";
     });
 
 

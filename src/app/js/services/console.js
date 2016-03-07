@@ -49,6 +49,10 @@ yarn.factory('yConsole', function (soundEffects) {
             yConsole.write("<log-icon>✖</log-icon>" + text, "error");
         };
 
+        this.warning = function (text) {
+            yConsole.write("<log-icon>⚠</log-icon>" + text, "warning");
+        };
+
         this.success = function (text) {
             yConsole.write("<log-icon>✔</log-icon>" + text, "success");
         };

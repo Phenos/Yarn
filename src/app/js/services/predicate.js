@@ -23,7 +23,17 @@ yarn.factory('Predicate', function PredicateService() {
             // This prevents the method from being put on the prototype
             yarn.syntax(this, text);
             return this;
-        }
+        };
+
+        /**
+         * Define the predicate as the negative form of another
+         * @param predicate
+         * @returns {Predicate}
+         */
+        this.isNegativeOf = function (predicate) {
+            this.negative = predicate;
+            return this;
+        };
 
     }
 

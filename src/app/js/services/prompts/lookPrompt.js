@@ -41,7 +41,14 @@ yarn.service("lookPrompt", function (writers,
                         predicate: "has",
                         object: "Name"
                     });
-                    prompt.option(label, "look " + thing.id);
+                    var Noticed = state.resolveValue({
+                        subject: thing.id,
+                        predicate: "is",
+                        object: "Noticed"
+                    });
+                    if (Noticed !== false) {
+                        prompt.option(label, "look " + thing.id);
+                    }
                 });
             }
 

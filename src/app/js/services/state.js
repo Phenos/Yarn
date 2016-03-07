@@ -4,6 +4,7 @@ yarn.service('state', function ($localStorage,
                                 Thing,
                                 Syntax,
                                 Predicate,
+                                yConsole,
                                 guid) {
 
         function State() {
@@ -109,6 +110,7 @@ yarn.service('state', function ($localStorage,
         /**
          * Get or create a new type of predicate
          * @param _id
+         * @param dontAutoCreate
          */
         State.prototype.predicate = function (_id, dontAutoCreate) {
             var predicate;
@@ -116,23 +118,23 @@ yarn.service('state', function ($localStorage,
             if (typeof(_id) === "string") {
                 var id = _id.toLowerCase();
 
-                if (!id)
-                    throw("Assertions must have an id");
-
                 // Resolve the predicate from the syntax
                 syntax = this.syntaxes[id];
-                if (syntax) predicate = syntax.predicate;
-
-                if (!predicate) {
+                if (!syntax) {
                     if (dontAutoCreate) {
                         predicate = null;
                     } else {
                         predicate = new Predicate(id, this);
                         //console.log("Created new predicate", predicate);
                         this.predicates[id] = predicate;
-                        this.syntaxes[id] = new Syntax(id, predicate);
+                        // By default, create a positivie syntax for the ad hoc predicate
+                        this.syntax(id, predicate, true);
                     }
+                } else {
+                    predicate = syntax.predicate;
                 }
+            } else {
+                console.error("You must provide an id to find a predicate");
             }
             return predicate;
         };
@@ -234,30 +236,48 @@ yarn.service('state', function ($localStorage,
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
             var options = _options || {};
-            //console.log("State.createAssertion", subject, predicate, object, options);
+            var _predicate = predicate;
 
-            // If not layer is provided, we set the "currentLayer"
-            if (!options.layer) {
-                options.layer = this.currentLayer;
-            }
 
-            // If not layer is provided, we set the "currentLayer"
-            if (angular.isUndefined(options.value)) {
-                options.value = true;
-            }
+            if (subject && _predicate && object) {
 
-            if (subject && predicate && object) {
+                // If the predicate is a negation, we find the positive predicate
+                // and force the value to false. We also warn if the author attempts
+                // to set a value with a negative predicate
+                if (_predicate.negative) {
+                    if (!angular.isUndefined(options.value)) {
+                        yConsole.error(
+                            ["Setting a value with a negative assertion is not allowed. Ref.: ",
+                                subject.id,
+                                predicate.id,
+                                object.id
+                            ].join(" "));
+                    }
+                    options.value = false;
+                    _predicate = this.predicate(predicate.negative);
+                }
+
+                // If no value is provided, we set "true" as the default
+                if (angular.isUndefined(options.value)) {
+                    options.value = true;
+                }
+
+                // If not layer is provided, we set the "currentLayer"
+                if (!options.layer) {
+                    options.layer = this.currentLayer;
+                }
+
                 if (!options.parent && this.currentLayer !== "world") {
                     // Find exquivalent assertions to be negated
                     this.negate({
                         subject: subject.id,
-                        predicate: predicate.id,
+                        predicate: _predicate.id,
                         object: object.id
                     });
                 }
                 var identicalAssertions = this.assertions.filter({
                     subject: subject.id,
-                    predicate: predicate.id,
+                    predicate: _predicate.id,
                     object: object.id,
                     layer: options.layer,
                     parent: options.parent
@@ -267,7 +287,7 @@ yarn.service('state', function ($localStorage,
                     if (topAssertion.layer === "world") {
                         // If the top assertion in on the static world layer
                         // We create a new assertion anyways
-                        var assertion = new Assertion(subject, predicate, object, options);
+                        var assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
                         this.persistAssertion(assertion);
                     } else {
@@ -276,7 +296,7 @@ yarn.service('state', function ($localStorage,
                         this.persistAssertion(topAssertion);
                     }
                 } else {
-                    var assertion = new Assertion(subject, predicate, object, options);
+                    var assertion = new Assertion(subject, _predicate, object, options);
                     this.assertions.add(assertion);
                     this.persistAssertion(assertion);
                 }

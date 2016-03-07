@@ -1,16 +1,17 @@
-yarn.service("aboutToRoutine", function (state) {
+yarn.service("aboutToRoutine", function (state,
+                                         commands) {
 
-    function aboutToRoutine(aboutToId) {
-        var isAboutTo = state.predicate("isAboutTo");
-        if (aboutToId) {
-            state.thing("You").setAssertion(isAboutTo, state.thing(aboutToId));
-            //console.log("ABOUT TO >> ", aboutTo);
-        } else {
-            state.negate(
-                state.thing("You").getAssertion(isAboutTo)
-            );
-            //console.log("CLEARED ABOUT TO !!! ");
+    function aboutToRoutine(intention) {
+        if (intention === "take") {
+            // todo: ... this is a hack to show the list of inventory in the take command
+            commands.command("playerInventory");
         }
+        var you = state.thing("you");
+        var has = state.predicate("has");
+        var intentionObj = state.thing("intention");
+        state.createAssertion(you, has, intentionObj, {
+            value: intention
+        });
         return true;
     }
 

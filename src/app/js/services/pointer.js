@@ -5,106 +5,103 @@
 
     function PointerService() {
 
-        // Todo: Token should be an object not an array
-        // Todo: Move all method functions into the prototype
         function Pointer() {
-
             this._state = "default";
-
-            this.start = function () {
-                this.text = "";
-                this.chr = "";
-                this.pos = 0;
-                this.buffer = [];
-                this.rawBuffer = [];
-                this.tokens = [];
-                this._state = "default";
-                this.chr = this.text[this.pos];
-            };
-
-            this.peek = function (len) {
-                return this.text.substr(this.pos + 1, len);
-            };
-
-            this.state = function (id) {
-                if (id || id === "") this._state = id;
-                return this._state;
-            };
-
-            this.step = function () {
-                this.buffer.push(this.chr);
-                this.rawBuffer.push(this.chr);
-                this.pos++;
-                this.read();
-                return this;
-            };
-
-            this.skip = function () {
-                this.rawBuffer.push(this.chr);
-                this.pos++;
-                this.read();
-                return this;
-            };
-
-            this.read = function () {
-                this.chr = this.text[this.pos];
-                return this;
-            };
-
-            this.flush = function () {
-                var txt;
-                var txtRaw;
-                var token;
-                var previousToken;
-                txtRaw = this.rawBuffer.join("");
-                txt = this.buffer.join("").trim();
-                if (txtRaw !== "") {
-                    if (txt === "" && this.state() === "default") {
-                        // Ignore whitespace here!
-
-                    } else {
-                        // Collapse line-breaks into multiLinebreak
-                        previousToken = this.tokens[this.tokens.length - 1];
-                        if (previousToken && this.state() === "linebreak" &&
-                            (previousToken[0] === "linebreak" || previousToken[0] === "multiLinebreak")
-                        ) {
-                            previousToken[0] = "multiLinebreak";
-                            previousToken[2] = previousToken[2] + txtRaw;
-                        } else {
-                            token = [this.state(), txt, txtRaw];
-                            this.tokens.push(token);
-                        }
-                        // Reset the state
-                        this.state("default");
-                        this.buffer = [];
-                        this.rawBuffer = [];
-                    }
-                }
-                return this;
-            };
-
-            this.startSingleCharBlock = function (stateId) {
-                this.flush()
-                    .skip()
-                    .state(stateId);
-            };
-
-            this.endSingleCharBlock = function () {
-                this.skip()
-                    .flush();
-            };
-
-            this.endPunctuationToken = function (type) {
-                this.flush().state(type);
-                this.step().flush();
-            };
-
-            this.isEnded = function () {
-                return this.pos > this.text.length;
-            };
-
             this.start();
         }
+
+        Pointer.prototype.start = function () {
+            this.text = "";
+            this.chr = "";
+            this.pos = 0;
+            this.buffer = [];
+            this.rawBuffer = [];
+            this.tokens = [];
+            this._state = "default";
+            this.chr = this.text[this.pos];
+        };
+
+        Pointer.prototype.peek = function (len) {
+            return this.text.substr(this.pos + 1, len);
+        };
+
+        Pointer.prototype.state = function (id) {
+            if (id || id === "") this._state = id;
+            return this._state;
+        };
+
+        Pointer.prototype.step = function () {
+            this.buffer.push(this.chr);
+            this.rawBuffer.push(this.chr);
+            this.pos++;
+            this.read();
+            return this;
+        };
+
+        Pointer.prototype.skip = function () {
+            this.rawBuffer.push(this.chr);
+            this.pos++;
+            this.read();
+            return this;
+        };
+
+        Pointer.prototype.read = function () {
+            this.chr = this.text[this.pos];
+            return this;
+        };
+
+        Pointer.prototype.flush = function () {
+            var txt;
+            var txtRaw;
+            var token;
+            var previousToken;
+            txtRaw = this.rawBuffer.join("");
+            txt = this.buffer.join("").trim();
+            if (txtRaw !== "") {
+                if (txt === "" && this.state() === "default") {
+                    // Ignore whitespace here!
+
+                } else {
+                    // Collapse line-breaks into multiLinebreak
+                    previousToken = this.tokens[this.tokens.length - 1];
+                    if (previousToken && this.state() === "linebreak" &&
+                        (previousToken[0] === "linebreak" || previousToken[0] === "multiLinebreak")
+                    ) {
+                        previousToken[0] = "multiLinebreak";
+                        previousToken[2] = previousToken[2] + txtRaw;
+                    } else {
+                        token = [this.state(), txt, txtRaw];
+                        this.tokens.push(token);
+                    }
+                    // Reset the state
+                    this.state("default");
+                    this.buffer = [];
+                    this.rawBuffer = [];
+                }
+            }
+            return this;
+        };
+
+        Pointer.prototype.startSingleCharBlock = function (stateId) {
+            this.flush()
+                .skip()
+                .state(stateId);
+        };
+
+        Pointer.prototype.endSingleCharBlock = function () {
+            this.skip()
+                .flush();
+        };
+
+        Pointer.prototype.endPunctuationToken = function (type) {
+            this.flush().state(type);
+            this.step().flush();
+        };
+
+        Pointer.prototype.isEnded = function () {
+            return this.pos > this.text.length;
+        };
+
 
         Pointer.prototype.tokenize = function (text) {
             var pointer = this;

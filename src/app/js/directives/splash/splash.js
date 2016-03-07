@@ -6,8 +6,7 @@ function SplashDirective() {
         bindToController: {
         },
         scope: {
-            visible: "=",
-            metadata: "="
+            visible: "="
         },
         controllerAs: 'splash',
         templateUrl: './html/splash.html',

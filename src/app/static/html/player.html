@@ -1,0 +1,18 @@
+<md-content>
+    <scenery></scenery>
+    <sidebar></sidebar>
+    <toolbar user="player.user"></toolbar>
+    <md-content
+            style="z-index:5; position: relative;"
+            layout="row"
+            flex="100"
+            class="player"
+            scrollbars
+    >
+        <div class="main-ui" flex="100">
+            <story-log on-clear="player.onStoryLogClear()"></story-log>
+            <user-choice></user-choice>
+            <splash visible="true"></splash>
+        </div>
+    </md-content>
+</md-content>

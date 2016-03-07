@@ -1,61 +1,58 @@
 yarn.service("takePrompt", function (logic,
                                      writers,
                                      commands,
-                                     state) {
+                                     state,
+                                     stateHelpers,
+                                     storyLog,
+                                     setDefaultOptionsHelper) {
 
     function takePrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo && isAboutTo.id === "take";
+            return "take" === state.resolveValue({
+                    subject: "you",
+                    predicate: "has",
+                    object: "intention"
+                });
         };
 
         context.question = function (promptLoop, prompt) {
-            prompt.question = "What do you want to take ?";
-            var thingsInRoom = state.resolve("You.isIn.hasInIt");
-            var thingsThatAreInventory = [];
 
-            // Todo: YUCK... Find a better way to do these checks!!!!!
-            thingsInRoom.forEach(function (thing) {
-                // Check if item is an InventoryItem
-                var isInventoryItem = false;
-                var thingsThatAre = thing.resolve("isA");
-                thingsThatAre.forEach(function (thing) {
-                    if (thing === state.thing("InventoryItem")) isInventoryItem = true;
-                });
-                if (isInventoryItem) thingsThatAreInventory.push(thing);
+            var room = state.resolveOne({
+                subject: "you",
+                predicate: "isIn"
             });
 
+            var thingsToTake = stateHelpers.inventoryInRoom(room);
 
             //console.log('thingsInRoom', thingsInRoom);
-            if (thingsThatAreInventory.length) {
-                thingsThatAreInventory.forEach(function (thing) {
-                    var label = thing.resolveValue("isNamed");
-                    prompt.option(label, thing.id);
+            if (thingsToTake.length) {
+                prompt.question = "What do you want to take ?";
+                thingsToTake.forEach(function (thing) {
+                    var label = state.resolveValue({
+                        subject: thing.id,
+                        predicate: "has",
+                        object: "Name"
+                    });
+                    //console.log(">>>>>", label, thing);
+                    prompt.option(label, "take " + thing.id);
                 });
+            } else {
+                prompt.question = "There is nothing to take here!";
             }
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
             backOption.iconOnly = true;
 
+            setDefaultOptionsHelper(prompt, true);
         };
 
         context.answer = function answer(promptLoop, option) {
+            logic.routines.aboutTo("");
             if (option) {
-                if (option.value === "back") {
-                    logic.routines.aboutTo("");
-                } else {
-                    logic.routines.aboutTo("");
-
-                    // todo: Find sexier api for removing an assertion
-                    // todo: Implement "unique" assertions... such as when someone is
-
-                    // todo: Put this into a "take" command
-                    var thing = state.thing(option.value);
-                    var hasInInventory = state.predicate("hasInInventory");
-                    state.thing("You").setAssertion(hasInInventory, thing);
-                    writers.DescribeThingTakenInInventory(thing);
+                if (option.value !== "back") {
+                    commands.command(option.value);
                 }
             } else {
                 storyLog.error("Sorry, nothing to take here!");

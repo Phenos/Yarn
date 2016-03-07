@@ -1,0 +1,58 @@
+
+
+
+
+
+
+Button
+    is Usable,
+    is usable with Click "Click the button",
+    is usable with Punch "Punch the button".
+
+// Setup available actions
+Click is an Action "Click".
+Punch is an Action "Punch".
+
+YouPunchTheButton (
+    You use the Button.
+    Button is used with Punch.
+) triggers YouPunchedTheButton (
+    Narrator says Monologue "Take that stupid button!!! He asked for it.".
+)
+
+
+/* *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** */
+
+Button
+    is Usable, /* is usable should be applied automatically when the others are set */
+    can be Pressed "Just press the button",
+    can be Punched "Punch the button",
+    is Pressable "Just press the button",
+    is Punchable "Punch the button".
+
+// Setup available actions
+Press
+    is an Action,
+    is used as Pressed,
+    is typed as Pressable,
+    has a Name "Click".
+
+Punch
+    is an Action,
+    is used as Punched,
+    is typed as Punchable,
+    has a Name "Punch".
+
+YouPunchTheButton (
+    You use the Button.
+    Button is Punched.
+    Button gets Punched.
+) triggers YouPunchedTheButton (
+    Narrator says Monologue "Take that stupid button!!! He asked for it.".
+)
+
+
+
+
+
+

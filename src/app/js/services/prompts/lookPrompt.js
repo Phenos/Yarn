@@ -1,40 +1,56 @@
 yarn.service("lookPrompt", function (writers,
                                      logic,
                                      commands,
-                                     state) {
+                                     state,
+                                     stateHelpers,
+                                     setDefaultOptionsHelper) {
 
     function lookPrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveValue("You.isAboutTo");
-            return isAboutTo && isAboutTo.id === "look";
+            return "look" === state.resolveValue({
+                    subject: "you",
+                    predicate: "has",
+                    object: "intention"
+                });
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";
-            var thingsInRoom = state.resolve("You.isIn.hasInIt");
+
+            var room = state.resolveOne({
+                subject: "You",
+                predicate: "isIn"
+            });
+
+            var thingsInRoom = stateHelpers.thingsInRoom(room);
+
             //console.log('thingsInRoom', thingsInRoom);
+
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
-                    var label = thing.resolveValue("isNamed");
-                    prompt.option(label, thing.id);
+                    var label = state.resolveValue({
+                        subject: thing.id,
+                        predicate: "has",
+                        object: "Name"
+                    });
+                    prompt.option(label, "look " + thing.id);
                 });
             }
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
             backOption.iconOnly = true;
+
+            setDefaultOptionsHelper(prompt, true);
+
         };
         context.answer = function answer(promptLoop, option) {
             if (option) {
                 if (option.value === "back") {
                     logic.routines.aboutTo("");
                 } else {
-                    logic.routines.aboutTo("");
-                    var thing = state.thing(option.value);
-                    writers.DescribeThing(thing);
+                    commands.command(option.value);
                 }
-            } else {
-                storyLog.error("Nothing to look at here!");
             }
         };
 

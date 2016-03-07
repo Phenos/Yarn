@@ -20,12 +20,10 @@
         <div flex="30"
              layout="row"
              layout-align="end center">
-            <span flex="90"></span>
-            <span flex
-                  layout="row"
+            <span layout="row"
                   layout-align="end center"
                   ng-if="username">
-                <md-menu flex md-position-mode="target-right target">
+                <md-menu flex="1" md-position-mode="target-right target">
                     <md-button
                             style="min-width: 0; padding: 0;"
                             ng-click="$mdOpenMenu($event)"
@@ -52,8 +50,7 @@
                     </md-menu-content>
                 </md-menu>
             </span>
-            <span flex="100"
-                  layout="row"
+            <span layout="row"
                   layout-align="end center"
                   ng-if="!username">
                 <md-button ng-href="/auth/twitter">

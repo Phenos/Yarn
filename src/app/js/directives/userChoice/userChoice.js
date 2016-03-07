@@ -3,11 +3,7 @@ yarn.directive('userChoice', UserChoiceDirective);
 function UserChoiceDirective() {
     return {
         restrict: 'E',
-        bindToController: {
-            question: '=',
-            options: '=',
-            onChoose: '&'
-        },
+        bindToController: {},
         scope: {},
         controllerAs: 'userChoice',
         templateUrl: './html/userChoice.html',
@@ -22,7 +18,6 @@ function UserChoiceDirective() {
             var prompt = promptLoop.currentPrompt;
             if (prompt) {
                 // Prompt the user with a question
-                // todo: This should be inside a sort of REPL pattern with a handler for each types of context
                 self.question = prompt.question;
                 self.options = prompt.options;
                 self.choose = function (value) {
@@ -34,11 +29,6 @@ function UserChoiceDirective() {
                 console.error("OUPS!!!... no prompt were found!!!");
             }
         });
-
-        this.choose = function (value) {
-            console.log("onChoose!");
-            self.onChoose({value: value});
-        };
 
         promptLoop.update();
     }

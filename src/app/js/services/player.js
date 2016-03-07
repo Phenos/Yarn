@@ -1,13 +1,22 @@
-yarn.service("player", function (writers,
-                                 promptLoop) {
+yarn.service("player", function () {
 
     var service = {};
 
-    service.update = function () {
-        writers
-            .LogStoryIntroduction()
-            .DescribeWhereYouAre();
-        promptLoop.update();
+    service.register = function (controller) {
+        service.controller = controller;
+    };
+
+    service.refresh = function () {
+        if (service.controller) service.controller.refresh();
+    };
+
+    service.closeSidenav = function () {
+        //console.log("closeSidenav");
+        if (service.controller) service.controller.closeSidenav();
+    };
+
+    service.openSidenav = function () {
+        if (service.controller) service.controller.openSidenav();
     };
 
     return service;

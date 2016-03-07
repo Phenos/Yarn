@@ -72,16 +72,33 @@
 
         Cursor.prototype.appendSymbol = function (variant, value) {
             var node = new Node("symbol", value, variant);
+            var lastPreviousNode = this.head().set.last();
 
-            if (this.head().set.last() &&
-                this.head().set.last().type === 'instruction' && !this.sequenceBroken) {
-                // If the value follows an instruction, the value is considered to be "absorbed" as
-                // a unique argument by the instruction
 
-                this.sequenceBroken = false;
-                this.push(this.head().set.last());
-                this.head().set.add(node);
-                //this.pop();
+            if (lastPreviousNode) {
+                if (lastPreviousNode.type === 'instruction' && !this.sequenceBroken) {
+                    // If the symbol follows an instruction, the value is considered to be "absorbed" as
+                    // a unique argument by the instruction
+
+                    this.sequenceBroken = false;
+                    this.push(this.head().set.last());
+                    this.head().set.add(node);
+                    //this.pop();
+                } else if (
+                        lastPreviousNode.type === 'symbol' &&
+                        lastPreviousNode.variant === 'reference' &&
+                        variant === 'value' &&
+                        !this.sequenceBroken
+                    ) {
+                    // If a value symbol follows a reference symbol, the value is added under the symbol
+                    // to be later use in assigning a value to an assertion
+                    this.sequenceBroken = false;
+                    this.push(this.head().set.last());
+                    this.head().set.add(node);
+                } else {
+                    this.sequenceBroken = false;
+                    this.head().set.add(node);
+                }
             } else {
                 this.sequenceBroken = false;
                 this.head().set.add(node);

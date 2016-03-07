@@ -17,8 +17,6 @@ yarn.service('script', function (Pointer,
         this.runtime = null;
     }
 
-    // todo: this should load the scripts itself instead of relying on parent
-
     Script.prototype.load = function (source, url) {
         this.url = url || "";
         this.source = source;
@@ -49,6 +47,9 @@ yarn.service('script', function (Pointer,
     Script.prototype.parseNode = function (node) {
         var returnValue;
         if (node.type === "instruction" && node.value === "import") {
+            node.type = "symbol";
+            node.value = "IMPORT";
+            node.variant = "statement";
             returnValue = this.importSet(node.set);
         } else {
             returnValue = this.parseSet(node.set);
@@ -68,21 +69,7 @@ yarn.service('script', function (Pointer,
     };
 
     Script.prototype.importNode = function (node) {
-        //todo: this code is duplicated... make unique with .resolveRelativeURL
-
-        var tmpBaseURI = this.url;
-
-        // hack to protect windows drive letters in the path
-        //tmpBaseURI = tmpBaseURI.replace("file://" ,"*stupid_hack1*");
-        //tmpBaseURI = tmpBaseURI.replace(":/" ,"stupid_hack2/");
-        //tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
-
-
-        //console.log("Importing: ", node.value, "relative to uri: ", tmpBaseURI);
-        var url = URI(node.value).absoluteTo(tmpBaseURI).toString();
-
-        // hack to protect windows drive letters in the path
-        //url = url.toString().replace("stupid_hack2/", ":/");
+        var url = this.resolveRelativeURI(node.value);
 
         return loadScript(url).then(function (loadedScript) {
             var script = new Script();
@@ -90,8 +77,9 @@ yarn.service('script', function (Pointer,
                 // Graft the root node of the imported script onto
                 // the node which imported the script
                 // then change the node type to
-                node.type = "instruction";
-                node.value = "@imported";
+                node.type = "symbol";
+                node.value = "IMPORT";
+                node.variant = "statement";
                 node.set = script.ast.root.set;
                 //console.log("Grafted imported AST into parent AST")
             });
@@ -113,18 +101,8 @@ yarn.service('script', function (Pointer,
         var resolvedURI = "";
         var tmpBaseURI = this.url;
         if (uri) {
-            // todo: refactore this hack into a seprate function/filter
-
-            // HACK to accound for difference in path resolution between windows an osx
-            //tmpBaseURI = tmpBaseURI.replace("file://", "*stupid_hack1*");
-            //tmpBaseURI = tmpBaseURI.replace(":/", "stupid_hack2/");
-            //tmpBaseURI = tmpBaseURI.replace("*stupid_hack1*", "file://");
-
             //console.log("relative to uri: ", tmpBaseURI);
             resolvedURI = URI(uri).absoluteTo(tmpBaseURI).toString();
-
-            // HACK to accound for difference in path resolution between windows an osx
-            //resolvedURI = resolvedURI.toString().replace("stupid_hack2/", "://");
         } else {
             resolvedURI = uri;
         }

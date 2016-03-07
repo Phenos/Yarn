@@ -2,7 +2,7 @@
 yarn.factory('welcomeMessage', WelcomeMessageService);
 
 function WelcomeMessageService($mdDialog,
-                               sidebarService,
+                               sidebar,
                                $localStorage) {
 
     var numberOfTimeToOpen = 3;
@@ -12,7 +12,7 @@ function WelcomeMessageService($mdDialog,
 
     service.open = function (ev) {
 
-        sidebarService.close();
+        sidebar.close();
 
         $mdDialog.show({
             controller: WelcomeMessageController,

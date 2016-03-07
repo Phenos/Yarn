@@ -8,10 +8,13 @@ var yarn = angular.module('yarn', [
     'angular-uri',
     'ngAnimate',
     'ngSanitize',
+    'ui.grid',
     'ngMaterial',
     'ui.router',
     'lbServices',
+    'tandibar/ng-rollbar',
     'ui.ace',
-    'cfp.hotkeys',
-    'breakpointApp'
+    'cfp.hotkeys'
 ]);
+
+window.yarn = yarn;

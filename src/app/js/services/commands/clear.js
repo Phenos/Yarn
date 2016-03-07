@@ -62,17 +62,18 @@ function clearCommand($localStorage,
     }
 
     function clearLocalStorage() {
-        $localStorage.$reset();
+        //delete $localStorage.localState;
+        $localStorage.localState = {};
         yConsole.success("Local storage memory cleared.");
     }
 
     function clearSession() {
-        state.removeAssertionsLayer('session');
+        state.assertions.removeLayer('session');
         yConsole.success("Game session is clear. Story is back at beginning.");
     }
 
     function clearWorld() {
-        state.removeAssertionsLayer('world');
+        state.assertions.removeLayer('world');
         yConsole.success("World state is cleared. This story world is now empty.");
     }
 

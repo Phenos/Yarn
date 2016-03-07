@@ -14,17 +14,6 @@
 
     gulp dev
 
-## Build for Native App (Electron)
-
-
-[insert git steps, npm install, bower install, gulp commands]
-
-[specific project folder structure]
-
-[how to generate OSX and Windows Builds]
-
-    gulp dev-electron
-
 ## Build for API
 
 The api is built with the LoopBack stack from StrongLoop. You can run the

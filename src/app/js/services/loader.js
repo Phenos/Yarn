@@ -9,11 +9,9 @@ yarn.service('loader', function (yarn,
     var service = {};
 
     service.fromURL = function fromURL(_url) {
-        state.removeAssertionsLayer('session');
-        state.removeAssertionsLayer('world');
+        state.assertions.removeLayer('session');
+        state.assertions.removeLayer('world');
 
-        // hack to protect windows drive letters in the path
-        //var url = _url.replace(/\\/g, "//");
         var url = _url;
 
         yConsole.log("Loading story from : " + url);
@@ -38,7 +36,6 @@ yarn.service('loader', function (yarn,
                 yConsole.success("Successfully loaded the story script");
                 yConsole.log("Running the <span command='inspect story'>story</span>");
 
-                // todo: this .run should be a promise and show a success or error message in the game console
                 // Change the current state layer to the static world (should be the default anyways).
                 state.currentLayer = "world";
                 script.run();
@@ -48,10 +45,10 @@ yarn.service('loader', function (yarn,
 
                 // Restore session state layer from localStorage
                 if (!$localStorage.localState) $localStorage.localState = {};
-                yarn.restoreFromLocalState($localStorage.localState);
+                yarn.restoreFromLocalState();
 
                 splashService.hide();
-                player.update();
+                player.refresh();
 
             }
 
@@ -64,9 +61,6 @@ yarn.service('loader', function (yarn,
     };
 
     service.fromSource = function fromSource(source, _baseURL) {
-
-        // hack to protect windows drive letters in the path
-        //var baseURL = _baseURL.replace(/\\/g, "//");
         var baseURL = _baseURL;
 
         yConsole.log("Loading story from source");
@@ -81,7 +75,6 @@ yarn.service('loader', function (yarn,
             yConsole.success("Successfully loaded the story script");
             yConsole.log("Running the <span command='inspect story'>story</span>");
 
-            // todo: this .run should be a promise and show a success or error message in the game console
             // Change the current state layer to the static world (should be the default anyways).
             state.currentLayer = "world";
             script.run();

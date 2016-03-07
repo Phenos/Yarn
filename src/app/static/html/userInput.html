@@ -14,20 +14,21 @@
         >
             <div class="autocomplete-match">
                 <div class="autocomplete-command"
-                      ng-bind-html="item.display"></div>
+                     ng-bind-html="item.display"></div>
                 <div class="autocomplete-description"
-                      ng-bind-html="item.description"></div>
+                     ng-bind-html="item.description"></div>
             </div>
         </md-autocomplete>
     </div>
-    <div
-            class="executeButton"
-            flex
+    <div class="executeButton"
+         flex="1"
+         layout="row"
     >
         <md-button
                 class="md-fab md-mini md-primary"
                 ng-click="userInput.submit()"
-                aria-label="Execute">
+                aria-label="Execute"
+        >
             <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
         </md-button>
     </div>

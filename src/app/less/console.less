@@ -4,9 +4,8 @@
     position: relative;
     background: #dddddd;
     z-index: 1000;
-    font-size: 0.8em;
+    font-size: 0.9em;
     font-weight: 400;
-    overflow: hidden;
     min-height: 60px;
 
     .isMobileWidth & {
@@ -15,14 +14,6 @@
     }
 
     logscroll {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow-x: hidden;
-        overflow-y: auto;
     }
 
     logs {
@@ -33,6 +24,7 @@
         log {
             display: block;
             position: relative;
+
             margin: 0 20px;
             padding: 0.4em 0;
             color: #333;
@@ -52,7 +44,7 @@
                 position: absolute;
                 font-size: 0.7em;
                 left: -1.3em;
-                top: 1em;
+                top: 0.7em;
             }
 
             .isMobileWidth & {
@@ -80,8 +72,11 @@
                 letter-spacing: 0.06em;
                 color: #CC3333;
             }
+            &.is-warning {
+                letter-spacing: 0.06em;
+                color: #b08e00;
+            }
             &.is-success {
-                //letter-spacing: 0.06em;
                 color: #229922;
             }
             &.is-command {

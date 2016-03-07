@@ -6,12 +6,21 @@ yarn.service("moveRoutine", function (state,
         var isIn = state.predicate("isIn");
         var you = state.thing("You");
         if (room) {
-            you.removeAssertions(isIn);
-            you.setAssertion(isIn, room);
+
+            // Remove player from current possition
+            state.negate({
+                subject: "You",
+                predicate: "isIn"
+            });
+
+            state.createAssertion(you, isIn, room, {
+                layer: state.currentLayer
+            });
         }
-        // TODO : Trigger movesFrom
+
         var movesTo = state.predicate("movesTo");
         events.trigger(you, movesTo, room);
+
         stepRoutine();
 
         return true;

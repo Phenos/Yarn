@@ -1,376 +1,435 @@
-yarn.service('state', function (Assertion,
+yarn.service('state', function ($localStorage,
+                                Assertion,
+                                Assertions,
                                 Thing,
                                 Syntax,
                                 Predicate,
-                                layerSetup) {
+                                guid) {
 
-    function State() {
-        this.assertions = [];
-        this.things = {};
-        this.predicates = {};
-        this.syntaxes = {};
-        this.currentLayer = "world";
-        this.localState = null;
-    }
+        function State() {
+            this.assertions = new Assertions();
+            this.things = {};
+            this.predicates = {};
+            this.syntaxes = {};
+            this.currentLayer = "world";
+            this.localState = null;
+            this.guid = guid();
+        }
 
-    State.prototype.restoreFromLocalState = function (localState) {
-        var self = this;
-        this.localState = localState;
-        angular.forEach(this.localState.assertions, function (assertion) {
-            var object = null;
-            if (typeof(assertion.object) === "number") {
-                object = assertion.object;
-            } else if (typeof(assertion.object) === "string") {
-                if (assertion.object.indexOf("@id:") === 0) {
-                    object = self.thing(assertion.object.substring(4));
-                } else {
+        State.prototype.restoreFromLocalState = function () {
+            var self = this;
+            var localAssertions = ($localStorage.localState &&
+                $localStorage.localState.assertions) || {};
+
+            //console.log("Restoring assertion from localState", localAssertions);
+
+            angular.forEach(localAssertions, function (assertion) {
+                var object = null;
+                var subject = null;
+
+                // todo : Refactor the following next two blocks for D.R.Y.
+
+                if (typeof(assertion.object) === "number") {
                     object = assertion.object;
+                } else if (typeof(assertion.object) === "string") {
+                    if (assertion.object.indexOf("@id:") === 0) {
+                        object = self.thing(assertion.object.substring(4));
+                    } else {
+                        object = assertion.object;
+                    }
                 }
+
+                if (typeof(assertion.subject) === "number") {
+                    object = assertion.subject;
+                } else if (typeof(assertion.subject) === "string") {
+                    if (assertion.subject.indexOf("@id:") === 0) {
+                        subject = self.thing(assertion.subject.substring(4));
+                    } else {
+                        subject = assertion.subject;
+                    }
+                }
+
+                var newAssertion = self.createAssertion(
+                    subject,
+                    self.predicate(assertion.predicate),
+                    object, {
+                        value: assertion.value
+                    }
+                );
+                //console.log("Restored:", assertion, newAssertion);
+            });
+        };
+
+        /**
+         * Get or create a new thing
+         * @param _id
+         * @param dontAutoCreate
+         */
+        State.prototype.thing = function (_id, dontAutoCreate) {
+            var thing = null;
+            if (_id) {
+                var id = _id.toLowerCase();
+                thing = this.things[id];
+                if (!thing) {
+                    if (dontAutoCreate) {
+                        thing = null;
+                    } else {
+                        thing = new Thing(id, this);
+                        thing.label(_id);
+                        this.things[id] = thing;
+                    }
+                }
+
             }
 
-            var newAssertion = self.setAssertion(
-                self.thing(assertion.subject),
-                self.predicate(assertion.predicate),
-                object,
-                assertion.value
-            );
-            //console.log("Restoring assertion from localState", assertion, newAssertion);
-        });
-    };
+            return thing;
+        };
 
-    State.prototype.getPredicates = function (tokens) {
-        var self = this;
-        var predicates = [];
-        tokens.forEach(function (token) {
-            var predicate = self.predicate(token);
-            if (!predicate) throw "Unknown predicate [" + token + "] in expression [" + expression + "]";
-            predicates.push(predicate);
-        });
-        return predicates;
-    };
+        /**
+         * Get or create a new thing
+         * @param predicate
+         * @param text
+         * @returns {*}
+         */
+        State.prototype.syntax = function (predicate, text) {
+            var syntax;
 
-    State.prototype.resolve = function (expression, _thing) {
-        var thing = _thing;
-        var allResolved = [];
-        var tokens = expression.split(".");
-        // If a thing was not supplied as a starting point, use the first token as the thing id
-        if (!thing) {
-            var thingId = tokens.shift();
-            if (thingId) thing = this.thing(thingId);
-        }
-        if (thing && tokens.length) {
-            allResolved = thing.resolve(tokens.join("."));
-        }
-        return allResolved;
-    };
+            if (!predicate)
+                throw("Syntax must have a predicate");
+            if (!text)
+                throw("Syntax must have a text");
+            syntax = this.syntaxes[text];
+            if (!syntax) {
+                syntax = new Syntax(text, predicate);
+                this.syntaxes[text] = syntax;
+            }
+            return syntax;
+        };
+
+        /**
+         * Get or create a new type of predicate
+         * @param _id
+         */
+        State.prototype.predicate = function (_id, dontAutoCreate) {
+            var predicate;
+            var syntax;
+            if (typeof(_id) === "string") {
+                var id = _id.toLowerCase();
+
+                if (!id)
+                    throw("Assertions must have an id");
+
+                // Resolve the predicate from the syntax
+                syntax = this.syntaxes[id];
+                if (syntax) predicate = syntax.predicate;
+
+                if (!predicate) {
+                    if (dontAutoCreate) {
+                        predicate = null;
+                    } else {
+                        predicate = new Predicate(id, this);
+                        //console.log("Created new predicate", predicate);
+                        this.predicates[id] = predicate;
+                        this.syntaxes[id] = new Syntax(id, predicate);
+                    }
+                }
+            }
+            return predicate;
+        };
+
+        State.prototype.resolveAll = function resolveAll(criterias) {
+            var foundObjects = [];
+            if (criterias && (criterias.subject && criterias.predicate) || (criterias.object && criterias.predicate)) {
+                var foundObjectsSets = {};
+                //console.log("criterias", criterias);
+
+                // Exclused parented assertions unless already specified
+                if (angular.isUndefined(criterias.parent)) criterias.parent = null;
+
+                // Match all assertions to the criterias
+                var assertions = this.assertions.find(criterias);
 
 
-    State.prototype.resolveValue = function (expression) {
-        var value;
-        var resolved = this.resolve(expression);
-        //console.log('State.resolved', resolved);
-        if (resolved.length) value = resolved[0];
-        return value;
-    };
+                // Sort assertion by weight
+                assertions = assertions.sort(function (a, b) {
+                    return a.weight() - b.weight();
+                });
 
-    /**
-     * Get or create a new thing
-     * @param _id
-     */
-    State.prototype.thing = function (_id, dontAutoCreate) {
-        var thing = null;
-        if (_id) {
-            var id = _id.toLowerCase();
-            thing = this.things[id];
-            if (!thing) {
-                if (dontAutoCreate) {
-                    thing = null;
+                // Check if the item to be resolved is the object or the subject
+                var typeToResolve = (criterias.object) ? "subject" : "object";
+
+                // Split all assertion by their unique thing to be resolved
+                assertions.forEach(function (assertion) {
+                    var foundObjectSet;
+                    if (assertion[typeToResolve]) {
+                        foundObjectSet = foundObjectsSets[assertion[typeToResolve].id];
+                        if (!foundObjectSet) foundObjectSet = foundObjectsSets[assertion[typeToResolve].id] = [];
+                        foundObjectSet.push(assertion);
+                    }
+                });
+
+                angular.forEach(foundObjectsSets, function (foundObjectSet) {
+                    var topAssertion = foundObjectSet[foundObjectSet.length - 1];
+                    if (topAssertion.value()) foundObjects.push(topAssertion[typeToResolve]);
+                });
+                //console.log("FOUND: ", foundObjects);
+
+            }
+            //console.log("foundObjects", foundObjects);
+            return foundObjects;
+        };
+
+        State.prototype.resolveOne = function (criterias) {
+            var value = null;
+            var objs = this.resolveAll(criterias);
+            if (objs.length) {
+                // We make sure that the top-most item is taken, in a case where
+                // multiple assertions would have been true, the heaviest one
+                // should be used
+                value = objs[objs.length - 1];
+            }
+            return value;
+        };
+
+        State.prototype.resolveValue = function (criterias) {
+            var value = null;
+            if (criterias && (criterias.subject && criterias.predicate)) {
+
+                // Exclused parented assertions
+                criterias.parent = null;
+
+                // If no object is supplied as criteria,
+                // If no object is supplied as criteria,
+                // indicate is should match for "no objects"
+                if (!criterias.object) criterias.object = null;
+
+                // Match all assertions to the criterias
+                var assertions = this.assertions.find(criterias);
+
+                //console.log("criterias", criterias);
+                //console.log("assertions", assertions);
+
+                // Sort assertion by weight
+                assertions = assertions.sort(function (a, b) {
+                    return a.weight() - b.weight();
+                });
+
+                var topAssertion = assertions[assertions.length - 1];
+                if (topAssertion) {
+                    value = topAssertion.value();
+                }
+
+            }
+            //console.log("foundObjects", foundObjects);
+            return value;
+        };
+
+        /**
+         * Get a new assertion
+         * @param subject
+         * @param predicate
+         * @param object
+         * @param _options
+         * @returns {*}
+         */
+        State.prototype.createAssertion = function (subject, predicate, object, _options) {
+            var options = _options || {};
+            //console.log("State.createAssertion", subject, predicate, object, options);
+
+            // If not layer is provided, we set the "currentLayer"
+            if (!options.layer) {
+                options.layer = this.currentLayer;
+            }
+
+            // If not layer is provided, we set the "currentLayer"
+            if (angular.isUndefined(options.value)) {
+                options.value = true;
+            }
+
+            if (subject && predicate && object) {
+                if (!options.parent && this.currentLayer !== "world") {
+                    // Find exquivalent assertions to be negated
+                    this.negate({
+                        subject: subject.id,
+                        predicate: predicate.id,
+                        object: object.id
+                    });
+                }
+                var identicalAssertions = this.assertions.filter({
+                    subject: subject.id,
+                    predicate: predicate.id,
+                    object: object.id,
+                    layer: options.layer,
+                    parent: options.parent
+                });
+                if (identicalAssertions.count() > 0) {
+                    var topAssertion = identicalAssertions.sortByWeight().top();
+                    if (topAssertion.layer === "world") {
+                        // If the top assertion in on the static world layer
+                        // We create a new assertion anyways
+                        var assertion = new Assertion(subject, predicate, object, options);
+                        this.assertions.add(assertion);
+                        this.persistAssertion(assertion);
+                    } else {
+                        // Else we re-use the existing assertion
+                        topAssertion.value(options.value);
+                        this.persistAssertion(topAssertion);
+                    }
                 } else {
-                    thing = new Thing(id, this);
-                    this.things[id] = thing;
+                    var assertion = new Assertion(subject, predicate, object, options);
+                    this.assertions.add(assertion);
+                    this.persistAssertion(assertion);
+                }
+
+            } else {
+                console.error("Impossible to create an incomplete assertion.", arguments);
+            }
+            //console.log("created: ", assertion);
+
+            return assertion;
+        };
+
+        /**
+         * Persist an assertion to localState for it "session" state layer (aka localStorage)
+         * If the session layer is empty, the assertion is removed
+         */
+        State.prototype.persistAssertion = function (assertion) {
+            //console.log("State.persistAssertion", assertion);
+            if (!$localStorage.localState) {
+                $localStorage.localState = {}
+            }
+            if (!$localStorage.localState.assertions) {
+                $localStorage.localState.assertions = {}
+            }
+            var localState = $localStorage.localState;
+            //console.log("persistAssertion", assertion, assertion.layer);
+            if (assertion.layer === "session") {
+                if (localState) {
+                    var json = assertion.toJSON();
+                    if (json) {
+                        localState.assertions[assertion.id()] = json;
+                    } else {
+                        delete localState.assertions[assertion.id()];
+                    }
+                }
+            }
+        };
+        State.prototype.UnpersistAssertions = function (_assertions) {
+            // todo: refactor: Initialising the localStorage this way is not elegant.... use .ensure() pattern
+            if (!$localStorage.localState) {
+                $localStorage.localState = {}
+            }
+            if (!$localStorage.localState.assertions) {
+                $localStorage.localState.assertions = {}
+            }
+            var localState = $localStorage.localState;
+
+            //console.log("State.UnpersistAssertions", _assertions);
+            var assertions = _assertions;
+            if (!angular.isArray(assertions)) assertions = [assertions];
+
+            angular.forEach(assertions, function (assertion) {
+                //console.log("persistAssertion", assertion, assertion.layer);
+                if (assertion.layer === "session") {
+                    delete localState.assertions[assertion.id()];
+                }
+            });
+        };
+
+        State.prototype.negate = function (criterias) {
+            var self = this;
+
+            if (criterias.layer) throw "Cannot specify layer when negating assertions";
+            if (criterias.parent) throw "Cannot specify parent when negating assertions";
+
+            var groupedAssertions = this.assertions
+                .filter(criterias)
+                .groupByTripple();
+
+            //console.log("groupedAssertions", groupedAssertions);
+
+            angular.forEach(groupedAssertions, function (assertions) {
+                var topAssertion = assertions.sortByWeight().top();
+                // First, we check wether the top assertion is already negative
+                if (topAssertion.value() !== false) {
+                    // Then we check if the topAssertion is on the static world layer
+                    if (topAssertion.layer === "world") {
+                        // If so, we create a new assertion on top to negate it
+                        var newAssertion = topAssertion.clone();
+                        if (self.currentLayer === "world") {
+                            newAssertion.layer = "session";
+                        } else {
+                            newAssertion.layer = self.currentLayer;
+                        }
+                        newAssertion.parent = null;
+                        newAssertion.value(false);
+                        self.assertions.add(newAssertion);
+                        //console.log("---------- negate2 ----> created new", newAssertion);
+                        self.persistAssertion(newAssertion);
+                    } else {
+                        // Now we test if we have an underlying layer with a value,
+                        // is so, we re-assign a "false" value to the current assertion
+                        // if not, we can simply delete the assertion
+                        var valueExistsUnder = assertions.count() > 1;
+
+                        if (valueExistsUnder) {
+                            topAssertion.value(false);
+                            self.persistAssertion(topAssertion);
+                            //console.log("---------- negate2 ----> reassigned to false", topAssertion);
+                        } else {
+                            self.assertions.remove(topAssertion);
+                            self.UnpersistAssertions(topAssertion);
+                            //console.log("---------- negate2 ----> Discarded", topAssertion);
+                        }
+                    }
+                } else {
+                    //console.log("---------- negate2 ----> already negative", topAssertion);
+                }
+            });
+
+
+        };
+        /*
+
+
+
+         console.log("wasInAssertions", wasInAssertions);
+         angular.forEach(wasInAssertions, function (assertion) {
+         });
+
+         */
+
+
+        State.prototype.step = function (increment) {
+            var count = 0;
+            var stepCount = this.resolveValue({
+                subject: "story",
+                predicate: "has",
+                object: "steps"
+            });
+            if (stepCount) {
+                if (typeof stepCount === "number") {
+                    count = stepCount;
                 }
             }
 
-        }
-
-        return thing;
-    };
-
-    /**
-     * Get or create a new thing
-     * @param predicate
-     * @param text
-     * @returns {*}
-     */
-    State.prototype.syntax = function (predicate, text) {
-        var syntax;
-
-        if (!predicate)
-            throw("Syntax must have a predicate");
-        if (!text)
-            throw("Syntax must have a text");
-        syntax = this.syntaxes[text];
-        if (!syntax) {
-            syntax = new Syntax(text, predicate);
-            this.syntaxes[text] = syntax;
-        }
-        return syntax;
-    };
-
-    /**
-     * Get a new assertion
-     * @param subject
-     * @param predicate
-     * @param object
-     * @param value
-     * @returns {*}
-     */
-    State.prototype.setAssertion = function (subject, predicate, object, value, parent) {
-        //console.log("State.setAssertion", subject, predicate, object, value);
-        var self = this;
-
-        // The set of assertions to negate first
-        var foundAssertions = [];
-        // The choses assertion to receive the new state
-        var chosenAssertion;
-        // If no "value" argument is specified we use "true" for the truth statement
-        var valueOveride = true;
-        // Check is a trully "false" value is specified
-        if (value === false) valueOveride = false;
-
-        // First, verify that we have at least a subject and a predicate
-        // Otherwise the assertions would not assert anything
-        if (subject && predicate) {
-
-            // Look for existing assertions that match the criteria
-            // IMPORTANT: a isUnique predicate mean that we still keep negated assertions.
-            // Instead we negate all the ones we dont need anymore
-            if (predicate.uniqueSubject) {
-                this.assertions.forEach(function (assertion) {
-                    // If it is a "uniqueSubject" predicate, match assertions
-                    // by subject and predicate only
-                    if (assertion.subject === subject &&
-                        assertion.predicate === predicate) {
-                        foundAssertions.push(assertion);
-                    }
-
-                    // When the predicate is "uniqueSubject"
-                    // we re-test to see if the assertion is a perfect candidate
-                    // to receive the new value
-                    if (assertion.subject === subject &&
-                        assertion.predicate === predicate &&
-                        assertion.object === object) {
-                        chosenAssertion = assertion;
-                    }
+            if (increment && typeof(increment) === "number") {
+                count = count + increment;
+                var story = this.thing("Story");
+                var steps = this.thing("Steps");
+                var has = this.predicate("has");
+                this.createAssertion(story, has, steps, {
+                    value: count
                 });
-
-            } else {
-                this.assertions.forEach(function (assertion) {
-                    // Otherwise, match assertions on all 3 criteras
-                    // subject, predicate and object
-                    if (assertion.subject === subject &&
-                        assertion.predicate === predicate &&
-                        assertion.object === object) {
-                        foundAssertions.push(assertion);
-                        // When the predicate is not "uniqueSubject"
-                        // any mathing assertion can be choses to
-                        // receive the value
-                        chosenAssertion = assertion;
-                    }
-                });
+                //console.log("====>", assertion);
             }
 
-            // By default, negate all pre-existing assertions
-            // This will ensure that any duplicate assertion will be removed
-            // (possible if errors have been made)
-            // But more importantly, it negates any assertion to be negated
-            // because the predicate is "uniqueSubject"
-            foundAssertions.forEach(function (assertion) {
-                //console.log("negating assertion: ", assertion);
-                self.negate(assertion);
-                self.persistAssertion(assertion);
-            });
+            return count;
+        };
 
-            if (!chosenAssertion) {
-                // No pre-existing assertions were found, so creating a fresh one
-                //console.log("parent", parent);
-                chosenAssertion = new Assertion(subject, predicate, object, parent);
-                //console.log("creating a new assertion: ", chosenAssertion);
-                this.assertions.push(chosenAssertion);
-            }
-
-            // The correct assertion is then assigned it's truth value
-            // Not that it is possible that the assertion is already
-            // set to this value anyways.
-            chosenAssertion.set(valueOveride, this.currentLayer, parent);
-
-            // If the current layer is for "session", store the assertion in the
-            // localStorage provider
-            this.persistAssertion(chosenAssertion);
-        } else {
-            console.warn("Impossible to create assertion without at least a subject and a predicate.")
-        }
-
-        return chosenAssertion;
-    };
-
-    /**
-     * Persist an assertion to localState for it "session" state layer (aka localStorage)
-     * If the session layer is empty, the assertion is removed
-     */
-    State.prototype.persistAssertion = function (assertion) {
-        if (this.localState) {
-            var json = assertion.toJSON(layerSetup, "session");
-            if (json) {
-                this.localState.assertions[assertion.id()] = json;
-            } else {
-                delete this.localState.assertions[assertion.id()];
-            }
-        }
-    };
-
-    State.prototype.negate = function (assertion) {
-        var self = this;
-        var assertions = [];
-        // Recreate an array of assertions if a single assertion was passed
-        if (angular.isArray(assertion)) {
-            assertions = assertion;
-        } else if (angular.isObject(assertion)) {
-            assertions = [assertion]
-        }
-        angular.forEach(assertions, function (assertion) {
-            assertion.set(false, self.currentLayer);
-            self.persistAssertion(assertion);
-        });
-
-    };
-
-    // todo: Take in account layers
-    // todo: Handle case when assertion was persisted in localStorage
-    // todo: Handle case when asseetion has uniqueSubject predicate
-    State.prototype.removeAssertions = function (subject, predicate, object) {
-        var self = this;
-        // Look for matching assertions
-        // todo: use built indexes instead of itterating trough all predicates
+        return new State();
 
 
-        // DOING: Negate assertions insead of removing them...
-
-        angular.forEach(this.assertions, function (assertion) {
-            var keep = true;
-            if (subject && Object.is(subject, assertion.subject)) keep = false;
-            if (predicate && Object.is(predicate, assertion.predicate)) keep = false;
-            if (object && Object.is(object, assertion.object)) keep = false;
-            if (!keep) {
-                self.negate(assertion);
-            }
-        });
-
-        return this;
-    };
-
-    State.prototype.removeAssertionsLayer = function (layerId) {
-        var self = this;
-        // Look for matching assertions
-        if (layerId) {
-            angular.forEach(this.assertions, function (assertion) {
-                assertion.removeState(layerId);
-                self.persistAssertion(assertion);
-            });
-        }
-        return this;
-    };
-
-    // TODO: Rename to getAssertions and have a version that return 1 item and need an objet argument
-    /**
-     * Get the topmost assertion from layered states
-     * @param subject
-     * @param predicate
-     * @returns {Array}
-     */
-    State.prototype.getAssertion = function (subject, predicate) {
-        var self = this;
-        var assertion;
-        var foundAssertions = [];
-
-        if (predicate && subject) {
-            // Look for an existing assertion
-            // todo: use built indexes instead of itterating trough all predicates
-            this.assertions.forEach(function (assertion) {
-                if (assertion.subject === subject &&
-                    assertion.predicate === predicate) {
-                    if (assertion.value(layerSetup) === true) {
-                        foundAssertions.push(assertion);
-                    }
-                }
-            });
-        } else {
-            console.warn("Impossible to find assertion without at least a subject and a predicate.")
-        }
-
-        return foundAssertions;
-    };
-
-
-    State.prototype.getAssertions = function (subject, predicate, object) {
-        var foundAssertions = this.assertions.filter(function (assertion) {
-            var keep = true;
-            if (subject && !Object.is(subject, assertion.subject)) keep = false;
-            if (predicate && !Object.is(predicate, assertion.predicate)) keep = false;
-            if (object && !Object.is(object, assertion.object)) keep = false;
-            return keep;
-        });
-
-        return foundAssertions;
-    };
-
-    /**
-     * Get or create a new type of predicate
-     * @param _id
-     */
-    State.prototype.predicate = function (_id) {
-        var id = _id.toLowerCase();
-        var predicate;
-        var syntax;
-
-        if (!id)
-            throw("Assertions must have an id");
-
-        // Resolve the predicate from the syntax
-        syntax = this.syntaxes[id];
-        if (syntax) predicate = syntax.predicate;
-
-        if (!predicate) {
-            predicate = new Predicate(id, this);
-            //console.log("Created new predicate", predicate);
-            this.predicates[id] = predicate;
-            this.syntaxes[id] = new Syntax(id, predicate);
-        }
-        return predicate;
-    };
-
-    State.prototype.step = function (increment) {
-        var count = 0;
-        var story = this.thing("Story");
-        var hasStepped = this.predicate("hasStepped");
-
-        var assertions = story.getAssertion(hasStepped);
-        if (assertions.length) {
-            if (typeof assertions[0].object === "number") {
-                count = assertions[0].object;
-            }
-        }
-
-        if (increment && typeof(increment) === "number") {
-            count = count + increment;
-            story.setAssertion(hasStepped, count);
-        }
-
-        return count;
-    };
-
-
-    return new State();
-
-});
+    }
+);
 

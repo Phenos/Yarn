@@ -1,52 +1,82 @@
 yarn.service('events', function (state,
                                  Assertion,
-                                 yConsole,
-                                 consoleHelper) {
+                                 yConsole) {
 
     function Events() {
     }
 
     Events.prototype.process = function () {
-        var trigger = state.predicate("triggers");
-        var triggerAssertions = state.getAssertions(null, trigger, null);
-        //console.log("found triggerAssertions", triggerAssertions);
+        console.log("Events.process()");
+
+        var somethingHappened = false;
+        var setsToBeTriggered = [];
+
+        var triggerAssertions = state.assertions.find({
+            predicate: "trigger"
+        });
+
+        // First, figure out which assertions set will need to be triggered
         angular.forEach(triggerAssertions, function (assertion) {
             // Fetch the list of assertions to be used as triggers
-            var conditionAssertions = [];
+            var childAssertions;
             var allConditionsAreTrue = true;
             var object = assertion.object;
             var subject = assertion.subject;
 
+            // First we check if the triggerrer and the triggered are supplied
             if (subject && object) {
-                console.log("Testing : ", consoleHelper.assertion2log(assertion));
+                //console.log("Testing : ", consoleHelper.assertion2log(assertion));
 
-                angular.forEach(subject.childStates, function (assertionState) {
-                    var assertion = assertionState.assertion;
-                    conditionAssertions.push(assertion);
-                    var isTrue = assertion.value();
-                    if (!isTrue) allConditionsAreTrue = false;
+                childAssertions = state.assertions.find({
+                    parent: subject.id
                 });
-                //console.log("Found conditionAssertions", conditionAssertions);
-                if (allConditionsAreTrue) {
-                    console.log("triggering " + object.is);
-                    angular.forEach(object.childStates, function (assertionState) {
-                        var assertion = assertionState.assertion;
-                        assertion.set(true, "session");
-                        state.persistAssertion(assertion);
-                        console.log("setting assertions", assertion);
-                    });
 
+                if (childAssertions.length) {
+                    //console.log("childAssertions", childAssertions);
+                    angular.forEach(childAssertions, function (assertion) {
+                        var value = state.resolveValue({
+                            subject: assertion.subject.id,
+                            predicate: assertion.predicate.id,
+                            object: assertion.object.id
+                        });
+                        if (!(value === assertion.value())) allConditionsAreTrue = false;
+                    });
+                    //console.log("allConditionsAreTrue", allConditionsAreTrue);
+                    if (allConditionsAreTrue) {
+                        setsToBeTriggered.push(object);
+                    }
                 }
+
             } else {
                 yConsole.error("The trigger is not well formed. You must have a complete assertion with a subject and an object.")
             }
         });
 
+        // Then, we trigger each assertion sets that are supposed to be triggered
+        console.log("setsToBeTriggered ", setsToBeTriggered);
+        angular.forEach(setsToBeTriggered, function (object) {
+            somethingHappened = true;
+            var childAssertions = state.assertions.find({
+                parent: object.id
+            });
+            //console.log("childAssertions for " + object.id, childAssertions);
+            angular.forEach(childAssertions, function (assertion) {
+                state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
+                    value: assertion.value()
+                });
+            });
+        });
+
+
+        return somethingHappened;
     };
 
+
     Events.prototype.trigger = function (subject, predicate, object) {
-        var assertion = state.setAssertion(subject, predicate, object);
-        assertion.set(true, "step");
+        console.log("Trigger", subject, predicate, object);
+        state.createAssertion(subject, predicate, object, {
+            layer: "step"
+        });
     };
 
     return new Events();

@@ -1,12 +1,15 @@
 yarn.factory('restartCommand', restartCommand);
 
-function restartCommand(yConsole,
+function restartCommand(commands,
+                        yConsole,
                         state,
                         player) {
 
     function handler() {
-        state.removeAssertionsLayer('session');
-        player.update();
+        commands.command("clear session");
+        commands.command("clear localstorage");
+        state.assertions.removeLayer('session');
+        player.refresh();
         yConsole.success("Story restarted");
     }
 

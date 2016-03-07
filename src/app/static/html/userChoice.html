@@ -1,18 +1,26 @@
 <div>
     <h3 class="question" ng-bind="userChoice.question"></h3>
-    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+    <section layout="row" layout-align="center center" layout-wrap>
         <md-button
                 ng-repeat="option in userChoice.options"
-                ng-class="(option.iconOnly) ? 'md-fab md-mini' : 'md-raised'"
+                ng-class="option.iconStyle()"
                 ng-click="$event.preventDefault(); userChoice.choose(option.value);"
                 aria-label="option.label"
         >
             <md-icon
                     ng-if="option.iconId"
-                    md-svg-icon="/svg-icons/{{ option.iconId }}.svg"></md-icon>
+                    md-svg-icon="/svg-icons/{{ option.iconId }}.svg">
+            </md-icon>
             <span
                     ng-if="!option.iconOnly"
-                    ng-bind="option.label"></span>
+                    ng-bind="option.label">
+            </span>
+            <md-tooltip
+                    md-visible="option.tooltipIsVisible"
+                    md-direction="botton"
+                    ng-if="option.iconOnly"
+                    ng-bind="option.label">
+            </md-tooltip>
         </md-button>
     </section>
 </div>

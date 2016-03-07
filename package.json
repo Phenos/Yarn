@@ -1,37 +1,59 @@
 {
-  "name": "yarn",
-  "productName": "Yarn",
+  "name": "yarn-studio-server",
+  "productName": "Yarn Studio Server",
   "author": {
     "name": "Mathieu Sylvain",
     "email": "mathieu.sylvain@phenos.ca",
     "url": "http://phenos.ca/"
   },
-  "version": "0.15.0",
+  "version": "0.20.0",
   "description": "",
-  "main": "build/main.js",
+  "main": "server/server.js",
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp",
-    "start": "node ./api/server/server.js",
-    "__postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp  build",
+    "start": "node server/server.js",
+    "postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp build",
     "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
   },
   "dependencies": {
+    "aws-sdk": "^2.2.33",
+    "body-parser": "^1.14.2",
     "bower": "latest",
+    "browser-sync": "^2.9.11",
+    "compression": "^1.0.3",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.1",
+    "cors": "^2.5.2",
     "del": "^2.1.0",
     "ejs": "2.3.3",
-    "electron-builder": "^2.4.0",
-    "electron-connect": "^0.3.3",
-    "express": "4.13.3",
+    "express-flash": "0.0.2",
+    "express-session": "^1.13.0",
     "gulp": "gulpjs/gulp#4.0",
+    "gulp-angular-embed-templates": "^2.2.0",
     "gulp-bump": "^1.0.0",
     "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.6.0",
+    "gulp-inject": "^3.0.0",
     "gulp-less": "^3.0.3",
+    "gulp-load-plugins": "^1.2.0",
     "gulp-serve": "^1.2.0",
+    "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.4.2",
     "gulp-using": "0.0.1",
-    "gulp-watch": "^4.3.5"
+    "gulp-watch": "^4.3.5",
+    "jade": "^1.11.0",
+    "loopback": "^2.22.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^2.1.0",
+    "loopback-component-passport": "^2.0.0",
+    "loopback-connector-postgresql": "^2.4.0",
+    "loopback-datasource-juggler": "^2.39.0",
+    "passport": "^0.3.2",
+    "passport-oauth2": "^1.1.2",
+    "passport-twitter": "^1.0.4",
+    "s3": "^4.4.0",
+    "serve-favicon": "^2.3.0"
   },
   "engines": {
     "node": "4.1.1"
@@ -41,13 +63,5 @@
     "url": "https://github.com/Phenos/Yarn.git"
   },
   "license": "ISC",
-  "devDependencies": {
-    "browser-sync": "^2.9.11",
-    "electron-packager": "^5.1.1",
-    "electron-prebuilt": "^0.35.0",
-    "gulp-angular-embed-templates": "^2.2.0",
-    "gulp-electron": "0.0.9",
-    "gulp-inject": "^3.0.0",
-    "gulp-shell": "^0.5.2"
-  }
+  "devDependencies": {}
 }

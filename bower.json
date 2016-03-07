@@ -16,7 +16,6 @@
     "angular": "~1.4.8",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
     "angular-ui-router": "~0.2.15",
-    "angularjs-breakpoint": "*",
     "angular-animate": "~1.4.8",
     "angular-uri": "~0.2.0",
     "angular-audio": "~1.7.1",
@@ -27,7 +26,11 @@
     "angular-resource": "~1.4.9",
     "angular-sanitize": "~1.5.0",
     "postal.js": "postal#~1.0.8",
-    "lodash": "~4.5.1"
+    "lodash": "~4.5.1",
+    "jquery": "~2.2.1",
+    "perfect-scrollbar": "~0.6.10",
+    "angular-ui-grid": "~3.1.1",
+    "ng-rollbar": "~1.8.3"
   },
   "resolutions": {
     "lodash": "~4.5.1",

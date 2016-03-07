@@ -1,35 +1,50 @@
 yarn.service("movePrompt", function (logic,
                                      commands,
-                                     state) {
+                                     state,
+                                     setDefaultOptionsHelper) {
 
     function movePrompt(context) {
 
         context.when = function () {
-            var isAboutTo = state.resolveValue("You.isAboutTo");
-            //console.log("isAboutTo =====>", isAboutTo);
-            return isAboutTo && isAboutTo.id === "move";
+            return "move" === state.resolveValue({
+                    subject: "you",
+                    predicate: "has",
+                    object: "intention"
+                });
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "Where do you want to go ?";
 
-            var rooms = state.resolve("you.isIn.linksTo");
-            //console.log('rooms', rooms);
-            rooms.forEach(function (room) {
-                var label = room.resolveValue("isNamed");
-                prompt.option(label, room.id);
+            var room = state.resolveOne({
+                subject: "you",
+                predicate: "isIn"
+            });
+
+            var linkedRooms = state.resolveAll({
+                subject: room.id,
+                predicate: "linksTo"
+            });
+
+            linkedRooms.forEach(function (room) {
+                var label = state.resolveValue({
+                    subject: room.id,
+                    predicate: "has",
+                    object: "Name"
+                });
+                prompt.option(label, "move " + room.id);
             });
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
             backOption.iconOnly = true;
 
+            setDefaultOptionsHelper(prompt, true);
         };
         context.answer = function answer(promptLoop, option) {
-            //console.trace(".answer for WhereToDo");
-            // todo: this should be injected instead of taken from parent scope
-            logic.routines.aboutTo("");
-            if (option.value !== "back") {
-                commands.command("move " + option.value);
+            if (option.value === "back") {
+                logic.routines.aboutTo("");
+            } else {
+                commands.command(option.value);
             }
         };
 

@@ -1,34 +1,28 @@
 "use strict";
 yarn.controller('playerMode', playerModeController);
-yarn.factory('playerModeService', PlayerModeService);
+yarn.service('playerMode', PlayerModeService);
 
 
 function playerModeController(user,
-                              metadata,
+                              $rootScope,
                               $scope,
-                              $mdSidenav,
                               yConsole,
                               welcomeMessage,
                               stories,
-                              playerModeService,
+                              playerMode,
                               hotkeys) {
 
-
-    hotkeys.bindTo($scope)
+    hotkeys.bindTo($rootScope)
         .add({
             combo: 'mod+esc',
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
             description: 'Show/Hide the console',
             callback: function () {
-                playerModeService.toggleConsole();
+                playerMode.toggleConsole();
             }
         });
 
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
-    $scope.metadata = metadata; // todo: metadata should be a service
-
-    // Service for playerMode UI interaction
-    $scope.playerModeService = playerModeService;
 
     /*
      Show a welcome message in the yarn console
@@ -37,23 +31,7 @@ function playerModeController(user,
     yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
     // Register with the service
-    playerModeService.register($scope);
-    /*
-     Side navigation visibility
-     */
-    $scope.openSidenav = function () {
-        $mdSidenav("leftSidebar").open();
-    };
-
-    $scope.closeSidenav = function () {
-        $mdSidenav("leftSidebar").close();
-    };
-
-
-    $scope.showSidebar = function () {
-        console.log("showSidebar");
-        playerModeService.showConsole();
-    };
+    playerMode.register($scope);
 
     // Play the default story
     stories.playDefault();
@@ -63,24 +41,40 @@ function playerModeController(user,
 
 }
 
-function PlayerModeService($localStorage, consoleService) {
+function PlayerModeService($localStorage, consoleService, helpService, player) {
     var service = {
         scope: null
     };
 
     service.register = function (scope) {
         service.scope = scope;
+        scope.consoleIsVisible = service.consoleIsVisible;
+        scope.helpIsVisible = service.helpIsVisible;
     };
-
 
     /*
      Console visibility
      */
     service.consoleIsVisible = false;
+    service.helpIsVisible = false;
 
-    if (!angular.isUndefined($localStorage.consoleIsVisible)) {
-        service.consoleIsVisible = $localStorage.consoleIsVisible;
+    function consoleIsVisible(value) {
+        if (!angular.isUndefined(value)) {
+            service.consoleIsVisible = value;
+            if (service.scope) service.scope.consoleIsVisible = value;
+        }
+        return service.consoleIsVisible;
     }
+    function helpIsVisible(value) {
+        if (!angular.isUndefined(value)) {
+            service.helpIsVisible = value;
+            if (service.scope) service.scope.helpIsVisible = value;
+        }
+        return service.helpIsVisible;
+    }
+
+    consoleIsVisible($localStorage.consoleIsVisible);
+    helpIsVisible($localStorage.helpIsVisible);
 
     service.toggleConsole = function () {
         if (service.consoleIsVisible) {
@@ -89,18 +83,30 @@ function PlayerModeService($localStorage, consoleService) {
             service.showConsole();
         }
     };
+    service.toggleHelp = function () {
+        if (service.helpIsVisible) {
+            service.hideHelp();
+        } else {
+            service.showHelp();
+        }
+    };
 
     service.showConsole = function () {
-        console.log("showSidebar");
-        service.scope.closeSidenav();
-        service.consoleIsVisible = true;
+        player.closeSidenav();
+        $localStorage.consoleIsVisible = consoleIsVisible(true);
         consoleService.focus();
-        $localStorage.consoleIsVisible = true;
     };
     service.hideConsole = function () {
-        console.log("hideSidebar");
-        service.consoleIsVisible = false;
-        $localStorage.consoleIsVisible = false;
+        $localStorage.consoleIsVisible = consoleIsVisible(false);
+    };
+
+    service.showHelp = function () {
+        player.closeSidenav();
+        $localStorage.helpIsVisible = helpIsVisible(true);
+        helpService.focus();
+    };
+    service.hideHelp = function () {
+        $localStorage.helpIsVisible = helpIsVisible(false);
     };
 
     return service;

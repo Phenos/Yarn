@@ -4,12 +4,14 @@
     yarn.factory('consoleService', consoleService);
 
 
-    function ConsoleDirective(commands) {
+    function ConsoleDirective(commands,
+                              getSelectionText) {
         return {
             restrict: 'E',
             bindToController: {
                 onEscapeFocus: '&',
                 onFocus: '&',
+                onClear: '&',
                 ready: "&"
             },
             scope: {},
@@ -22,6 +24,7 @@
         function ConsoleController(consoleService,
                                    yConsole,
                                    $scope,
+                                   $rootScope,
                                    $compile,
                                    $timeout,
                                    $element,
@@ -29,7 +32,7 @@
 
             var self = this;
 
-            hotkeys.bindTo($scope)
+            hotkeys.bindTo($rootScope)
                 .add({
                     combo: 'mod+k',
                     allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
@@ -42,7 +45,7 @@
             consoleService.register(this);
 
             var logsElem = $element.find("logs");
-            var logscrollElem = $element.find("logscroll");
+            var logscrollElem = $element.find("md-content");
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
@@ -56,17 +59,6 @@
                     $element.find("input")[0].focus();
                 }, 200);
             };
-
-            // todo: put in a utils service
-            function getSelectionText() {
-                var text = "";
-                if (window.getSelection) {
-                    text = window.getSelection().toString();
-                } else if (document.selection && document.selection.type != "Control") {
-                    text = document.selection.createRange().text;
-                }
-                return text;
-            }
 
             this.onInputEscapeFocus = function () {
                 //console.log("console.onInputEscapeFocus");
@@ -90,9 +82,12 @@
             this.clear = function () {
                 var logElement = $element.find("logs");
                 logElement.empty();
+
+                this.onClear();
             };
 
             this.write = function (text, type) {
+                $scope.$emit("refreshScrollbars");
 
                 // Log Yarn console to the browser console
                 //if (type === "error") {

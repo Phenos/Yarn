@@ -16,7 +16,13 @@
                 <md-button ng-click="sidebar.openWelcomeMessage()">
                     <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
                     <span>About this prototype</span>
-                    <span class="versionNumber">- v{{ metadata.version }}</span>
+                    <span class="versionNumber">- v{{ sidebar.metadata.version }}</span>
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="sidebar.openHelp()">
+                    <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
+                    <span>Help & Documentation</span>
                 </md-button>
             </md-menu-item>
             <md-divider></md-divider>
@@ -84,7 +90,7 @@
         </md-toolbar>
         <md-content layout-padding>
             <md-menu-item>
-                <md-button ng-click="sidebar.openConsole()" aria-label="Open console">
+                <md-button ng-click="sidebar.showConsole()" aria-label="Open console">
                     <md-icon md-svg-icon="/svg-icons/console.svg"></md-icon>
                     Console
                 </md-button>

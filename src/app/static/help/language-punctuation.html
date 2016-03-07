@@ -1,0 +1,92 @@
+<article>
+    <h1>Punctuation</h1>
+
+    <h2>Commas, periods and semi-colons.</h2>
+
+    <p>
+        By adding puncutation, you can create series of assertions that are both
+        easier to write and easier to read.
+    </p>
+
+    <p>
+        Here is an example of multiple assertions about the same subject, which are
+        chained into a longer sentence:
+    </p>
+    <code>
+PeterTheDog is a Dog, is in the Kennel, is Tired
+    </code>
+    <p>
+        Just like a normal english sentence, the commas allow you to chain more assertions
+        without having to repeat the subject.</p>
+
+    <h2>Adding linefeeds</h2>
+    <p>
+        To keep you text more readable, you can cut you line of text inbetween the 3 parts
+        of the assertions without any side-effects
+    </p>
+    <code>
+PeterTheDog
+is a Dog,
+is in the Kennel,
+is Tired
+    </code>
+
+    <h2>Indentation</h2>
+
+    <p>
+        You can also use indentation (additionnal spaces and tabs) if you want to
+        give more structure to your code. This is purely aesthetics and will not change
+        the behavior of the code.
+    </p>
+    <p>Let's add some to PeterTheDog:</p>
+    <code>
+PeterTheDog
+  is a Dog,
+  is in the Kennel,
+  is Tired
+    </code>
+
+    <h2>Using quotes for texts and labels</h2>
+    <p>For labels and long texts you simply use either the single or double quotes. Like this:</p>
+    <code>
+PeterTheDog
+  is a Dog,
+  is named "Peter T. Dog",
+  is in the Kennel,
+  is described as
+    'Peter your dog has had a long day.
+     He looks very tired'
+    </code>
+    <p>
+        Notice how we can also add linefeed to break long texts.
+    </p>
+    <h2>Add periods to prevent chaining.</h2>
+    <p>
+        Whenever you have assertions which precede or follow each others, you can
+        make sure they dont automatically chain by adding a period.
+    </p>
+    <p>
+        Here we make sure John and PeterTheDog dont get mixed up:
+    </p>
+    <code>
+John loves PeterTheDog.
+PeterTheDog
+  is a Dog,
+  is named "Peter T. Dog".
+    </code>
+    <p>
+        Alternativelly, you can use two linefeeds instead of periods. Like so:
+    </p>
+    <code>
+John loves PeterTheDog
+
+PeterTheDog is a Dog, called "Peter T. Dog"
+
+SillySusan loves John
+    </code>
+
+    <p>
+        <a href="language-comments.html">Next : Comments</a>
+    </p>
+
+</article>

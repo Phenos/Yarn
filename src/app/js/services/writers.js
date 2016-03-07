@@ -5,24 +5,8 @@ yarn.factory('writers', function (yarn,
                                   script,
                                   sceneryService) {
 
-    // Story welcome message and introduction
-    // todo: Output specially styled titles for story and chapters
-    function LogStoryIntroduction() {
-        var story = state.thing("story");
-        var storyTitle = state.resolveValue("story.isNamed");
-
-        if (storyTitle) storyLog.heading(storyTitle);
-
-        var storyDescription = state.resolveValue("story.isDescribedAs");
-        if (storyDescription) storyLog.subHeading(storyDescription);
-        // todo: Output specially styled separators
-        storyLog.divider();
-        return this;
-    }
-
-
     // Describe where you are at the beginning
-    function DescribeWhereYouAre() {
+    function describeWhereYouAre() {
         var returnFn;
         if (state.step() === 0) {
             returnFn = describeCoverpage();
@@ -33,20 +17,34 @@ yarn.factory('writers', function (yarn,
     }
 
     function describeCoverpage() {
-        var story = state.thing("Story");
-
 
         storyLog.clear();
 
         // Show the story title
-        var storyIsCalled = story.resolveValue("isNamed");
+        var storyIsCalled = state.resolveValue({
+            subject: "Story",
+            predicate: "has",
+            object: "Name"
+        });
         if (storyIsCalled) {
             storyLog.heading(storyIsCalled);
         }
 
         // Set the scenery
-        var scenery = story.resolveValue("hasScenery");
-        var coverpage = story.resolveValue("hasCoverpage");
+        var scenery = state.resolveValue({
+            subject: "Story",
+            predicate: "has",
+            object: "Scenery"
+        });
+
+        var coverpage = state.resolveValue({
+            subject: "Story",
+            predicate: "has",
+            object: "Coverpage"
+        });
+
+
+
         var scenery_url = scenery && script.resolveRelativeURI(scenery);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
         var url = scenery_url || coverpage_url || false;
@@ -61,12 +59,20 @@ yarn.factory('writers', function (yarn,
             storyLog.image(coverpage_url);
         }
 
-        var description = story.resolveValue("isDescribedAs");
+        var description = state.resolveValue({
+            subject: "Story",
+            predicate: "has",
+            object: "Description"
+        });
         if (description) {
             storyLog.log("“&nbsp;" + description + "&nbsp;”");
         }
 
-        var author = story.resolveValue("isAuthoredBy");
+        var author = state.resolveValue({
+            subject: "Story",
+            predicate: "has",
+            object: "Author"
+        });
         if (author) {
             storyLog.log("by " + author);
         }
@@ -77,10 +83,20 @@ yarn.factory('writers', function (yarn,
     function describeRoom() {
         storyLog.clear();
 
-        var room = state.resolveValue("you.isIn");
+        var room = state.resolveOne({
+            subject: "You",
+            predicate: "isIn"
+        });
+
+        //console.log("describing room", room);
+
         //console.log("Your in room ", room);
         if (room) {
-            var scenery = room.resolveValue("hasScenery");
+            var scenery = state.resolveValue({
+                subject: room.id,
+                predicate: "has",
+                object: "Scenery"
+            });
             var url = script.resolveRelativeURI(scenery);
             if (url) {
                 sceneryService.change(url);
@@ -88,10 +104,20 @@ yarn.factory('writers', function (yarn,
                 sceneryService.clear();
             }
 
-            var label = room.resolveValue("isNamed");
-            storyLog.heading(label);
-            var description = room.resolveValue("isDescribedAs");
+            var label = state.resolveValue({
+                subject: room.id,
+                predicate: "has",
+                object: "Name"
+            });
+            if (label) storyLog.heading(label);
+
+            var description = state.resolveValue({
+                subject: room.id,
+                predicate: "has",
+                object: "Description"
+            });
             if (description) storyLog.log(description);
+
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");
             yConsole.error("Your hero is nowhere to be found!");
@@ -99,15 +125,32 @@ yarn.factory('writers', function (yarn,
                 "For the story to start, you must place you hero in a room.<br/>" +
                 "Ex.: #You is in #YourBedroom.");
         }
+
+        // Before ending, flush the log from any buffered logs
+        storyLog.flushBuffers();
+
         return this;
     }
 
     // Describe where you are at the beginning
-    function DescribeThing(thing) {
+    function describeThing(thing) {
         if (thing) {
-            var label = thing.resolveValue("isNamed");
-            var description = thing.resolveValue("isDescribedAs");
-            var image = thing.resolveValue("hasImage");
+            var label = state.resolveValue({
+                subject: thing.id,
+                predicate: "has",
+                object: "Name"
+            });
+            var description = state.resolveValue({
+                subject: thing.id,
+                predicate: "has",
+                object: "Description"
+            });
+            var image = state.resolveValue({
+                subject: thing.id,
+                predicate: "has",
+                object: "Image"
+            });
+
             if (image) {
                 storyLog.thingImage(
                     script.resolveRelativeURI(image)
@@ -120,24 +163,35 @@ yarn.factory('writers', function (yarn,
     }
 
     // Describe where you are at the beginning
-    function DescribeThingTakenInInventory(thing) {
+    function nothingHappened() {
+        storyLog.log("Nothing happened!");
+        return this;
+    }
+
+    // Describe where you are at the beginning
+    function describeThingTakenInInventory(thing) {
         if (thing) {
-            var label = thing.resolveValue("isNamed");
+            var label = state.resolveValue({
+                subject: thing.id,
+                predicate: "has",
+                object: "Name"
+            });
             if (label) storyLog.log("You took the " + label);
         }
         return this;
     }
 
     return {
-        DescribeThingTakenInInventory: DescribeThingTakenInInventory,
-        DescribeThing: DescribeThing,
-        DescribeRoom: describeRoom,
-        DescribeCoverpage: describeCoverpage,
-        DescribeWhereYouAre: DescribeWhereYouAre,
-        LogStoryIntroduction: LogStoryIntroduction
+        nothingHappened: nothingHappened,
+        describeThingTakenInInventory: describeThingTakenInInventory,
+        describeThing: describeThing,
+        describeRoom: describeRoom,
+        describeCoverpage: describeCoverpage,
+        describeWhereYouAre: describeWhereYouAre
     };
 
 });
+
 
 
 

@@ -1,29 +1,19 @@
-<md-content style="z-index:5" flex layout="row">
-    <md-section ng-show="playerModeService.consoleIsVisible" flex="50" layout="column" class="IDE">
+<md-content style="z-index:5" flex="1" layout="row">
+    <assertion-browser></assertion-browser>
+    <md-section ng-show="consoleIsVisible" flex="100" layout="column" class="IDE">
         <console-toolbar user="user"></console-toolbar>
         <div flex="100" layout="row">
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
     </md-section>
-    <md-content flex layout="column">
-        <scenery></scenery>
-        <sidebar metadata="metadata" on-open-console="showSidebar()"></sidebar>
-        <toolbar user="user"></toolbar>
-        <md-content style="z-index:5">
-            <md-content flex="100" layout="column">
-                <div layout="row" flex="100" class="player">
-                    <div class="main-ui" flex="100">
-                        <story-log></story-log>
-                        <user-choice
-                                ng-show="game.question"
-                                on-choose="game.choose(value)"
-                                question="game.question"
-                                options="game.options"
-                        ></user-choice>
-                        <splash visible="true" metadata="metadata"></splash>
-                    </div>
-                </div>
-            </md-content>
-        </md-content>
-    </md-content>
+    <player flex="100" user="user" layout="column"></player>
+    <md-section ng-show="helpIsVisible"
+                md-whiteframe="5"
+                flex="100"
+                layout="column">
+        <help-toolbar></help-toolbar>
+        <div flex="100" layout="row">
+            <help on-escape-focus="onHelpEscapeFocus()" on-focus="onHelpFocus()"></help>
+        </div>
+    </md-section>
 </md-content>

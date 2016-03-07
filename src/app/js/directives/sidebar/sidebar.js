@@ -1,12 +1,7 @@
-yarn.directive('sidebar', SidebarDirective);
-yarn.factory('sidebarService', sidebarService);
-
-function SidebarDirective() {
+yarn.directive('sidebar', function SidebarDirective() {
     return {
         restrict: 'E',
         bindToController: {
-            metadata: "=",
-            onOpenConsole: "&"
         },
         scope: true,
         replace: true,
@@ -15,20 +10,30 @@ function SidebarDirective() {
         controller: SidebarController
     };
 
-    function SidebarController(sidebarService,
+    function SidebarController(sidebar,
                                $mdSidenav,
                                welcomeMessage,
-                               commands) {
+                               commands,
+                               metadata,
+                               playerMode) {
         var self = this;
 
-        sidebarService.register(this);
-
-        this.openConsole = function () {
-            console.log("sidebar.openClose");
-            self.onOpenConsole();
-            self.closeAll();
+        this.showConsole = function () {
+            playerMode.showConsole();
         };
 
+        metadata.then(function (metadata) {
+            this.metadata = metadata
+        });
+
+        sidebar.register(this);
+
+        //this.openConsole = function () {
+        //    console.log("sidebar.openConsole");
+        //    player.openConsole();
+        //    self.closeAll();
+        //};
+        //
         this.openStoryMenu = function () {
             $mdSidenav("storySidebar").open();
         };
@@ -62,16 +67,21 @@ function SidebarDirective() {
 
         this.close = function () {
             $mdSidenav("leftSidebar").close();
+            $mdSidenav("authorSidebar").close();
         };
 
-        this.openWelcomeMessage = function() {
+        this.openWelcomeMessage = function () {
             welcomeMessage.open();
-        }
+        };
+
+        this.openHelp = function () {
+            playerMode.showHelp();
+        };
 
     }
-}
+});
 
-function sidebarService() {
+yarn.factory('sidebar', function sidebarService() {
     var controller;
 
     function open() {
@@ -93,4 +103,4 @@ function sidebarService() {
         open: open,
         close: close
     }
-}
+});

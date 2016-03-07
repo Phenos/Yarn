@@ -5,12 +5,20 @@ function inventoryCommand(yConsole,
 
     function handler() {
         var itemList;
-        var thingsInInventory = state.resolve("You.hasInInventory");
+
+        var thingsInInventory = state.resolveAll({
+            subject: "you",
+            predicate: "hasInInventory"
+        });
 
         if (thingsInInventory.length) {
             itemList = [];
             thingsInInventory.forEach(function (thing) {
-                var label = thing.resolveValue("isNamed");
+                var label = state.resolveValue({
+                    subject: thing.id,
+                    predicate: "has",
+                    object: "Name"
+                });
                 itemList.push(label);
             });
             var message = [

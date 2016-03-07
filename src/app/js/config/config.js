@@ -1,4 +1,3 @@
-
 yarn.config(function (LoopBackResourceProvider) {
     console.log("Loading app configuration");
     // Use a custom auth header instead of the default 'Authorization'
@@ -9,27 +8,35 @@ yarn.config(function (LoopBackResourceProvider) {
 
 });
 
-
-
-yarn.run(function ($rootScope,
-                                     commandsRegistry) {
-    $rootScope.breakpoints = {
-        0: 'isMobileWidth',
-        480: 'isMobileLandscapeWidth',
-        641: 'isTabletWidth',
-        1025: 'isDesktopWidth',
-        1281: 'isWidescreenLayout'
+yarn.config(function(RollbarProvider) {
+    var roolbarConfig = {
+        //accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
+        accessToken: "INVALID",
+        captureUncaught: true,
+        payload: {
+            environment: 'test'
+        }
     };
+    console.log("Configured Roolbar Error Reporting", [roolbarConfig]);
+    RollbarProvider.init(roolbarConfig);
+});
+
+yarn.run(function (commandsRegistry) {
 
     commandsRegistry.load([
         "inventoryPlayerCommand",
         "beginStoryCommand",
         "inspectCommand",
         "aboutToCommand",
+        "evalCommand",
         "clearCommand",
         "loadCommand",
         "graphCommand",
         "useCommand",
+        "validateCommand",
+        "refreshCommand",
+        "lookCommand",
+        "takeCommand",
         "moveCommand",
         "restartCommand",
         "inventoryCommand",

@@ -55,16 +55,43 @@ yarn.service('events', function (state,
         // Then, we trigger each assertion sets that are supposed to be triggered
         console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (object) {
-            somethingHappened = true;
+            var shouldOccur = true;
             var childAssertions = state.assertions.find({
                 parent: object.id
             });
-            //console.log("childAssertions for " + object.id, childAssertions);
-            angular.forEach(childAssertions, function (assertion) {
-                state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                    value: assertion.value()
-                });
+
+            var maximumOccurrence = state.resolveValue({
+                "subject": object.id,
+                "predicate": "has",
+                "object": "MaximumOccurrence"
             });
+
+            var Occurrence = state.resolveValue({
+                "subject": object.id,
+                "predicate": "has",
+                "object": "Occurrence"
+            });
+
+            // Here we check if the event has reached the maximum allowed
+            // number of occurrences
+            if (!angular.isNumber(Occurrence)) Occurrence = 0;
+            if (angular.isNumber(maximumOccurrence) && Occurrence >= maximumOccurrence) shouldOccur = false;
+
+
+            if (shouldOccur) {
+                somethingHappened = true;
+                state.createAssertion(object, state.predicate("has"), state.thing("Occurrence"), {
+                    value: Occurrence + 1
+                });
+                //console.log("childAssertions for " + object.id, childAssertions);
+                angular.forEach(childAssertions, function (assertion) {
+                    state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
+                        value: assertion.value()
+                    });
+                });
+            }
+
+
         });
 
 

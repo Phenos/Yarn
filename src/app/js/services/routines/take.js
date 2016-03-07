@@ -1,5 +1,6 @@
 yarn.service("takeRoutine", function (state,
                                       events,
+                                      assert,
                                       stepRoutine,
                                       writers) {
 
@@ -22,15 +23,12 @@ yarn.service("takeRoutine", function (state,
             state.createAssertion(you, hasInInventory, object);
             writers.describeThingTakenInInventory(object);
 
-
             state.negate({
                 subject: object.id,
                 predicate: "isIn"
             });
 
-            var take = state.predicate("take");
-            // todo: Use id instead of object as arguments for Trigger
-            events.trigger(you, take, object);
+            events.trigger(assert("you", "take", object));
 
             stepRoutine();
         }

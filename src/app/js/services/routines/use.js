@@ -1,13 +1,10 @@
-yarn.service("useRoutine", function (state,
+yarn.service("useRoutine", function (assert,
                                      events,
                                      stepRoutine) {
 
     return function useRoutine(object) {
-        var subject = state.thing("You");
-        var use = state.predicate("use");
-        events.trigger(subject, use, object);
+        events.trigger(assert("You", "use", object));
         var somethingHappened = stepRoutine();
-
         return somethingHappened;
     }
 

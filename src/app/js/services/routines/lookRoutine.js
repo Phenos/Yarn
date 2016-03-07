@@ -1,17 +1,12 @@
-yarn.service("lookRoutine", function (state,
-                                      events,
+yarn.service("lookRoutine", function (events,
                                       writers,
+                                      assert,
                                       stepRoutine) {
 
     function lookRoutine(object) {
         if (object) {
             writers.describeThing(object);
-
-            // todo: Refactor these 3 lines into a single line
-            var you = state.thing("You");
-            var hasLookedAt = state.predicate("hasLookedAt");
-            events.trigger(you, hasLookedAt, object);
-
+            events.trigger(assert("You", "have looked at", object));
             stepRoutine();
         }
         return true;

@@ -236,16 +236,15 @@ yarn.service('state', function ($localStorage,
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
             var options = _options || {};
-            var _predicate = predicate;
 
-
-            if (subject && _predicate && object) {
+            if (subject && predicate && object) {
+                var _predicate = predicate;
 
                 // If the predicate is a negation, we find the positive predicate
                 // and force the value to false. We also warn if the author attempts
                 // to set a value with a negative predicate
-                if (_predicate.negative) {
-                    if (!angular.isUndefined(options.value)) {
+                if (typeof(_predicate.negative) === "string" && _predicate.negative !== "") {
+                    if (angular.isDefined(options.value)) {
                         yConsole.error(
                             ["Setting a value with a negative assertion is not allowed. Ref.: ",
                                 subject.id,

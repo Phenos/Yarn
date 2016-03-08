@@ -123,7 +123,6 @@ yarn.service('gamePedicates', function (predicates) {
          */
 
 
-        // Something uses something else
         predicates("use")
             .syntax("use")
             .syntax("uses")
@@ -132,7 +131,6 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("use a")
             .syntax("uses a");
 
-        // Something uses something else
         predicates("movesTo")
             .syntax("moves to")
             .syntax("moves into")
@@ -148,6 +146,22 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("enter the")
             .syntax("enter in")
             .syntax("enter into");
+
+        predicates("movedTo")
+            .syntax("moved to")
+            .syntax("moved into")
+            .syntax("went to")
+            .syntax("went into")
+            .syntax("entered")
+            .syntax("entered the")
+            .syntax("entered in")
+            .syntax("entered into");
+
+        predicates("exited")
+            .syntax("exited from")
+            .syntax("exited from the")
+            .syntax("moved out of")
+            .syntax("moved out of the");
 
         predicates("hasLookedAt")
             .syntax("looked at")

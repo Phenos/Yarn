@@ -3,7 +3,8 @@ yarn.service("stepRoutine", function (events,
                                       dialogs,
                                       script,
                                       assert,
-                                      sceneryService) {
+                                      sceneryService,
+                                      player) {
 
     /**
      * Increment the game session step counter
@@ -14,6 +15,15 @@ yarn.service("stepRoutine", function (events,
         var somethingHappened = events.process();
         // Check if dialogs are supposed to be said
         dialogs.process();
+
+        // todo: Refactor... this type of reaction should go trough some sort of command or routine ?
+        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+        if (storyHasEnded) {
+            player.refresh();
+        }
+
+
+
         // Update the scenery in case it has changed
         updateScenery();
 

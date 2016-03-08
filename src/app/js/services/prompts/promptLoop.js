@@ -4,6 +4,7 @@ yarn.service('promptLoop', function (PromptLoop,
                                      usePrompt,
                                      takePrompt,
                                      lookPrompt,
+                                     theEndPrompt,
                                      defaultPrompt) {
 
     // Create an instant of the promptLoop
@@ -11,6 +12,7 @@ yarn.service('promptLoop', function (PromptLoop,
 
     // NOTE: The order is important here. The "WhatToDo" must be after other options
 
+    promptLoop.addContext("TheEnd", theEndPrompt);
     promptLoop.addContext("WhatToUse", usePrompt);
     promptLoop.addContext("WhereToGo", movePrompt);
     promptLoop.addContext("WhatToLookAt", lookPrompt);

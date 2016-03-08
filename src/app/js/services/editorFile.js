@@ -11,7 +11,7 @@ yarn.service("EditorFile", function (guid,
         this._uri = uri;
         this.uri = URI(this._uri);
         if (session.user) {
-            console.log("session", session);
+            //console.log("session", session);
             baseURI = "http://storage.yarnstudio.io/" + session.user.username + "/";
             this.absoluteURI = this.uri.absoluteTo(baseURI).toString();
         } else {

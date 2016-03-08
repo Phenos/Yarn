@@ -3,7 +3,9 @@ yarn.directive('userChoice', UserChoiceDirective);
 function UserChoiceDirective() {
     return {
         restrict: 'E',
-        bindToController: {},
+        bindToController: {
+            prompt: "="
+        },
         scope: {},
         controllerAs: 'userChoice',
         templateUrl: './html/userChoice.html',
@@ -13,22 +15,16 @@ function UserChoiceDirective() {
     function UserChoiceController(promptLoop, soundEffects) {
         var self = this;
 
-        promptLoop.onUpdate( function (promptLoop) {
-            // Load the appropriate prompt and setup the ui with the prompt
-            var prompt = promptLoop.currentPrompt;
-            if (prompt) {
-                // Prompt the user with a question
-                self.question = prompt.question;
-                self.options = prompt.options;
-                self.choose = function (value) {
-                    soundEffects.tap();
-                    prompt.answer(promptLoop, value);
-                    promptLoop.update();
-                };
-            } else {
-                console.error("OUPS!!!... no prompt were found!!!");
-            }
-        });
+        if (self.prompt) {
+            // Prompt the user with a question
+            self.choose = function (value) {
+                soundEffects.tap();
+                self.prompt.answer(promptLoop, value);
+                promptLoop.update();
+            };
+        } else {
+            console.error("OUPS!!!... no prompt were found!!!");
+        }
 
         promptLoop.update();
     }

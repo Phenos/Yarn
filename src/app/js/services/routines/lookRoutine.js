@@ -6,6 +6,7 @@ yarn.service("lookRoutine", function (events,
     function lookRoutine(object) {
         if (object) {
             writers.describeThing(object);
+            writers.objectMenu(object);
             events.trigger(assert("You", "have looked at", object));
             stepRoutine();
         }

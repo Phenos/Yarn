@@ -1,4 +1,4 @@
-yarn.factory('writers', function (yarn,
+yarn.factory('writers', function (Prompt,
                                   assert,
                                   yConsole,
                                   storyLog,
@@ -167,6 +167,23 @@ yarn.factory('writers', function (yarn,
         return this;
     }
 
+    function objectMenu(thing) {
+        if (thing) {
+
+            var prompt = new Prompt();
+
+            var name = state.resolveValue(assert(thing, "has", "Name"));
+
+            var isUsable = state.resolveValue(assert(thing, "is", "Usable"));
+            if (isUsable) {
+                prompt.option("Use " + name, "use " + thing.id);
+            }
+
+        }
+
+        return this;
+    }
+
     return {
         nothingHappened: nothingHappened,
         describeThingTakenInInventory: describeThingTakenInInventory,
@@ -174,7 +191,8 @@ yarn.factory('writers', function (yarn,
         describeRoom: describeRoom,
         describeCoverpage: describeCoverpage,
         describeTheEnd: describeTheEnd,
-        describeWhereYouAre: describeWhereYouAre
+        describeWhereYouAre: describeWhereYouAre,
+        objectMenu: objectMenu
     };
 
 });

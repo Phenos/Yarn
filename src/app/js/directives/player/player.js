@@ -12,6 +12,13 @@ yarn.directive('player', function () {
 
     function playerController($scope, $element, sidebar, writers, promptLoop, player) {
 
+        promptLoop.onUpdate(function (promptLoop) {
+            // Load the appropriate prompt and setup the ui with the prompt
+            var prompt = promptLoop.currentPrompt;
+            $scope.prompt = prompt;
+        });
+        promptLoop.update();
+
         this.onStoryLogClear = function () {
             $element.find("md-content")[0].scrollTop = 0;
             $scope.$broadcast("refreshScrollbars");

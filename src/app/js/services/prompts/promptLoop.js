@@ -2,7 +2,7 @@ yarn.service('promptLoop', function (PromptLoop,
                                      coverpagePrompt,
                                      movePrompt,
                                      usePrompt,
-                                     takePrompt,
+                                     inventoryPrompt,
                                      lookPrompt,
                                      theEndPrompt,
                                      defaultPrompt) {
@@ -16,7 +16,7 @@ yarn.service('promptLoop', function (PromptLoop,
     promptLoop.addContext("WhatToUse", usePrompt);
     promptLoop.addContext("WhereToGo", movePrompt);
     promptLoop.addContext("WhatToLookAt", lookPrompt);
-    promptLoop.addContext("WhatToTake", takePrompt);
+    promptLoop.addContext("inventory", inventoryPrompt);
     promptLoop.addContext("WhatToDo", defaultPrompt);
     promptLoop.addContext("Coverpage", coverpagePrompt);
 

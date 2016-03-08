@@ -6,7 +6,7 @@ yarn.service("theEndPrompt", function (commands,
 
         context.when = function () {
             var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
-            console.log("storyHasEnded", storyHasEnded);
+            //console.log("storyHasEnded", storyHasEnded);
             return storyHasEnded;
         };
 

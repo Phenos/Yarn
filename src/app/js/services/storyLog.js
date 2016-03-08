@@ -58,6 +58,14 @@ yarn.service('storyLog', function () {
         this.controller.write(text, "log");
     };
 
+    StoryLog.prototype.prompts = function (prompts) {
+        var buffer;
+        angular.forEach(prompts, function (prompt) {
+            buffer.push("(----)");
+        });
+        this.controller.write(buffer.join(""), "log");
+    };
+
     StoryLog.prototype.image = function (url) {
         this.controller.write("<img src='" + url + "' alt='coverpage'>", "image");
     };

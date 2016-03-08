@@ -1,8 +1,8 @@
 <div>
-    <h3 class="question" ng-bind="userChoice.question"></h3>
+    <h3 class="question" ng-bind="userChoice.prompt.question"></h3>
     <section layout="row" layout-align="center center" layout-wrap>
         <md-button
-                ng-repeat="option in userChoice.options"
+                ng-repeat="option in userChoice.prompt.options"
                 ng-class="option.iconStyle()"
                 ng-click="$event.preventDefault(); userChoice.choose(option.value);"
                 aria-label="option.label"

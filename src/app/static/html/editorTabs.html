@@ -1,0 +1,9 @@
+<md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+    <md-tab ng-repeat="file in tabs.files"
+            label="{{file.name}}">
+        <editor save-and-run="IDE.saveAndRun()"
+                source="currentStory.content"
+                layout="column"
+                flex></editor>
+    </md-tab>
+</md-tabs>

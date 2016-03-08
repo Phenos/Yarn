@@ -1,13 +1,13 @@
 <md-content style="z-index:5" flex="1" layout="row">
     <md-section flex="50" layout="column" class="IDE">
         <editor-toolbar user="user"></editor-toolbar>
-        <div ng-if="currentStory" flex="{{ editorFlexHeight }}" layout="row">
-            <editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor>
+        <div ng-if="currentStory" flex="{{ editorFlexHeight }}" layout="column">
+            <editor-tabs layout="column" flex="100"></editor-tabs>
+            <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
         </div>
         <div flex="{{ currentStory ? consoleFlexHeight : 100 }}" layout="row">
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
     </md-section>
-    <player flex="50" layout="column"></player>
-    <assertion-browser></assertion-browser>
+    <player flex="50" user="user"></assertion-browser>
 </md-content>

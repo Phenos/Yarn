@@ -21,6 +21,7 @@
       "src/app/js/game/game.predicates.js",
       "src/app/js/controllers/**/*.js",
       "src/app/js/services/**/*.js",
+      "src/app/js/filters/**/*.js",
       "src/app/js/directives/**/*.js"
     ],
     "javascriptVendorsSource": [

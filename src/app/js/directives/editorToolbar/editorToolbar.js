@@ -1,5 +1,5 @@
 yarn.directive('editorToolbar', EditorToolbarDirective);
-
+/*
 yarn.filter('keyboardShortcut', function($window) {
     return function(str) {
         if (!str) return;
@@ -18,7 +18,7 @@ yarn.filter('keyboardShortcut', function($window) {
     };
 
 });
-
+*/
 function EditorToolbarDirective() {
     return {
         restrict: 'E',

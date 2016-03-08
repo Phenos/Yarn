@@ -1,14 +1,12 @@
-yarn.factory('IDE', IDEService);
-
 /**
  * Service for handling IDE/editor operations
  */
-function IDEService(stories,
-                    hotkeys,
-                    rememberLastStory,
-                    $mdDialog,
-                    yConsole,
-                    loader) {
+yarn.service('IDE', function IDEService(stories,
+                                        hotkeys,
+                                        rememberLastStory,
+                                        $mdDialog,
+                                        yConsole,
+                                        loader) {
 
     var service = {};
 
@@ -26,6 +24,15 @@ function IDEService(stories,
                 callback: function (event) {
                     event.preventDefault();
                     service.saveAndRun();
+                }
+            })
+            .add({
+                combo: 'mod+o',
+                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                description: 'Open file...',
+                callback: function (event) {
+                    event.preventDefault();
+                    service.openFromStorage();
                 }
             })
             .add({
@@ -72,6 +79,11 @@ function IDEService(stories,
         stories.save(success, failure);
     };
 
+    service.openFromStorage = function () {
+        console.log("openFromStorage");
+    };
+
+
 
     service.run = function () {
         var url = "http://storage.yarnstudio.io/" + stories.currentUser.username + "/story.yarn.txt";
@@ -93,7 +105,9 @@ function IDEService(stories,
     };
 
     return service;
-}
+});
+
+
 
 
 

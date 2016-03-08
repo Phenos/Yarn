@@ -16,10 +16,9 @@ yarn.service("usePrompt", function (stateHelpers,
             prompt.question = "What do you want to use ?";
 
             var room = state.resolveOne(assert("You", "is in"));
-
             var thingsInRoom = stateHelpers.usableItemInRoom(room);
 
-            console.log('thingsInRoom', thingsInRoom);
+            //console.log('thingsInRoom', thingsInRoom);
 
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {

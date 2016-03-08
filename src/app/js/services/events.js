@@ -9,14 +9,14 @@ yarn.service('events', function (assert,
     }
 
     Events.prototype.process = function () {
-        console.log("Events.process()");
+        //console.log("Events.process()");
 
         var somethingHappened = false;
         var setsToBeTriggered = [];
 
         var triggerAssertions = state.assertions.find(assert(undefined, "trigger"));
 
-        console.log("triggerAssertions", triggerAssertions);
+        //console.log("triggerAssertions", triggerAssertions);
 
         // First, figure out which assertions set will need to be triggered
         angular.forEach(triggerAssertions, function (assertion) {
@@ -53,11 +53,10 @@ yarn.service('events', function (assert,
             else {
                 yConsole.error("The trigger is not well formed. You must have a complete assertion with a subject and an object.")
             }
-        })
-        ;
+        });
 
-// Then, we trigger each assertion sets that are supposed to be triggered
-        console.log("setsToBeTriggered ", setsToBeTriggered);
+        // Then, we trigger each assertion sets that are supposed to be triggered
+        //console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (object) {
             var shouldOccur = true;
             var childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
@@ -86,17 +85,14 @@ yarn.service('events', function (assert,
                     });
                 });
             }
-
-
         });
-
 
         return somethingHappened;
     };
 
 
     Events.prototype.trigger = function (assert) {
-        console.log("Trigger", assert);
+        //console.log("Trigger", assert);
         state.createAssertion(assert.subject, assert.predicate, assert.object, {
             layer: "step"
         });

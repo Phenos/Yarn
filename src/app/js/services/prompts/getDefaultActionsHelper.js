@@ -41,7 +41,7 @@ yarn.service("setDefaultOptionsHelper", function (state,
             var inventoryInRoom = stateHelpers.inventoryInRoom(room);
             // Enable the "inventory" action if the user has inventory
             var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
-console.log("------", inventoryInRoom, inventoryItems, room);
+
             if (inventoryItems.length || inventoryInRoom.length) {
                 option = prompt.option("Take", "aboutTo take");
                 option.iconId = "take";

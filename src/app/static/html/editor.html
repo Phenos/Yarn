@@ -38,7 +38,7 @@
             </md-button>
             <span flex></span>
             <save-status>
-                <span ng-bind="editor.file.status"></span>
+                <a target="_blank" ng-href="{{ editor.file.absoluteURI }}" ng-bind="editor.file.status"></a>
                 <md-tooltip>
                     File located at {{ editor.file.absoluteURI }}
                 </md-tooltip>

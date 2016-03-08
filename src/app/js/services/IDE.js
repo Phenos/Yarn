@@ -6,7 +6,9 @@ yarn.service('IDE', function IDEService(stories,
                                         rememberLastStory,
                                         $mdDialog,
                                         yConsole,
-                                        loader) {
+                                        loader,
+                                        storage,
+                                        editorFiles) {
 
     var service = {};
 
@@ -79,8 +81,28 @@ yarn.service('IDE', function IDEService(stories,
         stories.save(success, failure);
     };
 
-    service.openFromStorage = function () {
-        console.log("openFromStorage");
+    service.openFromStorage = function (ev) {
+
+        storage.refresh();
+
+        $mdDialog.show({
+            controller: OpenFromStorageController,
+            templateUrl: './html/openFromStorage.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: false
+        });
+
+        function OpenFromStorageController($scope) {
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+            $scope.open = function(file) {
+                $mdDialog.cancel();
+                editorFiles.open(file);
+            };
+        }
     };
 
 

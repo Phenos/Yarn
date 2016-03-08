@@ -8,13 +8,14 @@ yarn.service("EditorFile", function (guid,
 
     function EditorFile(uri) {
         this.guid = guid();
-        this.uri = uri;
+        this._uri = uri;
+        this.uri = URI(this._uri);
         if (session.user) {
             console.log("session", session);
             baseURI = "http://storage.yarnstudio.io/" + session.user.username + "/";
-            this.absoluteURI = URI(this.uri).absoluteTo(baseURI).toString();
+            this.absoluteURI = this.uri.absoluteTo(baseURI).toString();
         } else {
-            this.absoluteURI = this.uri;
+            this.absoluteURI = this._uri;
         }
         this.ready = true;
         this.status = "";
@@ -29,13 +30,12 @@ yarn.service("EditorFile", function (guid,
             .then(function (script) {
                 self.status = "Loaded";
                 self.content = script.source;
-                console.log("script:", script);
+                //console.log("script:", script);
             })
             .catch(function () {
                 self.status = "Failed loading";
                 yConsole.error("Error while loading file: " + self.absoluteURI);
             });
-        console.log("----- LOADING : ", this.uri);
     };
 
     EditorFile.prototype.save = function () {
@@ -43,8 +43,7 @@ yarn.service("EditorFile", function (guid,
     };
 
     EditorFile.prototype.name = function () {
-        var _uri = URI(this.uri);
-        return _uri.filename().replace("." + _uri.suffix(), "");
+        return this.uri.filename().replace("." + this.uri.suffix(), "");
     };
 
     return EditorFile;

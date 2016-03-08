@@ -11,8 +11,13 @@ yarn.service("editorFiles", function (EditorFile) {
         return file;
     };
 
-    EditorFiles.prototype.open = function (uri) {
-        var file = new EditorFile(uri);
+    EditorFiles.prototype.open = function (uriOrFile) {
+        var file;
+        if (angular.isObject(uriOrFile)) {
+            file = uriOrFile;
+        } else {
+            file = new EditorFile(uriOrFile);
+        }
         file.load();
         this.files.push(file);
         return file;

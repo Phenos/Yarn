@@ -1,6 +1,6 @@
 <md-tabs md-selected="selectedIndex" flex="100" md-border-bottom md-autoselect>
     <md-tab ng-repeat="file in tabs.files"
-            label="{{file.name()}}">
+            label="{{ file.name() }}">
         <editor read-only="!file.ready"
                 save-and-run="IDE.saveAndRun()"
                 source="file.content"

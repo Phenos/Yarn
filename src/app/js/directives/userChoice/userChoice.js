@@ -3,23 +3,20 @@ yarn.directive('userChoice', UserChoiceDirective);
 function UserChoiceDirective() {
     return {
         restrict: 'E',
-        bindToController: {
+        scope: {
             prompt: "="
         },
-        scope: {},
-        controllerAs: 'userChoice',
         templateUrl: './html/userChoice.html',
         controller: UserChoiceController
     };
 
-    function UserChoiceController(promptLoop, soundEffects) {
-        var self = this;
+    function UserChoiceController($scope, promptLoop, soundEffects) {
 
-        if (self.prompt) {
+        if ($scope.prompt) {
             // Prompt the user with a question
-            self.choose = function (value) {
+            $scope.choose = function (value) {
                 soundEffects.tap();
-                self.prompt.answer(promptLoop, value);
+                $scope.prompt.answer(promptLoop, value);
                 promptLoop.update();
             };
         } else {

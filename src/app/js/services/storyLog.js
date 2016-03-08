@@ -58,12 +58,11 @@ yarn.service('storyLog', function () {
         this.controller.write(text, "log");
     };
 
-    StoryLog.prototype.prompts = function (prompts) {
-        var buffer;
-        angular.forEach(prompts, function (prompt) {
-            buffer.push("(----)");
-        });
-        this.controller.write(buffer.join(""), "log");
+    StoryLog.prototype.prompt = function (prompt) {
+        var scope = {
+            prompt: prompt
+        };
+        this.controller.write("<user-choice prompt='prompt'></user-choice>", "prompt", scope);
     };
 
     StoryLog.prototype.image = function (url) {

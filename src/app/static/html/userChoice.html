@@ -1,10 +1,10 @@
 <div>
-    <h3 class="question" ng-bind="userChoice.prompt.question"></h3>
+    <h3 ng-if="prompt.question" class="question" ng-bind="prompt.question"></h3>
     <section layout="row" layout-align="center center" layout-wrap>
         <md-button
-                ng-repeat="option in userChoice.prompt.options"
+                ng-repeat="option in prompt.options"
                 ng-class="option.iconStyle()"
-                ng-click="$event.preventDefault(); userChoice.choose(option.value);"
+                ng-click="$event.preventDefault(); choose(option.value);"
                 aria-label="option.label"
         >
             <md-icon

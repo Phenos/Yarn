@@ -21,11 +21,16 @@
                 this.onClear();
             };
 
-            this.write = function (text, type) {
-                var scope = $scope.$new();
-                scope.text = text;
-                scope.type = type;
-                var logItemEl = $compile('<log-item type="type" text="text"></log-item>')(scope);
+            this.write = function (text, type, scope) {
+                var newScope = $scope.$new(false);
+                if (scope) {
+                    angular.extend(newScope, {
+                        scope: scope
+                    });
+                }
+                newScope.text = text;
+                newScope.type = type;
+                var logItemEl = $compile('<log-item type="type" text="text" scope="scope"></log-item>')(newScope);
                 $element.append(logItemEl);
             };
 

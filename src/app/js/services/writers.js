@@ -4,6 +4,7 @@ yarn.factory('writers', function (Prompt,
                                   storyLog,
                                   state,
                                   script,
+                                  commands,
                                   sceneryService) {
 
     // Describe where you are at the beginning
@@ -172,13 +173,29 @@ yarn.factory('writers', function (Prompt,
 
             var prompt = new Prompt();
 
+            prompt.answer = function answer(promptLoop, option) {
+                commands.command(option);
+            };
+
             var name = state.resolveValue(assert(thing, "has", "Name"));
 
             var isUsable = state.resolveValue(assert(thing, "is", "Usable"));
             if (isUsable) {
-                prompt.option("Use " + name, "use " + thing.id);
+                var option = prompt.option("Use " + name, "use " + thing.id);
+                option.iconId = "use";
+                option.iconSize = "small";
+                option.iconOnly = true;
             }
 
+            var isInventoryItem = state.resolveValue(assert(thing, "is", "InventoryItem"));
+            if (isInventoryItem) {
+                var option = prompt.option("Take " + name, "take " + thing.id);
+                option.iconId = "inventory";
+                option.iconSize = "small";
+                option.iconOnly = true;
+            }
+
+            storyLog.prompt(prompt);
         }
 
         return this;

@@ -8,7 +8,7 @@
             restrict: 'E',
             bindToController: {
                 readOnly: "=",
-                status: "=",
+                file: "=",
                 saveAndRun: "&",
                 ready: "&",
                 source: "="
@@ -19,7 +19,9 @@
             controller: EditorController
         };
 
-        function EditorController(editorService,
+        function EditorController($mdDialog,
+                                  editorService,
+                                  editorFiles,
                                   commands,
                                   IDE) {
             var aceEditor;
@@ -35,9 +37,11 @@
             };
 
             this.save = function() {
+                this.file.save();
             };
 
             this.reload = function() {
+                this.file.load();
             };
 
             this.search = function(ev) {
@@ -57,7 +61,7 @@
             };
 
             this.close = function() {
-                console.log("Close!");
+                editorFiles.close(this.file);
             };
 
             this.focus = function() {
@@ -65,6 +69,7 @@
             };
 
             function aceLoaded(_editor) {
+                _editor.$blockScrolling = Infinity;
                 console.log("Editor loaded");
                 aceEditor = _editor;
             }

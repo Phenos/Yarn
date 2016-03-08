@@ -6,8 +6,10 @@ yarn.config(function ($stateProvider,
     $stateProvider.state('editorMode', {
         url: '/editor',
         resolve: {
-            "user": function (userFromAPI) {
+            "user": function (userFromAPI, session) {
                 return userFromAPI().then(function (user) {
+                    console.log("USER PUT IN SESSION", user);
+                    session.user = user;
                     return user;
                 });
             }
@@ -21,8 +23,9 @@ yarn.config(function ($stateProvider,
     $stateProvider.state('playerMode', {
         url: '/',
         resolve: {
-            "user": function (userFromAPI) {
+            "user": function (userFromAPI, session) {
                 return userFromAPI().then(function (user) {
+                    session.user = user;
                     return user;
                 });
             }

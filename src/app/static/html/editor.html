@@ -15,7 +15,7 @@
             <md-button ng-click="editor.reload()" class="md-icon-button" aria-label="Reload from file">
                 <md-icon md-svg-icon="/svg-icons/load.svg"></md-icon>
                 <md-tooltip>
-                    Reload from file
+                    Reload
                 </md-tooltip>
             </md-button>
             <md-button ng-click="editor.run()" class="md-icon-button" aria-label="Run">
@@ -37,7 +37,12 @@
                 </md-tooltip>
             </md-button>
             <span flex></span>
-            <save-status ng-bind="editor.status"></save-status>
+            <save-status>
+                <span ng-bind="editor.file.status"></span>
+                <md-tooltip>
+                    File located at {{ editor.file.absoluteURL }}
+                </md-tooltip>
+            </save-status>
             <md-button ng-click="editor.close()" class="md-icon-button" aria-label="Close">
                 <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
                 <md-tooltip>
@@ -49,7 +54,7 @@
     <div
             flex="100"
             ui-ace="editor.options"
-            ng-readonly="editor.readOnly"
+            ng-readonly="editor.file.ready"
             ng-model="editor.source">
     </div>
 

@@ -1,6 +1,4 @@
-yarn.factory('userFromAPI', userFromAPI);
-
-function userFromAPI($http, Rollbar) {
+yarn.service('userFromAPI', function userFromAPI($http, Rollbar) {
 
     function loadUserFromAPI() {
 
@@ -49,5 +47,6 @@ function userFromAPI($http, Rollbar) {
     }
 
     return loadUserFromAPI;
-}
+});
+
 

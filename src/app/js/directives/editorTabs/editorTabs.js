@@ -16,13 +16,13 @@
 
         function editorTabsController(editorTabs, editorFiles) {
 
-            editorFiles.open("./chapters/story.yarn");
-            editorFiles.open("./chapters/rooms.yarn");
-            editorFiles.open("./chapters/things.yarn");
-            editorFiles.open("./chapters/the-unflushed-toilet.yarn");
+            editorFiles.open("./story.yarn.txt");
+            editorFiles.open("./chapters/rooms.yarn.txt");
+            editorFiles.open("./chapters/things.yarn.txt");
+            editorFiles.open("./chapters/the-unflushed-toilet.yarn.txt");
 
-            //editorFiles.open("./chapters/dialogs.yarn");
-            //editorFiles.open("./chapters/kitchen.yarn");
+            //editorFiles.open("./chapters/dialogs.yarn.txt");
+            //editorFiles.open("./chapters/kitchen.yarn.txt");
 
             this.files = editorFiles.files;
 

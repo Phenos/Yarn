@@ -14,22 +14,14 @@
             controller: editorTabsController
         };
 
-        function editorTabsController(editorTabs) {
+        function editorTabsController(editorTabs, editorFiles) {
 
-            this.files = [
-                {
-                    name: "Test1",
-                    url: "Test1.yarn.txt"
-                },
-                {
-                    name: "Test2",
-                    url: "Test1.yarn.txt"
-                },
-                {
-                    name: "Potatoe",
-                    url: "Potatoe.yarn.txt"
-                }
-            ];
+            editorFiles.new();
+            editorFiles.new();
+            editorFiles.new();
+            editorFiles.new();
+
+            this.files = editorFiles.files;
 
             editorTabs.register(this);
 

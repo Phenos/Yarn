@@ -1,19 +1,18 @@
 yarn.service("moveRoutine", function (state,
                                       events,
                                       assert,
+                                      predicates,
+                                      things,
                                       stepRoutine) {
 
     function moveRoutine(room) {
-        var isIn = state.predicate("isIn");
-        var you = state.thing("You");
+        var isIn = predicates("isIn");
+        var you = things("You");
         if (room) {
 
             // Remove player from current possition
 
-            state.negate({
-                subject: "You",
-                predicate: "isIn"
-            });
+            state.negate(assert("you", "is in"));
 
             //state.negate("You is in");
 

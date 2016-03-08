@@ -1,32 +1,61 @@
-yarn.service("assert", function(state) {
+yarn.service("assert", function (things,
+                                 predicates) {
 
-    function assert(subject, predicate, object, value) {
+    function assert(subject, predicate, object, valueOrOptions) {
+        var options;
+
+        if (!angular.isObject(valueOrOptions)) {
+            options = {
+                value: valueOrOptions
+            }
+        } else {
+            options = valueOrOptions
+        }
+
         var c = {
             subject: subject,
             predicate: predicate,
             object: object
         };
-        if (angular.isDefined(value)) {
-            c.value = value;
+
+        if (angular.isUndefined(options.parent)) {
+            c.parent = null;
+        } else {
+            c.parent = options.parent;
         }
-        if (angular.isDefined(c.subject)) {
-            if (typeof(c.subject) === "string") {
-                c.subject = state.thing(c.subject);
-            }
+
+        ensureIsThing(c, "subject");
+        ensureIsPredicate(c, "predicate");
+        ensureIsThing(c, "object");
+        ensureIsThing(c, "parent");
+
+        if (angular.isDefined(options.value)) {
+            c.value = options.value;
         }
-        if (angular.isDefined(c.object)) {
-            if (typeof(c.object) === "string") {
-                c.object = state.thing(c.object);
-            }
+        if (angular.isDefined(options.layer)) {
+            c.layer = options.layer;
         }
-        if (angular.isDefined(c.predicate)) {
-            if (typeof(c.predicate) === "string") {
-                c.predicate = state.predicate(c.predicate);
-            }
-        }
+
         return c;
     }
 
-    return assert;
+    function ensureIsThing(obj, attribute) {
+        if (angular.isDefined(obj[attribute])) {
+            if (typeof(obj[attribute]) === "string") {
+                obj[attribute] = things(obj[attribute]);
+            }
+        }
+        return obj[attribute];
+    }
 
+    function ensureIsPredicate(obj, attribute) {
+        if (angular.isDefined(obj[attribute])) {
+            if (typeof(obj[attribute]) === "string") {
+                obj[attribute] = predicates(obj[attribute]);
+            }
+        }
+        return obj[attribute];
+    }
+
+    return assert;
 });

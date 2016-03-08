@@ -2,6 +2,7 @@ yarn.service("takePrompt", function (logic,
                                      writers,
                                      commands,
                                      state,
+                                     assert,
                                      stateHelpers,
                                      storyLog,
                                      setDefaultOptionsHelper) {
@@ -9,33 +10,19 @@ yarn.service("takePrompt", function (logic,
     function takePrompt(context) {
 
         context.when = function () {
-            return "take" === state.resolveValue({
-                    subject: "you",
-                    predicate: "has",
-                    object: "intention"
-                });
+            return "take" === state.resolveValue(assert("You", "has", "Intention"));
         };
 
         context.question = function (promptLoop, prompt) {
 
-            var room = state.resolveOne({
-                subject: "you",
-                predicate: "isIn"
-            });
-
+            var room = state.resolveOne(assert("You", "is in"));
             var thingsToTake = stateHelpers.inventoryInRoom(room);
 
-            //console.log('thingsInRoom', thingsInRoom);
             if (thingsToTake.length) {
                 prompt.question = "What do you want to take ?";
                 thingsToTake.forEach(function (thing) {
-                    var label = state.resolveValue({
-                        subject: thing.id,
-                        predicate: "has",
-                        object: "Name"
-                    });
-                    //console.log(">>>>>", label, thing);
-                    prompt.option(label, "take " + thing.id);
+                    var name = state.resolveValue(assert(thing, "has", "Name"));
+                    prompt.option(name, "take " + thing.id);
                 });
             } else {
                 prompt.question = "There is nothing to take here!";

@@ -1,4 +1,5 @@
 yarn.factory('writers', function (yarn,
+                                  assert,
                                   yConsole,
                                   storyLog,
                                   state,
@@ -21,30 +22,14 @@ yarn.factory('writers', function (yarn,
         storyLog.clear();
 
         // Show the story title
-        var storyIsCalled = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Name"
-        });
-        if (storyIsCalled) {
-            storyLog.heading(storyIsCalled);
+        var name = state.resolveValue(assert("Story", "has", "Name"));
+        if (name) {
+            storyLog.heading(name);
         }
 
         // Set the scenery
-        var scenery = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Scenery"
-        });
-
-        var coverpage = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Coverpage"
-        });
-
-
-
+        var scenery = state.resolveValue(assert("Story", "has", "Scenery"));
+        var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
         var scenery_url = scenery && script.resolveRelativeURI(scenery);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
         var url = scenery_url || coverpage_url || false;
@@ -59,20 +44,12 @@ yarn.factory('writers', function (yarn,
             storyLog.image(coverpage_url);
         }
 
-        var description = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Description"
-        });
+        var description = state.resolveValue(assert("Story", "has", "Description"));
         if (description) {
             storyLog.log("“&nbsp;" + description + "&nbsp;”");
         }
 
-        var author = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Author"
-        });
+        var author = state.resolveValue(assert("Story", "has", "Author"));
         if (author) {
             storyLog.log("by " + author);
         }
@@ -83,20 +60,10 @@ yarn.factory('writers', function (yarn,
     function describeRoom() {
         storyLog.clear();
 
-        var room = state.resolveOne({
-            subject: "You",
-            predicate: "isIn"
-        });
+        var room = state.resolveOne(assert("You", "is in"));
 
-        //console.log("describing room", room);
-
-        //console.log("Your in room ", room);
         if (room) {
-            var scenery = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Scenery"
-            });
+            var scenery = state.resolveValue(assert(room, "has", "Scenery"));
             var url = script.resolveRelativeURI(scenery);
             if (url) {
                 sceneryService.change(url);
@@ -104,23 +71,12 @@ yarn.factory('writers', function (yarn,
                 sceneryService.clear();
             }
 
-            var label = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Name"
-            });
-            if (label) storyLog.heading(label);
+            var name = state.resolveValue(assert(room, "has", "Name"));
+            if (name) storyLog.heading(name);
 
-            var introduction = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Introduction"
-            });
-            var description = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "description"
-            });
+            var introduction = state.resolveValue(assert(room, "has", "Introduction"));
+            var description = state.resolveValue(assert(room, "has", "Description"));
+
             if (introduction) {
                 storyLog.log(introduction);
             } else if (description) {
@@ -144,28 +100,15 @@ yarn.factory('writers', function (yarn,
     // Describe where you are at the beginning
     function describeThing(thing) {
         if (thing) {
-            var label = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Name"
-            });
-            var description = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Description"
-            });
-            var image = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Image"
-            });
-
+            var name = state.resolveValue(assert(thing, "has", "Name"));
+            var description = state.resolveValue(assert(thing, "has", "Description"));
+            var image = state.resolveValue(assert(thing, "has", "Image"));
             if (image) {
                 storyLog.thingImage(
                     script.resolveRelativeURI(image)
                 );
             }
-            if (label) storyLog.subHeading(label);
+            if (name) storyLog.subHeading(name);
             if (description) storyLog.log(description);
         }
         return this;
@@ -180,12 +123,8 @@ yarn.factory('writers', function (yarn,
     // Describe where you are at the beginning
     function describeThingTakenInInventory(thing) {
         if (thing) {
-            var label = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Name"
-            });
-            if (label) storyLog.log("You took the " + label);
+            var name = state.resolveValue(assert(thing, "has", "Name"));
+            if (name) storyLog.log("You took the " + name);
         }
         return this;
     }

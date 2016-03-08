@@ -1,24 +1,17 @@
-yarn.service("usableItemInRoomHelper", function (state) {
+yarn.service("usableItemInRoomHelper", function (state,
+                                                 assert) {
 
     return function usableItemInRoom(room) {
         var foundUsableItems = [];
 
         if (room) {
 
-            var thingsInRoom = state.resolveAll({
-                predicate: "isIn",
-                object: room.id
-            });
+            var thingsInRoom = state.resolveAll(assert(undefined, "is in", room));
 
             thingsInRoom.forEach(function (thing) {
                 // Check if item is an InventoryItem
-                var thingIsUsable = state.resolveValue({
-                    subject: thing.id,
-                    predicate: "is",
-                    object: "Usable"
-                });
-
-                if (thingIsUsable) foundUsableItems.push(thing);
+                var isUsable = state.resolveValue(assert(thing, "is", "Usable"));
+                if (isUsable) foundUsableItems.push(thing);
             });
         }
 

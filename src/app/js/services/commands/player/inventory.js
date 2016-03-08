@@ -1,26 +1,20 @@
 yarn.factory('inventoryPlayerCommand', inventoryPlayerCommand);
 
 function inventoryPlayerCommand(state,
+                                assert,
                                 storyLog,
                                 promptLoop) {
 
     function handler() {
         var itemList;
 
-        var thingsInInventory = state.resolveAll({
-            subject: "you",
-            predicate: "hasInInventory"
-        });
+        var thingsInInventory = state.resolveAll(assert("You", "have in inventory"));
 
         if (thingsInInventory.length) {
             itemList = [];
             thingsInInventory.forEach(function (thing) {
-                var label = state.resolveValue({
-                    subject: thing.id,
-                    predicate: "has",
-                    object: "Name"
-                });
-                itemList.push(label);
+                var name = state.resolveValue(assert(thing, "has", "Name"));
+                itemList.push(name);
             });
             var message = [
                 "You have ",

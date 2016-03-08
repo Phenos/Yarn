@@ -1,13 +1,13 @@
 yarn.factory('lookCommand', function (yConsole,
                                       events,
-                                      state,
+                                      things,
                                       logic,
                                       lookRoutine,
                                       storyLog) {
 
     function handler(args) {
         if (args.length) {
-            var object = state.thing(args[0], true);
+            var object = things(args[0], true);
             if (object) {
                 lookRoutine(object);
             } else {

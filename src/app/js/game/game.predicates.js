@@ -1,17 +1,15 @@
-yarn.service('gamePedicates', function (state) {
+yarn.service('gamePedicates', function (predicates) {
 
     return function () {
 
-        var is = state
-            .predicate("is")
+        predicates("is")
             .syntax("is a")
             .syntax("is an")
             .syntax("are")
             .syntax("are a")
             .syntax("are an");
 
-        state
-            .predicate("isNot")
+        predicates("isNot")
             .isNegativeOf("is")
             .syntax("is not")
             .syntax("is not a")
@@ -20,16 +18,14 @@ yarn.service('gamePedicates', function (state) {
             .syntax("are not a")
             .syntax("are not an");
 
-        state
-            .predicate("has")
+        predicates("has")
             .syntax("has an")
             .syntax("have")
             .syntax("have a")
             .syntax("have an")
             .syntax("has a");
 
-        state
-            .predicate("hasNot")
+        predicates("hasNot")
             .isNegativeOf("has")
             .syntax("has not")
             .syntax("has not an")
@@ -46,8 +42,7 @@ yarn.service('gamePedicates', function (state) {
             .syntax("do not have a")
             .syntax("do not have an");
 
-        state
-            .predicate("isIn")
+        predicates("isIn")
             .syntax("is in the")
             .syntax("is inside the")
             .syntax("is at the")
@@ -61,8 +56,7 @@ yarn.service('gamePedicates', function (state) {
             .syntax("are at")
             .syntax("is in");
 
-        state
-            .predicate("isNotIn")
+        predicates("isNotIn")
             .isNegativeOf("isIn")
             .syntax("is not in the")
             .syntax("is not inside the")
@@ -78,8 +72,7 @@ yarn.service('gamePedicates', function (state) {
             .syntax("is not in");
 
         // When something has something else. Ex.: Kitchen has a Kitchen Table
-        state
-            .predicate("hasInInventory")
+        predicates("hasInInventory")
             .syntax("has in inventory a")
             .syntax("has in inventory")
             .syntax("has inventory")
@@ -88,8 +81,7 @@ yarn.service('gamePedicates', function (state) {
             .syntax("have inventory");
 
         // When a place is linked to another place
-        state
-            .predicate("linksTo")
+        predicates("linksTo")
             .syntax("goes to")
             .syntax("is open to")
             .syntax("goes to the")
@@ -97,8 +89,7 @@ yarn.service('gamePedicates', function (state) {
             .syntax("links to the")
             .syntax("links to");
 
-        state
-            .predicate("doesNotLinkTo")
+        predicates("doesNotLinkTo")
             .isNegativeOf("linksTo")
             .syntax("does not go to")
             .syntax("doesn't go to")
@@ -115,14 +106,12 @@ yarn.service('gamePedicates', function (state) {
 
 
         // Something triggers something else
-        state
-            .predicate("trigger")
+        predicates("trigger")
             .syntax("trigger")
             .syntax("triggers");
 
         // Something triggers something else
-        state
-            .predicate("doesNotTrigger")
+        predicates("doesNotTrigger")
             .isNegativeOf("trigger")
             .syntax("doesn't trigger")
             .syntax("does not trigger");
@@ -135,8 +124,7 @@ yarn.service('gamePedicates', function (state) {
 
 
         // Something uses something else
-        state
-            .predicate("use")
+        predicates("use")
             .syntax("use")
             .syntax("uses")
             .syntax("use the")
@@ -145,8 +133,7 @@ yarn.service('gamePedicates', function (state) {
             .syntax("uses a");
 
         // Something uses something else
-        state
-            .predicate("movesTo")
+        predicates("movesTo")
             .syntax("moves to")
             .syntax("moves into")
             .syntax("goes to")
@@ -162,20 +149,17 @@ yarn.service('gamePedicates', function (state) {
             .syntax("enter in")
             .syntax("enter into");
 
-        state
-            .predicate("hasLookedAt")
+        predicates("hasLookedAt")
             .syntax("looked at")
             .syntax("has looked at")
             .syntax("have looked at");
 
-        state
-            .predicate("take")
+        predicates("take")
             .syntax("took")
             .syntax("has taken")
             .syntax("takes");
 
-        state
-            .predicate("say")
+        predicates("say")
             .syntax("says");
 
     }

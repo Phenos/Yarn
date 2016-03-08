@@ -2,16 +2,16 @@ yarn.service('state', function ($localStorage,
                                 Assertion,
                                 Assertions,
                                 Thing,
+                                things,
                                 Syntax,
                                 Predicate,
+                                predicates,
                                 yConsole,
+                                assert,
                                 guid) {
 
         function State() {
             this.assertions = new Assertions();
-            this.things = {};
-            this.predicates = {};
-            this.syntaxes = {};
             this.currentLayer = "world";
             this.localState = null;
             this.guid = guid();
@@ -34,7 +34,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.object;
                 } else if (typeof(assertion.object) === "string") {
                     if (assertion.object.indexOf("@id:") === 0) {
-                        object = self.thing(assertion.object.substring(4));
+                        object = things(assertion.object.substring(4));
                     } else {
                         object = assertion.object;
                     }
@@ -44,7 +44,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.subject;
                 } else if (typeof(assertion.subject) === "string") {
                     if (assertion.subject.indexOf("@id:") === 0) {
-                        subject = self.thing(assertion.subject.substring(4));
+                        subject = things(assertion.subject.substring(4));
                     } else {
                         subject = assertion.subject;
                     }
@@ -52,7 +52,7 @@ yarn.service('state', function ($localStorage,
 
                 var newAssertion = self.createAssertion(
                     subject,
-                    self.predicate(assertion.predicate),
+                    predicates(assertion.predicate),
                     object, {
                         value: assertion.value
                     }
@@ -61,95 +61,17 @@ yarn.service('state', function ($localStorage,
             });
         };
 
-        /**
-         * Get or create a new thing
-         * @param _id
-         * @param dontAutoCreate
-         */
-        State.prototype.thing = function (_id, dontAutoCreate) {
-            var thing = null;
-            if (_id) {
-                var id = _id.toLowerCase();
-                thing = this.things[id];
-                if (!thing) {
-                    if (dontAutoCreate) {
-                        thing = null;
-                    } else {
-                        thing = new Thing(id, this);
-                        thing.label(_id);
-                        this.things[id] = thing;
-                    }
-                }
 
-            }
-
-            return thing;
-        };
-
-        /**
-         * Get or create a new thing
-         * @param predicate
-         * @param text
-         * @returns {*}
-         */
-        State.prototype.syntax = function (predicate, text) {
-            var syntax;
-
-            if (!predicate)
-                throw("Syntax must have a predicate");
-            if (!text)
-                throw("Syntax must have a text");
-            syntax = this.syntaxes[text];
-            if (!syntax) {
-                syntax = new Syntax(text, predicate);
-                this.syntaxes[text] = syntax;
-            }
-            return syntax;
-        };
-
-        /**
-         * Get or create a new type of predicate
-         * @param _id
-         * @param dontAutoCreate
-         */
-        State.prototype.predicate = function (_id, dontAutoCreate) {
-            var predicate;
-            var syntax;
-            if (typeof(_id) === "string") {
-                var id = _id.toLowerCase();
-
-                // Resolve the predicate from the syntax
-                syntax = this.syntaxes[id];
-                if (!syntax) {
-                    if (dontAutoCreate) {
-                        predicate = null;
-                    } else {
-                        predicate = new Predicate(id, this);
-                        //console.log("Created new predicate", predicate);
-                        this.predicates[id] = predicate;
-                        // By default, create a positivie syntax for the ad hoc predicate
-                        this.syntax(id, predicate, true);
-                    }
-                } else {
-                    predicate = syntax.predicate;
-                }
-            } else {
-                console.error("You must provide an id to find a predicate");
-            }
-            return predicate;
-        };
-
-        State.prototype.resolveAll = function resolveAll(criterias) {
+        State.prototype.resolveAll = function resolveAll(assert) {
             var foundObjects = [];
-            if (criterias && (criterias.subject && criterias.predicate) || (criterias.object && criterias.predicate)) {
+            if (assert && (assert.subject && assert.predicate) || (assert.object && assert.predicate)) {
                 var foundObjectsSets = {};
-                //console.log("criterias", criterias);
 
                 // Exclused parented assertions unless already specified
-                if (angular.isUndefined(criterias.parent)) criterias.parent = null;
+                if (angular.isUndefined(assert.parent)) assert.parent = null;
 
                 // Match all assertions to the criterias
-                var assertions = this.assertions.find(criterias);
+                var assertions = this.assertions.find(assert);
 
 
                 // Sort assertion by weight
@@ -158,7 +80,7 @@ yarn.service('state', function ($localStorage,
                 });
 
                 // Check if the item to be resolved is the object or the subject
-                var typeToResolve = (criterias.object) ? "subject" : "object";
+                var typeToResolve = (assert.object) ? "subject" : "object";
 
                 // Split all assertion by their unique thing to be resolved
                 assertions.forEach(function (assertion) {
@@ -181,9 +103,9 @@ yarn.service('state', function ($localStorage,
             return foundObjects;
         };
 
-        State.prototype.resolveOne = function (criterias) {
+        State.prototype.resolveOne = function (assert) {
             var value = null;
-            var objs = this.resolveAll(criterias);
+            var objs = this.resolveAll(assert);
             if (objs.length) {
                 // We make sure that the top-most item is taken, in a case where
                 // multiple assertions would have been true, the heaviest one
@@ -193,20 +115,20 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
-        State.prototype.resolveValue = function (criterias) {
+        State.prototype.resolveValue = function (assert) {
             var value = null;
-            if (criterias && (criterias.subject && criterias.predicate)) {
+            if (assert && (assert.subject && assert.predicate)) {
 
                 // Exclused parented assertions
-                criterias.parent = null;
+                assert.parent = null;
 
                 // If no object is supplied as criteria,
                 // If no object is supplied as criteria,
                 // indicate is should match for "no objects"
-                if (!criterias.object) criterias.object = null;
+                if (!assert.object) assert.object = null;
 
                 // Match all assertions to the criterias
-                var assertions = this.assertions.find(criterias);
+                var assertions = this.assertions.find(assert);
 
                 //console.log("criterias", criterias);
                 //console.log("assertions", assertions);
@@ -253,7 +175,7 @@ yarn.service('state', function ($localStorage,
                             ].join(" "));
                     }
                     options.value = false;
-                    _predicate = this.predicate(predicate.negative);
+                    _predicate = predicates(predicate.negative);
                 }
 
                 // If no value is provided, we set "true" as the default
@@ -268,19 +190,13 @@ yarn.service('state', function ($localStorage,
 
                 if (!options.parent && this.currentLayer !== "world") {
                     // Find exquivalent assertions to be negated
-                    this.negate({
-                        subject: subject.id,
-                        predicate: _predicate.id,
-                        object: object.id
-                    });
+                    this.negate(assert(subject, _predicate, object));
                 }
-                var identicalAssertions = this.assertions.filter({
-                    subject: subject.id,
-                    predicate: _predicate.id,
-                    object: object.id,
+                var _assert = assert(subject, _predicate, object, {
                     layer: options.layer,
                     parent: options.parent
                 });
+                var identicalAssertions = this.assertions.filter(_assert);
                 if (identicalAssertions.count() > 0) {
                     var topAssertion = identicalAssertions.sortByWeight().top();
                     if (topAssertion.layer === "world") {
@@ -355,14 +271,14 @@ yarn.service('state', function ($localStorage,
             });
         };
 
-        State.prototype.negate = function (criterias) {
+        State.prototype.negate = function (assert) {
             var self = this;
 
-            if (criterias.layer) throw "Cannot specify layer when negating assertions";
-            if (criterias.parent) throw "Cannot specify parent when negating assertions";
+            if (assert.layer) throw "Cannot specify layer when negating assertions";
+            if (assert.parent) throw "Cannot specify parent when negating assertions";
 
             var groupedAssertions = this.assertions
-                .filter(criterias)
+                .filter(assert)
                 .groupByTripple();
 
             //console.log("groupedAssertions", groupedAssertions);
@@ -421,11 +337,7 @@ yarn.service('state', function ($localStorage,
 
         State.prototype.step = function (increment) {
             var count = 0;
-            var stepCount = this.resolveValue({
-                subject: "story",
-                predicate: "has",
-                object: "steps"
-            });
+            var stepCount = this.resolveValue(assert("Story", "has", "Steps"));
             if (stepCount) {
                 if (typeof stepCount === "number") {
                     count = stepCount;
@@ -434,20 +346,18 @@ yarn.service('state', function ($localStorage,
 
             if (increment && typeof(increment) === "number") {
                 count = count + increment;
-                var story = this.thing("Story");
-                var steps = this.thing("Steps");
-                var has = this.predicate("has");
+                var story = things("Story");
+                var steps = things("Steps");
+                var has = predicates("has");
                 this.createAssertion(story, has, steps, {
                     value: count
                 });
-                //console.log("====>", assertion);
             }
 
             return count;
         };
 
         return new State();
-
 
     }
 );

@@ -1,5 +1,6 @@
 yarn.service("lookPrompt", function (writers,
                                      logic,
+                                     assert,
                                      commands,
                                      state,
                                      stateHelpers,
@@ -8,26 +9,15 @@ yarn.service("lookPrompt", function (writers,
     function lookPrompt(context) {
 
         context.when = function () {
-            return "look" === state.resolveValue({
-                    subject: "you",
-                    predicate: "has",
-                    object: "intention"
-                });
+            return "look" === state.resolveValue(assert("You", "has", "Intention"));
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";
 
-            var room = state.resolveOne({
-                subject: "You",
-                predicate: "isIn"
-            });
+            var room = state.resolveOne(assert("You", "is in"));
 
             // Add the room to the list of objects to inspect
-            var roomName = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Name"
-            });
+            var roomName = state.resolveValue(assert(room, "has", "Name"));
             prompt.option(roomName, "look " + room.id);
 
             var thingsInRoom = stateHelpers.thingsInRoom(room);
@@ -36,18 +26,10 @@ yarn.service("lookPrompt", function (writers,
 
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
-                    var label = state.resolveValue({
-                        subject: thing.id,
-                        predicate: "has",
-                        object: "Name"
-                    });
-                    var Noticed = state.resolveValue({
-                        subject: thing.id,
-                        predicate: "is",
-                        object: "Noticed"
-                    });
+                    var name = state.resolveValue(assert(thing, "has", "Name"));
+                    var Noticed = state.resolveValue(assert(thing, "is", "Noticed"));
                     if (Noticed !== false) {
-                        prompt.option(label, "look " + thing.id);
+                        prompt.option(name, "look " + thing.id);
                     }
                 });
             }

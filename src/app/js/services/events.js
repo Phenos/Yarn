@@ -1,4 +1,7 @@
-yarn.service('events', function (state,
+yarn.service('events', function (assert,
+                                 state,
+                                 predicates,
+                                 things,
                                  Assertion,
                                  yConsole) {
 
@@ -11,9 +14,9 @@ yarn.service('events', function (state,
         var somethingHappened = false;
         var setsToBeTriggered = [];
 
-        var triggerAssertions = state.assertions.find({
-            predicate: "trigger"
-        });
+        var triggerAssertions = state.assertions.find(assert(undefined, "trigger"));
+
+        console.log("triggerAssertions", triggerAssertions);
 
         // First, figure out which assertions set will need to be triggered
         angular.forEach(triggerAssertions, function (assertion) {
@@ -27,18 +30,17 @@ yarn.service('events', function (state,
             if (subject && object) {
                 //console.log("Testing : ", consoleHelper.assertion2log(assertion));
 
-                childAssertions = state.assertions.find({
+                childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
                     parent: subject.id
-                });
+                }));
 
                 if (childAssertions.length) {
                     //console.log("childAssertions", childAssertions);
                     angular.forEach(childAssertions, function (assertion) {
-                        var value = state.resolveValue({
-                            subject: assertion.subject.id,
-                            predicate: assertion.predicate.id,
-                            object: assertion.object.id
-                        });
+                        var value = state.resolveValue(
+                            assert(assertion.subject,
+                                assertion.predicate,
+                                assertion.object));
                         if (!(value === assertion.value())) allConditionsAreTrue = false;
                     });
                     //console.log("allConditionsAreTrue", allConditionsAreTrue);
@@ -47,30 +49,23 @@ yarn.service('events', function (state,
                     }
                 }
 
-            } else {
+            }
+            else {
                 yConsole.error("The trigger is not well formed. You must have a complete assertion with a subject and an object.")
             }
-        });
+        })
+        ;
 
-        // Then, we trigger each assertion sets that are supposed to be triggered
+// Then, we trigger each assertion sets that are supposed to be triggered
         console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (object) {
             var shouldOccur = true;
-            var childAssertions = state.assertions.find({
+            var childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
                 parent: object.id
-            });
+            }));
 
-            var maximumOccurrence = state.resolveValue({
-                "subject": object.id,
-                "predicate": "has",
-                "object": "MaximumOccurrence"
-            });
-
-            var Occurrence = state.resolveValue({
-                "subject": object.id,
-                "predicate": "has",
-                "object": "Occurrence"
-            });
+            var maximumOccurrence = state.resolveValue(assert(object, "has", "MaximumOccurrence"));
+            var Occurrence = state.resolveValue(assert(object, "has", "Occurrence"));
 
             // Here we check if the event has reached the maximum allowed
             // number of occurrences
@@ -80,7 +75,8 @@ yarn.service('events', function (state,
 
             if (shouldOccur) {
                 somethingHappened = true;
-                state.createAssertion(object, state.predicate("has"), state.thing("Occurrence"), {
+                // Todo: createAssertion should also use assert() ??
+                state.createAssertion(object, predicates("has"), things("Occurrence"), {
                     value: Occurrence + 1
                 });
                 //console.log("childAssertions for " + object.id, childAssertions);

@@ -1,4 +1,4 @@
-yarn.service("editorFiles", function (guid, URI) {
+yarn.service("editorFiles", function (EditorFile) {
 
     function EditorFiles() {
         this.files = [];
@@ -20,20 +20,6 @@ yarn.service("editorFiles", function (guid, URI) {
     EditorFiles.prototype.close = function (uri) {
 
     };
-
-    function EditorFile(uri) {
-        this.guid = guid();
-        this.uri = uri;
-    }
-
-    EditorFile.prototype.name = function () {
-        var _uri = URI(this.uri);
-        var filename = _uri.filename();
-        var name = filename.replace(_uri.suffix(), "");
-        return name;
-    };
-
-
 
     return new EditorFiles();
 

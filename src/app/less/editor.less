@@ -2,13 +2,56 @@ editor {
     //padding: 20px 20px 5px 20px;
     padding: 0;
 
+    md-toolbar {
+        background: rgb(63,81,181) !important;
+
+        color: #000;
+        height: 40px;
+        min-height: 40px;
+        font-size: 0.8em;
+
+        save-status {
+            position: relative;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8em;
+        }
+
+        .md-toolbar-tools {
+            height: 40px;
+
+            button.md-button {
+                background: none !important;
+                border-radius: 3px;
+                line-height: 3228;
+                height: 26px;
+                min-height: 26px;
+                width: auto;
+                padding: 2px;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2) !important;
+                    md-icon {
+                        color: rgba(255, 255, 255, 1);
+                    }
+                }
+
+                md-icon {
+                    color: rgba(255, 255, 255, 0.8);
+                    height: 16px;
+                    min-height: 16px;
+                }
+            }
+        }
+    }
+
     .ace_editor {
+
+        font-size: 1.1em !important;
 
         .ace_content {
             background-color: #f4f4f4;
             opacity: 0.8;
         }
-        font-size: 0.8em !important;
 
         .ace_gutter {
             background-color: #eee;

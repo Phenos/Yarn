@@ -1,4 +1,5 @@
-yarn.service("validateStory", function validateStory(Validation) {
+yarn.service("validateStory", function validateStory(Validation,
+                                                     assert) {
 
     var validation = new Validation({
         name: "Validating the Story metadata and basic requirements"
@@ -8,12 +9,8 @@ yarn.service("validateStory", function validateStory(Validation) {
         pass: "The Story has a Name",
         fail: "The Story object doesnt have a Name"
     }, function (state) {
-        var title = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Name"
-        });
-        return typeof(title) === "zzstring" && title !== "";
+        var name = state.resolveValue(assert("Story", "has", "Name"));
+        return typeof(name) === "string" && name !== "";
     });
 
     validation.assert({
@@ -21,12 +18,8 @@ yarn.service("validateStory", function validateStory(Validation) {
         fail: "The Story object doesnt have a Description",
         type: "warning"
     }, function (state) {
-        var description = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Description"
-        });
-        return typeof(description) === "zzstring" && description !== "";
+        var description = state.resolveValue(assert("Story", "has", "Description"));
+        return typeof(description) === "string" && description !== "";
     });
 
 

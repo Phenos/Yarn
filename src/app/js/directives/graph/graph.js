@@ -37,7 +37,7 @@
                 var nodesIndex = {};
                 var links = [];
                 var radius = 140;
-
+/*
                 angular.forEach(things, function (thing) {
                     throw "Unrefactored";
                     //todo: This has not been refactored yet!
@@ -185,7 +185,7 @@
                     //debugger;
 
                 });
-
+*/
             }
         }
     }

@@ -1,36 +1,21 @@
 yarn.service("takeRoutine", function (state,
                                       events,
                                       stepRoutine,
+                                      assert,
+                                      predicates,
+                                      things,
                                       writers) {
-
-/*
-
-
-    TODO: MAKE THIS AS SEXY AS POSSILE
-
-
-*/
-
-
     function takeRoutine(object) {
         if (object) {
-            var hasInInventory = state.predicate("hasInInventory");
-            var isIn = state.predicate("isIn");
-            var you = state.thing("You");
+            var hasInInventory = predicates("hasInInventory");
+            var you = things("You");
 
             // Put item in inventory and log it to the player
             state.createAssertion(you, hasInInventory, object);
             writers.describeThingTakenInInventory(object);
 
-
-            state.negate({
-                subject: object.id,
-                predicate: "isIn"
-            });
-
-            var take = state.predicate("take");
-            // todo: Use id instead of object as arguments for Trigger
-            events.trigger(you, take, object);
+            state.negate(assert(object, "is in"));
+            events.trigger(assert("you", "take", object));
 
             stepRoutine();
         }
@@ -40,4 +25,3 @@ yarn.service("takeRoutine", function (state,
     return takeRoutine;
 
 });
-

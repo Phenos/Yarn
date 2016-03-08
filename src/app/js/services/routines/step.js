@@ -2,6 +2,7 @@ yarn.service("stepRoutine", function (events,
                                       state,
                                       dialogs,
                                       script,
+                                      assert,
                                       sceneryService) {
 
     /**
@@ -13,7 +14,6 @@ yarn.service("stepRoutine", function (events,
         var somethingHappened = events.process();
         // Check if dialogs are supposed to be said
         dialogs.process();
-
         // Update the scenery in case it has changed
         updateScenery();
 
@@ -23,17 +23,9 @@ yarn.service("stepRoutine", function (events,
 
 
     function updateScenery() {
-        var room = state.resolveOne({
-            subject: "You",
-            predicate: "isIn"
-        });
-
+        var room = state.resolveOne(assert("You", "is in"));
         if (room) {
-            var scenery = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Scenery"
-            });
+            var scenery = state.resolveValue(assert(room, "has", "Scenery"));
             var url = script.resolveRelativeURI(scenery);
             if (url) {
                 sceneryService.change(url);

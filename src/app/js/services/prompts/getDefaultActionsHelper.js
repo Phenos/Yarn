@@ -1,4 +1,5 @@
 yarn.service("setDefaultOptionsHelper", function (state,
+                                                  assert,
                                                   stateHelpers) {
 
     return function setDefaultOptionsHelper(prompt, isSmall) {
@@ -6,16 +7,10 @@ yarn.service("setDefaultOptionsHelper", function (state,
         var size = "large";
         if (isSmall) size = "";
 
-        var room = state.resolveOne({
-            subject: "You",
-            predicate: "isIn"
-        });
+        var room = state.resolveOne(assert("You", "is in"));
 
         if (room) {
-            var linkedRooms = state.resolveAll({
-                subject: room.id,
-                predicate: "linksTo"
-            });
+            var linkedRooms = state.resolveAll(assert(room, "links to"));
 
             //console.log("linksToCurrentRoom", linksToCurrentRoom);
             if (linkedRooms.length) {
@@ -29,11 +24,7 @@ yarn.service("setDefaultOptionsHelper", function (state,
             var thingsInRoom = stateHelpers.thingsInRoom(room);
             // Filter out things that dont have a label
             var thingsInRoomWithDescriptions = thingsInRoom.filter(function (thing) {
-                var description = state.resolveValue({
-                    subject: thing.id,
-                    predicate: "has",
-                    object: "Description"
-                });
+                var description = state.resolveValue(assert(thing, "has", "Description"));
                 return typeof(description) === "string";
             });
 
@@ -49,10 +40,7 @@ yarn.service("setDefaultOptionsHelper", function (state,
             // in the current room
             var inventoryInRoom = stateHelpers.inventoryInRoom(room);
             // Enable the "inventory" action if the user has inventory
-            var inventoryItems = state.resolveAll({
-                subject: "you",
-                predicate: "hasInInventory"
-            });
+            var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
 
             if (inventoryItems.length || inventoryInRoom.length) {
                 option = prompt.option("Take", "aboutTo take");

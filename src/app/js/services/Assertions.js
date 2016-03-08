@@ -1,4 +1,5 @@
-yarn.service("Assertions", function () {
+yarn.service("Assertions", function (assert,
+                                     match) {
 
     function Assertions(assertions) {
         this._all = [];
@@ -38,18 +39,7 @@ yarn.service("Assertions", function () {
         var addedAssertions = [];
 
         assertions.forEach(function (assertion) {
-            //var existingAssertion;
             if (assertion) {
-                //existingAssertion = self.get(assertion.id());
-                ////console.log(assertion.id());
-                ////console.log("existingAssertion", existingAssertion);
-                //if (existingAssertion) {
-                //    existingAssertion.value(assertion.value());
-                //    addedAssertions.push(existingAssertion);
-                //} else {
-                //    self._all.push(assertion);
-                //    addedAssertions.push(assertion);
-                //}
                 self._all.push(assertion);
                 addedAssertions.push(assertion);
             }
@@ -73,25 +63,25 @@ yarn.service("Assertions", function () {
     };
 
     Assertions.prototype.removeLayer = function (layer) {
-        var assertions = this.find({
+        var assertions = this.find(assert(undefined, undefined, undefined, {
             layer: layer
-        });
+        }));
         this.remove(assertions);
         return this;
     };
 
 
-    Assertions.prototype.find = function (criterias) {
+    Assertions.prototype.find = function (assert) {
         var self = this;
         var matches = [];
         self._all.forEach(function (assertion) {
-            if (match(assertion, criterias)) matches.push(assertion);
+            if (match(assertion, assert)) matches.push(assertion);
         });
         return matches;
     };
 
-    Assertions.prototype.filter = function (criterias) {
-        return new Assertions(this.find(criterias));
+    Assertions.prototype.filter = function (assert) {
+        return new Assertions(this.find(assert));
     };
 
     Assertions.prototype.sortByWeight = function () {
@@ -121,76 +111,10 @@ yarn.service("Assertions", function () {
         return this._all[this._all.length - 1];
     };
 
-    function match(assertion, criterias) {
-        var matchedValue;
-        var isMatch = true;
-        var subject = criterias.subject;
-        var predicate = criterias.predicate;
-        var object = criterias.object;
-
-        if (!assertion) isMatch = false;
-
-        if (isMatch && !angular.isUndefined(subject)) {
-            //console.log("subjec: criterias : ", criterias);
-            if (angular.isString(subject)) subject = subject.toLowerCase();
-            matchedValue = null;
-            if (assertion.subject !== null) matchedValue = (assertion.subject && assertion.subject.id) || "";
-            if (matchedValue !== subject) isMatch = false;
-        }
-
-        if (isMatch && !angular.isUndefined(predicate)) {
-            if (angular.isString(predicate)) predicate = predicate.toLowerCase();
-            matchedValue = null;
-            if (assertion.predicate !== null) matchedValue = (assertion.predicate && assertion.predicate.id) || "";
-            if (matchedValue !== predicate) isMatch = false;
-        }
-
-        if (isMatch && !angular.isUndefined(object)) {
-            if (angular.isString(object)) object = object.toLowerCase();
-            matchedValue = null;
-            if (assertion.object !== null) {
-                if (typeof(assertion.object) === "object") {
-                    matchedValue = (assertion.object && assertion.object.id) || "";
-                } else {
-                    if (typeof(assertion.object) === "string") {
-                        matchedValue = assertion.object.toLowerCase();
-                    } else {
-                        matchedValue = assertion.object;
-                    }
-                }
-            }
-            if (matchedValue !== object) isMatch = false;
-        }
-
-        if (isMatch && !angular.isUndefined(criterias.filter)) {
-            matchedValue = assertion.filter;
-            if (matchedValue !== criterias.filter) isMatch = false;
-        }
-
-        if (isMatch && !angular.isUndefined(criterias.layer)) {
-            matchedValue = assertion.layer;
-            if (matchedValue !== criterias.layer) isMatch = false;
-        }
-
-        if (isMatch && !angular.isUndefined(criterias.value)) {
-            matchedValue = assertion.value;
-            if (matchedValue !== criterias.value) isMatch = false;
-        }
-
-        if (isMatch && !angular.isUndefined(criterias.parent)) {
-            //console.log("parent: criterias : ", criterias);
-            matchedValue = (assertion.parent && assertion.parent.id) || null;
-            if (matchedValue !== criterias.parent) isMatch = false;
-        }
-
-        return isMatch;
-    }
-
     function ensureArray(assertion) {
         return (angular.isArray(assertion)) ? assertion : [assertion];
     }
 
     return Assertions;
-})
-;
+});
 

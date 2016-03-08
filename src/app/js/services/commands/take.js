@@ -1,11 +1,12 @@
 yarn.factory('takeCommand', function (yConsole,
-                                     events,
-                                     state,
-                                     logic) {
+                                      events,
+                                      things,
+                                      storyLog,
+                                      logic) {
 
     function handler(args) {
         if (args.length) {
-            var object = state.thing(args[0], true);
+            var object = things(args[0], true);
             if (object) {
                 logic.routines.take(object);
                 storyLog.flushBuffers();

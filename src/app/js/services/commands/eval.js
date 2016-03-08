@@ -1,21 +1,23 @@
 yarn.factory('evalCommand', function evalCommand(state,
                                                  yConsole,
+                                                 assert,
+                                                 things,
+                                                 predicates,
                                                  consoleHelper) {
 
 
     function handler(args) {
-        var subject = state.thing(args[0], true);
-        var predicate = state.predicate(args[1], true);
-        var object = state.thing(args[2], true);
+        var subject = things(args[0], true) || undefined;
+        var predicate = predicates(args[1], true) || undefined;
+        var object = things(args[2], true) || undefined;
+
         if (subject && predicate) {
-            var assertions = state.getAssertions(subject, predicate, object);
+            var assertions = state.assertions.find(assert(subject, predicate, object));
 
             console.log("assertion:", assertions);
             angular.forEach(assertions, function (assertion) {
                 yConsole.log(consoleHelper.assertion2log(assertion));
             });
-        } else {
-            console.log()
         }
     }
 

@@ -23,7 +23,7 @@ yarn.service('storyLog', function () {
     // To be later flushed
     StoryLog.prototype.buffer = function () {
         var bufferedLog = new StoryLog();
-        console.log("Creating a buffered log ", bufferedLog);
+        //console.log("Creating a buffered log ", bufferedLog);
         this.bufferedLogs.push(bufferedLog);
         return bufferedLog;
     };
@@ -31,7 +31,7 @@ yarn.service('storyLog', function () {
     StoryLog.prototype.flushBuffers = function () {
         var self = this;
         var log;
-        console.log("Flushing the log buffer", this.bufferedLogs);
+        //console.log("Flushing the log buffer", this.bufferedLogs);
         while (this.bufferedLogs.length) {
             log = this.bufferedLogs.shift();
             log.register(self.controller);

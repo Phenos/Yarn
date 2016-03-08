@@ -1,6 +1,8 @@
 yarn.factory('inspectCommand', inspectCommand);
 
 function inspectCommand(state,
+                        things,
+                        assert,
                         yConsole,
                         consoleHelper) {
 
@@ -32,7 +34,6 @@ function inspectCommand(state,
         } else if (args.length > 0) {
             inspectItems(args)
         }
-        //console.log(state);
     }
 
     function inspectItems(items) {
@@ -42,12 +43,12 @@ function inspectCommand(state,
             var log = [];
             var itemName = _itemName.toLowerCase();
 
-            var thing = state.thing(itemName);
+            var thing = things(itemName);
             if (thing) {
 
-                assertions = state.assertions.find({
-                    subject: thing.id
-                });
+                assertions = state.assertions.find(assert(thing, undefined, undefined, {
+                    parent: null
+                }));
 
                 log.push("The object <span command='inspect " + thing.id + "'>" + thing.id + "</span> has ");
 
@@ -60,10 +61,10 @@ function inspectCommand(state,
                 angular.forEach(assertions, function (assertion) {
                     log.push(consoleHelper.assertion2log(assertion) + "<br/>");
                 });
-
-                var childAssertions = state.assertions.find({
-                    parent: thing.id
-                });
+/*
+                var childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
+                    parent: thing
+                }));
 
                 if (childAssertions.length) {
                     log.push("<strong>Has " + childAssertions.length + " child assertions:</strong><br/>");
@@ -74,7 +75,7 @@ function inspectCommand(state,
                             "<br/>")
                     });
                 }
-
+*/
                 yConsole.log(log.join(""));
 
             } else {

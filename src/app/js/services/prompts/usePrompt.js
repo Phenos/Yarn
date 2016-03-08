@@ -1,4 +1,5 @@
 yarn.service("usePrompt", function (stateHelpers,
+                                    assert,
                                     logic,
                                     storyLog,
                                     commands,
@@ -8,33 +9,21 @@ yarn.service("usePrompt", function (stateHelpers,
     function usePrompt(context) {
 
         context.when = function () {
-            return "use" === state.resolveValue({
-                    subject: "you",
-                    predicate: "has",
-                    object: "intention"
-                });
+            return "use" === state.resolveValue(assert("You", "has", "Intention"));
         };
 
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to use ?";
 
-            var room = state.resolveOne({
-                subject: "you",
-                predicate: "isIn"
-            });
-
+            var room = state.resolveOne(assert("You", "is in"));
             var thingsInRoom = stateHelpers.usableItemInRoom(room);
 
             //console.log('thingsInRoom', thingsInRoom);
 
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
-                    var label = state.resolveValue({
-                        subject: thing.id,
-                        predicate: "has",
-                        object: "Name"
-                    });
-                    prompt.option(label, "use " + thing.id);
+                    var name = state.resolveValue(assert(thing, "has", "Name"));
+                    prompt.option(name, "use " + thing.id);
                 });
             }
 

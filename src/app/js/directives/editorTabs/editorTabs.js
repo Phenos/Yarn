@@ -18,15 +18,15 @@
 
             this.files = [
                 {
-                    name: "Test1.yarn.txt",
+                    name: "Test1",
                     url: "Test1.yarn.txt"
                 },
                 {
-                    name: "Test2.yarn.txt",
+                    name: "Test2",
                     url: "Test1.yarn.txt"
                 },
                 {
-                    name: "Potatoe.yarn.txt",
+                    name: "Potatoe",
                     url: "Potatoe.yarn.txt"
                 }
             ];

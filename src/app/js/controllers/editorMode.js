@@ -40,18 +40,18 @@ function editorModeController(stories,
     Height permutation between Console and Editor on focus events
 
      */
-    $scope.editorFlexHeight_default = 75;
-    $scope.consoleFlexHeight_default = 25;
+    $scope.editorFlexHeight_default = 65;
+    $scope.consoleFlexHeight_default = 35;
     $scope.editorFlexHeight = $scope.editorFlexHeight_default ;
     $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
     $scope.onConsoleEscapeFocus = function () {
-        $scope.editorFlexHeight = 75;
-        $scope.consoleFlexHeight = 25;
+        $scope.editorFlexHeight = 65;
+        $scope.consoleFlexHeight = 35;
         editorService.focus();
     };
     $scope.onConsoleFocus = function () {
-        $scope.editorFlexHeight = 25;
-        $scope.consoleFlexHeight = 75;
+        $scope.editorFlexHeight = 35;
+        $scope.consoleFlexHeight = 65;
     };
 
 }

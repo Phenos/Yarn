@@ -3,34 +3,20 @@ yarn.config(function ($stateProvider,
 
     $urlRouterProvider.otherwise('/');
 
-    $stateProvider.state('editorMode', {
-        url: '/editor',
-        resolve: {
-            "user": function (userFromAPI) {
-                return userFromAPI().then(function (user) {
-                    return user;
-                });
-            }
-        },
-        controllerAs: 'editorMode',
-        bindToController: {},
-        templateUrl: './html/editorMode.html',
-        controller: 'editorMode'
-    });
-
-    $stateProvider.state('playerMode', {
+    $stateProvider.state('root', {
         url: '/',
         resolve: {
-            "user": function (userFromAPI) {
+            "user": function (userFromAPI, session) {
                 return userFromAPI().then(function (user) {
+                    session.user = user;
                     return user;
                 });
             }
         },
-        controllerAs: 'playerMode',
+        controllerAs: 'root',
         bindToController: {},
-        templateUrl: './html/playerMode.html',
-        controller: 'playerMode'
+        templateUrl: './html/root.html',
+        controller: 'root'
     });
 
 });

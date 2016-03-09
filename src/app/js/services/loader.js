@@ -81,16 +81,16 @@ yarn.service('loader', function (yarn,
 
             // Change the current state layer to the current session.
             state.currentLayer = "session";
-            console.log("A!");
+
             // Restore session state layer from localStorage
             if (!$localStorage.localState) $localStorage.localState = {};
             yarn.restoreFromLocalState($localStorage.localState);
 
-            console.log("B");
-
             //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
             splashService.hide();
-            updateStoryLog();
+
+            console.log("Why is updateStorylog commented out ?");
+            //updateStoryLog();
 
         }
 

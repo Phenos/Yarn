@@ -1,16 +1,28 @@
 "use strict";
-yarn.controller('playerMode', playerModeController);
-yarn.service('playerMode', PlayerModeService);
+yarn.controller('root', rootController);
+yarn.service('root', rootService);
 
 
-function playerModeController(user,
-                              $rootScope,
-                              $scope,
-                              yConsole,
-                              welcomeMessage,
-                              stories,
-                              playerMode,
-                              hotkeys) {
+function rootController(user,
+                        $rootScope,
+                        $scope,
+                        IDE,
+                        yConsole,
+                        welcomeMessage,
+                        editorService,
+                        editorFiles,
+                        stories,
+                        root,
+                        hotkeys) {
+
+    $scope.IDE = IDE;
+    $scope.user = user; // Note: User not yet in a service, resolved in route instead
+    $scope.editorFiles = editorFiles;
+
+    IDE.register($scope);
+    // Register with the service
+    root.register($scope);
+
 
     hotkeys.bindTo($rootScope)
         .add({
@@ -18,11 +30,10 @@ function playerModeController(user,
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
             description: 'Show/Hide the console',
             callback: function () {
-                playerMode.toggleConsole();
+                root.toggleConsole();
             }
         });
 
-    $scope.user = user; // Note: User not yet in a service, resolved in route instead
 
     /*
      Show a welcome message in the yarn console
@@ -30,18 +41,53 @@ function playerModeController(user,
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
     yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
-    // Register with the service
-    playerMode.register($scope);
-
     // Play the default story
     stories.playDefault();
+
+    // Check if a previously opened story should be loaded
+    //IDE.loadRememberedStory();
 
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
+    $scope.openFile = function () {
+        IDE.openFromStorage();
+    };
+
+    // We load the story from the user, or ensure that a default one exists
+    stories.findOrCreateUserStory(user, function (story) {
+        yConsole.log("Loaded a story in the editor");
+        $scope.currentStory = story;
+    }, function () {
+        yConsole.log("No story can be loaded in the editor. You can only edit your own stories when you are logged in.");
+        yConsole.log("Until then you can still use the console to enter commands and affect your game session.");
+        $scope.currentStory = null;
+    });
+
+
+    /*
+
+     Height permutation between Console and Editor on focus events
+
+     */
+    $scope.editorFlexHeight_default = 65;
+    $scope.consoleFlexHeight_default = 35;
+    $scope.editorFlexHeight = $scope.editorFlexHeight_default;
+    $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
+    $scope.onConsoleEscapeFocus = function () {
+        $scope.editorFlexHeight = 65;
+        $scope.consoleFlexHeight = 35;
+        editorService.focus();
+    };
+    $scope.onConsoleFocus = function () {
+        $scope.editorFlexHeight = 35;
+        $scope.consoleFlexHeight = 65;
+    };
+
+
 }
 
-function PlayerModeService($localStorage, consoleService, helpService, player) {
+function rootService($localStorage, consoleService, helpService, player) {
     var service = {
         scope: null
     };
@@ -65,6 +111,7 @@ function PlayerModeService($localStorage, consoleService, helpService, player) {
         }
         return service.consoleIsVisible;
     }
+
     function helpIsVisible(value) {
         if (!angular.isUndefined(value)) {
             service.helpIsVisible = value;
@@ -91,6 +138,11 @@ function PlayerModeService($localStorage, consoleService, helpService, player) {
         }
     };
 
+    /*
+
+     Mechanics for console panel layout
+
+     */
     service.showConsole = function () {
         player.closeSidenav();
         $localStorage.consoleIsVisible = consoleIsVisible(true);
@@ -100,6 +152,12 @@ function PlayerModeService($localStorage, consoleService, helpService, player) {
         $localStorage.consoleIsVisible = consoleIsVisible(false);
     };
 
+
+    /*
+
+     Mechanics for help panel layout
+
+     */
     service.showHelp = function () {
         player.closeSidenav();
         $localStorage.helpIsVisible = helpIsVisible(true);
@@ -108,6 +166,7 @@ function PlayerModeService($localStorage, consoleService, helpService, player) {
     service.hideHelp = function () {
         $localStorage.helpIsVisible = helpIsVisible(false);
     };
+
 
     return service;
 }

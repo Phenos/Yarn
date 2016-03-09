@@ -1,6 +1,4 @@
-yarn.filter('keyboardShortcut', keyboardShortcutFilter);
-
-function keyboardShortcutFilter($window) {
+yarn.filter('keyboardShortcut', function keyboardShortcutFilter($window) {
 
     return function (str) {
         var returnValue;
@@ -21,4 +19,5 @@ function keyboardShortcutFilter($window) {
         return returnValue;
     };
 
-}
+});
+

@@ -1,15 +1,19 @@
-yarn.factory('writers', function (yarn,
+yarn.factory('writers', function (Prompt,
                                   assert,
                                   yConsole,
                                   storyLog,
                                   state,
                                   script,
+                                  commands,
                                   sceneryService) {
 
     // Describe where you are at the beginning
     function describeWhereYouAre() {
         var returnFn;
-        if (state.step() === 0) {
+        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+        if (storyHasEnded) {
+            returnFn = describeTheEnd();
+        } else if (state.step() === 0) {
             returnFn = describeCoverpage();
         } else {
             returnFn = describeRoom();
@@ -52,6 +56,41 @@ yarn.factory('writers', function (yarn,
         var author = state.resolveValue(assert("Story", "has", "Author"));
         if (author) {
             storyLog.log("by " + author);
+        }
+
+        return this;
+    }
+
+    function describeTheEnd() {
+
+        storyLog.clear();
+
+        // Show the story title
+        var name = state.resolveValue(assert("TheEnd", "has", "Name"));
+        if (name) {
+            storyLog.heading(name);
+        }
+
+        // Set the scenery
+        var scenery = state.resolveValue(assert("TheEnd", "has", "Scenery"));
+        var coverpage = state.resolveValue(assert("TheEnd", "has", "Coverpage"));
+        var scenery_url = scenery && script.resolveRelativeURI(scenery);
+        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
+        var url = scenery_url || coverpage_url || false;
+
+        if (url) {
+            sceneryService.change(url);
+        } else {
+            sceneryService.clear();
+        }
+
+        if (coverpage) {
+            storyLog.image(coverpage_url);
+        }
+
+        var description = state.resolveValue(assert("TheEnd", "has", "Description"));
+        if (description) {
+            storyLog.log("“&nbsp;" + description + "&nbsp;”");
         }
 
         return this;
@@ -129,13 +168,48 @@ yarn.factory('writers', function (yarn,
         return this;
     }
 
+    function objectMenu(thing) {
+        if (thing) {
+
+            var prompt = new Prompt();
+
+            prompt.answer = function answer(promptLoop, option) {
+                commands.command(option);
+            };
+
+            var name = state.resolveValue(assert(thing, "has", "Name"));
+
+            var isUsable = state.resolveValue(assert(thing, "is", "Usable"));
+            if (isUsable) {
+                var option = prompt.option("Use " + name, "use " + thing.id);
+                option.iconId = "use";
+                option.iconSize = "small";
+                option.iconOnly = true;
+            }
+
+            var isInventoryItem = state.resolveValue(assert(thing, "is", "InventoryItem"));
+            if (isInventoryItem) {
+                var option = prompt.option("Take " + name, "take " + thing.id);
+                option.iconId = "inventory";
+                option.iconSize = "small";
+                option.iconOnly = true;
+            }
+
+            storyLog.prompt(prompt);
+        }
+
+        return this;
+    }
+
     return {
         nothingHappened: nothingHappened,
         describeThingTakenInInventory: describeThingTakenInInventory,
         describeThing: describeThing,
         describeRoom: describeRoom,
         describeCoverpage: describeCoverpage,
-        describeWhereYouAre: describeWhereYouAre
+        describeTheEnd: describeTheEnd,
+        describeWhereYouAre: describeWhereYouAre,
+        objectMenu: objectMenu
     };
 
 });

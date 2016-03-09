@@ -43,8 +43,8 @@ yarn.service("setDefaultOptionsHelper", function (state,
             var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
 
             if (inventoryItems.length || inventoryInRoom.length) {
-                option = prompt.option("Take", "aboutTo take");
-                option.iconId = "take";
+                option = prompt.option("Inventory", "aboutTo inventory");
+                option.iconId = "inventory";
                 option.iconSize = size;
                 option.iconOnly = true;
             }

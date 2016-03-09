@@ -10,6 +10,36 @@
                     aria-label="Open menu">
                 <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
             </md-button>
+            <md-menu flex="1" md-position-mode="target">
+                <md-button
+                        style="min-width: 0; padding: 0;"
+                        ng-click="$mdOpenMenu($event)"
+                        class="md-icon-button"
+                        aria-label="Story menu">
+                    <md-icon md-svg-icon="/svg-icons/story.svg"></md-icon>
+                </md-button>
+                <md-menu-content width="6">
+                    <md-toolbar>
+                        <div class="md-toolbar-tools">
+                            <div>
+                                <md-icon style="height: 50px; width: 32px; margin-right: 10px;"
+                                         md-svg-icon="/svg-icons/story.svg"></md-icon>
+                            </div>
+                            <h2>
+                                <span>Story Menu</span>
+                            </h2>
+                            <span flex></span>
+                        </div>
+                    </md-toolbar>
+                    <md-menu-item>
+                        <md-button ng-click="toolbar.restartStory()">
+                            <md-icon md-svg-icon="/svg-icons/restart.svg"></md-icon>
+                            <span>Restart</span>
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
         </div>
         <div flex="40"
              layout="row"

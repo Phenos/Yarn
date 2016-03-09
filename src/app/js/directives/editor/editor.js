@@ -3,10 +3,17 @@
     yarn.directive('editor', EditorDirective);
     yarn.factory('editorService', editorService);
 
-    function EditorDirective() {
+    function EditorDirective($mdDialog,
+                             editorService,
+                             editorFiles,
+                             commands,
+                             IDE,
+                             confirmAction) {
         return {
             restrict: 'E',
             bindToController: {
+                readOnly: "=",
+                file: "=",
                 saveAndRun: "&",
                 ready: "&",
                 source: "="
@@ -17,21 +24,68 @@
             controller: EditorController
         };
 
-        function EditorController(editorService) {
+        function EditorController() {
+            var self = this;
             var aceEditor;
 
             editorService.register(this);
+
+            this.validate = function() {
+                commands.command("validate");
+            };
+
+            this.run = function() {
+                IDE.run();
+            };
+
+            this.save = function() {
+                this.file.save();
+            };
+
+            this.reload = function() {
+                confirmAction(
+                    "Unsaved changes",
+                    "You have unsaved changes in this file.<br/> Are you sure you want to " +
+                    "close it and <br/><strong>loose those changes</strong> ?",
+                    function () {
+                        this.file.load();
+                    })
+            };
+
+            this.search = function(ev) {
+                // Appending dialog to document.body to cover sidenav in docs app
+                var confirm = $mdDialog.confirm()
+                    .title('Sorry!')
+                    .textContent('The search feature is not implemented yet.')
+                    .targetEvent(ev)
+                    .ok('Ok')
+                    .cancel('Cancel');
+
+                $mdDialog.show(confirm).then(function() {
+                    console.log("ok");
+                }, function() {
+                    console.log("cancel");
+                });
+            };
+
+            this.close = function() {
+                editorFiles.close(this.file);
+            };
 
             this.focus = function() {
                 aceEditor.textInput.focus();
             };
 
             function aceLoaded(_editor) {
+                _editor.$blockScrolling = Infinity;
                 console.log("Editor loaded");
                 aceEditor = _editor;
             }
 
             function aceChanged(e) {
+                if (self.file) {
+                    self.file.updateStatus();
+                }
             }
 
             this.options = {
@@ -40,7 +94,7 @@
                     'ace/theme/tomorrow',
                     'ace/mode/javascript'
                 ],
-                workerPath: './bower_components/ace-builds/src-noconflict/',
+                workerPath: '/ace/js/',
                 useWrapMode : true,
                 useWorker: false,
                 mode: 'javascript',

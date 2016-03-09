@@ -5,7 +5,7 @@ yarn.service('aboutToCommand',
 
         var validStates = "Valid states are <span command=''>move</span>, " +
             "<span command='aboutTo look'>look</span>, " +
-            "<span command='aboutTo take'>take</span>, " +
+            "<span command='aboutTo inventory'>inventory</span>, " +
             "<span command='aboutTo use'>use</span>.";
 
         function handler(args) {
@@ -14,7 +14,7 @@ yarn.service('aboutToCommand',
                 if (state) {
                     if (
                         state === "move" ||
-                        state === "take" ||
+                        state === "inventory" ||
                         state === "look" ||
                         state === "use"
                     )

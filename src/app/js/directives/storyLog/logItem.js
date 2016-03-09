@@ -2,24 +2,27 @@
 
 yarn.directive('logItem', LogItemDirective);
 
-function LogItemDirective($sce) {
+function LogItemDirective() {
     return {
         restrict: 'E',
         bindToController: {
+            scope: '=',
             type: '=',
             text: '='
         },
         scope: {},
         controllerAs: 'logItem',
-        template: '<div class="logItem"></div>',
         controller: LogItemController
     };
 
-    function LogItemController($scope, $element) {
+    function LogItemController($scope, $element, $compile) {
         var self = this;
 
+        angular.extend($scope, this.scope);
+
         $scope.$watch('logItem.text', function(value) {
-            $element[0].innerHTML = "<div class='logItem is-" + self.type + "'>" + value + "<div>";
+            var logItemEl = $compile("<div class='logItem is-" + self.type + "'>" + value + "<div>")($scope);
+            $element.append(logItemEl);
         });
 
     }

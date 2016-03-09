@@ -1,0 +1,23 @@
+<md-dialog ng-cloak flex="80" style="max-height: 90%;">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Open file from storage</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/svg-icons/close.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <storage-files select="open(file)"></storage-files>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()" style="margin-right:20px;">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

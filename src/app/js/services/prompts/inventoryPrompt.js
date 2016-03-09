@@ -1,4 +1,4 @@
-yarn.service("takePrompt", function (logic,
+yarn.service("inventoryPrompt", function (logic,
                                      writers,
                                      commands,
                                      state,
@@ -10,22 +10,21 @@ yarn.service("takePrompt", function (logic,
     function takePrompt(context) {
 
         context.when = function () {
-            return "take" === state.resolveValue(assert("You", "has", "Intention"));
+            return "inventory" === state.resolveValue(assert("You", "has", "Intention"));
         };
 
         context.question = function (promptLoop, prompt) {
 
-            var room = state.resolveOne(assert("You", "is in"));
-            var thingsToTake = stateHelpers.inventoryInRoom(room);
+            var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
 
-            if (thingsToTake.length) {
-                prompt.question = "What do you want to take ?";
-                thingsToTake.forEach(function (thing) {
+            if (inventoryItems.length) {
+                prompt.question = "Your inventory";
+                inventoryItems.forEach(function (thing) {
                     var name = state.resolveValue(assert(thing, "has", "Name"));
-                    prompt.option(name, "take " + thing.id);
+                    prompt.option(name, "look " + thing.id);
                 });
             } else {
-                prompt.question = "There is nothing to take here!";
+                prompt.question = "You have nothing in inventory!";
             }
 
             var backOption = prompt.option("Back", "back");
@@ -36,13 +35,10 @@ yarn.service("takePrompt", function (logic,
         };
 
         context.answer = function answer(promptLoop, option) {
-            logic.routines.aboutTo("");
             if (option) {
                 if (option.value !== "back") {
                     commands.command(option.value);
                 }
-            } else {
-                storyLog.error("Sorry, nothing to take here!");
             }
 
         };

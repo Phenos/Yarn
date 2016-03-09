@@ -1,14 +1,14 @@
-yarn.factory('IDE', IDEService);
-
 /**
  * Service for handling IDE/editor operations
  */
-function IDEService(stories,
-                    hotkeys,
-                    rememberLastStory,
-                    $mdDialog,
-                    yConsole,
-                    loader) {
+yarn.service('IDE', function IDEService(stories,
+                                        hotkeys,
+                                        rememberLastStory,
+                                        $mdDialog,
+                                        yConsole,
+                                        loader,
+                                        storage,
+                                        editorFiles) {
 
     var service = {};
 
@@ -26,6 +26,15 @@ function IDEService(stories,
                 callback: function (event) {
                     event.preventDefault();
                     service.saveAndRun();
+                }
+            })
+            .add({
+                combo: 'mod+o',
+                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                description: 'Open file...',
+                callback: function (event) {
+                    event.preventDefault();
+                    service.openFromStorage();
                 }
             })
             .add({
@@ -72,6 +81,31 @@ function IDEService(stories,
         stories.save(success, failure);
     };
 
+    service.openFromStorage = function (ev) {
+
+        storage.refresh();
+
+        $mdDialog.show({
+            controller: OpenFromStorageController,
+            templateUrl: './html/openFromStorage.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: false
+        });
+
+        function OpenFromStorageController($scope) {
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+            $scope.open = function(file) {
+                $mdDialog.cancel();
+                editorFiles.open(file);
+            };
+        }
+    };
+
+
 
     service.run = function () {
         var url = "http://storage.yarnstudio.io/" + stories.currentUser.username + "/story.yarn.txt";
@@ -93,7 +127,9 @@ function IDEService(stories,
     };
 
     return service;
-}
+});
+
+
 
 
 

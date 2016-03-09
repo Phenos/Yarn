@@ -94,7 +94,7 @@
                     'ace/theme/tomorrow',
                     'ace/mode/javascript'
                 ],
-                workerPath: './bower_components/ace-builds/src-noconflict/',
+                workerPath: '/ace/js/',
                 useWrapMode : true,
                 useWorker: false,
                 mode: 'javascript',

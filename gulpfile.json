@@ -20,6 +20,7 @@
       "src/app/js/config/config.js",
       "src/app/js/game/game.predicates.js",
       "src/app/js/controllers/**/*.js",
+      "src/app/js/ace/**/*.js",
       "src/app/js/services/**/*.js",
       "src/app/js/filters/**/*.js",
       "src/app/js/directives/**/*.js"
@@ -32,9 +33,6 @@
       "./bower_components/postal.js/lib/postal.min.js",
       "./bower_components/ace-builds/src-noconflict/ace.js",
       "./bower_components/ace-builds/src-noconflict/ext-language_tools.js",
-      "./bower_components/ace-builds/src-noconflict/worker-javascript.js",
-      "./bower_components/ace-builds/src-noconflict/mode-javascript.js",
-      "./bower_components/ace-builds/src-noconflict/theme-tomorrow.js",
       "./bower_components/angular-resource/angular-resource.min.js",
       "./bower_components/angular-sanitize/angular-sanitize.min.js",
       "./bower_components/angular-aria/angular-aria.min.js",

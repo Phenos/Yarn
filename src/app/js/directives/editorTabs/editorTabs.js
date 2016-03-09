@@ -47,12 +47,6 @@
                 });
 
             editorFiles.open("./story.yarn.txt");
-            editorFiles.open("./chapters/rooms.yarn.txt");
-            editorFiles.open("./chapters/things.yarn.txt");
-            editorFiles.open("./chapters/the-unflushed-toilet.yarn.txt");
-
-            //editorFiles.open("./chapters/dialogs.yarn.txt");
-            //editorFiles.open("./chapters/kitchen.yarn.txt");
 
             this.files = editorFiles.files;
 

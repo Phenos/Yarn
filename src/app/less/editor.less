@@ -45,17 +45,15 @@ editor {
     }
 
     .ace_editor {
-
+        background-color: #fff;
         font-size: 1.1em !important;
 
         .ace_content {
-            background-color: #f4f4f4;
-            opacity: 0.8;
+            background-color: #fff;
         }
 
         .ace_gutter {
-            background-color: #eee;
-            opacity: 0.8;
+            background-color: #ddd;
         }
 
         &.ace_focus {
@@ -67,5 +65,19 @@ editor {
                 opacity: 1;
             }
         }
+
+        &[readonly="readonly"].ace_focus,
+        &[readonly="readonly"] {
+            //opacity: 0 !important;
+
+            .ace_content {
+                opacity: 0 !important;
+            }
+            .ace_gutter {
+                opacity: 0 !important;
+            }
+
+        }
+
     }
 }

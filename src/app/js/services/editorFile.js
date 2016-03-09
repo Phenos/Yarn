@@ -17,23 +17,25 @@ yarn.service("EditorFile", function (guid,
         } else {
             this.absoluteURI = this._uri;
         }
-        this.ready = true;
+        this.ready = false;
         this.status = "";
         this.content = "";
     }
 
     EditorFile.prototype.load = function () {
         var self = this;
-        this.ready = false;
-        this.status = "Loading...";
+
+        self.ready = false;
+        self.status = "Loading...";
         loadScript(this.absoluteURI)
             .then(function (script) {
+                self.ready = true;
                 self.status = "Loaded";
                 self.content = script.source;
                 //console.log("script:", script);
             })
             .catch(function () {
-                self.status = "Failed loading";
+                self.status = "Failed to load";
                 yConsole.error("Error while loading file: " + self.absoluteURI);
             });
     };
@@ -43,7 +45,7 @@ yarn.service("EditorFile", function (guid,
     };
 
     EditorFile.prototype.name = function () {
-        return this.uri.filename().replace("." + this.uri.suffix(), "");
+        return this.uri.filename().replace(".yarn.txt", "");
     };
 
     return EditorFile;

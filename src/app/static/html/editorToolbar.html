@@ -1,12 +1,15 @@
-<md-toolbar style="height:80px" class="editorToolbar md-menu-toolbar" layout="row">
+<md-toolbar
+        style="height:80px"
+        class="editorToolbar md-menu-toolbar"
+        layout="row">
     <div flex="100" layout="row">
         <md-toolbar-filler layout
                            layout-align="center center"
                            ng-click="toolbar.IDE.openFromStorage()">
             <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
         </md-toolbar-filler>
-        <div>
-            <h2 class="md-toolbar-tools">Editor</h2>
+        <div flex="100">
+            <h2 class="md-toolbar-tools">Story Editor</h2>
             <md-menu-bar>
                 <md-menu>
                     <button ng-click="$mdOpenMenu()">
@@ -44,24 +47,52 @@
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
-
+                <md-menu>
+                    <button ng-click="$mdOpenMenu()">
+                        Tools
+                    </button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.openAssertionBrowser()">
+                                Assertion Browser
+                                <span class="md-alt-text"> {{ 'M-B' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-menu>
+                    <button ng-click="$mdOpenMenu()">
+                        Console
+                    </button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.clearConsole()">
+                                Clear
+                                <span class="md-alt-text"> {{ 'M-K' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-menu>
+                    <button ng-click="$mdOpenMenu()">
+                        Options
+                    </button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="toolbar.hideConsole()">
+                                Close
+                                <span class="md-alt-text"> {{ 'M-Esc' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
             </md-menu-bar>
         </div>
+        <div flex="1">
+            <md-button class="md-icon-button" ng-click="toolbar.hideConsole()" aria-label="Close console">
+                <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
+            </md-button>
+        </div>
     </div>
-    <!--
-        <md-button
-                ng-click="toolbar.openSidebar()"
-                class="md-icon-button"
-                aria-label="Open menu">
-            <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
-        </md-button>
-
-            <md-button ng-click="editor.openShare()" class="md-icon-button" aria-label="Share">
-                <md-icon md-svg-icon="/svg-icons/share.svg"></md-icon>
-            </md-button>
-            <md-button ng-click="editor.saveAndRun()" class="md-icon-button" aria-label="Run">
-                <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
-            </md-button>
-    -->
 
 </md-toolbar>

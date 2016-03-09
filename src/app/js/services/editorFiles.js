@@ -1,4 +1,4 @@
-yarn.service("editorFiles", function (EditorFile) {
+yarn.service("editorFiles", function (EditorFile, confirmAction) {
 
     function EditorFiles() {
         this.files = [];
@@ -24,13 +24,30 @@ yarn.service("editorFiles", function (EditorFile) {
     };
 
     EditorFiles.prototype.close = function (file) {
+        var self = this;
         var _file;
+        var index = null;
         for (var i = 0; i < this.files.length; i++) {
             _file = this.files[i];
             if (_file === file) {
-                this.files.splice(i, 1);
+                index = i;
+                break;
             }
         }
+        if (index !== null) {
+            if (_file.isModified()) {
+                confirmAction(
+                    "Unsaved changes",
+                    "You have unsaved changes in this file.<br/> Are you sure you want to " +
+                    "reload this file from storage and <br/><strong>loose those changes</strong> ?",
+                    function () {
+                        self.files.splice(i, 1);
+                    })
+            } else {
+                self.files.splice(i, 1);
+            }
+        }
+
     };
 
     return new EditorFiles();

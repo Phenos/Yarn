@@ -3,7 +3,12 @@
     yarn.directive('editor', EditorDirective);
     yarn.factory('editorService', editorService);
 
-    function EditorDirective() {
+    function EditorDirective($mdDialog,
+                             editorService,
+                             editorFiles,
+                             commands,
+                             IDE,
+                             confirmAction) {
         return {
             restrict: 'E',
             bindToController: {
@@ -19,11 +24,8 @@
             controller: EditorController
         };
 
-        function EditorController($mdDialog,
-                                  editorService,
-                                  editorFiles,
-                                  commands,
-                                  IDE) {
+        function EditorController() {
+            var self = this;
             var aceEditor;
 
             editorService.register(this);
@@ -41,7 +43,13 @@
             };
 
             this.reload = function() {
-                this.file.load();
+                confirmAction(
+                    "Unsaved changes",
+                    "You have unsaved changes in this file.<br/> Are you sure you want to " +
+                    "close it and <br/><strong>loose those changes</strong> ?",
+                    function () {
+                        this.file.load();
+                    })
             };
 
             this.search = function(ev) {
@@ -75,6 +83,9 @@
             }
 
             function aceChanged(e) {
+                if (self.file) {
+                    self.file.updateStatus();
+                }
             }
 
             this.options = {

@@ -20,6 +20,7 @@ yarn.service("EditorFile", function (guid,
         this.ready = false;
         this.status = "";
         this.content = "";
+        this.originalContent = "";
     }
 
     EditorFile.prototype.load = function () {
@@ -32,12 +33,26 @@ yarn.service("EditorFile", function (guid,
                 self.ready = true;
                 self.status = "Loaded";
                 self.content = script.source;
+                self.originalContent = script.source;
                 //console.log("script:", script);
             })
             .catch(function () {
                 self.status = "Failed to load";
                 yConsole.error("Error while loading file: " + self.absoluteURI);
             });
+    };
+
+    EditorFile.prototype.updateStatus = function () {
+        var isModified = this.isModified();
+        if (isModified) {
+            this.status = "Not saved";
+        } else {
+            this.status = "Saved";
+        }
+    };
+
+    EditorFile.prototype.isModified = function () {
+        return (this.content !== this.originalContent);
     };
 
     EditorFile.prototype.save = function () {

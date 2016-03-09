@@ -12,9 +12,6 @@ yarn.directive('sidebar', function SidebarDirective() {
 
     function SidebarController(sidebar,
                                $mdSidenav,
-                               welcomeMessage,
-                               commands,
-                               metadata,
                                root) {
         var self = this;
 
@@ -22,44 +19,7 @@ yarn.directive('sidebar', function SidebarDirective() {
             root.showConsole();
         };
 
-        metadata.then(function (metadata) {
-            this.metadata = metadata
-        });
-
         sidebar.register(this);
-
-        //this.openConsole = function () {
-        //    console.log("sidebar.openConsole");
-        //    player.openConsole();
-        //    self.closeAll();
-        //};
-        //
-        this.openStoryMenu = function () {
-            $mdSidenav("storySidebar").open();
-        };
-
-        this.closeStoryMenu = function () {
-            $mdSidenav("storySidebar").close();
-        };
-
-        this.openAuthorMenu = function () {
-            $mdSidenav("authorSidebar").open();
-        };
-
-        this.closeAuthorMenu = function () {
-            $mdSidenav("authorSidebar").close();
-        };
-
-        this.restartStory = function () {
-            commands.command("restart");
-            self.closeAll();
-        };
-
-        this.closeAll = function () {
-            self.close();
-            self.closeStoryMenu();
-            self.closeAuthorMenu();
-        };
 
         this.open = function () {
             $mdSidenav("leftSidebar").open();
@@ -67,11 +27,6 @@ yarn.directive('sidebar', function SidebarDirective() {
 
         this.close = function () {
             $mdSidenav("leftSidebar").close();
-            $mdSidenav("authorSidebar").close();
-        };
-
-        this.openWelcomeMessage = function () {
-            welcomeMessage.open();
         };
 
         this.openHelp = function () {

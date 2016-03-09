@@ -90,7 +90,10 @@ color: #C99E00\
 color: #718C00\
 }\
 .ace-tomorrow .ace_camelcase {\
-color: #2F5DFF\
+color: #22439E\
+}\
+.ace-tomorrow .ace_identifier {\
+color: #696969\
 }\
 .ace-tomorrow .ace_entity.ace_name.ace_tag,\
 .ace-tomorrow .ace_entity.ace_other.ace_attribute-name,\

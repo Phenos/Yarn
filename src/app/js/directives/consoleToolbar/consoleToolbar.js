@@ -16,9 +16,9 @@ function ConsoleToolbarDirective() {
 
     function ConsoleToolbarController(assertionBrowser,
                                       consoleService,
-                                      playerMode) {
+                                      root) {
         this.hideConsole = function () {
-            playerMode.hideConsole();
+            root.hideConsole();
         };
 
         this.openAssertionBrowser = function () {

@@ -15,11 +15,11 @@ yarn.directive('sidebar', function SidebarDirective() {
                                welcomeMessage,
                                commands,
                                metadata,
-                               playerMode) {
+                               root) {
         var self = this;
 
         this.showConsole = function () {
-            playerMode.showConsole();
+            root.showConsole();
         };
 
         metadata.then(function (metadata) {
@@ -75,7 +75,7 @@ yarn.directive('sidebar', function SidebarDirective() {
         };
 
         this.openHelp = function () {
-            playerMode.showHelp();
+            root.showHelp();
         };
 
     }

@@ -2,7 +2,11 @@
     <assertion-browser></assertion-browser>
     <md-section ng-show="consoleIsVisible" flex="100" layout="column" class="IDE">
         <console-toolbar user="user"></console-toolbar>
-        <div flex="100" layout="row">
+        <div flex="{{ editorFlexHeight }}" layout="column">
+            <editor-tabs layout="column"></editor-tabs>
+            <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
+        </div>
+        <div flex="{{ consoleFlexHeight }}" layout="row">
             <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
         </div>
     </md-section>

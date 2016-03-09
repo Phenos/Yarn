@@ -3,7 +3,23 @@
     <md-section ng-show="consoleIsVisible" flex="100" layout="column" class="IDE">
         <editor-toolbar user="user"></editor-toolbar>
         <div flex="{{ editorFlexHeight }}" layout="column">
-            <editor-tabs layout="column"></editor-tabs>
+            <editor-tabs ng-show="editorFiles.files.length > 0" layout="column"></editor-tabs>
+            <div style="background: #fff;"
+                 ng-show="editorFiles.files.length === 0"
+                 layout="column"
+                 layout-align="center center"
+                 flex="100"
+            >
+                <div flex="30"></div>
+                <div style="color: #888;">
+                    No files are curently open.<br/>
+                    From the menu you can click on <br/>
+                    <md-button style="font-size: 1em; margin-left: -8px;" ng-click="openFile()">
+                        Files \ Open...
+                    </md-button>
+                </div>
+                <div flex="50"></div>
+            </div>
             <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
         </div>
         <div flex="{{ consoleFlexHeight }}" layout="row">

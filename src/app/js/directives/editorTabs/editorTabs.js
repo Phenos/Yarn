@@ -46,8 +46,6 @@
                     }
                 });
 
-            editorFiles.open("./story.yarn.txt");
-
             this.files = editorFiles.files;
 
             editorTabs.register(this);

@@ -4,18 +4,20 @@ yarn.service('root', rootService);
 
 
 function rootController(user,
-                              $rootScope,
-                              $scope,
-                              IDE,
-                              yConsole,
-                              welcomeMessage,
-                              editorService,
-                              stories,
-                              root,
-                              hotkeys) {
+                        $rootScope,
+                        $scope,
+                        IDE,
+                        yConsole,
+                        welcomeMessage,
+                        editorService,
+                        editorFiles,
+                        stories,
+                        root,
+                        hotkeys) {
 
     $scope.IDE = IDE;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
+    $scope.editorFiles = editorFiles;
 
     IDE.register($scope);
     // Register with the service
@@ -48,7 +50,9 @@ function rootController(user,
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
-
+    $scope.openFile = function () {
+        IDE.openFromStorage();
+    };
 
     // We load the story from the user, or ensure that a default one exists
     stories.findOrCreateUserStory(user, function (story) {
@@ -68,7 +72,7 @@ function rootController(user,
      */
     $scope.editorFlexHeight_default = 65;
     $scope.consoleFlexHeight_default = 35;
-    $scope.editorFlexHeight = $scope.editorFlexHeight_default ;
+    $scope.editorFlexHeight = $scope.editorFlexHeight_default;
     $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
     $scope.onConsoleEscapeFocus = function () {
         $scope.editorFlexHeight = 65;
@@ -107,6 +111,7 @@ function rootService($localStorage, consoleService, helpService, player) {
         }
         return service.consoleIsVisible;
     }
+
     function helpIsVisible(value) {
         if (!angular.isUndefined(value)) {
             service.helpIsVisible = value;
@@ -152,7 +157,7 @@ function rootService($localStorage, consoleService, helpService, player) {
 
      Mechanics for help panel layout
 
-    */
+     */
     service.showHelp = function () {
         player.closeSidenav();
         $localStorage.helpIsVisible = helpIsVisible(true);

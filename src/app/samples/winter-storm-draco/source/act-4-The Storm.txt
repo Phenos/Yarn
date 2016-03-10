@@ -533,7 +533,8 @@ Section 3 - Conversation
 
     To say orient player:
         now draco is proper-named;
-        now printed name of draco is "Winter Storm Draco";
+        now printed name of draco is
+            "Winter Storm Draco";
         now oriented is true.
 
 
@@ -548,53 +549,4 @@ Section 3 - Conversation
     Instead of going nowhere in whiteness while oriented is true:
         say "You cast an eye that way, hoping that some landmark will appear from out of the snow and confirm your sense of place, but nothing materializes. If you do know north from south, though, there's only one way to go."
 
-
-Book 3 - Euclid Street
-
-Section 1 - Description
-
-    Euclid Street is a room. "[one of]As you run, you refamiliarize yourself with concepts of line, form, and color. Those shapes that appear to be smaller than the other shapes only seem that way because they're further from you. The thing that is furthest away is a 'vanishing point'—You can figure that out later. The orange-pink cast over all of the shapes is an effect of the streetlights, or perhaps the dawn. The shapes themselves are houses. Each of them is surrounded and covered by at least a foot of snow, a colorless substance with many interesting properties[or]You are on Euclid Street, the street where your house is[stopping].[paragraph break]Your house is south from here. To the north is something you are afraid to look at."
-
-Section 2 - Scenery
-
-    Some houses are plural-named scenery in euclid street. Understand "shape" and "shapes" and "yard" and "yards" and "doors" and "windows" and "porches" and "window" and "porch" as the houses. The description of the houses is "Houses are shapes with yards, doors, windows, porches, that sort of thing."
-
-    Instead of entering the houses, try going south.
-
-    The vanishing point is scenery in euclid street. The description of the vanishing point is "As you contemplate the implications of the process of vision and its relationship to real space, your head starts to hurt."
-
-    The streetlights are plural-named scenery in euclid street. Understand "streetlight" and "streetlamps" and "streetlamp" as the streetlamps. The description of the streetlights is "You can see the effect of the streetlights on every surface they illuminate, but you can't see the lights themselves—Oh! They're up there."
-
-    The dawn is plural-named scenery in euclid street. Understand "sun" as the dawn. Instead of examining the dawn, try examining the sky.
-
-    The lane is scenery in euclid street. Understand "road" and "street" and "euclid street" and "line" as the lane. The printed name of the lane is "Euclid Street". The description of the lane is "Euclid Street is a line which separates one half of space from the other half. You are a point on this line. (This is a simplification, of course.)"
-
-    A million screaming white crows are plural-named scenery in euclid street. Understand "storm" and "figure" and "winter storm draco" and "draco" and "crow" and "bird" and "birds" as the million screaming white crows. The description of the white crows is "[one of]You glance back at a million screaming white crows. They look to be catching up with you pretty fast[or]You may want to get inside before they get here[stopping]."
-
-    Instead of examining north in euclid street, try examining the white crows.
-
-    Instead of listening to something in Euclid Street, say "All you can hear is that [fixed letter spacing]'TEKELI-LI!'[variable letter spacing] over and over again, getting louder and closer all the time."
-
-    Instead of listening to Euclid Street, say "All you can hear is that [fixed letter spacing]'TEKELI-LI!'[variable letter spacing] over and over again, getting louder and closer all the time."
-
-    The real house is scenery in euclid street.
-    The description of the real house is
-        "Although covered in snow, it strongly resembles your own house. You have vivid memories of
-        living in something almost identical to this. Yes. This is probably your house."
-
-    Instead of opening the real house,
-        try going south.
-
-    Instead of examining south in euclid street,
-        try examining the real house.
-
-    Instead of entering the real house,
-        try going south.
-
-    Instead of going inside in euclid street,
-        try going south.
-
-    Instead of going nowhere in euclid street, say
-        "You rack your brain, trying to recall the difference between east and west.
-         [paragraph break]Maybe now isn't the time. The thing behind you is getting closer."
 

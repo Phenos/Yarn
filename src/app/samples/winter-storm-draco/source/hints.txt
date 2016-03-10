@@ -1,6 +1,3 @@
-Volume 7 - The Walkthrough
-
-Hinting is an action out of world. Understand "help" or "hint" or "walkthrough" or "walkthru" as hinting.
 
 Carry out hinting:
 	say "[italic type]Are you sure you want a hint?[paragraph break]>";

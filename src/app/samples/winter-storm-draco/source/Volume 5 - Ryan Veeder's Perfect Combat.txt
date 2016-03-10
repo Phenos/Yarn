@@ -1,0 +1,658 @@
+Volume 5 - Ryan Veeder's Perfect Combat, by Ryan Veeder
+
+Book 1 - The Appearance of combat
+
+Combatstate is a truth state that varies.
+
+Rule for constructing the status line while combatstate is true (this is the combatstatus line rule):
+	center "DEFEAT [fight status] VICTORY" at row 1;
+	rule succeeds.
+
+The combat goal is a number that varies. [the length of the progress bar; set as we enter combat.]
+
+The combat progress is a number that varies. [the position on the progress bar; set as enter combat.]
+
+To say fight status (this is the progress bar construction rule):
+	now temp progress is combat progress;
+	insert left equals signs;
+	say "|";
+	now temp progress is combat goal minus combat progress;
+	insert right equals signs.
+
+Temp progress is a number that varies.
+
+To insert left equals signs (this is the left side of progress bar rule):
+	if temp progress is greater than 0:
+		say "=";
+		decrement temp progress;
+		insert left equals signs;
+	otherwise:
+		rule succeeds;
+
+To insert right equals signs (this is the right side of progress bar rule):
+	if temp progress is greater than 0:
+		say "=";
+		decrement temp progress;
+		insert right equals signs;
+	otherwise:
+		rule succeeds.
+
+Book 2 - Beginning Combat
+
+
+A thing has a number called the inherent goal. The inherent goal of a thing is usually 10.
+
+A thing has a number called the inherent progress. The inherent progress of a thing is usually 5.
+
+A thing has a table name called the personal combat table. The personal combat table of a thing is usually the Table of Fake Combat.
+
+The current enemy is a thing that varies. The current enemy is the absence of malice.
+
+The absence of malice is a thing. [if you say so.]
+
+Instead of attacking something (this is the very replacable attacking means combat rule):
+	if combatstate is true:
+		say "[We] [are] already in a fight.";
+	otherwise if the personal combat table of the noun is the Table of Fake Combat:
+		say "Violence isn't the answer to this one.";
+	otherwise:
+		now the current enemy is the noun;
+		follow the combat initiation rulebook.
+
+Combat initiation rules is a rulebook.
+
+First turn leniency is a truth state that varies. First turn leniency is false.
+
+A combat initiation rule (this is the default combat beginning rule):
+	now combatstate is true;
+	now first turn leniency is true;
+	now combat goal is the inherent goal of the current enemy;
+	now combat progress is the inherent progress of the current enemy;
+	now current combat table is the personal combat table of the current enemy.
+
+
+Book 3 - The Sequence of Combat
+
+Perfect combat rules is a rulebook.
+
+Every turn while combatstate is true (this is the trigger combat rules rule):
+	follow the perfect combat rulebook.
+
+
+a perfect combat rule (this is the can only fight a present enemy rule):
+	if current enemy is not visible:
+		now current enemy is the absence of malice;
+		now combatstate is false.
+
+a perfect combat rule (this is the cap at zero progress rule):
+	if combat progress is less than 0:
+		now combat progress is 0.
+
+a perfect combat rule (this is the combat ends in defeat at zero progress rule):
+	if combat progress is 0:
+		follow the defeated combat rulebook.
+
+A perfect combat rule (this is the cap at maximum progress rule):
+	if combat progress is greater than combat goal:
+		now combat progress is combat goal.
+
+A perfect combat rule (this is the combat ends in victory at max progress rule):
+	if the combat progress is the combat goal:
+		follow the victorious combat rulebook.
+
+A perfect combat rule (this is the trigger combat punishment rule):
+	if the current action is not combat behavior and combatstate is true:
+		if combat stalled is false:
+			follow the combat punishment rulebook.
+
+A perfect combat rule (this is the choose an attack rule):
+	if combat progress is less than combat goal and combatstate is true:
+		if combat stalled is true:
+			choose row with attack of the current attack in the current combat table;
+			say "[current attack message][line break][combat options]";
+			now current attack is attack entry;
+		otherwise:
+			choose random row in current combat table;
+			now current attack message is "[message entry]";
+			say "[current attack message][line break][combat options]";
+			now current attack is attack entry;
+		now combat stalled is false.
+
+The current attack message is text that varies. [This keeps attack messages consistent when they need to be repeated, such as when the player is wasting time.]
+
+The choose an attack rule is listed last in the perfect combat rulebook.
+
+Part 1 - Combat Punishment
+
+Combat punishment rules is a rulebook.
+
+[individual battles need their own approaches to punishing non-combat behavior.
+
+actions that are exempt from combat punishment should also trigger combat stalled.]
+
+Part 2 - Combat Stalled
+
+Combat stalled is a truth state that varies. Combat stalled is false.
+
+Before examining (this is the examining takes no time rule):
+	if combatstate is true:
+		now combat stalled is true.
+
+Before looking (this is the looking takes no time rule):
+	if combatstate is true:
+		now combat stalled is true.
+
+[Say "combat stalled is true" whenever the player makes a mistake or some other type of event occurs that make a turn pass in the game logic when no time should pass in the combat logic.]
+
+Book 4 - Combat Tables
+
+The current combat table is a table name that varies.
+
+The current attack is a number that varies.
+
+Table of Fake Combat
+attack	message	advance	back	up	down	left	right	thrust
+1	""	""	""	""	""	""	""	""
+
+
+
+Book 6 - Combat Options
+
+Part 1 - Printing Combat Options
+
+To say combat options (this is the combat options text rule):
+	if fast mode is true:
+		say "[one of]What will [we] do? [or][stopping]Advance (A), Back up (B), Slice (C), Thrust (T), or Flee (F)?";
+	otherwise:
+		say "[one of]What will [we] do? [or][stopping][bold type][bracket]A[close bracket][roman type]DVANCE, [bold type][bracket]B[close bracket][roman type]ACK UP, SLI[bold type][bracket]C[close bracket][roman type]E, [bold type][bracket]T[close bracket][roman type]HRUST, or [bold type][bracket]F[close bracket][roman type]LEE?"
+
+
+
+[ FOR USE IN GAMES THAT LACK FAST MODE
+
+To say combat options (this is the combat options text rule):
+	say "[one of]What will [we] do? [or][stopping][bold type][bracket]A[close bracket][roman type]DVANCE, [bold type][bracket]B[close bracket][roman type]ACK UP, SLI[bold type][bracket]C[close bracket][roman type]E, [bold type][bracket]T[close bracket][roman type]HRUST, or [bold type][bracket]F[close bracket][roman type]LEE?"
+
+]
+
+
+Part 2 - Weapons
+
+A thing can be weapon. The shovel is weapon.
+
+Definition: a thing is nonweapon if it is not weapon.
+
+Chapter 1 - Wielding Weapons
+
+Wielding relates a person to one thing. The verb to wield means the wielding relation.
+
+Readying is an action applying to one carried thing. Understand "wield [something]" and "ready [something]" and "brandish [something]" as readying.
+
+Instead of readying something nonweapon (this is the wield only weapons rule):
+	if the noun is not weapon:
+		if combatstate is true:
+			now combat stalled is true;
+		say "[The noun] [aren't] a suitable weapon." instead.
+
+To grasp is a verb.
+
+To step is a verb.
+
+Instead of readying something (this is the wielding a weapon rule):
+	now player wields nothing;
+	now the player wields the noun;
+	if combatstate is true:
+		say "[We] [step] back a bit as [we] [grasp] [the noun].";
+		if combat progress is greater than 1:
+			decrement combat progress;
+	otherwise:
+		say "[We] [grasp] [the noun]."
+
+Unreadying is an action applying to one carried thing. Understand "unready [something]" and "unwield [something]" and "stop wielding [something]" as unreadying.
+
+To stop is a verb.
+
+Instead of unreadying something:
+	if player wields noun:
+		say "[We] [stop] wielding [the noun].";
+		now player wields nothing;
+	otherwise:
+		say "[We] [aren't] wielding [the noun].".
+
+To release is a verb.
+
+Before dropping something:
+	if player wields noun:
+		now player wields nothing;
+		say "[We] [release] [our] grasp on [the noun]."
+
+Before inserting something into something:
+	if player wields noun:
+		now player wields nothing;
+		say "[We] [release] [our] grasp on [the noun]."
+
+Before putting something on something:
+	if player wields noun:
+		now player wields nothing;
+		say "[We] [release] [our] grasp on [the noun]."
+
+Part 3 - Combat Behavior
+
+Before combat behavior (this is the combat behavior is confined to combat rule):
+	if combatstate is false:
+		say "That verb does not make sense in this context." instead.
+
+Part 4 - The Combat Options Themselves
+
+Chapter 1 - Movement Actions
+
+Section 1 - The Advancing Action
+
+Advancing is an action applying to nothing. Advancing is combat behavior.
+
+Understand "a" and "advance" and "forward" as advancing.
+
+Instead of advancing (this is the normal advancing rule):
+	choose row with attack of the current attack in the current combat table;
+	say advance entry;
+	follow the status reminder rule.
+
+Section 2 - The Backing Up action
+
+Backing is an action applying to nothing. Backing is combat behavior.
+
+Understand "back up" and "b" and "backward" as backing.
+
+Instead of backing (this is the normal backing rule):
+	choose row with attack of the current attack in the current combat table;
+	say back entry;
+	follow the status reminder rule.
+
+Chapter 2 - Weapon Actions
+
+Before weapon behavior (this is the weapon behavior requires wielded weapon rule):
+	if player wields nothing:
+		let biff be a random visible weapon thing enclosed by player;
+		if biff is a thing:
+			now player wields biff;
+			say "[We] [grasp] [the biff].";
+	if player wields nothing:
+		now combat stalled is true;
+		say "[We] [can't] do that without a weapon!" instead.
+
+Section 1 - The Slicing Action
+
+Slicing is an action applying to one visible thing. Slicing is combat behavior. Slicing is weapon behavior.
+
+Understand the command "slice" as something new.
+
+Understand "slice [direction]" and "c [direction]" as slicing.
+
+To slice is a verb.
+
+Instead of slicing (this is the normal slicing rule):
+	choose row with attack of the current attack in the current combat table;
+	if noun is compassly:
+		now combat stalled is true;
+		say "[We] [can] only slice up, down, left, or right!";
+	if noun is up:
+		say up entry;
+	if noun is down:
+		say down entry;
+	if noun is left:
+		say left entry;
+	if noun is right:
+		say right entry;
+	follow the status reminder rule.
+
+Parser clarification internal rule response (E) is "[ridiculous response]?".
+
+To say ridiculous response:
+	if the player's command includes "slice":
+		say "[one of][bracket]You can also use a command like 'slice right' or 'c r' if you wish.[close bracket][or][stopping]In which direction (up, down, left, or right) do you want to slice";
+	otherwise if the player's command matches the regular expression "\bc\b":
+		say "[one of][bracket]You can also use a command like 'slice right' or 'c r' if you wish.[close bracket][or][stopping]In which direction (up, down, left, or right) do you want to slice";
+	otherwise:
+		say "What do you want [if the noun is not the player][the noun] [end if]to [parser command so far]"
+
+Left is a direction. The opposite of left is right. Understand "l" as left.
+Right is a direction. The opposite of right is left. Understand "r" as right.
+
+Before going (this is the can't go subjectively rule):
+	if the noun is left or the noun is right:
+		say "Please supply an objective direction." instead.
+
+A direction can be compassly.
+
+North is compassly.
+Northeast is compassly.
+East is compassly.
+Southeast is compassly.
+South is compassly.
+Southwest is compassly.
+West is compassly.
+Northwest is compassly.
+
+Section 2 - The Thrusting Action
+
+Thrusting is an action applying to nothing. Thrusting is combat behavior. Thrusting is weapon behavior.
+
+Understand "t" and "thrust" and "lunge" as thrusting.
+
+Instead of thrusting (this is the normal thrusting rule):
+	choose row with attack of the current attack in the current combat table;
+	say thrust entry;
+	follow the status reminder rule.
+
+Chapter 3 - Fleeing Actions
+
+Section 1 - The Fleeing Action
+
+Fleeing is an action applying to nothing. Fleeing is combat behavior.
+
+Understand "f" and "flee" and "run away" and "escape" as fleeing.
+
+the fleetarget is a room that varies.
+
+First carry out going rule (this is the set room to flee to rule):
+	now the fleetarget is the location.
+
+To flee is a verb.
+
+Carry out fleeing (this is the normal fleeing rule):
+	let way be the best route from the location to the fleetarget;
+	if way is a direction:
+		now combatstate is false;
+		let target be the fleetarget;
+		now fleetarget is the location;
+		say "[We] [flee] the battle.";
+		now player is in target;
+	otherwise:
+		say "[We] [can] find nowhere to escape to!";
+		now combat stalled is true.
+
+
+Part 5 - The Status Reminder
+
+This is the status reminder rule:
+	if fast mode is true:
+		if combat progress is less than combat goal:
+			say "Your Combat Progress Quotient is [combat progress] out of [combat goal].";
+	otherwise:
+		if important reminder is false:
+			now important reminder is true;
+			say "Your progress has been recorded in the Combat Progress Bar at the top of the window.";
+
+Important reminder is a truth state that varies. Important reminder is false.
+
+
+Book 7 - The End of combat
+
+Section 1 - Victorious End
+
+Victorious combat rules is a rulebook.
+
+A victorious combat rule (this is the very basic victorious combat rule):
+	now combatstate is false.
+
+The very basic victorious combat rule is listed last in the victorious combat rulebook.
+
+
+Section 2 - Defeated End
+
+Defeated combat rules is a rulebook.
+
+A defeated combat rule (this is the very basic defeated combat rule):
+	now combatstate is false.
+
+The very basic defeated combat rule is listed last in the defeated combat rulebook.
+
+Book 8 - The Combat Facts of the Black Angel
+
+Part 1 - The Basic Facts
+
+Chapter 1 - Declarations
+
+The Black Angel wields the scythe. [This doesn't actually affect anything HA HA HA HA]
+
+The inherent goal of the Black Angel is 14.
+
+The inherent progress of the Black Angel is 4.
+
+A combat punishment rule:
+	if current enemy is the Black Angel:
+		if current action is looking or current action is examining:
+			now combat stalled is true;
+		otherwise if current action is taking inventory:
+			now combat stalled is true;
+		otherwise if first turn leniency is true:
+			now first turn leniency is false;
+		otherwise:
+			say "While you're distracted, [if the noun is the black angel]she[otherwise]the Black Angel[end if] scythes you in the arm.";
+			now combat progress is combat progress - 1;
+			if combat progress is 0:
+				now combat progress is 1.
+
+
+
+
+The personal combat table of the Black Angel is the Table of Black Angel Combat.
+
+Chapter 2 - The Table
+
+Table of Black Angel Combat
+attack	message	advance	back	up	down	left	right	thrust
+1	"[1mess]"	"[1a]"	"[1b]"	"[1u]"	"[1d]"	"[1l]"	"[1r]"	"[1t]"
+2	"[2mess]"	"[2a]"	"[2b]"	"[2u]"	"[1d]"	"[2l]"	"[2r]"	"[2t]"
+3	"[3mess]"	"[3a]"	"[3b]"	"[3u]"	"[1d]"	"[3l]"	"[3r]"	"[3t]"
+4	"[4mess]"	"[4a]"	"[4b]"	"[4u]"	"[1d]"	"[4l]"	"[4r]"	"[4t]"
+5	"[5mess]"	"[5a]"	"[5b]"	"[5u]"	"[1d]"	"[5l]"	"[5r]"	"[5t]"
+
+Part 2 - The Attacks
+
+Chapter 1 - Attack 1 - She Swipes Left
+
+To say 1mess:
+	say "[one of]She grasps her scythe and swings at you from the left.[or]The scythe's blade swings in from your left![or]She swipes back and forth theatrically: Left, right. Then she swings in earnest, at your head.[then at random]"
+
+To say 1a:
+	decrement combat progress;
+	increment jacket damage;
+	say "You step into her attack, and the scythe rips into your jacket."
+
+To say 1b:
+	decrement combat progress;
+	say "You jump back, and the blade slices through empty air."
+
+To say 1u:
+	increment combat progress;
+	say "You raise your shovel and deflect the attack[one of]. The Black Angel is surprised only momentarily[or][stopping]."
+
+To say 1d:
+	increment combat progress;
+	say "You bring your shovel down and deflect the attack[one of]. The Black Angel is surprised only momentarily[or][stopping]."
+
+To say 1l:
+	now combat progress is combat progress + 2;
+	say "[one of]You swing your shovel straight into her scythe: Both blades peal out sickeningly. The Black Angel is pushed back, and you close the distance.[or]You slice into her attack, and she reels for a second from the impact.[then at random]"
+
+To say 1r:
+	decrement combat progress;
+	increment jacket damage;
+	say "You slice in the same direction as her attack, but her weapon has the greater reach: The scythe pierces your jacket."
+
+To say 1t:
+	now combat progress is combat progress - 2;
+	now jacket damage is jacket damage + 2;
+	say "You lunge into her attack, and she slices into your left side."
+
+Chapter 2 - Attack 2 - She Swipes Right
+
+To say 2mess:
+	say "[one of]She swings her scythe in a wide arc, coming from the right—toward your neck.[or]She adjusts her grip and slices at your right side.[or]You lose sight of her in the snow—then you see the blade coming at you, on your right![then at random]"
+
+To say 2a:
+	decrement combat progress;
+	increment jacket damage;
+	say "You step into her attack, and the scythe rips into your jacket."
+
+To say 2b:
+	decrement combat progress;
+	say "You jump back, and the blade slices through empty air."
+
+To say 2u:
+	increment combat progress;
+	say "You raise your shovel and deflect the attack[one of]. The Black Angel is surprised only momentarily[or][stopping]."
+
+To say 2d:
+	increment combat progress;
+	say "You bring your shovel down and deflect the attack[one of]. The Black Angel is surprised only momentarily[or][stopping]."
+
+To say 2l:
+	decrement combat progress;
+	increment jacket damage;
+	say "You slice in the same direction as her attack, but her weapon has the greater reach: The scythe pierces your jacket."
+
+To say 2r:
+	now combat progress is combat progress + 2;
+	say "[one of]You swing the shovel into her scythe: You feel it in your wrists, your arms, your shoulders. But the Black Angel reels from the impact, and you gain some ground.[or]The scythe and the shovel smash into each other with such force that you expect one or both to shatter. The Black Angel staggers back.[then at random]"
+
+To say 2t:
+	now combat progress is combat progress - 2;
+	now jacket damage is jacket damage + 2;
+	say "You lunge into her attack, and she slices into your right side."
+
+Chapter 3 - Attack 3 - She Swipes Down
+
+To say 3mess:
+	say "[one of]She brings the scythe down, pointing right at your head![or]She raises her scythe over her head and swings it down.[or]The scythe plunges down, toward your head![then at random]"
+
+To say 3a:
+	decrement combat progress;
+	increment jacket damage;
+	say "You step into her attack, and the scythe rips into the back of your jacket."
+
+To say 3b:
+	decrement combat progress;
+	say "You jump back, and the blade slices through empty air."
+
+To say 3u:
+	now combat progress is combat progress + 2;
+	say "[one of]You raise your shovel against her attack. The scythe rebounds, and the Black Angel nearly loses her grip.[or]You block the attack with your shovel, and the Black Angel is knocked back by the recoil.[stopping]"
+
+To say 3d:
+	decrement combat progress;
+	increment jacket damage;
+	say "You slice in the same direction as her attack, but her weapon has the greater reach: The scythe pierces your jacket."
+
+To say 3l:
+	increment combat progress;
+	say "You swing your shovel to the left and deflect the attack[one of]. The Black Angel is surprised only momentarily[or][stopping]."
+
+To say 3r:
+	increment combat progress;
+	say "You swing your shovel to the right and deflect the attack[one of]. The Black Angel is surprised only momentarily[or][stopping]."
+
+To say 3t:
+	now combat progress is combat progress - 2;
+	say "You lunge into her attack, and she nearly slices your ear off."
+
+Chapter 4 - Attack 4 - She Winds Up
+
+To say 4mess:
+	say "[one of]She pulls her scythe away, drawing herself back like a spring.[or]She winds up for a powerful strike.[then at random]"
+
+To say 4a:
+	increment combat progress;
+	say "You take the opportunity to close the distance, and she's forced to recalibrate her approach."
+
+To say 4b:
+	say "You back away in plenty of time: She swings with incredible force, but at nothing, and you step back into place as she rights herself."
+
+To say 4u:
+	decrement combat progress;
+	increment jacket damage;
+	say "You swing wildly above you, but the attack comes from the side, and the scythe slices your jacket."
+
+To say 4d:
+	decrement combat progress;
+	increment jacket damage;
+	say "You bring your weapon down—too early. She slices easily at your jacket."
+
+To say 4l:
+	decrement combat progress;
+	increment jacket damage;
+	say "You slice desperately from right to left, and leave yourself open to a blow to your shoulder."
+
+To say 4r:
+	decrement combat progress;
+	increment jacket damage;
+	say "You slice desperately from left to right, and leave yourself open to a blow to your thigh."
+
+To say 4t:
+	now combat progress is combat progress + 3;
+	say "Before she can swing, you lunge forward, the blade of your shovel trained on her stomach. The thrust connects—the Black Angel falters—and a shriek of pain bursts from her skull."
+
+
+Chapter 5 - Attack 5 - She Brandishes
+
+To say 5mess:
+	say "[one of]She spins her scythe theatrically, hoping to distract you with its glitter.[or]She brandishes the scythe. Its edge glints.[then at random]"
+
+To say 5a:
+	increment combat progress;
+	say "You move in before she can attack."
+
+To say 5b:
+	decrement combat progress;
+	say "You back away, and lose precious ground, as the Black Angel continues to spin her weapon."
+
+To say 5u:
+	increment combat progress;
+	say "You slice up at her, and land a decent hit under her chin."
+
+To say 5d:
+	increment combat progress;
+	say "You swing your weapon down and knock a chip of stone from her arm."
+
+To say 5l:
+	increment combat progress;
+	say "You slice from right to left, and land a blow on her right wing."
+
+To say 5r:
+	increment combat progress;
+	say "You slice from left to right, and land a blow on her left wing."
+
+To say 5t:
+	now combat progress is combat progress + 2;
+	say "You take the chance to thrust the shovel toward her—knocking her back and nearly breaking her grip on the scythe."
+
+
+Part 4 - To End the Battle
+
+
+A victorious combat rule (this is the beat the black angel rule):
+	remove the black angel from play;
+	if current action is advancing:
+		say "The ground you gain is critical, though: She's left an opening, and before she can make her next move you rush past her and through the gate.";
+		try going south;
+	otherwise:
+		say "She withdraws and grabs at her wound, as if the stone were bleeding. Her wings heave, black feathers falling and flying away in the wind. She fixes you with a glare of desperate hatred.[paragraph break]Then her body tenses, as if she's about to scream—but instead she lifts herself into the air, through the snow, into the storm.";
+
+A defeated combat rule (this is the beaten by black angel rule):
+	if current action is backing:
+		say "She cackles, and withdraws into the darkness. You realize you've retreated so far that you're back at the obelisk.";
+	otherwise:
+		say "You fall. The Black Angel laughs.[paragraph break]When you can stand again, you're [one of]not in the same place[or]somewhere else[or]back at the obelisk again[stopping].";
+	now player is in nearobelisk.
+
+
+Part 5 - The Jacket Gets Ripped Up
+
+Jacket damage is a number that varies. Jacket damage is 0.
+
+Instead of examining the puffy jacket while jacket damage is greater than 0:
+	say "[if jacket damage is 1]There's a tear in your jacket, but it's still keeping you as warm ([quotation mark]not very[quotation mark]) as it was before it got cut up[otherwise if jacket damage is 2]There's a couple of tears in your jacket, but it's still keeping you as warm ([quotation mark]not very[quotation mark]) as it was before it got cut up[otherwise if jacket damage is less than six]Your jacket's been ripped up quite a bit. Maybe, if you ever get home, you will get a chance to replace it[otherwise]Your jacket has been reduced to pathetic tatters[end if]."
+
+
+

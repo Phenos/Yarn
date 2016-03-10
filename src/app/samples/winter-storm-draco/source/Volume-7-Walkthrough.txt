@@ -1,0 +1,49 @@
+Volume 7 - The Walkthrough
+
+Hinting is an action out of world. Understand "help" or "hint" or "walkthrough" or "walkthru" as hinting.
+
+Carry out hinting:
+	say "[italic type]Are you sure you want a hint?[paragraph break]>";
+	if player consents:
+		say "Okay: [hint][roman type]";
+	otherwise:
+		say "Cool.[line break][roman type]"
+
+To say hint:
+	if location is euclid street:
+		say "GO SOUTH.";
+	otherwise if location is whiteness:
+		if oriented is true:
+			say "If west is that way, then south is that way. Go south.";
+		otherwise if draco is not faraway:
+			say "This guy is kind of self-obsessed. You might get an in with him if you can guess his name. (Bonus Hint: His name is easy to guess.)";
+		otherwise:
+			say "There's a great verb for getting people's (or crows[']) attention that I told you about earlier in the game. Remember?";
+	otherwise if location is tunnelo:
+		say "Not much of anywhere to go from here but south.";
+	otherwise if location is bus stop:
+		say "To get across the street you have to take that tunnel that's west from here.";
+	otherwise if location is peters street:
+		say "To get across the street you have to take that tunnel to the south.";
+	otherwise if location is in cemetery:
+		if black angel is vexed:
+			if player encloses the shovel:
+				say "To fight the Black Angel effectively, slice in the opposite directions of her attacks. (That means if she slices down, you should slice up; if she slices from the right, you should slice to the right.) Only thrust when you have an opening.";
+			otherwise:
+				say "To fight the Black Angel, you need a weapon. There's a weapon-like object in the shed[if location is not nearshed] (There's a shed around here somewhere)[end if].";
+		otherwise:
+			say "The way out of the cemetery is [if location is nearmausoleum]east[otherwise]south[end if].";
+	otherwise if location is in woods:
+		if bearings is true:
+			say "Just follow the directions out of the woods.";
+		otherwise:
+			if player carries needle:
+				if needle is magnetized:
+					say "Now that your needle is magnetized, you can totally make it into a compass. You just need to make it float on something. Put some wine in a cup; put the needle in the cork; put the cork in the cup. No problem.";
+				otherwise:
+					say "You could make a compass with that needle if it were magnetized. [if location encloses the tin]Something in this area or in your inventory has a magnet on it; try 'RUB NEEDLE ON' that thing[otherwise]There's a magnetic thing in these woods, but you'll have to look around and examine stuff to find it[end if].";
+			otherwise:
+				say "Have you seen the crows? Have you bugged the crows?";
+	otherwise:
+		say "Just go south from here."
+

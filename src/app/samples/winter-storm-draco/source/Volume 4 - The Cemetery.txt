@@ -1,0 +1,285 @@
+
+Volume 4 - The Cemetery
+
+Book 1 - General Cemetery Stuff
+
+Cemetery is a region.
+
+
+Section 1 - Messages
+
+Angelmessage is a truth state that varies. Angelmessage is true.
+
+After looking in Cemetery:
+	now visibility-text is "Very Bad";
+	now description of the snow is "You can detect the snow mainly as a burning cold on your neck, your face, and your hands. You can't really see it; rather, it renders everything else invisible.";
+	now description of the sky is "There are no streetlamps to illuminate the sky here.";
+	if angelmessage is true:
+		say "[one of]The wind blows a black feather past your face—and out of sight.[or]In the black sky, a blacker shape appears—No, you're imagining things.[or][fixed letter spacing]'TEKELI-LI!'[line break][variable letter spacing][stopping]";
+		now angelmessage is false;
+	otherwise:
+		now angelmessage is true.
+
+
+Section 2 - Graves
+
+The grave markers are plural-named backdrop in Cemetery. Understand "grave" and "graves" and "date" and "dates" and "marker" and "grave marker" and "tombstone" and "tombstones" and "stone" and "stones" and "tomb stone" and "tomb stones" and "headstone" and "headstones" and "head stone" and "head stones" and "memorial" and "memorials" and "gravestone" and "gravestones" and "grave stone" and "grave stones" and "graveyard" and "cemetery" as the grave markers.
+
+Instead of examining the grave markers:
+	say "You bend down to squint at one of the gravestones.[paragraph break][gravetext of the location][paragraph break][if a random chance of 1 in 3 succeeds][one of]Your knees ache as you erect yourself[or]Snow stings the small of your back—you stand up and adjust your jacket[or]You raise your head before a trickle of snot can fall out of your nose[as decreasingly likely outcomes]."
+
+A room has text called gravetext. Gravetext of a room is usually "It reads: 'FILLER TEXT.'"
+
+Section 3 - Cemetery Backdrops
+
+The ditch is a backdrop. Understand "creek" as the ditch. The ditch is in nearwoods and nearmausoleum and nearobelisk. Description of ditch is "You can't see it from here."
+
+Before doing something other than examining with the ditch:
+	try examining the ditch instead.
+
+The wooden fence is a backdrop. The wooden fence is in nearshed and nearobelisk and neargate. The description of the wooden fence is "You're pretty sure the wooden fence [italic type]exists[roman type], over to the east somewhere, but that's about it."
+
+Before doing something other than examining with the wooden fence:
+	try examining the wooden fence instead.
+
+
+The shape is a backdrop in cemetery. Understand "shapes" and "[shapely] shape" and "[shapely] shapes" as the shape.
+
+Understand "large" and "larger" and "small" and "smaller" and "dark" and "darker" and "black" and "blacker" as "[shapely]".
+
+The description of the shape is "You peer into black torrents of snow. Your eyes unfocus. You see out to what might be an infinite distance. You lose track of what you were looking for."
+
+Before doing something other than examining with the shape:
+	say "It is way over there." instead.
+
+Book 2 - Rooms In The Cemetery
+
+Part 1 - Near The Woods
+
+nearwoods is a room in cemetery. Printed name of nearwoods is "Near the Woods".
+
+Description of nearwoods is "[one of]This is fairly close to where you thought you'd end up. Getting home from here should be easy.[paragraph break][or][stopping]You're at the north end of the cemetery, where it meets up with the woods. In all other directions are diminishingly visible grave markers.[one of] There are no streetlights over the cemetery, and the snow has picked up a bit.[or][stopping][paragraph break]You can see (or you remember seeing, or you imagine having seen) larger shapes to the east and south."
+
+Instead of going north in nearwoods, say "Your house is south. North are the woods, wherein you've spent plenty of time already."
+
+Instead of going northeast in nearwoods, say "Your house is south. Northeast are the woods, wherein you've spent plenty of time already."
+
+Instead of going northwest in nearwoods, say "Your house is south. Northwest are the woods, wherein you've spent plenty of time already."
+
+Instead of going west in nearwoods, say "You trudge west a bit and almost fall into a ditch. It may actually be a creek. It's not really worth making sure.[paragraph break]You return to the trailhead."
+
+Instead of going southwest in nearwoods, say "You trudge southwest a bit and almost fall into a ditch. It may actually be a creek. It's not really worth making sure.[paragraph break]You return to the trailhead."
+
+Before going southeast in nearwoods, say "You venture foolishly to the southwest, where you can't see anything."
+
+Gravetext of nearwoods is "[one of]This one says 'HEYERDAHL.'[or]It's a little lamb, weathered and cracked. The inscription is impossible to make out.[or]'HOCK' is etched in the black marble.[or]A skull is carved in the limestone, and beneath that the name 'HARRYHAUSEN.'[then at random]"
+
+Part 2 - Near a Shed
+
+nearshed is a room in cemetery. Printed name of nearshed is "Near a Shed".
+
+Nearshed is east of nearwoods and northeast of nearmausoleum.
+
+Description of nearshed is "The tombstones draw oddly close to this shed. Too many people have died; there's no room left for cemetery maintenance.[paragraph break]The shed itself is unbelievably decrepit, and leans about thirty degrees away from the perpendicular. This must be down to an unevenness of the ground—but you could easily believe it was warped just this evening, by this bitter wind.[paragraph break]Vague spaces lurk south and west."
+
+Before going southwest in nearshed, say "You plod to the southwest, where you can't see anything."
+
+Instead of going north in nearshed, say "Your house is south. North are the woods, wherein you've spent plenty of time already."
+
+Instead of going northeast in nearshed, say "Your house is south. Northeast are the woods, wherein you've spent plenty of time already."
+
+Instead of going northwest in nearshed, say "Your house is south. Northwest are the woods, wherein you've spent plenty of time already."
+
+Instead of going east in nearshed, say "You can walk only a few yards before you run violently into a wooden fence—all but invisible in the thick snow."
+
+Instead of going southeast in nearshed, say "You can walk only a few yards before you run violently into a wooden fence—all but invisible in the thick snow."
+
+Gravetext of nearshed is "[one of]Under the gothic finials is the name 'NATHAN GRAVES.'[or][italic type]Here Lyes[line break]J. McGILLICUTTY[line break]Killed for Lying.[roman type][or]EPPS[line break]1944 -[paragraph break]Not yet, apparently.[or]Soaring over the name 'LOMBARDI' is a carving of a ferocious bird of prey.[then at random]"
+
+The shed is closed openable scenery container in nearshed. The description of the shed is "The planks of the shed have shrunken with age, and the snow blows inside without difficulty[if the shed is closed]. The door is closed[end if]."
+
+Understand "door" and "plank" and "planks" as the shed.
+
+Instead of entering the shed, say "The shed is no kind of shelter: The walls are full of holes, and the whole time you were inside, you'd have to stand at an angle."
+
+Instead of attacking the shed, say "It wouldn't be a fair fight."
+
+Chapter 1 - The Shovel
+
+The shed contains the shovel. Understand "spade" as the shovel. The description of the shovel is "Although chipped and rusty, this shovel looks a lot more sturdy than the shed[if the location is not nearshed] where you found it[end if]."
+
+After taking the shovel the first time, say "You lift the shovel. The rusty handle should be cold enough to burn your bare hands, but you feel fine."
+
+
+
+Part 3 -  Near a Mausoleum
+
+nearmausoleum is a room in cemetery. Printed name of nearmausoleum is "Near a Mausoleum".
+
+nearmausoleum is south of nearwoods.
+
+Description of nearmausoleum is "The marble edifice offers no shelter from the storm (to you, anyway), but it at least serves as a point of reference among the swirling snow and rows of headstones.[paragraph break]The way back to the woods is north. Something else is east."
+
+Instead of going west in nearmausoleum, say "You trudge west a bit and almost fall into a ditch. It may actually be a creek. It's not really worth making sure.[paragraph break]You return to the mausoleum."
+
+Instead of going northwest in nearmausoleum, say "You trudge northwest a bit and almost fall into a ditch. It may actually be a creek. It's not really worth making sure.[paragraph break]You return to the mausoleum."
+
+Instead of going southwest in nearmausoleum, say "You trudge southwest a bit and almost fall into a ditch. It may actually be a creek. It's not really worth making sure.[paragraph break]You return to the mausoleum."
+
+Instead of going south in nearmausoleum, say "You trudge south a bit and almost fall into a ditch. It may actually be a creek. It's not really worth making sure.[paragraph break]You return to the mausoleum."
+
+Before going southeast in nearmausoleum, say "You blindly march to the southeast, where you can't see anything."
+
+Before going northeast in nearmausoleum, say "You recklessly walk northeast, where you can't see anything."
+
+Gravetext of nearmausoleum is "[one of][italic type]Vain the Hopes for such as me[line break]Who dwell in deep Eternity.[roman type][or]The ancient stone reads: 'PYM.'[or]The engraving is in Chinese or something. You can't make head or tail of it.[or]'Celeste NOLAN[line break]Wife - Mother - Embezzler'[then at random]"
+
+The mausoleum is scenery in nearmausoleum. The description of the mausoleum is "The snow seems to fly deliberately around rather than settle in a drift against the walls and columns of black marble. The bars over the windows and door are wrought in a floral motif; the name chiseled over the threshold is 'SILAS.'"
+
+Understand "wall" and "walls" and "column" and "columns" and "bar" and "bars" and "iron bar" and "iron bars" and "door" and "floral motif" and "motif" and "name" and "silas" and "crypt" and "window" and "windows" and "decoration" and "decorations" as the mausoleum.
+
+Instead of opening the mausoleum, say "You tug on the iron bars halfheartedly. Nothing happens. Must be locked."
+
+Instead of unlocking the mausoleum with something, say "If there is in fact a keyhole, you can't see it."
+
+Instead of pulling the mausoleum, try opening the noun.
+
+Instead of entering the mausoleum, try opening the noun.
+
+Instead of searching the mausoleum, say "There are windows of a sort, but they seem primarily to be frames for additional wrought-iron decoration, and you can see nothing of interest on the other side."
+
+
+
+Part 4 - Near an Obelisk
+
+nearobelisk is a room in cemetery. Printed name of nearobelisk is "Near an Obelisk".
+
+nearobelisk is south of nearshed and east of nearmausoleum and southeast of nearwoods.
+
+Description of nearobelisk is "The open area around the obelisk must be a driveway, underneath the snow. The nearby grave markers all stand at a respectable distance.[paragraph break]At the foot of the monument is a spotlight. It's either turned off or burnt out.[paragraph break]A large dark shape is west, and a smaller dark shape is north. If what you're standing on is indeed a road, it leads south."
+
+Instead of going southeast in nearobelisk, say "You can walk only a few yards before you run violently into a wooden fence—all but invisible in the thick snow."
+
+Instead of going northeast in nearobelisk, say "You can walk only a few yards before you run violently into a wooden fence—all but invisible in the thick snow."
+
+Instead of going east in nearobelisk, say "You can walk only a few yards before you run violently into a wooden fence—all but invisible in the thick snow."
+
+Instead of going southwest in nearobelisk, say "You trudge southwest a bit and almost fall into a ditch. It may actually be a creek. It's not really worth making sure.[paragraph break]You return to the obelisk."
+
+Before going northwest in nearobelisk, say "You nonchalantly amble to the northwest, where you can't see anything."
+
+Gravetext of nearobelisk is "[one of]There's no name or epitaph, just two hyphen-separated dates.[or][italic type]Betimes, my love, you fled from me[line break]Beyond cold Death's unyielding door[line break]Your precious beauty food for worms[line break]Alas, I'll never see you more[roman type][or]It reads: [italic type]Here Lies Aaron Berenstein[line break]For All Your Flooring Needs,[line break]Call Berenstein & Sons Surfaces[line break](319) 337-4054[roman type][or][italic type]MAX von SYDOW[line break]Not That Max von Sydow[line break]1929 -[then at random]"
+
+The obelisk is scenery in nearobelisk. Understand "monument" and "monolith" and "pillar" and "white" and "marble" as the obelisk. Description of obelisk is "A pillar of white marble points up in defiance, or reproach, or warning, toward—you can't see what. There's a bunch of clouds in the way."
+
+The spotlight is scenery in nearobelisk. Understand "light" and "spot" and "spot light" as the spotlight. Description of spotlight is "It points up at the obelisk, and its brilliant white light reflects from the monolith's surface, making it a beacon to the entire cemetery, when the light's turned on."
+
+Instead of switching on the spotlight, say "You can't find any switch."
+
+Instead of switching off the spotlight, say "You can't find any switch."
+
+The driveway is a backdrop. The driveway is in nearobelisk and neargate. Understand "road" as the driveway. The description of the driveway is "This stretch of snow-covered ground without any grave markers on it is probably a driveway."
+
+Part 5 - Near the Gate
+
+neargate is a room in cemetery. Printed name of neargate is "Near the Gate".
+
+neargate is south of nearobelisk and southeast of nearmausoleum.
+
+Description of neargate is "You can see the southern wall of the cemetery now, and straight south down the driveway is the gate.".
+
+Gravetext of neargate is "[one of]Raised granite letters read 'RODINA FELDEVERTOVA.'[or][italic type]CLARK[line break]ANDY & MELISSA[line break]IN PERPETUUM[roman type][or]The limestone is so weathered that no discernible inscription remains.[or]The name in the inscription is your name.[paragraph break]No, wait, it's spelled slightly differently. Plus this person died in 1956.[then at random]"
+
+Instead of going northeast in neargate, say "You can walk only a few yards before you run violently into a wooden fence—all but invisible in the thick snow."
+
+Instead of going east in neargate, say "You can walk only a few yards before you run violently into a wooden fence—all but invisible in the thick snow."
+
+Instead of going southeast in neargate, say "The gate is south. Southeast is just a wall."
+
+Instead of going southwest in neargate, say "The gate is south. Southwest is just a wall."
+
+Before going northwest in neargate, say "You hike northwest, where hopefully there's something to hike toward."
+
+The southern wall is scenery in neargate. The description of the southern wall is "Increasingly tall drifts of snow are forming against the brick wall. The only way out is the gate just south of here."
+
+instead of climbing the southern wall, say "That is not part of your skillset."
+
+Chapter 1 - The Gate
+
+The gate is a backdrop. The gate is in neargate and Peters Street.
+
+The gate can be open or closed.
+
+The description of the gate is "The gate is thick bars of iron, in an appropriately stoic design. [if location is neargate]And, though the cemetery should definitely be closed by this time of night, the gate is open. How lucky for you[otherwise if gate is closed]It is closed[otherwise][closegate]As you turn back to look, the gate swings shut, as if by an invisible hand—no, by the wind[end if]."
+
+To say closegate:
+	now gate is closed.
+
+Instead of opening the gate:
+	if gate is open:
+		say "That is already open.";
+	otherwise:
+		say "You give the gate a furtive tap. Nope! Won't budge. Locked up tight."
+
+Instead of closing the gate:
+	if location is neargate:
+		say "That would not be helpful.";
+	otherwise if gate is closed:
+		say "That is already closed.";
+	otherwise:
+		now gate is closed;
+		say "You pull on the gate slowly, carefully, but its inertia carries it faster and faster until it screeches into place. The gate is closed."
+
+Instead of entering the gate:
+	if location is neargate:
+		try going south;
+	otherwise:
+		try going north.
+
+Chapter 2 - The Black Angel
+
+The Black Angel is a woman in neargate. Understand "her" and "death" and "hand" and "hands" and "stone" and "statue" and "skull" and "wing" and "wings" and "feather" and "feathers" and "eye socket" and "eye sockets" and "socket" and "sockets" as the black angel.
+
+The Black Angel can be vexed. The Black Angel is not vexed.
+
+
+The initial appearance of the Black Angel is "[if combatstate is true]The Black Angel floats between you and the gate[otherwise if black angel is vexed]The Black Angel hovers near the gate, awaiting your approach[otherwise]Off to the side, the Black Angel stands guard among the tombstones[end if]."
+
+Instead of rubbing the black angel:
+	say "Rubbing your hands all over her seems a trifle disrespectful."
+
+The description of the Black Angel is "[if vexed]Your eyes pass over the wide arc of her wings, the curve of her scythe, her worn stone hands. Then you look up, into her eye sockets—and you quickly look away[otherwise]Though the stone is old, her features are distinct even in this light: Her brow is stern, but her gaze is distracted. She's too preoccupied to brush the snow from her wings[end if]."
+
+The Black Angel can be transparent. The Black Angel is transparent. The Black Angel carries the scythe.
+
+The description of the scythe is "[if black angel is vexed]It's carved from the same stone as she is, but the scythe glitters wickedly as the Black Angel tosses it from hand to hand[otherwise]Maybe she's only holding on to it for balance[end if]."
+
+
+Section 1 - Activating Combat
+
+Before attacking the Black Angel:
+	if combatstate is false:
+		if Black Angel is not vexed:
+			now Black Angel is vexed;
+			say "You move in to surprise her, but she notices your approach. She spreads her wings and adjusts her grip on her scythe. She cackles—or is that a crow shrieking?";
+		otherwise:
+			say "The Black Angel grins as you come near. She's ready for you.";
+	otherwise:
+		now combat stalled is true;
+		say "That's a good idea. Pick one of the combat options." instead.
+
+Instead of going south in neargate while the black angel is in neargate:
+	if combatstate is false:
+		if Black Angel is not vexed:
+			now Black Angel is vexed;
+			say "As you approach the exit, the Black Angel's wings shudder. She rises from her post: In an instant she's between you and the gate.";
+		otherwise:
+			say "You make a run for the gate, but she glides into your path.";
+		now the current enemy is the black angel;
+		follow the combat initiation rulebook;
+	otherwise:
+		say "The Black Angel is between you and the gate.";
+		now combat stalled is true.
+
+
+

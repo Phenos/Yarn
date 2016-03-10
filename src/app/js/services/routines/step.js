@@ -3,7 +3,7 @@ yarn.service("stepRoutine", function (events,
                                       dialogs,
                                       script,
                                       assert,
-                                      sceneryService,
+                                      wallpaperService,
                                       player) {
 
     /**
@@ -24,23 +24,23 @@ yarn.service("stepRoutine", function (events,
 
 
 
-        // Update the scenery in case it has changed
-        updateScenery();
+        // Update the wallpaper in case it has changed
+        updateWallpaper();
 
         state.assertions.removeLayer("step");
         return somethingHappened;
     };
 
 
-    function updateScenery() {
+    function updateWallpaper() {
         var room = state.resolveOne(assert("You", "is in"));
         if (room) {
-            var scenery = state.resolveValue(assert(room, "has", "Scenery"));
-            var url = script.resolveRelativeURI(scenery);
+            var wallpaper = state.resolveValue(assert(room, "has", "Wallpaper"));
+            var url = script.resolveRelativeURI(wallpaper);
             if (url) {
-                sceneryService.change(url);
+                wallpaperService.change(url);
             } else {
-                sceneryService.clear();
+                wallpaperService.clear();
             }
         }
     }

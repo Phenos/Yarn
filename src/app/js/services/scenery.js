@@ -1,18 +1,18 @@
-yarn.factory('sceneryService', sceneryService);
+yarn.factory('wallpaperService', wallpaperService);
 
-function sceneryService() {
+function wallpaperService() {
 
     var image = "";
     var onChangeFn = function () {};
 
     function onChange(fn) {
-        //console.log("Registered scenery directive");
+        //console.log("Registered wallpaper directive");
         onChangeFn = fn;
         onChangeFn(image);
     }
 
     function change(_image) {
-        //console.log("Changing scenery to : ", _image);
+        //console.log("Changing wallpaper to : ", _image);
         image = _image;
         onChangeFn(image);
     }

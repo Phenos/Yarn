@@ -5,7 +5,7 @@ yarn.factory('writers', function (Prompt,
                                   state,
                                   script,
                                   commands,
-                                  sceneryService) {
+                                  wallpaperService) {
 
     // Describe where you are at the beginning
     function describeWhereYouAre() {
@@ -31,17 +31,17 @@ yarn.factory('writers', function (Prompt,
             storyLog.heading(name);
         }
 
-        // Set the scenery
-        var scenery = state.resolveValue(assert("Story", "has", "Scenery"));
+        // Set the wallpaper
+        var wallpaper = state.resolveValue(assert("Story", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
-        var scenery_url = scenery && script.resolveRelativeURI(scenery);
+        var wallpaper_url = wallpaper && script.resolveRelativeURI(wallpaper);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = scenery_url || coverpage_url || false;
+        var url = wallpaper_url || coverpage_url || false;
 
         if (url) {
-            sceneryService.change(url);
+            wallpaperService.change(url);
         } else {
-            sceneryService.clear();
+            wallpaperService.clear();
         }
 
         if (coverpage) {
@@ -71,17 +71,17 @@ yarn.factory('writers', function (Prompt,
             storyLog.heading(name);
         }
 
-        // Set the scenery
-        var scenery = state.resolveValue(assert("TheEnd", "has", "Scenery"));
+        // Set the wallpaper
+        var wallpaper = state.resolveValue(assert("TheEnd", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("TheEnd", "has", "Coverpage"));
-        var scenery_url = scenery && script.resolveRelativeURI(scenery);
+        var wallpaper_url = wallpaper && script.resolveRelativeURI(wallpaper);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = scenery_url || coverpage_url || false;
+        var url = wallpaper_url || coverpage_url || false;
 
         if (url) {
-            sceneryService.change(url);
+            wallpaperService.change(url);
         } else {
-            sceneryService.clear();
+            wallpaperService.clear();
         }
 
         if (coverpage) {
@@ -102,12 +102,12 @@ yarn.factory('writers', function (Prompt,
         var room = state.resolveOne(assert("You", "is in"));
 
         if (room) {
-            var scenery = state.resolveValue(assert(room, "has", "Scenery"));
-            var url = script.resolveRelativeURI(scenery);
+            var wallpaper = state.resolveValue(assert(room, "has", "Wallpaper"));
+            var url = script.resolveRelativeURI(wallpaper);
             if (url) {
-                sceneryService.change(url);
+                wallpaperService.change(url);
             } else {
-                sceneryService.clear();
+                wallpaperService.clear();
             }
 
             var name = state.resolveValue(assert(room, "has", "Name"));

@@ -1,63 +1,108 @@
+/*
 
-Book 1 - Highway
+Act 1 - The Highway
 
-    Highway is a room.
-        "[one of]That was the hard part. From here on it's a straight shot, no problem.
-        [or][stopping]The grocery store is north, across the highway; that's where you just were.
-        To the south is a trail through the woods, and on the other side of that is your house[one of].
-        [paragraph break]You should try to get there quick, before the storm catches up with you[or][stopping]."
+*/
 
-    The invisible house is scenery in highway.
-    Instead of doing something with the invisible house, say
+Highway is a room,
+    // todo: Implement longer description for the first time ?
+    has Description //First time
+        "That was the hard part. From here on it's a straight shot, no problem.
+
+        The grocery store is north, across the highway; that's where you just were.
+        To the south is a trail through the woods, and on the other side of that is your house
+
+        You should try to get there quick, before the storm catches up with you."
+    has Description // After the first time
+        "The grocery store is north, across the highway; that's where you just were.
+        To the south is a trail through the woods, and on the other side of that is your house."
+
+InvisibleHouse
+    // todo: Make sure that Scenery can be highlighted and clickable in the text
+    // todo: Make sure that Scenery items are noticed and can be looked at after
+    // the user looked at the room
+    is Scenery,
+    is in Highway,
+    has Description
         "You can't see your house from here. It's on the other side of the woods."
 
-    The road is scenery in highway.
-    the description of the road is
-        "The cars are all inching along carefully, and the snow on most of the road is undisturbed."
+Road
+    // todo: highlight the word in the room description
+    is Scenery,
+    is in Highway,
+    has a Description
+        "The cars are all inching along carefully, and the snow on
+        most of the road is undisturbed."
 
-    Instead of searching the road, say
-        "The people in the cars are difficult to see, shrouded by clouds of their own breath."
-
-    The traffic signal is scenery in highway.
-    The description of the traffic signal is
+TrafficSignal
+    // todo: highlight the word in the room description
+    is Scenery,
+    is in Highway,
+    has a Description
         "Green, amber, red, green. You should get a move on."
 
-    The grocery store is scenery in highway.
-    The description of the grocery store is
-        "The grocery store is nearly abandoned; sensible people are all safe in their homes right now.
-         But it is open, and its bright white lights shine out from its plate glass windows as a
-         welcoming beacon to everyone who needs to stock up on bottled water before the blizzard hits."
+GroceryStore
+    // todo: highlight the word in the room description
+    is Scenery,
+    is in Highway,
+    has a Description
+        "The grocery store is nearly abandoned; sensible
+         peopleareall safe in their homes right now.
+         But it is open, and its bright white lights shine
+         out from its plate glass windows as a
+         welcoming beacon to everyone who needs to stock up
+         on bottled water before the blizzard hits."
 
-    The streetlamps are plural-named scenery in highway.
-    The description of the streetlamps is
+StreetLamps
+    // todo: highlight the word in the room description
+    is Scenery,
+    is in Highway,
+    has a Description
         "Rows of streetlamps hang above the road in both directions, neither of
         which is the direction of your house."
 
-    The trailhead is scenery in highway.
-    The description of the trailhead is
-        "As snow falls through the trees and blankets the forest, the trail gets more difficult to discern."
+Trail
+    // todo: highlight the word in the room description
+    is Scenery,
+    is in Highway,
+    has a Description
+        "As snow falls through the trees and blankets the forest,
+        the trail gets more difficult to discern."
 
-    The treeline is a backdrop.
-    The treeline is in highway and nearwoods and nearshed.
-    The description of the treeline is
+Treeline
+    // todo: highlight the word in the room description
+    is a Scenery,
+    //todo: Method for having scenery span multiple places (using regions?)
+    // The treeline is in highway and nearwoods and nearshed.
+    has a Description
+        //todo: Text changes depending on where the player looks from..
         "[if location is highway]From here, the forest seems to go on forever—but it's really
         not that far to the other side[otherwise]It's getting harder to tell where the forest is.
         It is probably north of you[end if]."
 
-    Instead of climbing the treeline, say "That is not part of your skillset."
+/*
+// todo: The comment changed depending if the hotdogs have been examined
+Instead of going north in Highway, say
+    "It's too late to go back to the store.
+    [if the package of hot dogs is exed]
+    You'll have to go home without buns
+    [otherwise]
+    Whatever you forgot, you can live without
+    [end if]."
 
-    Instead of going north in Highway, say
-        "It's too late to go back to the store. [if the package of hot dogs is exed]You'll have to go home
-        without buns[otherwise]Whatever you forgot, you can live without[end if]."
+Instead of going south in Highway:
+    say "Now you are walking into the woods.
 
-    Instead of going nowhere in Highway, say
-        "The way through the woods is south."
+        Now you are losing your bearings.
 
-    Instead of going south in Highway:
-        say "Now you are walking into the woods.[paragraph break]Now you are losing your
-            bearings.[paragraph break]You turn around, to retrace your path and return to the
-            highway—but the snow has already covered your footsteps, and the trail
-            (if it was indeed the trail) is invisible.[paragraph break]Now you have no idea
-            where you are.[paragraph break]";
-        wander around;
-        now visibility-text is "Pretty Bad".
+        You turn around, to retrace your path and return to the
+        highway—but the snow has already covered your footsteps, and the trail
+        (if it was indeed the trail) is invisible.
+
+        Now you have no idea where you are."
+
+    // Todo: move the user ?
+    // wander around;
+    // Todo: When starting to wander around, change the visibility
+    // now visibility-text is "Pretty Bad".
+*/

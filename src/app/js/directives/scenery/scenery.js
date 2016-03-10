@@ -1,18 +1,16 @@
-yarn.directive('scenery', SceneryDirective);
-
-function SceneryDirective() {
+yarn.directive('wallpaper', function WallpaperDirective() {
     return {
         restrict: 'E',
         bindToController: {
         },
         scope: {},
-        controllerAs: 'scenery',
-        templateUrl: './html/scenery.html',
-        controller: SceneryController
+        controllerAs: 'wallpaper',
+        templateUrl: './html/wallpaper.html',
+        controller: WallpaperController
     };
 
-    function SceneryController(sceneryService, $element) {
-        sceneryService.onChange(function (image) {
+    function WallpaperController(wallpaperService, $element) {
+        wallpaperService.onChange(function (image) {
             if (image) {
                 $element.css("background-image", "url(" + image + ")");
             } else {
@@ -20,4 +18,5 @@ function SceneryDirective() {
             }
         });
     }
-}
+});
+

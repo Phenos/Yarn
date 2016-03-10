@@ -273,7 +273,7 @@ Part 1 - Important Items
     The printed name of the unopened bottle is
         "unopened bottle of wine".
 
-    // Todo: whoa...
+    // Todo: whoa... say whaaa ?
     Instead of opening a bottle:
         if the opened bottle is offstage:
             repeat with vino running through bottles:

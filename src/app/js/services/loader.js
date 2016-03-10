@@ -14,6 +14,7 @@ yarn.service('loader', function (yarn,
 
         var url = _url;
 
+        console.log("loader.fromURL", url);
         yConsole.log("Loading story from : " + url);
         return loadScript(url).then(onSuccess, onError);
 

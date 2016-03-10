@@ -4,8 +4,8 @@ function loadCommand(yConsole,
                      loader,
                      rememberLastStory) {
 
-    function handler(command, args) {
-        var url = args && args[0];
+    function handler(args) {
+        var url = args[0];
 
         if (url) {
             rememberLastStory.remember(url);

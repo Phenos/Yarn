@@ -19,13 +19,13 @@ yarn.service("storage", function (EditorFile, Story, session) {
     Storage.prototype.refresh = function (uri) {
         var self = this;
 
-        if (session.user) {
+        if (session.user()) {
             self.isLoading = true;
             Story.files({}, function (data) {
                 console.log("data", data);
                 angular.forEach(data.files, function (file) {
                     if (file && file.Size > 0) {
-                        var path = file.Key && file.Key.replace(session.user.username + "/", "");
+                        var path = file.Key && file.Key.replace(session.user().username + "/", "");
                         if (path) self.add(path, file);
                     }
                 });

@@ -25,10 +25,10 @@ yarn.service("EditorFile", function (guid,
         this.meta = meta || {};
         this.filterOut = false;
         this.uri = URI(this._uri);
-        if (session.user) {
+        if (session.user()) {
             //console.log("session", session);
             //todo: put this url in a config file
-            baseURI = "http://storage.yarnstudio.io/" + session.user.username + "/";
+            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
             this.absoluteURI = this.uri.absoluteTo(baseURI).toString();
         } else {
             this.absoluteURI = this._uri;

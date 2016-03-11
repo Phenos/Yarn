@@ -8,7 +8,7 @@ yarn.config(function ($stateProvider,
         resolve: {
             "user": function (userFromAPI, session) {
                 return userFromAPI().then(function (user) {
-                    session.user = user;
+                    session.user(user);
                     return user;
                 });
             }

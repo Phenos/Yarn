@@ -22,9 +22,30 @@
             </div>
             <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
         </div>
-        <div flex="{{ consoleFlexHeight }}" layout="row">
-            <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
-        </div>
+        <md-tabs class="toolTabs" md-selected="tabs.selected" flex="{{ consoleFlexHeight }}" md-autoselect>
+            <md-tab>
+                <md-tab-label>
+                    <md-icon style="width: 1.5em; margin-left: 0.7em"
+                             md-svg-icon="/svg-icons/console.svg"></md-icon>
+                    Console
+                </md-tab-label>
+                <md-tab-body>
+                    <div flex="100" layout="row">
+                        <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <md-icon style="width: 1.5em; margin-left: 0.7em"
+                             md-svg-icon="/svg-icons/inspector.svg"></md-icon>
+                    Inspector
+                </md-tab-label>
+                <md-tab-body>
+                    Pota-toes!
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
     </md-section>
     <player flex="100" user="user" layout="column"></player>
     <md-section ng-show="helpIsVisible"

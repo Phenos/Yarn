@@ -93,6 +93,8 @@
                 _editor.$blockScrolling = Infinity;
                 console.log("Editor loaded");
                 aceEditor = _editor;
+
+                aceEditor.on("click", clickHandler);
             }
 
             function aceChanged(e) {
@@ -104,6 +106,7 @@
             this.options = {
                 require: [
                     'ace/ext/language_tools',
+                    //'ace/range',
                     'ace/theme/tomorrow',
                     'ace/mode/javascript'
                 ],
@@ -119,7 +122,24 @@
                 },
                 onLoad: aceLoaded,
                 onChange: aceChanged
-            }
+            };
+
+            //var Range = require("ace/range").Range, markerId;
+            function clickHandler(e){
+                var editor = e.editor;
+                console.log(aceEditor);
+                var pos = editor.getCursorPosition();
+                var token = editor.session.getTokenAt(pos.row, pos.column);
+                console.log("token", token);
+                if (/\bkeyword\b/.test(token.type))
+                    console.log(token.value, 'is a keyword');
+
+                // add highlight for the clicked token
+                //var range = new Range(pos.row, token.start, pos.row, token.start + token.value.length);
+                //console.log(range);
+                //editor.session.removeMarker(markerId);
+                //markerId = editor.session.addMarker(range, 'ace_bracket red')
+            };
 
         }
     }

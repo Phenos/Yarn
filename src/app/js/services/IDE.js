@@ -99,6 +99,7 @@ yarn.service('IDE', function IDEService(stories,
                 $mdDialog.cancel();
             };
             $scope.open = function(file) {
+                console.log("open", file);
                 $mdDialog.cancel();
                 editorFiles.open(file);
             };

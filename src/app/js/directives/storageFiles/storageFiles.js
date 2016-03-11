@@ -2,7 +2,8 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
     return {
         restrict: 'E',
         bindToController: {
-            select: "&"
+            select: "&",
+            onSearch: "="
         },
         scope: {},
         controllerAs: 'storageFiles',
@@ -10,13 +11,31 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         controller: StorageFilesController
     };
 
-    function StorageFilesController(storage) {
-        console.log("StorageFilesController", storage);
+    function StorageFilesController($scope, storage) {
+        var self = this;
+        //console.log("StorageFilesController", storage);
         this.storage = storage;
+        this.files = storage.files;
+        this.search = "";
 
-        this.onSelect = function (file) {
-            console.log("onSelect", file);
-            this.select({file: file});
+        updateList();
+
+        function updateList() {
+            //console.log(self.files);
+            angular.forEach(self.files, function (file) {
+                var filterOut = false;
+                if (self.search && file._uri.indexOf(self.search) === -1) {
+                    filterOut = true;
+                    console.log("no match")
+
+                }
+                file.filterOut = filterOut;
+            });
         }
+
+        $scope.$watch('storageFiles.search', function (searchTerm) {
+            self.search = searchTerm;
+            updateList();
+        });
     }
 });

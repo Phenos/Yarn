@@ -6,9 +6,24 @@ yarn.service("EditorFile", function (guid,
 
     var baseURI = "";
 
-    function EditorFile(uri) {
+    /*
+     Profile for the .meta attribute
+
+     {
+         Key: 'twitter.YarnStudioGames/winter-storm-draco/player.txt',
+         LastModified: Thu Mar 10 2016 14:03:28 GMT-0500 (EST),
+         ETag: '"239dee9f8c7bdf7beec35c573f40ca86"',
+         Size: 723,
+         StorageClass: 'STANDARD',
+         Owner: [Object]
+     },
+     */
+
+    function EditorFile(uri, meta) {
         this.guid = guid();
         this._uri = uri;
+        this.meta = meta || {};
+        this.filterOut = false;
         this.uri = URI(this._uri);
         if (session.user) {
             //console.log("session", session);

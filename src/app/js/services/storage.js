@@ -4,8 +4,9 @@ yarn.service("storage", function (EditorFile, Story, session) {
         this.files = [];
     }
 
-    Storage.prototype.add = function (uri) {
-        var file = new EditorFile(uri);
+    Storage.prototype.add = function (uri, meta) {
+        // Todo, first check if the file is already there
+        var file = new EditorFile(uri, meta);
         this.files.push(file);
         return file;
     };
@@ -17,14 +18,16 @@ yarn.service("storage", function (EditorFile, Story, session) {
 
     Storage.prototype.refresh = function (uri) {
         var self = this;
-        this.clear();
 
         if (session.user) {
             self.isLoading = true;
             Story.files({}, function (data) {
+                console.log("data", data);
                 angular.forEach(data.files, function (file) {
-                    var path = file && file.Key && file.Key.replace(session.user.username + "/", "");
-                    if (path) self.add(path);
+                    if (file && file.Size > 0) {
+                        var path = file.Key && file.Key.replace(session.user.username + "/", "");
+                        if (path) self.add(path, file);
+                    }
                 });
                 self.isLoading = false;
             }, function () {
@@ -35,14 +38,6 @@ yarn.service("storage", function (EditorFile, Story, session) {
         } else {
             yConsole.error("You must me signed-in to load and save data from your storage.");
         }
-        /*
-         { Key: 'twitter.YarnStudioGames/winter-storm-draco/player.txt',
-         LastModified: Thu Mar 10 2016 14:03:28 GMT-0500 (EST),
-         ETag: '"239dee9f8c7bdf7beec35c573f40ca86"',
-         Size: 723,
-         StorageClass: 'STANDARD',
-         Owner: [Object] },
-         */
 
         return this;
     };

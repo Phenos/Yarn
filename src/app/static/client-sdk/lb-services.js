@@ -2096,7 +2096,11 @@ module.factory(
          */
         "potato": {
           url: urlBase + "/stories/potato",
-          method: "POST"
+          method: "GET"
+        },
+        "files": {
+          url: urlBase + "/stories/files",
+          method: "GET"
         }
       }
     );

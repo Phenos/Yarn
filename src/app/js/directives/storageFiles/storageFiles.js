@@ -12,7 +12,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
 
     function StorageFilesController(storage) {
         console.log("StorageFilesController", storage);
-        this.files = storage.files;
+        this.storage = storage;
 
         this.onSelect = function (file) {
             console.log("onSelect", file);

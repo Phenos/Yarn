@@ -1,12 +1,18 @@
 <md-list flex="80">
-    <md-list-item ng-if="storageFiles.files.length > 0"
-                  ng-repeat="file in storageFiles.files"
-                  ng-click="storageFiles.onSelect(file)"
-    >
-        <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
-        <p> {{ file.uri.path() }} </p>
-    </md-list-item>
-    <div ng-if="storageFiles.files.length === 0">
-        Sorry... no files in storage!
+    <div ng-if="storageFiles.storage.isLoading" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
+    <div ng-if="!storageFiles.storage.isLoading">
+        <md-list-item ng-if="storageFiles.storage.files.length > 0"
+                      ng-repeat="file in storageFiles.storage.files"
+                      ng-click="storageFiles.onSelect(file)"
+        >
+            <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
+            <p> {{ file.uri.path() }} </p>
+        </md-list-item>
+        <div ng-if="storageFiles.storage.files.length === 0">
+            Sorry... no files in storage!
+        </div>
+    </div>
+
 </md-list>

@@ -1,4 +1,4 @@
-yarn.service("storage", function (EditorFile) {
+yarn.service("storage", function (EditorFile, Story, session) {
 
     function Storage() {
         this.files = [];
@@ -16,23 +16,33 @@ yarn.service("storage", function (EditorFile) {
     };
 
     Storage.prototype.refresh = function (uri) {
+        var self = this;
         this.clear();
 
-        this.add("./story.yarn.txt");
-        this.add("./chapters/rooms.yarn.txt");
-        this.add("./chapters/things.yarn.txt");
-        this.add("./chapters/the-unflushed-toilet.yarn.txt");
-        this.add("./chapters/dialogs.yarn.txt");
-        this.add("./chapters/kitchen.yarn.txt");
-        this.add("./chapters/lorem.yarn.txt");
-        this.add("./chapters/ipsum.yarn.txt");
-        this.add("./POTATOT/dolor.yarn.txt");
-        this.add("./chapters/sit.yarn.txt");
-        this.add("./asd/amet.yarn.txt");
-        this.add("./chapters/inni.yarn.txt");
-        this.add("./chapters/mini.yarn.txt");
-        this.add("./092384/minie.yarn.txt");
-        this.add("./zxc/moe.yarn.txt");
+        if (session.user) {
+            self.isLoading = true;
+            Story.files({}, function (data) {
+                angular.forEach(data.files, function (file) {
+                    var path = file && file.Key && file.Key.replace(session.user.username + "/", "");
+                    if (path) self.add(path);
+                });
+                self.isLoading = false;
+            }, function () {
+                self.isLoading = false;
+                yConsole.error("An error occurered while trying to load file from storage");
+            });
+
+        } else {
+            yConsole.error("You must me signed-in to load and save data from your storage.");
+        }
+        /*
+         { Key: 'twitter.YarnStudioGames/winter-storm-draco/player.txt',
+         LastModified: Thu Mar 10 2016 14:03:28 GMT-0500 (EST),
+         ETag: '"239dee9f8c7bdf7beec35c573f40ca86"',
+         Size: 723,
+         StorageClass: 'STANDARD',
+         Owner: [Object] },
+         */
 
         return this;
     };

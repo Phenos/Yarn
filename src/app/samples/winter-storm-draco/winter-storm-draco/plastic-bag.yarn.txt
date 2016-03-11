@@ -1,0 +1,259 @@
+/*
+
+The Plastic Bag
+
+*/
+
+// todo: Should there be a "carries" predicate to mimic this syntax ? (which could convert to "is in")
+
+// todo: Implement containers in inventory
+PlasticBag is a Container.
+
+//todo: Not sexy... add support for the inverse syntax of "have in inventory"
+You have in inventory the PlasticBag
+
+
+PackageOfHotdogs
+    has Name "Package of Hot Dogs",
+    is in PlasticBag,
+    is Important,
+    has action Eating,
+    has action Openning,
+    // todo: implement the one-of
+    has a Description:
+        "This package contains twelve hot dogs. You don't know how long this blizzard will last,
+        but you and your housemates probably cannot survive the whole storm on twelve hot
+        dogs
+
+        [one of]It occurs to you that you forgot the buns[or][stopping].
+        "
+
+    WhenOpenHotDogs (
+        Openning action with PackageOfHotdogs.
+    ) trigger CantOpenHotDogs (
+        Narrator says Monologue
+            "It's plenty cold out here, but it'd be more sanitary
+             to leave the package sealed until you could put it in a
+             proper refrigerator."
+    )
+
+    WhenEatHotDogs (
+        Eating action with PackageOfHotdogs.
+    ) trigger CantEatHotDogs (
+        Narrator says Monologue
+            "You should save those for when you're starving to death."
+    )
+
+Section 2 - The Solo Cups
+
+
+    The plastic bag contains the package of Solo cups. The package of solo cups is important.
+
+    The Solo cups can be closed or open. The solo cups is closed.
+
+    Instead of taking the solo cups while the solo cups is closed:
+        try opening the solo cups.
+
+    The description of the package of Solo cups is
+        "This package contains [if open]71[otherwise]72[end if] red Solo cups.
+         You and your housemates have plans for these."
+
+    Instead of opening the solo cups the first time:
+        now the solo cups is open;
+        now the player carries the Solo cup;
+        say "You tear the plastic apart and pull out a cup."
+
+    Instead of opening the solo cups:
+        say "It's already open. You've already got a cup."
+
+    Instead of closing the solo cups, say
+        "[if the solo cups is open]The plastic is torn; you can't reseal
+         it[otherwise]It's pretty well closed already[end if]."
+
+    Instead of inserting something into the solo cups, say
+        "It'd be more practical to use a single cup as a container."
+
+
+
+Section 3 - The Single Cup
+
+
+    The Solo cup is a container.
+    The description of the Solo cup is "It's a red plastic cup[if full] with some wine in it[end if]."
+
+    The Solo cup can be full. The Solo cup is not full.
+
+
+    Instead of inserting the solo cup into the solo cups, say
+        "Too late! The cup is out."
+
+    Instead of inserting a bottle into the Solo cup:
+        if the noun is not the opened bottle:
+            say "The bottle isn't open.";
+        otherwise if the Solo cup is full:
+            say "There's already some wine in there." instead;
+        otherwise:
+            now the Solo cup is full;
+            say "You pour some wine into the Solo cup.";
+
+    Instead of drinking the Solo cup:
+        if the noun contains something:
+            say "Well, there's [a list of things in the solo cup] in there right now.";
+        otherwise if the noun is full:
+            say "You take a leisurely sip, and it warms your insides—a little.";
+        otherwise:
+            say "That cup is empty."
+
+
+    Before inserting the snow into the Solo cup: say
+        "A cup of snow won't do you much good. A cup of water might be more useful,
+         but melting that much snow would require more body heat than you can spare."
+            instead.
+
+
+
+Corkscrew
+    is Important,
+    is in PlasticBag,
+    has Name "Corkscrew",
+    has Description
+        "It recently came to light that, somehow, neither you nor any of your housemates owned
+         a corkscrew. Well, from now on, any time they want to screw a cork out of anything,
+         they'll be at your mercy."
+
+
+CanvasBag
+    is a Container,
+    has a Name "Canvas bag".
+    // is in @Inventory.
+    //todo: implement the "is in @Inventory" or something similar
+
+    You have in inventory the CanvasBag.
+
+
+Cork is a Container, has a Descritpion
+    "It's a sad little cork, with no insignia. One end is stained purple."
+
+
+//todo: Implement "inheritance" of attributes when resoling assertions ???
+//todo: Or maybe implement a "copy of" assertion to do a momentary copy ?
+UnopennedBottle
+    is a Thing,
+    is an InventoryItem,
+    is Important,
+    has action Drinking,
+    has action Openning,
+    has a Name "Unopenned bottle of wine",
+    has a Description
+        "This is some extremely cheap wine."
+
+OpenBottle
+    is a Thing,
+    is an InventoryItem,
+    is Important,
+    has action Drinking,
+    has a Name "Openned bottle of wine",
+    has a Description
+        "This is some extremely cheap wine."
+
+//todo: Opening a bottle
+
+DrinkingOpenBottle (
+    Drinking action with OpenBottle.
+) trigger YumYum (
+    Narrator says Monologue
+        "[one of]Mmm. Wine-y[or]Dook dook, yum yum[or]
+        That might be enough for right now[stopping]."
+)
+
+DrinkingUnopennedBottle (
+    Openning action with OpenBottle.
+) trigger OpenItFirst (
+    Narrator says Monologue "That bottle is not open."
+)
+
+
+/*
+
+Here the player can open one (but only on) of the two
+identical bottles and be left with an Open Bottle and a Corkscrew.
+
+*/
+
+// Todo: whoa... say whaaa ?
+
+WhenOpeningBottle1 (
+    Openning action with WineBottle1.
+) trigger ThenBottleIsOpen.
+
+WhenOpeningBottle2 (
+    Openning action with WineBottle2.
+) trigger ThenBottleIsOpen.
+
+/*
+
+//Todo: Instead of repeating the event trigger, allow using the parent ty as the trigger
+
+WhenOpeningBottle2 (
+    Openning action with Bottle.
+) trigger ThenBottleIsOpen.
+
+- or -
+
+WhenOpeningBottle2 (
+    Openning action with type Bottle.
+) trigger ThenBottleIsOpen.
+
+- or -
+
+WhenOpeningBottle2 (
+    Openning action with {is a Bottle}.
+) trigger ThenBottleIsOpen.
+
+
+*/
+
+ThenBottleIsOpen (
+    // todo: Cheap switching mechanics ??
+    WineBottle1 change places with OpenBottle.
+    You have in inventory the Cork.
+    Narrator says Monologue
+        "You apply the corkscrew with some difficulty, given how cold your hands are and
+        how cold everything else around is. But then there's a [i]pop![roman type]—and you
+        have a loose cork and an open bottle on your hands."
+)
+
+
+// todo: implement a better way to create multiple copies of objects
+WineBottle1 is an UnopennedBottle.
+WineBottle2 is an UnopennedBottle.
+
+You
+    have in inventory the WineBottle1,
+    have in inventory the WineBottle2.
+
+
+/*
+
+Here the player can fill a Solo Cup with the wine from the open
+bottle and then drink it.
+
+*/
+//todo: Mechanics for pouring wine in solo cups
+The Solo cup can be full. The Solo cup is not full.
+
+//todo: Solocup is Drinkable only when they are full
+Does the player mean drinking the Solo cup:
+    if the solo cup is full:
+        it is very likely;
+    otherwise:
+        it is very unlikely.
+
+// todo: what is this supposed to do ?
+/*
+Before inserting a bottle (called boite) into the package of solo cups:
+    if the package of solo cups is closed:
+        try opening the package of solo cups;
+        try inserting boite into the solo cup instead.
+*/
+

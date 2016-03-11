@@ -6,6 +6,7 @@ var config = require('./gulpfile.json');
 var cwd = config.cwd;
 var paths = config.paths;
 
+gulp.task('loopbackAngular', loopbackAngularTask);
 gulp.task('bump', bumpTask);
 gulp.task('compileLess', lessTask);
 gulp.task('copyStatic', copyStaticTask);
@@ -31,6 +32,7 @@ gulp.task('build', gulp.series(
     'clean',
     'compileLess',
     'copyAssets',
+    //'loopbackAngular',
     'cleanAfterBuild'
 ));
 gulp.task('devServerless', gulp.series(
@@ -45,6 +47,15 @@ gulp.task('dev', gulp.series(
 
 
 // -----[ Task Functions ]--------
+
+
+function loopbackAngularTask() {
+    return gulp.src('./server/server.js')
+        .pipe($.loopbackSdkAngular())
+        .pipe($.rename('lb-services.js'))
+        .pipe(gulp.dest('./build/static/client-sdk/'));
+}
+
 
 function injectJsFilesTask() {
 

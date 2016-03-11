@@ -153,6 +153,7 @@ app.get('/auth/account', ensureLoggedIn('/login'), function (req, res, next) {
 });
 
 app.get('/auth/account/json', function (req, res, next) {
+    console.log("Returning user data from", req.user);
     var data = req.user || {};
     res.send(data);
 });
@@ -219,7 +220,8 @@ app.get('/login', function (req, res, next) {
 app.post('/login', function (req, res) {
     User.login({
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        rememberMe: false
     }, 'user', function (err, token) {
         if (err) {
             res.render('response', { //render view named 'response.ejs'

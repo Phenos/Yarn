@@ -49,7 +49,7 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
         return this._mainFile;
     };
 
-    EditorFiles.prototype.save = function (file) {
+    EditorFiles.prototype.save = function (file, callback) {
         file.status = "Saving...";
         var savedContent = self.content;
         storage.save(file, function (meta) {
@@ -57,10 +57,12 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
             file.ready = true;
             file.status = "Saved";
             file.originalContent = savedContent;
+            callback(null, file);
         }, function (err) {
             file.status = "Failed to save";
             console.error("Error while saving file: " + file.absoluteURI, err);
             yConsole.error("Error while saving file: " + file.absoluteURI);
+            callback(err);
         });
     };
 

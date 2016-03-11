@@ -34,8 +34,12 @@
                 commands.command("validate");
             };
 
-            this.run = function() {
-                IDE.run();
+            this.saveAndRun = function() {
+                editorFiles.save(this.file, function (err, file) {
+                    if (!err) {
+                        IDE.runFile(file);
+                    }
+                });
             };
 
             this.setAsMain = function() {

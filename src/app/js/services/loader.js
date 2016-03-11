@@ -27,7 +27,7 @@ yarn.service('loader', function (yarn,
          * Called once all files are loaded (including imports)
          */
         function onSuccess(script) {
-            //console.info("Game script loaded successfully", script);
+            console.info("Game script loaded successfully", script);
 
             yarn.load(script.source, script.url).then(onSuccess, onError);
 
@@ -44,13 +44,17 @@ yarn.service('loader', function (yarn,
                 // Change the current state layer to the current session.
                 state.currentLayer = "session";
 
+
                 // Restore session state layer from localStorage
+
+                console.warn("Restoring game state doesnt work for now...");
+                /*
                 if (!$localStorage.localState) $localStorage.localState = {};
                 yarn.restoreFromLocalState();
+                */
 
                 splashService.hide();
                 player.refresh();
-
             }
 
             function onError(request) {

@@ -114,6 +114,13 @@ yarn.service('IDE', function IDEService(stories,
         loader.fromSource(stories.currentStory.content, url);
     };
 
+    service.runFile = function (file) {
+        if (file) {
+            rememberLastStory.forget();
+            loader.fromURL(file.absoluteURI);
+        }
+    };
+
 
     service.loadRememberedStory = function () {
         // Reload the story that was previously loaded

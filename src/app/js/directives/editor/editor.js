@@ -38,6 +38,15 @@
                 IDE.run();
             };
 
+            this.setAsMain = function() {
+                var currentMainFile = editorFiles.mainFile();
+                if (currentMainFile === this.file) {
+                    editorFiles.mainFile(null);
+                } else {
+                    editorFiles.mainFile(this.file);
+                }
+            };
+
             this.save = function() {
                 editorFiles.save(this.file);
             };

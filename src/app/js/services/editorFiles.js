@@ -2,6 +2,7 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
 
     function EditorFiles() {
         this.files = [];
+        this._mainFile = null;
         this.reloadFromLocalStorage();
     }
 
@@ -10,18 +11,43 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
      */
     EditorFiles.prototype.reloadFromLocalStorage = function () {
         var self = this;
+        var mainFile = "";
         var sessionFiles = session.storage("editorFiles");
         if (sessionFiles) {
+            if (sessionFiles.mainFile) {
+                mainFile = sessionFiles.mainFile;
+            }
             if (angular.isArray(sessionFiles.files)) {
                 var oldList = sessionFiles.files;
                 sessionFiles.files = [];
                 angular.forEach(oldList, function (file) {
-                    self.open(file);
+                    var newFile = self.open(file);
+                    if (mainFile === file) {
+                        newFile.isMain = true;
+                        self.mainFile(newFile);
+                    }
                 });
             }
         }
     };
 
+    EditorFiles.prototype.mainFile = function (file) {
+        if (angular.isDefined(file)) {
+            if (file !== null) {
+                if (angular.isObject(this._mainFile))
+                    this._mainFile.isMain = false;
+                file.isMain = true;
+                this._mainFile = file;
+            } else {
+                if (angular.isObject(this._mainFile))
+                    this._mainFile.isMain = false;
+                this._mainFile = null;
+            }
+            this.persist();
+        }
+        console.log("Main file is now ", file);
+        return this._mainFile;
+    };
 
     EditorFiles.prototype.save = function (file) {
         file.status = "Saving...";
@@ -45,6 +71,14 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
     EditorFiles.prototype.persist = function (file) {
         var self = this;
         var sessionFiles = session.storage("editorFiles");
+
+        console.log("this._mainFile", this._mainFile);
+        if (angular.isObject(this._mainFile)) {
+            sessionFiles.mainFile = this._mainFile._uri;
+        } else {
+            delete sessionFiles.mainFile;
+        }
+
         if (sessionFiles) {
             if (!angular.isArray(sessionFiles.files))
                 sessionFiles.files = [];

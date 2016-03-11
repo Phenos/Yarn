@@ -24,6 +24,7 @@ yarn.service("EditorFile", function (guid,
         this._uri = uri;
         this.meta = meta || {};
         this.filterOut = false;
+        this.isMain = false;
         this.uri = URI(this._uri);
         if (session.user()) {
             //console.log("session", session);

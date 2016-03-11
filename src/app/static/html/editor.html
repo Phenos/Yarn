@@ -18,10 +18,16 @@
                     Reload
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="editor.run()" class="md-icon-button" aria-label="Run">
-                <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
+            <md-button ng-click="editor.setAsMain()" ng-class="editor.file.isMain ? 'isOn' : ''" class="md-icon-button" aria-label="Set as main story file">
+                <md-icon md-svg-icon="/svg-icons/main-file.svg"></md-icon>
                 <md-tooltip>
-                    Run
+                    Set as main story file
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="editor.run()" class="md-icon-button" aria-label="Run from main">
+                <md-icon md-svg-icon="/svg-icons/play-toolbar.svg"></md-icon>
+                <md-tooltip>
+                    Run from main
                 </md-tooltip>
             </md-button>
             <md-button ng-click="editor.validate()" class="md-icon-button" aria-label="Validate">

@@ -1,9 +1,48 @@
-yarn.service("editorFiles", function (EditorFile, confirmAction) {
+yarn.service("editorFiles", function (EditorFile, confirmAction, session) {
 
     function EditorFiles() {
         this.files = [];
+        this.reloadFromLocalStorage();
     }
 
+    /**
+     * Reload the list open files from localStorage
+     */
+    EditorFiles.prototype.reloadFromLocalStorage = function () {
+        var self = this;
+        var sessionFiles = session.storage("editorFiles");
+        if (sessionFiles) {
+            if (angular.isArray(sessionFiles.files)) {
+                var oldList = sessionFiles.files;
+                sessionFiles.files = [];
+                angular.forEach(oldList, function (file) {
+                    self.open(file);
+                });
+            }
+        }
+    };
+
+    /**
+     * Persist on or all files to localStorage
+     * @param file
+     */
+    EditorFiles.prototype.persist = function (file) {
+        var self = this;
+        var sessionFiles = session.storage("editorFiles");
+        if (sessionFiles) {
+            if (!angular.isArray(sessionFiles.files))
+                sessionFiles.files = [];
+
+            if (file) {
+                sessionFiles.files.push(file._uri);
+            } else {
+                sessionFiles.files = [];
+                angular.forEach(self.files, function (file) {
+                    sessionFiles.files.push(file._uri);
+                });
+            }
+        }
+    };
 
     EditorFiles.prototype.new = function () {
         var file = new EditorFile("untitled");
@@ -20,6 +59,7 @@ yarn.service("editorFiles", function (EditorFile, confirmAction) {
         }
         file.load();
         this.files.push(file);
+        this.persist(file);
         return file;
     };
 
@@ -47,6 +87,9 @@ yarn.service("editorFiles", function (EditorFile, confirmAction) {
                 self.files.splice(i, 1);
             }
         }
+
+        // Refresh this list of files in localStorage
+        this.persist()
 
     };
 

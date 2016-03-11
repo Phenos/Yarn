@@ -1,4 +1,4 @@
-yarn.service("storage", function (EditorFile, Story, session) {
+yarn.service("storage", function (EditorFile, Story, session, yConsole) {
 
     function Storage() {
         this.files = [];
@@ -14,6 +14,21 @@ yarn.service("storage", function (EditorFile, Story, session) {
     Storage.prototype.clear = function (uri) {
         this.files = [];
         return this;
+    };
+
+    Storage.prototype.save = function (file, success, failed) {
+        Story.saveFile({
+            filename: file.uri.filename(true),
+            uri: file._uri,
+            content: file.content
+        }, function (meta) {
+            console.log("storage.save success", meta);
+            success(meta);
+        }, function (err) {
+            self.isLoading = false;
+            yConsole.error("An error occurered while trying to load file from storage");
+            failed(err);
+        })
     };
 
     Storage.prototype.refresh = function (uri) {

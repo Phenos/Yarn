@@ -1,4 +1,4 @@
-yarn.service("editorFiles", function (EditorFile, confirmAction, session) {
+yarn.service("editorFiles", function (EditorFile, confirmAction, session, storage) {
 
     function EditorFiles() {
         this.files = [];
@@ -20,6 +20,22 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session) {
                 });
             }
         }
+    };
+
+
+    EditorFiles.prototype.save = function (file) {
+        file.status = "Saving...";
+        var savedContent = self.content;
+        storage.save(file, function (meta) {
+            console.log("storage.save success ", meta);
+            file.ready = true;
+            file.status = "Saved";
+            file.originalContent = savedContent;
+        }, function (err) {
+            file.status = "Failed to save";
+            console.error("Error while saving file: " + file.absoluteURI, err);
+            yConsole.error("Error while saving file: " + file.absoluteURI);
+        });
     };
 
     /**

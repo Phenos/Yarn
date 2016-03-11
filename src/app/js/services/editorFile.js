@@ -71,10 +71,6 @@ yarn.service("EditorFile", function (guid,
         return (this.content !== this.originalContent);
     };
 
-    EditorFile.prototype.save = function () {
-        console.log("----- SAVE : ", this.uri);
-    };
-
     EditorFile.prototype.name = function () {
         return this.uri.filename().replace(".yarn.txt", "");
     };

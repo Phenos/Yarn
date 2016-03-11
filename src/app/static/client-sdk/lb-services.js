@@ -2101,6 +2101,10 @@ module.factory(
         "files": {
           url: urlBase + "/stories/files",
           method: "GET"
+        },
+        "saveFile": {
+          url: urlBase + "/stories/saveFile",
+          method: "POST"
         }
       }
     );

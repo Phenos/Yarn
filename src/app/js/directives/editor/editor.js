@@ -39,7 +39,7 @@
             };
 
             this.save = function() {
-                this.file.save();
+                editorFiles.save(this.file);
             };
 
             this.reload = function() {

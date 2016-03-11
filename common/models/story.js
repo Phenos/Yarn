@@ -6,7 +6,7 @@ module.exports = function (Story) {
     Story.potato = function (options, callback) {
         var ctx = loopback.getCurrentContext();
         var currentUser = ctx.get('currentUser');
-        console.log("currentUser", currentUser);
+        //console.log("currentUser", currentUser);
 
         var s3client = s3.createClient({
             s3Options: {
@@ -21,7 +21,7 @@ module.exports = function (Story) {
             Key: storyPath,
             Bucket: "storage.yarnstudio.io"
         };
-        console.log("Streaming from S3 : " + storyPath);
+        //console.log("Streaming from S3 : " + storyPath);
         var stream = s3client.downloadStream(s3Params);
         var data = "";
         stream.on('error', function(err) {
@@ -32,7 +32,7 @@ module.exports = function (Story) {
             data = data + chunck;
         });
         stream.on('end', function() {
-            console.log("Story loaded from S3");
+            //console.log("Story loaded from S3");
             callback(null, {
                 options: options,
                 story: data

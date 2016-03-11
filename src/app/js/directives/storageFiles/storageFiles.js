@@ -26,8 +26,6 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
                 var filterOut = false;
                 if (self.search && file._uri.indexOf(self.search) === -1) {
                     filterOut = true;
-                    console.log("no match")
-
                 }
                 file.filterOut = filterOut;
             });

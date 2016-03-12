@@ -1,0 +1,17 @@
+<article>
+    <h2>
+        <md-icon md-svg-icon="/svg-icons/inspections/{{ type }}.svg"></md-icon>
+        {{ title }} <span class="subHeading">({{ type}})</span>
+    </h2>
+    <p>
+        This object is used in {{ assertionCount }} assertions in your story.
+    </p>
+    <p>
+        <md-button ng-click="openAsSubject()">
+            Assertions as the Subject
+        </md-button>
+        <md-button ng-click="openAsObject()">
+            Assertions as the Object
+        </md-button>
+    </p>
+</article>

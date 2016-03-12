@@ -1,19 +1,14 @@
-<div layout-margin
-     layout-padding
-     layout-fill
+<div class="inspector" layout-padding
      layout="column">
     <div layout="column"
-         ng-show="inspector.articles">
-        <md-content layout-margin
-                    layout-padding
-                    md-whiteframe="3">
-            <articles layout-margin
-                 layout-padding
-                 >
-            </articles>
-        </md-content>
+         ng-show="inspector.articles.length > 0">
+        <articles layout-padding
+             md-whiteframe="3"
+             style="background: #fff;"
+        >
+        </articles>
     </div>
-    <div ng-hide="inspector.articles"
+    <div ng-show="inspector.articles.length === 0"
          layout-fill
          layout="column"
          layout-align="center center">

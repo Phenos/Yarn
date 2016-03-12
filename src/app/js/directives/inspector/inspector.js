@@ -23,13 +23,6 @@
 
             inspector.register(this);
 
-            this.clear = function () {
-                var logElement = $element.find("logs");
-                logElement.empty();
-
-                this.onClear();
-            };
-
             this.update = function (articles) {
                 var elemArticles = $element.find("articles");
 
@@ -63,6 +56,7 @@
         };
 
         service.inspect = function (token) {
+            this.clear();
             var self = this;
             angular.forEach(inspections, function (inspection) {
                 inspection.inspect(token, onYeld);

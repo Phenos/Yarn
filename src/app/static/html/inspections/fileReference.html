@@ -1,0 +1,18 @@
+<article>
+    <h2>
+        <md-icon md-svg-icon="/svg-icons/inspections/{{ type }}.svg"></md-icon>
+        {{ title }}
+    </h2>
+    <p>
+        The full address is :<br>
+        <md-link ng-click="openInBrowser()" ng-bind="url"></md-link>
+    </p>
+    <p>
+        <md-button ng-click="openInEditor()">
+            Open in editor
+        </md-button>
+        <md-button ng-click="openInBrowser()">
+            Open in browser
+        </md-button>
+    </p>
+</article>

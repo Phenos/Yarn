@@ -1,5 +1,7 @@
-yarn.service("inspections", function (urlInspection) {
+yarn.service("inspections", function (fileReferenceInspection,
+                                      objectReferenceInspection) {
     return [
-        urlInspection
+        fileReferenceInspection,
+        objectReferenceInspection
     ];
 });

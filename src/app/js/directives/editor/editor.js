@@ -129,6 +129,9 @@
                 var editor = e.editor;
                 var pos = editor.getCursorPosition();
                 var token = editor.session.getTokenAt(pos.row, pos.column);
+                if (token) {
+                    token.file = self.file;
+                }
                 inspector.inspect(token);
             }
 

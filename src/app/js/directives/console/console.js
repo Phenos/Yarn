@@ -3,9 +3,9 @@
     yarn.directive('console', ConsoleDirective);
     yarn.factory('consoleService', consoleService);
 
-
     function ConsoleDirective(commands,
                               getSelectionText) {
+
         return {
             restrict: 'E',
             bindToController: {

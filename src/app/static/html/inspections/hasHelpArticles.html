@@ -1,0 +1,11 @@
+<div>
+    <h3>
+        <md-icon md-svg-icon="/svg-icons/help.svg"></md-icon>
+        {{inspection.helpArticle.length}} Related help articles
+    </h3>
+    <md-list>
+        <md-list-item ng-click="inspection.openArticle(article)">
+            <p ng-bing="article.title"></p>
+        </md-list-item>
+    </md-list>
+</div>

@@ -1,0 +1,26 @@
+<div layout-margin
+     layout-padding
+     layout-fill
+     layout="column">
+    <div layout="column"
+         ng-show="inspector.articles">
+        <md-content layout-margin
+                    layout-padding
+                    md-whiteframe="3">
+            <articles layout-margin
+                 layout-padding
+                 >
+            </articles>
+        </md-content>
+    </div>
+    <div ng-hide="inspector.articles"
+         layout-fill
+         layout="column"
+         layout-align="center center">
+        <div style="font-size: 0.8em; color: rgba(0,0,0,0.4)">
+            To inspect something, move you text cursor
+            <br/>
+            over any word in the editor.
+        </div>
+    </div>
+</div>

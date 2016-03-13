@@ -4,18 +4,38 @@
 <body>
 <style>
     line {
-        stroke: #ddd;
+        stroke: #bbb;
         stroke-width: 3;
     }
 
     circle {
-        fill: blue;
+        fill: #ddd;
+        r: 0.3em;
+        stroke: #666;
+        stroke-width: 2px;
+    }
+
+    circle.entrance {
+        fill: #00b500;
+        r: 0.6em;
+        stroke: #fff;
+        stroke-width: 3px;
+    }
+
+    circle.exit {
+        fill: #bf0000;
+        r: 0.6em;
+        stroke: #fff;
+        stroke-width: 3px;
     }
 
     #svgContent {
+        background: #eee;
         padding: 10px;
-        margin: 80px;
+        margin: 20px;
+        border: 3px solid #eee;
     }
+
 </style>
 <div id="svgContent"></div>
 
@@ -30,6 +50,8 @@
      */
 
     var roomCounter = 0;
+    var maxWidth = 900;
+    var maxHeight = 900;
 
     var config3 = {
         snapX: 8,
@@ -45,7 +67,7 @@
         bearingAsText: bearingAsText8ways
     };
 
-    var config = {
+    var config2 = {
         snapX: 24,
         snapY: 24,
         boundX: 1,
@@ -59,11 +81,28 @@
         bearingAsText: bearingAsText4ways
     };
 
+    var config = {
+        snapX: 25,
+        snapY: 25,
+        boundX: 1,
+        boundY: 0.2,
+        density: 0.35,
+        maxDist: 5.5, //In relation to the snap
+        maxDistDiagFactor: 1.4,
+        minExits: 1,
+        maxExits: 3,
+        exitsOverflow: 4,
+        entranceExtremity: "left",
+        exitExtremity: "right",
+        bearingAsText: bearingAsText4ways
+    };
+
 
     function Rooms() {
         this.rooms = [];
         this.roomsIndex = {};
         this.coordIndex = {};
+        this.extremities = {};
     }
 
     Rooms.prototype.generate = function (count) {
@@ -96,6 +135,13 @@
         this.roomsIndex[room.id] = room;
         this.coordIndex[room.x + "-" + room.y] = room;
 
+        var extremities = this.extremities;
+        if (!extremities.left || room.x < extremities.left.x) extremities.left = room;
+        if (!extremities.right || room.x > extremities.right.x) extremities.right = room;
+        if (!extremities.top || room.y < extremities.top.y) extremities.top = room;
+        if (!extremities.bottom || room.y > extremities.bottom.y) extremities.bottom = room;
+
+
         function randomSnappedNumber(snap) {
             return Math.floor(Math.random() * snap) / snap;
         }
@@ -123,7 +169,8 @@
         var distance = this.distanceFrom(room);
 
         if (
-                !room.bearingsIndex[bearingTextFrom] && !this.bearingsIndex[bearingTextTo] &&
+                !room.bearingsIndex[bearingTextFrom] &&
+                !this.bearingsIndex[bearingTextTo] &&
                 distance < absoluteMaxDist
         ) {
 
@@ -186,7 +233,7 @@
             "north", "east", "south", "west",
             "north", "east", "south", "west"
         ];
-        var bearingIndex = Math.floor((bearing + 360 - 45) / 90);
+        var bearingIndex = Math.floor((bearing + 360 - 44) / 90);
 //        console.log("bearingIndex: ", bearingIndex, bearingLabels[bearingIndex]);
         return bearingLabels[bearingIndex];
     }
@@ -233,10 +280,15 @@
 
     // Link to nearest room
     allRooms.forEach(function (room) {
+        // Create a copy of rooms (for later sorting)
         var roomsByDistance = allRooms.slice();
+
+        // Calculate the distance of all nodes to the current node
         roomsByDistance.forEach(function (room2) {
             room2.distance = room.distanceFrom(room2);
         });
+
+        // Sort all nodes from nearest to farthest
         roomsByDistance.sort(function (roomA, roomB) {
             return roomA.distance - roomB.distance;
         });
@@ -278,8 +330,6 @@
                     if (!room.exitsIndex[room2.id]) {
                         room.linkTo(room2);
                     }
-                } else {
-//                    console.log("Too many rooms", room.exits.length, room2.exits.length)
                 }
             }
         });
@@ -291,18 +341,26 @@
     allRooms.forEach(function (room) {
         if (room.exits.length === 0) {
             room.active = false;
-//            console.log("deactivated: ", room);
-        } else {
-//            console.log("keep: ", room);
-
         }
     });
 
-    console.log("rooms", rooms.rooms);
-    // Output the rooms
-    rooms.rooms.forEach(function (room) {
-//        console.log("ROOM #" + room.id);
+    // Set entrance
+    rooms.entrance = rooms.extremities[config.entranceExtremity];
+    rooms.exit = rooms.extremities[config.exitExtremity];
+
+    rooms.entrance.type = "entrance";
+    rooms.exit.type = "exit";
+
+    // Prune rooms without exits
+    allRooms.forEach(function (room) {
+        if (room.exits.length === 0) {
+            room.active = false;
+        }
     });
+
+    console.log("Rooms", rooms);
+    console.log("rooms", rooms.rooms);
+    console.log("extremities", rooms.extremities);
 
     function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
         // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
@@ -345,41 +403,49 @@
 
 </script>
 
+
+
+
+
 <script>
     window.onload = function () {
-        var w = 900,
-                h = 900;
+        var sizeX = maxWidth * config.boundX;
+        var sizeY = maxHeight * config.boundY;
+
         var svg = d3.select("#svgContent")
                 .append("svg")
-                .attr("width", w)
-                .attr("height", h)
+                .attr("width", sizeX)
+                .attr("height", sizeY)
                 .attr('preserveAspectRatio', 'xMinYMin slice')
                 .append('g');
+
         var dataSet = {
             nodes: [],
             edges: []
         };
 
-        var sizeX = 500;
-        var sizeY = 500;
 
         // Assign incremendal indexes
         var _D3_index = 0;
+
         rooms.rooms.forEach(function (room) {
             if (room.active) {
                 room._D3_index = _D3_index;
                 _D3_index++;
             }
         });
+
         rooms.rooms.forEach(function (room) {
 
             if (room.active) {
+
                 dataSet.nodes.push({
                     name: "ROOM #" + room.id,
                     id: room.id,
+                    type: room.type,
                     fixed: true,
-                    x: room.x * sizeX + 10,
-                    y: room.y * sizeY + 10
+                    x: room.x * maxWidth + 20,
+                    y: room.y * maxHeight + 20
                 });
 
                 room.exits.forEach(function (toRoom) {
@@ -403,7 +469,7 @@
                 .gravity(0.05)
                 .distance(100)
                 .charge(-100)
-                .size([w, h])
+                .size([sizeX, sizeY])
                 .start();
 
         var link = svg.selectAll(".link")
@@ -448,9 +514,18 @@
 
         var node = svg.selectAll("circle")
                 .data(dataSet.nodes)
-                .enter().append("circle")
-                .attr("class", "node")
-                .attr("r", 4.5)
+                .enter()
+                .append("circle")
+//                .attr("class", "node")
+                .attr("class", function (d) {
+                    console.log("d", d);
+                    if (d.type) {
+                        return "node " + d.type;
+                    } else {
+                        return "node";
+                    }
+                })
+                .attr("r", 6)
                 .call(node_drag);
 
         force.on("tick", tick);

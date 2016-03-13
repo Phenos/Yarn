@@ -10,7 +10,6 @@
 
     circle {
         fill: #ddd;
-        r: 0.3em;
         stroke: #666;
         stroke-width: 2px;
     }
@@ -81,7 +80,7 @@
         bearingAsText: bearingAsText4ways
     };
 
-    var config = {
+    var config5 = {
         snapX: 25,
         snapY: 25,
         boundX: 1,
@@ -94,6 +93,24 @@
         exitsOverflow: 4,
         entranceExtremity: "left",
         exitExtremity: "right",
+        padding: 20,
+        bearingAsText: bearingAsText4ways
+    };
+
+    var config = {
+        snapX: 30,
+        snapY: 30,
+        boundX: 1,
+        boundY: 0.15,
+        density: 0.25,
+        maxDist: 7.5, //In relation to the snap
+        maxDistDiagFactor: 1.4,
+        minExits: 1,
+        maxExits: 3,
+        exitsOverflow: 4,
+        entranceExtremity: "left",
+        exitExtremity: "right",
+        padding: 20,
         bearingAsText: bearingAsText4ways
     };
 
@@ -155,7 +172,30 @@
         this.exitsIndex = {};
         this.bearingsIndex = {};
         this.active = true;
+        this.roomSize = randomPick([
+            0, 1, 2, 3, 4, 5
+        ]);
+        this.roomShape = randomPick([
+            "round",
+            "square",
+            "long",
+            "wide"
+        ]);
+        this.roomType = randomPick([
+            "circularRoom",
+            "longHall",
+            "bedroom",
+            "storageRoom",
+            "longCorridor",
+            "lowRoofedHub",
+            "darkLivingSpace"
+        ]);
     }
+
+    function randomPick(items) {
+        return items[Math.floor(Math.random() * items.length)];
+    }
+
 
     Room.prototype.linkTo = function (room) {
         var bearingFrom = bearing(room.x, room.y, this.x, this.y);
@@ -409,8 +449,8 @@
 
 <script>
     window.onload = function () {
-        var sizeX = maxWidth * config.boundX;
-        var sizeY = maxHeight * config.boundY;
+        var sizeX = maxWidth * config.boundX + (config.padding);
+        var sizeY = maxHeight * config.boundY + (config.padding);
 
         var svg = d3.select("#svgContent")
                 .append("svg")
@@ -444,8 +484,11 @@
                     id: room.id,
                     type: room.type,
                     fixed: true,
-                    x: room.x * maxWidth + 20,
-                    y: room.y * maxHeight + 20
+                    roomSize: room.roomSize,
+                    roomShape: room.roomShape,
+                    roomType: room.roomType,
+                    x: room.x * (maxWidth - config.padding) + config.padding,
+                    y: room.y * (maxHeight - config.padding) + config.padding
                 });
 
                 room.exits.forEach(function (toRoom) {
@@ -516,7 +559,14 @@
                 .data(dataSet.nodes)
                 .enter()
                 .append("circle")
-//                .attr("class", "node")
+//                .append(function (d) {
+//                    return "circle"
+//                    if (d.roomShape === "round") {
+//                        return "circle"
+//                    } else {
+//                        return "square"
+//                    }
+//                })
                 .attr("class", function (d) {
                     console.log("d", d);
                     if (d.type) {
@@ -525,7 +575,9 @@
                         return "node";
                     }
                 })
-                .attr("r", 6)
+                .attr("r", function (d) {
+                    return 6 + (d.roomSize * 1.5);
+                })
                 .call(node_drag);
 
         force.on("tick", tick);

@@ -41,7 +41,8 @@
         maxDistDiagFactor: 1.4,
         minExits: 1,
         maxExits: 4,
-        exitsOverflow: 99
+        exitsOverflow: 99,
+        bearingAsText: bearingAsText8ways
     };
 
     var config = {
@@ -54,7 +55,8 @@
         maxDistDiagFactor: 1.4,
         minExits: 1,
         maxExits: 3,
-        exitsOverflow: 99
+        exitsOverflow: 99,
+        bearingAsText: bearingAsText4ways
     };
 
 
@@ -111,10 +113,10 @@
 
     Room.prototype.linkTo = function (room) {
         var bearingFrom = bearing(room.x, room.y, this.x, this.y);
-        var bearingTextFrom = bearingAsText(bearingFrom);
+        var bearingTextFrom = config.bearingAsText(bearingFrom);
 
         var bearingTo = bearing(this.x, this.y, room.x, room.y);
-        var bearingTextTo = bearingAsText(bearingTo);
+        var bearingTextTo = config.bearingAsText(bearingTo);
 
         var averageSnap = (config.snapX + config.snapY) / 2;
         var absoluteMaxDist = ((1 / averageSnap) * config.maxDist * config.maxDistDiagFactor);
@@ -167,13 +169,24 @@
         return ((brng + 360) % 360);
     }
 
-    function bearingAsText(bearing) {
+    function bearingAsText8ways(bearing) {
         var bearingLabels = [
             "north", "northEast", "east", "southEath", "south", "southWest", "west", "northWest",
             "north", "northEast", "east", "southEath", "south", "southWest", "west", "northWest",
             "north", "northEast", "east", "southEath", "south", "southWest", "west", "northWest"
         ];
-        var bearingIndex = Math.floor((bearing + 360) / 45);
+        var bearingIndex = Math.floor((bearing + 360 - 22.5) / 45);
+//        console.log("bearingIndex: ", bearingIndex, bearingLabels[bearingIndex]);
+        return bearingLabels[bearingIndex];
+    }
+
+    function bearingAsText4ways(bearing) {
+        var bearingLabels = [
+            "north", "east", "south", "west",
+            "north", "east", "south", "west",
+            "north", "east", "south", "west"
+        ];
+        var bearingIndex = Math.floor((bearing + 360 - 45) / 90);
 //        console.log("bearingIndex: ", bearingIndex, bearingLabels[bearingIndex]);
         return bearingLabels[bearingIndex];
     }

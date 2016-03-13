@@ -1,0 +1,471 @@
+<html>
+<head>
+</head>
+<body>
+<style>
+    line {
+        stroke: #ddd;
+        stroke-width: 3;
+    }
+
+    circle {
+        fill: blue;
+    }
+
+    #svgContent {
+        padding: 10px;
+        margin: 80px;
+    }
+</style>
+<div id="svgContent"></div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+<script>
+    /*
+
+     Generate a coherently eucledian maze with good "narrative" constraints
+
+     */
+
+    var roomCounter = 0;
+
+    var config3 = {
+        snapX: 8,
+        snapY: 8,
+        boundX: 1,
+        boundY: 1,
+        density: 0.7,
+        maxDist: 2, //In relation to the snap
+        maxDistDiagFactor: 1.4,
+        minExits: 1,
+        maxExits: 4,
+        exitsOverflow: 99
+    };
+
+    var config = {
+        snapX: 24,
+        snapY: 24,
+        boundX: 1,
+        boundY: 0.24,
+        density: 0.2,
+        maxDist: 4, //In relation to the snap
+        maxDistDiagFactor: 1.4,
+        minExits: 1,
+        maxExits: 3,
+        exitsOverflow: 99
+    };
+
+
+    function Rooms() {
+        this.rooms = [];
+        this.roomsIndex = {};
+        this.coordIndex = {};
+    }
+
+    Rooms.prototype.generate = function (count) {
+        var room;
+
+        for (var i = 0; i < count; i++) {
+            room = new Room();
+            this.place(room);
+        }
+    };
+
+    Rooms.prototype.place = function (room) {
+        this.rooms.push(room);
+        var maxCycles = 1000;
+        var x;
+        var y;
+        for (var i = 0; i < maxCycles; i++) {
+            x = randomSnappedNumber(config.snapX);
+            y = randomSnappedNumber(config.snapY);
+            if (
+                    !this.coordIndex[x + "-" + y] &&
+                    x < config.boundX &&
+                    y < config.boundY
+            ) {
+                room.x = x;
+                room.y = y;
+                break;
+            }
+        }
+        this.roomsIndex[room.id] = room;
+        this.coordIndex[room.x + "-" + room.y] = room;
+
+        function randomSnappedNumber(snap) {
+            return Math.floor(Math.random() * snap) / snap;
+        }
+    };
+
+    function Room() {
+        this.id = roomCounter++;
+        this.x = 0;
+        this.y = 0;
+        this.exits = [];
+        this.exitsIndex = {};
+        this.bearingsIndex = {};
+        this.active = true;
+    }
+
+    Room.prototype.linkTo = function (room) {
+        var bearingFrom = bearing(room.x, room.y, this.x, this.y);
+        var bearingTextFrom = bearingAsText(bearingFrom);
+
+        var bearingTo = bearing(this.x, this.y, room.x, room.y);
+        var bearingTextTo = bearingAsText(bearingTo);
+
+        var averageSnap = (config.snapX + config.snapY) / 2;
+        var absoluteMaxDist = ((1 / averageSnap) * config.maxDist * config.maxDistDiagFactor);
+        var distance = this.distanceFrom(room);
+
+        if (
+                !room.bearingsIndex[bearingTextFrom] && !this.bearingsIndex[bearingTextTo] &&
+                distance < absoluteMaxDist
+        ) {
+
+            // Exits To
+            room.exitsIndex[this.id] = this;
+            room.bearingsIndex[bearingTextFrom] = this;
+            room.exits.push(this);
+
+            // Exits From
+            this.exitsIndex[room.id] = room;
+            this.bearingsIndex[bearingTextTo] = room;
+            this.exits.push(room);
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    Room.prototype.distanceFrom = function (dest) {
+        function distance(x, y, x0, y0) {
+            return Math.sqrt((x -= x0) * x + (y -= y0) * y);
+        }
+
+        return distance(this.x, this.y, dest.x, dest.y);
+    };
+
+
+    /**
+     * Calculate the bearing between two positions as a value from 0-360
+     *
+     * @param x - The latitude of the first position
+     * @param y - The longitude of the first position
+     * @param x2 - The latitude of the second position
+     * @param y2 - The longitude of the second position
+     *
+     * @return int - The bearing between 0 and 360
+     */
+    function bearing(x, y, x2, y2) {
+        var dLon = toRad(y2 - y);
+        var _y = Math.sin(dLon) * Math.cos(toRad(x2));
+        var _x = Math.cos(toRad(x)) * Math.sin(toRad(x2)) - Math.sin(toRad(x)) * Math.cos(toRad(x2)) * Math.cos(dLon);
+        var brng = toDeg(Math.atan2(_y, _x));
+        return ((brng + 360) % 360);
+    }
+
+    function bearingAsText(bearing) {
+        var bearingLabels = [
+            "north", "northEast", "east", "southEath", "south", "southWest", "west", "northWest",
+            "north", "northEast", "east", "southEath", "south", "southWest", "west", "northWest",
+            "north", "northEast", "east", "southEath", "south", "southWest", "west", "northWest"
+        ];
+        var bearingIndex = Math.floor((bearing + 360) / 45);
+//        console.log("bearingIndex: ", bearingIndex, bearingLabels[bearingIndex]);
+        return bearingLabels[bearingIndex];
+    }
+
+
+    /**
+     * Since not all browsers implement this we have our own utility that will
+     * convert from degrees into radians
+     *
+     * @param number - The degrees to be converted into radians
+     * @return number
+     */
+    function toRad(deg) {
+        return deg * Math.PI / 180;
+    }
+
+
+    /**
+     * Since not all browsers implement this we have our own utility that will
+     * convert from radians into degrees
+     *
+     * @param number - The radians to be converted into degrees
+     * @return number
+     */
+    function toDeg(rad) {
+        return rad * 180 / Math.PI;
+    }
+
+    /*
+
+     Generate and output a maze
+
+     */
+    var rooms = new Rooms();
+    rooms.generate(Math.floor(config.snapX * config.snapY * config.boundX * config.boundY * config.density));
+    var allRooms = rooms.rooms;
+
+    // Set a random maximum of exits for each room
+    allRooms.forEach(function (room) {
+        var maxExits = Math.floor(Math.random() * (config.maxExits + config.minExits - 1) + config.minExits);
+//        console.log(maxExits);
+        room.maxExits = maxExits;
+    });
+
+    // Link to nearest room
+    allRooms.forEach(function (room) {
+        var roomsByDistance = allRooms.slice();
+        roomsByDistance.forEach(function (room2) {
+            room2.distance = room.distanceFrom(room2);
+        });
+        roomsByDistance.sort(function (roomA, roomB) {
+            return roomA.distance - roomB.distance;
+        });
+
+//        console.log("distance : " + roomsByDistance[1].distance);
+
+        /*
+
+         Links rooms according to constraints
+
+         - No repeating bearings
+         - No too many or too few exits
+         - No too far between rooms
+         - No intersections
+
+         */
+        roomsByDistance.forEach(function (room2) {
+            // Check if not linking to itself
+            if (room !== room2) {
+
+
+                // Test if the new link created would intersect with existing path
+                var noIntersect = true;
+                allRooms.forEach(function (refRoomFrom) {
+                    refRoomFrom.exits.forEach(function (refRoomTo) {
+                        var intersect = checkLineIntersection(room.x, room.y, room2.x, room2.y,
+                                refRoomFrom.x, refRoomFrom.y, refRoomTo.x, refRoomTo.y);
+                        if (intersect.onLine1 && intersect.onLine2) {
+                            noIntersect = false;
+                        }
+                    });
+                });
+
+                if (
+                        room.exits.length < (room.maxExits + config.exitsOverflow) &&
+                        room2.exits.length < (room2.maxExits) &&
+                        noIntersect
+                ) {
+                    if (!room.exitsIndex[room2.id]) {
+                        room.linkTo(room2);
+                    }
+                } else {
+//                    console.log("Too many rooms", room.exits.length, room2.exits.length)
+                }
+            }
+        });
+
+
+    });
+
+    // Prune rooms without exits
+    allRooms.forEach(function (room) {
+        if (room.exits.length === 0) {
+            room.active = false;
+//            console.log("deactivated: ", room);
+        } else {
+//            console.log("keep: ", room);
+
+        }
+    });
+
+    console.log("rooms", rooms.rooms);
+    // Output the rooms
+    rooms.rooms.forEach(function (room) {
+//        console.log("ROOM #" + room.id);
+    });
+
+    function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
+        // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
+        var denominator, a, b, numerator1, numerator2, result = {
+            x: null,
+            y: null,
+            onLine1: false,
+            onLine2: false
+        };
+        denominator = ((line2EndY - line2StartY) * (line1EndX - line1StartX)) - ((line2EndX - line2StartX) * (line1EndY - line1StartY));
+        if (denominator == 0) {
+            return result;
+        }
+        a = line1StartY - line2StartY;
+        b = line1StartX - line2StartX;
+        numerator1 = ((line2EndX - line2StartX) * a) - ((line2EndY - line2StartY) * b);
+        numerator2 = ((line1EndX - line1StartX) * a) - ((line1EndY - line1StartY) * b);
+        a = numerator1 / denominator;
+        b = numerator2 / denominator;
+
+        // if we cast these lines infinitely in both directions, they intersect here:
+        result.x = line1StartX + (a * (line1EndX - line1StartX));
+        result.y = line1StartY + (a * (line1EndY - line1StartY));
+        /*
+         // it is worth noting that this should be the same as:
+         x = line2StartX + (b * (line2EndX - line2StartX));
+         y = line2StartX + (b * (line2EndY - line2StartY));
+         */
+        // if line1 is a segment and line2 is infinite, they intersect if:
+        if (a > 0 && a < 1) {
+            result.onLine1 = true;
+        }
+        // if line2 is a segment and line1 is infinite, they intersect if:
+        if (b > 0 && b < 1) {
+            result.onLine2 = true;
+        }
+        // if line1 and line2 are segments, they intersect if both of the above are true
+        return result;
+    }
+
+</script>
+
+<script>
+    window.onload = function () {
+        var w = 900,
+                h = 900;
+        var svg = d3.select("#svgContent")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h)
+                .attr('preserveAspectRatio', 'xMinYMin slice')
+                .append('g');
+        var dataSet = {
+            nodes: [],
+            edges: []
+        };
+
+        var sizeX = 500;
+        var sizeY = 500;
+
+        // Assign incremendal indexes
+        var _D3_index = 0;
+        rooms.rooms.forEach(function (room) {
+            if (room.active) {
+                room._D3_index = _D3_index;
+                _D3_index++;
+            }
+        });
+        rooms.rooms.forEach(function (room) {
+
+            if (room.active) {
+                dataSet.nodes.push({
+                    name: "ROOM #" + room.id,
+                    id: room.id,
+                    fixed: true,
+                    x: room.x * sizeX + 10,
+                    y: room.y * sizeY + 10
+                });
+
+                room.exits.forEach(function (toRoom) {
+                    if (toRoom.active) {
+                        var edge = {
+                            source: room._D3_index,
+                            target: toRoom._D3_index
+                        };
+//                        console.log(room.id + "-" + toRoom.id);
+                        dataSet.edges.push(edge);
+                    }
+                });
+            }
+        });
+//        console.log(dataSet.edges);
+
+
+        var force = self.force = d3.layout.force()
+                .nodes(dataSet.nodes)
+                .links(dataSet.edges)
+                .gravity(0.05)
+                .distance(100)
+                .charge(-100)
+                .size([w, h])
+                .start();
+
+        var link = svg.selectAll(".link")
+                .data(dataSet.edges)
+                .enter().append("line")
+                .attr("class", "link")
+                .attr("x1", function (d) {
+                    return d.source.x;
+                })
+                .attr("y1", function (d) {
+                    return d.source.y;
+                })
+                .attr("x2", function (d) {
+                    return d.target.x;
+                })
+                .attr("y2", function (d) {
+                    return d.target.y;
+                });
+
+        var node_drag = d3.behavior.drag()
+                .on("dragstart", dragstart)
+                .on("drag", dragmove)
+                .on("dragend", dragend);
+
+        function dragstart(d, i) {
+            force.stop(); // stops the force auto positioning before you start dragging
+        }
+
+        function dragmove(d, i) {
+            d.px += d3.event.dx;
+            d.py += d3.event.dy;
+            d.x += d3.event.dx;
+            d.y += d3.event.dy;
+            tick();
+        }
+
+        function dragend(d, i) {
+            d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+            tick();
+            force.resume();
+        }
+
+        var node = svg.selectAll("circle")
+                .data(dataSet.nodes)
+                .enter().append("circle")
+                .attr("class", "node")
+                .attr("r", 4.5)
+                .call(node_drag);
+
+        force.on("tick", tick);
+
+        function tick() {
+            link.attr("x1", function (d) {
+                        return d.source.x;
+                    })
+                    .attr("y1", function (d) {
+                        return d.source.y;
+                    })
+                    .attr("x2", function (d) {
+                        return d.target.x;
+                    })
+                    .attr("y2", function (d) {
+                        return d.target.y;
+                    });
+
+            node.attr("cx", function (d) {
+                        return d.x;
+                    })
+                    .attr("cy", function (d) {
+                        return d.y;
+                    });
+        }
+    };
+
+
+</script>
+</body>
+</html>

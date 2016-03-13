@@ -1,14 +1,58 @@
 (function () {
 
+    yarn.directive('getContextMenu', function (globalContextMenu) {
+        return {
+            restrict: 'A',
+            link: function($scope, $element, $attrs) {
+                $element.on("contextmenu", function (e) {
+                    if (globalContextMenu.menuItems.length) {
+                        e.preventDefault();
+                        $scope.contextMenuItems = globalContextMenu.flush();
+                        //console.log("contextmenuexists!!!");
+                        var event = new Event('contextmenuexists');
+                        event.clientX = e.clientX;
+                        event.clientY = e.clientY;
+                        $element[0].dispatchEvent(event);
+                    }
+                });
+            }
+        };
+    });
+
+
+    yarn.service("globalContextMenu", function () {
+        var service = {
+            menuItems: []
+        };
+
+        service.flush = function () {
+            var menuItems = service.menuItems;
+            service.menuItems = [];
+            return menuItems;
+        };
+
+        service.add = function (label, icon, callback) {
+            service.menuItems.push({
+                label: label,
+                icon: icon,
+                click: callback
+            });
+        };
+
+        return service;
+    });
+
     yarn.directive('editor', EditorDirective);
     yarn.factory('editorService', editorService);
 
     function EditorDirective($mdDialog,
                              editorService,
                              editorFiles,
+                             root,
                              commands,
                              inspector,
                              IDE,
+                             globalContextMenu,
                              confirmAction) {
         return {
             restrict: 'E',
@@ -92,10 +136,16 @@
 
             function aceLoaded(_editor) {
                 _editor.$blockScrolling = Infinity;
-                console.log("Editor loaded");
                 aceEditor = _editor;
 
                 aceEditor.on("click", clickHandler);
+
+                angular.element(aceEditor.container).on("contextmenu", function() {
+                    globalContextMenu.add("Inspector", "inspector.svg", function() {
+                        root.focusInspector();
+                    });
+                });
+
             }
 
             function aceChanged(e) {

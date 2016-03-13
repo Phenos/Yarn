@@ -1,4 +1,10 @@
-<md-content style="z-index:5" flex="1" layout="row">
+<md-content style="z-index:5"
+            flex="1"
+            layout="row"
+            get-context-menu
+            data-context-event="contextmenuexists"
+            data-context-menu="./html/editor-context-menus.html"
+>
     <assertion-browser></assertion-browser>
     <md-section ng-show="consoleIsVisible" flex="100" layout="column" class="IDE">
         <editor-toolbar user="user"></editor-toolbar>
@@ -22,17 +28,7 @@
             </div>
             <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
         </div>
-        <md-tabs class="toolTabs" md-selected="tabs.selected" flex="{{ consoleFlexHeight }}" md-autoselect>
-            <md-tab>
-                <md-tab-label>
-                    <md-icon style="width: 1.5em; margin-left: 0.7em"
-                             md-svg-icon="/svg-icons/inspector.svg"></md-icon>
-                    Inspector
-                </md-tab-label>
-                <md-tab-body>
-                    <inspector></inspector>
-                </md-tab-body>
-            </md-tab>
+        <md-tabs class="toolTabs" md-selected="toolTabs.selected" flex="{{ consoleFlexHeight }}" md-autoselect>
             <md-tab>
                 <md-tab-label>
                     <md-icon style="width: 1.5em; margin-left: 0.7em"
@@ -43,6 +39,16 @@
                     <div flex="100" layout="row">
                         <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
                     </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <md-icon style="width: 1.5em; margin-left: 0.7em"
+                             md-svg-icon="/svg-icons/inspector.svg"></md-icon>
+                    Inspector
+                </md-tab-label>
+                <md-tab-body>
+                    <inspector></inspector>
                 </md-tab-body>
             </md-tab>
         </md-tabs>

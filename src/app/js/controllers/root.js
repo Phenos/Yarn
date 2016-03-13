@@ -19,6 +19,10 @@ function rootController(user,
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
 
+    $scope.toolTabs = {
+        selected: 0
+    };
+
     IDE.register($scope);
     // Register with the service
     root.register($scope);
@@ -82,6 +86,15 @@ function rootController(user,
     $scope.onConsoleFocus = function () {
         $scope.editorFlexHeight = 35;
         $scope.consoleFlexHeight = 65;
+    };
+
+    $scope.focusInspector = function () {
+        console.log($scope.toolTabs.selected);
+        $scope.toolTabs.selected = 1;
+    };
+
+    $scope.focusConsole = function () {
+        $scope.toolTabs.selected = 0;
     };
 
 
@@ -167,6 +180,13 @@ function rootService($localStorage, consoleService, helpService, player) {
         $localStorage.helpIsVisible = helpIsVisible(false);
     };
 
+    service.focusConsole = function () {
+        service.scope.focusConsole();
+    };
+
+    service.focusInspector = function () {
+        service.scope.focusInspector();
+    };
 
     return service;
 }

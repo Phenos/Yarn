@@ -489,7 +489,7 @@ function comments(next) {
             token : "comment", // multi line comment
             regex : /\/\*/,
             next: [
-                DocCommentHighlightRules.getTagRule(),
+                //DocCommentHighlightRules.getTagRule(),
                 {token : "comment", regex : "\\*\\/", next : next || "pop"},
                 {defaultToken : "comment", caseInsensitive: true}
             ]
@@ -497,7 +497,7 @@ function comments(next) {
             token : "comment",
             regex : "\\/\\/",
             next: [
-                DocCommentHighlightRules.getTagRule(),
+                //DocCommentHighlightRules.getTagRule(),
                 {token : "comment", regex : "$|^", next : next || "pop"},
                 {defaultToken : "comment", caseInsensitive: true}
             ]

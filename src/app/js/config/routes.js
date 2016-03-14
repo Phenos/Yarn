@@ -2,6 +2,16 @@ yarn.service("firebaseConnection", function(Firebase) {
     return new Firebase("https://yarnstudiodev.firebaseio.com");
 });
 
+
+yarn.service("apiClient", function($window) {
+    var apiClient = null;
+    if ($window.ActionheroClient) {
+        apiClient = new ActionheroClient();
+    }
+    return apiClient;
+});
+
+
 yarn.service("auth", function(firebaseConnection, $firebaseAuth) {
     return $firebaseAuth(firebaseConnection)
 });
@@ -11,7 +21,7 @@ yarn.service("authUser", function (auth, authData2user) {
         var user = null;
         var authData = auth.$getAuth();
         //console.log("auth", auth);
-        //console.log("authUser authData", authData);
+        console.log("authUser authData", authData);
         if (authData) user = authData2user(authData);
         return user;
     });

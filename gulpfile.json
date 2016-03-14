@@ -2,18 +2,16 @@
   "server": {
     "proxy": "localhost:5000",
     "host": "localhost",
-    "root": "build/static",
+    "root": "build/public",
     "port": 8001
   },
   "paths": {
     "buildRoot": "build",
-    "staticRoot": "build/static",
-    "storiesRoot": "build/static/stories",
-    "distStylesRoot": "build/static/styles",
-    "distTempLess": "build/static/less-temp",
+    "staticRoot": "build/public",
+    "distStylesRoot": "build/public/styles",
+    "distTempLess": "build/public/less-temp",
     "less": "src/app/less/**/*.less",
     "staticSource": "src/app/static/**",
-    "storiesSource": "src/app/stories/**",
     "javascriptSource": [
       "src/app/js/config/module.js",
       "src/app/js/config/routes.js",
@@ -52,13 +50,13 @@
       "./bower_components/angular-hotkeys/build/hotkeys.min.js",
       "./bower_components/d3/d3.min.js"
     ],
-    "javacriptTarget": "build/static/js",
-    "bowerComponentsTarteg": "build/static/bower_components",
+    "javacriptTarget": "build/public/js",
+    "bowerComponentsTarteg": "build/public/bower_components",
     "clean": [
       "build"
     ],
     "cleanAfter": [
-      "build/static/less-temp"
+      "build/public/less-temp"
     ],
     "watch": [
       "src/app/less/**/*.less",
@@ -72,7 +70,6 @@
         "src/app/static/**/*.txt"
       ],
       "js": "src/app/js/**/*.js",
-      "stories": "src/app/stories/**",
       "less": "src/app/less/**/*.less"
     }
   },

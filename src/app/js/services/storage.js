@@ -1,4 +1,4 @@
-yarn.service("storage", function (EditorFile, Story, session, yConsole) {
+yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
 
     function Storage() {
         this.files = [];
@@ -36,8 +36,10 @@ yarn.service("storage", function (EditorFile, Story, session, yConsole) {
 
         if (session.user()) {
             self.isLoading = true;
-            Story.files({}, function (data) {
-                console.log("data", data);
+
+
+            apiClient.action('files', function (data) {
+                console.log("Storagerefresh > apiClient.files", data);
                 angular.forEach(data.files, function (file) {
                     if (file && file.Size > 0) {
                         var path = file.Key && file.Key.replace(session.user().username + "/", "");
@@ -49,6 +51,8 @@ yarn.service("storage", function (EditorFile, Story, session, yConsole) {
                 self.isLoading = false;
                 yConsole.error("An error occurered while trying to load file from storage");
             });
+
+
 
         } else {
             yConsole.error("You must me signed-in to load and save data from your storage.");

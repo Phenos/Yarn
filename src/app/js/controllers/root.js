@@ -11,7 +11,6 @@ function rootController(user,
                         welcomeMessage,
                         editorService,
                         editorFiles,
-                        stories,
                         root,
                         hotkeys) {
 
@@ -45,9 +44,6 @@ function rootController(user,
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
     yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
-    // Play the default story
-    stories.playDefault();
-
     // Check if a previously opened story should be loaded
     //IDE.loadRememberedStory();
 
@@ -57,17 +53,6 @@ function rootController(user,
     $scope.openFile = function () {
         IDE.openFromStorage();
     };
-
-    // We load the story from the user, or ensure that a default one exists
-    stories.findOrCreateUserStory(user, function (story) {
-        yConsole.log("Loaded a story in the editor");
-        $scope.currentStory = story;
-    }, function () {
-        yConsole.log("No story can be loaded in the editor. You can only edit your own stories when you are logged in.");
-        yConsole.log("Until then you can still use the console to enter commands and affect your game session.");
-        $scope.currentStory = null;
-    });
-
 
     /*
 

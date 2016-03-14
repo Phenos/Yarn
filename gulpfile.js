@@ -6,7 +6,6 @@ var config = require('./gulpfile.json');
 var cwd = config.cwd;
 var paths = config.paths;
 
-gulp.task('loopbackAngular', loopbackAngularTask);
 gulp.task('bump', bumpTask);
 gulp.task('compileLess', lessTask);
 gulp.task('copyStatic', copyStaticTask);
@@ -26,13 +25,11 @@ gulp.task('copyAssets', gulp.series(
 gulp.task('clean', cleanTask);
 gulp.task('cleanAfterBuild', cleanAfterTask);
 gulp.task('server', serverTask);
-gulp.task('api', apiTask);
 gulp.task('watch', watchTask);
 gulp.task('build', gulp.series(
     'clean',
     'compileLess',
     'copyAssets',
-    //'loopbackAngular',
     'cleanAfterBuild'
 ));
 gulp.task('devServerless', gulp.series(
@@ -41,20 +38,11 @@ gulp.task('devServerless', gulp.series(
 ));
 gulp.task('dev', gulp.series(
     'build',
-    'watch',
-    'api'
+    'watch'
 ));
 
 
 // -----[ Task Functions ]--------
-
-
-function loopbackAngularTask() {
-    return gulp.src('./server/server.js')
-        .pipe($.loopbackSdkAngular())
-        .pipe($.rename('lb-services.js'))
-        .pipe(gulp.dest('./build/static/client-sdk/'));
-}
 
 
 function injectJsFilesTask() {
@@ -149,16 +137,10 @@ function serverTask(callback) {
     callback();
 }
 
-function apiTask(callback) {
-    var app = require("./server/server.js");
-    app.start();
-    callback();
-}
-
 function watchTask(callback) {
     gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
     gulp.watch(paths.watches.js, gulp.series('copyJs', browserSync.reload));
-    gulp.watch(paths.watches.statics, gulp.series('copyStatic', 'copyJs', browserSync.reload));
+    gulp.watch(paths.watches.statics, gulp.series('copyStatic', 'copyJs', 'injectJsFiles', browserSync.reload));
     callback();
 }
 

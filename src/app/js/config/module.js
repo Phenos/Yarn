@@ -11,7 +11,6 @@ var yarn = angular.module('yarn', [
     'ui.grid',
     'ngMaterial',
     'ui.router',
-    'lbServices',
     'firebase',
     'ngDebottle',
     'ngContextMenu',

@@ -1,8 +1,7 @@
 /**
  * Service for handling IDE/editor operations
  */
-yarn.service('IDE', function IDEService(stories,
-                                        hotkeys,
+yarn.service('IDE', function IDEService(hotkeys,
                                         rememberLastStory,
                                         $mdDialog,
                                         yConsole,
@@ -77,8 +76,7 @@ yarn.service('IDE', function IDEService(stories,
     };
 
     service.save = function (success, failure) {
-        console.log(stories.currentStory);
-        stories.save(success, failure);
+        console.log("IDE.save");
     };
 
     service.openFromStorage = function (ev) {

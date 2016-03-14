@@ -46,33 +46,6 @@ var appRoot = __dirname;
 console.log("Loading api app from :" + appRoot);
 
 
-// Inject the current user in the context
-app.use(loopback.context());
-app.use(loopback.token());
-app.use(function setCurrentUser(req, res, next) {
-    if (!req.accessToken) {
-        return next();
-    }
-    app.models.user.findById(req.accessToken.userId, function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            return next(new Error('No user with this access token was found.'));
-        }
-        //console.log("found user", user);
-        var loopbackContext = loopback.getCurrentContext();
-        if (loopbackContext) {
-            loopbackContext.set('currentUser', user);
-        } else {
-            console.log("no current context?");
-        }
-        next();
-    });
-});
-
-
-
 app.start = function () {
     app.set('port', (process.env.PORT || 5000));
 
@@ -104,12 +77,79 @@ app.middleware('parse', bodyParser.urlencoded({
     extended: true
 }));
 
+// Inject the current user in the context
+app.middleware('initial', function (req, res, next) {
+    //console.log("initial>>> ", req.accessToken);
+    return next();
+});
+
+app.middleware('initial', loopback.cookieParser(app.get('cookieSecret')));
+
+// Inject the current user in the context
+app.middleware('session', function (req, res, next) {
+    //console.log("session>>> ", req.accessToken);
+    return next();
+});
+
+// Inject the current user in the context
+app.middleware('auth', function (req, res, next) {
+    //console.log("auth>>> ", req.accessToken);
+    return next();
+});
+
+// Inject the current user in the context
+app.middleware('parse', function (req, res, next) {
+    //console.log("parse>>> ", req.accessToken);
+    return next();
+});
+
 // The access token is only available after boot
-app.middleware('auth', loopback.token({
+app.middleware('session:before', loopback.token({
     model: app.models.accessToken
 }));
 
-app.middleware('session:before', loopback.cookieParser(app.get('cookieSecret')));
+app.middleware('session:before', loopback.context());
+
+//app.use(function setCurrentUser(req, res, next) {
+app.middleware('session', function setCurrentUser(req, res, next) {
+    //console.log("req.accessToken >> ", req.accessToken);
+    if (!req.accessToken) {
+        return next();
+    }
+    app.models.user.findById(req.accessToken.userId, function (err, user) {
+        if (err) {
+            //console.log(err);
+            return next(err);
+        }
+        //console.log("user?", user);
+        if (!user) {
+            return next(new Error('No user with this access token was found.'));
+        }
+
+        user.profiles = [];
+        app.models.userIdentity.find({userid: req.accessToken.userId }, function (err, profiles) {
+            if (err) {
+                console.error(err);
+                return next(err);
+            }
+            //console.log("FOund user profiles", profiles);
+            user.profiles = profiles;
+
+            //console.log("found user", user);
+            req.user = user;
+            var loopbackContext = loopback.getCurrentContext();
+            if (loopbackContext) {
+                loopbackContext.set('currentUser', user);
+            } else {
+                console.log("no current context?");
+            }
+            next();
+        });
+
+
+    });
+});
+
 app.middleware('session', loopback.session({
     secret: 'kitty',
     saveUninitialized: true,
@@ -152,9 +192,21 @@ app.get('/auth/account', ensureLoggedIn('/login'), function (req, res, next) {
     });
 });
 
+/**
+ * This route is queries by the app to obtain session data.
+ */
 app.get('/auth/account/json', function (req, res, next) {
-    console.log("Returning user data from", req.user);
-    var data = req.user || {};
+    //console.log("Returning user data from", req.user);
+
+    var currentUser;
+    var loopbackContext = loopback.getCurrentContext();
+    if (loopbackContext) {
+        currentUser = varloopbackContext.get('currentUser');
+    } else {
+        //console.log("no current context!!!");
+    }
+
+    var data = currentUser || req.user || {};
     res.send(data);
 });
 
@@ -221,7 +273,7 @@ app.post('/login', function (req, res) {
     User.login({
         email: req.body.email,
         password: req.body.password,
-        rememberMe: false
+        rememberMe: true
     }, 'user', function (err, token) {
         if (err) {
             res.render('response', { //render view named 'response.ejs'
@@ -265,14 +317,10 @@ app.get('/auth/logout', function (req, res, next) {
 
         res.redirect('/');
     } else {
-        console.log("Wtf?");
+        //console.log("Wtf?");
         res.redirect('/logoutError');
     }
 });
-
-
-
-
 
 
 // -- Mount static files here--

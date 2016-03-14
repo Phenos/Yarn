@@ -24,7 +24,7 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
                     scope.url = txt;
                 }
 
-                yeld(new InspectionArticle("File Reference", "fileReference", "file-reference", scope))
+                yeld(new InspectionArticle("File Reference", "fileReference", "file-reference-inspection", scope))
             }
         }
 
@@ -41,7 +41,7 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
 
 });
 
-yarn.directive('fileReference', function fileReference() {
+yarn.directive('fileReferenceInspection', function fileReference() {
     return {
         replace: true,
         templateUrl: "./html/inspections/fileReference.html",

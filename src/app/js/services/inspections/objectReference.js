@@ -1,14 +1,11 @@
 yarn.service("objectReferenceInspection",
-    function objectReferenceInspection(InspectionArticle,
-                                       URI,
-                                       editorFiles,
-                                       $window) {
+    function objectReferenceInspection(InspectionArticle) {
         return {
             inspect: inspect
         };
 
         function inspect(token, yeld) {
-            console.log("token", token);
+
             if (token && token.type === "camelcase") {
                 var txt = token.value;
                 if (txt) {

@@ -3,7 +3,7 @@
     yarn.directive('getContextMenu', function (globalContextMenu) {
         return {
             restrict: 'A',
-            link: function($scope, $element, $attrs) {
+            link: function ($scope, $element, $attrs) {
                 $element.on("contextmenu", function (e) {
                     if (globalContextMenu.menuItems.length) {
                         e.preventDefault();
@@ -53,7 +53,9 @@
                              inspector,
                              IDE,
                              globalContextMenu,
-                             confirmAction) {
+                             confirmAction,
+                             $throttle,
+                             $debounce) {
         return {
             restrict: 'E',
             bindToController: {
@@ -75,11 +77,11 @@
 
             editorService.register(this);
 
-            this.validate = function() {
+            this.validate = function () {
                 commands.command("validate");
             };
 
-            this.saveAndRun = function() {
+            this.saveAndRun = function () {
                 editorFiles.save(this.file, function (err, file) {
                     if (!err) {
                         IDE.runFile(file);
@@ -87,7 +89,7 @@
                 });
             };
 
-            this.setAsMain = function() {
+            this.setAsMain = function () {
                 var currentMainFile = editorFiles.mainFile();
                 if (currentMainFile === this.file) {
                     editorFiles.mainFile(null);
@@ -96,11 +98,11 @@
                 }
             };
 
-            this.save = function() {
+            this.save = function () {
                 editorFiles.save(this.file);
             };
 
-            this.reload = function() {
+            this.reload = function () {
                 confirmAction(
                     "Unsaved changes",
                     "You have unsaved changes in this file.<br/> Are you sure you want to " +
@@ -110,7 +112,7 @@
                     })
             };
 
-            this.search = function(ev) {
+            this.search = function (ev) {
                 // Appending dialog to document.body to cover sidenav in docs app
                 var confirm = $mdDialog.confirm()
                     .title('Sorry!')
@@ -119,18 +121,18 @@
                     .ok('Ok')
                     .cancel('Cancel');
 
-                $mdDialog.show(confirm).then(function() {
+                $mdDialog.show(confirm).then(function () {
                     console.log("ok");
-                }, function() {
+                }, function () {
                     console.log("cancel");
                 });
             };
 
-            this.close = function() {
+            this.close = function () {
                 editorFiles.close(this.file);
             };
 
-            this.focus = function() {
+            this.focus = function () {
                 aceEditor.textInput.focus();
             };
 
@@ -139,16 +141,22 @@
                 aceEditor = _editor;
 
                 aceEditor.on("click", clickHandler);
+                aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
 
-                angular.element(aceEditor.container).on("contextmenu", function() {
-                    globalContextMenu.add("Inspector", "inspector.svg", function() {
+                angular.element(aceEditor.container).on("contextmenu", function () {
+                    globalContextMenu.add("Inspector", "inspector.svg", function () {
                         root.focusInspector();
                     });
                 });
 
             }
 
-            function aceChanged(e) {
+            function changeCursorHandler() {
+                updateInspection();
+            }
+
+            function aceChanged() {
+                updateInspection();
                 if (self.file) {
                     self.file.updateStatus();
                 }
@@ -162,7 +170,7 @@
                     'ace/mode/javascript'
                 ],
                 workerPath: '/ace/js/',
-                useWrapMode : true,
+                useWrapMode: true,
                 useWorker: false,
                 mode: 'javascript',
                 theme: 'tomorrow',
@@ -175,14 +183,20 @@
                 onChange: aceChanged
             };
 
-            function clickHandler(e){
-                var editor = e.editor;
-                var pos = editor.getCursorPosition();
-                var token = editor.session.getTokenAt(pos.row, pos.column);
-                if (token) {
-                    token.file = self.file;
+            function clickHandler() {
+                updateInspection();
+            }
+
+            var updateInspection = $debounce($throttle(slowUpdateInspection, 200), 200);
+            function slowUpdateInspection() {
+                if (aceEditor) {
+                    var pos = aceEditor.getCursorPosition();
+                    var token = aceEditor.session.getTokenAt(pos.row, pos.column);
+                    if (token) {
+                        token.file = self.file;
+                    }
+                    inspector.inspect(token);
                 }
-                inspector.inspect(token);
             }
 
         }

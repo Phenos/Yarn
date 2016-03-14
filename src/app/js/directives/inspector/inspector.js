@@ -3,6 +3,18 @@
     yarn.directive('inspector', InspectorDirective);
     yarn.service('inspector', inspectorService);
 
+    yarn.directive('inspectorArticle', function InspectorArticle($compile) {
+        return {
+            restrict: 'A',
+            link: function($scope, $element) {
+                var scope = $scope.$new(false);
+                angular.extend(scope, $scope.article.scope);
+                var articleElement = $compile("<" + $scope.article.directive + "></" + $scope.article.directive + ">")(scope);
+                $element.append(articleElement);
+            }
+        };
+    });
+
 
     function InspectorDirective() {
         return {
@@ -24,17 +36,9 @@
             inspector.register(this);
 
             this.update = function (articles) {
-                var elemArticles = $element.find("articles");
-
+                //var elemArticles = $element.find("articles");
+                //elemArticles.empty();
                 self.articles = articles;
-                elemArticles.empty();
-
-                angular.forEach(articles, function (article) {
-                    var scope = $scope.$new(false);
-                    angular.extend(scope, article.scope);
-                    var element = $compile("<" + article.directive + "></" + article.directive + ">")(scope);
-                    elemArticles.append(element);
-                });
             };
 
         }

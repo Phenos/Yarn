@@ -12,6 +12,7 @@ var yarn = angular.module('yarn', [
     'ngMaterial',
     'ui.router',
     'lbServices',
+    'ngDebottle',
     'ngContextMenu',
     'tandibar/ng-rollbar',
     'ui.ace',

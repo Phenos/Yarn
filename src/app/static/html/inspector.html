@@ -1,11 +1,16 @@
-<div class="inspector" layout-padding
+<div class="inspector"
+     layout-padding
      layout="column">
     <div layout="column"
          ng-show="inspector.articles.length > 0">
-        <articles layout-padding
-             md-whiteframe="3"
-             style="background: #fff;"
-        >
+        <articles>
+            <article
+                    ng-repeat="article in inspector.articles"
+                    inspector-article
+                    layout-padding
+                    md-whiteframe="3"
+                    style="background: #fff;">
+            </article>
         </articles>
     </div>
     <div ng-show="inspector.articles.length === 0"

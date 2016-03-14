@@ -21,14 +21,14 @@ function StoriesService(Story,
     // if non exists, a default one is created
     service.findOrCreateUserStory = function (user, success, failure) {
         if (user.username) {
-            console.log("Finding or creating story for user: ", user);
+            //console.log("Finding or creating story for user: ", user);
             Story.findOne({where: {user: user.username}}, function (story) {
-                console.log("Story found", story);
+                console.log("Story found", [story]);
                 service.currentStory = story;
                 service.currentUser = user;
                 success(story);
             }, function (err) {
-                console.log("No story found", err);
+                //console.log("No story found", err);
                 createDefaultStory(user, success, failure);
             });
         } else {
@@ -38,7 +38,7 @@ function StoriesService(Story,
     };
 
     service.createDefaultStory = function (user, success, failure) {
-        console.log("Creating default story for user");
+        //console.log("Creating default story for user");
         Story.create({
             guid: "123456789",
             username: user.username,
@@ -54,7 +54,7 @@ function StoriesService(Story,
     service.save = function (success, failure) {
         service.currentStory.$save(
             function (story) {
-                console.log("Story saved");
+                //console.log("Story saved");
                 yConsole.success("Story saved");
                 if (success) success(story);
             },

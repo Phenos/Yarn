@@ -45,7 +45,7 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
             }
             this.persist();
         }
-        console.log("Main file is now ", file);
+        //console.log("Main file is now ", file);
         return this._mainFile;
     };
 
@@ -74,7 +74,7 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
         var self = this;
         var sessionFiles = session.storage("editorFiles");
 
-        console.log("this._mainFile", this._mainFile);
+        //console.log("this._mainFile", this._mainFile);
         if (angular.isObject(this._mainFile)) {
             sessionFiles.mainFile = this._mainFile._uri;
         } else {

@@ -14,7 +14,7 @@ yarn.service('loader', function (yarn,
 
         var url = _url;
 
-        console.log("loader.fromURL", url);
+        //console.log("loader.fromURL", url);
         yConsole.log("Loading story from : " + url);
         return loadScript(url).then(onSuccess, onError);
 
@@ -27,7 +27,7 @@ yarn.service('loader', function (yarn,
          * Called once all files are loaded (including imports)
          */
         function onSuccess(script) {
-            console.info("Game script loaded successfully", script);
+            console.info("Game script loaded successfully", [script]);
 
             yarn.load(script.source, script.url).then(onSuccess, onError);
 

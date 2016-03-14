@@ -60,7 +60,7 @@ yarn.service('yarn', function ($localStorage,
             //this.scripts.push(script);
 
             return script.load(text, url).then(function () {
-                console.log("wtf", script);
+                //console.log("wtf", script);
                 return script;
             });
         };

@@ -15,7 +15,7 @@ yarn.factory('script', function (Pointer,
         this.source = source;
         var self = this;
         this.pointer.tokenize(source);
-        console.log("yarn.script.load: ", url);
+        //console.log("yarn.script.load: ", url);
         return this.compile(this.pointer.tokens).then(function (ast) {
             //console.log("after compile");
             return self.processImports(ast);
@@ -71,7 +71,7 @@ yarn.factory('script', function (Pointer,
 
     Script.prototype.importNode = function (node) {
         var url = this.resolveRelativeURI(node.value);
-        console.log("-------> ", this, node.value);
+        //console.log("-------> ", this, node.value);
 
         return loadScript(url).then(function (loadedScript) {
             var script = new Script();

@@ -11,11 +11,11 @@ yarn.directive('toolbar', function ToolbarDirective() {
         controller: ToolbarController
     };
 
-    function ToolbarController(sidebar, $scope, $window, commands) {
+    function ToolbarController(sidebar, $scope, $window, commands, auth, login) {
 
         if (this.user && this.user.username) {
-            $scope.avatar = this.user.profiles[0].profile.photos[0].value;
-            $scope.username = this.user.profiles[0].profile.displayName;
+            $scope.avatar = this.user.profileImageURL;
+            $scope.username = this.user.displayName;
         }
 
         this.restartStory = function () {
@@ -23,7 +23,12 @@ yarn.directive('toolbar', function ToolbarDirective() {
         };
 
         this.logout = function () {
-            $window.location.href = "/auth/logout";
+            auth.$unauth();
+            $window.location.href = "/";
+        };
+
+        this.login = function () {
+            login();
         };
 
         this.openSidebar = function() {

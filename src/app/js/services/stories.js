@@ -20,7 +20,7 @@ function StoriesService(Story,
     // Try to load a story for the current user...
     // if non exists, a default one is created
     service.findOrCreateUserStory = function (user, success, failure) {
-        if (user.username) {
+        if (user && user.username) {
             //console.log("Finding or creating story for user: ", user);
             Story.findOne({where: {user: user.username}}, function (story) {
                 console.log("Story found", [story]);

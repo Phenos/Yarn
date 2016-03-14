@@ -1,3 +1,46 @@
+yarn.service("firebaseConnection", function(Firebase) {
+    return new Firebase("https://yarnstudiodev.firebaseio.com");
+});
+
+yarn.service("auth", function(firebaseConnection, $firebaseAuth) {
+    return $firebaseAuth(firebaseConnection)
+});
+
+yarn.service("authUser", function (auth, authData2user) {
+    return auth.$waitForAuth().then(function (wha) {
+        var user = null;
+        var authData = auth.$getAuth();
+        //console.log("auth", auth);
+        //console.log("authUser authData", authData);
+        if (authData) user = authData2user(authData);
+        return user;
+    });
+
+});
+
+yarn.service("authData2user", function authData2user() {
+    return function (authData) {
+        var profile = authData[authData.provider];
+        return {
+            username: authData.provider + "." + authData[authData.provider].username,
+            profileImageURL: profile.profileImageURL,
+            displayName: profile.displayName
+        };
+    }
+
+});
+
+yarn.service("login", function (auth) {
+    return function login() {
+        return auth.$authWithOAuthRedirect("twitter").then(function(authData) {
+            console.log("Logged in as:", authData.uid);
+        }).catch(function(error) {
+            console.error("Authentication failed:", error);
+        });
+    };
+ });
+
+
 yarn.config(function ($stateProvider,
                       $urlRouterProvider) {
 
@@ -6,9 +49,9 @@ yarn.config(function ($stateProvider,
     $stateProvider.state('root', {
         url: '/',
         resolve: {
-            "user": function (userFromAPI, session) {
-                return userFromAPI().then(function (user) {
-                    session.open(user);
+            "user": function (authUser, session) {
+                return authUser.then(function (user) {
+                    if (user) session.open(user);
                     return user;
                 });
             }

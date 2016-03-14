@@ -8,6 +8,7 @@ yarn.service("apiClient", function($window) {
     if ($window.ActionheroClient) {
         apiClient = new ActionheroClient();
     }
+    console.log("apiClient", [apiClient]);
     return apiClient;
 });
 
@@ -17,7 +18,7 @@ yarn.service("auth", function(firebaseConnection, $firebaseAuth) {
 });
 
 yarn.service("authUser", function (auth, authData2user) {
-    return auth.$waitForAuth().then(function (wha) {
+    return auth.$waitForAuth().then(function () {
         var user = null;
         var authData = auth.$getAuth();
         //console.log("auth", auth);

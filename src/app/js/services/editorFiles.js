@@ -1,4 +1,4 @@
-yarn.service("editorFiles", function (EditorFile, confirmAction, session, storage) {
+yarn.service("editorFiles", function (EditorFile, confirmAction, session, storage, yConsole) {
 
     function EditorFiles() {
         this.files = [];

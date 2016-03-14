@@ -88,11 +88,11 @@ var JavaScriptHighlightRules = function(options) {
             comments("no_regex"),
             {
                 token : "string",
-                regex : "'(?=.)",
+                regex : /'(?=.|\s|\S)/,
                 next  : "qstring"
             }, {
                 token : "string",
-                regex : '"(?=.)',
+                regex : /"(?=.|\s|\S)/,
                 next  : "qqstring"
             }, {
                 token : "camelcase",

@@ -6,7 +6,7 @@ module.exports = function (Story) {
 
     Story.potato = function (options, callback) {
         var ctx = loopback.getCurrentContext();
-        var currentUser = ctx.get('currentUser');
+        var currentUser = ctx.get('user');
         //console.log("currentUser", currentUser);
 
         var s3client = s3.createClient({
@@ -48,7 +48,7 @@ module.exports = function (Story) {
 
         // Get the current user
         var ctx = loopback.getCurrentContext();
-        var currentUser = ctx.get('currentUser');
+        var currentUser = ctx.get('user');
         console.log("currentUser", currentUser);
 
         // Create a client connection to S3
@@ -93,7 +93,7 @@ module.exports = function (Story) {
 
         // Get the current user
         var ctx = loopback.getCurrentContext();
-        var currentUser = ctx.get('currentUser');
+        var currentUser = ctx.get('user');
         console.log("currentUser", currentUser);
 
         // Create a client connection to S3

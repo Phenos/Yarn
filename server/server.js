@@ -139,9 +139,9 @@ app.middleware('session', function setCurrentUser(req, res, next) {
             req.user = user;
             var loopbackContext = loopback.getCurrentContext();
             if (loopbackContext) {
-                loopbackContext.set('currentUser', user);
+                loopbackContext.set('user', user);
             } else {
-                console.log("no current context?");
+                console.log("no current context?????");
             }
             next();
         });
@@ -201,9 +201,9 @@ app.get('/auth/account/json', function (req, res, next) {
     var currentUser;
     var loopbackContext = loopback.getCurrentContext();
     if (loopbackContext) {
-        currentUser = varloopbackContext.get('currentUser');
+        currentUser = varloopbackContext.get('user');
     } else {
-        //console.log("no current context!!!");
+        console.log("no current context!!!!!!");
     }
 
     var data = currentUser || req.user || {};
@@ -308,7 +308,7 @@ app.get('/auth/login', function (req, res, next) {
 app.get('/auth/logout', function (req, res, next) {
     req.logout();
     var ctx = loopback.getCurrentContext();
-    var currentUser = ctx.get('currentUser');
+    var currentUser = ctx.get('user');
     if (currentUser) {
         console.log("Logging out");
         //currentUser.logout();

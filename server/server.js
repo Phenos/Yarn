@@ -108,12 +108,18 @@ app.middleware('session:before', loopback.token({
     model: app.models.accessToken
 }));
 
-app.middleware('session:before', loopback.context());
+//app.middleware('initial', loopback.context());
+//app.middleware('initial', function (req, res, next) {
+//    console.log("initial!!!");
+//    next();
+//});
+
+app.middleware('auth', loopback.context());
 
 //app.use(function setCurrentUser(req, res, next) {
-app.middleware('session', function setCurrentUser(req, res, next) {
-    //console.log("req.accessToken >> ", req.accessToken);
+app.middleware('auth', function setCurrentUser(req, res, next) {
     if (!req.accessToken) {
+        //console.log("no access token!!! >> ", req.accessToken);
         return next();
     }
     app.models.user.findById(req.accessToken.userId, function (err, user) {
@@ -140,8 +146,10 @@ app.middleware('session', function setCurrentUser(req, res, next) {
             var loopbackContext = loopback.getCurrentContext();
             if (loopbackContext) {
                 loopbackContext.set('user', user);
+                //console.log("Added 'user' in the loopbackContext");
+                //console.log("loopbackContext", loopbackContext);
             } else {
-                console.log("no current context?????");
+                //console.log("no current context?????");
             }
             next();
         });
@@ -201,9 +209,9 @@ app.get('/auth/account/json', function (req, res, next) {
     var currentUser;
     var loopbackContext = loopback.getCurrentContext();
     if (loopbackContext) {
-        currentUser = varloopbackContext.get('user');
+        currentUser = loopbackContext.get('user');
     } else {
-        console.log("no current context!!!!!!");
+        //console.log("no current context!!!!!!");
     }
 
     var data = currentUser || req.user || {};

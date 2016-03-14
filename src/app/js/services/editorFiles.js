@@ -53,16 +53,16 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
         file.status = "Saving...";
         var savedContent = self.content;
         storage.save(file, function (meta) {
-            console.log("storage.save success ", meta);
+            //console.log("storage.save success ", meta);
             file.ready = true;
             file.status = "Saved";
             file.originalContent = savedContent;
-            callback(null, file);
+            callback && callback(null, file);
         }, function (err) {
             file.status = "Failed to save";
             console.error("Error while saving file: " + file.absoluteURI, err);
             yConsole.error("Error while saving file: " + file.absoluteURI);
-            callback(err);
+            callback && callback(err);
         });
     };
 

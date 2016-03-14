@@ -170,7 +170,7 @@
                     'ace/mode/javascript'
                 ],
                 workerPath: '/ace/js/',
-                useWrapMode: true,
+                useWrapMode: false,
                 useWorker: false,
                 mode: 'javascript',
                 theme: 'tomorrow',
@@ -192,10 +192,11 @@
                 if (aceEditor) {
                     var pos = aceEditor.getCursorPosition();
                     var token = aceEditor.session.getTokenAt(pos.row, pos.column);
+                    console.log("token", token);
                     if (token) {
                         token.file = self.file;
+                        inspector.inspect(token);
                     }
-                    inspector.inspect(token);
                 }
             }
 

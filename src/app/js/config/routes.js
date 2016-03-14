@@ -35,7 +35,9 @@ yarn.service("authData2user", function authData2user() {
         return {
             username: authData.provider + "." + authData[authData.provider].username,
             profileImageURL: profile.profileImageURL,
-            displayName: profile.displayName
+            displayName: profile.displayName,
+            token: authData.token,
+            rawAuthData: authData
         };
     }
 

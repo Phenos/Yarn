@@ -23,7 +23,7 @@ exports.default = {
       // allow connections to be created without remoteIp and remotePort (they will be set to 0)
       enforceConnectionProperties: true,
       // disables the whitelisting of client params
-      disableParamScrubbing: false,
+      disableParamScrubbing: true,
       // params you would like hidden from any logs
       filteredParams: [],
       // values that signify missing params

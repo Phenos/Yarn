@@ -10,14 +10,14 @@ exports.status = {
 };
 
 function saveFile(api, data, next) {
+    var username = data.user && data.user.username;
 
-    if (data.user) {
+    if (username) {
         // Create a client connection to S3
         var s3client = s3.createClient({
             s3Options: api.config.s3.connectionOptions
         });
 
-        var username = data.user.username;
         var timestamp = (new Date()).toJSON().replace(".", ":");
         var randomId = parseInt((Math.random() * 100000000000)).toString();
         var fullPath = [
@@ -25,20 +25,20 @@ function saveFile(api, data, next) {
             username,
             timestamp,
             randomId,
-            data.filename
+            data.params.filename
         ].join("-");
 
         var fullURI = [
             username,
             "/",
-            data.uri
+            data.params.uri
         ].join("");
 
         var file = {
             fullURI: fullURI,
-            uri: data.uri,
+            uri: data.params.uri,
             path: fullPath,
-            content: data.content
+            content: data.params.content
         };
         api.log("fullURI: ", fullURI);
         api.log("fullPath: ", fullPath);
@@ -51,6 +51,7 @@ function saveFile(api, data, next) {
                     callback();
                 } else {
                     api.error(err);
+                    callback(err);
                 }
             });
         }
@@ -64,11 +65,11 @@ function saveFile(api, data, next) {
                 localFile: file.path
             };
 
-            api.log("Get the list of objects from : " + file.fullURI);
+            api.log("Save file to: : " + file.fullURI);
             var uploader = s3client.uploadFile(params);
             uploader.on('error', function (err) {
                 api.error("unable to upload to S3:", err.stack);
-                next(new Error(err));
+                callback(new Error(err));
             });
             uploader.on('end', function () {
                 api.log("Upload complete for : " + file.fullURI);

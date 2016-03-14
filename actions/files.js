@@ -19,16 +19,16 @@ exports.status = {
 
 //function files(callback) {
 function files(api, data, next) {
+    var username = data.user && data.user.username;
     var allFiles = [];
 
-    if (data.user) {
+    if (username) {
 
         // Create a client connection to S3
         var s3client = s3.createClient({
             s3Options: api.config.s3.connectionOptions
         });
 
-        var username = data.user.username;
         var storyPath = username + "/";
         var params = {
             s3Params: {

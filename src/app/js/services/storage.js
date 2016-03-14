@@ -17,18 +17,26 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
     };
 
     Storage.prototype.save = function (file, success, failed) {
-        Story.saveFile({
+        var user = session.user();
+        console.log(">>>>>user", user);
+        apiClient.action('saveFile', {
             filename: file.uri.filename(true),
             uri: file._uri,
-            content: file.content
-        }, function (meta) {
-            console.log("storage.save success", meta);
-            success(meta);
-        }, function (err) {
-            self.isLoading = false;
-            yConsole.error("An error occurered while trying to load file from storage");
-            failed(err);
-        })
+            content: file.content,
+            token: user.token,
+            username: user.username
+        }, function(data){
+            if (!data.error) {
+                console.log("storage.save success", [data]);
+                success(data);
+            } else {
+                self.isLoading = false;
+                yConsole.error("An error occurered while trying to load file from storage : " + data.error);
+                failed(data.error);
+            }
+            // do stuff
+        });
+
     };
 
     Storage.prototype.refresh = function (uri) {
@@ -51,8 +59,6 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
                 self.isLoading = false;
                 yConsole.error("An error occurered while trying to load file from storage");
             });
-
-
 
         } else {
             yConsole.error("You must me signed-in to load and save data from your storage.");

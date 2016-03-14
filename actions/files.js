@@ -3,21 +3,11 @@ var s3 = require('s3');
 exports.status = {
     name: 'files',
     description: "Returns the list of available files in the user' storage",
-
+    middleware: ['authentication'],
     outputExample: {},
-
-    //run: function (api, data, next) {
-    //    data.response.id                = api.id;
-    //    data.response.actionheroVersion = api.actionheroVersion;
-    //    data.response.uptime            = new Date().getTime() - api.bootTime;
-    //
-    //    files
-    //    next();
-    //}
     run: files
 };
 
-//function files(callback) {
 function files(api, data, next) {
     var username = data.user && data.user.username;
     var allFiles = [];

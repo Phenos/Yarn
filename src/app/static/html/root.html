@@ -28,15 +28,22 @@
                          layout-align="center center"
                          flex="100"
                     >
-                        <div flex="30"></div>
-                        <div style="color: #888;">
-                            No files are curently open.<br/>
-                            From the menu you can click on <br/>
-                            <md-button style="font-size: 1em; margin-left: -8px;" ng-click="openFile()">
-                                Files \ Open...
-                            </md-button>
+                        <div flex="20"></div>
+                        <div>
+                            <div layout="column">
+                                <div style="color: #666; text-align: center;">
+                                    No files are curently open!
+                                </div>
+                                <br/>
+                                <md-button ng-click="openMain()">
+                                    Open the main "story.txt" file
+                                </md-button>
+                                <md-button ng-click="openFile()">
+                                    Browse Files ...
+                                </md-button>
+                            </div>
                         </div>
-                        <div flex="50"></div>
+                        <div flex="60"></div>
                     </div>
                     <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
                 </div>

@@ -54,6 +54,11 @@ function rootController(user,
         IDE.openFromStorage();
     };
 
+    $scope.openMain = function () {
+        var main = editorFiles.open("./story.txt");
+        editorFiles.mainFile(main);
+    };
+
     /*
 
      Height permutation between Console and Editor on focus events

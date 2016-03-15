@@ -14,7 +14,7 @@
             controller: StoryLogController
         };
 
-        function StoryLogController(storyLog, $scope, $element, $compile) {
+        function StoryLogController(storyLog, $scope, $element, $compile, player) {
 
             this.clear = function () {
                 $element.empty();
@@ -32,6 +32,8 @@
                 newScope.type = type;
                 var logItemEl = $compile('<log-item class="unread" type="type" text="text" scope="scope"></log-item>')(newScope);
                 $element.append(logItemEl);
+
+                player.scroll();
             };
 
             this.markAsRead = function () {

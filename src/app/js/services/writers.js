@@ -62,6 +62,7 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeTheEnd() {
+        storyLog.markAsRead();
 
         storyLog.clear();
 
@@ -97,7 +98,6 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeRoom() {
-        //storyLog.clear();
         storyLog.markAsRead();
 
         var room = state.resolveOne(assert("You", "is in"));
@@ -139,6 +139,7 @@ yarn.factory('writers', function (Prompt,
 
     // Describe where you are at the beginning
     function describeThing(thing) {
+        storyLog.markAsRead();
         if (thing) {
             var name = state.resolveValue(assert(thing, "has", "Name"));
             var description = state.resolveValue(assert(thing, "has", "Description"));

@@ -4,7 +4,14 @@ exports.status = {
     name: 'files',
     description: "Returns the list of available files in the user' storage",
     middleware: ['authentication'],
-    outputExample: {},
+    outputExample: [{
+            Key: 'twitter.YarnStudioGames/folder/story.txt',
+            LastModified: "Thu Mar 10 2016 14:03:28 GMT-0500 (EST)",
+            ETag: '"239dee9f8c7bdf7beec35c573f40ca86"',
+            Size: 723,
+            StorageClass: 'STANDARD',
+            Owner: {}
+        }],
     run: files
 };
 

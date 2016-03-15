@@ -104,10 +104,8 @@ yarn.service('IDE', function IDEService(hotkeys,
         }
     };
 
-
-
     service.run = function () {
-        var url = "http://storage.yarnstudio.io/" + stories.currentUser.username + "/story.yarn.txt";
+        var url = "http://storage.yarnstudio.io/" + stories.currentUser.username + "/story.txt";
         rememberLastStory.forget();
         loader.fromSource(stories.currentStory.content, url);
     };

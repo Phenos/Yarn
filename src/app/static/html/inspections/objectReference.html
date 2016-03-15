@@ -1,14 +1,14 @@
 <div>
-    <h2>
-        <md-icon md-svg-icon="/svg-icons/inspections/{{ type }}.svg"></md-icon>
-        {{ title }} <span class="subHeading">({{ type}})</span>
-    </h2>
     <p>
-        This predicate is used in {{ assertionCount }} assertions in your story.
+        This item is used in {{ assertionCount }} assertions in your story.
     </p>
     <p>
-        <md-button ng-click="openAsSubject()">
-            Usage in Assertions Browser
-        </md-button>
+        It occurs
+        <a ng-click="openAsSubject()">
+            99 times as subject
+        </a>
+        <a ng-click="openAsObject()">
+            99 times as the object
+        </a>
     </p>
 </div>

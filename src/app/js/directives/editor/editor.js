@@ -192,7 +192,7 @@
                 if (aceEditor) {
                     var pos = aceEditor.getCursorPosition();
                     var token = aceEditor.session.getTokenAt(pos.row, pos.column);
-                    console.log("token", token);
+                    //console.log("token", token);
                     if (token) {
                         token.file = self.file;
                         inspector.inspect(token);

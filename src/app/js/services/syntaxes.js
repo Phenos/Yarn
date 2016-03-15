@@ -21,7 +21,25 @@ yarn.service("syntaxes", function (Syntax) {
         return syntax;
     }
 
+    function _for(predicate) {
+        var matches = {
+            positive: [],
+            negative: []
+        };
+        angular.forEach(allSyntaxes, function (syntax, key) {
+            if (syntax.predicate === predicate) {
+                if (syntax.isPositive) {
+                    matches.positive.push(syntax);
+                } else {
+                    matches.negative.push(syntax);
+                }
+            }
+        });
+        return matches;
+    }
+
     return {
+        for: _for,
         get: _get,
         set: _set
     };

@@ -10,7 +10,7 @@
                 var scope = $scope.$new(false);
                 angular.extend(scope, $scope.article.scope);
                 var articleElement = $compile("<" + $scope.article.directive + "></" + $scope.article.directive + ">")(scope);
-                $element.append(articleElement);
+                $element.find("section").append(articleElement);
             }
         };
     });
@@ -60,17 +60,20 @@
         };
 
         service.inspect = function (token) {
-            this.clear();
             var self = this;
-            angular.forEach(inspections, function (inspection) {
-                inspection.inspect(token, onYeld);
-            });
+            if (angular.isObject(token)) {
+                token.helpArticles = [];
+                this.clear();
+                angular.forEach(inspections, function (inspection) {
+                    inspection.inspect(token, onYeld);
+                });
+                function onYeld(article) {
+                    self.addArticle(article);
+                }
 
-            function onYeld(article) {
-                self.addArticle(article);
+                controller.update(self.articles)
             }
 
-            controller.update(self.articles)
         };
 
         service.addArticle = function (article) {

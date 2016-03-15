@@ -1,5 +1,5 @@
 yarn.service("predicateReferenceInspection",
-    function predicateReferenceInspection(InspectionArticle) {
+    function predicateReferenceInspection(InspectionArticle, predicates, syntaxes) {
         return {
             inspect: inspect
         };
@@ -16,10 +16,17 @@ yarn.service("predicateReferenceInspection",
                         scope.title = txt;
                         scope.type = "predicateReference";
                         scope.assertionCount = 999;
+                        var predicate = predicates(txt, true);
+                        console.log("predicate", predicate);
+                        if (!predicate) {
+                            scope.isCustomPredicate = true;
+                        } else {
+                            scope.syntaxesForPredicate = syntaxes.for(predicate);
+                        }
                         scope.openAsPredicate = openAsPredicate;
                     }
 
-                    yeld(new InspectionArticle("Predicate Reference", "predicateReference", "predicate-reference", scope))
+                    yeld(new InspectionArticle(txt.trim(), "predicateReference", "predicate-reference", scope))
                 }
             }
 

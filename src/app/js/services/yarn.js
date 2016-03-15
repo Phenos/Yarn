@@ -67,9 +67,10 @@ yarn.service('yarn', function ($localStorage,
 
     }
 
+    gamePedicates();
+
     var yarn = new Yarn();
 
-    gamePedicates(yarn);
 
     return yarn;
 });

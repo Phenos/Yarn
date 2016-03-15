@@ -2,12 +2,14 @@ yarn.service("inspections", function (fileReferenceInspection,
                                       textInspection,
                                       commentInspection,
                                       predicateReferenceInspection,
-                                      objectReferenceInspection) {
+                                      objectReferenceInspection,
+                                      relatedHelpInspection) {
     return [
         textInspection,
         fileReferenceInspection,
         objectReferenceInspection,
         predicateReferenceInspection,
-        commentInspection
+        commentInspection,
+        relatedHelpInspection
     ];
 });

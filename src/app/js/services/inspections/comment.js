@@ -18,6 +18,11 @@ yarn.service("commentInspection", function commentInspection(InspectionArticle) 
                 scope.wordCount = txt.trim().replace(regex, ' ').split(' ').length;
             }
 
+            token.helpArticles.push({
+                title: "Line comments & block comments",
+                url: "./some-address.html"
+            });
+
             yeld(new InspectionArticle("Comment", "comment", "comment-inspection", scope))
         }
 

@@ -20,7 +20,8 @@ yarn.service("objectReferenceInspection",
                         scope.openAsObject = openAsObject;
                     }
 
-                    yeld(new InspectionArticle("Object Reference", "objectReference", "object-reference", scope))
+                    yeld(new InspectionArticle(txt.trim(), "objectReference", "object-reference", scope))
+
                 }
             }
 

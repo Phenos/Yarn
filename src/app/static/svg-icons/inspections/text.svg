@@ -4,42 +4,12 @@
 	 viewBox="0 0 28 28" style="enable-background:new 0 0 28 28;" xml:space="preserve">
 <g>
 	<g>
-		<rect y="3" style="fill:#010002;" width="28" height="2"/>
-		<rect y="11" style="fill:#010002;" width="28" height="2"/>
-		<rect y="19" style="fill:#010002;" width="28" height="2"/>
-		<rect y="7" style="fill:#010002;" width="20" height="2"/>
-		<rect y="15" style="fill:#010002;" width="20" height="2"/>
-		<rect y="23.001" style="fill:#010002;" width="20" height="1.999"/>
+		<rect y="3" width="28" height="2"/>
+		<rect y="11" width="28" height="2"/>
+		<rect y="19" width="28" height="2"/>
+		<rect y="7" width="20" height="2"/>
+		<rect y="15" width="20" height="2"/>
+		<rect y="23.001" width="20" height="1.999"/>
 	</g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
 </g>
 </svg>

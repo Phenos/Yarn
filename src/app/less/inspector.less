@@ -1,24 +1,73 @@
 .inspector {
-    font-size: 0.9em;
 
     articles {
+        display: block;
         position: relative;
 
         article {
-            margin-bottom: 1em;
+            position: relative;
+            display: block;
             padding-bottom: 0;
+            margin: 0.8em;
+            background: #fff;
 
-            h2, h3, h4 {
-                font-weight: normal;
+            section {
+                position: relative;
+                display: block;
+                margin: 0.5em 0.5em 0.25em 1em;
+                padding-bottom: 0.25em;
             }
+
+            h2, h3, h4, h5 {
+                margin: 0.5em 0 0.5em 0;
+            }
+
+            h2.type-help {
+                background: rgb(0, 85, 0);
+            }
+
             h2 {
-                margin-top: 0;
+                background: rgb(63, 81, 181);
+
+                font-weight: normal;
+                margin: 0;
+                padding: 0.3em 0.3em 0.3em 0.6em;
+                color: #fff;
+                font-size: 1.1em;
+
+                md-icon {
+                    svg {
+                        color: #fff;
+                        fill: #fff;
+                    }
+                    height: 2em;
+                }
+            }
+            ul {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+                padding-left: 1em;
+
+                li {
+                    list-style-type: square;
+
+                    a:visited,
+                    a:link {
+                        text-decoration: none;
+
+                    }
+                }
             }
 
             .subHeading {
-                font-size: 0.7em;
-                color: #555;
-                font-weight: bold;
+                position: relative;
+                top: 0.5em;
+                float: right;
+                margin-right: 1em;
+                font-size: 0.9em;
+                font-weight: 400;
+                margin-left: 1em;
+                color: rgba(255, 255, 255, 0.6);
             }
         }
     }

@@ -3,14 +3,16 @@ yarn.service('logic', function (aboutToRoutine,
                                 moveRoutine,
                                 takeRoutine,
                                 useRoutine,
-                                stepRoutine) {
+                                stepRoutine,
+                                hintRoutine) {
 
     var routines = {
         aboutTo: aboutToRoutine,
         move: moveRoutine,
         use: useRoutine,
         take: takeRoutine,
-        step: stepRoutine
+        step: stepRoutine,
+        hint: hintRoutine
     };
 
     routines.aboutTo = aboutToRoutine;

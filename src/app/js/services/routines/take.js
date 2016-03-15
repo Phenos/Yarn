@@ -3,6 +3,7 @@ yarn.service("takeRoutine", function (state,
                                       stepRoutine,
                                       assert,
                                       predicates,
+                                      storyLog,
                                       things,
                                       writers) {
     function takeRoutine(object) {
@@ -13,9 +14,6 @@ yarn.service("takeRoutine", function (state,
             // Put item in inventory and log it to the player
             state.createAssertion(you, hasInInventory, object);
             writers.describeThingTakenInInventory(object);
-
-            state.negate(assert(object, "is in"));
-            events.trigger(assert("you", "take", object));
 
             stepRoutine();
         }

@@ -165,7 +165,7 @@ yarn.factory('writers', function (Prompt,
     function describeThingTakenInInventory(thing) {
         if (thing) {
             var name = state.resolveValue(assert(thing, "has", "Name"));
-            if (name) storyLog.log("You took the " + name);
+            if (name) storyLog.action("You take the " + name);
         }
         return this;
     }

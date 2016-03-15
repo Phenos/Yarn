@@ -59,8 +59,8 @@ yarn.service("setDefaultOptionsHelper", function (state,
                 option.iconOnly = true;
             }
 
-            option = prompt.option("Clear & refresh", "refresh");
-            option.iconId = "refresh";
+            option = prompt.option("Who? What? Why? Where?", "hint");
+            option.iconId = "question-mark";
             option.iconSize = "mini";
             option.iconOnly = true;
 

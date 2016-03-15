@@ -3,6 +3,7 @@ yarn.service("moveRoutine", function (state,
                                       assert,
                                       predicates,
                                       things,
+                                      storyLog,
                                       stepRoutine) {
 
     function moveRoutine(room) {
@@ -16,6 +17,10 @@ yarn.service("moveRoutine", function (state,
                 layer: state.currentLayer
             });
         }
+
+        var roomName = state.resolveValue(assert(room, "has", "Name"));
+
+        storyLog.action("You move to the " + roomName);
 
         events.trigger(assert("You", "entered", room));
         events.trigger(assert("You", "exited", previousRoom));

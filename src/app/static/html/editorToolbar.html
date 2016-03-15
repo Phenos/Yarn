@@ -5,7 +5,11 @@
         <md-toolbar-filler layout
                            layout-align="center center"
                            ng-click="toolbar.IDE.openFromStorage()">
-            <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
+            <md-icon ng-show="!toolbar.IDE.isWorking" md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
+            <md-progress-circular
+                    ng-if="toolbar.IDE.isWorking"
+                    md-diameter="70"
+                    md-mode="indeterminate"></md-progress-circular>
         </md-toolbar-filler>
         <div flex="100">
             <h2 class="md-toolbar-tools">Story Editor</h2>
@@ -29,19 +33,21 @@
                     </button>
                     <md-menu-content>
                         <md-menu-item>
-                            <md-button ng-click="toolbar.IDE.saveAndRun()">
-                                Save and Run
+                            <md-button ng-click="toolbar.IDE.saveAllAndRun()">
+                                Save All and Run
                                 <span class="md-alt-text"> {{ 'M-Enter' | keyboardShortcut }}</span>
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button ng-click="toolbar.IDE.save()">
-                                Save
+                            <md-button ng-click="toolbar.IDE.saveAll()">
+                                Save All
+                                <span class="md-alt-text"> {{ 'M-S' | keyboardShortcut }}</span>
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
                             <md-button ng-click="toolbar.IDE.run()">
                                 Run
+                                <span class="md-alt-text"> {{ 'M-R' | keyboardShortcut }}</span>
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>

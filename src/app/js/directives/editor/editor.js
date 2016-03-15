@@ -81,12 +81,8 @@
                 commands.command("validate");
             };
 
-            this.saveAndRun = function () {
-                editorFiles.save(this.file, function (err, file) {
-                    if (!err) {
-                        IDE.runFile(file);
-                    }
-                });
+            this.saveAllAndRun = function () {
+                IDE.saveAllAndRun();
             };
 
             this.setAsMain = function () {

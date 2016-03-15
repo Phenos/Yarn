@@ -59,12 +59,9 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
 
     EditorFiles.prototype.save = function (file, callback) {
         file.status = "Saving...";
-        var savedContent = self.content;
         storage.save(file, function (meta) {
-            //console.log("storage.save success ", meta);
             file.ready = true;
             file.status = "Saved";
-            file.originalContent = savedContent;
             callback && callback(null, file);
         }, function (err) {
             file.status = "Failed to save";
@@ -72,6 +69,36 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
             yConsole.error("Error while saving file: " + file.absoluteURI);
             callback && callback(err);
         });
+    };
+
+    EditorFiles.prototype.saveAll = function (success, failure) {
+        // Iterate trough all open files
+        // If they have changed, then them
+        var files = this.files;
+        var filesToSave = [];
+        angular.forEach(files, function (file) {
+            if (file.isModified()) {
+                filesToSave.push(file);
+            }
+        });
+        console.log("filesToSave", filesToSave);
+
+        function saveNextFile(success, failure) {
+            var nextFile = filesToSave.pop();
+            console.log("nextFile", nextFile);
+            if (nextFile) {
+                storage.save(nextFile, function () {
+                    saveNextFile(success, failure);
+                }, function (err) {
+                    yConsole.error("An errror occured while saving all files");
+                    failure && failure(err);
+                })
+            } else {
+                success && success()
+            }
+        }
+
+        saveNextFile(success, failure);
     };
 
     /**

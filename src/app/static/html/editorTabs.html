@@ -1,14 +1,14 @@
 <md-tabs md-selected="tabs.selected" flex="100" md-border-bottom md-autoselect>
     <md-tab ng-repeat="file in tabs.files">
         <md-tab-label>
-            {{ file.name() }}
+            {{ file.name() }} <span ng-if="file.isModified()">*</span>
             <md-icon style="width: 1.5em; margin-left: 0.7em"
                      ng-if="file.isMain"
                      md-svg-icon="/svg-icons/main-file.svg"></md-icon>
         </md-tab-label>
         <md-tab-body>
             <editor read-only="!file.ready"
-                    save-and-run="IDE.saveAndRun()"
+                    save-and-run="IDE.saveAllAndRun()"
                     source="file.content"
                     file="file"
                     layout="column"

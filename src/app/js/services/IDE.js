@@ -9,7 +9,9 @@ yarn.service('IDE', function IDEService(hotkeys,
                                         storage,
                                         editorFiles) {
 
-    var service = {};
+    var service = {
+        isWorking: false
+    };
 
     /**
      * Register the service to a scope to allow binding keystrokes
@@ -24,7 +26,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 description: 'Save and run the story',
                 callback: function (event) {
                     event.preventDefault();
-                    service.saveAndRun();
+                    service.saveAllAndRun();
                 }
             })
             .add({
@@ -42,7 +44,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 description: 'Save the story',
                 callback: function (event) {
                     event.preventDefault();
-                    service.save();
+                    service.saveAll();
                 }
             })
             .add({
@@ -57,25 +59,28 @@ yarn.service('IDE', function IDEService(hotkeys,
     };
 
 
-    service.saveAndRun = function () {
-        console.log(".saveAndRun()");
-        service.save(function (story) {
+    service.saveAllAndRun = function () {
+        var self = this;
+        console.log(".saveAllAndRun()");
+        this.isWorking = true;
+        service.saveAll(function (story) {
             service.run(story);
+            self.isWorking = false;
         }, function () {
             $mdDialog.show(
                 $mdDialog
                     .alert()
-                    //.parent(angular.element(document.querySelector('#popupContainer')))
                     .clickOutsideToClose(true)
                     .title('Oups!')
                     .textContent('A problem occured while saving your story. Your changes were not saved.')
                     .ok('Ok')
-                //.targetEvent(ev)
             );
         })
     };
 
-    service.save = function (success, failure) {
+    service.saveAll = function (success, failure) {
+        editorFiles.saveAll(success, failure);
+
         console.log("IDE.save");
     };
 
@@ -93,13 +98,16 @@ yarn.service('IDE', function IDEService(hotkeys,
         });
 
         function OpenFromStorageController($scope) {
+            var self = this;
             $scope.cancel = function() {
                 $mdDialog.cancel();
             };
             $scope.open = function(file) {
+                self.isWorking = true;
                 console.log("open", file);
                 $mdDialog.cancel();
                 editorFiles.open(file);
+                self.isWorking = false;
             };
         }
     };
@@ -117,8 +125,10 @@ yarn.service('IDE', function IDEService(hotkeys,
 
     service.runFile = function (file) {
         if (file) {
+            this.isWorking = true;
             rememberLastStory.forget();
             loader.fromURL(file.absoluteURI);
+            this.isWorking = false;
         }
     };
 

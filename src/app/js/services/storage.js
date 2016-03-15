@@ -17,17 +17,20 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
     };
 
     Storage.prototype.save = function (file, success, failed) {
+        self.isLoading = true;
+        var savedContent = file.content;
         var user = session.user();
-        console.log(">>>>>user", user);
         if (user) {
             apiClient.action('saveFile', {
                 filename: file.uri.filename(true),
                 uri: file._uri,
-                content: file.content,
+                content: savedContent,
                 token: user.token,
                 username: user.username
             }, function(data){
                 if (!data.error) {
+                    console.log("?",[savedContent], [file.originalContent]);
+                    file.originalContent = savedContent;
                     console.log("storage.save success", [data]);
                     success(data);
                 } else {

@@ -5,11 +5,11 @@ yarn.service("inspections", function (fileReferenceInspection,
                                       objectReferenceInspection,
                                       relatedHelpInspection) {
     return [
-        textInspection,
         fileReferenceInspection,
         objectReferenceInspection,
         predicateReferenceInspection,
         commentInspection,
+        textInspection,
         relatedHelpInspection
     ];
 });

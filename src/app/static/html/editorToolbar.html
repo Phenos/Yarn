@@ -53,6 +53,13 @@
                     </button>
                     <md-menu-content>
                         <md-menu-item class="md-indent">
+                            <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
+                            <md-button ng-click="toolbar.openHelp()">
+                                Help & Documentation
+                                <span class="md-alt-text"> {{ 'M-H' | keyboardShortcut }}</span>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item class="md-indent">
                             <md-icon md-svg-icon="/svg-icons/assertions.svg"></md-icon>
                             <md-button ng-click="toolbar.openAssertionBrowser()">
                                 Assertion Browser

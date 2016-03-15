@@ -15,7 +15,6 @@ function EditorToolbarDirective() {
     };
 
     function EditorToolbarController(assertionBrowser,
-                                     consoleService,
                                      root,
                                      IDE) {
 
@@ -29,8 +28,8 @@ function EditorToolbarDirective() {
             assertionBrowser.open();
         };
 
-        this.clearConsole = function () {
-            consoleService.clear();
-        }
+        this.openHelp = function() {
+            root.showHelp();
+        };
     }
 }

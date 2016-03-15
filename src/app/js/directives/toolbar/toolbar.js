@@ -33,7 +33,8 @@ yarn.directive('toolbar', function ToolbarDirective() {
 
         this.openSidebar = function() {
             sidebar.open();
-        }
+        };
+
     }
 });
 

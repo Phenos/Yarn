@@ -1,17 +1,11 @@
 .toolTabs {
 
-    .md-tab {
-        text-transform: none;
-        font-size: 0.8em;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 1em;
-        padding-right: 1em;
-    }
+    z-index: 2000;
+
 
     md-ink-bar {
-        height: 0.05em;
-        background: #3f51b5 !important;
+        height: 0.2em;
+        background: #fff !important;
     }
 
     md-tab-content {
@@ -19,6 +13,32 @@
     }
 
     md-tabs-wrapper {
+        background: #4d4d4d;
+
+        md-tab-item {
+            text-transform: none;
+            font-size: 0.8em;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0.2em;
+            padding-right: 1.2em;
+            color: rgba(255, 255, 255, 0.6);
+            md-icon {
+                color: rgba(255, 255, 255, 0.6);
+                fill: rgba(255, 255, 255, 0.6);
+
+            }
+
+            &.md-active {
+                color: #FFFFFF;
+
+                md-icon {
+                    color: #FFFFFF;
+                    fill: #FFFFFF;
+
+                }
+            }
+        }
     }
 
     md-icon {
@@ -27,6 +47,5 @@
     }
 
     md-tab-item.md-active {
-
     }
 }

@@ -92,22 +92,22 @@ function rootService($localStorage, consoleService, helpService, player) {
 
     service.register = function (scope) {
         service.scope = scope;
-        scope.consoleIsVisible = service.consoleIsVisible;
+        scope.IDEisVisible = service.IDEisVisible;
         scope.helpIsVisible = service.helpIsVisible;
     };
 
     /*
      Console visibility
      */
-    service.consoleIsVisible = false;
+    service.IDEisVisible = false;
     service.helpIsVisible = false;
 
-    function consoleIsVisible(value) {
+    function IDEisVisible(value) {
         if (!angular.isUndefined(value)) {
-            service.consoleIsVisible = value;
-            if (service.scope) service.scope.consoleIsVisible = value;
+            service.IDEisVisible = value;
+            if (service.scope) service.scope.IDEisVisible = value;
         }
-        return service.consoleIsVisible;
+        return service.IDEisVisible;
     }
 
     function helpIsVisible(value) {
@@ -118,11 +118,11 @@ function rootService($localStorage, consoleService, helpService, player) {
         return service.helpIsVisible;
     }
 
-    consoleIsVisible($localStorage.consoleIsVisible);
+    IDEisVisible($localStorage.IDEisVisible);
     helpIsVisible($localStorage.helpIsVisible);
 
     service.toggleConsole = function () {
-        if (service.consoleIsVisible) {
+        if (service.IDEisVisible) {
             service.hideConsole();
         } else {
             service.showConsole();
@@ -143,11 +143,11 @@ function rootService($localStorage, consoleService, helpService, player) {
      */
     service.showConsole = function () {
         player.closeSidenav();
-        $localStorage.consoleIsVisible = consoleIsVisible(true);
+        $localStorage.IDEisVisible = IDEisVisible(true);
         consoleService.focus();
     };
     service.hideConsole = function () {
-        $localStorage.consoleIsVisible = consoleIsVisible(false);
+        $localStorage.IDEisVisible = IDEisVisible(false);
     };
 
 

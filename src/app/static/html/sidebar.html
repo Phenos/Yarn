@@ -12,9 +12,9 @@
             </div>
         </md-toolbar>
         <md-content layout-padding>
-            <div ng-if="username" class="logged-in-as" layout="row">
+            <div ng-show="username" class="logged-in-as" layout="row">
                 <div style="width: 60px;">
-                    <img class="avatar" src="{{ avatar }}"></img>
+                    <img ng-show="username" class="avatar" src="{{ avatar }}"></img>
                 </div>
                 <div flex="">
                     <span class="connected-as-label">You are connected as</span><br/>

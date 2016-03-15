@@ -97,7 +97,8 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeRoom() {
-        storyLog.clear();
+        //storyLog.clear();
+        storyLog.markAsRead();
 
         var room = state.resolveOne(assert("You", "is in"));
 

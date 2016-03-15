@@ -30,8 +30,14 @@
                 }
                 newScope.text = text;
                 newScope.type = type;
-                var logItemEl = $compile('<log-item type="type" text="text" scope="scope"></log-item>')(newScope);
+                var logItemEl = $compile('<log-item class="unread" type="type" text="text" scope="scope"></log-item>')(newScope);
                 $element.append(logItemEl);
+            };
+
+            this.markAsRead = function () {
+                angular.element($element[0].getElementsByClassName("unread"))
+                    .removeClass("unread")
+                    .addClass("read")
             };
 
             storyLog.register(this);

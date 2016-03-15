@@ -96,6 +96,10 @@ yarn.service('storyLog', function () {
         this.controller.clear();
     };
 
+    StoryLog.prototype.markAsRead = function () {
+        this.controller.markAsRead();
+    };
+
     return new StoryLog();
 });
 

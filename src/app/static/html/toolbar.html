@@ -1,12 +1,12 @@
 <md-toolbar class="toolbar">
     <div class="md-toolbar-tools">
         <div
-            flex="30"
-            layout="row"
-            layout-align="start center">
+                flex="30"
+                layout="row"
+                layout-align="start center">
             <md-button
                     ng-click="toolbar.openSidebar()"
-                    class="md-icon-button"
+                    class="md-icon-button main-menu-button"
                     aria-label="Open menu">
                 <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
             </md-button>
@@ -31,25 +31,31 @@
              layout="row"
              layout-align="end end">
             <div flex=""></div>
-            <md-menu md-position-mode="target">
+            <md-menu md-offset="-10 -10"
+                     md-position-mode="target-right target">
                 <md-button
                         style="min-width: 0; padding: 0;"
                         ng-click="$mdOpenMenu($event)"
-                        class="md-icon-button"
+                        class="md-icon-button story-menu-button"
                         aria-label="Story menu">
-                    <md-icon md-svg-icon="/svg-icons/story.svg"></md-icon>
+                    <md-icon md-menu-origin
+                             md-svg-icon="/svg-icons/story.svg"></md-icon>
                 </md-button>
-                <md-menu-content width="6">
+                <md-menu-content width="4" class="story-menu">
                     <md-toolbar>
-                        <div class="md-toolbar-tools">
-                            <div>
-                                <md-icon style="height: 50px; width: 32px; margin-right: 10px;"
-                                         md-svg-icon="/svg-icons/story.svg"></md-icon>
-                            </div>
+                        <div class="md-toolbar-tools" layout="row">
+                            <span flex=""></span>
+
                             <h2>
                                 <span>Story Menu</span>
                             </h2>
-                            <span flex></span>
+
+                            <div>
+                                <md-icon
+                                        style="height: 30px; width: 30px; margin: 0 10px;"
+                                        md-menu-align-target
+                                        md-svg-icon="/svg-icons/story.svg"></md-icon>
+                            </div>
                         </div>
                     </md-toolbar>
                     <md-menu-item>

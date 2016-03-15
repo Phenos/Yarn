@@ -45,8 +45,16 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
             }
             this.persist();
         }
-        //console.log("Main file is now ", file);
-        return this._mainFile;
+        var _mainFile;
+        if (angular.isDefined(this._mainFile)) {
+            _mainFile = this._mainFile;
+        } else {
+            yConsole.log("Opening the default main story file.");
+            var url = "http://storage.yarnstudio.io/" + session.user().username + "/story.txt";
+            _mainFile = this.open(url);
+        }
+
+        return _mainFile;
     };
 
     EditorFiles.prototype.save = function (file, callback) {

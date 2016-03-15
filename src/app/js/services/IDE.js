@@ -105,9 +105,14 @@ yarn.service('IDE', function IDEService(hotkeys,
     };
 
     service.run = function () {
-        var url = "http://storage.yarnstudio.io/" + stories.currentUser.username + "/story.txt";
-        rememberLastStory.forget();
-        loader.fromSource(stories.currentStory.content, url);
+        var mainFile = editorFiles.mainFile();
+        if (mainFile) {
+            var uri = mainFile.absoluteURI;
+            rememberLastStory.forget();
+            loader.fromURL(uri);
+        } else {
+            yConsole.log("Could not find which story should be run");
+        }
     };
 
     service.runFile = function (file) {

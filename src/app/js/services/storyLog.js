@@ -58,6 +58,10 @@ yarn.service('storyLog', function () {
         this.controller.write(text, "log");
     };
 
+    StoryLog.prototype.insight = function (text) {
+        this.controller.write("<md-icon md-svg-icon='./svg-icons/insight.svg'></md-icon>" + text, "insight");
+    };
+
     StoryLog.prototype.prompt = function (prompt) {
         var scope = {
             prompt: prompt

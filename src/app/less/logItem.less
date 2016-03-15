@@ -27,6 +27,17 @@ log-item {
         color: #fff;
         text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
 
+        md-icon {
+            position: relative;
+            top: 0.5em;
+            color: inherit;
+            width: 30px;
+            height: 30px;
+            float: right;
+            padding-left: 1em;
+            text-shadow: inherit;
+        }
+
         a:visited,
         a:link,
         a {
@@ -53,6 +64,17 @@ log-item {
             margin: 1em 1em;
             font-weight: 400;
             text-align: justify;
+        }
+
+        &.is-insight {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 1em 1em;
+            font-weight: 400;
+            text-align: justify;
+            font-style: italic;
+            color: #ffffdc;
+
         }
 
         &.is-image {

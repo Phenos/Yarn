@@ -6,14 +6,14 @@
             data-context-menu="./html/editor-context-menus.html"
 >
     <assertion-browser></assertion-browser>
-    <player class="layout-panel" flex="40" user="user" layout="column"></player>
+    <player class="layout-panel" flex="" user="user" layout="column"></player>
     <md-section
             md-whiteframe="10"
             class="IDE"
             layout="column"
             flex="60"
             ng-show="IDEisVisible || helpIsVisible">
-        <md-section layout="row" style="overflow: hidden" flex="{{ editorFlexHeight }}">
+        <md-section layout="row" flex="" style="overflow: hidden">
             <md-section
                     ng-show="IDEisVisible"
                     class="layout-panel"
@@ -52,35 +52,48 @@
                 </div>
             </md-section>
         </md-section>
-        <md-tabs
+        <md-section
+                layout="column"
                 class="toolTabs layout-panel"
-                ng-show="IDEisVisible"
-                md-selected="toolTabs.selected"
                 flex="{{ consoleFlexHeight }}"
-                md-autoselect>
-            <md-tab>
-                <md-tab-label>
-                    <md-icon style="width: 1.5em; margin-left: 0.7em"
-                             md-svg-icon="/svg-icons/commands.svg"></md-icon>
-                    Commands
-                </md-tab-label>
-                <md-tab-body>
-                    <div flex="100" layout="row">
-                        <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
-                    </div>
-                </md-tab-body>
-            </md-tab>
-            <md-tab>
-                <md-tab-label>
-                    <md-icon style="width: 1.5em; margin-left: 0.7em"
-                             md-svg-icon="/svg-icons/inspector.svg"></md-icon>
-                    Inspector
-                </md-tab-label>
-                <md-tab-body>
-                    <inspector></inspector>
-                </md-tab-body>
-            </md-tab>
-        </md-tabs>
+                ng-show="IDEisVisible"
+        >
+            <div class="toolTabs-toggle">
+                <md-button class="md-icon-button" ng-click="toggleTools()" aria-label="Show&Hide tools">
+                    <md-icon ng-show="!toolsAreVisible" md-svg-icon="/svg-icons/pull-up.svg"></md-icon>
+                    <md-icon ng-show="toolsAreVisible" md-svg-icon="/svg-icons/pull-down.svg"></md-icon>
+                </md-button>
+            </div>
+
+            <md-tabs
+                    flex="100"
+                    md-selected="toolTabs.selected"
+                    md-autoselect>
+
+                <md-tab>
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/commands.svg"></md-icon>
+                        Commands
+                    </md-tab-label>
+                    <md-tab-body>
+                        <div flex="100" layout="row">
+                            <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab>
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/inspector.svg"></md-icon>
+                        Inspector
+                    </md-tab-label>
+                    <md-tab-body>
+                        <inspector></inspector>
+                    </md-tab-body>
+                </md-tab>
+            </md-tabs>
+        </md-section>
 
     </md-section>
 </md-content>

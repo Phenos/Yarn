@@ -59,18 +59,18 @@ function rootController(user,
      Height permutation between Console and Editor on focus events
 
      */
-    $scope.editorFlexHeight_default = 65;
-    $scope.consoleFlexHeight_default = 35;
+    $scope.editorFlexHeight_default = 100;
+    $scope.consoleFlexHeight_default = 0;
     $scope.editorFlexHeight = $scope.editorFlexHeight_default;
     $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
     $scope.onConsoleEscapeFocus = function () {
-        $scope.editorFlexHeight = 65;
-        $scope.consoleFlexHeight = 35;
+        $scope.editorFlexHeight = 100;
+        $scope.consoleFlexHeight = 0;
         editorService.focus();
     };
     $scope.onConsoleFocus = function () {
-        $scope.editorFlexHeight = 35;
-        $scope.consoleFlexHeight = 65;
+        $scope.editorFlexHeight = 60;
+        $scope.consoleFlexHeight = 40;
     };
 
     $scope.focusInspector = function () {
@@ -80,6 +80,17 @@ function rootController(user,
 
     $scope.focusConsole = function () {
         $scope.toolTabs.selected = 0;
+    };
+
+    $scope.toggleTools = function () {
+        console.log("toggle Tools");
+        if ($scope.toolsAreVisible) {
+            $scope.toolsAreVisible = false;
+            $scope.onConsoleEscapeFocus();
+        } else {
+            $scope.toolsAreVisible = true;
+            $scope.onConsoleFocus();
+        }
     };
 
 

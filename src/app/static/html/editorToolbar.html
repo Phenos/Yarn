@@ -1,5 +1,4 @@
 <md-toolbar
-        style="height:80px"
         class="editorToolbar md-menu-toolbar"
         layout="row">
     <div flex="100" layout="row">
@@ -74,7 +73,7 @@
                             </md-button>
                         </md-menu-item>
                         <md-menu-item class="md-indent">
-                            <md-icon md-svg-icon="/svg-icons/predicates.svg"></md-icon>
+                            <md-icon md-svg-icon="/svg-icons/inspector.svg"></md-icon>
                             <md-button ng-click="IDE.focusInspector()">
                                 Inspector
                                 <span class="md-alt-text"> {{ 'M-I' | keyboardShortcut }}</span>
@@ -98,7 +97,7 @@
             </md-menu-bar>
         </div>
         <div flex="1">
-            <md-button class="md-icon-button" ng-click="toolbar.hideConsole()" aria-label="Close console">
+            <md-button class="md-icon-button close-button" ng-click="toolbar.hideConsole()" aria-label="Close console">
                 <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
             </md-button>
         </div>

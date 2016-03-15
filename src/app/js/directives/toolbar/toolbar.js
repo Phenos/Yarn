@@ -2,7 +2,6 @@ yarn.directive('toolbar', function ToolbarDirective() {
     return {
         restrict: 'E',
         bindToController: {
-            user: "="
         },
         scope: {},
         replace: true,
@@ -11,7 +10,9 @@ yarn.directive('toolbar', function ToolbarDirective() {
         controller: ToolbarController
     };
 
-    function ToolbarController(sidebar, $scope, $window, commands, auth, login) {
+    function ToolbarController(sidebar, $scope, session, commands, login) {
+
+        if (session.user()) this.user = session.user();
 
         if (this.user && this.user.username) {
             $scope.avatar = this.user.profileImageURL;
@@ -20,11 +21,6 @@ yarn.directive('toolbar', function ToolbarDirective() {
 
         this.restartStory = function () {
             commands.command("restart");
-        };
-
-        this.logout = function () {
-            auth.$unauth();
-            $window.location.href = "/";
         };
 
         this.login = function () {

@@ -11,9 +11,20 @@ yarn.directive('sidebar', function SidebarDirective() {
     };
 
     function SidebarController(sidebar,
+                               $scope,
                                $mdSidenav,
+                               $window,
+                               session,
+                               auth,
+                               login,
                                root) {
-        var self = this;
+
+        if (session.user()) this.user = session.user();
+
+        if (this.user && this.user.username) {
+            $scope.avatar = this.user.profileImageURL;
+            $scope.username = this.user.displayName;
+        }
 
         this.showConsole = function () {
             root.showConsole();
@@ -31,6 +42,15 @@ yarn.directive('sidebar', function SidebarDirective() {
 
         this.openHelp = function () {
             root.showHelp();
+        };
+
+        this.logout = function () {
+            auth.$unauth();
+            $window.location.href = "/";
+        };
+
+        this.login = function () {
+            login();
         };
 
     }

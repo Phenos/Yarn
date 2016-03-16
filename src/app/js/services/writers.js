@@ -5,6 +5,7 @@ yarn.factory('writers', function (Prompt,
                                   state,
                                   script,
                                   commands,
+                                  themes,
                                   wallpaper) {
 
     // Describe where you are at the beginning
@@ -22,6 +23,8 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeCoverpage() {
+
+        refreshTheme();
 
         storyLog.clear();
 
@@ -64,6 +67,8 @@ yarn.factory('writers', function (Prompt,
     function describeTheEnd() {
         storyLog.markAsRead();
 
+        refreshTheme();
+
         storyLog.clear();
 
         // Show the story title
@@ -97,10 +102,31 @@ yarn.factory('writers', function (Prompt,
         return this;
     }
 
+    function refreshTheme(room) {
+        var themeId = null;
+
+        if (room) {
+            themeId = state.resolveValue(assert(room, "has", "Theme"));
+        }
+        if (!themeId) {
+            themeId = state.resolveValue(assert("Story", "has", "Theme"));
+        }
+        if (themeId) {
+            var theme = themes.select(themeId);
+            if (theme && theme.id === themeId) {
+                yConsole.log("Theme changed to : " + themeId);
+            } else {
+                yConsole.warning("Wanted theme not found: " + themeId);
+            }
+        }
+    }
+
     function describeRoom() {
         storyLog.markAsRead();
 
         var room = state.resolveOne(assert("You", "is in"));
+
+        refreshTheme(room);
 
         if (room) {
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
@@ -110,6 +136,8 @@ yarn.factory('writers', function (Prompt,
             } else {
                 wallpaper.clear();
             }
+
+
 
             var name = state.resolveValue(assert(room, "has", "Name"));
             if (name) storyLog.heading(name);
@@ -214,6 +242,7 @@ yarn.factory('writers', function (Prompt,
         describeThing: describeThing,
         describeRoom: describeRoom,
         describeCoverpage: describeCoverpage,
+        refreshTheme: refreshTheme,
         describeTheEnd: describeTheEnd,
         describeWhereYouAre: describeWhereYouAre,
         objectMenu: objectMenu

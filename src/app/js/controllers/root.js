@@ -12,13 +12,14 @@ function rootController(user,
                         editorService,
                         editorFiles,
                         root,
+                        themes,
                         wallpaper,
                         hotkeys) {
 
     $scope.IDE = IDE;
+    $scope.themes = themes;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
-    $scope.toolsAreVisible = true;
 
     $scope.toolTabs = {
         selected: 0
@@ -93,8 +94,11 @@ function rootController(user,
         $scope.toolTabs.selected = 0;
     };
 
-    $scope.toggleTools = function () {
-        console.log("toggle Tools");
+
+    $scope.toggleTools = function (value) {
+        if (angular.isDefined(value)) {
+            $scope.toolsAreVisible = !!value;
+        }
         if ($scope.toolsAreVisible) {
             $scope.toolsAreVisible = false;
             $scope.onConsoleEscapeFocus();
@@ -104,6 +108,8 @@ function rootController(user,
         }
     };
 
+
+    $scope.toggleTools(true);
 
 }
 

@@ -32,11 +32,11 @@ yarn.service("lookAroundRoutine", function (events,
                     thingName = thingName || thing.id;
                     phrase.push("[" + thingName + "]");
                     if (index === thingsInRoom.length - 1) {
-                        phrase.push(" and a ");
-                    } else if (index < thingsInRoom.length - 1) {
-                        phrase.push(", ")
-                    } else {
                         phrase.push(".")
+                    } else if (index === thingsInRoom.length - 2) {
+                        phrase.push(" and a ");
+                    } else {
+                        phrase.push(", ")
                     }
                 });
 

@@ -25,10 +25,12 @@ yarn.service("inventoryRoutine", function (events,
                 var thingName = state.resolveValue(assert(thing, "has", "Name"));
                 thingName = thingName || thing.id;
                 phrase.push("[" + thingName + "]");
-                if (index < inventory.length) {
-                    phrase.push(", ")
-                } else {
+                if (index === inventory.length - 1) {
                     phrase.push(".")
+                } else if (index === inventory.length - 2) {
+                    phrase.push(" and a ");
+                } else {
+                    phrase.push(", ")
                 }
             });
 

@@ -14,17 +14,14 @@ yarn.service("aboutToRoutine", function (state,
         } else if (intention.toLowerCase() === "look") {
 
             lookAroundRoutine();
-
-        } else {
-
-            var you = things("you");
-            var has = predicates("has");
-            var intentionObj = things("intention");
-            state.createAssertion(you, has, intentionObj, {
-                value: intention
-            });
-
         }
+
+        var you = things("you");
+        var has = predicates("has");
+        var intentionObj = things("intention");
+        state.createAssertion(you, has, intentionObj, {
+            value: intention
+        });
 
         return true;
     }

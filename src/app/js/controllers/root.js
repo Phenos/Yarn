@@ -42,6 +42,14 @@ function rootController(user,
             callback: function () {
                 root.toggleConsole();
             }
+        })
+        .add({
+            combo: 'mod+h',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            description: 'Show/Hide the help',
+            callback: function () {
+                root.toggleHelp();
+            }
         });
 
 

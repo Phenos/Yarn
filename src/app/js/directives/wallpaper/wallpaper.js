@@ -9,8 +9,8 @@ yarn.directive('wallpaper', function WallpaperDirective() {
         controller: WallpaperController
     };
 
-    function WallpaperController(wallpaperService, $element) {
-        wallpaperService.onChange(function (image) {
+    function WallpaperController(wallpaper, $element) {
+        wallpaper.onChange(function (image) {
             if (image) {
                 $element.css("background-image", "url(" + image + ")");
             } else {

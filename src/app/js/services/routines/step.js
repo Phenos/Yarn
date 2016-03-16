@@ -3,9 +3,8 @@ yarn.service("stepRoutine", function (events,
                                       dialogs,
                                       script,
                                       assert,
-                                      wallpaperService,
+                                      wallpaper,
                                       player) {
-
     /**
      * Increment the game session step counter
      */
@@ -35,12 +34,12 @@ yarn.service("stepRoutine", function (events,
     function updateWallpaper() {
         var room = state.resolveOne(assert("You", "is in"));
         if (room) {
-            var wallpaper = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaper);
+            var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
+            var url = script.resolveRelativeURI(wallpaperValue);
             if (url) {
-                wallpaperService.change(url);
+                wallpaper.change(url);
             } else {
-                wallpaperService.clear();
+                wallpaper.clear();
             }
         }
     }

@@ -12,6 +12,7 @@ function rootController(user,
                         editorService,
                         editorFiles,
                         root,
+                        wallpaper,
                         hotkeys) {
 
     $scope.IDE = IDE;
@@ -22,6 +23,10 @@ function rootController(user,
     $scope.toolTabs = {
         selected: 0
     };
+
+    console.log("wallpaper", wallpaper);
+    wallpaper.change("/images/splash/splash-bg.jpg");
+
 
     IDE.register($scope);
     // Register with the service

@@ -2,7 +2,6 @@ yarn.service('loader', function (yarn,
                                  state,
                                  loadScript,
                                  yConsole,
-                                 splashService,
                                  player,
                                  $localStorage) {
 
@@ -53,7 +52,6 @@ yarn.service('loader', function (yarn,
                 yarn.restoreFromLocalState();
                 */
 
-                splashService.hide();
                 player.refresh();
             }
 
@@ -92,7 +90,6 @@ yarn.service('loader', function (yarn,
             yarn.restoreFromLocalState($localStorage.localState);
 
             //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
-            splashService.hide();
 
             console.log("Why is updateStorylog commented out ?");
             //updateStoryLog();

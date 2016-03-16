@@ -159,13 +159,6 @@
             }
 
             this.options = {
-                require: [
-                    'ace/ext/language_tools',
-                    //'ace/range',
-                    'ace/theme/tomorrow',
-                    'ace/mode/javascript'
-                ],
-                workerPath: '/ace/js/',
                 useWrapMode: false,
                 useWorker: false,
                 mode: 'javascript',

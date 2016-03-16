@@ -14,6 +14,13 @@ yarn.config(function(RollbarProvider) {
 
 yarn.run(function (commandsRegistry) {
 
+    var path = "/public/js/ace/";
+    ace.config.set('basePath', path);
+    ace.config.set('modePath', path);
+    ace.config.set('themePath', path);
+    ace.config.set('workerPath', path);
+
+
     commandsRegistry.load([
         "inventoryPlayerCommand",
         "beginStoryCommand",

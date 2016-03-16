@@ -4,6 +4,7 @@ yarn.service("stepRoutine", function (events,
                                       script,
                                       assert,
                                       synonyms,
+                                      statuses,
                                       wallpaper,
                                       player) {
 
@@ -14,9 +15,10 @@ yarn.service("stepRoutine", function (events,
         state.step(1);
 
         /*
-         Refresh the list of Synonyms, in case they changed during game play
+         Refresh the list of Statuses and Synonyms, in case they changed during game play
          */
         synonyms.update(state);
+        statuses.update(state);
 
         // Process all the events
         var somethingHappened = events.process();

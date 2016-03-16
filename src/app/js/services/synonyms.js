@@ -27,7 +27,7 @@ yarn.service("synonyms", function (assert, things) {
     };
 
     Synonyms.prototype.update = function (state) {
-        console.log("Synonyms.update()");
+        //console.log("Synonyms.update()");
         var self = this;
 
         self.all = {};
@@ -40,20 +40,16 @@ yarn.service("synonyms", function (assert, things) {
         var nameAssertions = state.resolveAll(assert(undefined, "has", "Name"), true);
         var allAssertions = synonymsAssertions.concat(nameAssertions);
 
-        console.log("synonymsAssertions", synonymsAssertions);
-        console.log("nameAssertions", nameAssertions);
-        console.log("allAssertions", allAssertions);
-
         angular.forEach(allAssertions, function (assertion) {
             var value = state.resolveValue(assert(
                 assertion.subject,
                 assertion.predicate,
                 assertion.object));
-            console.log("value", value);
+            //console.log("value", value);
             self.add(assertion.subject, value);
         });
 
-        console.log("self.all", self.all);
+        //console.log("self.all", self.all);
     };
 
     function Synonym(object, text) {

@@ -12,7 +12,7 @@ yarn.directive('statusBar', function StatusBarDirective(storyLog) {
         $scope.statuses = statuses;
         $scope.allStatuses = statuses.getAll();
 
-        $scope.$watch("statuses.updated",function(newValue,oldValue) {
+        $scope.$watch("statuses.updated",function() {
             $scope.allStatuses = statuses.getAll();
             $scope.updated = statuses.updated;
         });

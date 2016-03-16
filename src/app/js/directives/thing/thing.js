@@ -1,4 +1,7 @@
-yarn.directive('thing', function ThingDirective(things, synonyms) {
+yarn.directive('thing', function ThingDirective(things,
+                                                synonyms,
+                                                yConsole,
+                                                promptLoop) {
     return {
         restrict: 'E',
         bindToController: {
@@ -28,6 +31,11 @@ yarn.directive('thing', function ThingDirective(things, synonyms) {
 
         this.click = function (e) {
             e.preventDefault();
+            if (this.thing) {
+                promptLoop.useThing(this.thing);
+            } else {
+                yConsole.warning("Clicking this link did nothing: " + this.text);
+            }
             console.log("thing: ", self.thing);
         }
     }

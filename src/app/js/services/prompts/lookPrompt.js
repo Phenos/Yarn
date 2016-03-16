@@ -42,6 +42,9 @@ yarn.service("lookPrompt", function (writers,
             setDefaultOptionsHelper(prompt, true);
 
         };
+        context.use = function(thing) {
+            commands.command("look " + thing.id);
+        };
         context.answer = function answer(promptLoop, option) {
             if (option) {
                 if (option.value === "back") {

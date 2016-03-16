@@ -36,7 +36,9 @@ yarn.service("inventoryPrompt", function (logic,
 
             setDefaultOptionsHelper(prompt, true);
         };
-
+        context.use = function(thing) {
+            commands.command("take " + thing.id);
+        };
         context.answer = function answer(promptLoop, option) {
             if (option) {
                 if (option.value !== "back") {

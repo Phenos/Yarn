@@ -1,4 +1,4 @@
-yarn.directive('statusBar', function StatusBarDirective() {
+yarn.directive('statusBar', function StatusBarDirective(storyLog) {
     return {
         restrict: 'E',
         scope: {},
@@ -18,7 +18,9 @@ yarn.directive('statusBar', function StatusBarDirective() {
         });
 
         $scope.click = function (status) {
-            console.log("Clicked status: ", status)
+            if (status.description) {
+                storyLog.log(status.description);
+            }
         }
     }
 });

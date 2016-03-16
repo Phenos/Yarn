@@ -40,8 +40,6 @@ yarn.service("statuses", function (state, assert) {
             self.add(object);
         });
 
-        console.log("Statuses.all", this.all);
-
     };
 
     function Status(object) {
@@ -50,6 +48,7 @@ yarn.service("statuses", function (state, assert) {
         this.value = state.resolveValue(assert(this.object, "has", "Value"));
         this.format = state.resolveValue(assert(this.object, "has", "Format"));
         this.icon = state.resolveValue(assert(this.object, "has", "Icon"));
+        this.description = state.resolveValue(assert(this.object, "has", "Description"));
     }
 
     return new Statuses();

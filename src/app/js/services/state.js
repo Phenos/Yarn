@@ -34,7 +34,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.object;
                 } else if (typeof(assertion.object) === "string") {
                     if (assertion.object.indexOf("@id:") === 0) {
-                        object = things(assertion.object.substring(4));
+                        object = things.get(assertion.object.substring(4));
                     } else {
                         object = assertion.object;
                     }
@@ -44,7 +44,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.subject;
                 } else if (typeof(assertion.subject) === "string") {
                     if (assertion.subject.indexOf("@id:") === 0) {
-                        subject = things(assertion.subject.substring(4));
+                        subject = things.get(assertion.subject.substring(4));
                     } else {
                         subject = assertion.subject;
                     }
@@ -62,8 +62,9 @@ yarn.service('state', function ($localStorage,
         };
 
 
-        State.prototype.resolveAll = function resolveAll(assert) {
-            var foundObjects = [];
+        State.prototype.resolveAll = function resolveAll(assert, returnAssertions) {
+            var foundAssertions = [];
+            var foundThings = [];
             if (assert && (assert.subject && assert.predicate) || (assert.object && assert.predicate)) {
                 var foundObjectsSets = {};
 
@@ -72,7 +73,6 @@ yarn.service('state', function ($localStorage,
 
                 // Match all assertions to the criterias
                 var assertions = this.assertions.find(assert);
-
 
                 // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
@@ -94,13 +94,17 @@ yarn.service('state', function ($localStorage,
 
                 angular.forEach(foundObjectsSets, function (foundObjectSet) {
                     var topAssertion = foundObjectSet[foundObjectSet.length - 1];
-                    if (topAssertion.value()) foundObjects.push(topAssertion[typeToResolve]);
+                    if (topAssertion.value()) {
+                        foundAssertions.push(topAssertion);
+                        foundThings.push(topAssertion[typeToResolve]);
+                    }
                 });
                 //console.log("FOUND: ", foundObjects);
 
             }
+
             //console.log("foundObjects", foundObjects);
-            return foundObjects;
+            return (returnAssertions) ? foundAssertions : foundThings;
         };
 
         State.prototype.resolveOne = function (assert) {
@@ -346,8 +350,8 @@ yarn.service('state', function ($localStorage,
 
             if (increment && typeof(increment) === "number") {
                 count = count + increment;
-                var story = things("Story");
-                var steps = things("Steps");
+                var story = things.get("Story");
+                var steps = things.get("Steps");
                 var has = predicates("has");
                 this.createAssertion(story, has, steps, {
                     value: count

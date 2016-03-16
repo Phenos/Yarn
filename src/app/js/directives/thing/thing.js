@@ -1,4 +1,4 @@
-yarn.directive('thing', function ThingDirective(things) {
+yarn.directive('thing', function ThingDirective(things, synonyms) {
     return {
         restrict: 'E',
         bindToController: {
@@ -17,7 +17,11 @@ yarn.directive('thing', function ThingDirective(things) {
         this.token = $attrs.token;
         this.text = this.token;
 
-        this.thing = things(this.token, true);
+        var synonym = synonyms.match(this.token);
+        if (synonym) {
+            this.thing = synonym.object;
+        }
+
         if (!angular.isObject(this.thing)) {
             this.unrecognized = true;
         }

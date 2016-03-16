@@ -13,7 +13,7 @@ yarn.service("moveRoutine", function (state,
             // Remove player from current possition
             state.negate(assert("you", "is in"));
             // Place the player in the new room
-            state.createAssertion(things("You"), predicates("isIn"), room, {
+            state.createAssertion(things.get("You"), predicates("isIn"), room, {
                 layer: state.currentLayer
             });
         }

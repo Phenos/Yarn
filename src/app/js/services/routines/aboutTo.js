@@ -4,7 +4,8 @@ yarn.service("aboutToRoutine", function (state,
                                          inventoryRoutine,
                                          predicates) {
 
-    function aboutToRoutine(intention) {
+    function aboutToRoutine(_intention) {
+        var intention = _intention || "";
 
         //console.log("intention.toLowerCase()", intention.toLowerCase());
         if (intention.toLowerCase() === "inventory") {
@@ -16,9 +17,9 @@ yarn.service("aboutToRoutine", function (state,
             lookAroundRoutine();
         }
 
-        var you = things("you");
+        var you = things.get("you");
         var has = predicates("has");
-        var intentionObj = things("intention");
+        var intentionObj = things.get("intention");
         state.createAssertion(you, has, intentionObj, {
             value: intention
         });

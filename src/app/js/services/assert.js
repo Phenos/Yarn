@@ -42,7 +42,7 @@ yarn.service("assert", function (things,
     function ensureIsThing(obj, attribute) {
         if (angular.isDefined(obj[attribute])) {
             if (typeof(obj[attribute]) === "string") {
-                obj[attribute] = things(obj[attribute]);
+                obj[attribute] = things.get(obj[attribute]);
             }
         }
         return obj[attribute];

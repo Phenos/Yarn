@@ -75,7 +75,7 @@ yarn.service('events', function (assert,
             if (shouldOccur) {
                 somethingHappened = true;
                 // Todo: createAssertion should also use assert() ??
-                state.createAssertion(object, predicates("has"), things("Occurrence"), {
+                state.createAssertion(object, predicates("has"), things.get("Occurrence"), {
                     value: Occurrence + 1
                 });
                 //console.log("childAssertions for " + object.id, childAssertions);

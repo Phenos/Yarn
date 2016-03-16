@@ -3,13 +3,21 @@ yarn.service("stepRoutine", function (events,
                                       dialogs,
                                       script,
                                       assert,
+                                      synonyms,
                                       wallpaper,
                                       player) {
+
     /**
      * Increment the game session step counter
      */
     return function stepRoutine() {
         state.step(1);
+
+        /*
+         Refresh the list of Synonyms, in case they changed during game play
+         */
+        synonyms.update(state);
+
         // Process all the events
         var somethingHappened = events.process();
         // Check if dialogs are supposed to be said
@@ -20,7 +28,6 @@ yarn.service("stepRoutine", function (events,
         if (storyHasEnded) {
             player.refresh();
         }
-
 
 
         // Update the wallpaper in case it has changed

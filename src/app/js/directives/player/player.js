@@ -87,7 +87,7 @@ yarn.directive('player', function () {
             }
 
             angular.element(scrollAreaElem)
-                .scrollTopAnimated(scrollTop, 750, EasingFunctions.easeOutQuart())
+                .scrollTopAnimated(scrollTop, 1250, EasingFunctions.easeOutQuart())
         };
 
     }

@@ -1,26 +1,28 @@
 yarn.service("things", function (Thing) {
 
-    var allThings = {};
+    function Things() {
+        this.all = {};
+    }
 
-    function things(_id, dontAutoCreate) {
+    Things.prototype.get = function (_id, dontAutoCreate) {
         var thing = null;
         if (_id) {
             var id = _id.toLowerCase();
-            thing = allThings[id];
+            thing = this.all[id];
             if (!thing) {
                 if (dontAutoCreate) {
                     thing = null;
                 } else {
                     thing = new Thing(id);
                     thing.label(_id);
-                    allThings[id] = thing;
+                    this.all[id] = thing;
                 }
             }
 
         }
 
         return thing;
-    }
+    };
 
-    return things;
+    return new Things();
 });

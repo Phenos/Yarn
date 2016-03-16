@@ -46,7 +46,7 @@ yarn.service('Runtime', function RuntimeService(state,
                     returnValue = node.value;
                     //console.log("VALUE variant:", node.value);
                 } else if (node.variant === "reference") {
-                    returnValue = things(node.value);
+                    returnValue = things.get(node.value);
                     node.resolvedTo = returnValue;
                 } else if (node.variant === "constant") {
                     console.error("Constants not supported yet! : " + node.value);

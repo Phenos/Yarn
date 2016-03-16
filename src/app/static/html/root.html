@@ -6,7 +6,7 @@
             data-context-menu="./html/editor-context-menus.html"
 >
     <assertion-browser></assertion-browser>
-    <player class="layout-panel" flex="" user="user" layout="column"></player>
+    <player class="layout-panel" flex="noshrink" user="user" layout="column"></player>
     <md-section
             md-whiteframe="10"
             class="IDE"
@@ -17,7 +17,8 @@
             <md-section
                     ng-show="IDEisVisible"
                     class="layout-panel"
-                    flex="100"
+                    flex="noshrink"
+                    style="width: 350px"
                     layout="column">
                 <editor-toolbar></editor-toolbar>
                 <div layout="column">
@@ -50,7 +51,8 @@
             </md-section>
             <md-section ng-show="helpIsVisible"
                         md-whiteframe="10"
-                        flex="100"
+                        flex="noshrink"
+                        style="width: 350px"
                         layout="column"
                         class="layout-panel">
                 <help-toolbar></help-toolbar>

@@ -13,26 +13,36 @@ yarn.service("EditorFile", function (guid,
         this.filterOut = false;
         this.isMain = false;
         this.uri = URI(this._uri);
-        if (session.user()) {
-            //console.log("session", session);
-            //todo: put this url in a config file
-            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
-            this.absoluteURI = this.uri.absoluteTo(baseURI).toString();
-        } else {
-            this.absoluteURI = this._uri;
-        }
         this.ready = false;
         this.status = "";
         this.content = "";
         this.originalContent = "";
     }
 
+    EditorFile.prototype.absoluteURI = function () {
+        var uri = this.uri;
+        if (session.user()) {
+            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
+            uri = this.uri.absoluteTo(baseURI);
+        }
+        return uri;
+    };
+
+    EditorFile.prototype.relativeToUserURI = function () {
+        var uri = this.uri;
+        if (session.user()) {
+            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
+            uri = this.absoluteURI().relativeTo(baseURI);
+        }
+        return uri;
+    };
+
     EditorFile.prototype.load = function () {
         var self = this;
 
         self.ready = false;
         self.status = "Loading...";
-        loadScript(this.absoluteURI)
+        loadScript(this.absoluteURI().toString())
             .then(function (script) {
                 self.ready = true;
                 self.status = "Loaded";
@@ -42,7 +52,7 @@ yarn.service("EditorFile", function (guid,
             })
             .catch(function () {
                 self.status = "Failed to load";
-                yConsole.error("Error while loading file: " + self.absoluteURI);
+                yConsole.error("Error while loading file: " + self.absoluteURI().toString());
             });
     };
 

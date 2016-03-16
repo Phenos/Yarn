@@ -65,8 +65,8 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
             callback && callback(null, file);
         }, function (err) {
             file.status = "Failed to save";
-            console.error("Error while saving file: " + file.absoluteURI, err);
-            yConsole.error("Error while saving file: " + file.absoluteURI);
+            console.error("Error while saving file: ", file.absoluteURI(), err);
+            yConsole.error("Error while saving file: " + file.absoluteURI().toString());
             callback && callback(err);
         });
     };

@@ -44,7 +44,11 @@ yarn.service('IDE', function IDEService(hotkeys,
                 description: 'Save the story',
                 callback: function (event) {
                     event.preventDefault();
-                    service.saveAll();
+
+                    service.isWorking = true;
+                    service.saveAll(function() {
+                        service.isWorking = false;
+                    });
                 }
             })
             .add({
@@ -115,7 +119,7 @@ yarn.service('IDE', function IDEService(hotkeys,
     service.run = function () {
         var mainFile = editorFiles.mainFile();
         if (mainFile) {
-            var uri = mainFile.absoluteURI;
+            var uri = mainFile.absoluteURI().toString();
             rememberLastStory.forget();
             loader.fromURL(uri);
         } else {
@@ -127,7 +131,7 @@ yarn.service('IDE', function IDEService(hotkeys,
         if (file) {
             this.isWorking = true;
             rememberLastStory.forget();
-            loader.fromURL(file.absoluteURI);
+            loader.fromURL(file.absoluteURI().toString());
             this.isWorking = false;
         }
     };

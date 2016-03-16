@@ -21,9 +21,10 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
         var savedContent = file.content;
         var user = session.user();
         if (user) {
+            var relativeToUserURI = file.relativeToUserURI();
             apiClient.action('saveFile', {
-                filename: file.uri.filename(true),
-                uri: file._uri,
+                filename: relativeToUserURI.filename(true),
+                uri: relativeToUserURI.toString(),
                 content: savedContent,
                 token: user.token,
                 username: user.username

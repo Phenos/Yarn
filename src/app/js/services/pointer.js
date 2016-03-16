@@ -101,7 +101,7 @@ yarn.factory('Pointer', function PointerService() {
     Pointer.prototype.tokenize = function (text) {
         var pointer = this;
         var cycle = 0;
-        var maxCycle = 100000;
+        var maxCycle = 1000000;
 
         var numeric = "0123456789";
         var numericExtended = numeric + ".";

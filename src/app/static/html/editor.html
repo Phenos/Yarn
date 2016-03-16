@@ -44,9 +44,9 @@
             </md-button>
             <span flex></span>
             <save-status>
-                <a target="_blank" ng-href="{{ editor.file.absoluteURI }}" ng-bind="editor.file.status"></a>
+                <a target="_blank" ng-href="{{ editor.file.absoluteURI().toString() }}" ng-bind="editor.file.status"></a>
                 <md-tooltip>
-                    File located at {{ editor.file.absoluteURI }}
+                    File located at {{ editor.file.absoluteURI().toString() }}
                 </md-tooltip>
             </save-status>
             <md-button ng-click="editor.close()" class="md-icon-button" aria-label="Close">

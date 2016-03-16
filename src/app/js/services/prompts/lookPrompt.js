@@ -27,6 +27,7 @@ yarn.service("lookPrompt", function (writers,
             if (thingsInRoom.length) {
                 thingsInRoom.forEach(function (thing) {
                     var name = state.resolveValue(assert(thing, "has", "Name"));
+                    name = name || thing.id;
                     var Noticed = state.resolveValue(assert(thing, "is", "Noticed"));
                     if (Noticed !== false) {
                         prompt.option(name, "look " + thing.id);

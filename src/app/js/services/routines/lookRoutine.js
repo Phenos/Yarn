@@ -9,6 +9,7 @@ yarn.service("lookRoutine", function (events,
         if (object) {
 
             var thingName = state.resolveValue(assert(object, "has", "Name"));
+            thingName = thingName || object.id;
             storyLog.action("You examine the " + thingName);
 
             writers.describeThing(object);

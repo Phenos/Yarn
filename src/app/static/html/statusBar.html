@@ -3,7 +3,7 @@
         <div
                 flex="grow"
                 layout="row"
-                layout-align="start center">
+                layout-align="center center">
             <md-button
                     ng-repeat="status in allStatuses"
                     ng-click="click(status)">
@@ -15,6 +15,7 @@
                 <md-tooltip md-direction="top">{{ status.name }}</md-tooltip>
             </md-button>
         </div>
+        <!--
         <div flex="shring"
              layout="row"
              layout-align="end end">
@@ -22,5 +23,6 @@
                 <md-icon md-svg-icon="/svg-icons/dotMenu.svg"></md-icon>
             </md-button>
         </div>
+        -->
     </div>
 </md-toolbar>

@@ -1,6 +1,8 @@
 // todo: Rename the "aboutTo" and "aboutToRoutine" to "intention"
 yarn.service('logic', function (aboutToRoutine,
                                 moveRoutine,
+                                lookAroundRoutine,
+                                inventoryRoutine,
                                 takeRoutine,
                                 useRoutine,
                                 stepRoutine,
@@ -10,6 +12,8 @@ yarn.service('logic', function (aboutToRoutine,
         aboutTo: aboutToRoutine,
         move: moveRoutine,
         use: useRoutine,
+        inventory: inventoryRoutine,
+        lookAround: lookAroundRoutine,
         take: takeRoutine,
         step: stepRoutine,
         hint: hintRoutine

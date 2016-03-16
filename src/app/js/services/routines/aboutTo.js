@@ -1,5 +1,6 @@
 yarn.service("aboutToRoutine", function (state,
                                          things,
+                                         lookAroundRoutine,
                                          inventoryRoutine,
                                          predicates) {
 
@@ -9,6 +10,10 @@ yarn.service("aboutToRoutine", function (state,
         if (intention.toLowerCase() === "inventory") {
 
             inventoryRoutine();
+
+        } else if (intention.toLowerCase() === "look") {
+
+            lookAroundRoutine();
 
         } else {
 

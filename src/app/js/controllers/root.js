@@ -97,7 +97,7 @@ function rootController(user,
 
     $scope.toggleTools = function (value) {
         if (angular.isDefined(value)) {
-            $scope.toolsAreVisible = !!value;
+            $scope.toolsAreVisible = !value;
         }
         if ($scope.toolsAreVisible) {
             $scope.toolsAreVisible = false;

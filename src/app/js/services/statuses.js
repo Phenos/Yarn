@@ -49,21 +49,9 @@ yarn.service("statuses", function (state, assert) {
         this.name = state.resolveValue(assert(this.object, "has", "Name"));
         this.value = state.resolveValue(assert(this.object, "has", "Value"));
         this.format = state.resolveValue(assert(this.object, "has", "Format"));
+        this.icon = state.resolveValue(assert(this.object, "has", "Icon"));
     }
-/*
-    Status.prototype.name = function () {
-        console.log("-----getting value----");
-        return state.resolveValue(assert(this.object, "has", "Name"));
-    };
 
-    Status.prototype.value = function () {
-        return state.resolveValue(assert(this.object, "has", "Value"));
-    };
-
-    Status.prototype.format = function () {
-        return state.resolveValue(assert(this.object, "has", "Format"));
-    };
-*/
     return new Statuses();
 
-})
+});

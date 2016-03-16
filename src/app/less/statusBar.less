@@ -1,4 +1,4 @@
-md-toolbar.statusBar {
+.statusBar {
 
     position: absolute;
     bottom: 0;
@@ -11,13 +11,24 @@ md-toolbar.statusBar {
         padding: 0;
     }
 
-    button.md-icon-button {
-        height: 40px;
-        width: 40px;
+    .md-button {
+        min-width: 0;
+        font-size: 0.9em;
+
+        span {
+            vertical-align: middle;
+        }
 
         md-icon {
-            //height: 30px;
-            //width: auto;
+            margin-right: 0.2em;
+        }
+    }
+
+    .md-icon-button {
+        height: 36px;
+        width: 36px;
+
+        md-icon {
         }
     }
 

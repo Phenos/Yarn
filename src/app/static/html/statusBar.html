@@ -7,7 +7,12 @@
             <md-button
                     ng-repeat="status in allStatuses"
                     ng-click="click(status)">
-                {{ status.name }} : {{ status.value }}
+                <md-icon ng-if="status.icon"
+                         md-svg-icon="/svg-icons/status/{{ status.icon }}.svg">
+                </md-icon>
+                <span ng-if="!status.icon">{{ status.name }} :&nbsp;</span>
+                <span>{{ status.value }}</span>
+                <md-tooltip md-direction="top">{{ status.name }}</md-tooltip>
             </md-button>
         </div>
         <div flex="shring"

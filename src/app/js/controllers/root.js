@@ -59,9 +59,6 @@ function rootController(user,
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
     yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
-    // Check if a previously opened story should be loaded
-    //IDE.loadRememberedStory();
-
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
@@ -118,6 +115,10 @@ function rootController(user,
 
 
     $scope.toggleTools(true);
+    // Check if a previously opened story should be loaded
+    //IDE.loadRememberedStory();
+    IDE.run();
+
 
 }
 

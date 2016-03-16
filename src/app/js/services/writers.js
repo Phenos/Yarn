@@ -25,12 +25,6 @@ yarn.factory('writers', function (Prompt,
 
         storyLog.clear();
 
-        // Show the story title
-        var name = state.resolveValue(assert("Story", "has", "Name"));
-        if (name) {
-            storyLog.heading(name);
-        }
-
         // Set the wallpaper
         var wallpaper = state.resolveValue(assert("Story", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
@@ -46,6 +40,12 @@ yarn.factory('writers', function (Prompt,
 
         if (coverpage) {
             storyLog.image(coverpage_url);
+        }
+
+        // Show the story title
+        var name = state.resolveValue(assert("Story", "has", "Name"));
+        if (name) {
+            storyLog.heading(name);
         }
 
         var description = state.resolveValue(assert("Story", "has", "Description"));

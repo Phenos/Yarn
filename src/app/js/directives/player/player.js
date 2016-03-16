@@ -76,7 +76,7 @@ yarn.directive('player', function () {
         };
 
         this.scroll = function (offset) {
-            var _offset = 300;
+            var _offset = 600;
             if (!angular.isUndefined(offset)) {
                 _offset = offset;
             }

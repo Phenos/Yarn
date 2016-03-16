@@ -21,6 +21,7 @@ yarn.service("inventoryPrompt", function (logic,
                 prompt.question = "Your inventory";
                 inventoryItems.forEach(function (thing) {
                     var name = state.resolveValue(assert(thing, "has", "Name"));
+                    name = name || thing.id;
                     prompt.option(name, "look " + thing.id);
                 });
             } else {

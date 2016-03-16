@@ -138,6 +138,7 @@ yarn.factory('writers', function (Prompt,
     }
 
     // Describe where you are at the beginning
+
     function describeThing(thing) {
         storyLog.markAsRead();
         if (thing) {
@@ -149,8 +150,12 @@ yarn.factory('writers', function (Prompt,
                     script.resolveRelativeURI(image)
                 );
             }
-            if (name) storyLog.subHeading(name);
-            if (description) storyLog.log(description);
+            if (description) {
+                storyLog.log(description);
+            } else {
+                var defaultSeeNothingText = state.resolveValue(assert("Default", "for", "YouSeeNothing"));
+                storyLog.log(defaultSeeNothingText || "Nothing interesting");
+            }
         }
         return this;
     }

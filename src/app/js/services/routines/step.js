@@ -14,6 +14,9 @@ yarn.service("stepRoutine", function (events,
     return function stepRoutine() {
         state.step(1);
 
+        events.trigger(assert("Story", "has", "Stepped"));
+        events.trigger(assert("You", "have", "Stepped"));
+
         /*
          Refresh the list of Statuses and Synonyms, in case they changed during game play
          */

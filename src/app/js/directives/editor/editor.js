@@ -74,8 +74,6 @@
             var self = this;
             var aceEditor;
 
-            editors.add(this);
-
             this.saveAllAndRun = function () {
                 IDE.saveAllAndRun();
             };
@@ -127,7 +125,9 @@
             };
 
             this.focus = function () {
-                aceEditor.textInput.focus();
+                if (aceEditor) {
+                    aceEditor.focus();
+                }
             };
 
             function aceLoaded(_editor) {
@@ -169,6 +169,8 @@
                 onLoad: aceLoaded,
                 onChange: aceChanged
             };
+
+            editors.add(this);
 
             function clickHandler() {
                 updateInspection();

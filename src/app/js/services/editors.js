@@ -15,6 +15,7 @@ yarn.service("editors", function () {
     Editors.prototype.select = function (editor) {
         //console.log("editors.select", editor);
         this.current = editor;
+        editor.focus();
     };
 
     Editors.prototype.selectByFile = function (file) {

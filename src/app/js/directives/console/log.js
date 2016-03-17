@@ -22,12 +22,12 @@ function LogDirective($sce) {
         var self = this;
 
         $scope.$watch('log.text', function(value) {
-            console.log("timestam", self.timestamp);
+            //console.log("timestam", self.timestamp);
             var _time = new Date(self.timestamp);
             self.time = _time.getHours() + ":" + _time.getMinutes();
             $element.addClass("is-" + self.type);
 
-            console.log("isNewStep", self.isNewStep);
+            //console.log("isNewStep", self.isNewStep);
             if (self.isNewStep) {
                 $element.addClass("isNewStep");
             }

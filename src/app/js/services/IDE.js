@@ -53,7 +53,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 }
             })
             .add({
-                combo: 'mod+r',
+                combo: 'mod+shift+r',
                 allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
                 description: 'Run the story',
                 callback: function (event) {
@@ -62,7 +62,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 }
             })
             .add({
-                combo: 'mod+v',
+                combo: 'mod+shift+v',
                 allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
                 description: 'Validate Current State',
                 callback: function (event) {

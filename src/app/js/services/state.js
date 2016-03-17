@@ -10,24 +10,9 @@ yarn.service('state', function ($localStorage,
                                 assert,
                                 session,
                                 guid,
+                                eval,
                                 $parse) {
 
-
-        function evalExpression(exp, scope) {
-            var value;
-            var base = {
-                //todo: provide a richer context for expressions
-            };
-            var newScope = angular.extend(base, scope);
-            if (angular.isString(exp)) {
-                if (exp.substr(0,4) === "exp:") {
-                    var fn = $parse(exp.substring(4));
-                    value = fn(newScope);
-                }
-            }
-            console.log("evaluated value", value);
-            return value;
-        }
 
         function State() {
             this.assertions = new Assertions();
@@ -228,7 +213,7 @@ yarn.service('state', function ($localStorage,
                 }
 
                 if (options.eval) {
-                    var evaluatedValue = evalExpression(options.value, {
+                    var evaluatedValue = eval(options.value, {
                         value: self.resolveValue(assert(subject, predicate, object))
                     });
                     if (angular.isDefined(evaluatedValue)) {

@@ -34,7 +34,8 @@
     "ng-contextmenu": "~0.4.1",
     "ng-debottle": "~1.1.0",
     "angularfire": "~1.1.4",
-    "angular-scroll": "~1.0.0"
+    "angular-scroll": "~1.0.0",
+    "nunjucks": "~2.4.1"
   },
   "resolutions": {
     "lodash": "~4.5.1",

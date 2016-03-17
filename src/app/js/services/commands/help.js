@@ -57,7 +57,6 @@
 
         return {
             name: "help",
-            keystroke: "ctrl+h",
             shortDescription: "Show console help",
             longDescription:
                 "To obtain help on any specific command, you can add another command name as an argument.<br/>" +

@@ -94,7 +94,10 @@
             };
 
             this.save = function () {
-                editorFiles.save(this.file);
+                IDE.isWorking = true;
+                editorFiles.save(this.file, function () {
+                    IDE.isWorking = false;
+                });
             };
 
             this.reload = function () {

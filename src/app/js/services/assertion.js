@@ -23,7 +23,13 @@ yarn.service('Assertion', function (layerSetup,
         this._value = true; // A value (true, false)
         this.parent = _options.parent || null; // A parent object
 
-        this.value(_options.value);
+        if (angular.isDefined(_options.evaluatedValue)) {
+            console.log("=====evaluatedValue", _options.evaluatedValue);
+            this.value(_options.evaluatedValue);
+        } else {
+            //console.log("=====standard", _options.value);
+            this.value(_options.value);
+        }
 
         //console.log("created Assertion", this);
     }

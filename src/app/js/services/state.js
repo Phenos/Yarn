@@ -8,7 +8,25 @@ yarn.service('state', function ($localStorage,
                                 predicates,
                                 yConsole,
                                 assert,
-                                guid) {
+                                guid,
+                                $parse) {
+
+
+        function evalExpression(exp, scope) {
+            var value;
+            var base = {
+                //todo: provide a richer context for expressions
+            };
+            var newScope = angular.extend(base, scope);
+            if (angular.isString(exp)) {
+                if (exp.substr(0,4) === "exp:") {
+                    var fn = $parse(exp.substring(4));
+                    value = fn(newScope);
+                }
+            }
+            console.log("evaluated value", value);
+            return value;
+        }
 
         function State() {
             this.assertions = new Assertions();
@@ -161,6 +179,7 @@ yarn.service('state', function ($localStorage,
          * @returns {*}
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
+            var self = this;
             var options = _options || {};
 
             if (subject && predicate && object) {
@@ -187,6 +206,15 @@ yarn.service('state', function ($localStorage,
                     options.value = true;
                 }
 
+                if (options.eval) {
+                    var evaluatedValue = evalExpression(options.value, {
+                        value: self.resolveValue(assert(subject, predicate, object))
+                    });
+                    if (angular.isDefined(evaluatedValue)) {
+                        options.evaluatedValue = evaluatedValue;
+                    }
+                }
+
                 // If not layer is provided, we set the "currentLayer"
                 if (!options.layer) {
                     options.layer = this.currentLayer;
@@ -211,7 +239,11 @@ yarn.service('state', function ($localStorage,
                         this.persistAssertion(assertion);
                     } else {
                         // Else we re-use the existing assertion
-                        topAssertion.value(options.value);
+                        if (angular.isDefined(options.evaluatedValue)) {
+                            topAssertion.value(options.evaluatedValue);
+                        } else {
+                            topAssertion.value(options.value);
+                        }
                         this.persistAssertion(topAssertion);
                     }
                 } else {

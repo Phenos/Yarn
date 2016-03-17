@@ -7,6 +7,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                                         yConsole,
                                         loader,
                                         storage,
+                                        commands,
                                         editorFiles) {
 
     var service = {
@@ -58,6 +59,15 @@ yarn.service('IDE', function IDEService(hotkeys,
                 callback: function (event) {
                     event.preventDefault();
                     service.run();
+                }
+            })
+            .add({
+                combo: 'mod+v',
+                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                description: 'Validate Current State',
+                callback: function (event) {
+                    event.preventDefault();
+                    service.validate();
                 }
             });
     };
@@ -116,12 +126,16 @@ yarn.service('IDE', function IDEService(hotkeys,
         }
     };
 
+    service.validate = function () {
+        commands.command("validate");
+    };
+
     service.run = function () {
         var mainFile = editorFiles.mainFile();
         if (mainFile) {
             var uri = mainFile.absoluteURI().toString();
             rememberLastStory.forget();
-            loader.fromURL(uri);
+            loader.fromURL(uri, true);
         } else {
             yConsole.log("Could not find which story should be run");
         }

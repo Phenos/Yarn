@@ -3,6 +3,7 @@ yarn.service('loader', function (yarn,
                                  loadScript,
                                  yConsole,
                                  player,
+                                 commands,
                                  $localStorage) {
 
     var service = {};
@@ -38,7 +39,12 @@ yarn.service('loader', function (yarn,
 
                 // Change the current state layer to the static world (should be the default anyways).
                 state.currentLayer = "world";
+
+                // Run the script to load the initial game state
                 script.run();
+
+                // Trigger validation on the new game state
+                commands.command("validate");
 
                 // Change the current state layer to the current session.
                 state.currentLayer = "session";

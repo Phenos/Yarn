@@ -53,6 +53,12 @@
                                     <span class="md-alt-text"> {{ 'M-R' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.IDE.validate()">
+                                    Validate Current State
+                                    <span class="md-alt-text"> {{ 'M-V' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
                         </md-menu-content>
                     </md-menu>
                     <md-menu>
@@ -141,7 +147,7 @@
                     Save and run story
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="toolbar.editors.current.validate()" class="md-icon-button" aria-label="Validate">
+            <md-button ng-click="toolbar.validate()" class="md-icon-button" aria-label="Validate">
                 <md-icon md-svg-icon="/svg-icons/validate.svg"></md-icon>
                 <md-tooltip>
                     Validate

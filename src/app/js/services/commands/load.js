@@ -9,7 +9,7 @@ function loadCommand(yConsole,
 
         if (url) {
             rememberLastStory.remember(url);
-            loader.fromURL(url);
+            loader.fromURL(url, true);
         } else {
             yConsole.error("Invalid or missing argument");
             yConsole.tip(

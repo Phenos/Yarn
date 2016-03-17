@@ -76,10 +76,6 @@
 
             editors.add(this);
 
-            this.validate = function () {
-                commands.command("validate");
-            };
-
             this.saveAllAndRun = function () {
                 IDE.saveAllAndRun();
             };

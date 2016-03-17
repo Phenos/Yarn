@@ -60,7 +60,7 @@ yarn.service("setDefaultOptionsHelper", function (state,
                 option.iconOnly = true;
             }
 
-            option = prompt.option("Who? What? Why? Where?", "hint");
+            option = prompt.option("Hint?", "hint");
             option.iconId = "question-mark";
             option.iconSize = "mini";
             option.iconOnly = true;

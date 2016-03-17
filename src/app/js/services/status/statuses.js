@@ -1,4 +1,4 @@
-yarn.service("statuses", function (state, assert) {
+yarn.service("statuses", function (state, assert, statusFormats) {
 
     function Statuses() {
         this.all = {};
@@ -50,6 +50,15 @@ yarn.service("statuses", function (state, assert) {
         this.icon = state.resolveValue(assert(this.object, "has", "Icon"));
         this.description = state.resolveValue(assert(this.object, "has", "Description"));
     }
+
+    Status.prototype.formattedValue = function () {
+        var value = this.value;
+        var formatter = statusFormats[this.format];
+        if (formatter) {
+            value = formatter(value);
+        }
+        return value
+    };
 
     return new Statuses();
 

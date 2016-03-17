@@ -43,12 +43,11 @@
     });
 
     yarn.directive('editor', EditorDirective);
-    yarn.factory('editorService', editorService);
 
     function EditorDirective($mdDialog,
-                             editorService,
                              editorFiles,
                              root,
+                             editors,
                              commands,
                              inspector,
                              IDE,
@@ -75,7 +74,7 @@
             var self = this;
             var aceEditor;
 
-            editorService.register(this);
+            editors.add(this);
 
             this.validate = function () {
                 commands.command("validate");
@@ -189,24 +188,6 @@
                 }
             }
 
-        }
-    }
-
-    function editorService() {
-        var controller;
-
-        function focus() {
-            console.log(".focus");
-            if (controller) controller.focus();
-        }
-
-        function register(ctrl) {
-            controller = ctrl;
-        }
-
-        return {
-            register: register,
-            focus: focus
         }
     }
 })();

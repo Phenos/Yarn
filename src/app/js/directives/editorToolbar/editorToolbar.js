@@ -14,11 +14,13 @@ function EditorToolbarDirective() {
         controller: EditorToolbarController
     };
 
-    function EditorToolbarController(assertionBrowser,
+    function EditorToolbarController(editors,
+                                     assertionBrowser,
                                      root,
                                      IDE) {
-
         this.IDE = IDE;
+
+        this.editors = editors;
 
         this.hideConsole = function () {
             root.hideConsole();

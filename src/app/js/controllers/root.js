@@ -9,7 +9,6 @@ function rootController(user,
                         IDE,
                         yConsole,
                         welcomeMessage,
-                        editorService,
                         editorFiles,
                         root,
                         themes,
@@ -83,7 +82,6 @@ function rootController(user,
     $scope.onConsoleEscapeFocus = function () {
         $scope.editorFlexHeight = 100;
         $scope.consoleFlexHeight = 0;
-        editorService.focus();
     };
     $scope.onConsoleFocus = function () {
         $scope.editorFlexHeight = 60;

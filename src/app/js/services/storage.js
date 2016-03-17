@@ -1,4 +1,4 @@
-yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
+yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI) {
 
     function Storage() {
         this.files = [];
@@ -6,8 +6,23 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
 
     Storage.prototype.add = function (uri, meta) {
         // Todo, first check if the file is already there
-        var file = new EditorFile(uri, meta);
-        this.files.push(file);
+        var foundSameFile = null;
+        var file;
+        var _uri = URI(uri);
+
+        angular.forEach(this.files, function (file) {
+            if (_uri.equals(file.uri)) {
+                foundSameFile = file;
+            }
+        });
+
+        if (foundSameFile) {
+            file = foundSameFile;
+            file.meta = meta;
+        } else {
+            file = new EditorFile(uri, meta);
+            this.files.push(file);
+        }
         return file;
     };
 
@@ -61,7 +76,9 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole) {
                     angular.forEach(data.files, function (file) {
                         if (file && file.Size > 0) {
                             var path = file.Key && file.Key.replace(session.user().username + "/", "");
-                            if (path) self.add(path, file);
+                            if (path) {
+                                self.add(path, file);
+                            }
                         }
                     });
                     self.isLoading = false;

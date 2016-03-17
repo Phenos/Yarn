@@ -44,23 +44,23 @@ yarn.service('loader', function (yarn,
                 // Run the script to load the initial game state
                 script.run();
 
-                /*
-                 Refresh the list of Statuses and Synonyms, in case they changed during game play
-                 */
-                synonyms.update(state);
-                statuses.update(state);
-
                 // Trigger validation on the new game state
                 commands.command("validate");
 
                 // Change the current state layer to the current session.
                 state.currentLayer = "session";
 
-
                 // Restore session state layer from localStorage
 
                 console.warn("Restoring game state doesnt work for now...");
                 yarn.restoreFromLocalState();
+
+                /*
+                 Refresh the list of Statuses and Synonyms, in case they changed during game play
+                 */
+                synonyms.update(state);
+                statuses.update(state);
+
 
                 player.refresh();
             }

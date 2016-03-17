@@ -8,6 +8,7 @@ yarn.service('state', function ($localStorage,
                                 predicates,
                                 yConsole,
                                 assert,
+                                session,
                                 guid,
                                 $parse) {
 
@@ -35,10 +36,30 @@ yarn.service('state', function ($localStorage,
             this.guid = guid();
         }
 
+        State.prototype.uniqueKey = function () {
+            var key;
+            var username = "anonymous";
+            if (session.user()) {
+                username = session.user().username;
+            }
+            var uniqueID = this.resolveValue("Story", "has", "UniqueID");
+            var releaseNumber = this.resolveValue("Story", "has", "UniqueID");
+            key = [username, uniqueID, releaseNumber].join("-");
+            return key;
+        };
+
+        State.prototype.getStoryLocalStorage = function () {
+            var key = this.uniqueKey();
+            if (angular.isUndefined($localStorage[key])) {
+                $localStorage[key] = {};
+            }
+            return $localStorage[key];
+        };
+
         State.prototype.restoreFromLocalState = function () {
             var self = this;
-            var localAssertions = ($localStorage.localState &&
-                $localStorage.localState.assertions) || {};
+            var storyStorage = this.getStoryLocalStorage();
+            var localAssertions = storyStorage.assertions || {};
 
             //console.log("Restoring assertion from localState", localAssertions);
 
@@ -265,35 +286,30 @@ yarn.service('state', function ($localStorage,
          * If the session layer is empty, the assertion is removed
          */
         State.prototype.persistAssertion = function (assertion) {
-            //console.log("State.persistAssertion", assertion);
-            if (!$localStorage.localState) {
-                $localStorage.localState = {}
+            var storyStorage = this.getStoryLocalStorage();
+
+            if (!storyStorage.assertions) {
+                storyStorage.assertions = {}
             }
-            if (!$localStorage.localState.assertions) {
-                $localStorage.localState.assertions = {}
-            }
-            var localState = $localStorage.localState;
+
             //console.log("persistAssertion", assertion, assertion.layer);
             if (assertion.layer === "session") {
-                if (localState) {
-                    var json = assertion.toJSON();
-                    if (json) {
-                        localState.assertions[assertion.id()] = json;
-                    } else {
-                        delete localState.assertions[assertion.id()];
-                    }
+                var json = assertion.toJSON();
+                if (json) {
+                    storyStorage.assertions[assertion.id()] = json;
+                } else {
+                    delete storyStorage.assertions[assertion.id()];
                 }
             }
         };
+
         State.prototype.UnpersistAssertions = function (_assertions) {
             // todo: refactor: Initialising the localStorage this way is not elegant.... use .ensure() pattern
-            if (!$localStorage.localState) {
-                $localStorage.localState = {}
+            var storyStorage = this.getStoryLocalStorage();
+
+            if (!storyStorage.assertions) {
+                storyStorage.assertions = {}
             }
-            if (!$localStorage.localState.assertions) {
-                $localStorage.localState.assertions = {}
-            }
-            var localState = $localStorage.localState;
 
             //console.log("State.UnpersistAssertions", _assertions);
             var assertions = _assertions;
@@ -302,7 +318,7 @@ yarn.service('state', function ($localStorage,
             angular.forEach(assertions, function (assertion) {
                 //console.log("persistAssertion", assertion, assertion.layer);
                 if (assertion.layer === "session") {
-                    delete localState.assertions[assertion.id()];
+                    delete storyStorage.assertions[assertion.id()];
                 }
             });
         };

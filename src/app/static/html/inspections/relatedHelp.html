@@ -1,7 +1,8 @@
 <div>
     <ul>
-        <li ng-repeat="helpArticle in helpArticles">
-            <a ng-href="helpArticle.url">{{ helpArticle.title}}</a>
+        <li ng-repeat="article in helpArticles">
+            <a ng-href="helpArticle.url"
+               ng-click="$event.preventDefault();open(article);">{{ article.title}}</a>
         </li>
     </ul>
 </div>

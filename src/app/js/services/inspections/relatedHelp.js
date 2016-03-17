@@ -1,4 +1,5 @@
-yarn.service("relatedHelpInspection", function relatedHelpInspection(InspectionArticle) {
+yarn.service("relatedHelpInspection", function relatedHelpInspection(InspectionArticle,
+                                                                     help) {
     return {
         inspect: inspect
     };
@@ -7,6 +8,13 @@ yarn.service("relatedHelpInspection", function relatedHelpInspection(InspectionA
         if (token && token.helpArticles && token.helpArticles.length > 0) {
             var scope = {};
             scope.helpArticles = token.helpArticles;
+
+            scope.open = function (article) {
+                help
+                    .focus()
+                    .load(article.url);
+            };
+
             yeld(new InspectionArticle("Related Help Articles", "help", "related-help-inspection", scope))
         }
     }

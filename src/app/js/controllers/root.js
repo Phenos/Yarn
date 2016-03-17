@@ -120,7 +120,7 @@ function rootController(user,
 
 }
 
-function rootService($localStorage, consoleService, helpService, player) {
+function rootService($localStorage, consoleService, help, player) {
     var service = {
         scope: null
     };
@@ -194,7 +194,6 @@ function rootService($localStorage, consoleService, helpService, player) {
     service.showHelp = function () {
         player.closeSidenav();
         $localStorage.helpIsVisible = helpIsVisible(true);
-        helpService.focus();
     };
     service.hideHelp = function () {
         $localStorage.helpIsVisible = helpIsVisible(false);

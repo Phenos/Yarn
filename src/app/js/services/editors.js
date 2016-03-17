@@ -9,6 +9,7 @@ yarn.service("editors", function () {
     Editors.prototype.add = function (editor) {
         //console.log("editors.add", editor);
         this.all.push(editor);
+        this.select(editor);
     };
 
     Editors.prototype.select = function (editor) {
@@ -23,7 +24,7 @@ yarn.service("editors", function () {
         angular.forEach(this.all, function (editor) {
             if (file === editor.file) {
                 foundEditor = editor;
-                self.current = editor;
+                self.select(editor);
             }
         });
         return self.current;

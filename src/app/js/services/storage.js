@@ -45,9 +45,9 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
                 username: user.username
             }, function(data){
                 if (!data.error) {
-                    console.log("?",[savedContent], [file.originalContent]);
+                    //console.log("?",[savedContent], [file.originalContent]);
                     file.originalContent = savedContent;
-                    console.log("storage.save success", [data]);
+                    //console.log("storage.save success", [data]);
                     success(data);
                 } else {
                     self.isLoading = false;
@@ -72,7 +72,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
                 username: user.username
             }, function (data) {
                 if (!data.error) {
-                    console.log("Storagerefresh > apiClient.files", data);
+                    //console.log("Storagerefresh > apiClient.files", data);
                     angular.forEach(data.files, function (file) {
                         if (file && file.Size > 0) {
                             var path = file.Key && file.Key.replace(session.user().username + "/", "");

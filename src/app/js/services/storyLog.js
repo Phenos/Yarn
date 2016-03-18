@@ -58,6 +58,10 @@ yarn.service('storyLog', function () {
         this.controller.write(text, "log");
     };
 
+    StoryLog.prototype.headline = function (text) {
+        this.controller.write(text, "headline");
+    };
+
     StoryLog.prototype.action = function (text) {
         this.controller.write("—" + text, "action");
     };

@@ -51,15 +51,28 @@ yarn.factory('writers', function (Prompt,
             storyLog.heading(name);
         }
 
-        var description = state.resolveValue(assert("Story", "has", "Description"));
-        if (description) {
-            storyLog.log("“&nbsp;" + description + "&nbsp;”");
+        // Show the headline title
+        var headline = state.resolveValue(assert("Story", "has", "Headline"));
+        var author = state.resolveValue(assert("Story", "has", "Author"));
+        if (author || headline) {
+            var headlineAndAuthor = [];
+            if (headline) {
+                headlineAndAuthor.push("“&nbsp;" + headline + "&nbsp;”");
+            }
+            if (headline && author) {
+                headlineAndAuthor.push("<br/>");
+            }
+            if (author) {
+                headlineAndAuthor.push("by " + author);
+            }
+            storyLog.headline(headlineAndAuthor.join(""));
         }
 
-        var author = state.resolveValue(assert("Story", "has", "Author"));
-        if (author) {
-            storyLog.log("by " + author);
+        var description = state.resolveValue(assert("Story", "has", "Description"));
+        if (description) {
+            storyLog.log(description);
         }
+
 
         return this;
     }

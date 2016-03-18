@@ -1,4 +1,4 @@
-yarn.factory('script', function (Pointer,
+yarn.service('script', function (Pointer,
                                  AST,
                                  Runtime,
                                  $q,

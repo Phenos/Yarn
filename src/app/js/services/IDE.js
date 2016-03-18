@@ -127,7 +127,7 @@ yarn.service('IDE', function IDEService(hotkeys,
     };
 
     service.validate = function () {
-        commands.command("validate");
+        commands.run("validate");
     };
 
     service.run = function () {

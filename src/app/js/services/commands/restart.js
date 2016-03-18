@@ -6,8 +6,8 @@ function restartCommand(commands,
                         player) {
 
     function handler() {
-        commands.command("clear session");
-        commands.command("clear localstorage");
+        commands.run("clear session");
+        commands.run("clear localstorage");
         state.assertions.removeLayer('session');
         player.refresh();
         yConsole.success("Story restarted");

@@ -1,13 +1,21 @@
-yarn.factory('commands', commands);
-yarn.factory('commandsRegistry', commandsRegistry);
+yarn.service('commands', function (yConsole,
+                                   hotkeys,
+                                   $injector) {
 
-function commands(yConsole,
-                  commandsRegistry) {
+    function Commands() {
+        this.all = [];
+    }
 
-    var command = function (text) {
+    Commands.prototype.run = function (textOrCommand) {
+        var text;
+        if (angular.isString(textOrCommand)) {
+            text = textOrCommand;
+        } else {
+            text = textOrCommand.name;
+        }
         var args = text.split(" ");
         var commandStr = args.shift();
-        var command = commandsRegistry.match(commandStr);
+        var command = this.match(commandStr);
         if (command) {
             yConsole.command(text);
             command.handler(args, text);
@@ -17,20 +25,8 @@ function commands(yConsole,
         }
     };
 
-    return {
-        command: command
-    };
-
-}
-
-function commandsRegistry(hotkeys,
-                          $injector) {
-    var service = {};
-
-    service.commands = [];
-
-    service.register = function (command) {
-        service.commands.push(command);
+    Commands.prototype.add = function (command) {
+        this.all.push(command);
 
         if (command.keystroke) {
             hotkeys.add({
@@ -44,24 +40,27 @@ function commandsRegistry(hotkeys,
 
     };
 
-    service.match = function (commandName) {
+    Commands.prototype.match = function (commandName) {
         var match = null;
 
-        angular.forEach(service.commands, function (command) {
+        angular.forEach(this.all, function (command) {
             if (command.name === commandName) match = command;
         });
 
         return match;
     };
 
-    service.load = function (commands) {
+    Commands.prototype.load = function (commands) {
+        var self = this;
         //console.log("Loading commands into command registry", commands);
         angular.forEach(commands, function (commandName) {
             var command = $injector.get(commandName);
-            service.register(command);
+            self.add(command);
         });
     };
 
-    return service;
-}
+
+    return new Commands();
+
+});
 

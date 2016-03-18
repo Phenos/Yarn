@@ -43,14 +43,14 @@ yarn.service("lookPrompt", function (writers,
 
         };
         context.use = function(thing) {
-            commands.command("look " + thing.id);
+            commands.run("look " + thing.id);
         };
         context.answer = function answer(promptLoop, option) {
             if (option) {
                 if (option.value === "back") {
                     logic.routines.aboutTo("");
                 } else {
-                    commands.command(option.value);
+                    commands.run(option.value);
                 }
             }
         };

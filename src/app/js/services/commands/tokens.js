@@ -1,10 +1,10 @@
 yarn.factory('tokensCommand', tokensCommand);
 
 function tokensCommand(yConsole,
-                       yarn) {
+                       script) {
 
     function handler() {
-        var html = yarn.scripts[0].pointer.html();
+        var html = script.pointer.html();
         yConsole.debug("Outputing script parsing tokens:");
         yConsole.debug(html);
     }

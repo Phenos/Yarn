@@ -12,7 +12,7 @@ yarn.config(function(RollbarProvider) {
     RollbarProvider.init(roolbarConfig);
 });
 
-yarn.run(function (commandsRegistry) {
+yarn.run(function (commands) {
 
     var path = "/public/js/ace/";
     ace.config.set('basePath', path);
@@ -21,7 +21,7 @@ yarn.run(function (commandsRegistry) {
     ace.config.set('workerPath', path);
 
 
-    commandsRegistry.load([
+    var builtInCommands = [
         "inventoryPlayerCommand",
         "beginStoryCommand",
         "inspectCommand",
@@ -43,6 +43,8 @@ yarn.run(function (commandsRegistry) {
         "treeCommand",
         "tokensCommand",
         "helpCommand"
-    ]);
+    ];
+    console.info("Loading buil-in commands ", [builtInCommands]);
+    commands.load(builtInCommands);
 
 });

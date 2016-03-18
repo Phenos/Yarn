@@ -78,5 +78,7 @@
 	"Save file to: : twitter.YarnStudioGames/winter-storm-draco/plastic-bag.txt": "Save file to: : twitter.YarnStudioGames/winter-storm-draco/plastic-bag.txt",
 	"Upload complete for : twitter.YarnStudioGames/winter-storm-draco/plastic-bag.txt": "Upload complete for : twitter.YarnStudioGames/winter-storm-draco/plastic-bag.txt",
 	"Save file to: : twitter.YarnStudioGames/winter-storm-draco/act-0-Highway.txt": "Save file to: : twitter.YarnStudioGames/winter-storm-draco/act-0-Highway.txt",
-	"Upload complete for : twitter.YarnStudioGames/winter-storm-draco/act-0-Highway.txt": "Upload complete for : twitter.YarnStudioGames/winter-storm-draco/act-0-Highway.txt"
+	"Upload complete for : twitter.YarnStudioGames/winter-storm-draco/act-0-Highway.txt": "Upload complete for : twitter.YarnStudioGames/winter-storm-draco/act-0-Highway.txt",
+	"Error with initializer step: %s": "Error with initializer step: %s",
+	"Error: cannot start web server @ 0.0.0.0:5001 => listen EADDRINUSE 0.0.0.0:5001\n    at Server.<anonymous> (/Users/mathieu/dev/yarn/node_modules/actionhero/servers/web.js:62:21)\n    at emitOne (events.js:77:13)\n    at Server.emit (events.js:169:7)\n    at emitErrorNT (net.js:1250:8)\n    at doNTCallback2 (node.js:429:9)\n    at process._tickDomainCallback (node.js:384:17)": "Error: cannot start web server @ 0.0.0.0:5001 => listen EADDRINUSE 0.0.0.0:5001\n    at Server.<anonymous> (/Users/mathieu/dev/yarn/node_modules/actionhero/servers/web.js:62:21)\n    at emitOne (events.js:77:13)\n    at Server.emit (events.js:169:7)\n    at emitErrorNT (net.js:1250:8)\n    at doNTCallback2 (node.js:429:9)\n    at process._tickDomainCallback (node.js:384:17)"
 }

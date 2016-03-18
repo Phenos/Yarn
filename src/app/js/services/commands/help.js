@@ -1,4 +1,5 @@
-yarn.service('helpCommand', function command(yConsole, commandsRegistry) {
+yarn.service('helpCommand', function command(commands,
+                                             yConsole) {
 
     function handler(args) {
 
@@ -17,7 +18,7 @@ yarn.service('helpCommand', function command(yConsole, commandsRegistry) {
     }
 
     function specificHelp(commandName) {
-        var command = commandsRegistry.match(commandName);
+        var command = commands.get(commandName);
         if (command) {
             yConsole.log(
                 "<span command>" + command.name + "</span><strong>command</strong><br/><br/>" +
@@ -30,7 +31,7 @@ yarn.service('helpCommand', function command(yConsole, commandsRegistry) {
 
     function genericHelp() {
         var commandsList = [];
-        angular.forEach(commandsRegistry.commands, function (command) {
+        angular.forEach(commands.all, function (command) {
             commandsList.push("<span command>" + command.name + "</span>");
         });
 
@@ -42,7 +43,7 @@ yarn.service('helpCommand', function command(yConsole, commandsRegistry) {
 
     function verboseHelp() {
         var commandsList = [];
-        angular.forEach(commandsRegistry.commands, function (command) {
+        angular.forEach(commands.all, function (command) {
             commandsList.push("<span command>" + command.name + "</span> : " + command.shortDescription);
         });
 

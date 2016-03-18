@@ -20,7 +20,7 @@ yarn.service("coverpagePrompt", function (commands,
 
         context.answer = function answer(promptLoop, option) {
             if (option) {
-                commands.command(option.value);
+                commands.run(option.value);
             }
         };
     }

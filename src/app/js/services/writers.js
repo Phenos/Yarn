@@ -217,7 +217,7 @@ yarn.factory('writers', function (Prompt,
             var prompt = new Prompt();
 
             prompt.answer = function answer(promptLoop, option) {
-                commands.command(option);
+                commands.run(option);
             };
 
             var name = state.resolveValue(assert(thing, "has", "Name"));

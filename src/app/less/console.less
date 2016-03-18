@@ -7,6 +7,26 @@
     font-weight: 400;
     min-height: 60px;
 
+    .commands-tray {
+        background: #006d00;
+        width: 8em;
+
+        md-list-item {
+            color: #fff;
+            min-height: 0;
+            .md-button {
+                min-height: 0;
+                text-transform: none;
+                text-align: left;
+                margin: 0;
+                padding: 0 1em;
+                min-width: 0;
+                width: 100%;
+                line-height: 2em;
+            }
+        }
+    }
+
     md-content {
         background-color: transparent !important;
     }
@@ -46,18 +66,18 @@
                 text-decoration: underline;
             }
             strong {
-                font-weight:800;
+                font-weight: 800;
             }
 
             .timestamp {
                 float: right;
                 font-size: 0.9em;
-                color: rgba(0,0,0,0.4);
+                color: rgba(0, 0, 0, 0.4);
             }
             .step {
                 float: right;
                 font-size: 0.9em;
-                color: rgba(0,0,0,0.4);
+                color: rgba(0, 0, 0, 0.4);
                 padding-left: 1em;
             }
 

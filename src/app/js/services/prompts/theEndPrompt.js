@@ -17,7 +17,7 @@ yarn.service("theEndPrompt", function (commands,
 
         context.answer = function answer(promptLoop, option) {
             if (option && option.value === "restart") {
-                commands.command("restart");
+                commands.run("restart");
             }
         };
     }

@@ -40,14 +40,14 @@ function saveFile(api, data, next) {
             path: fullPath,
             content: data.params.content
         };
-        api.log("fullURI: ", fullURI);
-        api.log("fullPath: ", fullPath);
+        //api.log("fullURI: ", fullURI);
+        //api.log("fullPath: ", fullPath);
 
         // Write the file to a temp file
         function saveFile(callback) {
             fs.writeFile(file.path, file.content, function (err) {
                 if (!err) {
-                    api.log("The file was saved!");
+                    //api.log("The file was saved!");
                     callback();
                 } else {
                     api.error(err);
@@ -65,14 +65,14 @@ function saveFile(api, data, next) {
                 localFile: file.path
             };
 
-            api.log("Save file to: : " + file.fullURI);
+            //api.log("Save file to: : " + file.fullURI);
             var uploader = s3client.uploadFile(params);
             uploader.on('error', function (err) {
                 api.error("unable to upload to S3:", err.stack);
                 callback(new Error(err));
             });
             uploader.on('end', function () {
-                api.log("Upload complete for : " + file.fullURI);
+                //api.log("Upload complete for : " + file.fullURI);
                 callback();
             });
         }
@@ -93,7 +93,7 @@ function saveFile(api, data, next) {
                             if (err) {
                                 next(new Error(err));
                             } else {
-                                api.log("File saved and temp file deleted");
+                                //api.log("File saved and temp file deleted");
                                 data.response.meta = meta;
                                 next();
                             }

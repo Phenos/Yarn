@@ -68,8 +68,7 @@
     ],
     "watches": {
       "statics": [
-        "src/app/static/**/*.html",
-        "src/app/static/**/*.txt"
+        "src/app/static/**/*"
       ],
       "js": "src/app/js/**/*.js",
       "less": "src/app/less/**/*.less"

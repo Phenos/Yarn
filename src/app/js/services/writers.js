@@ -15,6 +15,7 @@ yarn.factory('writers', function (Prompt,
         if (storyHasEnded) {
             returnFn = describeTheEnd();
         } else if (state.step() === 0) {
+            storyLog.clear();
             returnFn = describeCoverpage();
         } else {
             returnFn = describeRoom();
@@ -25,8 +26,6 @@ yarn.factory('writers', function (Prompt,
     function describeCoverpage() {
 
         refreshTheme();
-
-        storyLog.clear();
 
         // Set the wallpaper
         var wallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
@@ -81,8 +80,6 @@ yarn.factory('writers', function (Prompt,
         storyLog.markAsRead();
 
         refreshTheme();
-
-        storyLog.clear();
 
         // Show the story title
         var name = state.resolveValue(assert("TheEnd", "has", "Name"));
@@ -181,9 +178,7 @@ yarn.factory('writers', function (Prompt,
     // Describe where you are at the beginning
 
     function describeThing(thing) {
-        storyLog.markAsRead();
         if (thing) {
-            var name = state.resolveValue(assert(thing, "has", "Name"));
             var description = state.resolveValue(assert(thing, "has", "Description"));
             var image = state.resolveValue(assert(thing, "has", "Image"));
             if (image) {

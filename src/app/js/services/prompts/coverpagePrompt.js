@@ -1,5 +1,6 @@
 yarn.service("coverpagePrompt", function (commands,
-                                          state) {
+                                          state,
+                                          assert) {
 
     function coverpagePrompt(context) {
 
@@ -9,12 +10,17 @@ yarn.service("coverpagePrompt", function (commands,
 
         context.question = function (promptLoop, prompt) {
             prompt.question = "Do you want to begin this story";
-            prompt.option("Begin story", "beginstory");
+            prompt.option("Start", "beginstory");
+
+            var credits = state.resolveValue(assert("Story", "has", "Credits"));
+            if (credits) {
+                prompt.option("Credits", "credits");
+            }
         };
 
         context.answer = function answer(promptLoop, option) {
-            if (option && option.value === "beginstory") {
-                commands.command("beginstory");
+            if (option) {
+                commands.command(option.value);
             }
         };
     }

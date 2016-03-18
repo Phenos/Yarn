@@ -1,4 +1,4 @@
-yarn.factory('evalCommand', function evalCommand(state,
+yarn.service('evalCommand', function evalCommand(state,
                                                  yConsole,
                                                  assert,
                                                  things,

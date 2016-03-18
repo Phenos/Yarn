@@ -15,10 +15,9 @@ yarn.service("inventoryPrompt", function (logic,
 
         context.question = function (promptLoop, prompt) {
 
-            var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
-
             // TODO: NERFED FOR NOW... SHOULDBE REMOVED
             //
+            //var inventoryItems = state.resolveAll(assert(undefined, "is in", "YourInventory"));
             //if (inventoryItems.length) {
             //    prompt.question = "Your inventory";
             //    inventoryItems.forEach(function (thing) {

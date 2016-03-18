@@ -41,7 +41,7 @@ yarn.service("setDefaultOptionsHelper", function (state,
             // in the current room
             var inventoryInRoom = stateHelpers.inventoryInRoom(room);
             // Enable the "inventory" action if the user has inventory
-            var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
+            var inventoryItems = state.resolveAll(assert(undefined, "is in", "YourInventory"));
 
             if (inventoryItems.length || inventoryInRoom.length) {
                 option = prompt.option("Inventory", "aboutTo inventory");

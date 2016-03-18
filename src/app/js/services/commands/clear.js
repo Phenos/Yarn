@@ -1,4 +1,4 @@
-yarn.factory('clearCommand', clearCommand);
+yarn.service('clearCommand', clearCommand);
 
 function clearCommand($localStorage,
                       yConsole,

@@ -1,4 +1,4 @@
-yarn.factory('beginStoryCommand', beginStoryCommand);
+yarn.service('beginStoryCommand', beginStoryCommand);
 
 function beginStoryCommand(yConsole,
                            logic,

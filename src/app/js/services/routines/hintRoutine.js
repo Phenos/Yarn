@@ -14,6 +14,8 @@ yarn.service("hintRoutine", function (writers,
 
         writers.describeThing(room);
 
+        storyLog.log("Nothing else comes to mind.");
+
         stepRoutine();
 
         return true;

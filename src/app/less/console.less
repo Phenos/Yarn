@@ -93,9 +93,22 @@
                 color: #b08e00;
             }
             &.is-success {
-                color: #229922;
+                color: #29b829;
             }
             &.is-command {
+                font-weight: bold;
+                font-style: italic;
+                color: #1b7b1b;
+                [command] {
+                    color: #1b7b1b !important;
+                }
+                log-icon {
+                    font-style: normal;
+                    font-size: 0.8em;
+                    left: -1.1em;
+                    top: 0.75em;
+                    color: #1b7b1b;
+                }
             }
             &.is-debug {
             }

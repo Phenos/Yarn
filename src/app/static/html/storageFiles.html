@@ -1,0 +1,27 @@
+<div flex="100" layout="column">
+    <md-input-container flex="1"
+                        md-no-float
+                        class="md-block">
+        <md-icon md-svg-src="/svg-icons/search.svg"></md-icon>
+        <input ng-model="storageFiles.search"
+               type="text"
+               placeholder="Enter search term">
+
+    </md-input-container>
+    <div ng-if="storageFiles.storage.isLoading && storageFiles.storage.files.length === 0">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <md-content flex="100">
+        <md-list>
+            <md-list-item ng-if="storageFiles.storage.files.length > 0"
+                          ng-click="storageFiles.select({file: file})"
+                          ng-repeat="file in storageFiles.files | filter: { filterOut: false }">
+                <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
+                <p>{{ file.uri.path() }}</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <md-content ng-if="(!storageFiles.storage.isLoading) && storageFiles.storage.files.length === 0">
+        You have no no files in storage!
+    </md-content>
+</div>

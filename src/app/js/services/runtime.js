@@ -1,5 +1,7 @@
 yarn.service('Runtime', function RuntimeService(state,
                                                 Cursor,
+                                                predicates,
+                                                things,
                                                 Stack,
                                                 yConsole) {
 
@@ -44,7 +46,7 @@ yarn.service('Runtime', function RuntimeService(state,
                     returnValue = node.value;
                     //console.log("VALUE variant:", node.value);
                 } else if (node.variant === "reference") {
-                    returnValue = state.thing(node.value);
+                    returnValue = things.get(node.value);
                     node.resolvedTo = returnValue;
                 } else if (node.variant === "constant") {
                     console.error("Constants not supported yet! : " + node.value);
@@ -99,7 +101,7 @@ yarn.service('Runtime', function RuntimeService(state,
                 }
 
                 // Identify which predicate corresponds to this instruction
-                predicate = state.predicate(node.value);
+                predicate = predicates(node.value);
                 // Run the child set of node to be used by the predicate
                 args = runtime.runSet(node.set);
                 // Create assertion from predicate

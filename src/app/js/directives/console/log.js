@@ -7,7 +7,10 @@ function LogDirective($sce) {
         restrict: 'E',
         bindToController: {
             type: '=',
-            text: '='
+            text: '=',
+            step: '=',
+            isNewStep: '=',
+            timestamp: '='
         },
         scope: {},
         controllerAs: 'log',
@@ -19,10 +22,17 @@ function LogDirective($sce) {
         var self = this;
 
         $scope.$watch('log.text', function(value) {
-            //console.log("element", $element);
-            //console.log("value", value);
+            //console.log("timestam", self.timestamp);
+            var _time = new Date(self.timestamp);
+            self.time = _time.getHours() + ":" + _time.getMinutes();
             $element.addClass("is-" + self.type);
-            var elem = $compile("<div>" + value + "</div>")($scope);
+
+            //console.log("isNewStep", self.isNewStep);
+            if (self.isNewStep) {
+                $element.addClass("isNewStep");
+            }
+
+            var elem = $compile("<div><span class='step'>#{{ log.step }}</span><span class='timestamp'>{{ log.time }}</span><span class='text'>" + value + "</span></div>")($scope);
             //console.log("elem: ", elem);
             $element.append(elem);
         });

@@ -16,7 +16,9 @@ yarn.service("defaultPrompt", function (commands,
             setDefaultOptionsHelper(prompt, false);
 
         };
-
+        context.use = function(thing) {
+            commands.command("look " + thing.id);
+        };
         context.answer = function answer(promptLoop, option) {
             if (option && option.value) {
                 commands.command(option.value);

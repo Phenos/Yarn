@@ -2,28 +2,52 @@ md-toolbar.toolbar {
 
     position: absolute;
     z-index: 9;
-    background-color: rgba(0,0,0,0.3) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    height: 70px;
 
     .md-toolbar-tools {
         padding: 0;
     }
 
-    .md-button {
-        text-transform: none;
-        font-size: 0.9em;
-        span {
-            padding: 0 0.3em;
+    button.md-button {
+
+        height: 50px;
+        width: 50px;
+        margin-right: 0;
+        margin-left: 0;
+
+        md-icon {
+            height: 30px;
+            margin-right: 0.5em;
+        }
+        &.md-icon-button {
+
+            width: 50px;
+            md-icon {
+                height: 30px;
+                width: auto;
+            }
         }
     }
 
+    .story-menu-button {
+        position: relative;
+        right: 0.5em;
+    }
+
+    .main-menu-button {
+    }
 }
 
-md-toolbar.toolbar,
-.md-open-menu-container {
-    .avatar {
-        border-radius: 5px;
-        width: 36px;
-        height: 36px;
+.story-menu md-toolbar {
+    background: #000;
+    height: 50px;
+    min-height: 50px;
+
+    .md-toolbar-tools {
+        padding: 0;
+        height: 50px;
+        max-height: 50px;
     }
 }
 

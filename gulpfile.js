@@ -25,7 +25,6 @@ gulp.task('copyAssets', gulp.series(
 gulp.task('clean', cleanTask);
 gulp.task('cleanAfterBuild', cleanAfterTask);
 gulp.task('server', serverTask);
-gulp.task('api', apiTask);
 gulp.task('watch', watchTask);
 gulp.task('build', gulp.series(
     'clean',
@@ -39,12 +38,12 @@ gulp.task('devServerless', gulp.series(
 ));
 gulp.task('dev', gulp.series(
     'build',
-    'watch',
-    'api'
+    'watch'
 ));
 
 
 // -----[ Task Functions ]--------
+
 
 function injectJsFilesTask() {
 
@@ -138,16 +137,10 @@ function serverTask(callback) {
     callback();
 }
 
-function apiTask(callback) {
-    var app = require("./server/server.js");
-    app.start();
-    callback();
-}
-
 function watchTask(callback) {
     gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
     gulp.watch(paths.watches.js, gulp.series('copyJs', browserSync.reload));
-    gulp.watch(paths.watches.statics, gulp.series('copyStatic', 'copyJs', browserSync.reload));
+    gulp.watch(paths.watches.statics, gulp.series('copyStatic', 'copyJs', 'injectJsFiles', browserSync.reload));
     callback();
 }
 

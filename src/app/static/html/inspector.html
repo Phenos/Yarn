@@ -1,0 +1,29 @@
+<div class="inspector"
+     layout="column">
+    <div layout="column"
+         ng-show="inspector.articles.length > 0">
+        <articles>
+            <article md-whiteframe
+                    ng-repeat="article in inspector.articles"
+                    inspector-article
+                    >
+                <h2 ng-class='"type-" + article.type'>
+                    <md-icon md-svg-icon="/svg-icons/inspections/{{ article.type }}.svg"></md-icon>
+                    {{ article.title }} <span class="subHeading">{{ article.type }}</span>
+                </h2>
+                <section>
+                </section>
+            </article>
+        </articles>
+    </div>
+    <div ng-show="inspector.articles.length === 0"
+         layout-fill
+         layout="column"
+         layout-align="center center">
+        <div style="font-size: 0.8em; color: rgba(0,0,0,0.4)">
+            To inspect something, move you text cursor
+            <br/>
+            over any word in the editor.
+        </div>
+    </div>
+</div>

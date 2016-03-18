@@ -1,38 +1,40 @@
 yarn.service("dialogs", function (state,
+                                  assert,
                                   storyLog) {
 
     var service = {};
 
     service.process = function process() {
-        var sayAssertions = state.assertions.find({
-            predicate: "say",
-            object: "Monologue",
+        var sayAssertions = state.assertions.find(assert(undefined, "say", "Monologue", {
             parent: null
-        });
+        }));
 
-        console.log("Dialog > sayAssertions", sayAssertions);
+        var sayInsight = state.assertions.find(assert(undefined, "say", "Insight", {
+            parent: null
+        }));
 
-        angular.forEach(sayAssertions, function (assertion) {
-            //console.log("assertion", assertion);
-            if (assertion.subject && assertion.predicate && assertion.object) {
-                var monologue = state.resolveValue({
-                    subject: assertion.subject.id,
-                    predicate: assertion.predicate.id,
-                    object: assertion.object.id
-                });
+        outputStatement(sayAssertions, "log");
+        outputStatement(sayInsight, "insight");
+
+        //console.log("Dialog > sayAssertions", sayAssertions);
+
+        function outputStatement(sayAssertions, type) {
+            angular.forEach(sayAssertions, function (assertion) {
+                //console.log("assertion", assertion);
+                var statement = state.resolveValue(assert(
+                    assertion.subject,
+                    assertion.predicate,
+                    assertion.object
+                ));
 
                 // Then remove the "say" assertion
                 state.assertions.remove(assertion);
 
-                //console.log("object", assertion.object);
-                if (monologue) {
-                    console.log("Buffering monologue.....");
-                    storyLog.buffer().log(monologue);
-                    //debugger;
+                if (statement) {
+                    storyLog.buffer()[type](statement);
                 }
-
-            }
-        });
+            });
+        }
 
     };
 

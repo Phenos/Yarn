@@ -1,14 +1,21 @@
-yarn.factory('writers', function (yarn,
+yarn.factory('writers', function (Prompt,
+                                  assert,
                                   yConsole,
                                   storyLog,
                                   state,
                                   script,
-                                  sceneryService) {
+                                  commands,
+                                  themes,
+                                  wallpaper) {
 
     // Describe where you are at the beginning
     function describeWhereYouAre() {
         var returnFn;
-        if (state.step() === 0) {
+        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+        if (storyHasEnded) {
+            returnFn = describeTheEnd();
+        } else if (state.step() === 0) {
+            storyLog.clear();
             returnFn = describeCoverpage();
         } else {
             returnFn = describeRoom();
@@ -18,105 +25,141 @@ yarn.factory('writers', function (yarn,
 
     function describeCoverpage() {
 
-        storyLog.clear();
+        refreshTheme();
 
-        // Show the story title
-        var storyIsCalled = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Name"
-        });
-        if (storyIsCalled) {
-            storyLog.heading(storyIsCalled);
-        }
-
-        // Set the scenery
-        var scenery = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Scenery"
-        });
-
-        var coverpage = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Coverpage"
-        });
-
-
-
-        var scenery_url = scenery && script.resolveRelativeURI(scenery);
+        // Set the wallpaper
+        var wallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
+        var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
+        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = scenery_url || coverpage_url || false;
+        var url = wallpaper_url || coverpage_url || false;
 
         if (url) {
-            sceneryService.change(url);
+            wallpaper.change(url);
         } else {
-            sceneryService.clear();
+            wallpaper.clear();
         }
 
         if (coverpage) {
             storyLog.image(coverpage_url);
         }
 
-        var description = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Description"
-        });
-        if (description) {
-            storyLog.log("“&nbsp;" + description + "&nbsp;”");
+        // Show the story title
+        var name = state.resolveValue(assert("Story", "has", "Name"));
+        if (name) {
+            storyLog.heading(name);
         }
 
-        var author = state.resolveValue({
-            subject: "Story",
-            predicate: "has",
-            object: "Author"
-        });
-        if (author) {
-            storyLog.log("by " + author);
+        // Show the headline title
+        var headline = state.resolveValue(assert("Story", "has", "Headline"));
+        var author = state.resolveValue(assert("Story", "has", "Author"));
+        if (author || headline) {
+            var headlineAndAuthor = [];
+            if (headline) {
+                headlineAndAuthor.push("“&nbsp;" + headline + "&nbsp;”");
+            }
+            if (headline && author) {
+                headlineAndAuthor.push("<br/>");
+            }
+            if (author) {
+                headlineAndAuthor.push("by " + author);
+            }
+            storyLog.headline(headlineAndAuthor.join(""));
+        }
+
+        var description = state.resolveValue(assert("Story", "has", "Description"));
+        if (description) {
+            storyLog.log(description);
+        }
+
+
+        return this;
+    }
+
+    function describeTheEnd() {
+        storyLog.markAsRead();
+
+        refreshTheme();
+
+        // Show the story title
+        var name = state.resolveValue(assert("TheEnd", "has", "Name"));
+        if (name) {
+            storyLog.heading(name);
+        }
+
+        // Set the wallpaper
+        var wallpaperValue = state.resolveValue(assert("TheEnd", "has", "Wallpaper"));
+        var coverpage = state.resolveValue(assert("TheEnd", "has", "Coverpage"));
+        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
+        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
+        var url = wallpaper_url || coverpage_url || false;
+
+        if (url) {
+            wallpaper.change(url);
+        } else {
+            wallpaper.clear();
+        }
+
+        if (coverpage) {
+            storyLog.image(coverpage_url);
+        }
+
+        var description = state.resolveValue(assert("TheEnd", "has", "Description"));
+        if (description) {
+            storyLog.log("“&nbsp;" + description + "&nbsp;”");
         }
 
         return this;
     }
 
-    function describeRoom() {
-        storyLog.clear();
+    function refreshTheme(room) {
+        var themeId = null;
 
-        var room = state.resolveOne({
-            subject: "You",
-            predicate: "isIn"
-        });
-
-        //console.log("describing room", room);
-
-        //console.log("Your in room ", room);
         if (room) {
-            var scenery = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Scenery"
-            });
-            var url = script.resolveRelativeURI(scenery);
-            if (url) {
-                sceneryService.change(url);
+            themeId = state.resolveValue(assert(room, "has", "Theme"));
+        }
+        if (!themeId) {
+            themeId = state.resolveValue(assert("Story", "has", "Theme"));
+        }
+        if (themeId) {
+            var theme = themes.select(themeId);
+            if (theme && theme.id === themeId) {
+                yConsole.log("Theme changed to : " + themeId);
             } else {
-                sceneryService.clear();
+                yConsole.warning("Wanted theme not found: " + themeId);
+            }
+        }
+    }
+
+    function describeRoom() {
+        storyLog.markAsRead();
+
+        var room = state.resolveOne(assert("You", "is in"));
+
+        refreshTheme(room);
+
+        if (room) {
+            var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
+            var url = script.resolveRelativeURI(wallpaperValue);
+            if (url) {
+                wallpaper.change(url);
+            } else {
+                wallpaper.clear();
             }
 
-            var label = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Name"
-            });
-            if (label) storyLog.heading(label);
 
-            var description = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Description"
-            });
-            if (description) storyLog.log(description);
+
+            var name = state.resolveValue(assert(room, "has", "Name"));
+            if (name) storyLog.heading(name);
+
+            var introduction = state.resolveValue(assert(room, "has", "Introduction"));
+            var description = state.resolveValue(assert(room, "has", "Description"));
+
+            if (introduction) {
+                storyLog.log(introduction);
+            } else if (description) {
+                storyLog.log(description);
+            }
 
         } else {
             storyLog.log("You are nowhere to be found! Place your hero somewhere");
@@ -133,31 +176,22 @@ yarn.factory('writers', function (yarn,
     }
 
     // Describe where you are at the beginning
+
     function describeThing(thing) {
         if (thing) {
-            var label = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Name"
-            });
-            var description = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Description"
-            });
-            var image = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Image"
-            });
-
+            var description = state.resolveValue(assert(thing, "has", "Description"));
+            var image = state.resolveValue(assert(thing, "has", "Image"));
             if (image) {
                 storyLog.thingImage(
                     script.resolveRelativeURI(image)
                 );
             }
-            if (label) storyLog.subHeading(label);
-            if (description) storyLog.log(description);
+            if (description) {
+                storyLog.log(description);
+            } else {
+                var defaultSeeNothingText = state.resolveValue(assert("Default", "for", "YouSeeNothing"));
+                storyLog.log(defaultSeeNothingText || "Nothing interesting");
+            }
         }
         return this;
     }
@@ -171,13 +205,42 @@ yarn.factory('writers', function (yarn,
     // Describe where you are at the beginning
     function describeThingTakenInInventory(thing) {
         if (thing) {
-            var label = state.resolveValue({
-                subject: thing.id,
-                predicate: "has",
-                object: "Name"
-            });
-            if (label) storyLog.log("You took the " + label);
+            var name = state.resolveValue(assert(thing, "has", "Name"));
+            if (name) storyLog.action("You take the " + name);
         }
+        return this;
+    }
+
+    function objectMenu(thing) {
+        if (thing) {
+
+            var prompt = new Prompt();
+
+            prompt.answer = function answer(promptLoop, option) {
+                commands.command(option);
+            };
+
+            var name = state.resolveValue(assert(thing, "has", "Name"));
+
+            var isUsable = state.resolveValue(assert(thing, "is", "Usable"));
+            if (isUsable) {
+                var option = prompt.option("Use " + name, "use " + thing.id);
+                option.iconId = "use";
+                option.iconSize = "small";
+                option.iconOnly = true;
+            }
+
+            var isInventoryItem = state.resolveValue(assert(thing, "is", "InventoryItem"));
+            if (isInventoryItem) {
+                var option = prompt.option("Take " + name, "take " + thing.id);
+                option.iconId = "inventory";
+                option.iconSize = "small";
+                option.iconOnly = true;
+            }
+
+            storyLog.prompt(prompt);
+        }
+
         return this;
     }
 
@@ -187,7 +250,10 @@ yarn.factory('writers', function (yarn,
         describeThing: describeThing,
         describeRoom: describeRoom,
         describeCoverpage: describeCoverpage,
-        describeWhereYouAre: describeWhereYouAre
+        refreshTheme: refreshTheme,
+        describeTheEnd: describeTheEnd,
+        describeWhereYouAre: describeWhereYouAre,
+        objectMenu: objectMenu
     };
 
 });

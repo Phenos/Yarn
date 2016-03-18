@@ -1,6 +1,14 @@
-<div
+<md-content
         flex="100"
+        layout="column"
         class="editor md-whiteframe-2dp"
-        ui-ace="editor.options"
-        ng-model="editor.source">
-</div>
+>
+    <div
+            flex="100"
+            ui-ace="editor.options"
+            ng-readonly="editor.readOnly"
+            ng-model="editor.source"
+    >
+    </div>
+
+</md-content>

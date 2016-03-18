@@ -2,24 +2,49 @@ yarn.service('state', function ($localStorage,
                                 Assertion,
                                 Assertions,
                                 Thing,
+                                things,
                                 Syntax,
                                 Predicate,
-                                guid) {
+                                predicates,
+                                yConsole,
+                                assert,
+                                session,
+                                guid,
+                                eval,
+                                $parse) {
+
 
         function State() {
             this.assertions = new Assertions();
-            this.things = {};
-            this.predicates = {};
-            this.syntaxes = {};
             this.currentLayer = "world";
             this.localState = null;
             this.guid = guid();
         }
 
+        State.prototype.uniqueKey = function () {
+            var key;
+            var username = "anonymous";
+            if (session.user()) {
+                username = session.user().username;
+            }
+            var uniqueID = this.resolveValue("Story", "has", "UniqueID");
+            var releaseNumber = this.resolveValue("Story", "has", "UniqueID");
+            key = [username, uniqueID, releaseNumber].join("-");
+            return key;
+        };
+
+        State.prototype.getStoryLocalStorage = function () {
+            var key = this.uniqueKey();
+            if (angular.isUndefined($localStorage[key])) {
+                $localStorage[key] = {};
+            }
+            return $localStorage[key];
+        };
+
         State.prototype.restoreFromLocalState = function () {
             var self = this;
-            var localAssertions = ($localStorage.localState &&
-                $localStorage.localState.assertions) || {};
+            var storyStorage = this.getStoryLocalStorage();
+            var localAssertions = storyStorage.assertions || {};
 
             //console.log("Restoring assertion from localState", localAssertions);
 
@@ -33,7 +58,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.object;
                 } else if (typeof(assertion.object) === "string") {
                     if (assertion.object.indexOf("@id:") === 0) {
-                        object = self.thing(assertion.object.substring(4));
+                        object = things.get(assertion.object.substring(4));
                     } else {
                         object = assertion.object;
                     }
@@ -43,7 +68,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.subject;
                 } else if (typeof(assertion.subject) === "string") {
                     if (assertion.subject.indexOf("@id:") === 0) {
-                        subject = self.thing(assertion.subject.substring(4));
+                        subject = things.get(assertion.subject.substring(4));
                     } else {
                         subject = assertion.subject;
                     }
@@ -51,7 +76,7 @@ yarn.service('state', function ($localStorage,
 
                 var newAssertion = self.createAssertion(
                     subject,
-                    self.predicate(assertion.predicate),
+                    predicates(assertion.predicate),
                     object, {
                         value: assertion.value
                     }
@@ -60,95 +85,18 @@ yarn.service('state', function ($localStorage,
             });
         };
 
-        /**
-         * Get or create a new thing
-         * @param _id
-         * @param dontAutoCreate
-         */
-        State.prototype.thing = function (_id, dontAutoCreate) {
-            var thing = null;
-            if (_id) {
-                var id = _id.toLowerCase();
-                thing = this.things[id];
-                if (!thing) {
-                    if (dontAutoCreate) {
-                        thing = null;
-                    } else {
-                        thing = new Thing(id, this);
-                        thing.label(_id);
-                        this.things[id] = thing;
-                    }
-                }
 
-            }
-
-            return thing;
-        };
-
-        /**
-         * Get or create a new thing
-         * @param predicate
-         * @param text
-         * @returns {*}
-         */
-        State.prototype.syntax = function (predicate, text) {
-            var syntax;
-
-            if (!predicate)
-                throw("Syntax must have a predicate");
-            if (!text)
-                throw("Syntax must have a text");
-            syntax = this.syntaxes[text];
-            if (!syntax) {
-                syntax = new Syntax(text, predicate);
-                this.syntaxes[text] = syntax;
-            }
-            return syntax;
-        };
-
-        /**
-         * Get or create a new type of predicate
-         * @param _id
-         */
-        State.prototype.predicate = function (_id, dontAutoCreate) {
-            var predicate;
-            var syntax;
-            if (typeof(_id) === "string") {
-                var id = _id.toLowerCase();
-
-                if (!id)
-                    throw("Assertions must have an id");
-
-                // Resolve the predicate from the syntax
-                syntax = this.syntaxes[id];
-                if (syntax) predicate = syntax.predicate;
-
-                if (!predicate) {
-                    if (dontAutoCreate) {
-                        predicate = null;
-                    } else {
-                        predicate = new Predicate(id, this);
-                        //console.log("Created new predicate", predicate);
-                        this.predicates[id] = predicate;
-                        this.syntaxes[id] = new Syntax(id, predicate);
-                    }
-                }
-            }
-            return predicate;
-        };
-
-        State.prototype.resolveAll = function resolveAll(criterias) {
-            var foundObjects = [];
-            if (criterias && (criterias.subject && criterias.predicate) || (criterias.object && criterias.predicate)) {
+        State.prototype.resolveAll = function resolveAll(assert, returnAssertions) {
+            var foundAssertions = [];
+            var foundThings = [];
+            if (assert && (assert.subject && assert.predicate) || (assert.object && assert.predicate)) {
                 var foundObjectsSets = {};
-                //console.log("criterias", criterias);
 
                 // Exclused parented assertions unless already specified
-                if (angular.isUndefined(criterias.parent)) criterias.parent = null;
+                if (angular.isUndefined(assert.parent)) assert.parent = null;
 
                 // Match all assertions to the criterias
-                var assertions = this.assertions.find(criterias);
-
+                var assertions = this.assertions.find(assert);
 
                 // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
@@ -156,7 +104,7 @@ yarn.service('state', function ($localStorage,
                 });
 
                 // Check if the item to be resolved is the object or the subject
-                var typeToResolve = (criterias.object) ? "subject" : "object";
+                var typeToResolve = (assert.object) ? "subject" : "object";
 
                 // Split all assertion by their unique thing to be resolved
                 assertions.forEach(function (assertion) {
@@ -170,18 +118,22 @@ yarn.service('state', function ($localStorage,
 
                 angular.forEach(foundObjectsSets, function (foundObjectSet) {
                     var topAssertion = foundObjectSet[foundObjectSet.length - 1];
-                    if (topAssertion.value()) foundObjects.push(topAssertion[typeToResolve]);
+                    if (topAssertion.value()) {
+                        foundAssertions.push(topAssertion);
+                        foundThings.push(topAssertion[typeToResolve]);
+                    }
                 });
                 //console.log("FOUND: ", foundObjects);
 
             }
+
             //console.log("foundObjects", foundObjects);
-            return foundObjects;
+            return (returnAssertions) ? foundAssertions : foundThings;
         };
 
-        State.prototype.resolveOne = function (criterias) {
+        State.prototype.resolveOne = function (assert) {
             var value = null;
-            var objs = this.resolveAll(criterias);
+            var objs = this.resolveAll(assert);
             if (objs.length) {
                 // We make sure that the top-most item is taken, in a case where
                 // multiple assertions would have been true, the heaviest one
@@ -191,20 +143,20 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
-        State.prototype.resolveValue = function (criterias) {
+        State.prototype.resolveValue = function (assert) {
             var value = null;
-            if (criterias && (criterias.subject && criterias.predicate)) {
+            if (assert && (assert.subject && assert.predicate)) {
 
                 // Exclused parented assertions
-                criterias.parent = null;
+                assert.parent = null;
 
                 // If no object is supplied as criteria,
                 // If no object is supplied as criteria,
                 // indicate is should match for "no objects"
-                if (!criterias.object) criterias.object = null;
+                if (!assert.object) assert.object = null;
 
                 // Match all assertions to the criterias
-                var assertions = this.assertions.find(criterias);
+                var assertions = this.assertions.find(assert);
 
                 //console.log("criterias", criterias);
                 //console.log("assertions", assertions);
@@ -233,50 +185,75 @@ yarn.service('state', function ($localStorage,
          * @returns {*}
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
+            var self = this;
             var options = _options || {};
-            //console.log("State.createAssertion", subject, predicate, object, options);
-
-            // If not layer is provided, we set the "currentLayer"
-            if (!options.layer) {
-                options.layer = this.currentLayer;
-            }
-
-            // If not layer is provided, we set the "currentLayer"
-            if (angular.isUndefined(options.value)) {
-                options.value = true;
-            }
 
             if (subject && predicate && object) {
+                var _predicate = predicate;
+
+                // If the predicate is a negation, we find the positive predicate
+                // and force the value to false. We also warn if the author attempts
+                // to set a value with a negative predicate
+                if (typeof(_predicate.negative) === "string" && _predicate.negative !== "") {
+                    if (angular.isDefined(options.value)) {
+                        yConsole.error(
+                            ["Setting a value with a negative assertion is not allowed. Ref.: ",
+                                subject.id,
+                                predicate.id,
+                                object.id
+                            ].join(" "));
+                    }
+                    options.value = false;
+                    _predicate = predicates(predicate.negative);
+                }
+
+                // If no value is provided, we set "true" as the default
+                if (angular.isUndefined(options.value)) {
+                    options.value = true;
+                }
+
+                if (options.eval) {
+                    var evaluatedValue = eval(options.value, {
+                        value: self.resolveValue(assert(subject, predicate, object))
+                    });
+                    if (angular.isDefined(evaluatedValue)) {
+                        options.evaluatedValue = evaluatedValue;
+                    }
+                }
+
+                // If not layer is provided, we set the "currentLayer"
+                if (!options.layer) {
+                    options.layer = this.currentLayer;
+                }
+
                 if (!options.parent && this.currentLayer !== "world") {
                     // Find exquivalent assertions to be negated
-                    this.negate({
-                        subject: subject.id,
-                        predicate: predicate.id,
-                        object: object.id
-                    });
+                    this.negate(assert(subject, _predicate, object));
                 }
-                var identicalAssertions = this.assertions.filter({
-                    subject: subject.id,
-                    predicate: predicate.id,
-                    object: object.id,
+                var _assert = assert(subject, _predicate, object, {
                     layer: options.layer,
                     parent: options.parent
                 });
+                var identicalAssertions = this.assertions.filter(_assert);
                 if (identicalAssertions.count() > 0) {
                     var topAssertion = identicalAssertions.sortByWeight().top();
                     if (topAssertion.layer === "world") {
                         // If the top assertion in on the static world layer
                         // We create a new assertion anyways
-                        var assertion = new Assertion(subject, predicate, object, options);
+                        var assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
                         this.persistAssertion(assertion);
                     } else {
                         // Else we re-use the existing assertion
-                        topAssertion.value(options.value);
+                        if (angular.isDefined(options.evaluatedValue)) {
+                            topAssertion.value(options.evaluatedValue);
+                        } else {
+                            topAssertion.value(options.value);
+                        }
                         this.persistAssertion(topAssertion);
                     }
                 } else {
-                    var assertion = new Assertion(subject, predicate, object, options);
+                    var assertion = new Assertion(subject, _predicate, object, options);
                     this.assertions.add(assertion);
                     this.persistAssertion(assertion);
                 }
@@ -294,35 +271,30 @@ yarn.service('state', function ($localStorage,
          * If the session layer is empty, the assertion is removed
          */
         State.prototype.persistAssertion = function (assertion) {
-            //console.log("State.persistAssertion", assertion);
-            if (!$localStorage.localState) {
-                $localStorage.localState = {}
+            var storyStorage = this.getStoryLocalStorage();
+
+            if (!storyStorage.assertions) {
+                storyStorage.assertions = {}
             }
-            if (!$localStorage.localState.assertions) {
-                $localStorage.localState.assertions = {}
-            }
-            var localState = $localStorage.localState;
+
             //console.log("persistAssertion", assertion, assertion.layer);
             if (assertion.layer === "session") {
-                if (localState) {
-                    var json = assertion.toJSON();
-                    if (json) {
-                        localState.assertions[assertion.id()] = json;
-                    } else {
-                        delete localState.assertions[assertion.id()];
-                    }
+                var json = assertion.toJSON();
+                if (json) {
+                    storyStorage.assertions[assertion.id()] = json;
+                } else {
+                    delete storyStorage.assertions[assertion.id()];
                 }
             }
         };
+
         State.prototype.UnpersistAssertions = function (_assertions) {
             // todo: refactor: Initialising the localStorage this way is not elegant.... use .ensure() pattern
-            if (!$localStorage.localState) {
-                $localStorage.localState = {}
+            var storyStorage = this.getStoryLocalStorage();
+
+            if (!storyStorage.assertions) {
+                storyStorage.assertions = {}
             }
-            if (!$localStorage.localState.assertions) {
-                $localStorage.localState.assertions = {}
-            }
-            var localState = $localStorage.localState;
 
             //console.log("State.UnpersistAssertions", _assertions);
             var assertions = _assertions;
@@ -331,19 +303,19 @@ yarn.service('state', function ($localStorage,
             angular.forEach(assertions, function (assertion) {
                 //console.log("persistAssertion", assertion, assertion.layer);
                 if (assertion.layer === "session") {
-                    delete localState.assertions[assertion.id()];
+                    delete storyStorage.assertions[assertion.id()];
                 }
             });
         };
 
-        State.prototype.negate = function (criterias) {
+        State.prototype.negate = function (assert) {
             var self = this;
 
-            if (criterias.layer) throw "Cannot specify layer when negating assertions";
-            if (criterias.parent) throw "Cannot specify parent when negating assertions";
+            if (assert.layer) throw "Cannot specify layer when negating assertions";
+            if (assert.parent) throw "Cannot specify parent when negating assertions";
 
             var groupedAssertions = this.assertions
-                .filter(criterias)
+                .filter(assert)
                 .groupByTripple();
 
             //console.log("groupedAssertions", groupedAssertions);
@@ -402,11 +374,7 @@ yarn.service('state', function ($localStorage,
 
         State.prototype.step = function (increment) {
             var count = 0;
-            var stepCount = this.resolveValue({
-                subject: "story",
-                predicate: "has",
-                object: "steps"
-            });
+            var stepCount = this.resolveValue(assert("Story", "has", "Steps"));
             if (stepCount) {
                 if (typeof stepCount === "number") {
                     count = stepCount;
@@ -415,20 +383,18 @@ yarn.service('state', function ($localStorage,
 
             if (increment && typeof(increment) === "number") {
                 count = count + increment;
-                var story = this.thing("Story");
-                var steps = this.thing("Steps");
-                var has = this.predicate("has");
+                var story = things.get("Story");
+                var steps = things.get("Steps");
+                var has = predicates("has");
                 this.createAssertion(story, has, steps, {
                     value: count
                 });
-                //console.log("====>", assertion);
             }
 
             return count;
         };
 
         return new State();
-
 
     }
 );

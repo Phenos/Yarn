@@ -10,8 +10,11 @@ var yarn = angular.module('yarn', [
     'ngSanitize',
     'ui.grid',
     'ngMaterial',
+    'duScroll',
     'ui.router',
-    'lbServices',
+    'firebase',
+    'ngDebottle',
+    'ngContextMenu',
     'tandibar/ng-rollbar',
     'ui.ace',
     'cfp.hotkeys'

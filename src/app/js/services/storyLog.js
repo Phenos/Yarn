@@ -23,7 +23,7 @@ yarn.service('storyLog', function () {
     // To be later flushed
     StoryLog.prototype.buffer = function () {
         var bufferedLog = new StoryLog();
-        console.log("Creating a buffered log ", bufferedLog);
+        //console.log("Creating a buffered log ", bufferedLog);
         this.bufferedLogs.push(bufferedLog);
         return bufferedLog;
     };
@@ -31,7 +31,7 @@ yarn.service('storyLog', function () {
     StoryLog.prototype.flushBuffers = function () {
         var self = this;
         var log;
-        console.log("Flushing the log buffer", this.bufferedLogs);
+        //console.log("Flushing the log buffer", this.bufferedLogs);
         while (this.bufferedLogs.length) {
             log = this.bufferedLogs.shift();
             log.register(self.controller);
@@ -56,6 +56,25 @@ yarn.service('storyLog', function () {
 
     StoryLog.prototype.log = function (text) {
         this.controller.write(text, "log");
+    };
+
+    StoryLog.prototype.headline = function (text) {
+        this.controller.write(text, "headline");
+    };
+
+    StoryLog.prototype.action = function (text) {
+        this.controller.write("—" + text, "action");
+    };
+
+    StoryLog.prototype.insight = function (text) {
+        this.controller.write("<md-icon md-svg-icon='./svg-icons/insight.svg'></md-icon>" + text, "insight");
+    };
+
+    StoryLog.prototype.prompt = function (prompt) {
+        var scope = {
+            prompt: prompt
+        };
+        this.controller.write("<user-choice prompt='prompt'></user-choice>", "prompt", scope);
     };
 
     StoryLog.prototype.image = function (url) {
@@ -87,6 +106,10 @@ yarn.service('storyLog', function () {
 
     StoryLog.prototype.clear = function () {
         this.controller.clear();
+    };
+
+    StoryLog.prototype.markAsRead = function () {
+        this.controller.markAsRead();
     };
 
     return new StoryLog();

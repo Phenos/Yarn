@@ -1,0 +1,108 @@
+<md-content style="z-index:5"
+            flex="1"
+            layout="row"
+            get-context-menu
+            data-context-event="contextmenuexists"
+            data-context-menu="./html/editor-context-menus.html"
+>
+    <assertion-browser></assertion-browser>
+    <player class="layout-panel theme-{{ themes.current.id }}" flex="noshrink" user="user" layout="column"></player>
+    <md-section
+            md-whiteframe="10"
+            class="IDE"
+            layout="column"
+            flex="60"
+            ng-show="IDEisVisible || helpIsVisible">
+        <md-section layout="row" flex="" style="overflow: hidden">
+            <md-section
+                    ng-show="IDEisVisible"
+                    class="layout-panel"
+                    flex="noshrink"
+                    style="width: 350px"
+                    layout="column">
+                <editor-toolbar></editor-toolbar>
+                <div layout="column">
+                    <editor-tabs ng-show="editorFiles.files.length > 0" layout="column"></editor-tabs>
+                    <div style="background: #fff;"
+                         ng-show="editorFiles.files.length === 0"
+                         layout="column"
+                         layout-align="center center"
+                         flex="100"
+                    >
+                        <div flex="20"></div>
+                        <div>
+                            <div layout="column">
+                                <div style="color: #666; text-align: center;">
+                                    No files are curently open!
+                                </div>
+                                <br/>
+                                <md-button ng-click="openMain()">
+                                    Open the main "story.txt" file
+                                </md-button>
+                                <md-button ng-click="openFile()">
+                                    Browse Files ...
+                                </md-button>
+                            </div>
+                        </div>
+                        <div flex="60"></div>
+                    </div>
+                    <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
+                </div>
+            </md-section>
+            <md-section ng-show="helpIsVisible"
+                        md-whiteframe="10"
+                        flex="noshrink"
+                        style="width: 350px"
+                        layout="column"
+                        class="layout-panel">
+                <help-toolbar></help-toolbar>
+                <div flex="100" layout="row">
+                    <help on-escape-focus="onHelpEscapeFocus()" on-focus="onHelpFocus()"></help>
+                </div>
+            </md-section>
+        </md-section>
+        <md-section
+                layout="column"
+                class="toolTabs layout-panel"
+                flex="{{ consoleFlexHeight }}"
+                ng-show="IDEisVisible"
+        >
+            <div class="toolTabs-toggle">
+                <md-button class="md-icon-button" ng-click="toggleTools()" aria-label="Show&Hide tools">
+                    <md-icon ng-show="!toolsAreVisible" md-svg-icon="/svg-icons/pull-up.svg"></md-icon>
+                    <md-icon ng-show="toolsAreVisible" md-svg-icon="/svg-icons/pull-down.svg"></md-icon>
+                </md-button>
+            </div>
+
+            <md-tabs
+                    flex="100"
+                    md-selected="toolTabs.selected"
+                    md-autoselect>
+
+                <md-tab>
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/commands.svg"></md-icon>
+                        Commands
+                    </md-tab-label>
+                    <md-tab-body>
+                        <div flex="100" layout="row">
+                            <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab>
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/inspector.svg"></md-icon>
+                        Inspector
+                    </md-tab-label>
+                    <md-tab-body>
+                        <inspector></inspector>
+                    </md-tab-body>
+                </md-tab>
+            </md-tabs>
+        </md-section>
+
+    </md-section>
+</md-content>

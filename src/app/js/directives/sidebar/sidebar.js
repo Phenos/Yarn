@@ -11,55 +11,26 @@ yarn.directive('sidebar', function SidebarDirective() {
     };
 
     function SidebarController(sidebar,
+                               $scope,
                                $mdSidenav,
-                               welcomeMessage,
-                               commands,
-                               metadata,
-                               playerMode) {
-        var self = this;
+                               $window,
+                               session,
+                               auth,
+                               login,
+                               root) {
+
+        if (session.user()) this.user = session.user();
+
+        if (this.user && this.user.username) {
+            $scope.avatar = this.user.profileImageURL;
+            $scope.username = this.user.displayName;
+        }
 
         this.showConsole = function () {
-            playerMode.showConsole();
+            root.showConsole();
         };
-
-        metadata.then(function (metadata) {
-            this.metadata = metadata
-        });
 
         sidebar.register(this);
-
-        //this.openConsole = function () {
-        //    console.log("sidebar.openConsole");
-        //    player.openConsole();
-        //    self.closeAll();
-        //};
-        //
-        this.openStoryMenu = function () {
-            $mdSidenav("storySidebar").open();
-        };
-
-        this.closeStoryMenu = function () {
-            $mdSidenav("storySidebar").close();
-        };
-
-        this.openAuthorMenu = function () {
-            $mdSidenav("authorSidebar").open();
-        };
-
-        this.closeAuthorMenu = function () {
-            $mdSidenav("authorSidebar").close();
-        };
-
-        this.restartStory = function () {
-            commands.command("restart");
-            self.closeAll();
-        };
-
-        this.closeAll = function () {
-            self.close();
-            self.closeStoryMenu();
-            self.closeAuthorMenu();
-        };
 
         this.open = function () {
             $mdSidenav("leftSidebar").open();
@@ -67,15 +38,19 @@ yarn.directive('sidebar', function SidebarDirective() {
 
         this.close = function () {
             $mdSidenav("leftSidebar").close();
-            $mdSidenav("authorSidebar").close();
-        };
-
-        this.openWelcomeMessage = function () {
-            welcomeMessage.open();
         };
 
         this.openHelp = function () {
-            playerMode.showHelp();
+            root.showHelp();
+        };
+
+        this.logout = function () {
+            auth.$unauth();
+            $window.location.href = "/";
+        };
+
+        this.login = function () {
+            login();
         };
 
     }

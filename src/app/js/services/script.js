@@ -1,4 +1,4 @@
-yarn.service('script', function (Pointer,
+yarn.factory('script', function (Pointer,
                                  AST,
                                  Runtime,
                                  $q,
@@ -6,27 +6,28 @@ yarn.service('script', function (Pointer,
                                  URI) {
 
     function Script() {
-        this.url = "";
-        this.source = "";
-        this.pointer = new Pointer();
-        this.ast = new AST();
-        // Keep a reference t key named nodes
-        this.references = {};
-        // Imported child scripts
-        this.imports = [];
-        this.runtime = null;
+        this.reset();
     }
 
     Script.prototype.load = function (source, url) {
+        this.reset();
         this.url = url || "";
         this.source = source;
         var self = this;
         this.pointer.tokenize(source);
-        //console.log("yarn.script.load");
+        //console.log("yarn.script.load: ", url);
         return this.compile(this.pointer.tokens).then(function (ast) {
             //console.log("after compile");
             return self.processImports(ast);
         });
+    };
+
+    Script.prototype.reset = function () {
+        this.pointer = new Pointer();
+        this.url = "";
+        this.source = "";
+        this.ast = new AST();
+        this.runtime = null;
     };
 
     Script.prototype.run = function () {
@@ -70,6 +71,7 @@ yarn.service('script', function (Pointer,
 
     Script.prototype.importNode = function (node) {
         var url = this.resolveRelativeURI(node.value);
+        //console.log("-------> ", this, node.value);
 
         return loadScript(url).then(function (loadedScript) {
             var script = new Script();

@@ -13,10 +13,10 @@ function HelpToolbarDirective() {
         controller: HelpToolbarController
     };
 
-    function HelpToolbarController(playerMode) {
+    function HelpToolbarController(root) {
 
         this.hideHelp = function () {
-            playerMode.hideHelp();
+            root.hideHelp();
         };
     }
 }

@@ -1,0 +1,47 @@
+<article>
+    <h1>Templating</h1>
+
+    <p>
+        Whenever text is outputed to the players screen, yarn will first check
+        if you specified that you text is a template that need to be evaluated first.
+    </p>
+
+    <p>
+        Templating is usefull for:
+    </p>
+    <ul>
+        <li>Vary text blocks according to conditions</li>
+        <li>Insert values in text such as names, numbers, time and other values.</li>
+        <li>Outputing dynamic lists of items</li>
+    </ul>
+    <p>
+        To specified that a text is a template, you precede it
+        with <strong>tmpl:</strong>, like in this example:
+    </p>
+<code>
+MagicHat has aDescription
+    "tmpl:
+    Your trusty pointy hat.
+    {% if assert('You are in Castle') %}
+        Too large and flappy as usual.
+    {% else %}
+        Weirdly it is glowing octarine... you must
+        be near the magic shop!.
+    {% endif %}"
+
+</code>
+    <p>
+        In the example, the hats description changes depending on the user's location.
+    </p>
+    <h3>The Nunjucks Templating Engine</h3>
+    <p>
+        This templating language is called "Nunjucks" and is used by many other projets. A more extensive
+        and generic purpose documentation is available on their website at:<br/>
+        <a href="http://mozilla.github.io/nunjucks/templating.html">http://mozilla.github.io/nunjucks/templating.html</a>
+    </p>
+
+    <p>
+        <a href="index.html">Back home</a>
+    </p>
+
+</article>

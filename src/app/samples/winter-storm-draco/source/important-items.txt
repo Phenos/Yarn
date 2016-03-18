@@ -1,0 +1,20 @@
+
+//todo: Flag things as important to make them impossible to drop
+A thing can be important.
+
+//todo: If a thing is important, output a custom message
+Instead of dropping something important:
+    say "Your housemates are expecting you to bring that home."
+
+//todo: Special case to allow puting important items only in the plastic bag
+Check inserting something important into something:
+    if the second noun is the plastic bag or the second noun is the canvas bag:
+        continue the action;
+    otherwise:
+        say "Your housemates are expecting you to bring that home. You can't leave it with [the second noun]." instead.
+
+// Todo: The "cant put this there" message should be customizable to include the objects name
+Check putting something important on something:
+    say "Your housemates are expecting you to bring that home. You can't leave it on [the second noun]." instead.
+
+

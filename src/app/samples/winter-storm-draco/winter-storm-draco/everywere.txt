@@ -1,0 +1,49 @@
+
+### The Snow
+
+    The snow is a backdrop.
+    The snow is everywhere.
+
+    // todo: allow "trying" to pick-up snow
+    Instead of taking the snow, say
+        "You pick some snow up from the ground. It bites your fingers, and you drop it
+        before it can finish melting in your grasp. You should have worn gloves."
+
+    // todo: allow "trying" to eat snow
+    Instead of eating the snow, say
+        "You lift a handful of snow to your lips. Biting into it produces a hollow crunch,
+        and it melts immediately in your mouth. It's all very much like eating unflavored shaved ice."
+
+    The description of the snow is
+        "Each flake falls at more or less the same rate, at the same gentle angle toward
+        the ground, and the effect is as if this lattice of white motes were being projected
+        onto the air by a disco ball. The snow on the ground is a completely different substance:
+        An opaque layer of dust, thickening by the second."
+
+
+### The Sky
+
+
+    The sky is a backdrop.
+    The sky is everywhere.
+
+    //todo:
+    The description of the sky is
+        "The sky is a very low-hanging mass of clouds, tinged orange-pink by
+        [if the location is Highway][otherwise]distant [end if]streetlamps."
+
+    Instead of doing something other than examining with the sky, say
+        "The sky is very far away."
+
+### MyBreath
+
+    The breath is a backdrop.
+    The breath is everywhere.
+
+    The description of the breath is
+        "As you exhale, a cloud of mist rises and obscures your vision even further.
+        It dissipates quickly—until you exhale again."
+
+
+
+

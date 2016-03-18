@@ -1,142 +1,221 @@
 @import "vars.less";
 
-.logItem {
+log-item {
+    display: block;
 
-    padding: 6px 20px;
-    margin: 0.5em 0.5em;
-    color: #fff;
+    &.read {
+        opacity: 0.5;
+        animation: markAsRead 2s;
 
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
-
-    a:visited,
-    a:link,
-    a {
-        color: #ff9;
-        text-decoration: none;
-        font-weight: 400;
-    }
-    strong {
-        font-weight: 600;
-    }
-
-    .isMobileWidth & {
-        margin-right: 0.2em !important;
-        margin-left: 0.2em !important;
-    }
-
-    &.is-log {
-        .fadeIn();
-        font-size: 1.2em;
-        margin: 1em 1em;
-        font-weight: 400;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.5em 0.2em !important;
+        @keyframes markAsRead {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+        &:hover {
+            opacity: 1;
         }
     }
 
-    &.is-image {
-        .fadeIn();
-        font-size: 1.2em;
-        margin: 1em 1em;
-        font-weight: 400;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.5em 0.2em !important;
-        }
-        img {
-            .defaultShadow();
-            max-width: 600px;
-            width: 80%;
-        }
-    }
+    .logItem {
 
-    &.is-error {
-        .fadeOut();
-        font-size: 0.9em;
-        letter-spacing: 0.06em;
-        margin: 1em 3em;
-        font-weight: 300;
-        text-align: center;
-        font-style: italic;
-    }
+        padding: 6px 20px;
+        margin: 0.5em 0.5em;
+        color: #fff;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
 
-    &.is-heading {
-        font-size: 2em;
-        font-weight: 200;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.2em 0.25em;
-        }
-    }
-
-    &.is-subHeading {
-        font-size: 1.3em;
-        font-weight: 200;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.2em 0.25em;
-        }
-    }
-
-    &.is-divider {
-        font-size: 1.3em;
-        margin: 1.5em 5em;
-        font-weight: bold;
-        text-align: center;
-        opacity: 0.4;
-
-        .isMobileWidth & {
-            margin: 0.25em 5em;
+        md-icon {
+            position: relative;
+            top: 0.5em;
+            color: inherit;
+            width: 30px;
+            height: 30px;
+            float: right;
+            padding-left: 1em;
+            text-shadow: inherit;
         }
 
-        .divider svg {
-            width: 160px;
-            path {
-                fill: #fff;
+        a:visited,
+        a:link,
+        a {
+            position: relative;
+            color: #ff9;
+            text-decoration: none;
+            font-weight: 400;
+
+            &.unrecognized-thing {
+                color: #d0261b !important;
+                font-weight: bold !important;
+                text-decoration: line-through !important;
+            }
+
+        }
+        strong {
+            font-weight: 600;
+        }
+
+        &.is-prompt {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0;
+            padding: 0;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        &.is-log {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 1em 1em;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        &.is-insight {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 1em 1em;
+            font-weight: 400;
+            text-align: justify;
+            font-style: italic;
+            color: #ffffdc;
+
+        }
+
+        &.is-action {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 1em 1em;
+            font-style: italic;
+            text-align: justify;
+            color: rgba(255, 255, 255, 0.81);
+
+        }
+
+        &.is-image {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 1em 1em;
+            font-weight: 400;
+            text-align: center;
+
+            img {
+                .defaultShadow();
+                max-width: 400px;
+                width: 80%;
+            }
+        }
+
+        &.is-error {
+            .fadeOut();
+            font-size: 0.9em;
+            letter-spacing: 0.06em;
+            margin: 1em 3em;
+            font-weight: 300;
+            text-align: center;
+            font-style: italic;
+        }
+
+        &.is-heading {
+            .fadeIn();
+            font-size: 2.2em;
+            font-weight: 200;
+            text-align: center;
+            margin: 0.2em 0.2em;
+        }
+
+        &.is-subHeading {
+            .fadeIn();
+            font-size: 1.3em;
+            font-weight: 200;
+            text-align: center;
+        }
+        &.is-headline {
+            .fadeIn();
+            font-size: 1.3em;
+            margin: 0em 3em;
+            text-align: center;
+
+        }
+
+
+        &.is-divider {
+            font-size: 1.3em;
+            margin: 1.5em 5em;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0.4;
+
+            .divider svg {
+                width: 160px;
+                path {
+                    fill: #fff;
+                }
+            }
+        }
+        &.is-thingImage {
+            .fadeIn();
+            font-size: 1.3em;
+            margin: 1.5em 5em;
+            text-align: center;
+
+            img {
+                .defaultShadow();
+                width: 5em;
+                height: 5em;
+                border-radius: 50%;
+                border: none;
+                background: #fff;
             }
         }
     }
-    &.is-thingImage {
-        font-size: 1.3em;
-        margin: 1.5em 5em;
-        text-align: center;
 
-        .isMobileWidth & {
-            margin: 0.25em 5em;
+    .fadeOut {
+
+        opacity: 1;
+        animation: fadingOut 2s;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+        overflow: hidden;
+
+        @keyframes fadingOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
         }
 
-        img {
-            .defaultShadow();
-            width: 5em;
-            height: 5em;
-            border-radius: 50%;
-            border: none;
-            background: #fff;
-        }
-    }
-}
-
-.fadeOut {
-
-    opacity: 1;
-    animation: fadingOut 2s;
-    animation-delay: 2s;
-    animation-fill-mode: forwards;
-    overflow: hidden;
-
-    @keyframes fadingOut {
-        0% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-            height: 0;
-            margin: 0;
-            padding: 0;
-        }
     }
 
+    .fadeOut {
+
+        opacity: 1;
+        animation: fadingOut 2s;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+        overflow: hidden;
+
+        @keyframes fadingOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+    }
 }
 
 .fadeIn {

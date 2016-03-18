@@ -2,15 +2,13 @@
 .console {
     display: block;
     position: relative;
-    background: #dddddd;
     z-index: 1000;
     font-size: 0.9em;
     font-weight: 400;
     min-height: 60px;
 
-    .isMobileWidth & {
-        padding: 0 0 0 0;
-        font-size: 1.2em;
+    md-content {
+        background-color: transparent !important;
     }
 
     logscroll {
@@ -28,7 +26,18 @@
             margin: 0 20px;
             padding: 0.4em 0;
             color: #333;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+            &.isNewStep {
+                margin-top: 0.5em;
+                border-top: 2px solid rgba(0, 0, 0, 0.05);
+            }
+
+            &:nth-child(even) {
+                background-color: rgba(255, 255, 255, 0.02);
+            }
+            &:nth-child(odd) {
+                background-color: rgba(0, 0, 0, 0.02);
+            }
 
             a:visited,
             a:link,
@@ -40,16 +49,23 @@
                 font-weight:800;
             }
 
+            .timestamp {
+                float: right;
+                font-size: 0.9em;
+                color: rgba(0,0,0,0.4);
+            }
+            .step {
+                float: right;
+                font-size: 0.9em;
+                color: rgba(0,0,0,0.4);
+                padding-left: 1em;
+            }
+
             log-icon {
                 position: absolute;
                 font-size: 0.7em;
                 left: -1.3em;
                 top: 0.7em;
-            }
-
-            .isMobileWidth & {
-                margin-right: 0.2em !important;
-                margin-left: 0.2em !important;
             }
 
             &.is-log {

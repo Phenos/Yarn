@@ -1,16 +1,18 @@
-yarn.factory('IDE', IDEService);
-
 /**
  * Service for handling IDE/editor operations
  */
-function IDEService(stories,
-                    hotkeys,
-                    rememberLastStory,
-                    $mdDialog,
-                    yConsole,
-                    loader) {
+yarn.service('IDE', function IDEService(hotkeys,
+                                        rememberLastStory,
+                                        $mdDialog,
+                                        yConsole,
+                                        loader,
+                                        storage,
+                                        commands,
+                                        editorFiles) {
 
-    var service = {};
+    var service = {
+        isWorking: false
+    };
 
     /**
      * Register the service to a scope to allow binding keystrokes
@@ -25,7 +27,16 @@ function IDEService(stories,
                 description: 'Save and run the story',
                 callback: function (event) {
                     event.preventDefault();
-                    service.saveAndRun();
+                    service.saveAllAndRun();
+                }
+            })
+            .add({
+                combo: 'mod+o',
+                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                description: 'Open file...',
+                callback: function (event) {
+                    event.preventDefault();
+                    service.openFromStorage();
                 }
             })
             .add({
@@ -34,49 +45,109 @@ function IDEService(stories,
                 description: 'Save the story',
                 callback: function (event) {
                     event.preventDefault();
-                    service.save();
+
+                    service.isWorking = true;
+                    service.saveAll(function() {
+                        service.isWorking = false;
+                    });
                 }
             })
             .add({
-                combo: 'mod+r',
+                combo: 'mod+shift+r',
                 allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
                 description: 'Run the story',
                 callback: function (event) {
                     event.preventDefault();
                     service.run();
                 }
+            })
+            .add({
+                combo: 'mod+shift+v',
+                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                description: 'Validate Current State',
+                callback: function (event) {
+                    event.preventDefault();
+                    service.validate();
+                }
             });
     };
 
 
-    service.saveAndRun = function () {
-        console.log(".saveAndRun()");
-        service.save(function (story) {
+    service.saveAllAndRun = function () {
+        var self = this;
+        console.log(".saveAllAndRun()");
+        this.isWorking = true;
+        service.saveAll(function (story) {
             service.run(story);
+            self.isWorking = false;
         }, function () {
             $mdDialog.show(
                 $mdDialog
                     .alert()
-                    //.parent(angular.element(document.querySelector('#popupContainer')))
                     .clickOutsideToClose(true)
                     .title('Oups!')
                     .textContent('A problem occured while saving your story. Your changes were not saved.')
                     .ok('Ok')
-                //.targetEvent(ev)
             );
         })
     };
 
-    service.save = function (success, failure) {
-        console.log(stories.currentStory);
-        stories.save(success, failure);
+    service.saveAll = function (success, failure) {
+        editorFiles.saveAll(success, failure);
+
+        console.log("IDE.save");
     };
 
+    service.openFromStorage = function (ev) {
+
+        storage.refresh();
+
+        $mdDialog.show({
+            controller: OpenFromStorageController,
+            templateUrl: './html/openFromStorage.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: false
+        });
+
+        function OpenFromStorageController($scope) {
+            var self = this;
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+            $scope.open = function(file) {
+                self.isWorking = true;
+                console.log("open", file);
+                $mdDialog.cancel();
+                editorFiles.open(file);
+                self.isWorking = false;
+            };
+        }
+    };
+
+    service.validate = function () {
+        commands.command("validate");
+    };
 
     service.run = function () {
-        var url = "http://storage.yarnstudio.io/" + stories.currentUser.username + "/story.yarn.txt";
-        rememberLastStory.forget();
-        loader.fromSource(stories.currentStory.content, url);
+        var mainFile = editorFiles.mainFile();
+        if (mainFile) {
+            var uri = mainFile.absoluteURI().toString();
+            rememberLastStory.forget();
+            loader.fromURL(uri, true);
+        } else {
+            yConsole.log("Could not find which story should be run");
+        }
+    };
+
+    service.runFile = function (file) {
+        if (file) {
+            this.isWorking = true;
+            rememberLastStory.forget();
+            loader.fromURL(file.absoluteURI().toString());
+            this.isWorking = false;
+        }
     };
 
 
@@ -93,7 +164,9 @@ function IDEService(stories,
     };
 
     return service;
-}
+});
+
+
 
 
 

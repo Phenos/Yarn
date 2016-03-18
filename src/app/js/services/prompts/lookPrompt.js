@@ -1,5 +1,6 @@
 yarn.service("lookPrompt", function (writers,
                                      logic,
+                                     assert,
                                      commands,
                                      state,
                                      stateHelpers,
@@ -8,34 +9,31 @@ yarn.service("lookPrompt", function (writers,
     function lookPrompt(context) {
 
         context.when = function () {
-            return "look" === state.resolveValue({
-                    subject: "you",
-                    predicate: "has",
-                    object: "intention"
-                });
+            return "look" === state.resolveValue(assert("You", "has", "Intention"));
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";
 
-            var room = state.resolveOne({
-                subject: "You",
-                predicate: "isIn"
-            });
+            var room = state.resolveOne(assert("You", "is in"));
 
-            var thingsInRoom = stateHelpers.thingsInRoom(room);
+            // Add the room to the list of objects to inspect
+            var roomName = state.resolveValue(assert(room, "has", "Name"));
 
-            //console.log('thingsInRoom', thingsInRoom);
+            // TODO: NERFED FOR NOW... SHOULDBE REMOVED
+            //prompt.option(roomName, "look " + room.id);
 
-            if (thingsInRoom.length) {
-                thingsInRoom.forEach(function (thing) {
-                    var label = state.resolveValue({
-                        subject: thing.id,
-                        predicate: "has",
-                        object: "Name"
-                    });
-                    prompt.option(label, "look " + thing.id);
-                });
-            }
+            //var thingsInRoom = stateHelpers.thingsInRoom(room);
+
+            //if (thingsInRoom.length) {
+            //    thingsInRoom.forEach(function (thing) {
+            //        var name = state.resolveValue(assert(thing, "has", "Name"));
+            //        name = name || thing.id;
+            //        var Noticed = state.resolveValue(assert(thing, "is", "Noticed"));
+            //        if (Noticed !== false) {
+            //            prompt.option(name, "look " + thing.id);
+            //        }
+            //    });
+            //}
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
@@ -43,6 +41,9 @@ yarn.service("lookPrompt", function (writers,
 
             setDefaultOptionsHelper(prompt, true);
 
+        };
+        context.use = function(thing) {
+            commands.command("look " + thing.id);
         };
         context.answer = function answer(promptLoop, option) {
             if (option) {

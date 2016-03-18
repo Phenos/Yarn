@@ -1,12 +1,13 @@
 yarn.factory('moveCommand', function (yConsole,
-                                     events,
-                                     state,
-                                     logic,
-                                     writers) {
+                                      events,
+                                      things,
+                                      state,
+                                      logic,
+                                      writers) {
 
     function handler(args) {
         if (args.length) {
-            var object = state.thing(args[0], true);
+            var object = things.get(args[0], true);
             if (object) {
                 var success = logic.routines.move(object);
                 if (success) writers.describeWhereYouAre(true);

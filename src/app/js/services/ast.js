@@ -24,9 +24,9 @@
             "startParen": "startSubset",
             "endParen": "endSubset",
             "multiLinebreak": "endSequence",
-            "numeric": "appendValue",
-            "singleQuote": "appendValue",
-            "doubleQuote": "appendValue",
+            "numeric": "appendNumeric",
+            "singleQuote": "appendText",
+            "doubleQuote": "appendText",
             "colon": "startArguments",
             "hash": "appendReference",
             "camelCase": "appendReference",
@@ -77,13 +77,24 @@
         
         var TokenHandlers = {
             "appendInstruction": function (cursor, tokenString) {
-                cursor.appendInstruction(tokenString);
+                // Test if instruction is in reality true or false
+                if (tokenString === "true") {
+                    cursor.appendSymbol("value", true);
+                } else if (tokenString === "false") {
+                    cursor.appendSymbol("value", false);
+                } else {
+                    cursor.appendInstruction(tokenString);
+                }
             },
             "endSequence": function (cursor) {
                 cursor.endSequence();
             },
-            "appendValue": function (cursor, tokenString) {
+            "appendText": function (cursor, tokenString) {
                 cursor.appendSymbol("value", tokenString);
+            },
+            "appendNumeric": function (cursor, tokenString) {
+                var value = parseFloat(tokenString);
+                cursor.appendSymbol("value", value);
             },
             "appendReference": function (cursor, tokenString) {
                 cursor.appendSymbol("reference", tokenString);

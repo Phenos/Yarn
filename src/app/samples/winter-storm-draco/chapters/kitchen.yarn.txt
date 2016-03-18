@@ -1,0 +1,62 @@
+/*
+
+THE ROASTING OF THE CHICKEN!
+
+In this example, you can pick a raw chicken from the kicthen, then
+cook it using the oven.
+
+*/
+
+Kitchen links to the Oven.
+
+Oven:
+    is a Room,
+    is a Thing,
+    is in the Kitchen,
+    is a Container,
+    is Usable,
+    has a Name "The Oven",
+    has a Description "Your standard oven... for baking meals and witches! It's branded as the Oven King 3000.".
+
+RawChicken:
+    is a Thing,
+    is an InventoryItem,
+    is in the Kitchen,
+    has a Name "Chicken",
+    has a Description "A raw chicken"
+
+RoastedChicken:
+    is a Thing,
+    is in Nowhere,
+    is an InventoryItem,
+    has a Name "A Roasted Chicken",
+    has a Description "This is an incredulously well roasted chichen!!!"
+
+StartOvenWithRawChicken (
+    You use the Oven.
+    RawChicken is in Oven.
+) triggers CookTheChickenIfRaw (
+    RawChicken is in Nowhere.
+    RoastedChicken is in Oven.
+    Narrator has Monologue "Wow... that chicken cooked in under 5 seconds!"
+)
+
+StartOvenWithRoastedChicken (
+    You use the Oven.
+    RoastedChicken is in Oven.
+) triggers CookTheRoastedChicken (
+    RawChicken is in Nowhere.
+    RoastedChicken is in Oven.
+    Narrator has Monologue "Cooking that chicken twice would not be wise!"
+)
+
+StartOvenWithNoChicken (
+    You use the Oven.
+    You have in inventory RoastedChicken.
+    RawChicken is Nowhere.
+) triggers NothingToCook (
+    Narrator has Monologue "It's probably better to put some food in before starting this over.. maybe a chicken?"
+)
+
+
+

@@ -1,13 +1,13 @@
 yarn.factory('useCommand', function (yConsole,
                                      events,
-                                     state,
+                                     things,
                                      logic,
                                      storyLog,
                                      writers) {
 
     function handler(args) {
         if (args.length) {
-            var object = state.thing(args[0], true);
+            var object = things.get(args[0], true);
             if (object) {
                 var somethingHappened = logic.routines.use(object);
                 //console.log("somethingHappened", somethingHappened);

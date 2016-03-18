@@ -2,7 +2,7 @@ md-toolbar.toolbar {
 
     position: absolute;
     z-index: 9;
-    background-color: rgba(0,0,0,0.5) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
     height: 70px;
 
     .md-toolbar-tools {
@@ -10,12 +10,23 @@ md-toolbar.toolbar {
     }
 
     button.md-button {
+
         height: 50px;
         width: 50px;
+        margin-right: 0;
+        margin-left: 0;
 
         md-icon {
             height: 30px;
-            width: auto;
+            margin-right: 0.5em;
+        }
+        &.md-icon-button {
+
+            width: 50px;
+            md-icon {
+                height: 30px;
+                width: auto;
+            }
         }
     }
 
@@ -27,7 +38,6 @@ md-toolbar.toolbar {
     .main-menu-button {
     }
 }
-
 
 .story-menu md-toolbar {
     background: #000;

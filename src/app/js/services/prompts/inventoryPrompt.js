@@ -15,19 +15,17 @@ yarn.service("inventoryPrompt", function (logic,
 
         context.question = function (promptLoop, prompt) {
 
-            // TODO: NERFED FOR NOW... SHOULDBE REMOVED
-            //
-            //var inventoryItems = state.resolveAll(assert(undefined, "is in", "YourInventory"));
-            //if (inventoryItems.length) {
-            //    prompt.question = "Your inventory";
-            //    inventoryItems.forEach(function (thing) {
-            //        var name = state.resolveValue(assert(thing, "has", "Name"));
-            //        name = name || thing.id;
-            //        prompt.option(name, "look " + thing.id);
-            //    });
-            //} else {
-            //    prompt.question = "You have nothing in inventory!";
-            //}
+            var inventoryItems = state.resolveAll(assert(undefined, "is in", "YourInventory"));
+            if (inventoryItems.length) {
+                prompt.question = "Take anything or look at what you have ?";
+                //inventoryItems.forEach(function (thing) {
+                //    var name = state.resolveValue(assert(thing, "has", "Name"));
+                //    name = name || thing.id;
+                //    prompt.option(name, "look " + thing.id);
+                //});
+            } else {
+                prompt.question = "You have nothing in inventory!";
+            }
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";

@@ -20,7 +20,7 @@ yarn.service("moveRoutine", function (state,
 
         var roomName = state.resolveValue(assert(room, "has", "Name"));
 
-        storyLog.action("You move to the " + roomName);
+        storyLog.action("You move thoward the " + roomName);
 
         events.trigger(assert("You", "entered", room));
         events.trigger(assert("You", "exited", previousRoom));

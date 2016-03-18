@@ -19,6 +19,11 @@ yarn.service("textInspection", function textInspection(InspectionArticle) {
                 scope.assertionsCount = "[n/a]";
             }
 
+            token.helpArticles.push({
+                title: "Text Templating",
+                url: "./language-templating.html"
+            });
+
             yeld(new InspectionArticle("Text", "text", "text-inspection", scope))
         }
 

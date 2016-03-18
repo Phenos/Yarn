@@ -26,6 +26,11 @@ yarn.service("predicateReferenceInspection",
                         scope.openAsPredicate = openAsPredicate;
                     }
 
+                    token.helpArticles.push({
+                        title: "YarnScrip Language Basics",
+                        url: "./yarnscript-language.html"
+                    });
+
                     yeld(new InspectionArticle(txt.trim(), "predicateReference", "predicate-reference", scope))
                 }
             }

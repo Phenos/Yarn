@@ -47,26 +47,30 @@ yarn.service('yarn', function ($localStorage,
          * @param url
          */
         this.load = function (text, url) {
-            //console.log("yarn.load");
+            console.warn("Currently supporting only one script at once");
+            //this.scripts = [];
 
-            if (url) {
-                script.url = url;
-            }
+            //if (url) {
+            //    script.url = url;
+            //}
 
             // Use url as initial ID (can be overwritted in yarn script)
-            if (!this.id) this.id = url;
+            //if (!this.id) this.id = url;
 
-            this.scripts.push(script);
+            //this.scripts.push(script);
+
             return script.load(text, url).then(function () {
+                //console.log("wtf", script);
                 return script;
             });
         };
 
     }
 
+    gamePedicates();
+
     var yarn = new Yarn();
 
-    gamePedicates(yarn);
 
     return yarn;
 });

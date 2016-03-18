@@ -1,0 +1,19 @@
+
+Section 4 - The End
+
+Instead of going north in euclid street:
+	say "You and I both know you'd definitely die."
+
+Instead of going south in euclid street:
+	now player is in Home;
+	say "You unlock the front door and creep inside—A gust of wind blows it wide open—You push against it with the last of your strength, and it closes again.[paragraph break]You call out softly to the stairway, but no one replies. Your housemates are asleep. You wonder what time it is.[paragraph break]You decide not to check. You stuff the hot dogs in the refrigerator, pull out another plastic cup, and pour yourself some wine.";
+	end the story finally saying "The end."
+
+Home is a room.
+
+Rule for constructing the status line when location is home:
+	center "||| Location: Home |||" at row 1;
+	rule succeeds.
+
+Rule for amusing a victorious player:
+	say "This interactive documentary is for educational purposes only. It is not intended to amuse."

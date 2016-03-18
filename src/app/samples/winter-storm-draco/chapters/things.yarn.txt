@@ -1,0 +1,57 @@
+SmallKey:
+    is a Thing,
+    is not Noticed,
+    is an InventoryItem,
+    is in the Kitchen,
+    has a Name "Key on the Table",
+    has a Description
+        "Resting at the center of the kitchen table, the small key look like it's been made a hundred years ago,
+        with the burnish and dull corners earned after a thousand uses."
+
+YouTakeTheSmallKey ( You took SmallKey ) triggers SmallKeyTaken.
+
+SmallKeyTaken (
+    SmallKey:
+        has a Name "A small key",
+        has a Description
+            "The small key you took from the table is a lot heavier than it looks
+            and warm to the touch. As you hold it between your fingers you feel like
+            you should find where it fits."
+
+    Kitchen has a Description
+        "The kitchen is a small cosy room with wood countertops,
+        white cabinets, old appliances and a kitchen table. There are two doors leading
+        to a bedroom and a bathroom.".
+)
+
+
+PlasticSpoon:
+    is an InventoryItem,
+    has an Image "./images/things/plastic-spoon.jpg",
+    has a Name "Plastic Spoon".
+
+
+RedSoccerBall:
+    is a Thing,
+    has a Name "Red Soccer Ball",
+    is a InventoryItem,
+    has an Image "./images/things/red-soccer-ball.jpg",
+    has a Description "the soccer ball is red and turquoise. It smells like banana."
+
+
+KitchenTable:
+    is a Thing,
+    has an Image "./images/things/kitchen-table.jpg",
+    has a Name "Kitchen Table",
+    has a Description
+        "This round kitchen table is made of dark maple and has four chairs.
+        It has two diner covers already layed out on it."
+
+FlashLight:
+    has a Name "Flashlight",
+    is a Thing,
+    is an InventoryItem,
+    is in the BedSideTableDrawer,
+    has an Image "./images/things/flashlight.jpg",
+    has a Description "A yellow plastic standard ordinary boring flashlight... looks cheap. Probably from Walmart".
+

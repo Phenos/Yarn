@@ -7,7 +7,7 @@ yarn.service("predicates", function (syntaxes,
         var predicate;
         var syntax;
         if (typeof(_id) === "string") {
-            var id = _id.toLowerCase();
+            var id = _id.trim().toLowerCase();
 
             // Resolve the predicate from the syntax
             syntax = syntaxes.get(id);

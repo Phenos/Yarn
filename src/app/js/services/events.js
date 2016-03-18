@@ -75,13 +75,15 @@ yarn.service('events', function (assert,
             if (shouldOccur) {
                 somethingHappened = true;
                 // Todo: createAssertion should also use assert() ??
-                state.createAssertion(object, predicates("has"), things("Occurrence"), {
+                state.createAssertion(object, predicates("has"), things.get("Occurrence"), {
                     value: Occurrence + 1
                 });
                 //console.log("childAssertions for " + object.id, childAssertions);
                 angular.forEach(childAssertions, function (assertion) {
+                    //console.log(">>>triggered assertion", assertion);
                     state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                        value: assertion.value()
+                        value: assertion.value(),
+                        eval: true
                     });
                 });
             }

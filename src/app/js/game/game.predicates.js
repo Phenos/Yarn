@@ -73,9 +73,11 @@ yarn.service('gamePedicates', function (predicates) {
 
         // When something has something else. Ex.: Kitchen has a Kitchen Table
         predicates("hasInInventory")
+            .syntax("has in inventory the")
             .syntax("has in inventory a")
             .syntax("has in inventory")
             .syntax("has inventory")
+            .syntax("have in inventory the")
             .syntax("have in inventory a")
             .syntax("have in inventory")
             .syntax("have inventory");
@@ -104,6 +106,10 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("doesn't link to the")
             .syntax("does not link to the");
 
+
+        predicates("hasAction")
+            .syntax("has the action")
+            .syntax("has action");
 
         // Something triggers something else
         predicates("trigger")

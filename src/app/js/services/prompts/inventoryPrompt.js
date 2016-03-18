@@ -17,15 +17,18 @@ yarn.service("inventoryPrompt", function (logic,
 
             var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
 
-            if (inventoryItems.length) {
-                prompt.question = "Your inventory";
-                inventoryItems.forEach(function (thing) {
-                    var name = state.resolveValue(assert(thing, "has", "Name"));
-                    prompt.option(name, "look " + thing.id);
-                });
-            } else {
-                prompt.question = "You have nothing in inventory!";
-            }
+            // TODO: NERFED FOR NOW... SHOULDBE REMOVED
+            //
+            //if (inventoryItems.length) {
+            //    prompt.question = "Your inventory";
+            //    inventoryItems.forEach(function (thing) {
+            //        var name = state.resolveValue(assert(thing, "has", "Name"));
+            //        name = name || thing.id;
+            //        prompt.option(name, "look " + thing.id);
+            //    });
+            //} else {
+            //    prompt.question = "You have nothing in inventory!";
+            //}
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
@@ -33,7 +36,9 @@ yarn.service("inventoryPrompt", function (logic,
 
             setDefaultOptionsHelper(prompt, true);
         };
-
+        context.use = function(thing) {
+            commands.command("take " + thing.id);
+        };
         context.answer = function answer(promptLoop, option) {
             if (option) {
                 if (option.value !== "back") {

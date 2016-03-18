@@ -8,7 +8,11 @@ yarn.service('state', function ($localStorage,
                                 predicates,
                                 yConsole,
                                 assert,
-                                guid) {
+                                session,
+                                guid,
+                                eval,
+                                $parse) {
+
 
         function State() {
             this.assertions = new Assertions();
@@ -17,10 +21,30 @@ yarn.service('state', function ($localStorage,
             this.guid = guid();
         }
 
+        State.prototype.uniqueKey = function () {
+            var key;
+            var username = "anonymous";
+            if (session.user()) {
+                username = session.user().username;
+            }
+            var uniqueID = this.resolveValue("Story", "has", "UniqueID");
+            var releaseNumber = this.resolveValue("Story", "has", "UniqueID");
+            key = [username, uniqueID, releaseNumber].join("-");
+            return key;
+        };
+
+        State.prototype.getStoryLocalStorage = function () {
+            var key = this.uniqueKey();
+            if (angular.isUndefined($localStorage[key])) {
+                $localStorage[key] = {};
+            }
+            return $localStorage[key];
+        };
+
         State.prototype.restoreFromLocalState = function () {
             var self = this;
-            var localAssertions = ($localStorage.localState &&
-                $localStorage.localState.assertions) || {};
+            var storyStorage = this.getStoryLocalStorage();
+            var localAssertions = storyStorage.assertions || {};
 
             //console.log("Restoring assertion from localState", localAssertions);
 
@@ -34,7 +58,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.object;
                 } else if (typeof(assertion.object) === "string") {
                     if (assertion.object.indexOf("@id:") === 0) {
-                        object = things(assertion.object.substring(4));
+                        object = things.get(assertion.object.substring(4));
                     } else {
                         object = assertion.object;
                     }
@@ -44,7 +68,7 @@ yarn.service('state', function ($localStorage,
                     object = assertion.subject;
                 } else if (typeof(assertion.subject) === "string") {
                     if (assertion.subject.indexOf("@id:") === 0) {
-                        subject = things(assertion.subject.substring(4));
+                        subject = things.get(assertion.subject.substring(4));
                     } else {
                         subject = assertion.subject;
                     }
@@ -62,8 +86,9 @@ yarn.service('state', function ($localStorage,
         };
 
 
-        State.prototype.resolveAll = function resolveAll(assert) {
-            var foundObjects = [];
+        State.prototype.resolveAll = function resolveAll(assert, returnAssertions) {
+            var foundAssertions = [];
+            var foundThings = [];
             if (assert && (assert.subject && assert.predicate) || (assert.object && assert.predicate)) {
                 var foundObjectsSets = {};
 
@@ -72,7 +97,6 @@ yarn.service('state', function ($localStorage,
 
                 // Match all assertions to the criterias
                 var assertions = this.assertions.find(assert);
-
 
                 // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
@@ -94,13 +118,17 @@ yarn.service('state', function ($localStorage,
 
                 angular.forEach(foundObjectsSets, function (foundObjectSet) {
                     var topAssertion = foundObjectSet[foundObjectSet.length - 1];
-                    if (topAssertion.value()) foundObjects.push(topAssertion[typeToResolve]);
+                    if (topAssertion.value()) {
+                        foundAssertions.push(topAssertion);
+                        foundThings.push(topAssertion[typeToResolve]);
+                    }
                 });
                 //console.log("FOUND: ", foundObjects);
 
             }
+
             //console.log("foundObjects", foundObjects);
-            return foundObjects;
+            return (returnAssertions) ? foundAssertions : foundThings;
         };
 
         State.prototype.resolveOne = function (assert) {
@@ -157,6 +185,7 @@ yarn.service('state', function ($localStorage,
          * @returns {*}
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
+            var self = this;
             var options = _options || {};
 
             if (subject && predicate && object) {
@@ -183,6 +212,15 @@ yarn.service('state', function ($localStorage,
                     options.value = true;
                 }
 
+                if (options.eval) {
+                    var evaluatedValue = eval(options.value, {
+                        value: self.resolveValue(assert(subject, predicate, object))
+                    });
+                    if (angular.isDefined(evaluatedValue)) {
+                        options.evaluatedValue = evaluatedValue;
+                    }
+                }
+
                 // If not layer is provided, we set the "currentLayer"
                 if (!options.layer) {
                     options.layer = this.currentLayer;
@@ -207,7 +245,11 @@ yarn.service('state', function ($localStorage,
                         this.persistAssertion(assertion);
                     } else {
                         // Else we re-use the existing assertion
-                        topAssertion.value(options.value);
+                        if (angular.isDefined(options.evaluatedValue)) {
+                            topAssertion.value(options.evaluatedValue);
+                        } else {
+                            topAssertion.value(options.value);
+                        }
                         this.persistAssertion(topAssertion);
                     }
                 } else {
@@ -229,35 +271,30 @@ yarn.service('state', function ($localStorage,
          * If the session layer is empty, the assertion is removed
          */
         State.prototype.persistAssertion = function (assertion) {
-            //console.log("State.persistAssertion", assertion);
-            if (!$localStorage.localState) {
-                $localStorage.localState = {}
+            var storyStorage = this.getStoryLocalStorage();
+
+            if (!storyStorage.assertions) {
+                storyStorage.assertions = {}
             }
-            if (!$localStorage.localState.assertions) {
-                $localStorage.localState.assertions = {}
-            }
-            var localState = $localStorage.localState;
+
             //console.log("persistAssertion", assertion, assertion.layer);
             if (assertion.layer === "session") {
-                if (localState) {
-                    var json = assertion.toJSON();
-                    if (json) {
-                        localState.assertions[assertion.id()] = json;
-                    } else {
-                        delete localState.assertions[assertion.id()];
-                    }
+                var json = assertion.toJSON();
+                if (json) {
+                    storyStorage.assertions[assertion.id()] = json;
+                } else {
+                    delete storyStorage.assertions[assertion.id()];
                 }
             }
         };
+
         State.prototype.UnpersistAssertions = function (_assertions) {
             // todo: refactor: Initialising the localStorage this way is not elegant.... use .ensure() pattern
-            if (!$localStorage.localState) {
-                $localStorage.localState = {}
+            var storyStorage = this.getStoryLocalStorage();
+
+            if (!storyStorage.assertions) {
+                storyStorage.assertions = {}
             }
-            if (!$localStorage.localState.assertions) {
-                $localStorage.localState.assertions = {}
-            }
-            var localState = $localStorage.localState;
 
             //console.log("State.UnpersistAssertions", _assertions);
             var assertions = _assertions;
@@ -266,7 +303,7 @@ yarn.service('state', function ($localStorage,
             angular.forEach(assertions, function (assertion) {
                 //console.log("persistAssertion", assertion, assertion.layer);
                 if (assertion.layer === "session") {
-                    delete localState.assertions[assertion.id()];
+                    delete storyStorage.assertions[assertion.id()];
                 }
             });
         };
@@ -346,8 +383,8 @@ yarn.service('state', function ($localStorage,
 
             if (increment && typeof(increment) === "number") {
                 count = count + increment;
-                var story = things("Story");
-                var steps = things("Steps");
+                var story = things.get("Story");
+                var steps = things.get("Steps");
                 var has = predicates("has");
                 this.createAssertion(story, has, steps, {
                     value: count

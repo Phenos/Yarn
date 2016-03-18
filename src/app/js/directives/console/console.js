@@ -3,9 +3,10 @@
     yarn.directive('console', ConsoleDirective);
     yarn.factory('consoleService', consoleService);
 
-
     function ConsoleDirective(commands,
+                              state,
                               getSelectionText) {
+
         return {
             restrict: 'E',
             bindToController: {
@@ -31,6 +32,7 @@
                                    hotkeys) {
 
             var self = this;
+            var lastStep = 0;
 
             hotkeys.bindTo($rootScope)
                 .add({
@@ -88,17 +90,18 @@
 
             this.write = function (text, type) {
                 $scope.$emit("refreshScrollbars");
-
-                // Log Yarn console to the browser console
-                //if (type === "error") {
-                //    console.error("YARN: ", text);
-                //} else {
-                //    console.log("YARN: " + type + " : " + text.substring(0, 80), [text]);
-                //}
                 var scope = $scope.$new();
                 scope.text = text;
                 scope.type = type;
-                var logElem = $compile('<log type="type" text="text"></log>')(scope);
+                scope.step = state.step();
+                if (lastStep !== scope.step) {
+                    scope.isNewStep = true;
+                    lastStep = scope.step;
+                } else {
+                    scope.isNewStep = false;
+                }
+                scope.timestamp = Date.now();
+                var logElem = $compile('<log is-new-step="isNewStep" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
                 logsElem.append(logElem);
                 $timeout(function () {
                     logscrollElem[0].scrollTop = logscrollElem[0].scrollHeight;

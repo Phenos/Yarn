@@ -1,18 +1,20 @@
-<md-content>
-    <scenery></scenery>
+<div style="position:relative" layout-fill>
+    <wallpaper></wallpaper>
     <sidebar></sidebar>
     <toolbar user="player.user"></toolbar>
     <md-content
             style="z-index:5; position: relative;"
             layout="row"
-            flex="100"
             class="player"
             scrollbars
+            layout-fill
+
     >
         <div class="main-ui" flex="100">
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>
-            <splash visible="true"></splash>
+            <div class="player-footer"></div>
         </div>
     </md-content>
-</md-content>
+    <status-bar></status-bar>
+</div>

@@ -58,6 +58,14 @@ yarn.service('storyLog', function () {
         this.controller.write(text, "log");
     };
 
+    StoryLog.prototype.action = function (text) {
+        this.controller.write("—" + text, "action");
+    };
+
+    StoryLog.prototype.insight = function (text) {
+        this.controller.write("<md-icon md-svg-icon='./svg-icons/insight.svg'></md-icon>" + text, "insight");
+    };
+
     StoryLog.prototype.prompt = function (prompt) {
         var scope = {
             prompt: prompt
@@ -94,6 +102,10 @@ yarn.service('storyLog', function () {
 
     StoryLog.prototype.clear = function () {
         this.controller.clear();
+    };
+
+    StoryLog.prototype.markAsRead = function () {
+        this.controller.markAsRead();
     };
 
     return new StoryLog();

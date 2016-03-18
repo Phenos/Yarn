@@ -43,7 +43,7 @@ function inspectCommand(state,
             var log = [];
             var itemName = _itemName.toLowerCase();
 
-            var thing = things(itemName);
+            var thing = things.get(itemName);
             if (thing) {
 
                 assertions = state.assertions.find(assert(thing, undefined, undefined, {

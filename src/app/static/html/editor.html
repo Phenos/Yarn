@@ -3,59 +3,12 @@
         layout="column"
         class="editor md-whiteframe-2dp"
 >
-
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <md-button ng-click="editor.save()" class="md-icon-button" aria-label="Save">
-                <md-icon md-svg-icon="/svg-icons/save.svg"></md-icon>
-                <md-tooltip>
-                    Save
-                </md-tooltip>
-            </md-button>
-            <md-button ng-click="editor.reload()" class="md-icon-button" aria-label="Reload from file">
-                <md-icon md-svg-icon="/svg-icons/load.svg"></md-icon>
-                <md-tooltip>
-                    Reload
-                </md-tooltip>
-            </md-button>
-            <md-button ng-click="editor.run()" class="md-icon-button" aria-label="Run">
-                <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
-                <md-tooltip>
-                    Run
-                </md-tooltip>
-            </md-button>
-            <md-button ng-click="editor.validate()" class="md-icon-button" aria-label="Validate">
-                <md-icon md-svg-icon="/svg-icons/validate.svg"></md-icon>
-                <md-tooltip>
-                    Validate
-                </md-tooltip>
-            </md-button>
-            <md-button ng-click="editor.search()" class="md-icon-button" aria-label="Search">
-                <md-icon md-svg-icon="/svg-icons/search.svg"></md-icon>
-                <md-tooltip>
-                    Search
-                </md-tooltip>
-            </md-button>
-            <span flex></span>
-            <save-status>
-                <a target="_blank" ng-href="{{ editor.file.absoluteURI }}" ng-bind="editor.file.status"></a>
-                <md-tooltip>
-                    File located at {{ editor.file.absoluteURI }}
-                </md-tooltip>
-            </save-status>
-            <md-button ng-click="editor.close()" class="md-icon-button" aria-label="Close">
-                <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
-                <md-tooltip>
-                    Close
-                </md-tooltip>
-            </md-button>
-        </div>
-    </md-toolbar>
     <div
             flex="100"
             ui-ace="editor.options"
             ng-readonly="editor.readOnly"
-            ng-model="editor.source">
+            ng-model="editor.source"
+    >
     </div>
 
 </md-content>

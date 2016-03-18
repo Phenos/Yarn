@@ -1,0 +1,22 @@
+Approach is a number that varies. Approach is 0.
+
+Every turn while player is in euclid street:
+	increment approach;
+	if approach is 3:
+		say "The flapping is getting louder; the shrieking is growing more excited.";
+	if approach is 4:
+		say "The crows aren't here yet, but the cacophany of their approach is deafening.";
+	if approach is 5:
+		say "The crows have caught up with you.
+
+		    They're on you all at once, like an avalanche, with beaks and talons tearing apart
+		    your jacket, tearing the flesh from your bones, sucking out and swallowing every
+		    soft part of your body. Your eyes are gobbled up early on, and so you sense rather
+		    than observe the process for most of its duration: Chest, thighs, stomach, neck.
+
+		    What isn't eaten is licked dry, then carried off into the clouds; not even blood
+		    remains to mark the snow. When Winter Storm Draco has finished, there is nothing
+		    left to bury.";
+
+		end the story saying "The end."
+

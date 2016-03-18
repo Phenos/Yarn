@@ -29,7 +29,8 @@ yarn.service("setDefaultOptionsHelper", function (state,
             });
 
 
-            if (thingsInRoomWithDescriptions.length) {
+            var roomName = state.resolveValue(assert(room, "has", "Name"));
+            if (thingsInRoomWithDescriptions.length || roomName) {
                 option = prompt.option("Look", "aboutTo look");
                 option.iconId = "look";
                 option.iconSize = size;
@@ -59,8 +60,8 @@ yarn.service("setDefaultOptionsHelper", function (state,
                 option.iconOnly = true;
             }
 
-            option = prompt.option("Clear & refresh", "refresh");
-            option.iconId = "refresh";
+            option = prompt.option("Hint?", "hint");
+            option.iconId = "question-mark";
             option.iconSize = "mini";
             option.iconOnly = true;
 

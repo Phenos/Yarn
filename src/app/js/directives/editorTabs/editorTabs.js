@@ -6,17 +6,26 @@
     function EditorTabsDirective() {
         return {
             restrict: 'E',
-            bindToController: {},
+            bindToController: {
+            },
             scope: {},
             controllerAs: 'tabs',
             templateUrl: './html/editorTabs.html',
             controller: editorTabsController
         };
 
-        function editorTabsController($rootScope, editorTabs, editorFiles, hotkeys) {
+        function editorTabsController($rootScope,
+                                      editors,
+                                      editorTabs,
+                                      editorFiles,
+                                      hotkeys) {
             var self = this;
 
             self.selected = 0;
+
+            this.select = function (file) {
+                editors.selectByFile(file);
+            };
 
             hotkeys.bindTo($rootScope)
                 .add({

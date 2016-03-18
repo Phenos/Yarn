@@ -20,6 +20,7 @@ editor {
             height: 40px;
 
             button.md-button {
+
                 background: none !important;
                 border-radius: 3px;
                 line-height: 3228;
@@ -32,6 +33,13 @@ editor {
                     background: rgba(255, 255, 255, 0.2) !important;
                     md-icon {
                         color: rgba(255, 255, 255, 1);
+                    }
+                }
+
+                &.isOn {
+                    background: rgba(255, 255, 255, 1) !important;
+                    md-icon {
+                        color: rgb(63,81,181) !important;
                     }
                 }
 
@@ -53,7 +61,9 @@ editor {
         }
 
         .ace_gutter {
-            background-color: #ddd;
+            background-color: #f0f0f0;
+            color: #888;
+            margin-right: 0.2em;
         }
 
         &.ace_focus {

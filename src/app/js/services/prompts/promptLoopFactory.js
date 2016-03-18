@@ -1,4 +1,4 @@
-yarn.factory('PromptLoop', function (Prompt) {
+yarn.service('PromptLoop', function (Prompt) {
 
     function PromptLoop() {
         this.contexts = [];
@@ -13,16 +13,23 @@ yarn.factory('PromptLoop', function (Prompt) {
         this.updatePromptUI = onUpdatePrompt;
     };
 
+    PromptLoop.prototype.useThing = function (thing) {
+        var context = this.findContext();
+        if (context.use) {
+            context.use(thing);
+        }
+    };
+
+    PromptLoop.prototype.findContext = function () {
+        return this.contexts.find(function (context) {
+            return context.when();
+        });
+    };
+
     PromptLoop.prototype.update = function (dontUpdateUI) {
         var prompt;
         var self = this;
-        var context = this.contexts.find(findContext);
-
-        function findContext(context) {
-            var found;
-            if (context.when()) found = context;
-            return found;
-        }
+        var context = this.findContext();
 
         // Setup the prompt if a context was found
         if (context) {

@@ -1,0 +1,75 @@
+
+Bob:
+    is an Actor,
+    is named "Grumpy Bob",
+    has image "http://www.lazyliteratus.com/wp-content/uploads/2011/05/crazy_old_man-236x300.jpg",
+    is in the Bathroom,
+    has dialog BobIsBrushingHisTeeth.
+
+TheNarrator is a Narrator.
+
+//---[ Bathroom Argument with Bob ]-----------------------
+
+BobIsBrushingHisTeeth (
+    Bob says "Hu... hi there. What are you doing here?".
+    You can reply Reply_I_dont_know,
+        can reply once Reply_SorryImLaving,
+        can reply Reply_HereToBrushMyTeeth.
+) is a Dialog.
+
+/*-- Your replies --*/
+
+Reply_I_dont_know (
+    You say "I dont know... what are YOU doing here?".
+    Dialog continues to BobIsShaving.
+) is a Dialog titled "I dont know...".
+
+Reply_SorryImLaving (
+    You say "Ho, sorry, I'm leaving!".
+    Dialog continues to LeavingBobAlone.
+) is a Dialog titled "Tell him your leaving.".
+
+Reply_HereToBrushMyTeeth (
+    You say "I'm just here to brush my teeth, can you leave?".
+    Dialog continues to ImBrushingMyTeeth.
+) is a Dialog titled "I'm here to brush my teeths...".
+
+/*-- Bobs replies --*/
+
+BobIsShaving (
+    Bob says "I'm shaving... leave me alone!".
+    You can reply Reply_SorryImLaving,
+        can reply Reply_HereToBrushMyTeeth.
+) is a Dialog.
+
+LeavingBobAlone (
+    Bob says
+        "Yeah.. that's it, leave now."
+    /* End Dialog */
+) is a Dialog.
+
+ImBrushingMyTeeth (
+    Bob says
+        "I'm ALSO brushing my teeth... how about YOU leave!!!".
+
+    TheNarrator says
+        "Bob flexes his muscles, cracks his knuckles and pushes you out of the bathroom!".
+
+    Dialog triggers PushedIntoKitchen.
+    /* End Dialog */
+) is a Dialog.
+
+/*-- Dialog conclusions --*/
+
+PushedIntoKitchen (
+    You are in the Kitchen
+)
+
+
+
+
+
+
+
+
+

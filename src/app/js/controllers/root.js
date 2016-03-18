@@ -9,15 +9,24 @@ function rootController(user,
                         IDE,
                         yConsole,
                         welcomeMessage,
-                        editorService,
                         editorFiles,
-                        stories,
                         root,
+                        themes,
+                        wallpaper,
                         hotkeys) {
 
     $scope.IDE = IDE;
+    $scope.themes = themes;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
+
+    $scope.toolTabs = {
+        selected: 0
+    };
+
+    console.log("wallpaper", wallpaper);
+    wallpaper.change("/images/splash/splash-bg.jpg");
+
 
     IDE.register($scope);
     // Register with the service
@@ -32,6 +41,14 @@ function rootController(user,
             callback: function () {
                 root.toggleConsole();
             }
+        })
+        .add({
+            combo: 'mod+h',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            description: 'Show/Hide the help',
+            callback: function () {
+                root.toggleHelp();
+            }
         });
 
 
@@ -41,12 +58,6 @@ function rootController(user,
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
     yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
-    // Play the default story
-    stories.playDefault();
-
-    // Check if a previously opened story should be loaded
-    //IDE.loadRememberedStory();
-
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
@@ -54,62 +65,84 @@ function rootController(user,
         IDE.openFromStorage();
     };
 
-    // We load the story from the user, or ensure that a default one exists
-    stories.findOrCreateUserStory(user, function (story) {
-        yConsole.log("Loaded a story in the editor");
-        $scope.currentStory = story;
-    }, function () {
-        yConsole.log("No story can be loaded in the editor. You can only edit your own stories when you are logged in.");
-        yConsole.log("Until then you can still use the console to enter commands and affect your game session.");
-        $scope.currentStory = null;
-    });
-
+    $scope.openMain = function () {
+        var main = editorFiles.open("./story.txt");
+        editorFiles.mainFile(main);
+    };
 
     /*
 
      Height permutation between Console and Editor on focus events
 
      */
-    $scope.editorFlexHeight_default = 65;
-    $scope.consoleFlexHeight_default = 35;
+    $scope.editorFlexHeight_default = 100;
+    $scope.consoleFlexHeight_default = 0;
     $scope.editorFlexHeight = $scope.editorFlexHeight_default;
     $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
     $scope.onConsoleEscapeFocus = function () {
-        $scope.editorFlexHeight = 65;
-        $scope.consoleFlexHeight = 35;
-        editorService.focus();
+        $scope.editorFlexHeight = 100;
+        $scope.consoleFlexHeight = 0;
     };
     $scope.onConsoleFocus = function () {
-        $scope.editorFlexHeight = 35;
-        $scope.consoleFlexHeight = 65;
+        $scope.editorFlexHeight = 60;
+        $scope.consoleFlexHeight = 40;
     };
+
+    $scope.focusInspector = function () {
+        console.log($scope.toolTabs.selected);
+        $scope.toolTabs.selected = 1;
+    };
+
+    $scope.focusConsole = function () {
+        $scope.toolTabs.selected = 0;
+    };
+
+
+    $scope.toggleTools = function (value) {
+        if (angular.isDefined(value)) {
+            $scope.toolsAreVisible = !value;
+        }
+        if ($scope.toolsAreVisible) {
+            $scope.toolsAreVisible = false;
+            $scope.onConsoleEscapeFocus();
+        } else {
+            $scope.toolsAreVisible = true;
+            $scope.onConsoleFocus();
+        }
+    };
+
+
+    $scope.toggleTools(true);
+    // Check if a previously opened story should be loaded
+    //IDE.loadRememberedStory();
+    IDE.run();
 
 
 }
 
-function rootService($localStorage, consoleService, helpService, player) {
+function rootService($localStorage, consoleService, help, player) {
     var service = {
         scope: null
     };
 
     service.register = function (scope) {
         service.scope = scope;
-        scope.consoleIsVisible = service.consoleIsVisible;
+        scope.IDEisVisible = service.IDEisVisible;
         scope.helpIsVisible = service.helpIsVisible;
     };
 
     /*
      Console visibility
      */
-    service.consoleIsVisible = false;
+    service.IDEisVisible = false;
     service.helpIsVisible = false;
 
-    function consoleIsVisible(value) {
+    function IDEisVisible(value) {
         if (!angular.isUndefined(value)) {
-            service.consoleIsVisible = value;
-            if (service.scope) service.scope.consoleIsVisible = value;
+            service.IDEisVisible = value;
+            if (service.scope) service.scope.IDEisVisible = value;
         }
-        return service.consoleIsVisible;
+        return service.IDEisVisible;
     }
 
     function helpIsVisible(value) {
@@ -120,11 +153,11 @@ function rootService($localStorage, consoleService, helpService, player) {
         return service.helpIsVisible;
     }
 
-    consoleIsVisible($localStorage.consoleIsVisible);
+    IDEisVisible($localStorage.IDEisVisible);
     helpIsVisible($localStorage.helpIsVisible);
 
     service.toggleConsole = function () {
-        if (service.consoleIsVisible) {
+        if (service.IDEisVisible) {
             service.hideConsole();
         } else {
             service.showConsole();
@@ -145,11 +178,11 @@ function rootService($localStorage, consoleService, helpService, player) {
      */
     service.showConsole = function () {
         player.closeSidenav();
-        $localStorage.consoleIsVisible = consoleIsVisible(true);
+        $localStorage.IDEisVisible = IDEisVisible(true);
         consoleService.focus();
     };
     service.hideConsole = function () {
-        $localStorage.consoleIsVisible = consoleIsVisible(false);
+        $localStorage.IDEisVisible = IDEisVisible(false);
     };
 
 
@@ -161,12 +194,18 @@ function rootService($localStorage, consoleService, helpService, player) {
     service.showHelp = function () {
         player.closeSidenav();
         $localStorage.helpIsVisible = helpIsVisible(true);
-        helpService.focus();
     };
     service.hideHelp = function () {
         $localStorage.helpIsVisible = helpIsVisible(false);
     };
 
+    service.focusConsole = function () {
+        service.scope.focusConsole();
+    };
+
+    service.focusInspector = function () {
+        service.scope.focusInspector();
+    };
 
     return service;
 }

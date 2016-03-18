@@ -27,6 +27,9 @@ yarn.service("movePrompt", function (logic,
 
             setDefaultOptionsHelper(prompt, true);
         };
+        context.use = function(thing) {
+            commands.command("move " + thing.id);
+        };
         context.answer = function answer(promptLoop, option) {
             if (option.value === "back") {
                 logic.routines.aboutTo("");

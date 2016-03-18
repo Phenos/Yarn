@@ -1,0 +1,17 @@
+
+//todo: The player description is dynamic according to what he is wearing
+The description of the player is
+    "You are wearing [a list of things worn by the player]."
+
+//todo: Should "wear" be a special type of predicate and mechanics ?
+The player wears the puffy black jacket.
+
+The description of the puffy black jacket is
+    "This jacket is not flattering in the slightest, but it isn't supposed to
+     look good: It is supposed to keep you from freezing to death. It's not
+     doing a very good job of that, either."
+
+//todo: Prevent the player from removing the jacket
+Instead of taking off the puffy black jacket, say
+    "As lousy as this jacket is, it's far better than
+    the alternative. You'll keep it on."

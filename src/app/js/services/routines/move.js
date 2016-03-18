@@ -3,6 +3,7 @@ yarn.service("moveRoutine", function (state,
                                       assert,
                                       predicates,
                                       things,
+                                      storyLog,
                                       stepRoutine) {
 
     function moveRoutine(room) {
@@ -12,10 +13,14 @@ yarn.service("moveRoutine", function (state,
             // Remove player from current possition
             state.negate(assert("you", "is in"));
             // Place the player in the new room
-            state.createAssertion(things("You"), predicates("isIn"), room, {
+            state.createAssertion(things.get("You"), predicates("isIn"), room, {
                 layer: state.currentLayer
             });
         }
+
+        var roomName = state.resolveValue(assert(room, "has", "Name"));
+
+        storyLog.action("You move to the " + roomName);
 
         events.trigger(assert("You", "entered", room));
         events.trigger(assert("You", "exited", previousRoom));

@@ -1,12 +1,3 @@
-yarn.config(function (LoopBackResourceProvider) {
-    console.log("Loading app configuration");
-    // Use a custom auth header instead of the default 'Authorization'
-    //LoopBackResourceProvider.setAuthHeader('X-Access-Token');
-
-    // Change the URL where to access the LoopBack REST API server
-    LoopBackResourceProvider.setUrlBase('/api');
-
-});
 
 yarn.config(function(RollbarProvider) {
     var roolbarConfig = {
@@ -23,6 +14,13 @@ yarn.config(function(RollbarProvider) {
 
 yarn.run(function (commandsRegistry) {
 
+    var path = "/public/js/ace/";
+    ace.config.set('basePath', path);
+    ace.config.set('modePath', path);
+    ace.config.set('themePath', path);
+    ace.config.set('workerPath', path);
+
+
     commandsRegistry.load([
         "inventoryPlayerCommand",
         "beginStoryCommand",
@@ -32,9 +30,9 @@ yarn.run(function (commandsRegistry) {
         "clearCommand",
         "loadCommand",
         "graphCommand",
+        "hintCommand",
         "useCommand",
         "validateCommand",
-        "refreshCommand",
         "lookCommand",
         "takeCommand",
         "moveCommand",

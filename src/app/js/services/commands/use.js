@@ -7,7 +7,7 @@ yarn.factory('useCommand', function (yConsole,
 
     function handler(args) {
         if (args.length) {
-            var object = things(args[0], true);
+            var object = things.get(args[0], true);
             if (object) {
                 var somethingHappened = logic.routines.use(object);
                 //console.log("somethingHappened", somethingHappened);

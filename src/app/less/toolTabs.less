@@ -1,0 +1,67 @@
+.toolTabs {
+
+    position: relative;
+    z-index: 2000;
+    min-height: 48px;
+    overflow: hidden;
+
+    .toolTabs-toggle {
+        position: absolute;
+        z-index: 1000;
+        top: 0.3em;
+        right: 0;
+        color: #fff;
+        md-icon {
+            color: rgba(255, 255, 255, 0.4);
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    md-ink-bar {
+        height: 0.2em;
+        background: #fff !important;
+    }
+
+    md-tab-content {
+        background: #eaeaea;
+    }
+
+    md-tabs-wrapper {
+        background: #4d4d4d;
+
+        md-tab-item {
+            text-transform: none;
+            font-size: 0.8em;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0.2em;
+            padding-right: 1.2em;
+            color: rgba(255, 255, 255, 0.6);
+            md-icon {
+                color: rgba(255, 255, 255, 0.6);
+                fill: rgba(255, 255, 255, 0.6);
+
+            }
+
+            &.md-active {
+                color: #FFFFFF;
+
+                md-icon {
+                    color: #FFFFFF;
+                    fill: #FFFFFF;
+
+                }
+            }
+        }
+    }
+
+    md-icon {
+        height: 1.5em;
+        margin-right: 0.7em
+    }
+
+    md-tab-item.md-active {
+    }
+}

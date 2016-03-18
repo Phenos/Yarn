@@ -1,10 +1,10 @@
 (function () {
 
     yarn.directive('help', HelpDirective);
-    yarn.service('helpService', helpService);
+    yarn.service('help', helpService);
 
 
-    function HelpDirective(helpService,
+    function HelpDirective(help,
                            $localStorage) {
         return {
             restrict: 'E',
@@ -23,14 +23,13 @@
                                    $http,
                                    $compile,
                                    $scope,
-                                   URI) {
+                                   URI,
+                                   root) {
             var self = this;
-            helpService.register(this);
+            help.register(this);
 
             this.focus = function () {
-                //$timeout(function () {
-                //    $element.find("input")[0].focus();
-                //}, 200);
+                root.showHelp();
             };
 
             this.lastHelpFileLoaded = function (uri) {
@@ -98,6 +97,8 @@
                 $scope.$broadcast("refreshScrollbars");
             };
 
+            help.register(this);
+
             this.load(this.lastHelpFileLoaded() || "./index.html");
         }
 
@@ -113,15 +114,19 @@
         };
 
         service.focus = function () {
-            controller.focus()
+            console.log("focus!");
+            controller.focus();
+            return this;
         };
 
         service.clear = function () {
-            controller.clear()
+            controller.clear();
+            return this;
         };
 
         service.load = function (url) {
             controller.load(url);
+            return this;
         };
 
         return service;

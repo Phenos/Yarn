@@ -9,12 +9,19 @@ yarn.service("dialogs", function (state,
             parent: null
         }));
 
+        var sayInsight = state.assertions.find(assert(undefined, "say", "Insight", {
+            parent: null
+        }));
+
+        outputStatement(sayAssertions, "log");
+        outputStatement(sayInsight, "insight");
+
         //console.log("Dialog > sayAssertions", sayAssertions);
 
-        angular.forEach(sayAssertions, function (assertion) {
-            //console.log("assertion", assertion);
-            if (assertion.subject && assertion.predicate && assertion.object) {
-                var monologue = state.resolveValue(assert(
+        function outputStatement(sayAssertions, type) {
+            angular.forEach(sayAssertions, function (assertion) {
+                //console.log("assertion", assertion);
+                var statement = state.resolveValue(assert(
                     assertion.subject,
                     assertion.predicate,
                     assertion.object
@@ -23,12 +30,11 @@ yarn.service("dialogs", function (state,
                 // Then remove the "say" assertion
                 state.assertions.remove(assertion);
 
-                if (monologue) {
-                    storyLog.buffer().log(monologue);
+                if (statement) {
+                    storyLog.buffer()[type](statement);
                 }
-
-            }
-        });
+            });
+        }
 
     };
 

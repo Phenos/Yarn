@@ -2,9 +2,10 @@ yarn.service('loader', function (yarn,
                                  state,
                                  loadScript,
                                  yConsole,
-                                 splashService,
                                  player,
-                                 $localStorage) {
+                                 synonyms,
+                                 statuses,
+                                 commands) {
 
     var service = {};
 
@@ -14,6 +15,7 @@ yarn.service('loader', function (yarn,
 
         var url = _url;
 
+        //console.log("loader.fromURL", url);
         yConsole.log("Loading story from : " + url);
         return loadScript(url).then(onSuccess, onError);
 
@@ -26,7 +28,7 @@ yarn.service('loader', function (yarn,
          * Called once all files are loaded (including imports)
          */
         function onSuccess(script) {
-            //console.info("Game script loaded successfully", script);
+            console.info("Game script loaded successfully", [script]);
 
             yarn.load(script.source, script.url).then(onSuccess, onError);
 
@@ -38,18 +40,29 @@ yarn.service('loader', function (yarn,
 
                 // Change the current state layer to the static world (should be the default anyways).
                 state.currentLayer = "world";
+
+                // Run the script to load the initial game state
                 script.run();
+
+                // Trigger validation on the new game state
+                commands.command("validate");
 
                 // Change the current state layer to the current session.
                 state.currentLayer = "session";
 
                 // Restore session state layer from localStorage
-                if (!$localStorage.localState) $localStorage.localState = {};
+
+                console.warn("Restoring game state doesnt work for now...");
                 yarn.restoreFromLocalState();
 
-                splashService.hide();
-                player.refresh();
+                /*
+                 Refresh the list of Statuses and Synonyms, in case they changed during game play
+                 */
+                synonyms.update(state);
+                statuses.update(state);
 
+
+                player.refresh();
             }
 
             function onError(request) {
@@ -58,48 +71,6 @@ yarn.service('loader', function (yarn,
             }
 
         }
-    };
-
-    service.fromSource = function fromSource(source, _baseURL) {
-        var baseURL = _baseURL;
-
-        yConsole.log("Loading story from source");
-        console.log("Story source: ", source);
-
-        yarn.load(source, baseURL).then(onSuccess, onError);
-
-        // TODO:  THIS METHOD IS A TOTAL DUPLICATE!!!! BEURK
-        function onSuccess(script) {
-            //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
-            //console.log("script WHOO", script);
-            yConsole.success("Successfully loaded the story script");
-            yConsole.log("Running the <span command='inspect story'>story</span>");
-
-            // Change the current state layer to the static world (should be the default anyways).
-            state.currentLayer = "world";
-            script.run();
-
-            // Change the current state layer to the current session.
-            state.currentLayer = "session";
-
-            // Restore session state layer from localStorage
-            if (!$localStorage.localState) $localStorage.localState = {};
-            yarn.restoreFromLocalState($localStorage.localState);
-
-            //console.log("======[ SHOULD HAVE ENDED RUN ]=======");
-            splashService.hide();
-
-            console.log("Why is updateStorylog commented out ?");
-            //updateStoryLog();
-
-        }
-
-        // TODO:  THIS METHOD IS A TOTAL DUPLICATE!!!! BEURK
-        function onError(request) {
-            yConsole.error("Failed to load story asset from : " + request.config.url);
-            yConsole.tip("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
-        }
-
     };
 
     return service;

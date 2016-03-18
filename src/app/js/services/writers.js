@@ -5,7 +5,8 @@ yarn.factory('writers', function (Prompt,
                                   state,
                                   script,
                                   commands,
-                                  sceneryService) {
+                                  themes,
+                                  wallpaper) {
 
     // Describe where you are at the beginning
     function describeWhereYouAre() {
@@ -23,29 +24,31 @@ yarn.factory('writers', function (Prompt,
 
     function describeCoverpage() {
 
+        refreshTheme();
+
         storyLog.clear();
+
+        // Set the wallpaper
+        var wallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
+        var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
+        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
+        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
+        var url = wallpaper_url || coverpage_url || false;
+
+        if (url) {
+            wallpaper.change(url);
+        } else {
+            wallpaper.clear();
+        }
+
+        if (coverpage) {
+            storyLog.image(coverpage_url);
+        }
 
         // Show the story title
         var name = state.resolveValue(assert("Story", "has", "Name"));
         if (name) {
             storyLog.heading(name);
-        }
-
-        // Set the scenery
-        var scenery = state.resolveValue(assert("Story", "has", "Scenery"));
-        var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
-        var scenery_url = scenery && script.resolveRelativeURI(scenery);
-        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = scenery_url || coverpage_url || false;
-
-        if (url) {
-            sceneryService.change(url);
-        } else {
-            sceneryService.clear();
-        }
-
-        if (coverpage) {
-            storyLog.image(coverpage_url);
         }
 
         var description = state.resolveValue(assert("Story", "has", "Description"));
@@ -62,6 +65,9 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeTheEnd() {
+        storyLog.markAsRead();
+
+        refreshTheme();
 
         storyLog.clear();
 
@@ -71,17 +77,17 @@ yarn.factory('writers', function (Prompt,
             storyLog.heading(name);
         }
 
-        // Set the scenery
-        var scenery = state.resolveValue(assert("TheEnd", "has", "Scenery"));
+        // Set the wallpaper
+        var wallpaperValue = state.resolveValue(assert("TheEnd", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("TheEnd", "has", "Coverpage"));
-        var scenery_url = scenery && script.resolveRelativeURI(scenery);
+        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = scenery_url || coverpage_url || false;
+        var url = wallpaper_url || coverpage_url || false;
 
         if (url) {
-            sceneryService.change(url);
+            wallpaper.change(url);
         } else {
-            sceneryService.clear();
+            wallpaper.clear();
         }
 
         if (coverpage) {
@@ -96,19 +102,42 @@ yarn.factory('writers', function (Prompt,
         return this;
     }
 
+    function refreshTheme(room) {
+        var themeId = null;
+
+        if (room) {
+            themeId = state.resolveValue(assert(room, "has", "Theme"));
+        }
+        if (!themeId) {
+            themeId = state.resolveValue(assert("Story", "has", "Theme"));
+        }
+        if (themeId) {
+            var theme = themes.select(themeId);
+            if (theme && theme.id === themeId) {
+                yConsole.log("Theme changed to : " + themeId);
+            } else {
+                yConsole.warning("Wanted theme not found: " + themeId);
+            }
+        }
+    }
+
     function describeRoom() {
-        storyLog.clear();
+        storyLog.markAsRead();
 
         var room = state.resolveOne(assert("You", "is in"));
 
+        refreshTheme(room);
+
         if (room) {
-            var scenery = state.resolveValue(assert(room, "has", "Scenery"));
-            var url = script.resolveRelativeURI(scenery);
+            var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
+            var url = script.resolveRelativeURI(wallpaperValue);
             if (url) {
-                sceneryService.change(url);
+                wallpaper.change(url);
             } else {
-                sceneryService.clear();
+                wallpaper.clear();
             }
+
+
 
             var name = state.resolveValue(assert(room, "has", "Name"));
             if (name) storyLog.heading(name);
@@ -137,7 +166,9 @@ yarn.factory('writers', function (Prompt,
     }
 
     // Describe where you are at the beginning
+
     function describeThing(thing) {
+        storyLog.markAsRead();
         if (thing) {
             var name = state.resolveValue(assert(thing, "has", "Name"));
             var description = state.resolveValue(assert(thing, "has", "Description"));
@@ -147,8 +178,12 @@ yarn.factory('writers', function (Prompt,
                     script.resolveRelativeURI(image)
                 );
             }
-            if (name) storyLog.subHeading(name);
-            if (description) storyLog.log(description);
+            if (description) {
+                storyLog.log(description);
+            } else {
+                var defaultSeeNothingText = state.resolveValue(assert("Default", "for", "YouSeeNothing"));
+                storyLog.log(defaultSeeNothingText || "Nothing interesting");
+            }
         }
         return this;
     }
@@ -163,7 +198,7 @@ yarn.factory('writers', function (Prompt,
     function describeThingTakenInInventory(thing) {
         if (thing) {
             var name = state.resolveValue(assert(thing, "has", "Name"));
-            if (name) storyLog.log("You took the " + name);
+            if (name) storyLog.action("You take the " + name);
         }
         return this;
     }
@@ -207,6 +242,7 @@ yarn.factory('writers', function (Prompt,
         describeThing: describeThing,
         describeRoom: describeRoom,
         describeCoverpage: describeCoverpage,
+        refreshTheme: refreshTheme,
         describeTheEnd: describeTheEnd,
         describeWhereYouAre: describeWhereYouAre,
         objectMenu: objectMenu

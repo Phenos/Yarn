@@ -18,21 +18,22 @@ yarn.service("lookPrompt", function (writers,
 
             // Add the room to the list of objects to inspect
             var roomName = state.resolveValue(assert(room, "has", "Name"));
-            prompt.option(roomName, "look " + room.id);
 
-            var thingsInRoom = stateHelpers.thingsInRoom(room);
+            // TODO: NERFED FOR NOW... SHOULDBE REMOVED
+            //prompt.option(roomName, "look " + room.id);
 
-            //console.log('thingsInRoom', thingsInRoom);
+            //var thingsInRoom = stateHelpers.thingsInRoom(room);
 
-            if (thingsInRoom.length) {
-                thingsInRoom.forEach(function (thing) {
-                    var name = state.resolveValue(assert(thing, "has", "Name"));
-                    var Noticed = state.resolveValue(assert(thing, "is", "Noticed"));
-                    if (Noticed !== false) {
-                        prompt.option(name, "look " + thing.id);
-                    }
-                });
-            }
+            //if (thingsInRoom.length) {
+            //    thingsInRoom.forEach(function (thing) {
+            //        var name = state.resolveValue(assert(thing, "has", "Name"));
+            //        name = name || thing.id;
+            //        var Noticed = state.resolveValue(assert(thing, "is", "Noticed"));
+            //        if (Noticed !== false) {
+            //            prompt.option(name, "look " + thing.id);
+            //        }
+            //    });
+            //}
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
@@ -40,6 +41,9 @@ yarn.service("lookPrompt", function (writers,
 
             setDefaultOptionsHelper(prompt, true);
 
+        };
+        context.use = function(thing) {
+            commands.command("look " + thing.id);
         };
         context.answer = function answer(promptLoop, option) {
             if (option) {

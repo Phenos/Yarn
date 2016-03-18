@@ -1,4 +1,6 @@
-<md-toolbar style="height:80px" class="helpToolbar md-menu-toolbar" layout="row">
+<md-toolbar
+        class="helpToolbar md-menu-toolbar"
+        layout="row">
     <div flex="100" layout="row">
         <md-toolbar-filler layout layout-align="center center">
             <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
@@ -22,7 +24,7 @@
             </md-menu-bar>
         </div>
         <div flex="1">
-            <md-button class="md-icon-button" ng-click="toolbar.hideHelp()" aria-label="Close help">
+            <md-button class="md-icon-button close-button" ng-click="toolbar.hideHelp()" aria-label="Close help">
                 <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
             </md-button>
         </div>

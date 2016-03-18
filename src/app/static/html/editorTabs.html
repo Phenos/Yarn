@@ -1,11 +1,18 @@
 <md-tabs md-selected="tabs.selected" flex="100" md-border-bottom md-autoselect>
-    <md-tab ng-repeat="file in tabs.files"
-            label="{{ file.name() }}">
-        <editor read-only="!file.ready"
-                save-and-run="IDE.saveAndRun()"
-                source="file.content"
-                file="file"
-                layout="column"
-                flex></editor>
+    <md-tab ng-repeat="file in tabs.files" md-on-select="tabs.select(file)">
+        <md-tab-label>
+            {{ file.name() }} <span ng-if="file.isModified()">*</span>
+            <md-icon style="width: 1.5em; margin-left: 0.7em"
+                     ng-if="file.isMain"
+                     md-svg-icon="/svg-icons/main-file.svg"></md-icon>
+        </md-tab-label>
+        <md-tab-body>
+            <editor read-only="!file.ready"
+                    save-and-run="IDE.saveAllAndRun()"
+                    source="file.content"
+                    file="file"
+                    layout="column"
+                    flex></editor>
+        </md-tab-body>
     </md-tab>
 </md-tabs>

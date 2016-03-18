@@ -33,7 +33,9 @@ yarn.service("usePrompt", function (stateHelpers,
 
             setDefaultOptionsHelper(prompt, true);
         };
-
+        context.use = function(thing) {
+            commands.command("use " + thing.id);
+        };
         context.answer = function answer(promptLoop, option) {
             if (option) {
                 if (option.value === "back") {

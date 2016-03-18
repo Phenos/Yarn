@@ -12,13 +12,23 @@
             </div>
         </md-toolbar>
         <md-content layout-padding>
-            <md-menu-item>
-                <md-button ng-click="sidebar.openHelp()">
-                    <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
-                    <span>Help & Documentation</span>
+            <div ng-show="username" class="logged-in-as" layout="row">
+                <div style="width: 60px;">
+                    <img ng-show="username" class="avatar" src="{{ avatar }}"></img>
+                </div>
+                <div flex="">
+                    <span class="connected-as-label">You are connected as</span><br/>
+                    <span class="username">{{ username }}</span>
+                </div>
+            </div>
+
+            <md-menu-item ng-if="!username" class="login-with-twitter">
+                <md-button ng-click="sidebar.login()">
+                    <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                    Login with Twitter
                 </md-button>
             </md-menu-item>
-            <md-divider></md-divider>
+
             <md-menu-item>
                 <md-button ng-click="sidebar.showConsole()" aria-label="Open console">
                     <md-icon md-svg-icon="/svg-icons/author.svg"></md-icon>
@@ -26,6 +36,12 @@
                 </md-button>
             </md-menu-item>
             <md-divider></md-divider>
+            <md-menu-item>
+                <md-button ng-click="sidebar.openHelp()">
+                    <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
+                    <span>Help & Documentation</span>
+                </md-button>
+            </md-menu-item>
             <md-menu-item>
                 <md-button ng-href="http://www.yarnstudio.io/" target="_blank">
                     <md-icon md-svg-icon="/svg-icons/blog.svg"></md-icon>
@@ -36,6 +52,13 @@
                 <md-button ng-href="https://twitter.com/YarnStudioGames" target="_blank">
                     <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
                     Follow Us on Twitter
+                </md-button>
+            </md-menu-item>
+            <md-divider></md-divider>
+            <md-menu-item>
+                <md-button ng-click="sidebar.logout()">
+                    <md-icon md-svg-icon="/svg-icons/logout.svg"></md-icon>
+                    Logout
                 </md-button>
             </md-menu-item>
         </md-content>

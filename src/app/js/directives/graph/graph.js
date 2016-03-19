@@ -20,36 +20,38 @@ yarn.directive('graph', function GraphDirective(state, assert) {
 
         graph.register(this);
 
-        this.update = function () {
+        this.update = function (model) {
+            var self = this;
             svg.selectAll("*").remove();
-            $timeout(buildGraph, 100);
+            $timeout(function () {
+                var _model = model || self.models.rooms;
+                buildGraph(_model);
+            }, 100);
         };
 
         this.model = function (id) {
+            var model = this.models[id];
+            if (model) {
+                this.update(model)
+            }
             console.log("id", id);
         };
 
-        function buildGraph() {
-            var assertions = state.assertions.all();
+        this.models = {
+            rooms: roomsModel,
+            containers: containerModel,
+            events: eventsModel
+        };
+
+        function roomsModel() {
+            var links = [];
             var nodes = [];
             var nodesIndex = {};
-            var links = [];
-            var radius = 140;
-
-            var width = svg[0][0].clientWidth;
-            var height = svg[0][0].clientHeight;
-
-            //responsive SVG needs these 2 attributes and no width and height attr
-            svg.attr("preserveAspectRatio", "xMinYMin meet")
-                .attr("viewBox", "0 0 " + width + " " + height);
-
-            //console.log("width, height", width, height);
-            //console.log("thingIsA", thingIsA);
+            var assertions = state.assertions.all();
 
             var thingsOfThatSort = state.resolveAll(assert(undefined, "is", thingIsA));
             angular.forEach(thingsOfThatSort, function (thing) {
-                var label = thing.id;
-                //todo: This has not been refactored yet!
+                var label = thing.label();
                 var index = nodes.length;
                 nodesIndex[thing.id] = index;
                 nodes.push({
@@ -58,12 +60,6 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                     group: index
                 })
             });
-            //console.log("thingsOfThatSort", thingsOfThatSort);
-            //console.log("nodesIndex", nodesIndex);
-            //console.log("nodes", nodes);
-
-            //console.log("THINGS: ", things);
-            //console.log("ASSERTIONS: ", assertions);
 
             angular.forEach(assertions, function (assertion) {
                 var sourceIndex = null;
@@ -85,8 +81,79 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                     }
                 }
             });
-            //console.log("assertions", assertions);
-            //console.log("links", links);
+
+            return {
+                nodes: nodes,
+                links: links
+            }
+        }
+
+        function containerModel() {
+            var links = [];
+            var nodes = [];
+            var nodesIndex = {};
+            var assertions = state.assertions.all();
+
+            function setOrGetNode(thing) {
+                var node = nodesIndex[thing.id];
+                if (!node) {
+                    var label = thing.label();
+                    var group = nodes.length;
+                    node = {
+                        id: thing.id,
+                        name: label || thing.id,
+                        group: group,
+                        weight: 1
+                    };
+                    nodesIndex[thing.id] = node;
+                    nodes.push(node);
+                }
+                return node.group;
+            }
+
+            angular.forEach(assertions, function (assertion) {
+                var sourceIndex = null;
+                var targetIndex = null;
+                if (assertion.predicate.id === "isin") {
+                    sourceIndex = setOrGetNode(assertion.subject);
+                    targetIndex = setOrGetNode(assertion.object);
+                    links.push({
+                        "source": sourceIndex,
+                        "target": targetIndex,
+                        "value": 1,
+                        "predicate": "is in"
+                    });
+                }
+            });
+
+            console.log(nodes, links, nodesIndex);
+
+            return {
+                nodes: nodes,
+                links: links
+            }
+        }
+
+        function eventsModel() {
+
+        }
+
+        function buildGraph(model) {
+            var modelData = model();
+
+            var nodes = modelData.nodes;
+            var links = modelData.links;
+            var radius = 140;
+
+            var width = svg[0][0].clientWidth;
+            var height = svg[0][0].clientHeight;
+
+            //responsive SVG needs these 2 attributes and no width and height attr
+            svg.attr("preserveAspectRatio", "xMinYMin meet")
+                .attr("viewBox", "0 0 " + width + " " + height);
+
+            //console.log("width, height", width, height);
+            //console.log("thingIsA", thingIsA);
 
             force
                 .nodes(nodes)
@@ -200,8 +267,6 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                         d.y = y;
                         return "scale(1)translate(" + x + "," + y + ")";
                     });
-
-                //debugger;
 
             });
 

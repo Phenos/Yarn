@@ -1,50 +1,40 @@
-
-<md-tab md-on-select="updateGraph()">
-    <md-tab-label>
-        <md-icon style="width: 1.5em; margin-left: 0.7em"
-                 md-svg-icon="/svg-icons/graph.svg"></md-icon>
-        Graph
-    </md-tab-label>
-    <md-tab-body layout="column" >
-        <div layout-fill layout="column">
-            <md-toolbar class="toolsToolbar" flex="noshrink">
-                <div class="md-toolbar-tools">
-                    <md-button ng-click="graph.update()" class="md-icon-button"
-                               aria-label="Refresh">
-                        <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
-                        <md-tooltip>
-                            Refresh
-                        </md-tooltip>
-                    </md-button>
-                    <md-button ng-click="graph.model('rooms')"
-                               aria-label="Rooms">
-                        <md-icon md-svg-icon="/svg-icons/exit.svg"></md-icon>
-                        Rooms
-                        <md-tooltip>
-                            Rooms
-                        </md-tooltip>
-                    </md-button>
-                    <md-button ng-click="graph.model('containers')"
-                               aria-label="Containers">
-                        <md-icon md-svg-icon="/svg-icons/container.svg"></md-icon>
-                        Container
-                        <md-tooltip>
-                            Container
-                        </md-tooltip>
-                    </md-button>
-                    <md-button ng-click="graph.model('events')"
-                               aria-label="Events">
-                        <md-icon md-svg-icon="/svg-icons/events.svg"></md-icon>
-                        Events
-                        <md-tooltip>
-                            Events
-                        </md-tooltip>
-                    </md-button>
-                </div>
-            </md-toolbar>
-            <md-content flex="grow">
-                <graph thingIsA="'Room'" predicate="'linksTo'"></graph>
-            </md-content>
+<div layout-fill layout="column">
+    <md-toolbar class="toolsToolbar" flex="noshrink">
+        <div class="md-toolbar-tools">
+            <md-button ng-click="graph.update()" class="md-icon-button"
+                       aria-label="Refresh">
+                <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                <md-tooltip>
+                    Refresh
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="graph.model('rooms')"
+                       aria-label="Rooms">
+                <md-icon md-svg-icon="/svg-icons/exit.svg"></md-icon>
+                Rooms
+                <md-tooltip>
+                    Rooms
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="graph.model('containers')"
+                       aria-label="Containers">
+                <md-icon md-svg-icon="/svg-icons/container.svg"></md-icon>
+                Container
+                <md-tooltip>
+                    Container
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="graph.model('events')"
+                       aria-label="Events">
+                <md-icon md-svg-icon="/svg-icons/events.svg"></md-icon>
+                Events
+                <md-tooltip>
+                    Events
+                </md-tooltip>
+            </md-button>
         </div>
-    </md-tab-body>
-</md-tab>
+    </md-toolbar>
+    <md-content flex="grow">
+        <graph thingIsA="'Room'" predicate="'linksTo'"></graph>
+    </md-content>
+</div>

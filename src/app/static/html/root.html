@@ -78,6 +78,88 @@
                     flex="100"
                     md-selected="toolTabs.selected"
                     md-autoselect>
+
+
+                <md-tab md-on-select="updateThings()">
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/thing.svg"></md-icon>
+                        Things
+                    </md-tab-label>
+                    <md-tab-body layout="column">
+                        <div layout-fill layout="column">
+                            <md-toolbar class="toolsToolbar" flex="noshrink">
+                                <div class="md-toolbar-tools">
+                                    <md-button ng-click="graph.update()" class="md-icon-button"
+                                               aria-label="Refresh">
+                                        <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                                        <md-tooltip>
+                                            Refresh
+                                        </md-tooltip>
+                                    </md-button>
+                                </div>
+                            </md-toolbar>
+                            <md-content flex="grow">
+                                Comming soon...
+                            </md-content>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+
+                <md-tab md-on-select="updateAnnotations()">
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/annotations.svg"></md-icon>
+                        Annotations
+                    </md-tab-label>
+                    <md-tab-body layout="column" >
+                        <div layout-fill layout="column">
+                            <md-toolbar class="toolsToolbar" flex="noshrink">
+                                <div class="md-toolbar-tools">
+                                    <md-button ng-click="graph.update()" class="md-icon-button"
+                                               aria-label="Refresh">
+                                        <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                                        <md-tooltip>
+                                            Refresh
+                                        </md-tooltip>
+                                    </md-button>
+                                </div>
+                            </md-toolbar>
+                            <md-content flex="grow">
+                                Comming soon...
+                            </md-content>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+
+                <md-tab md-on-select="updateValidations()">
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/validate.svg"></md-icon>
+                        Validator
+                    </md-tab-label>
+                    <md-tab-body layout="column" >
+                        <div layout-fill layout="column">
+                            <md-toolbar class="toolsToolbar" flex="noshrink">
+                                <div class="md-toolbar-tools">
+                                    <md-button ng-click="validator.update()" class="md-icon-button"
+                                               aria-label="Refresh">
+                                        <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                                        <md-tooltip>
+                                            Re-validate
+                                        </md-tooltip>
+                                    </md-button>
+                                </div>
+                            </md-toolbar>
+                            <md-content flex="grow">
+                                Comming soon...
+                            </md-content>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+
+
+
                 <md-tab md-on-select="updateGraph()">
                     <md-tab-label>
                         <md-icon style="width: 1.5em; margin-left: 0.7em"
@@ -86,7 +168,7 @@
                     </md-tab-label>
                     <md-tab-body layout="column" >
                         <div layout-fill layout="column">
-                            <md-toolbar class="graphToolbar" flex="noshrink">
+                            <md-toolbar class="toolsToolbar" flex="noshrink">
                                 <div class="md-toolbar-tools">
                                     <md-button ng-click="graph.update()" class="md-icon-button"
                                                aria-label="Refresh">
@@ -158,7 +240,7 @@
                     </md-tab-label>
                     <md-tab-body layout="column" >
                         <div layout-fill layout="column">
-                            <md-toolbar class="assertionsToolbar" flex="noshrink">
+                            <md-toolbar class="toolsToolbar" flex="noshrink">
                                 <div class="md-toolbar-tools">
                                     <md-button ng-click="updateAssertions()" class="md-icon-button"
                                                aria-label="Refresh">

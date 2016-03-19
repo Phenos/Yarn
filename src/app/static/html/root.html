@@ -78,6 +78,31 @@
                     flex="100"
                     md-selected="toolTabs.selected"
                     md-autoselect>
+                <md-tab md-on-select="updateGraph()">
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/graph.svg"></md-icon>
+                        Graph
+                    </md-tab-label>
+                    <md-tab-body layout="column" >
+                        <div layout-fill layout="column">
+                            <md-toolbar class="assertionsToolbar" flex="noshrink">
+                                <div class="md-toolbar-tools">
+                                    <md-button ng-click="updateGraph()" class="md-icon-button"
+                                               aria-label="Refresh">
+                                        <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                                        <md-tooltip>
+                                            Refresh
+                                        </md-tooltip>
+                                    </md-button>
+                                </div>
+                            </md-toolbar>
+                            <md-content flex="grow">
+                                <graph thingIsA="'Room'" predicate="'linksTo'"></graph>
+                            </md-content>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
 
                 <md-tab>
                     <md-tab-label>

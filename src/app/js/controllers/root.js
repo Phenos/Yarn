@@ -14,7 +14,8 @@ function rootController(user,
                         themes,
                         wallpaper,
                         hotkeys,
-                        state) {
+                        state,
+                        graph) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
@@ -26,6 +27,10 @@ function rootController(user,
     $scope.updateAssertions = function () {
         $scope.allAssertions = state.assertions.all();
         //console.log("updateAssertions", $scope.allAssertions);
+    };
+
+    $scope.updateGraph = function () {
+        graph.update();
     };
 
     $scope.toolTabs = {

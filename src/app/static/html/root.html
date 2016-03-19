@@ -101,6 +101,31 @@
                         <inspector></inspector>
                     </md-tab-body>
                 </md-tab>
+                <md-tab md-on-select="updateAssertions()">
+                    <md-tab-label>
+                        <md-icon style="width: 1.5em; margin-left: 0.7em"
+                                 md-svg-icon="/svg-icons/assertions.svg"></md-icon>
+                        Assertions
+                    </md-tab-label>
+                    <md-tab-body layout="column" >
+                        <div layout-fill layout="column">
+                            <md-toolbar class="assertionsToolbar" flex="noshrink">
+                                <div class="md-toolbar-tools">
+                                    <md-button ng-click="updateAssertions()" class="md-icon-button"
+                                               aria-label="Refresh">
+                                        <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                                        <md-tooltip>
+                                            Refresh
+                                        </md-tooltip>
+                                    </md-button>
+                                </div>
+                            </md-toolbar>
+                            <md-content flex="grow">
+                                <assertion-browser-grid data="allAssertions"></assertion-browser-grid>
+                            </md-content>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
             </md-tabs>
         </md-section>
 

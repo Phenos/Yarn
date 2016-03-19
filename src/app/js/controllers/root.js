@@ -13,18 +13,25 @@ function rootController(user,
                         root,
                         themes,
                         wallpaper,
-                        hotkeys) {
+                        hotkeys,
+                        state) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
 
+    $scope.allAssertions = [];
+
+    $scope.updateAssertions = function () {
+        $scope.allAssertions = state.assertions.all();
+        //console.log("updateAssertions", $scope.allAssertions);
+    };
+
     $scope.toolTabs = {
         selected: 0
     };
 
-    console.log("wallpaper", wallpaper);
     wallpaper.change("/images/splash/splash-bg.jpg");
 
 
@@ -89,7 +96,7 @@ function rootController(user,
     };
 
     $scope.focusInspector = function () {
-        console.log($scope.toolTabs.selected);
+        //console.log($scope.toolTabs.selected);
         $scope.toolTabs.selected = 1;
     };
 

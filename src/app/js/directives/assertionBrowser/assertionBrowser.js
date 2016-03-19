@@ -22,18 +22,20 @@
     function assertionBrowserGridDirective() {
         return {
             restrict: 'E',
-            bindToController: {
+            scope: {
                 data: "="
             },
-            scope: {},
-            controllerAs: 'assertionBrowser',
             templateUrl: './html/assertionBrowserGrid.html',
             controller: AssertionBrowserGridController
         };
 
-        function AssertionBrowserGridController() {
+        function AssertionBrowserGridController($scope) {
 
-            this.options = {
+            $scope.$watch("data", function () {
+                $scope.options.data = $scope.data;
+            });
+
+            $scope.options = {
                 enableFiltering: true,
                 columnDefs: [
                     {
@@ -53,14 +55,14 @@
                         field: 'layer',
                         displayName: 'layer'},
                     {
-                        field: 'parent',
+                        field: 'parent.text()',
                         displayName: 'parent'},
                     {
                         field: 'weight()',
                         displayName: 'weight'
                     }
                 ],
-                data: this.data
+                data: $scope.data
             };
 
         }

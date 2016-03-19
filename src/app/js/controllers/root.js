@@ -23,14 +23,11 @@ function rootController(user,
     $scope.editorFiles = editorFiles;
 
     $scope.allAssertions = [];
+    $scope.graph = graph;
 
     $scope.updateAssertions = function () {
         $scope.allAssertions = state.assertions.all();
         //console.log("updateAssertions", $scope.allAssertions);
-    };
-
-    $scope.updateGraph = function () {
-        graph.update();
     };
 
     $scope.toolTabs = {

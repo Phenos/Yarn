@@ -25,6 +25,10 @@ yarn.directive('graph', function GraphDirective(state, assert) {
             $timeout(buildGraph, 100);
         };
 
+        this.model = function (id) {
+            console.log("id", id);
+        };
+
         function buildGraph() {
             var assertions = state.assertions.all();
             var nodes = [];
@@ -218,6 +222,11 @@ yarn.service('graph', function graphService() {
     service.update = function () {
         service.controller && service.controller.update();
     };
+
+    service.model = function (id) {
+        service.controller && service.controller.model(id);
+    };
+
 
     return service;
 });

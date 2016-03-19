@@ -86,13 +86,37 @@
                     </md-tab-label>
                     <md-tab-body layout="column" >
                         <div layout-fill layout="column">
-                            <md-toolbar class="assertionsToolbar" flex="noshrink">
+                            <md-toolbar class="graphToolbar" flex="noshrink">
                                 <div class="md-toolbar-tools">
-                                    <md-button ng-click="updateGraph()" class="md-icon-button"
+                                    <md-button ng-click="graph.update()" class="md-icon-button"
                                                aria-label="Refresh">
                                         <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
                                         <md-tooltip>
                                             Refresh
+                                        </md-tooltip>
+                                    </md-button>
+                                    <md-button ng-click="graph.model('rooms')"
+                                               aria-label="Rooms">
+                                        <md-icon md-svg-icon="/svg-icons/exit.svg"></md-icon>
+                                        Rooms
+                                        <md-tooltip>
+                                            Rooms
+                                        </md-tooltip>
+                                    </md-button>
+                                    <md-button ng-click="graph.model('containers')"
+                                               aria-label="Containers">
+                                        <md-icon md-svg-icon="/svg-icons/container.svg"></md-icon>
+                                        Container
+                                        <md-tooltip>
+                                            Container
+                                        </md-tooltip>
+                                    </md-button>
+                                    <md-button ng-click="graph.model('events')"
+                                               aria-label="Events">
+                                        <md-icon md-svg-icon="/svg-icons/events.svg"></md-icon>
+                                        Events
+                                        <md-tooltip>
+                                            Events
                                         </md-tooltip>
                                     </md-button>
                                 </div>

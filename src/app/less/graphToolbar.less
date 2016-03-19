@@ -1,0 +1,42 @@
+.graphToolbar {
+    background: rgb(116, 116, 116) !important;
+    color: #000;
+    height: 40px;
+    min-height: 40px;
+    font-size: 0.8em;
+
+    .md-toolbar-tools {
+
+        button.md-button {
+
+            background: none !important;
+            border-radius: 3px;
+            min-height: 30px;
+            width: auto;
+            padding: 2px;
+            line-height: 1.5em;
+            text-transform: none;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.2) !important;
+                md-icon {
+                    color: rgba(255, 255, 255, 1);
+                }
+            }
+
+            &.isOn {
+                background: rgba(255, 255, 255, 1) !important;
+                md-icon {
+                    color: rgb(63,81,181) !important;
+                }
+            }
+
+            md-icon {
+                color: rgba(255, 255, 255, 0.9);
+                height: 20px;
+                min-height: 20px;
+                margin-right: 0.2em;
+            }
+        }
+    }
+}

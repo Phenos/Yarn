@@ -12,7 +12,7 @@ yarn.config(function(RollbarProvider) {
     RollbarProvider.init(roolbarConfig);
 });
 
-yarn.run(function (commands) {
+yarn.run(function (commands, tools) {
 
     var path = "/public/js/ace/";
     ace.config.set('basePath', path);
@@ -20,6 +20,17 @@ yarn.run(function (commands) {
     ace.config.set('themePath', path);
     ace.config.set('workerPath', path);
 
+    var buitInTools = [
+        "annotationsTool",
+        "assertionsTool",
+        "commandsTool",
+        "graphTool",
+        "inspectorTool",
+        "thingsTool",
+        "validatorTool"
+    ];
+
+    tools.load(buitInTools);
 
     var builtInCommands = [
         "inventoryPlayerCommand",

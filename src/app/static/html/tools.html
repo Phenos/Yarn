@@ -1,0 +1,17 @@
+<div flex="grow" layout="column">
+    <md-tabs
+            flex="100"
+            md-selected="toolTabs.selected"
+            md-autoselect>
+        <md-tab md-on-select="update(tool)" ng-repeat="tool in tools.all">
+            <md-tab-label>
+                <md-icon style="width: 1.5em; margin-left: 0.7em"
+                         md-svg-icon="/svg-icons/{{ tool.icon }}.svg"></md-icon>
+                {{ tool.label }}
+            </md-tab-label>
+            <md-tab-body layout="column">
+                <tool directive="tool.directive"></tool>
+            </md-tab-body>
+        </md-tab>
+    </md-tabs>
+</div>

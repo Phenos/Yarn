@@ -9,9 +9,8 @@ yarn.service("tools", function toolsService ($injector) {
     Tools.prototype.add = function (tool) {
         this.all.push(tool);
         this.index[tool.id] = tool;
-        this.all.sort(function (tool) {
-            console.log("tool", tool);
-            return tool.order - tool.order;
+        this.all.sort(function (toolA, toolB) {
+            return toolB.order - toolA.order;
         });
     };
 

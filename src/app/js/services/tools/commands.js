@@ -3,6 +3,6 @@ yarn.service("commandsTool", function (Tool) {
         label: "Commands",
         icon: "commands",
         directive: "commands-tool",
-        order: 1
+        order: 100
     });
 });

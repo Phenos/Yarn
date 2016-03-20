@@ -3,12 +3,25 @@ yarn.factory('restartCommand', restartCommand);
 function restartCommand(commands,
                         yConsole,
                         state,
-                        player) {
+                        player,
+                        synonyms,
+                        statuses) {
 
     function handler() {
         commands.run("clear session");
         commands.run("clear localstorage");
         state.assertions.removeLayer('session');
+
+
+        /*
+         Refresh the list of Statuses and Synonyms, in case they changed during game play
+         */
+        //TODO: Those two updates should be extracted in a global behavior
+        // They are repeated too ofter
+        // TODO: Dont inject state as argument
+        synonyms.update(state);
+        statuses.update(state);
+
 
         player.refresh();
         yConsole.success("Story restarted");

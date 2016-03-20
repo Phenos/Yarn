@@ -1,4 +1,5 @@
-yarn.directive('statusBar', function StatusBarDirective(storyLog) {
+yarn.directive('statusBar', function StatusBarDirective(storyLog,
+                                                        state) {
     return {
         restrict: 'E',
         scope: {},
@@ -11,10 +12,12 @@ yarn.directive('statusBar', function StatusBarDirective(storyLog) {
         $scope.updated = "banana";
         $scope.statuses = statuses;
         $scope.allStatuses = statuses.getAll();
+        $scope.visible = false;
 
-        $scope.$watch("statuses.updated",function() {
+        $scope.$watch("statuses.updated", function () {
             $scope.allStatuses = statuses.getAll();
             $scope.updated = statuses.updated;
+            $scope.visible = state.step() > 0;
         });
 
         $scope.click = function (status) {

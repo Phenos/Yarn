@@ -22,13 +22,7 @@ function rootController(user,
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
 
-    $scope.allAssertions = [];
     $scope.graph = graph;
-
-    $scope.updateAssertions = function () {
-        $scope.allAssertions = state.assertions.all();
-        //console.log("updateAssertions", $scope.allAssertions);
-    };
 
     $scope.toolTabs = {
         selected: 0

@@ -63,7 +63,7 @@
                 var logItemEl = $compile('<log-item class="unread" type="type" text="text" scope="scope"></log-item>')(newScope);
                 $element.append(logItemEl);
 
-                player.scroll();
+                player.scroll(logItemEl);
             };
 
             this.markAsRead = function () {

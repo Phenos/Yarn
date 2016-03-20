@@ -110,8 +110,9 @@
                 var logElem = $compile('<log is-new-step="isNewStep" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
                 logsElem.append(logElem);
                 $timeout(function () {
-                    var scrollHeight = logscrollElem[0].scrollHeight;
-                    logscrollElem.scrollTopAnimated(scrollHeight, 1000, easing.easeOutQuart())
+                    //console.log("WTF!", [logscrollElem]);
+                    //var scrollHeight = logscrollElem[0].scrollHeight;
+                    //logscrollElem.scrollTopAnimated(scrollHeight, 1000, easing.easeOutQuart)
                 });
                 $scope.$emit("refreshScrollbars");
             };

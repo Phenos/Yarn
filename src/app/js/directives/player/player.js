@@ -13,6 +13,7 @@ yarn.directive('player', function () {
 
     function playerController($scope,
                               $element,
+                              $timeout,
                               sidebar,
                               writers,
                               promptLoop,
@@ -53,23 +54,17 @@ yarn.directive('player', function () {
             sidebar.close();
         };
 
-        this.scroll = function (offset) {
+        this.scroll = function (targetElement) {
+            var duration = 1500;
+            var offset = 200;
+
             // First we check to see if it's the first game step
             // to prevent scrolling when first showing the coverpage
-            if (state.step() > 0) {
-
-                var _offset = 600;
-                if (!angular.isUndefined(offset)) {
-                    _offset = offset;
-                }
-                //var scrollHeight = scrollAreaElem.scrollHeight + _offset;
-                var scrollTop = scrollAreaElem.scrollTop + _offset;
-                if (scrollTop > scrollAreaElem.scrollHeight) {
-                    scrollTop = scrollAreaElem.scrollHeight;
-                }
-
+            if (state.step() > 0 && targetElement) {
                 angular.element(scrollAreaElem)
-                    .scrollTopAnimated(scrollTop, 1250, easing.easeOutQuart())
+                    .scrollToElementAnimated(targetElement, offset, duration, function (t) {
+                        return t * (2 - t)
+                    });
             }
         };
 

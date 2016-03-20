@@ -4,13 +4,12 @@
     <toolbar user="player.user"></toolbar>
     <md-content
             style="z-index:5; position: relative;"
-            layout="row"
+            NOPE_layout="row"
             class="player"
             scrollbars
             layout-fill
-
     >
-        <div class="main-ui" flex="100">
+        <div class="main-ui">
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>
             <div class="player-footer"></div>

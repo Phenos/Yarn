@@ -36,7 +36,7 @@ yarn.directive('thing', function ThingDirective(things,
             } else {
                 yConsole.warning("Clicking this link did nothing: " + this.text);
             }
-            console.log("thing: ", self.thing);
+            //console.log("thing: ", self.thing);
         }
     }
 

@@ -9,6 +9,7 @@ function restartCommand(commands,
         commands.run("clear session");
         commands.run("clear localstorage");
         state.assertions.removeLayer('session');
+
         player.refresh();
         yConsole.success("Story restarted");
     }

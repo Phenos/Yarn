@@ -63,7 +63,11 @@ function clearCommand($localStorage,
 
     function clearLocalStorage() {
         //delete $localStorage.localState;
-        $localStorage.localState = {};
+
+        // Clear the assertions from localStorage
+        var storyStorage = state.getStoryLocalStorage();
+        storyStorage.assertions = {};
+
         yConsole.success("Local storage memory cleared.");
     }
 

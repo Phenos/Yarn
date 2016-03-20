@@ -33,6 +33,10 @@ function EditorToolbarDirective() {
             this.IDE.run();
         };
 
+        this.search = function() {
+            editors.search();
+        };
+
         this.hideConsole = function () {
             root.hideConsole();
         };

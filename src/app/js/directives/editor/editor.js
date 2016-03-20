@@ -130,6 +130,12 @@
                 }
             };
 
+            this.search = function () {
+                if (aceEditor) {
+                    aceEditor.execCommand("find");
+                }
+            };
+
             function aceLoaded(_editor) {
                 _editor.$blockScrolling = Infinity;
                 aceEditor = _editor;

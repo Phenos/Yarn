@@ -18,6 +18,10 @@ yarn.service("editors", function () {
         editor.focus();
     };
 
+    Editors.prototype.search = function () {
+        this.current && this.current.search();
+    };
+
     Editors.prototype.selectByFile = function (file) {
         //console.log("selectByFile", file);
         var self = this;

@@ -139,8 +139,9 @@ yarn.factory('writers', function (Prompt,
         refreshTheme(room);
 
         if (room) {
+            var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaperValue);
+            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
             if (url) {
                 wallpaper.change(url);
             } else {

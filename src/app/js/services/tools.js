@@ -1,10 +1,17 @@
 
-yarn.service("tools", function toolsService ($injector) {
+yarn.service("tools", function toolsService ($injector, state) {
 
     function Tools () {
         this.all = [];
         this.index = {};
     }
+
+    Tools.prototype.focusFromMemory = function () {
+        var storage = state.getStoryLocalStorage("tools");
+        var toolId = storage.lastOpenTool;
+        if (toolId) this.focus(toolId);
+        console.log("focusFromMemory", toolId);
+    };
 
     Tools.prototype.add = function (tool) {
         this.all.push(tool);
@@ -28,6 +35,9 @@ yarn.service("tools", function toolsService ($injector) {
     };
 
     Tools.prototype.focus = function (id) {
+        console.log("focus", id);
+        var storage = state.getStoryLocalStorage("tools");
+        storage.lastOpenTool = id;
         angular.forEach(this.all, function (tool) {
             if (tool.id === id) {
                 tool.focus();

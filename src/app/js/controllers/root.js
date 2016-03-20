@@ -13,7 +13,8 @@ function rootController(user,
                         root,
                         themes,
                         wallpaper,
-                        hotkeys) {
+                        hotkeys,
+                        tools) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
@@ -116,6 +117,7 @@ function rootController(user,
     //IDE.loadRememberedStory();
     IDE.run();
 
+    tools.focusFromMemory();
 
 }
 

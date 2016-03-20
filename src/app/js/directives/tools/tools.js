@@ -10,6 +10,10 @@ yarn.directive('tools', function ToolsDirective() {
 
     function ToolsController($scope, tools) {
         $scope.tools = tools;
+
+        $scope.focus = function (tool) {
+            tools.focus(tool.id)
+        }
     }
 
 });

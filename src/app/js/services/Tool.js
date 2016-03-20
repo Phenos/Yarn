@@ -7,7 +7,16 @@ yarn.service("Tool", function () {
         this.icon = options.icon;
         this.directive = options.directive;
         this.options = options;
+        this.isFocused = false;
     }
+
+    Tool.prototype.focus = function () {
+        this.isFocused = true;
+    };
+
+    Tool.prototype.blur = function () {
+        this.isFocused = false;
+    };
 
     return Tool;
 

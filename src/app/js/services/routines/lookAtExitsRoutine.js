@@ -21,19 +21,19 @@ yarn.service("lookAtExitsRoutine", function (events,
             phrase.push("You are at the [" + roomName + "]. ");
         }
 
-        var exitsInRoom = stateHelpers.exitsInRoom(room);
+        var doorsInRoom = stateHelpers.doorsInRoom(room);
 
         if (room) {
-            if (exitsInRoom.length) {
+            if (doorsInRoom.length) {
 
-                phrase.push("Your can go to the ");
-                angular.forEach(exitsInRoom, function (thing, index) {
-                    var exitName = state.resolveValue(assert(thing, "has", "Name"));
-                    exitName = exitName || thing.id;
-                    phrase.push("[" + exitName + "]");
-                    if (index === exitsInRoom.length - 1) {
+                phrase.push("Exits are the ");
+                angular.forEach(doorsInRoom, function (thing, index) {
+                    var doorName = state.resolveValue(assert(thing, "has", "Name"));
+                    doorName = doorName || thing.id;
+                    phrase.push("[" + doorName + "]");
+                    if (index === doorsInRoom.length - 1) {
                         phrase.push(".")
-                    } else if (index === exitsInRoom.length - 2) {
+                    } else if (index === doorsInRoom.length - 2) {
                         phrase.push(" and the ");
                     } else {
                         phrase.push(", ")
@@ -52,7 +52,7 @@ yarn.service("lookAtExitsRoutine", function (events,
 
         }
 
-        events.trigger(assert("You", "have looked at", "Exits"));
+        events.trigger(assert("You", "have looked at", "Doors"));
 
         stepRoutine();
 

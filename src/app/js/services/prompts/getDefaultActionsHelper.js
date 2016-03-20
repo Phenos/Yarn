@@ -10,10 +10,10 @@ yarn.service("setDefaultOptionsHelper", function (state,
         var room = state.resolveOne(assert("You", "is in"));
 
         if (room) {
-            var linkedRooms = state.resolveAll(assert(room, "links to"));
+            var doorsInRoom = stateHelpers.doorsInRoom(room);
 
             //console.log("linksToCurrentRoom", linksToCurrentRoom);
-            if (linkedRooms.length) {
+            if (doorsInRoom.length) {
                 option = prompt.option("Move", "aboutTo move");
                 option.iconId = "move";
                 option.iconSize = size;

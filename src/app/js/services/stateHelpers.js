@@ -1,13 +1,13 @@
 yarn.service("stateHelpers", function (inventoryInRoomHelper,
                                        ownInventoryHelper,
                                        usableItemInRoomHelper,
-                                       exitsInRoomHelper,
+                                       doorsInRoomHelper,
                                        thingsInRoomHelper) {
 
     return {
         usableItemInRoom: usableItemInRoomHelper,
         inventoryInRoom: inventoryInRoomHelper,
-        exitsInRoom: exitsInRoomHelper,
+        doorsInRoom: doorsInRoomHelper,
         ownInventory: ownInventoryHelper,
         thingsInRoom: thingsInRoomHelper
     }

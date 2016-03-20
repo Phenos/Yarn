@@ -68,7 +68,7 @@ yarn.service('events', function (assert,
 
 
     Events.prototype.triggerNow = function (object) {
-        console.log("Events.prototype.triggerNow", object);
+        //console.log("Events.prototype.triggerNow", object);
         var somethingHappened = false;
         var shouldOccur = true;
         var childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
@@ -104,7 +104,7 @@ yarn.service('events', function (assert,
 
 
     Events.prototype.trigger = function (assert) {
-        console.log("Trigger", assert);
+        //console.log("Trigger", assert);
         state.createAssertion(assert.subject, assert.predicate, assert.object, {
             layer: "step"
         });

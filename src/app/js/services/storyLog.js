@@ -13,7 +13,7 @@ yarn.service('storyLog', function () {
         // Mock function that buffer function calls until the console is ready
         function mockFunction(fn) {
             return function () {
-                console.log("Log item buffered", fn, arguments);
+                //console.log("Log item buffered", fn, arguments);
                 self._buffer.push([fn, arguments])
             }
         }

@@ -20,7 +20,6 @@
                                     $compile,
                                     player,
                                     templating,
-                                    yConsole,
                                     state,
                                     assert) {
 
@@ -29,13 +28,6 @@
                 this.onClear();
             };
 
-            /*
-             Match = /\[(?<Text>[^]]+)]\((?<Url>[^)]+)\)/;
-             Replacement = '<link token="${Url}">${Text}</link>';
-
-             BracketsMatch = /\[(?<Text>[^]]+)]/;
-             BracketsReplacement = '<link token="${Text}">${Text}</link>';
-             */
             this.write = function (text, type, scope) {
                 var parsedTxt = text;
 

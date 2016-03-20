@@ -6,7 +6,6 @@ yarn.factory('moveCommand', function (yConsole,
                                       writers) {
 
     function handler(args) {
-        console.log("WTF");
         if (args.length) {
             var door = things.get(args[0], true);
             if (door) {

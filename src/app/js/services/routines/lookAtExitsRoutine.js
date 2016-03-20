@@ -28,7 +28,6 @@ yarn.service("lookAtExitsRoutine", function (events,
 
                 phrase.push("Exits are ");
                 angular.forEach(doorsInRoom, function (thing, index) {
-                    console.log("ooor thing???", thing);
                     var doorName = state.resolveValue(assert(thing, "has", "Name"));
                     doorName = doorName || thing.id;
                     phrase.push("[" + doorName + "]");

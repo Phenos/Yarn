@@ -15,7 +15,6 @@ yarn.factory('writers', function (Prompt,
         if (storyHasEnded) {
             returnFn = describeTheEnd();
         } else if (state.step() === 0) {
-            storyLog.clear();
             returnFn = describeCoverpage();
         } else {
             returnFn = describeRoom();

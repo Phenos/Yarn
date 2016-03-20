@@ -6,11 +6,11 @@ yarn.factory('moveCommand', function (yConsole,
                                       writers) {
 
     function handler(args) {
+        console.log("WTF");
         if (args.length) {
-            var room = things.get(args[0], true);
-            var door = things.get(args[1], true);
-            if (room & door) {
-                var success = logic.routines.move(room, door);
+            var door = things.get(args[0], true);
+            if (door) {
+                var success = logic.routines.move(door);
                 if (success) writers.describeWhereYouAre(true);
             } else {
                 yConsole.error("Could not find any object called : " + args[0]);

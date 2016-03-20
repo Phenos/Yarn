@@ -26,15 +26,16 @@ yarn.service("lookAtExitsRoutine", function (events,
         if (room) {
             if (doorsInRoom.length) {
 
-                phrase.push("Exits are the ");
+                phrase.push("Exits are ");
                 angular.forEach(doorsInRoom, function (thing, index) {
+                    console.log("ooor thing???", thing);
                     var doorName = state.resolveValue(assert(thing, "has", "Name"));
                     doorName = doorName || thing.id;
                     phrase.push("[" + doorName + "]");
                     if (index === doorsInRoom.length - 1) {
                         phrase.push(".")
                     } else if (index === doorsInRoom.length - 2) {
-                        phrase.push(" and the ");
+                        phrase.push(" and ");
                     } else {
                         phrase.push(", ")
                     }

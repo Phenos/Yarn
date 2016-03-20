@@ -13,19 +13,17 @@
     <div flex="grow" layout="row">
         <md-content flex="30" class="list-of-types">
             <md-list>
-                <md-list-item>
+                <md-list-item ng-click="filterByType()">
                     <p>ALL TYPES</p>
-                    <md-checkbox class="md-secondary"></md-checkbox>
                 </md-list-item>
-                <md-list-item ng-repeat="type in types">
+                <md-list-item ng-click="filterByType(type)" ng-repeat="type in types">
                     <p>{{ type.object.label() }} ({{ type.count}})</p>
-                    <md-checkbox class="md-secondary" ng-model="type.selected"></md-checkbox>
                 </md-list-item>
             </md-list>
         </md-content>
         <md-content flex="70" class="list-of-things">
             <md-list>
-                <md-list-item ng-repeat="thing in things">
+                <md-list-item ng-repeat="thing in thingsFiltered">
                     <p>{{ thing.object.text() }}</p>
                 </md-list-item>
             </md-list>

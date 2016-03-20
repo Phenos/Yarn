@@ -1,4 +1,4 @@
-yarn.directive('graphTool', function CommandsTool(tools) {
+yarn.directive('graphTool', function CommandsTool(graph) {
 
     return {
         restrict: 'E',
@@ -9,7 +9,7 @@ yarn.directive('graphTool', function CommandsTool(tools) {
     };
 
     function Controller($scope) {
-        var self = this;
+        $scope.graph = graph;
     }
 
 });

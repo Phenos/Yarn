@@ -16,7 +16,7 @@ yarn.directive('graph', function GraphDirective(state, assert) {
         var predicate = this.predicate.toLowerCase() || "linksto";
         var force = d3.layout.force();
         var svg = d3.select($element[0]).append("svg");
-        console.log("svg", svg);
+        //console.log("svg", svg);
 
         graph.register(this);
 
@@ -34,7 +34,7 @@ yarn.directive('graph', function GraphDirective(state, assert) {
             if (model) {
                 this.update(model)
             }
-            console.log("id", id);
+            //console.log("id", id);
         };
 
         this.models = {
@@ -126,7 +126,7 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                 }
             });
 
-            console.log(nodes, links, nodesIndex);
+            //console.log(nodes, links, nodesIndex);
 
             return {
                 nodes: nodes,

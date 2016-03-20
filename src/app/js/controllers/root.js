@@ -13,16 +13,12 @@ function rootController(user,
                         root,
                         themes,
                         wallpaper,
-                        hotkeys,
-                        state,
-                        graph) {
+                        hotkeys) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
-
-    $scope.graph = graph;
 
     $scope.toolTabs = {
         selected: 0

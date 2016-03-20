@@ -14,6 +14,7 @@ var yarn = angular.module('yarn', [
     'ui.router',
     'firebase',
     'ngDebottle',
+    'ngLodash',
     'ngContextMenu',
     'tandibar/ng-rollbar',
     'ui.ace',

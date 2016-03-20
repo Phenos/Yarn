@@ -39,11 +39,7 @@
             this.write = function (text, type, scope) {
                 var parsedTxt = text;
 
-                var BracketsMatch = /\[([^\]]+)]/g;
-                var BracketsReplacement = '<thing token="$1">$1</thing>';
-
-                parsedTxt = parsedTxt.replace(BracketsMatch, BracketsReplacement);
-
+                // Render tempate if necessary
                 if (parsedTxt.substring(0, 5) === "tmpl:") {
                     parsedTxt = templating.render(parsedTxt.substring(5), {
                         // todo: move this in the "templating" service
@@ -57,6 +53,12 @@
                         }
                     });
                 }
+
+                // Render bracket links
+                var BracketsMatch = /\[([^\]]+)]/g;
+                var BracketsReplacement = '<thing token="$1">$1</thing>';
+                parsedTxt = parsedTxt.replace(BracketsMatch, BracketsReplacement);
+
 
                 var newScope = $scope.$new(false);
                 if (scope) {

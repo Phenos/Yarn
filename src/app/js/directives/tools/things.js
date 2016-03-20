@@ -10,13 +10,14 @@ yarn.directive('thingsTool', function CommandsTool(things, state) {
 
     function Controller($scope) {
 
-        $scope.types = [];
-        $scope.typesIndex = {};
-        $scope.things = [];
-        $scope.thingsIndex = {};
-        $scope.assertions = [];
 
         $scope.update = function () {
+            $scope.types = [];
+            $scope.typesIndex = {};
+            $scope.things = [];
+            $scope.thingsIndex = {};
+            $scope.assertions = [];
+
             var allAssertions = state.assertions.all();
             $scope.assertions = allAssertions.filter(function (assertion) {
                 var keep = false;

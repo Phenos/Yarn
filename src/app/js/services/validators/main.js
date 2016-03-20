@@ -1,4 +1,6 @@
-yarn.service("validator", function (validateStory) {
+yarn.service("validator", function (state,
+                                    validateStory,
+                                    postal) {
 
     /**
      * Class for validator
@@ -20,9 +22,16 @@ yarn.service("validator", function (validateStory) {
         this.results = blankResults;
     };
 
-    Validator.prototype.run = function (state) {
+    Validator.prototype.run = function () {
         this.reset();
         this.validate(validateStory, state);
+
+        postal.publish({
+            channel: "validator",
+            topic: "results",
+            data: this.results
+        });
+
         return this.results;
     };
 

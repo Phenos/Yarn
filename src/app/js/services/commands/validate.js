@@ -5,7 +5,7 @@ yarn.factory('validateCommand', function (yConsole,
     function handler() {
         var maxResults = 10;
         var limitMessage = "";
-        var results = validator.run(state);
+        var results = validator.run();
         //console.log("Validation results", results.all);
         yConsole.log([
             "Validator executed " + results.all.length + " tests  :  ",

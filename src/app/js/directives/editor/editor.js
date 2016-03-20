@@ -70,7 +70,7 @@
             controller: EditorController
         };
 
-        function EditorController() {
+        function EditorController(tools) {
             var self = this;
             var aceEditor;
 
@@ -139,7 +139,7 @@
 
                 angular.element(aceEditor.container).on("contextmenu", function () {
                     globalContextMenu.add("Inspector", "inspector.svg", function () {
-                        root.focusInspector();
+                        tools.focus("inspector");
                     });
                 });
 

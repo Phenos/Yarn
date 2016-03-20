@@ -8,7 +8,8 @@ yarn.service('IDE', function IDEService(hotkeys,
                                         loader,
                                         storage,
                                         commands,
-                                        editorFiles) {
+                                        editorFiles,
+                                        tools) {
 
     var service = {
         isWorking: false
@@ -47,7 +48,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                     event.preventDefault();
 
                     service.isWorking = true;
-                    service.saveAll(function() {
+                    service.saveAll(function () {
                         service.isWorking = false;
                     });
                 }
@@ -67,6 +68,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 description: 'Validate Current State',
                 callback: function (event) {
                     event.preventDefault();
+                    tools.focus("validator");
                     service.validate();
                 }
             });
@@ -113,10 +115,10 @@ yarn.service('IDE', function IDEService(hotkeys,
 
         function OpenFromStorageController($scope) {
             var self = this;
-            $scope.cancel = function() {
+            $scope.cancel = function () {
                 $mdDialog.cancel();
             };
-            $scope.open = function(file) {
+            $scope.open = function (file) {
                 self.isWorking = true;
                 console.log("open", file);
                 $mdDialog.cancel();

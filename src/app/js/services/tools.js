@@ -23,5 +23,19 @@ yarn.service("tools", function toolsService ($injector) {
         });
     };
 
+    Tools.prototype.get = function (id) {
+        return this.index[id];
+    };
+
+    Tools.prototype.focus = function (id) {
+        angular.forEach(this.all, function (tool) {
+            if (tool.id === id) {
+                tool.focus();
+            } else {
+                tool.blur();
+            }
+        });
+    };
+
     return new Tools();
 });

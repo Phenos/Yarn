@@ -27,6 +27,7 @@ yarn.service('yarn', function ($localStorage,
             this.scripts.forEach(function (script) {
                 script.run();
             });
+
             return this;
         };
 

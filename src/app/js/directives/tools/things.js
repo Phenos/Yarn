@@ -1,4 +1,6 @@
-yarn.directive('thingsTool', function CommandsTool(things, state) {
+yarn.directive('thingsTool', function ThingsToolDirective(things,
+                                                          state,
+                                                          postal) {
 
     return {
         restrict: 'E',
@@ -10,6 +12,13 @@ yarn.directive('thingsTool', function CommandsTool(things, state) {
 
     function Controller($scope) {
 
+        postal.subscribe({
+            channel: "runtime",
+            topic: "afterRun",
+            callback: function () {
+                $scope.update();
+            }
+        });
 
         $scope.update = function () {
             $scope.types = [];

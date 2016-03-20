@@ -1,4 +1,4 @@
-yarn.service("thingsTool", function (Tool) {
+yarn.service("thingsTool", function thingsToolService(Tool) {
     return new Tool("things", {
         label: "Things",
         icon: "thing",

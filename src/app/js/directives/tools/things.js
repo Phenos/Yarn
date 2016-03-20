@@ -1,4 +1,4 @@
-yarn.directive('thingsTool', function CommandsTool(tools) {
+yarn.directive('thingsTool', function CommandsTool(things, state) {
 
     return {
         restrict: 'E',
@@ -9,7 +9,55 @@ yarn.directive('thingsTool', function CommandsTool(tools) {
     };
 
     function Controller($scope) {
-        var self = this;
+
+        $scope.types = [];
+        $scope.typesIndex = {};
+        $scope.things = [];
+        $scope.thingsIndex = {};
+        $scope.assertions = [];
+
+        $scope.update = function () {
+            var allAssertions = state.assertions.all();
+            $scope.assertions = allAssertions.filter(function (assertion) {
+                var keep = false;
+                var type = $scope.typesIndex[assertion.object.id];
+                var thing = $scope.thingsIndex[assertion.subject.id];
+                if (assertion.predicate.id === "is") {
+                    if (!thing) {
+                        thing = {
+                            object: assertion.subject,
+                            count: 1
+                        };
+                        $scope.thingsIndex[assertion.subject.id] = thing;
+                        $scope.things.push(thing);
+                    } else {
+
+                    }
+                    if (!type) {
+                        type = {
+                            object: assertion.object,
+                            selected: true,
+                            count: 1
+                        };
+                        $scope.typesIndex[assertion.object.id] = type;
+                        $scope.types.push(type);
+                    } else {
+                        type.count++;
+                    }
+                    keep = true;
+                }
+                return keep;
+            });
+
+            $scope.types.sort(function (A, B) {
+                return (A.object.id > B.object.id) ? 1 : -1;
+            });
+            $scope.things.sort(function (A, B) {
+                return (A.object.id > B.object.id) ? 1 : -1;
+            });
+        };
+
+        $scope.update();
     }
 
 });

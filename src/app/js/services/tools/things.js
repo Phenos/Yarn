@@ -3,6 +3,6 @@ yarn.service("thingsTool", function (Tool) {
         label: "Things",
         icon: "thing",
         directive: "things-tool",
-        order: 80
+        order: 120
     });
 });

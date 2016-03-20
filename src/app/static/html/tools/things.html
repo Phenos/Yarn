@@ -1,7 +1,7 @@
-<div layout-fill layout="column">
+<div layout-fill layout="column" class="things-tool">
     <md-toolbar class="toolsToolbar" flex="noshrink">
         <div class="md-toolbar-tools">
-            <md-button ng-click="graph.update()" class="md-icon-button"
+            <md-button ng-click="update()" class="md-icon-button"
                        aria-label="Refresh">
                 <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
                 <md-tooltip>
@@ -10,7 +10,25 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-content flex="grow">
-        Things panel is comming soon...
-    </md-content>
+    <div flex="grow" layout="row">
+        <md-content flex="30" class="list-of-types">
+            <md-list>
+                <md-list-item>
+                    <p>ALL TYPES</p>
+                    <md-checkbox class="md-secondary"></md-checkbox>
+                </md-list-item>
+                <md-list-item ng-repeat="type in types">
+                    <p>{{ type.object.label() }} ({{ type.count}})</p>
+                    <md-checkbox class="md-secondary" ng-model="type.selected"></md-checkbox>
+                </md-list-item>
+            </md-list>
+        </md-content>
+        <md-content flex="70" class="list-of-things">
+            <md-list>
+                <md-list-item ng-repeat="thing in things">
+                    <p>{{ thing.object.text() }}</p>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
 </div>

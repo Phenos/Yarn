@@ -1,0 +1,42 @@
+.validator-tool {
+
+    font-size: 0.9em;
+
+    md-list {
+        md-list-item,
+        md-list-item .md-list-item-inner {
+            min-height: 20px;
+        }
+        md-list-item {
+            md-icon {
+                width: 12px;
+                height: 12px;
+                margin-right: 0.75em !important;
+            }
+            &.type-error {
+                color: #922c1f;
+                font-weight: bold;
+                md-icon {
+                    color: #922c1f;
+                }
+            }
+            &.type-passed {
+                color: #0c7700;
+                md-icon {
+                    color: #0c7700;
+                }
+            }
+            &.type-warning {
+                color: #7f7d7e;
+                md-icon {
+                    color: #d8a612;
+                }
+            }
+        }
+    }
+
+    .list-of-types {
+        background: #eaeaea;
+        overflow-x: hidden;
+    }
+}

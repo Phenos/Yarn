@@ -212,6 +212,7 @@ yarn.service('state', function ($localStorage,
                     options.value = true;
                 }
 
+                //console.log("eval", options.eval);
                 if (options.eval) {
                     var evaluatedValue = eval(options.value, {
                         value: self.resolveValue(assert(subject, predicate, object))

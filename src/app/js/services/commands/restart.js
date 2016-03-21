@@ -4,6 +4,7 @@ function restartCommand(commands,
                         yConsole,
                         state,
                         player,
+                        storyLog,
                         synonyms,
                         statuses) {
 
@@ -11,7 +12,6 @@ function restartCommand(commands,
         commands.run("clear session");
         commands.run("clear localstorage");
         state.assertions.removeLayer('session');
-
 
         /*
          Refresh the list of Statuses and Synonyms, in case they changed during game play
@@ -22,7 +22,7 @@ function restartCommand(commands,
         synonyms.update(state);
         statuses.update(state);
 
-
+        storyLog.clear();
         player.refresh();
         yConsole.success("Story restarted");
     }

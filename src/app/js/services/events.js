@@ -93,8 +93,10 @@ yarn.service('events', function (assert,
             //console.log("childAssertions for " + object.id, childAssertions);
             angular.forEach(childAssertions, function (assertion) {
                 //console.log(">>>triggered assertion", assertion);
+                var value = assertion.value();
+                //console.log("triggerNow value", value);
                 state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                    value: assertion.value(),
+                    value: value,
                     eval: true
                 });
             });

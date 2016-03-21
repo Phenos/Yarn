@@ -121,7 +121,7 @@ yarn.service('IDE', function IDEService(hotkeys,
             };
             $scope.open = function (file) {
                 self.isWorking = true;
-                console.log("open", file);
+                //console.log("open", file);
                 $mdDialog.cancel();
                 editorFiles.open(file);
                 editors.focus(file.uri.toString());

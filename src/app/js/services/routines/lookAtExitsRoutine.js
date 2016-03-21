@@ -12,7 +12,7 @@ yarn.service("lookAtExitsRoutine", function (events,
         storyLog.action("You look around for exits");
 
         var defaultText = state.resolveValue(assert("Default", "for", "NowhereToGo"));
-        defaultText = defaultText || "Your see nowhere else to go";
+        defaultText = defaultText || "You see nowhere else to go";
 
         var room = state.resolveOne(assert("You", "is in"));
         if (room) {

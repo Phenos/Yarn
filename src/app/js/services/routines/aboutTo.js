@@ -2,6 +2,7 @@ yarn.service("aboutToRoutine", function (state,
                                          things,
                                          lookAroundRoutine,
                                          lookAtExitsRoutine,
+                                         lookAtUsablesRoutine,
                                          inventoryRoutine,
                                          predicates) {
 
@@ -20,6 +21,10 @@ yarn.service("aboutToRoutine", function (state,
         } else if (intention.toLowerCase() === "move") {
 
             lookAtExitsRoutine();
+
+        } else if (intention.toLowerCase() === "use") {
+
+            lookAtUsablesRoutine();
         }
 
         var you = things.get("you");

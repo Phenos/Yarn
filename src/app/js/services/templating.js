@@ -9,18 +9,23 @@ yarn.service("templating", function ($window, yConsole) {
     var recursion = 0;
     var maxRecursion = 50;
     Templating.prototype.render = function (source, scope) {
+        var output;
         recursion++;
-        //console.log("recursion", recursion);
         if (recursion > maxRecursion) {
             recursion = recursion - maxRecursion;
             yConsole.error('Too much recursion during template rendering!');
         } else {
             var _scope = scope || {};
-            //console.log("Templating.render", [source, scope]);
             try {
-                var output = nunjucks.renderString(source, _scope);
+                output = nunjucks.renderString(source, _scope);
+
+                // Coherce the value to a float if needed
+                if (output[0] === "#") {
+                    console.log("COHERCING FLOAT: ", output);
+                    output = parseFloat(output.substring(1));
+                }
+
             } catch (e) {
-                //console.log({e:e});
                 var msg = [
                     e.name + "\n",
                     e.message
@@ -29,6 +34,7 @@ yarn.service("templating", function ($window, yConsole) {
             }
             recursion--;
         }
+
         return output;
     };
 

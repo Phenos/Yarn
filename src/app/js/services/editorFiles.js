@@ -114,14 +114,14 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         var self = this;
         var sessionFiles = session.storage("editorFiles");
 
-        //console.log("this._mainFile", this._mainFile);
-        if (angular.isObject(this._mainFile)) {
-            sessionFiles.mainFile = this._mainFile._uri;
-        } else {
-            delete sessionFiles.mainFile;
-        }
-
         if (sessionFiles) {
+            //console.log("this._mainFile", this._mainFile);
+            if (angular.isObject(this._mainFile)) {
+                sessionFiles.mainFile = this._mainFile._uri;
+            } else {
+                delete sessionFiles.mainFile;
+            }
+
             if (!angular.isArray(sessionFiles.files))
                 sessionFiles.files = [];
 

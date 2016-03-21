@@ -31,15 +31,13 @@
             this.write = function (text, type, scope) {
                 var parsedTxt = text;
 
-                // Render tempate if necessary
-                if (parsedTxt.substring(0, 5) === "tmpl:") {
-                    parsedTxt = templating.render(parsedTxt.substring(5));
-                }
-
                 // Render bracket links
                 var BracketsMatch = /\[([^\]]+)]/g;
                 var BracketsReplacement = '<thing token="$1">$1</thing>';
                 parsedTxt = parsedTxt.replace(BracketsMatch, BracketsReplacement);
+
+                // Render paragraph breaks and line breaks
+                parsedTxt = parsedTxt.replace(/(\\[n])/g, '<br/>');
 
 
                 var newScope = $scope.$new(false);

@@ -25,10 +25,11 @@ yarn.service("editors", function (state) {
         var storage = state.getStoryLocalStorage("editors");
         //console.log("Editors.focus", fileURI, this.all);
         angular.forEach(this.all, function (_editor) {
+            console.log(fileURI, _editor.file.uri.toString())
             if (fileURI === _editor.file.uri.toString()) {
                 self.current = _editor;
                 storage.lastOpenFile = fileURI;
-                //console.log(".focus storage.lastOpenFile ",fileURI);
+                console.log(" > _editor.focus()",fileURI);
                 _editor.focus();
             } else {
                 _editor.blur();

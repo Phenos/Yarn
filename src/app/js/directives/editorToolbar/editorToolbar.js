@@ -15,7 +15,6 @@ function EditorToolbarDirective() {
     };
 
     function EditorToolbarController(editors,
-                                     assertionBrowser,
                                      root,
                                      tools,
                                      IDE) {
@@ -39,10 +38,6 @@ function EditorToolbarDirective() {
 
         this.hideConsole = function () {
             root.hideConsole();
-        };
-
-        this.openAssertionBrowser = function () {
-            assertionBrowser.open();
         };
 
         this.openHelp = function() {

@@ -1,4 +1,4 @@
-yarn.service("statuses", function (state, assert) {
+yarn.service("statuses", function (state, assert, script) {
 
     function Statuses() {
         this.all = {};
@@ -48,8 +48,14 @@ yarn.service("statuses", function (state, assert) {
         this.value = state.resolveValue(assert(this.object, "has", "Value"));
         this.formula = state.resolveValue(assert(this.object, "has", "Formula"));
         this.format = state.resolveValue(assert(this.object, "has", "Format"));
-        this.icon = state.resolveValue(assert(this.object, "has", "Icon"));
         this.description = state.resolveValue(assert(this.object, "has", "Description"));
+
+        this.standardIcon = state.resolveValue(assert(this.object, "has", "Icon"));
+        this.SVGIcon = state.resolveValue(assert(this.object, "has", "SVGIcon"));
+        if (this.SVGIcon) {
+            this.SVGIcon = script.resolveRelativeURI(this.SVGIcon);
+        }
+
     }
 
     Status.prototype.formattedValue = function () {

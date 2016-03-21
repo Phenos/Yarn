@@ -1,4 +1,4 @@
-yarn.factory('hintCommand', function (hintRoutine,
+yarn.service('hintCommand', function (hintRoutine,
                                       aboutToRoutine) {
 
     function handler() {

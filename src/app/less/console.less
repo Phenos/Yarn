@@ -3,9 +3,29 @@
     display: block;
     position: relative;
     z-index: 1000;
-    font-size: 0.9em;
+    font-size: 1em;
     font-weight: 400;
     min-height: 60px;
+
+    .commands-tray {
+        background: #006d00;
+        width: 8em;
+
+        md-list-item {
+            color: #fff;
+            min-height: 0;
+            .md-button {
+                min-height: 0;
+                text-transform: none;
+                text-align: left;
+                margin: 0;
+                padding: 0 1em;
+                min-width: 0;
+                width: 100%;
+                line-height: 2em;
+            }
+        }
+    }
 
     md-content {
         background-color: transparent !important;
@@ -46,18 +66,18 @@
                 text-decoration: underline;
             }
             strong {
-                font-weight:800;
+                font-weight: 800;
             }
 
             .timestamp {
                 float: right;
                 font-size: 0.9em;
-                color: rgba(0,0,0,0.4);
+                color: rgba(0, 0, 0, 0.4);
             }
             .step {
                 float: right;
                 font-size: 0.9em;
-                color: rgba(0,0,0,0.4);
+                color: rgba(0, 0, 0, 0.4);
                 padding-left: 1em;
             }
 
@@ -93,9 +113,22 @@
                 color: #b08e00;
             }
             &.is-success {
-                color: #229922;
+                color: #29b829;
             }
             &.is-command {
+                font-weight: bold;
+                font-style: italic;
+                color: #1b7b1b;
+                [command] {
+                    color: #1b7b1b !important;
+                }
+                log-icon {
+                    font-style: normal;
+                    font-size: 0.8em;
+                    left: -1.1em;
+                    top: 0.75em;
+                    color: #1b7b1b;
+                }
             }
             &.is-debug {
             }

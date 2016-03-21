@@ -1,5 +1,7 @@
-<md-tabs md-selected="tabs.selected" flex="100" md-border-bottom md-autoselect>
-    <md-tab ng-repeat="file in tabs.files" md-on-select="tabs.select(file)">
+<md-tabs md-selected="tabs.selected" flex="100" md-border-bottom md-autoselect="false">
+    <md-tab ng-repeat="file in tabs.files"
+            md-on-select="tabs.focus(file)"
+            md-active="file.isFocused">
         <md-tab-label>
             {{ file.name() }} <span ng-if="file.isModified()">*</span>
             <md-icon style="width: 1.5em; margin-left: 0.7em"

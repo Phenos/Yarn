@@ -26,8 +26,6 @@ yarn.factory('writers', function (Prompt,
 
         refreshTheme();
 
-        storyLog.clear();
-
         // Set the wallpaper
         var wallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
@@ -51,15 +49,28 @@ yarn.factory('writers', function (Prompt,
             storyLog.heading(name);
         }
 
-        var description = state.resolveValue(assert("Story", "has", "Description"));
-        if (description) {
-            storyLog.log("“&nbsp;" + description + "&nbsp;”");
+        // Show the headline title
+        var headline = state.resolveValue(assert("Story", "has", "Headline"));
+        var author = state.resolveValue(assert("Story", "has", "Author"));
+        if (author || headline) {
+            var headlineAndAuthor = [];
+            if (headline) {
+                headlineAndAuthor.push("“&nbsp;" + headline + "&nbsp;”");
+            }
+            if (headline && author) {
+                headlineAndAuthor.push("<br/>");
+            }
+            if (author) {
+                headlineAndAuthor.push("by " + author);
+            }
+            storyLog.headline(headlineAndAuthor.join(""));
         }
 
-        var author = state.resolveValue(assert("Story", "has", "Author"));
-        if (author) {
-            storyLog.log("by " + author);
+        var description = state.resolveValue(assert("Story", "has", "Description"));
+        if (description) {
+            storyLog.log(description);
         }
+
 
         return this;
     }
@@ -68,8 +79,6 @@ yarn.factory('writers', function (Prompt,
         storyLog.markAsRead();
 
         refreshTheme();
-
-        storyLog.clear();
 
         // Show the story title
         var name = state.resolveValue(assert("TheEnd", "has", "Name"));
@@ -129,8 +138,9 @@ yarn.factory('writers', function (Prompt,
         refreshTheme(room);
 
         if (room) {
+            var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaperValue);
+            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
             if (url) {
                 wallpaper.change(url);
             } else {
@@ -168,9 +178,7 @@ yarn.factory('writers', function (Prompt,
     // Describe where you are at the beginning
 
     function describeThing(thing) {
-        storyLog.markAsRead();
         if (thing) {
-            var name = state.resolveValue(assert(thing, "has", "Name"));
             var description = state.resolveValue(assert(thing, "has", "Description"));
             var image = state.resolveValue(assert(thing, "has", "Image"));
             if (image) {
@@ -209,7 +217,7 @@ yarn.factory('writers', function (Prompt,
             var prompt = new Prompt();
 
             prompt.answer = function answer(promptLoop, option) {
-                commands.command(option);
+                commands.run(option);
             };
 
             var name = state.resolveValue(assert(thing, "has", "Name"));

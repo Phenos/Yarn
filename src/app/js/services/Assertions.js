@@ -7,7 +7,7 @@ yarn.service("Assertions", function (assert,
     }
 
     Assertions.prototype.all = function () {
-        return this._all;
+        return this._all.slice();
     };
 
     Assertions.prototype.get = function (id) {

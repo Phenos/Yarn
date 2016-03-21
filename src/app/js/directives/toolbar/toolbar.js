@@ -20,7 +20,7 @@ yarn.directive('toolbar', function ToolbarDirective() {
         }
 
         this.restartStory = function () {
-            commands.command("restart");
+            commands.run("restart");
         };
 
         this.login = function () {

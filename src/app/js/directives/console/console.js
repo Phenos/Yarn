@@ -1,11 +1,12 @@
 (function () {
 
     yarn.directive('console', ConsoleDirective);
-    yarn.factory('consoleService', consoleService);
+    yarn.service('consoleService', consoleService);
 
     function ConsoleDirective(commands,
                               state,
-                              getSelectionText) {
+                              getSelectionText,
+                              easing) {
 
         return {
             restrict: 'E',
@@ -34,6 +35,8 @@
             var self = this;
             var lastStep = 0;
 
+            this.commands = commands;
+
             hotkeys.bindTo($rootScope)
                 .add({
                     combo: 'mod+k',
@@ -47,7 +50,7 @@
             consoleService.register(this);
 
             var logsElem = $element.find("logs");
-            var logscrollElem = $element.find("md-content");
+            var logscrollElem = angular.element($element.find("md-content")[0]);
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
@@ -55,6 +58,10 @@
                     self.focus();
                 }
             });
+
+            this.runCommand = function (command) {
+                commands.run(command);
+            };
 
             this.focus = function () {
                 $timeout(function () {
@@ -77,7 +84,7 @@
                 if (trimmed[0] === ">") {
                     yConsole.error("Story script not yet supported!")
                 } else {
-                    commands.command(trimmed);
+                    commands.run(trimmed);
                 }
             };
 
@@ -89,7 +96,6 @@
             };
 
             this.write = function (text, type) {
-                $scope.$emit("refreshScrollbars");
                 var scope = $scope.$new();
                 scope.text = text;
                 scope.type = type;
@@ -104,8 +110,11 @@
                 var logElem = $compile('<log is-new-step="isNewStep" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
                 logsElem.append(logElem);
                 $timeout(function () {
-                    logscrollElem[0].scrollTop = logscrollElem[0].scrollHeight;
+                    //console.log("WTF!", [logscrollElem]);
+                    //var scrollHeight = logscrollElem[0].scrollHeight;
+                    //logscrollElem.scrollTopAnimated(scrollHeight, 1000, easing.easeOutQuart)
                 });
+                $scope.$emit("refreshScrollbars");
             };
 
             yConsole.register(this);

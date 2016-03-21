@@ -61,7 +61,7 @@
 
         service.inspect = function (token) {
             var self = this;
-            if (angular.isObject(token)) {
+            if (controller && angular.isObject(token)) {
                 token.helpArticles = [];
                 this.clear();
                 angular.forEach(inspections, function (inspection) {

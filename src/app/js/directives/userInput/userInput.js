@@ -1,9 +1,4 @@
 yarn.directive('userInput', UserInputDirective);
-yarn.filter('rawHtml', ['$sce', function ($sce) {
-    return function (val) {
-        return $sce.trustAsHtml(val);
-    };
-}]);
 
 
 function UserInputDirective() {
@@ -21,7 +16,7 @@ function UserInputDirective() {
         controller: UserInputController
     };
 
-    function UserInputController($scope, $element, hotkeys, commandsRegistry) {
+    function UserInputController(commands, $scope, $element, hotkeys) {
         var self = this;
 
         this.hasFocus = false;
@@ -37,20 +32,20 @@ function UserInputDirective() {
             });
 
         this.getAutoCompleteMatches = function (searchText) {
-            var commands = [];
+            var allCommands = [];
 
-            angular.forEach(commandsRegistry.commands, function (_command) {
+            angular.forEach(commands.all, function (_command) {
                 var command = {};
                 command.name = _command.name;
                 command.description = _command.shortDescription;
                 command.display = _command.autocompletePreview || _command.name;
                 command.autocomplete = _command.autocompleteText || _command.name;
-                commands.push(command);
+                allCommands.push(command);
             });
 
             var results = [];
 
-            angular.forEach(commands, function (command) {
+            angular.forEach(allCommands, function (command) {
                 var _name = command.name.trim().toLowerCase();
                 var _searchText = searchText.trim().toLowerCase();
                 var matched = false;

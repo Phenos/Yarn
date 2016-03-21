@@ -12,7 +12,7 @@ yarn.service("eval", function ($parse) {
                 value = fn(newScope);
             }
         }
-        console.log("evaluated value", value);
+        //console.log("evaluated value", value);
         return value;
     }
 

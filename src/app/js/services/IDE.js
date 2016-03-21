@@ -8,7 +8,9 @@ yarn.service('IDE', function IDEService(hotkeys,
                                         loader,
                                         storage,
                                         commands,
-                                        editorFiles) {
+                                        editorFiles,
+                                        editors,
+                                        tools) {
 
     var service = {
         isWorking: false
@@ -47,7 +49,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                     event.preventDefault();
 
                     service.isWorking = true;
-                    service.saveAll(function() {
+                    service.saveAll(function () {
                         service.isWorking = false;
                     });
                 }
@@ -67,6 +69,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 description: 'Validate Current State',
                 callback: function (event) {
                     event.preventDefault();
+                    tools.focus("validator");
                     service.validate();
                 }
             });
@@ -113,31 +116,37 @@ yarn.service('IDE', function IDEService(hotkeys,
 
         function OpenFromStorageController($scope) {
             var self = this;
-            $scope.cancel = function() {
+            $scope.cancel = function () {
                 $mdDialog.cancel();
             };
-            $scope.open = function(file) {
+            $scope.open = function (file) {
                 self.isWorking = true;
-                console.log("open", file);
+                //console.log("open", file);
                 $mdDialog.cancel();
                 editorFiles.open(file);
+                editors.focus(file.uri.toString());
                 self.isWorking = false;
             };
         }
     };
 
     service.validate = function () {
-        commands.command("validate");
+        commands.run("validate");
     };
 
-    service.run = function () {
+    service.run = function (fallback) {
         var mainFile = editorFiles.mainFile();
         if (mainFile) {
             var uri = mainFile.absoluteURI().toString();
             rememberLastStory.forget();
             loader.fromURL(uri, true);
         } else {
-            yConsole.log("Could not find which story should be run");
+            if (fallback) {
+                console.info("Could not find which story should be run, calling up the fallback");
+                fallback();
+            } else {
+                yConsole.warning("Could not find which story should be run");
+            }
         }
     };
 

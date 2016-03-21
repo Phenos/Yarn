@@ -8,7 +8,7 @@ yarn.service("apiClient", function($window) {
     if ($window.ActionheroClient) {
         apiClient = new ActionheroClient();
     }
-    console.log("apiClient", [apiClient]);
+    //console.log("apiClient", [apiClient]);
     return apiClient;
 });
 
@@ -22,7 +22,7 @@ yarn.service("authUser", function (auth, authData2user) {
         var user = null;
         var authData = auth.$getAuth();
         //console.log("auth", auth);
-        console.log("authUser authData", authData);
+        //console.log("authUser authData", authData);
         if (authData) user = authData2user(authData);
         return user;
     });

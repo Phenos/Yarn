@@ -1,14 +1,15 @@
 <div>
     <p>
-        This item is used in {{ assertionCount }} assertions in your story.
+        This item is used in {{ usageCount.total }} assertions in your story.
     </p>
     <p>
         It occurs
         <a ng-click="openAsSubject()">
-            99 times as subject
+            {{ usageCount.asSubject }} times as subject
         </a>
+        and
         <a ng-click="openAsObject()">
-            99 times as the object
+            {{ usageCount.asObject }} times as the object
         </a>
     </p>
 </div>

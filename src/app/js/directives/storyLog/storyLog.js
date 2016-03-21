@@ -20,7 +20,6 @@
                                     $compile,
                                     player,
                                     templating,
-                                    yConsole,
                                     state,
                                     assert) {
 
@@ -29,21 +28,10 @@
                 this.onClear();
             };
 
-            /*
-             Match = /\[(?<Text>[^]]+)]\((?<Url>[^)]+)\)/;
-             Replacement = '<link token="${Url}">${Text}</link>';
-
-             BracketsMatch = /\[(?<Text>[^]]+)]/;
-             BracketsReplacement = '<link token="${Text}">${Text}</link>';
-             */
             this.write = function (text, type, scope) {
                 var parsedTxt = text;
 
-                var BracketsMatch = /\[([^\]]+)]/g;
-                var BracketsReplacement = '<thing token="$1">$1</thing>';
-
-                parsedTxt = parsedTxt.replace(BracketsMatch, BracketsReplacement);
-
+                // Render tempate if necessary
                 if (parsedTxt.substring(0, 5) === "tmpl:") {
                     parsedTxt = templating.render(parsedTxt.substring(5), {
                         // todo: move this in the "templating" service
@@ -58,6 +46,12 @@
                     });
                 }
 
+                // Render bracket links
+                var BracketsMatch = /\[([^\]]+)]/g;
+                var BracketsReplacement = '<thing token="$1">$1</thing>';
+                parsedTxt = parsedTxt.replace(BracketsMatch, BracketsReplacement);
+
+
                 var newScope = $scope.$new(false);
                 if (scope) {
                     angular.extend(newScope, {
@@ -69,7 +63,7 @@
                 var logItemEl = $compile('<log-item class="unread" type="type" text="text" scope="scope"></log-item>')(newScope);
                 $element.append(logItemEl);
 
-                player.scroll();
+                player.scroll(logItemEl);
             };
 
             this.markAsRead = function () {

@@ -3,7 +3,8 @@ yarn.service('Runtime', function RuntimeService(state,
                                                 predicates,
                                                 things,
                                                 Stack,
-                                                yConsole) {
+                                                yConsole,
+                                                postal) {
 
     /**
      * Runtime class user to execute the ast with the state
@@ -23,7 +24,17 @@ yarn.service('Runtime', function RuntimeService(state,
      */
     Runtime.prototype.run = function () {
         this.cursor.start(this.ast.root);
-        return this.runNode(this.ast.root);
+        var node = this.runNode(this.ast.root);
+
+        postal.publish({
+            channel: "runtime",
+            topic: "afterRun",
+            data: {
+                root: node
+            }
+        });
+
+        return node;
     };
 
     Runtime.prototype.runNode = function (node) {

@@ -1,34 +1,45 @@
 
-yarn.service("editors", function () {
+yarn.service("editors", function (state) {
 
     function Editors() {
         this.all = [];
         this.current = null;
     }
 
+    Editors.prototype.lastFocusFromMemory = function () {
+        var storage = state.getStoryLocalStorage("editors");
+        var fileURI = storage.lastOpenFile;
+        //console.log("focusFromMemory", fileURI);
+        return fileURI;
+        //if (fileURI) this.focus(fileURI);
+    };
+
     Editors.prototype.add = function (editor) {
         //console.log("editors.add", editor);
         this.all.push(editor);
-        this.select(editor);
     };
 
-    Editors.prototype.select = function (editor) {
-        //console.log("editors.select", editor);
-        this.current = editor;
-        editor.focus();
-    };
-
-    Editors.prototype.selectByFile = function (file) {
-        //console.log("selectByFile", file);
+    Editors.prototype.focus = function (fileURI) {
         var self = this;
-        var foundEditor = null;
-        angular.forEach(this.all, function (editor) {
-            if (file === editor.file) {
-                foundEditor = editor;
-                self.select(editor);
+        //console.log("editors.select", editor);
+        var storage = state.getStoryLocalStorage("editors");
+        //console.log("Editors.focus", fileURI, this.all);
+        angular.forEach(this.all, function (_editor) {
+            //console.log(fileURI, _editor.file.uri.toString());
+            if (fileURI === _editor.file.uri.toString()) {
+                self.current = _editor;
+                storage.lastOpenFile = fileURI;
+                //console.log(" > _editor.focus()",fileURI);
+                _editor.focus();
+            } else {
+                _editor.blur();
             }
         });
-        return self.current;
+
+    };
+
+    Editors.prototype.search = function () {
+        this.current && this.current.search();
     };
 
     return new Editors();

@@ -15,19 +15,29 @@ function EditorToolbarDirective() {
     };
 
     function EditorToolbarController(editors,
-                                     assertionBrowser,
                                      root,
+                                     tools,
                                      IDE) {
         this.IDE = IDE;
 
         this.editors = editors;
 
-        this.hideConsole = function () {
-            root.hideConsole();
+        this.validate = function() {
+            tools.focus("validator");
+            this.IDE.validate();
         };
 
-        this.openAssertionBrowser = function () {
-            assertionBrowser.open();
+        this.run = function() {
+            tools.focus("commands");
+            this.IDE.run();
+        };
+
+        this.search = function() {
+            editors.search();
+        };
+
+        this.hideConsole = function () {
+            root.hideConsole();
         };
 
         this.openHelp = function() {

@@ -1,0 +1,38 @@
+<div layout-fill layout="column" class="validator-tool">
+    <md-toolbar class="toolsToolbar" flex="noshrink">
+        <div class="md-toolbar-tools">
+            <md-button ng-click="update()" class="md-icon-button"
+                       aria-label="Refresh">
+                <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                <md-tooltip>
+                    Re-validate
+                </md-tooltip>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content flex="grow">
+        <!--
+        <md-content flex="30" class="list-of-types">
+            <md-list>
+                <md-list-item>
+                    <p>ALL TYPES</p>
+                    <md-checkbox class="md-secondary"></md-checkbox>
+                </md-list-item>
+                <md-list-item ng-repeat="result in validations">
+                    <p>{{ type.object.label() }} ({{ type.count}})</p>
+                    <md-checkbox class="md-secondary" ng-model="type.selected"></md-checkbox>
+                </md-list-item>
+            </md-list>
+        </md-content>
+        -->
+        <md-content flex="70" class="list-of-things">
+            <md-list>
+                <md-list-item ng-repeat="result in results.all"
+                              ng-class="'type-' + result.type">
+                    <md-icon md-svg-icon="./svg-icons/validation-result-{{result.type}}.svg"></md-icon>
+                    <p>{{ result.message }}</p>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-content>
+</div>

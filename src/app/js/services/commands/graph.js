@@ -1,4 +1,4 @@
-yarn.factory('graphCommand', graphCommand);
+yarn.service('graphCommand', graphCommand);
 
 function graphCommand(yConsole) {
 

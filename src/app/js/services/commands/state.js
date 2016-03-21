@@ -15,7 +15,7 @@ function stateCommand(yConsole,
         var itemCount = 0;
 
         html.push("<div class='assertions'>");
-        state.assertions.forEach(function (assertion) {
+        state.assertions.all().forEach(function (assertion) {
             itemCount++;
             var log = [];
 

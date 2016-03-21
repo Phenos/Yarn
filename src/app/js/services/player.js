@@ -19,8 +19,8 @@ yarn.service("player", function () {
         if (service.controller) service.controller.openSidenav();
     };
 
-    service.scroll = function () {
-        if (service.controller) service.controller.scroll();
+    service.scroll = function (target) {
+        if (service.controller) service.controller.scroll(target);
     };
 
     return service;

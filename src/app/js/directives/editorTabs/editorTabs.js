@@ -23,8 +23,9 @@
 
             self.selected = 0;
 
-            this.select = function (file) {
-                editors.selectByFile(file);
+            this.focus = function (file) {
+                //console.log("file", file.uri.toString());
+                editors.focus(file.uri.toString());
             };
 
             hotkeys.bindTo($rootScope)

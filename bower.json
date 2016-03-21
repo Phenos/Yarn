@@ -35,7 +35,8 @@
     "ng-debottle": "~1.1.0",
     "angularfire": "~1.1.4",
     "angular-scroll": "~1.0.0",
-    "nunjucks": "~2.4.1"
+    "nunjucks": "~2.4.1",
+    "ng-lodash": "~0.4.0"
   },
   "resolutions": {
     "lodash": "~4.5.1",

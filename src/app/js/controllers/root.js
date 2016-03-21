@@ -13,7 +13,9 @@ function rootController(user,
                         root,
                         themes,
                         wallpaper,
-                        hotkeys) {
+                        hotkeys,
+                        tools,
+                        editors) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
@@ -24,14 +26,12 @@ function rootController(user,
         selected: 0
     };
 
-    console.log("wallpaper", wallpaper);
     wallpaper.change("/images/splash/splash-bg.jpg");
 
-
     IDE.register($scope);
+
     // Register with the service
     root.register($scope);
-
 
     hotkeys.bindTo($rootScope)
         .add({
@@ -89,7 +89,7 @@ function rootController(user,
     };
 
     $scope.focusInspector = function () {
-        console.log($scope.toolTabs.selected);
+        //console.log($scope.toolTabs.selected);
         $scope.toolTabs.selected = 1;
     };
 
@@ -115,9 +115,12 @@ function rootController(user,
     $scope.toggleTools(true);
     // Check if a previously opened story should be loaded
     //IDE.loadRememberedStory();
-    IDE.run();
+    IDE.run(function () {
+        $scope.openMain();
+        IDE.run();
+    });
 
-
+    tools.focusFromMemory();
 }
 
 function rootService($localStorage, consoleService, help, player) {

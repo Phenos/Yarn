@@ -15,20 +15,17 @@ yarn.service("inventoryPrompt", function (logic,
 
         context.question = function (promptLoop, prompt) {
 
-            var inventoryItems = state.resolveAll(assert("You", "has in inventory"));
-
-            // TODO: NERFED FOR NOW... SHOULDBE REMOVED
-            //
-            //if (inventoryItems.length) {
-            //    prompt.question = "Your inventory";
-            //    inventoryItems.forEach(function (thing) {
-            //        var name = state.resolveValue(assert(thing, "has", "Name"));
-            //        name = name || thing.id;
-            //        prompt.option(name, "look " + thing.id);
-            //    });
-            //} else {
-            //    prompt.question = "You have nothing in inventory!";
-            //}
+            var inventoryItems = state.resolveAll(assert(undefined, "is in", "YourInventory"));
+            if (inventoryItems.length) {
+                prompt.question = "Take anything or look at what you have ?";
+                //inventoryItems.forEach(function (thing) {
+                //    var name = state.resolveValue(assert(thing, "has", "Name"));
+                //    name = name || thing.id;
+                //    prompt.option(name, "look " + thing.id);
+                //});
+            } else {
+                prompt.question = "You have nothing in inventory!";
+            }
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
@@ -37,12 +34,12 @@ yarn.service("inventoryPrompt", function (logic,
             setDefaultOptionsHelper(prompt, true);
         };
         context.use = function(thing) {
-            commands.command("take " + thing.id);
+            commands.run("take " + thing.id);
         };
         context.answer = function answer(promptLoop, option) {
             if (option) {
                 if (option.value !== "back") {
-                    commands.command(option.value);
+                    commands.run(option.value);
                 }
             }
 

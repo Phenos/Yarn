@@ -12,14 +12,14 @@ yarn.service("movePrompt", function (logic,
         context.question = function (promptLoop, prompt) {
             prompt.question = "Where do you want to go ?";
 
-            var room = state.resolveOne(assert("You", "is in"));
-
-            var linkedRooms = state.resolveAll(assert(room, "linksTo"));
-
-            linkedRooms.forEach(function (room) {
-                var name = state.resolveValue(assert(room, "has", "Name"));
-                prompt.option(name, "move " + room.id);
-            });
+            //var room = state.resolveOne(assert("You", "is in"));
+            //
+            //var linkedRooms = state.resolveAll(assert(room, "linksTo"));
+            //
+            //linkedRooms.forEach(function (room) {
+            //    var name = state.resolveValue(assert(room, "has", "Name"));
+            //    prompt.option(name, "move " + room.id);
+            //});
 
             var backOption = prompt.option("Back", "back");
             backOption.iconId = "close";
@@ -28,13 +28,13 @@ yarn.service("movePrompt", function (logic,
             setDefaultOptionsHelper(prompt, true);
         };
         context.use = function(thing) {
-            commands.command("move " + thing.id);
+            commands.run("move " + thing.id);
         };
         context.answer = function answer(promptLoop, option) {
             if (option.value === "back") {
                 logic.routines.aboutTo("");
             } else {
-                commands.command(option.value);
+                commands.run(option.value);
             }
         };
 

@@ -1,60 +1,5 @@
 yarn.directive('player', function () {
 
-    var EasingFunctions = {
-        // no easing, no acceleration
-        linear: function (t) {
-            return t
-        },
-        // accelerating from zero velocity
-        easeInQuad: function (t) {
-            return t * t
-        },
-        // decelerating to zero velocity
-        easeOutQuad: function (t) {
-            return t * (2 - t)
-        },
-        // acceleration until halfway, then deceleration
-        easeInOutQuad: function (t) {
-            return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-        },
-        // accelerating from zero velocity
-        easeInCubic: function (t) {
-            return t * t * t
-        },
-        // decelerating to zero velocity
-        easeOutCubic: function (t) {
-            return (--t) * t * t + 1
-        },
-        // acceleration until halfway, then deceleration
-        easeInOutCubic: function (t) {
-            return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
-        },
-        // accelerating from zero velocity
-        easeInQuart: function (t) {
-            return t * t * t * t
-        },
-        // decelerating to zero velocity
-        easeOutQuart: function (t) {
-            return 1 - (--t) * t * t * t
-        },
-        // acceleration until halfway, then deceleration
-        easeInOutQuart: function (t) {
-            return t < .5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t
-        },
-        // accelerating from zero velocity
-        easeInQuint: function (t) {
-            return t * t * t * t * t
-        },
-        // decelerating to zero velocity
-        easeOutQuint: function (t) {
-            return 1 + (--t) * t * t * t * t
-        },
-        // acceleration until halfway, then deceleration
-        easeInOutQuint: function (t) {
-            return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t
-        }
-    }
-
     return {
         restrict: 'E',
         bindToController: {
@@ -68,11 +13,13 @@ yarn.directive('player', function () {
 
     function playerController($scope,
                               $element,
+                              $timeout,
                               sidebar,
                               writers,
                               promptLoop,
                               player,
-                              state) {
+                              state,
+                              easing) {
 
         var scrollAreaElem = $element[0].getElementsByClassName("player")[0];
 
@@ -107,23 +54,17 @@ yarn.directive('player', function () {
             sidebar.close();
         };
 
-        this.scroll = function (offset) {
+        this.scroll = function (targetElement) {
+            var duration = 1500;
+            var offset = 200;
+
             // First we check to see if it's the first game step
             // to prevent scrolling when first showing the coverpage
-            if (state.step() > 0) {
-
-                var _offset = 600;
-                if (!angular.isUndefined(offset)) {
-                    _offset = offset;
-                }
-                //var scrollHeight = scrollAreaElem.scrollHeight + _offset;
-                var scrollTop = scrollAreaElem.scrollTop + _offset;
-                if (scrollTop > scrollAreaElem.scrollHeight) {
-                    scrollTop = scrollAreaElem.scrollHeight;
-                }
-
+            if (state.step() > 0 && targetElement) {
                 angular.element(scrollAreaElem)
-                    .scrollTopAnimated(scrollTop, 1250, EasingFunctions.easeOutQuart())
+                    .scrollToElementAnimated(targetElement, offset, duration, function (t) {
+                        return t * (2 - t)
+                    });
             }
         };
 

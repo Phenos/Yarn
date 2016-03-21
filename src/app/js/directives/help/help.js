@@ -46,7 +46,7 @@
                 var resolvedURI = URI(uri).absoluteTo("./help/").toString();
 
 
-                console.log("resolvedURI", resolvedURI);
+                //console.log("resolvedURI", resolvedURI);
 
                 var config = {
                     method: 'GET',
@@ -114,7 +114,7 @@
         };
 
         service.focus = function () {
-            console.log("focus!");
+            //console.log("focus!");
             controller.focus();
             return this;
         };

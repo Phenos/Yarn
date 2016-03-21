@@ -13,7 +13,7 @@ yarn.service('Node', function NodeService(Set) {
         html.push("<div class='node'>");
         html.push(
             "<span class='label'><span class='value'>" +
-            this.value.substr(0, 80) +
+            this.value.toString().substr(0, 80) +
             "</span> <span class='type'>"
             + this.type +
             "</span>");

@@ -1,15 +1,17 @@
-yarn.service("editorFiles", function (EditorFile, confirmAction, session, storage, yConsole) {
+yarn.service("editorFiles", function (EditorFile, editors, confirmAction, session, storage, yConsole) {
 
     function EditorFiles() {
         this.files = [];
         this._mainFile = null;
         this.reloadFromLocalStorage();
+
     }
 
     /**
      * Reload the list open files from localStorage
      */
     EditorFiles.prototype.reloadFromLocalStorage = function () {
+        var lastFocusFromMemory = editors.lastFocusFromMemory();
         var self = this;
         var mainFile = "";
         var sessionFiles = session.storage("editorFiles");
@@ -21,7 +23,11 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
                 var oldList = sessionFiles.files;
                 sessionFiles.files = [];
                 angular.forEach(oldList, function (file) {
-                    var newFile = self.open(file);
+                    var setFocus = false;
+                    if (lastFocusFromMemory === file) {
+                        setFocus = true;
+                    }
+                    var newFile = self.open(file, setFocus);
                     if (mainFile === file) {
                         newFile.isMain = true;
                         self.mainFile(newFile);
@@ -81,7 +87,6 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
                 filesToSave.push(file);
             }
         });
-        console.log("filesToSave", filesToSave);
 
         function saveNextFile(success, failure) {
             var nextFile = filesToSave.pop();
@@ -137,12 +142,17 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
         return file;
     };
 
-    EditorFiles.prototype.open = function (uriOrFile) {
+    EditorFiles.prototype.open = function (uriOrFile, setFocus) {
         var file;
         if (angular.isObject(uriOrFile)) {
             file = uriOrFile;
         } else {
             file = new EditorFile(uriOrFile);
+        }
+        if (setFocus) {
+            file.isFocused = true;
+        } else {
+            file.isFocused = false;
         }
         file.load();
         this.files.push(file);
@@ -156,7 +166,7 @@ yarn.service("editorFiles", function (EditorFile, confirmAction, session, storag
         var index = null;
         for (var i = 0; i < this.files.length; i++) {
             _file = this.files[i];
-            if (_file === file) {
+            if (_file.uri.toString() === file.uri.toString()) {
                 index = i;
                 break;
             }

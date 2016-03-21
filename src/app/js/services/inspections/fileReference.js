@@ -1,7 +1,8 @@
 yarn.service("fileReferenceInspection", function fileReferenceInspection(InspectionArticle,
-                                                       URI,
-                                                       editorFiles,
-                                                       $window) {
+                                                                         URI,
+                                                                         editorFiles,
+                                                                         editors,
+                                                                         $window) {
     return {
         inspect: inspect
     };
@@ -32,10 +33,13 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
             var absoluteURI = URI(txt).absoluteTo(token.file.uri).toString();
             $window.open(absoluteURI, "_blank");
         }
+
         function openInEditor() {
             var absoluteURI = URI(txt).absoluteTo(token.file.uri).toString();
             console.log(absoluteURI);
             editorFiles.open(absoluteURI);
+            editors.focus(absoluteURI);
+
         }
     }
 
@@ -45,7 +49,7 @@ yarn.directive('fileReferenceInspection', function fileReference() {
     return {
         replace: true,
         templateUrl: "./html/inspections/fileReference.html",
-        controller: function($scope) {
+        controller: function ($scope) {
         }
     };
 });

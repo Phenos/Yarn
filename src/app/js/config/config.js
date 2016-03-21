@@ -8,11 +8,11 @@ yarn.config(function(RollbarProvider) {
             environment: 'test'
         }
     };
-    console.log("Configured Roolbar Error Reporting", [roolbarConfig]);
+    console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
     RollbarProvider.init(roolbarConfig);
 });
 
-yarn.run(function (commandsRegistry) {
+yarn.run(function (commands, tools) {
 
     var path = "/public/js/ace/";
     ace.config.set('basePath', path);
@@ -20,8 +20,19 @@ yarn.run(function (commandsRegistry) {
     ace.config.set('themePath', path);
     ace.config.set('workerPath', path);
 
+    var buitInTools = [
+        "annotationsTool",
+        "assertionsTool",
+        "commandsTool",
+        "graphTool",
+        "inspectorTool",
+        "thingsTool",
+        "validatorTool"
+    ];
 
-    commandsRegistry.load([
+    tools.load(buitInTools);
+
+    var builtInCommands = [
         "inventoryPlayerCommand",
         "beginStoryCommand",
         "inspectCommand",
@@ -33,6 +44,7 @@ yarn.run(function (commandsRegistry) {
         "hintCommand",
         "useCommand",
         "validateCommand",
+        "creditsCommand",
         "lookCommand",
         "takeCommand",
         "moveCommand",
@@ -42,6 +54,8 @@ yarn.run(function (commandsRegistry) {
         "treeCommand",
         "tokensCommand",
         "helpCommand"
-    ]);
+    ];
+    console.info("Loading buil-in commands ", [builtInCommands]);
+    commands.load(builtInCommands);
 
 });

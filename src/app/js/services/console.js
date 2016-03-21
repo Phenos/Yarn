@@ -62,7 +62,7 @@ yarn.factory('yConsole', function (soundEffects) {
         };
 
         this.command = function (text) {
-            yConsole.write("<span command>" + text + "</span>", "command");
+            yConsole.write("<log-icon>▶</log-icon><span command>" + text + "</span>", "command");
         };
 
         this.clear = function () {

@@ -9,6 +9,7 @@ yarn.service('events', function (assert,
     }
 
     Events.prototype.process = function () {
+        var self = this;
         //console.log("Events.process()");
 
         var somethingHappened = false;
@@ -58,37 +59,48 @@ yarn.service('events', function (assert,
         // Then, we trigger each assertion sets that are supposed to be triggered
         //console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (object) {
-            var shouldOccur = true;
-            var childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
-                parent: object.id
-            }));
-
-            var maximumOccurrence = state.resolveValue(assert(object, "has", "MaximumOccurrence"));
-            var Occurrence = state.resolveValue(assert(object, "has", "Occurrence"));
-
-            // Here we check if the event has reached the maximum allowed
-            // number of occurrences
-            if (!angular.isNumber(Occurrence)) Occurrence = 0;
-            if (angular.isNumber(maximumOccurrence) && Occurrence >= maximumOccurrence) shouldOccur = false;
-
-
-            if (shouldOccur) {
-                somethingHappened = true;
-                // Todo: createAssertion should also use assert() ??
-                state.createAssertion(object, predicates("has"), things.get("Occurrence"), {
-                    value: Occurrence + 1
-                });
-                //console.log("childAssertions for " + object.id, childAssertions);
-                angular.forEach(childAssertions, function (assertion) {
-                    //console.log(">>>triggered assertion", assertion);
-                    state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                        value: assertion.value(),
-                        eval: true
-                    });
-                });
-            }
+            var somethingHappenedNow = self.triggerNow(object);
+            if (somethingHappenedNow) somethingHappened = true;
         });
 
+        return somethingHappened;
+    };
+
+
+    Events.prototype.triggerNow = function (object) {
+        //console.log("Events.prototype.triggerNow", object);
+        var somethingHappened = false;
+        var shouldOccur = true;
+        var childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
+            parent: object.id
+        }));
+
+        var maximumOccurrence = state.resolveValue(assert(object, "has", "MaximumOccurrence"));
+        var Occurrence = state.resolveValue(assert(object, "has", "Occurrence"));
+
+        // Here we check if the event has reached the maximum allowed
+        // number of occurrences
+        if (!angular.isNumber(Occurrence)) Occurrence = 0;
+        if (angular.isNumber(maximumOccurrence) && Occurrence >= maximumOccurrence) shouldOccur = false;
+
+
+        if (shouldOccur) {
+            somethingHappened = true;
+            // Todo: createAssertion should also use assert() ??
+            state.createAssertion(object, predicates("has"), things.get("Occurrence"), {
+                value: Occurrence + 1
+            });
+            //console.log("childAssertions for " + object.id, childAssertions);
+            angular.forEach(childAssertions, function (assertion) {
+                //console.log(">>>triggered assertion", assertion);
+                var value = assertion.value();
+                //console.log("triggerNow value", value);
+                state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
+                    value: value,
+                    eval: true
+                });
+            });
+        }
         return somethingHappened;
     };
 

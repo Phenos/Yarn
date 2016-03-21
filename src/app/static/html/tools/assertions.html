@@ -1,0 +1,16 @@
+<div flex="100" layout="column">
+    <md-toolbar class="toolsToolbar" flex="noshrink">
+        <div class="md-toolbar-tools">
+            <md-button ng-click="update()" class="md-icon-button"
+                       aria-label="Refresh">
+                <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+                <md-tooltip>
+                    Refresh
+                </md-tooltip>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <div flex="grow" layout="column">
+        <assertion-grid flex="grow" layout="column" data="allAssertions"></assertion-grid>
+    </div>
+</div>

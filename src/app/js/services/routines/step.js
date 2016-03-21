@@ -46,8 +46,9 @@ yarn.service("stepRoutine", function (events,
     function updateWallpaper() {
         var room = state.resolveOne(assert("You", "is in"));
         if (room) {
+            var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaperValue);
+            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
             if (url) {
                 wallpaper.change(url);
             } else {

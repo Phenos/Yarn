@@ -17,11 +17,11 @@ yarn.service("defaultPrompt", function (commands,
 
         };
         context.use = function(thing) {
-            commands.command("look " + thing.id);
+            commands.run("look " + thing.id);
         };
         context.answer = function answer(promptLoop, option) {
             if (option && option.value) {
-                commands.command(option.value);
+                commands.run(option.value);
             }
             //console.log("defaultPrompt Answer: ", option.value);
         };

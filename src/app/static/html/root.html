@@ -21,7 +21,7 @@
                     style="width: 350px"
                     layout="column">
                 <editor-toolbar></editor-toolbar>
-                <div layout="column">
+                <div flex="grow" layout="column">
                     <editor-tabs ng-show="editorFiles.files.length > 0" layout="column"></editor-tabs>
                     <div style="background: #fff;"
                          ng-show="editorFiles.files.length === 0"
@@ -74,34 +74,7 @@
                 </md-button>
             </div>
 
-            <md-tabs
-                    flex="100"
-                    md-selected="toolTabs.selected"
-                    md-autoselect>
-
-                <md-tab>
-                    <md-tab-label>
-                        <md-icon style="width: 1.5em; margin-left: 0.7em"
-                                 md-svg-icon="/svg-icons/commands.svg"></md-icon>
-                        Commands
-                    </md-tab-label>
-                    <md-tab-body>
-                        <div flex="100" layout="row">
-                            <console on-escape-focus="onConsoleEscapeFocus()" on-focus="onConsoleFocus()"></console>
-                        </div>
-                    </md-tab-body>
-                </md-tab>
-                <md-tab>
-                    <md-tab-label>
-                        <md-icon style="width: 1.5em; margin-left: 0.7em"
-                                 md-svg-icon="/svg-icons/inspector.svg"></md-icon>
-                        Inspector
-                    </md-tab-label>
-                    <md-tab-body>
-                        <inspector></inspector>
-                    </md-tab-body>
-                </md-tab>
-            </md-tabs>
+            <tools></tools>
         </md-section>
 
     </md-section>

@@ -4,7 +4,7 @@ yarn.service("ownInventoryHelper", function (state,
     return function ownInventory() {
         var foundInventory = [];
 
-        var thingsInInventory = state.resolveAll(assert("You", "have in inventory"));
+        var thingsInInventory = state.resolveAll(assert(undefined, "is in", "YourInventory"));
 
         console.log("thingsInInventory", thingsInInventory);
 

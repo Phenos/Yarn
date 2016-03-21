@@ -9,7 +9,6 @@ yarn.service('yarn', function ($localStorage,
     function Yarn() {
 
         this.localState = {};
-        this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
         this.scripts = [];
 
         postal.subscribe({
@@ -27,6 +26,7 @@ yarn.service('yarn', function ($localStorage,
             this.scripts.forEach(function (script) {
                 script.run();
             });
+
             return this;
         };
 
@@ -47,18 +47,6 @@ yarn.service('yarn', function ($localStorage,
          * @param url
          */
         this.load = function (text, url) {
-            console.warn("Currently supporting only one script at once");
-            //this.scripts = [];
-
-            //if (url) {
-            //    script.url = url;
-            //}
-
-            // Use url as initial ID (can be overwritted in yarn script)
-            //if (!this.id) this.id = url;
-
-            //this.scripts.push(script);
-
             return script.load(text, url).then(function () {
                 //console.log("wtf", script);
                 return script;

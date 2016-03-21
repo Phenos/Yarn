@@ -35,6 +35,7 @@
       "./bower_components/angular-sanitize/angular-sanitize.min.js",
       "./bower_components/angular-aria/angular-aria.min.js",
       "./bower_components/ngstorage/ngStorage.min.js",
+      "./bower_components/ng-lodash/build/ng-lodash.min.js",
       "./bower_components/angular-animate/angular-animate.min.js",
       "./bower_components/angular-material/angular-material.min.js",
       "./bower_components/angular-scroll/angular-scroll.min.js",
@@ -68,8 +69,7 @@
     ],
     "watches": {
       "statics": [
-        "src/app/static/**/*.html",
-        "src/app/static/**/*.txt"
+        "src/app/static/**/*"
       ],
       "js": "src/app/js/**/*.js",
       "less": "src/app/less/**/*.less"

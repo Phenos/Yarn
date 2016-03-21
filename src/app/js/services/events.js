@@ -94,6 +94,10 @@ yarn.service('events', function (assert,
             angular.forEach(childAssertions, function (assertion) {
                 //console.log(">>>triggered assertion", assertion);
                 var value = assertion.value();
+                // If the value is a string, we first render it!
+                if (angular.isString(value)) {
+                    value = state.render(value);
+                }
                 //console.log("triggerNow value", value);
                 state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
                     value: value

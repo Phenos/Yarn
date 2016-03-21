@@ -1,4 +1,4 @@
-yarn.service("statuses", function (state, assert, statusFormats) {
+yarn.service("statuses", function (state, assert) {
 
     function Statuses() {
         this.all = {};
@@ -46,6 +46,7 @@ yarn.service("statuses", function (state, assert, statusFormats) {
         this.object = object;
         this.name = state.resolveValue(assert(this.object, "has", "Name"));
         this.value = state.resolveValue(assert(this.object, "has", "Value"));
+        this.formula = state.resolveValue(assert(this.object, "has", "Formula"));
         this.format = state.resolveValue(assert(this.object, "has", "Format"));
         this.icon = state.resolveValue(assert(this.object, "has", "Icon"));
         this.description = state.resolveValue(assert(this.object, "has", "Description"));
@@ -53,9 +54,8 @@ yarn.service("statuses", function (state, assert, statusFormats) {
 
     Status.prototype.formattedValue = function () {
         var value = this.value;
-        var formatter = statusFormats[this.format];
-        if (formatter) {
-            value = formatter(value);
+        if (angular.isDefined(this.formula)) {
+            value = this.formula;
         }
         return value
     };

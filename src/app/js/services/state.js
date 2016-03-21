@@ -171,16 +171,17 @@ yarn.service('state', function ($localStorage,
         };
 
         State.prototype.resolveValue = function (assert) {
-            var value;
-            var rawValue = this.resolveRawValue(assert);
+            var value = this.resolveRawValue(assert);
             //console.log("rawValue: ", rawValue);
-            if (angular.isString(rawValue)) {
-                value = templating.render(rawValue, this.scope());
-            } else {
-                value = rawValue;
+            if (angular.isString(value)) {
+                value = this.render(value);
             }
             //console.log("resolveValue: ", value);
             return value;
+        };
+
+        State.prototype.render = function (template) {
+            return templating.render(template, this.scope())
         };
 
         /**
@@ -406,12 +407,18 @@ yarn.service('state', function ($localStorage,
                 steps : this.step()
             };
 
+            newScope.format ={
+                timeOfDay : timeOfDay
+            };
 
-            var i = 0;
+            function timeOfDay(value) {
+                var d = new Date(1976, 1, 1, 0, value, 0, 0);
+                var minutesStr = "00" + d.getMinutes();
+                return d.getHours() + ":" + (minutesStr).substr(minutesStr.length-2, 2);
+            }
+
             // todo: move this in the "templating" service
             function _assert(assertion) {
-                i++;
-                if (i > 1000) debugger;
                 console.log("assert: " + assertion);
                 var __assert = parseAssert(assertion);
                 return state.resolveValue(__assert);

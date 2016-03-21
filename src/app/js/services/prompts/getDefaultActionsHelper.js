@@ -53,7 +53,8 @@ yarn.service("setDefaultOptionsHelper", function (state,
             // Enable the "use" option if there are inventory items
             // in the current room
             var usableItemInCurrentRoom = stateHelpers.usableItemInRoom(room);
-            if (usableItemInCurrentRoom.length) {
+            var usableItemInInventory = stateHelpers.usableItemInRoom("YourInventory");
+            if (usableItemInCurrentRoom.length || usableItemInInventory.length) {
                 option = prompt.option("Use", "aboutTo use");
                 option.iconId = "use";
                 option.iconSize = size;

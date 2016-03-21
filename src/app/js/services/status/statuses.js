@@ -54,7 +54,7 @@ yarn.service("statuses", function (state, assert) {
 
     Status.prototype.formattedValue = function () {
         var value = this.value;
-        if (angular.isDefined(this.formula)) {
+        if (angular.isDefined(this.formula) && this.formula !== null) {
             value = this.formula;
         }
         return value

@@ -30,7 +30,7 @@ yarn.service("lookAroundRoutine", function (events,
                 angular.forEach(thingsInRoom, function (thing, index) {
                     var thingName = state.resolveValue(assert(thing, "has", "Name"));
                     thingName = thingName || thing.id;
-                    phrase.push("[" + thingName + "]");
+                    phrase.push("[" + thingName + ":" + thing.id + "]");
                     if (index === thingsInRoom.length - 1) {
                         phrase.push(".")
                     } else if (index === thingsInRoom.length - 2) {

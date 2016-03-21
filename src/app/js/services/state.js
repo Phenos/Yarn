@@ -419,7 +419,7 @@ yarn.service('state', function ($localStorage,
 
             // todo: move this in the "templating" service
             function _assert(assertion) {
-                console.log("assert: " + assertion);
+                //console.log("assert: " + assertion);
                 var __assert = parseAssert(assertion);
                 return state.resolveValue(__assert);
             }

@@ -21,7 +21,7 @@ yarn.service("templating", function ($window, yConsole) {
 
                 // Coherce the value to a float if needed
                 if (output[0] === "#") {
-                    console.log("COHERCING FLOAT: ", output);
+                    //console.log("COHERCING FLOAT: ", output);
                     output = parseFloat(output.substring(1));
                 }
 

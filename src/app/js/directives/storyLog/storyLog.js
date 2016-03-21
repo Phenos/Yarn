@@ -18,10 +18,7 @@
                                     $scope,
                                     $element,
                                     $compile,
-                                    player,
-                                    templating,
-                                    state,
-                                    assert) {
+                                    player) {
 
             this.clear = function () {
                 $element.empty();
@@ -32,9 +29,12 @@
                 var parsedTxt = text;
 
                 // Render bracket links
-                var BracketsMatch = /\[([^\]]+)]/g;
-                var BracketsReplacement = '<thing token="$1">$1</thing>';
-                parsedTxt = parsedTxt.replace(BracketsMatch, BracketsReplacement);
+                parsedTxt = parsedTxt.replace(/\[([^\]]+)]/g, function (match) {
+                    var tokens = match.substring(1, match.length - 1).split("::");
+                    var name = tokens[0];
+                    var id = tokens[1] || tokens[0];
+                    return '<thing token="' + id + '" text="' + name + '"></thing>'
+                });
 
                 // Render paragraph breaks and line breaks
                 parsedTxt = parsedTxt.replace(/(\\[n])/g, '<br/>');

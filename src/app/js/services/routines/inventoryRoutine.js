@@ -24,7 +24,7 @@ yarn.service("inventoryRoutine", function (events,
             angular.forEach(inventory, function (thing, index) {
                 var thingName = state.resolveValue(assert(thing, "has", "Name"));
                 thingName = thingName || thing.id;
-                phrase.push("[" + thingName + "]");
+                phrase.push("[" + thingName + ":" + thing.id +  "]");
                 if (index === inventory.length - 1) {
                     phrase.push(".")
                 } else if (index === inventory.length - 2) {

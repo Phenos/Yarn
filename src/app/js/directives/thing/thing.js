@@ -14,11 +14,10 @@ yarn.directive('thing', function ThingDirective(things,
     };
 
     function ThingController($attrs) {
-        var self = this;
 
         this.unrecognized = false;
         this.token = $attrs.token;
-        this.text = this.token;
+        this.text = $attrs.text;
 
         var synonym = synonyms.match(this.token);
         if (synonym) {

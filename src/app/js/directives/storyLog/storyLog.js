@@ -33,17 +33,7 @@
 
                 // Render tempate if necessary
                 if (parsedTxt.substring(0, 5) === "tmpl:") {
-                    parsedTxt = templating.render(parsedTxt.substring(5), {
-                        // todo: move this in the "templating" service
-                        assert: function (_assertion) {
-                            var assertion = _assertion.split(" ");
-                            var subject = assertion.shift();
-                            var object = assertion.pop();
-                            var predicate = assertion.join(" ");
-                            var value = state.resolveValue(assert(subject, predicate, object));
-                            return value;
-                        }
-                    });
+                    parsedTxt = templating.render(parsedTxt.substring(5));
                 }
 
                 // Render bracket links

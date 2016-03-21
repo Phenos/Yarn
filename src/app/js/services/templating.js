@@ -1,4 +1,4 @@
-yarn.service("templating", function ($window, lodash) {
+yarn.service("templating", function ($window) {
 
     var nunjucks = $window.nunjucks;
 
@@ -6,17 +6,11 @@ yarn.service("templating", function ($window, lodash) {
     }
 
     Templating.prototype.render = function (source, scope) {
-        addScopeHelpers(scope);
+        var _scope = scope || {};
         //console.log("Templating.render", [source, scope]);
-        var output = nunjucks.renderString(source, scope);
+        var output = nunjucks.renderString(source, _scope);
         return output;
     };
-
-
-    function addScopeHelpers(scope) {
-        scope.lodash = lodash;
-    }
-
 
     return new Templating();
 

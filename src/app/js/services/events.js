@@ -96,8 +96,7 @@ yarn.service('events', function (assert,
                 var value = assertion.value();
                 //console.log("triggerNow value", value);
                 state.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                    value: value,
-                    eval: true
+                    value: value
                 });
             });
         }

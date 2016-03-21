@@ -1,6 +1,6 @@
 yarn.service('clearCommand', clearCommand);
 
-function clearCommand($localStorage,
+function clearCommand(storyLocalStorage,
                       yConsole,
                       state) {
 
@@ -65,7 +65,7 @@ function clearCommand($localStorage,
         //delete $localStorage.localState;
 
         // Clear the assertions from localStorage
-        var storyStorage = state.getStoryLocalStorage();
+        var storyStorage = storyLocalStorage.get();
         storyStorage.assertions = {};
 
         yConsole.success("Local storage memory cleared.");

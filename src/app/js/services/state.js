@@ -10,15 +10,15 @@ yarn.service('state', function ($localStorage,
                                 assert,
                                 session,
                                 guid,
-                                eval,
-                                $parse) {
-
+                                lodash,
+                                templating,
+                                storyLocalStorage) {
 
         function State() {
             this.assertions = new Assertions();
             this.currentLayer = "world";
             this.localState = null;
-            this.guid = guid();
+            storyLocalStorage.uid(this.uniqueKey());
         }
 
         State.prototype.uniqueKey = function () {
@@ -28,22 +28,17 @@ yarn.service('state', function ($localStorage,
                 username = session.user().username;
             }
             var uniqueID = this.resolveValue("Story", "has", "UniqueID");
-            var releaseNumber = this.resolveValue("Story", "has", "UniqueID");
+            var releaseNumber = this.resolveValue("Story", "has", "ReleaseNumber") || 0;
             key = [username, uniqueID, releaseNumber].join("-");
             return key;
         };
 
-        State.prototype.getStoryLocalStorage = function () {
-            var key = this.uniqueKey();
-            if (angular.isUndefined($localStorage[key])) {
-                $localStorage[key] = {};
-            }
-            return $localStorage[key];
-        };
 
         State.prototype.restoreFromLocalState = function () {
             var self = this;
-            var storyStorage = this.getStoryLocalStorage();
+
+            //TOOD: Try to find a way notto inject state here...
+            var storyStorage = storyLocalStorage.get(this);
             var localAssertions = storyStorage.assertions || {};
 
             //console.log("Restoring assertion from localState", localAssertions);
@@ -74,14 +69,13 @@ yarn.service('state', function ($localStorage,
                     }
                 }
 
-                var newAssertion = self.createAssertion(
+                self.createAssertion(
                     subject,
                     predicates(assertion.predicate),
                     object, {
                         value: assertion.value
                     }
                 );
-                //console.log("Restored:", assertion, newAssertion);
             });
         };
 
@@ -143,7 +137,7 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
-        State.prototype.resolveValue = function (assert) {
+        State.prototype.resolveRawValue = function (assert) {
             var value = null;
             if (assert && (assert.subject && assert.predicate)) {
 
@@ -176,6 +170,19 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
+        State.prototype.resolveValue = function (assert) {
+            var value;
+            var rawValue = this.resolveRawValue(assert);
+            //console.log("rawValue: ", rawValue);
+            if (angular.isString(rawValue)) {
+                value = templating.render(rawValue, this.scope());
+            } else {
+                value = rawValue;
+            }
+            //console.log("resolveValue: ", value);
+            return value;
+        };
+
         /**
          * Get a new assertion
          * @param subject
@@ -187,6 +194,7 @@ yarn.service('state', function ($localStorage,
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
             var self = this;
             var options = _options || {};
+            var assertion;
 
             if (subject && predicate && object) {
                 var _predicate = predicate;
@@ -212,16 +220,6 @@ yarn.service('state', function ($localStorage,
                     options.value = true;
                 }
 
-                //console.log("eval", options.eval);
-                if (options.eval) {
-                    var evaluatedValue = eval(options.value, {
-                        value: self.resolveValue(assert(subject, predicate, object))
-                    });
-                    if (angular.isDefined(evaluatedValue)) {
-                        options.evaluatedValue = evaluatedValue;
-                    }
-                }
-
                 // If not layer is provided, we set the "currentLayer"
                 if (!options.layer) {
                     options.layer = this.currentLayer;
@@ -241,7 +239,7 @@ yarn.service('state', function ($localStorage,
                     if (topAssertion.layer === "world") {
                         // If the top assertion in on the static world layer
                         // We create a new assertion anyways
-                        var assertion = new Assertion(subject, _predicate, object, options);
+                        assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
                         this.persistAssertion(assertion);
                     } else {
@@ -254,7 +252,7 @@ yarn.service('state', function ($localStorage,
                         this.persistAssertion(topAssertion);
                     }
                 } else {
-                    var assertion = new Assertion(subject, _predicate, object, options);
+                    assertion = new Assertion(subject, _predicate, object, options);
                     this.assertions.add(assertion);
                     this.persistAssertion(assertion);
                 }
@@ -272,7 +270,7 @@ yarn.service('state', function ($localStorage,
          * If the session layer is empty, the assertion is removed
          */
         State.prototype.persistAssertion = function (assertion) {
-            var storyStorage = this.getStoryLocalStorage();
+            var storyStorage = storyLocalStorage.get(this);
 
             if (!storyStorage.assertions) {
                 storyStorage.assertions = {}
@@ -291,7 +289,7 @@ yarn.service('state', function ($localStorage,
 
         State.prototype.UnpersistAssertions = function (_assertions) {
             // todo: refactor: Initialising the localStorage this way is not elegant.... use .ensure() pattern
-            var storyStorage = this.getStoryLocalStorage();
+            var storyStorage = storyLocalStorage.get(this);
 
             if (!storyStorage.assertions) {
                 storyStorage.assertions = {}
@@ -393,6 +391,47 @@ yarn.service('state', function ($localStorage,
             }
 
             return count;
+        };
+
+        State.prototype.scope = function () {
+            var state = this;
+
+            var newScope = {
+                lodash: lodash,
+                assert: _assert,
+                assertRaw: assertRaw
+            };
+
+            newScope.state ={
+                steps : this.step()
+            };
+
+
+            var i = 0;
+            // todo: move this in the "templating" service
+            function _assert(assertion) {
+                i++;
+                if (i > 1000) debugger;
+                console.log("assert: " + assertion);
+                var __assert = parseAssert(assertion);
+                return state.resolveValue(__assert);
+            }
+
+            // todo: move this in the "templating" service
+            function assertRaw(assertion) {
+                //console.log("assertRaw: " + assertion);
+                var __assert = parseAssert(assertion);
+                return state.resolveRawValue(__assert);
+            }
+
+            function parseAssert(assertion) {
+                var tokens = assertion.split(" ");
+                var subject = tokens.shift();
+                var object = tokens.pop();
+                var predicate = tokens.join(" ");
+                return assert(subject, predicate, object);
+            }
+            return newScope;
         };
 
         return new State();

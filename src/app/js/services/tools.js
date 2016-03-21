@@ -1,5 +1,6 @@
 
-yarn.service("tools", function toolsService ($injector, state) {
+yarn.service("tools", function toolsService ($injector,
+                                             storyLocalStorage) {
 
     function Tools () {
         this.all = [];
@@ -7,7 +8,7 @@ yarn.service("tools", function toolsService ($injector, state) {
     }
 
     Tools.prototype.focusFromMemory = function () {
-        var storage = state.getStoryLocalStorage("tools");
+        var storage = storyLocalStorage.get("tools");
         var toolId = storage.lastOpenTool;
         if (toolId) this.focus(toolId);
         //console.log("focusFromMemory", toolId);
@@ -36,7 +37,7 @@ yarn.service("tools", function toolsService ($injector, state) {
 
     Tools.prototype.focus = function (id) {
         //console.log("focus", id);
-        var storage = state.getStoryLocalStorage("tools");
+        var storage = storyLocalStorage.get("tools");
         storage.lastOpenTool = id;
         angular.forEach(this.all, function (tool) {
             if (tool.id === id) {

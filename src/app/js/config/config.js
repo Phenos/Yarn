@@ -9,7 +9,7 @@ yarn.config(function(RollbarProvider) {
         }
     };
     console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
-    RollbarProvider.init(roolbarConfig);
+    //RollbarProvider.init(roolbarConfig);
 });
 
 yarn.run(function (commands, tools) {

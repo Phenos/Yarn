@@ -1,5 +1,5 @@
 
-yarn.service("editors", function (state) {
+yarn.service("editors", function (storyLocalStorage) {
 
     function Editors() {
         this.all = [];
@@ -7,7 +7,7 @@ yarn.service("editors", function (state) {
     }
 
     Editors.prototype.lastFocusFromMemory = function () {
-        var storage = state.getStoryLocalStorage("editors");
+        var storage = storyLocalStorage.get("editors");
         var fileURI = storage.lastOpenFile;
         //console.log("focusFromMemory", fileURI);
         return fileURI;
@@ -22,7 +22,7 @@ yarn.service("editors", function (state) {
     Editors.prototype.focus = function (fileURI) {
         var self = this;
         //console.log("editors.select", editor);
-        var storage = state.getStoryLocalStorage("editors");
+        var storage = storyLocalStorage.get("editors");
         //console.log("Editors.focus", fileURI, this.all);
         angular.forEach(this.all, function (_editor) {
             //console.log(fileURI, _editor.file.uri.toString());

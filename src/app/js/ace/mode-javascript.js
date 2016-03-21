@@ -95,7 +95,7 @@ ace.define("ace/mode/javascript_highlight_rules", ["require", "exports", "module
                     next: "qqstring"
                 }, {
                     token: "camelcase",
-                    regex: /([A-Z][a-z_A-Z0-9]+)/
+                    regex: /([@A-Z][a-z_A-Z0-9]+)/
                 }, {
                     token: "constant.numeric", // hex
                     regex: /0(?:[xX][0-9a-fA-F]+|[bB][01]+)\b/

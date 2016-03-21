@@ -125,7 +125,7 @@ yarn.factory('Pointer', function PointerService() {
             }
 
             if (pointer.state() === "default") {
-                if (upperAlpha.indexOf(pointer.chr) >= 0) {
+                if ((upperAlpha + "@").indexOf(pointer.chr) >= 0) {
                     pointer
                         .flush()
                         .state("camelCase");
@@ -150,9 +150,9 @@ yarn.factory('Pointer', function PointerService() {
                         .flush()
                         .state("numeric");
                     continue;
-                } else if (pointer.chr === '@') {
-                    pointer.startSingleCharBlock("at");
-                    continue;
+                    //} else if (pointer.chr === '@') {
+                    //    pointer.startSingleCharBlock("camelCase");
+                    //    continue;
                 } else if (pointer.chr === '#') {
                     pointer.startSingleCharBlock("hash");
                     continue;
@@ -230,7 +230,7 @@ yarn.factory('Pointer', function PointerService() {
                 pointer.state() === "at" ||
                 pointer.state() === "dollar"
             ) {
-                if (alphaNumExtended.indexOf(pointer.chr) < 0) {
+                if ((alphaNumExtended + "@").indexOf(pointer.chr) < 0) {
                     pointer
                         .flush(pointer.state());
                     continue;

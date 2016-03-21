@@ -18,10 +18,7 @@
                                     $scope,
                                     $element,
                                     $compile,
-                                    player,
-                                    templating,
-                                    state,
-                                    assert) {
+                                    player) {
 
             this.clear = function () {
                 $element.empty();
@@ -31,25 +28,16 @@
             this.write = function (text, type, scope) {
                 var parsedTxt = text;
 
-                // Render tempate if necessary
-                if (parsedTxt.substring(0, 5) === "tmpl:") {
-                    parsedTxt = templating.render(parsedTxt.substring(5), {
-                        // todo: move this in the "templating" service
-                        assert: function (_assertion) {
-                            var assertion = _assertion.split(" ");
-                            var subject = assertion.shift();
-                            var object = assertion.pop();
-                            var predicate = assertion.join(" ");
-                            var value = state.resolveValue(assert(subject, predicate, object));
-                            return value;
-                        }
-                    });
-                }
-
                 // Render bracket links
-                var BracketsMatch = /\[([^\]]+)]/g;
-                var BracketsReplacement = '<thing token="$1">$1</thing>';
-                parsedTxt = parsedTxt.replace(BracketsMatch, BracketsReplacement);
+                parsedTxt = parsedTxt.replace(/\[([^\]]+)]/g, function (match) {
+                    var tokens = match.substring(1, match.length - 1).split("::");
+                    var name = tokens[0];
+                    var id = tokens[1] || tokens[0];
+                    return '<thing token="' + id + '" text="' + name + '"></thing>'
+                });
+
+                // Render paragraph breaks and line breaks
+                parsedTxt = parsedTxt.replace(/(\\[n])/g, '<br/>');
 
 
                 var newScope = $scope.$new(false);

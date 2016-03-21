@@ -9,7 +9,6 @@ yarn.service('yarn', function ($localStorage,
     function Yarn() {
 
         this.localState = {};
-        this.id = ""; // String ID, should be set to either story url or ID configured in yarn script
         this.scripts = [];
 
         postal.subscribe({

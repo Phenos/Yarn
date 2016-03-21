@@ -134,14 +134,19 @@ yarn.service('IDE', function IDEService(hotkeys,
         commands.run("validate");
     };
 
-    service.run = function () {
+    service.run = function (fallback) {
         var mainFile = editorFiles.mainFile();
         if (mainFile) {
             var uri = mainFile.absoluteURI().toString();
             rememberLastStory.forget();
             loader.fromURL(uri, true);
         } else {
-            yConsole.log("Could not find which story should be run");
+            if (fallback) {
+                console.info("Could not find which story should be run, calling up the fallback");
+                fallback();
+            } else {
+                yConsole.warning("Could not find which story should be run");
+            }
         }
     };
 

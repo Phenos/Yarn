@@ -28,11 +28,10 @@ function rootController(user,
 
     wallpaper.change("/images/splash/splash-bg.jpg");
 
-
     IDE.register($scope);
+
     // Register with the service
     root.register($scope);
-
 
     hotkeys.bindTo($rootScope)
         .add({
@@ -70,7 +69,6 @@ function rootController(user,
         var main = editorFiles.open("./story.txt");
         editorFiles.mainFile(main);
         editors.focus(main.uri.toString());
-
     };
 
     /*
@@ -118,7 +116,10 @@ function rootController(user,
     $scope.toggleTools(true);
     // Check if a previously opened story should be loaded
     //IDE.loadRememberedStory();
-    IDE.run();
+    IDE.run(function () {
+        $scope.openMain();
+        IDE.run();
+    });
 
     tools.focusFromMemory();
 }

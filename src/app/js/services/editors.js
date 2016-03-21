@@ -42,18 +42,5 @@ yarn.service("editors", function (state) {
         this.current && this.current.search();
     };
 
-    Editors.prototype.selectByFile = function (file) {
-        //console.log("selectByFile", file);
-        var self = this;
-        var foundEditor = null;
-        angular.forEach(this.all, function (editor) {
-            if (file === editor.file) {
-                foundEditor = editor;
-                self.focus(editor.file.uri.toString());
-            }
-        });
-        return self.current;
-    };
-
     return new Editors();
 });

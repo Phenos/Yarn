@@ -87,7 +87,6 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
                 filesToSave.push(file);
             }
         });
-        console.log("filesToSave", filesToSave);
 
         function saveNextFile(success, failure) {
             var nextFile = filesToSave.pop();
@@ -167,7 +166,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         var index = null;
         for (var i = 0; i < this.files.length; i++) {
             _file = this.files[i];
-            if (_file === file) {
+            if (_file.uri.toString() === file.uri.toString()) {
                 index = i;
                 break;
             }

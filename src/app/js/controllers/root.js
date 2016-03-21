@@ -68,7 +68,6 @@ function rootController(user,
     $scope.openMain = function () {
         var main = editorFiles.open("./story.txt");
         editorFiles.mainFile(main);
-        editors.focus(main.uri.toString());
     };
 
     /*

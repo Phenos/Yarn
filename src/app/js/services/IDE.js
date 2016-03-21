@@ -9,6 +9,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                                         storage,
                                         commands,
                                         editorFiles,
+                                        editors,
                                         tools) {
 
     var service = {
@@ -123,6 +124,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 console.log("open", file);
                 $mdDialog.cancel();
                 editorFiles.open(file);
+                editors.focus(file.uri.toString());
                 self.isWorking = false;
             };
         }

@@ -14,7 +14,8 @@ function rootController(user,
                         themes,
                         wallpaper,
                         hotkeys,
-                        tools) {
+                        tools,
+                        editors) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
@@ -68,6 +69,8 @@ function rootController(user,
     $scope.openMain = function () {
         var main = editorFiles.open("./story.txt");
         editorFiles.mainFile(main);
+        editors.focus(main.uri.toString());
+
     };
 
     /*
@@ -118,7 +121,6 @@ function rootController(user,
     IDE.run();
 
     tools.focusFromMemory();
-
 }
 
 function rootService($localStorage, consoleService, help, player) {

@@ -6,7 +6,7 @@ yarn.service("session", function ($localStorage) {
     }
 
     Session.prototype.open = function (user) {
-        console.log("Sesion open for " + user.username, [user]);
+        console.info("Session open for " + user.username, [user]);
         if (user) {
             this._user = user;
             var key = "yarn-" + user.username;

@@ -104,30 +104,19 @@
                     })
             };
 
-            this.search = function (ev) {
-                // Appending dialog to document.body to cover sidenav in docs app
-                var confirm = $mdDialog.confirm()
-                    .title('Sorry!')
-                    .textContent('The search feature is not implemented yet.')
-                    .targetEvent(ev)
-                    .ok('Ok')
-                    .cancel('Cancel');
-
-                $mdDialog.show(confirm).then(function () {
-                    console.log("ok");
-                }, function () {
-                    console.log("cancel");
-                });
-            };
-
             this.close = function () {
                 editorFiles.close(this.file);
             };
 
             this.focus = function () {
+                this.file.isFocused = true;
                 if (aceEditor) {
                     aceEditor.focus();
                 }
+            };
+
+            this.blur = function () {
+                this.file.isFocused = false;
             };
 
             this.search = function () {

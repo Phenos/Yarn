@@ -8,7 +8,7 @@ yarn.config(function(RollbarProvider) {
             environment: 'test'
         }
     };
-    console.log("Configured Roolbar Error Reporting", [roolbarConfig]);
+    console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
     RollbarProvider.init(roolbarConfig);
 });
 

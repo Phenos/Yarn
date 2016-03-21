@@ -8,8 +8,15 @@ player {
 
     .player {
         min-height: 100%;
+
+        // These few rules are there to prevent
+        // a weird behavior from the disapearing
+        // toolbar when scrolling down
+        transform: none !important;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
     }
-        md-content {
+    md-content {
         background-color: transparent !important;
     }
 

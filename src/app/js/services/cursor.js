@@ -5,6 +5,7 @@
     function CursorService(Node) {
 
         function Cursor() {
+            this.source = null;
             this.stack = [];
             this.sequenceBroken = false;
         }
@@ -43,6 +44,7 @@
 
         Cursor.prototype.appendInstruction = function (value) {
             var node = new Node("instruction", value);
+            node.source = this.source;
 
             if (this.head().set.last() &&
                 this.head().set.last().type === 'symbol' && !this.sequenceBroken) {
@@ -72,8 +74,8 @@
 
         Cursor.prototype.appendSymbol = function (variant, value) {
             var node = new Node("symbol", value, variant);
+            node.source = this.source;
             var lastPreviousNode = this.head().set.last();
-
 
             if (lastPreviousNode) {
                 if (lastPreviousNode.type === 'instruction' && !this.sequenceBroken) {

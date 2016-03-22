@@ -140,7 +140,8 @@ yarn.service('Runtime', function RuntimeService(state,
                                 createdAssertions.push(
                                     state.createAssertion(currentThis, predicate, object, {
                                         parent: parent,
-                                        value: value
+                                        value: value,
+                                        source: node.source
                                     })
                                 );
                             }

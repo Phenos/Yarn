@@ -5,6 +5,7 @@ yarn.service('Node', function NodeService(Set) {
         this.variant = variant;
         this.value = value;
         this.set = new Set();
+        this.source = null;
         this.resolvedTo = null; // To which object or predicate the node has resolved to
     }
 

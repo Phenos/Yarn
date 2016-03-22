@@ -3,6 +3,6 @@ yarn.service("validatorTool", function (Tool) {
         label: "Validator",
         icon: "validate",
         directive: "validator-tool",
-        order: 140
+        order: 90
     });
 });

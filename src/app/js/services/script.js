@@ -12,6 +12,7 @@ yarn.service('script', function (Pointer,
     Script.prototype.load = function (source, url) {
         this.reset();
         this.url = url || "";
+        this.pointer = new Pointer(this.url);
         this.source = source;
         var self = this;
         this.pointer.tokenize(source);
@@ -23,7 +24,6 @@ yarn.service('script', function (Pointer,
     };
 
     Script.prototype.reset = function () {
-        this.pointer = new Pointer();
         this.url = "";
         this.source = "";
         this.ast = new AST();

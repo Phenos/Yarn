@@ -1,7 +1,9 @@
 yarn.factory('Pointer', function PointerService() {
 
-    function Pointer() {
+    function Pointer(uri) {
+        console.log("URI!!", uri);
         this._state = "default";
+        this.uri = uri;
         this.start();
     }
 
@@ -9,6 +11,9 @@ yarn.factory('Pointer', function PointerService() {
         this.text = "";
         this.chr = "";
         this.pos = 0;
+        this.line = 0;
+        this.character = 0;
+        this.source = new Source(this.uri);
         this.buffer = [];
         this.rawBuffer = [];
         this.tokens = [];
@@ -52,10 +57,26 @@ yarn.factory('Pointer', function PointerService() {
         var previousToken;
         txtRaw = this.rawBuffer.join("");
         txt = this.buffer.join("").trim();
+
         if (txtRaw !== "") {
+
+            // Keep a copy of this source to be added to the token
+            // Then create a clone to keop counting.
+            var source = this.source;
+            this.source = this.source.clone();
+
+            // Update the new source pointer
+            this.source.position = this.source.position + txtRaw.length;
+            this.source.character = this.source.character + txtRaw.length;
+            if (this.state() === "linebreak") {
+                this.source.line = this.source.line + 1;
+                this.source.character = 0;
+            }
+            this.source.position = this.source.position + txtRaw.length;
+
+
             if (txt === "" && this.state() === "default") {
                 // Ignore whitespace here!
-
             } else {
                 // Collapse line-breaks into multiLinebreak
                 previousToken = this.tokens[this.tokens.length - 1];
@@ -65,15 +86,17 @@ yarn.factory('Pointer', function PointerService() {
                     previousToken[0] = "multiLinebreak";
                     previousToken[2] = previousToken[2] + txtRaw;
                 } else {
-                    token = [this.state(), txt, txtRaw];
+                    token = [this.state(), txt, txtRaw, source];
                     this.tokens.push(token);
                 }
                 // Reset the state
                 this.state("default");
                 this.buffer = [];
                 this.rawBuffer = [];
+                console.log("token source:", source.uri, source.position, source.line, source.character);
             }
         }
+
         return this;
     };
 
@@ -258,6 +281,18 @@ yarn.factory('Pointer', function PointerService() {
         });
         grid.push("</table>");
         return grid.join("");
+    };
+
+
+    function Source(uri, position, line, character) {
+        this.uri = uri || "";
+        this.position = position || 0;
+        this.line = line || 0;
+        this.character = character || 0;
+    }
+
+    Source.prototype.clone = function () {
+        return new Source(this.uri, this.position, this.line, this.character);
     };
 
     return Pointer;

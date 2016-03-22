@@ -15,7 +15,7 @@ yarn.service("relatedHelpInspection", function relatedHelpInspection(InspectionA
                     .load(article.url);
             };
 
-            yeld(new InspectionArticle("Related Help Articles", "help", "related-help-inspection", scope))
+            yeld(new InspectionArticle("Help Articles", "help", "related-help-inspection", scope))
         }
     }
 

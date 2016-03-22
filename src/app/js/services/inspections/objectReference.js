@@ -17,7 +17,7 @@ yarn.service("objectReferenceInspection",
 
                     if (token && token.value) {
                         thing = things.get(token.value);
-                        scope.title = txt;
+                        scope.title = "This is an object";
                         scope.type = "objectReference";
                         scope.usageCount = {
                             total: 0,
@@ -42,7 +42,7 @@ yarn.service("objectReferenceInspection",
                         url: "./yarnscript-language.html"
                     });
 
-                    yeld(new InspectionArticle(txt.trim(), "objectReference", "object-reference", scope))
+                    yeld(new InspectionArticle(scope.title, "objectReference", "object-reference", scope))
 
                 }
             }

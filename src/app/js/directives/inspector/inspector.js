@@ -32,6 +32,19 @@
 
                 this.token = null;
 
+                this.title = function () {
+                    if (this.token) {
+                        var title = this.token.value;
+                        if (title.length > 40) {
+                            title = title.substring(0, 35) + "…";
+                        }
+                        return title;
+                    } else {
+                        return "Nothing to inspect!"
+                    }
+                };
+
+
                 if (this.service) {
                     this.service.register(this);
                 } else {
@@ -64,6 +77,7 @@
         };
 
         service.inspect = function (token) {
+            controller.token = token;
             console.log("inspect()", token, controller);
             var self = this;
             if (controller && angular.isObject(token)) {

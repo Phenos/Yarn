@@ -16,7 +16,7 @@ yarn.service("predicateReferenceInspection",
                     var scope = {};
 
                     if (token && token.value) {
-                        scope.title = txt;
+                        scope.title = "This is a predicate";
                         scope.type = "predicateReference";
                         scope.usageCount = {
                             total: 0
@@ -44,7 +44,7 @@ yarn.service("predicateReferenceInspection",
                         url: "./yarnscript-language.html"
                     });
 
-                    yeld(new InspectionArticle(txt.trim(), "predicateReference", "predicate-reference", scope))
+                    yeld(new InspectionArticle(scope.title, "predicateReference", "predicate-reference", scope))
                 }
             }
 

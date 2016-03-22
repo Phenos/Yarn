@@ -1,5 +1,32 @@
 .inspector {
 
+    md-fab-speed-dial {
+        top: -8px;
+        right: 20px;
+        bottom: auto;
+        left: auto;
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        .md-button {
+            width: 48px;
+            height: 48px;
+            background: #fff !important;
+            md-icon {
+                color: #000;
+            }
+        }
+    }
+
+    h2 {
+        font-weight: normal;
+        margin: 0;
+        padding: 0.6em 0.6em 0.6em 1em;
+        font-size: 1.4em;
+        background: #445ABC;
+        color: #fff;
+    }
+
     articles {
         display: block;
         position: relative;
@@ -8,32 +35,22 @@
             position: relative;
             display: block;
             padding-bottom: 0;
-            margin: 0.8em;
             background: #fff;
 
             section {
                 position: relative;
                 display: block;
-                margin: 0.5em 0.5em 0.25em 1em;
+                margin: 0.5em 0.5em 0.25em 1.5em;
                 padding-bottom: 0.25em;
             }
 
-            h2, h3, h4, h5 {
-                margin: 0.5em 0 0.5em 0;
-            }
 
-            h2.type-help {
-                background: rgb(0, 85, 0);
-            }
-
-            h2 {
-                background: rgb(63, 81, 181);
-
+            h3 {
+                background: rgb(236, 236, 236);
                 font-weight: normal;
                 margin: 0;
-                padding: 0.3em 0.3em 0.3em 0.6em;
-                color: #fff;
-                font-size: 1.1em;
+                padding: 0.6em 0.6em 0.6em 1.5em;
+                font-size: 1em;
 
                 md-icon {
                     svg {
@@ -47,7 +64,7 @@
             ul {
                 margin-top: 0.5em;
                 margin-bottom: 0.5em;
-                padding-left: 1em;
+                padding-left: 1.2em;
 
                 li {
                     list-style-type: square;

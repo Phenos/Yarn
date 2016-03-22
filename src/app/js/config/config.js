@@ -26,7 +26,6 @@ yarn.run(function (commands, tools) {
         "commandsTool",
         "graphTool",
         "inspectorTool",
-        "thingsTool",
         "validatorTool"
     ];
 

@@ -1,0 +1,63 @@
+early-bird {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    z-index: 99999;
+
+
+    &:hover {
+        img {
+            animation-name: hvr-buzz-out;
+            animation-duration: .75s;
+            animation-timing-function: linear;
+            animation-iteration-count: 1;
+            bottom: 10px;
+            left: 40px;
+            width: 240px;
+        }
+    }
+
+    .message {
+        font-size: 1.2em;
+        background: #147cb1;
+        color: #fff;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 40px;
+        padding-top: 0.5em;
+        cursor: pointer;
+
+        span {
+            position: relative;
+            left: 120px;
+        }
+    }
+
+    img {
+        z-index: 100;
+        width: 180px;
+        position: absolute;
+        bottom: 0;
+        left: 15px;
+        cursor: pointer;
+
+        &:hover {
+            bottom: 10px;
+            left: 40px;
+            width: 240px;
+        }
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+
+
+}
+

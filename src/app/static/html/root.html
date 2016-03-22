@@ -1,4 +1,4 @@
-<md-content style="z-index:5"
+<md-content style="z-index:5; overflow: hidden; padding-bottom: 40px;"
             flex="1"
             layout="row"
             get-context-menu
@@ -6,6 +6,14 @@
             data-context-menu="./html/editor-context-menus.html"
 >
     <assertion-browser></assertion-browser>
+    <early-bird ng-if="false">
+        <img src="/images/early-bird.png" class="hvr-buzz-out" ng-click="open()"/>
+        <div class="message" ng-click="open()">
+            <span>
+                Get early access with the <strong class="underline">Early Bird</strong> special.
+            </span>
+        </div>
+    </early-bird>
     <player class="layout-panel theme-{{ themes.current.id }}" flex="noshrink" user="user" layout="column"></player>
     <md-section
             md-whiteframe="10"

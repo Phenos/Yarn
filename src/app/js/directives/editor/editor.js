@@ -100,6 +100,14 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             if (self.file) {
                 self.file.updateStatus();
             }
+
+            if (self.file && self.file.goToLine) {
+                console.log("goToLine", self.file.goToLine);
+                //aceEditor.focus();
+                //aceEditor.resize(true);
+                aceEditor.gotoLine(self.file.goToLine, 0, true);
+            }
+
         }
 
         this.options = {

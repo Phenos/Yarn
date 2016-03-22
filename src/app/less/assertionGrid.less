@@ -6,12 +6,20 @@ assertion-grid {
 
     .grid {
         border: none;
-        overflow: hidden;
+        width: 100%;
+        //overflow: hidden;
+
+        .ui-grid-header-cell-wrapper {
+            height: inherit !important;
+
+        }
+        .ui-grid-cell-contents {
+            padding: 0.3em 0.5em;
+        }
+
     }
 
 
-    .ui-grid-header-cell-wrapper {
-        height: inherit !important;
-    }
+
 }
 

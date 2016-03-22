@@ -193,10 +193,9 @@ yarn.service('state', function ($localStorage,
          * @returns {*}
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
-            var self = this;
             var options = _options || {};
             var assertion;
-
+            //console.log("options", options.source.uri);
             if (subject && predicate && object) {
                 var _predicate = predicate;
 

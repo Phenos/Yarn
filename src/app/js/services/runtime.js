@@ -137,6 +137,7 @@ yarn.service('Runtime', function RuntimeService(state,
                                 yConsole.error("Invalid assertion, cannot use text as the object: " +
                                     currentThis.id + " " + predicate.id + " " + object.id);
                             } else {
+                                //console.log("node.source", node.source);
                                 createdAssertions.push(
                                     state.createAssertion(currentThis, predicate, object, {
                                         parent: parent,

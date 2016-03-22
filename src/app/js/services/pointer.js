@@ -1,7 +1,6 @@
-yarn.factory('Pointer', function PointerService() {
+yarn.factory('Pointer', function PointerService(URI) {
 
     function Pointer(uri) {
-        console.log("URI!!", uri);
         this._state = "default";
         this.uri = uri;
         this.start();
@@ -93,7 +92,7 @@ yarn.factory('Pointer', function PointerService() {
                 this.state("default");
                 this.buffer = [];
                 this.rawBuffer = [];
-                console.log("token source:", source.uri, source.position, source.line, source.character);
+                //console.log("token source:", source.uri, source.position, source.line, source.character);
             }
         }
 
@@ -286,6 +285,11 @@ yarn.factory('Pointer', function PointerService() {
 
     function Source(uri, position, line, character) {
         this.uri = uri || "";
+        this.file = "";
+        if (this.uri) {
+            this._uri = URI(this.uri);
+            this.file = this._uri.filename();
+        }
         this.position = position || 0;
         this.line = line || 0;
         this.character = character || 0;

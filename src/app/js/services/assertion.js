@@ -13,8 +13,10 @@ yarn.service('Assertion', function (layerSetup,
      * @constructor
      */
     function Assertion(subject, predicate, object, options) {
+        //console.log("options.source", options.source);
         var _options = options || {};
         internalCounter = internalCounter + 1;
+        this.source = _options.source || null;
         this.creationIndex = internalCounter;
         this.subject = subject || null;
         this.predicate = predicate || null;

@@ -67,6 +67,7 @@
                         yConsole.error("Invalid token found during compilation : " + token[2]);
                     } else {
                         cursor.source = tokenSource;
+                        //console.log("tokenSource", tokenSource);
                         tokenHandler(cursor, tokenString);
                     }
                 });

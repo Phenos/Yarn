@@ -3,6 +3,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
     function EditorFiles() {
         this.files = [];
         this._mainFile = null;
+        this.goToLine = null;
         this.reloadFromLocalStorage();
 
     }
@@ -142,7 +143,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         return file;
     };
 
-    EditorFiles.prototype.open = function (uriOrFile, setFocus) {
+    EditorFiles.prototype.open = function (uriOrFile, setFocus, goToLine) {
         var file;
         if (angular.isObject(uriOrFile)) {
             file = uriOrFile;
@@ -155,6 +156,9 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
             file.isFocused = false;
         }
         file.load();
+        if (goToLine) {
+            file.goToLine = goToLine;
+        }
         this.files.push(file);
         this.persist(file);
         return file;

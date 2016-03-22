@@ -11,22 +11,30 @@
         </div>
     </md-toolbar>
     <div flex="grow" layout="row">
-        <md-content flex="30" class="list-of-types">
+        <md-content flex="20" class="list-of-types" md-whiteframe="10">
             <md-list>
                 <md-list-item ng-click="filterByType()">
                     <p>ALL TYPES</p>
                 </md-list-item>
                 <md-list-item ng-click="filterByType(type)" ng-repeat="type in types">
-                    <p>{{ type.object.label() }} ({{ type.count}})</p>
+                    <p><span class="count">{{ type.count}}</span><span>{{ type.object.label() }}</span></p>
                 </md-list-item>
             </md-list>
         </md-content>
-        <md-content flex="70" class="list-of-things">
+        <md-content flex="20" class="list-of-things" md-whiteframe="10">
             <md-list>
-                <md-list-item ng-repeat="thing in thingsFiltered">
+                <md-list-item
+                        ng-repeat="thing in thingsFiltered"
+                        ng-click="selectThing(thing)">
                     <p>{{ thing.object.text() }}</p>
                 </md-list-item>
             </md-list>
+        </md-content>
+        <md-content flex="70"
+                    layout="column"
+                    class="details-of-thing"
+                    md-whiteframe="10">
+            <inspector flex="grow" service="thingInspector"></inspector>
         </md-content>
     </div>
 </div>

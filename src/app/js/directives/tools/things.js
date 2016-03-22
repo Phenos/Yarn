@@ -8,9 +8,10 @@ function ThingsToolDirective(things,
         scope: {},
         replace: true,
         templateUrl: './html/tools/things.html',
-        controller: function ($scope) {
+        controller: function ($scope, thingInspector) {
 
             $scope.thingsFiltered = [];
+            $scope.thingInspector = thingInspector;
 
             postal.subscribe({
                 channel: "runtime",
@@ -24,6 +25,15 @@ function ThingsToolDirective(things,
                 //console.log("filterByType", type);
                 $scope.filter = type.object.id;
                 $scope.thingsFiltered = $scope.applyFilter();
+            };
+
+            $scope.selectThing = function (thing) {
+                var token = {
+                    value: thing.object.id,
+                    type: "camelcase"
+                };
+                //console.log("thing", thing);
+                thingInspector.inspect(token);
             };
 
             $scope.applyFilter = function () {

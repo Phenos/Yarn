@@ -2,6 +2,7 @@
 
     yarn.directive('inspector', InspectorDirective);
     yarn.service('inspector', inspectorService);
+    yarn.service('thingInspector', inspectorService);
 
     yarn.directive('inspectorArticle', function InspectorArticle($compile) {
         return {
@@ -20,28 +21,31 @@
         return {
             restrict: 'E',
             bindToController: {
+                service: "="
             },
             scope: {},
             replace: true,
             controllerAs: 'inspector',
             templateUrl: './html/inspector.html',
-            controller: InspectorController
+            controller: function InspectorController(inspector) {
+                var self = this;
+
+                this.token = null;
+
+                if (this.service) {
+                    this.service.register(this);
+                } else {
+                    inspector.register(this);
+                }
+
+                this.update = function (articles) {
+                    self.articles = articles;
+                };
+
+            }
         };
 
-        function InspectorController($scope, $element, inspector, $compile) {
-            var self = this;
 
-            this.token = null;
-
-            inspector.register(this);
-
-            this.update = function (articles) {
-                //var elemArticles = $element.find("articles");
-                //elemArticles.empty();
-                self.articles = articles;
-            };
-
-        }
 
     }
 
@@ -60,11 +64,13 @@
         };
 
         service.inspect = function (token) {
+            console.log("inspect()", token, controller);
             var self = this;
             if (controller && angular.isObject(token)) {
                 token.helpArticles = [];
                 this.clear();
                 angular.forEach(inspections, function (inspection) {
+                    //console.log("token", token);
                     inspection.inspect(token, onYeld);
                 });
                 function onYeld(article) {

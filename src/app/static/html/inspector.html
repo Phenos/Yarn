@@ -9,14 +9,14 @@
                     >
                 <h2 ng-class='"type-" + article.type'>
                     <md-icon md-svg-icon="/svg-icons/inspections/{{ article.type }}.svg"></md-icon>
-                    {{ article.title }} <span class="subHeading">{{ article.type }}</span>
+                    {{ article.title }} <!-- span class="subHeading">{{ article.type }}</span -->
                 </h2>
                 <section>
                 </section>
             </article>
         </articles>
     </div>
-    <div ng-show="inspector.articles.length === 0"
+    <div ng-show="!inspector.articles || inspector.articles.length === 0"
          layout-fill
          layout="column"
          layout-align="center center">

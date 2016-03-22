@@ -1,6 +1,6 @@
 .things-tool {
 
-    font-size: 0.8em;
+    font-size: 0.9em;
 
     md-list {
         md-list-item,
@@ -10,7 +10,25 @@
     }
 
     .list-of-types {
-        background: #eaeaea;
+        background: #a6a6a6;
         overflow-x: hidden;
+        z-index: 100;
+
+        .count {
+            color: #767676;
+            font-size: 1.2em;
+            padding-right: 0.5em;
+        }
+    }
+
+    .list-of-things {
+        background: #d8d8d8;
+        overflow-x: hidden;
+        z-index: 200;
+    }
+
+    .details-of-thing {
+        background: #fff;
+        z-index: 300;
     }
 }

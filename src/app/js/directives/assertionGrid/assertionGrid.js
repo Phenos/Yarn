@@ -64,8 +64,7 @@
                     },
                     {
                         field: 'weight()',
-                        displayName: 'weight',
-                        visible: false
+                        displayName: 'weight'
                     },
                     {
                         field: 'source',

@@ -67,8 +67,10 @@ yarn.factory('Pointer', function PointerService(URI) {
             // Update the new source pointer
             this.source.position = this.source.position + txtRaw.length;
             this.source.character = this.source.character + txtRaw.length;
-            if (this.state() === "linebreak") {
-                this.source.line = this.source.line + 1;
+            // Count linebreaks
+            var lineBreaks = txtRaw.split("\n").length - 1;
+            if (lineBreaks) {
+                this.source.line = this.source.line + lineBreaks;
                 this.source.character = 0;
             }
             this.source.position = this.source.position + txtRaw.length;
@@ -291,7 +293,7 @@ yarn.factory('Pointer', function PointerService(URI) {
             this.file = this._uri.filename();
         }
         this.position = position || 0;
-        this.line = line || 0;
+        this.line = line || 1;
         this.character = character || 0;
     }
 

@@ -4,6 +4,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                                                   IDE,
                                                   globalContextMenu,
                                                   confirmAction,
+                                                  $timeout,
                                                   $throttle,
                                                   $debounce) {
     return {
@@ -81,6 +82,9 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             aceEditor = _editor;
 
             aceEditor.on("click", clickHandler);
+            aceEditor.on("focus", function() {
+                checkGoToLine();
+            });
             aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
 
             angular.element(aceEditor.container).on("contextmenu", function () {
@@ -100,14 +104,21 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             if (self.file) {
                 self.file.updateStatus();
             }
+            checkGoToLine();
 
-            if (self.file && self.file.goToLine) {
-                console.log("goToLine", self.file.goToLine);
-                //aceEditor.focus();
-                //aceEditor.resize(true);
-                aceEditor.gotoLine(self.file.goToLine, 0, true);
-            }
 
+        }
+
+        function checkGoToLine() {
+                $timeout(function () {
+                    if (self.file && self.file.goToLine) {
+                        console.log("checkGoToLine", self.file.goToLine);
+                        //console.log("goToLine", self.file.goToLine);
+                        //aceEditor.resize(true);
+                        aceEditor.gotoLine(self.file.goToLine, 0, true);
+                        self.file.goToLine = null;
+                    }
+                }, 500);
         }
 
         this.options = {

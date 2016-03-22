@@ -1,4 +1,4 @@
-<md-content style="z-index:5; overflow: hidden; padding-bottom: 40px;"
+<md-content style="z-index:5; overflow: hidden;"
             flex="1"
             layout="row"
             get-context-menu
@@ -19,9 +19,9 @@
             md-whiteframe="10"
             class="IDE"
             layout="column"
-            flex="60"
+            flex="50"
             ng-show="IDEisVisible || helpIsVisible">
-        <md-section layout="row" flex="" style="overflow: hidden">
+        <md-section layout="row" flex="" style="overflow: hidden; position: relative;">
             <md-section
                     ng-show="IDEisVisible"
                     class="layout-panel"
@@ -30,6 +30,7 @@
                     layout="column">
                 <editor-toolbar></editor-toolbar>
                 <div flex="grow" layout="column">
+                    <div class="bottomShadow"></div>
                     <editor-tabs ng-show="editorFiles.files.length > 0" layout="column"></editor-tabs>
                     <div style="background: #fff;"
                          ng-show="editorFiles.files.length === 0"
@@ -70,9 +71,11 @@
             </md-section>
         </md-section>
         <md-section
+                md-whiteframe="10"
                 layout="column"
                 class="toolTabs layout-panel"
                 flex="{{ consoleFlexHeight }}"
+                flex-order="5"
                 ng-show="IDEisVisible"
         >
             <div class="toolTabs-toggle">

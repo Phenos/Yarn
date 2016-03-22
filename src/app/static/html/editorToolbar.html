@@ -2,7 +2,9 @@
      md-whiteframe="4"
 >
     <md-toolbar
+            md-whiteframe="4"
             class="editorToolbar md-menu-toolbar"
+            flex="noshrink"
             layout="row">
         <div flex="100" layout="row">
             <md-toolbar-filler layout
@@ -85,7 +87,7 @@
         </div>
     </md-toolbar>
 
-    <md-toolbar class="editorIconToolbar">
+    <md-toolbar flex="no-shrink" class="editorIconToolbar">
         <div class="md-toolbar-tools">
             <md-button ng-click="toolbar.editors.current.save()" class="md-icon-button" aria-label="Save">
                 <md-icon md-svg-icon="/svg-icons/save.svg"></md-icon>

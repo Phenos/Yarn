@@ -1,6 +1,7 @@
 <form layout="row" flex>
     <div flex="100" class="md-block inputContainer">
         <md-autocomplete
+                md-whiteframe="4"
                 placeholder="Enter a command"
                 md-no-cache="true"
                 ng-keypress="userInput.keypress($event)"
@@ -19,17 +20,5 @@
                      ng-bind-html="item.description"></div>
             </div>
         </md-autocomplete>
-    </div>
-    <div class="executeButton"
-         flex="1"
-         layout="row"
-    >
-        <md-button
-                class="md-fab md-mini md-primary"
-                ng-click="userInput.submit()"
-                aria-label="Execute"
-        >
-            <md-icon md-svg-icon="/svg-icons/play.svg"></md-icon>
-        </md-button>
     </div>
 </form>

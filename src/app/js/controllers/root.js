@@ -84,8 +84,8 @@ function rootController(user,
         $scope.consoleFlexHeight = 0;
     };
     $scope.onConsoleFocus = function () {
-        $scope.editorFlexHeight = 60;
-        $scope.consoleFlexHeight = 40;
+        $scope.editorFlexHeight = 50;
+        $scope.consoleFlexHeight = 50;
     };
 
     $scope.focusInspector = function () {

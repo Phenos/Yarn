@@ -21,39 +21,47 @@
         return {
             restrict: 'E',
             bindToController: {
-                service: "="
             },
             scope: {},
             replace: true,
             controllerAs: 'inspector',
             templateUrl: './html/inspector.html',
-            controller: function InspectorController(inspector) {
+            controller: function InspectorController(inspector, state, assert) {
                 var self = this;
 
                 this.token = null;
 
                 this.title = function () {
+                    var value = "Nothing to inspect!";
                     if (this.token) {
                         var title = this.token.value;
                         if (title.length > 40) {
                             title = title.substring(0, 35) + "…";
                         }
-                        return title;
-                    } else {
-                        return "Nothing to inspect!"
+                        value = title;
                     }
+                    return value;
                 };
 
-
-                if (this.service) {
-                    this.service.register(this);
-                } else {
-                    inspector.register(this);
-                }
+                this.summary = function () {
+                    var value = null;
+                    if (this.token) {
+                        var summary = state.resolveValue(assert(this.token.value, "has", "DocSummary"));
+                        if (summary) {
+                            if (summary.length > 140) {
+                                summary = summary.substring(0, 135) + "…";
+                            }
+                        }
+                        value = summary;
+                    }
+                    return value;
+                };
 
                 this.update = function (articles) {
                     self.articles = articles;
                 };
+
+                inspector.register(this);
 
             }
         };

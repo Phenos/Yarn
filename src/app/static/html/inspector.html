@@ -5,6 +5,9 @@
         <h2>
             {{ inspector.title() }}
         </h2>
+        <div class="summary" ng-if="inspector.summary()">
+            {{ inspector.summary() }}
+        </div>
         <articles>
             <article ng-repeat="article in inspector.articles"
                      inspector-article
@@ -35,7 +38,7 @@
          layout-fill
          layout="column"
          layout-align="center center">
-        <div style="font-size: 0.8em; color: rgba(0,0,0,0.4)">
+        <div style="color: rgba(0,0,0,0.4)">
             To inspect something, move you text cursor over any
             <br/>
             word in the editor, or select an item from the list of things.

@@ -37,12 +37,7 @@ yarn.service("occurencesInspection",
                         if (assertion.object === thing || assertion.subject === thing) scope.usageCount.total++;
                     });
 
-                    token.helpArticles.push({
-                        title: "YarnScrip Language Basics",
-                        url: "./yarnscript-language.html"
-                    });
-
-                    yeld(new InspectionArticle(scope.title, "objectReference", "object-reference", scope))
+                    yeld(new InspectionArticle(scope.title, "occurences", "occurences", scope))
 
                 }
             }
@@ -56,10 +51,10 @@ yarn.service("occurencesInspection",
 
     });
 
-yarn.directive('objectReference', function objectReference() {
+yarn.directive('occurences', function occurences() {
     return {
         replace: true,
-        templateUrl: "./html/inspections/objectReference.html",
+        templateUrl: "./html/inspections/occurences.html",
         controller: function ($scope) {
         }
     };

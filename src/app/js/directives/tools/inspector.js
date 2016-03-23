@@ -20,7 +20,11 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
 
             $scope.filterByType = function (type) {
                 //console.log("filterByType", type);
-                $scope.filter = type.object.id;
+                if (type && type.object) {
+                    $scope.filter = type.object.id;
+                } else {
+                    $scope.filter = null;
+                }
                 $scope.thingsFiltered = $scope.applyFilter();
             };
 
@@ -69,18 +73,19 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
                         } else {
                             type.count++;
                         }
-                        if (!thing) {
-                            thing = {
-                                object: assertion.subject,
-                                types: []
-                            };
-                            $scope.thingsIndex[assertion.subject.id] = thing;
-                            $scope.things.push(thing);
-                        }
-                        thing.types.push(type.object.id);
                         keep = true;
                     }
-                    return keep;
+                    if (!thing) {
+                        thing = {
+                            object: assertion.subject,
+                            types: []
+                        };
+                        $scope.thingsIndex[assertion.subject.id] = thing;
+                        $scope.things.push(thing);
+                    }
+                    if (type) {
+                        thing.types.push(type.object.id);
+                    }
                 });
 
                 $scope.types.sort(function (A, B) {

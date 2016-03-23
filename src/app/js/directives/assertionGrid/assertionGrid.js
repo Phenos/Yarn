@@ -13,7 +13,7 @@
             controller: AssertionGridController
         };
 
-        function AssertionGridController($scope) {
+        function AssertionGridController($scope, $element) {
 
             $scope.$watch("data", function () {
                 $scope.options.data = $scope.data;
@@ -24,7 +24,8 @@
             };
 
             $scope.options = {
-                //enableFiltering: true,
+                rowHeight: 30,
+                enableFiltering: true,
                 enableRowReordering: true,
                 enableGridMenu: true,
                 onRegisterApi: function(gridApi){

@@ -15,7 +15,8 @@ function rootController(user,
                         themes,
                         wallpaper,
                         hotkeys,
-                        tools) {
+                        tools,
+                        fireOnResizeEvent) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
@@ -107,6 +108,7 @@ function rootController(user,
 
 
     $scope.toggleTools = function (value) {
+        fireOnResizeEvent();
         if (angular.isDefined(value)) {
             $scope.toolsAreVisible = value;
             if ($scope.toolsAreVisible) {

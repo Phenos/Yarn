@@ -46,7 +46,6 @@ yarn.service("tools", function toolsService($injector,
                 tool.blur();
             }
         });
-        console.log("dontExpand", dontExpand);
         if (!dontExpand) root.toggleTools(true);
     };
 

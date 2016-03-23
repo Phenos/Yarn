@@ -21,16 +21,6 @@ function UserInputDirective() {
 
         this.hasFocus = false;
 
-        hotkeys.bindTo($scope)
-            .add({
-                combo: 'esc',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Focus back to the editor',
-                callback: function () {
-                    self.toggleFocus();
-                }
-            });
-
         this.getAutoCompleteMatches = function (searchText) {
             var allCommands = [];
 

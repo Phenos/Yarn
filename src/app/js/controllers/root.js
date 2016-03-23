@@ -49,6 +49,14 @@ function rootController(user,
             callback: function () {
                 root.toggleHelp();
             }
+        })
+        .add({
+            combo: 'esc',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            description: '',
+            callback: function () {
+                root.toggleTools();
+            }
         });
 
 

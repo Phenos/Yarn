@@ -1,52 +1,39 @@
 yarn.service("occurencesInspection",
     function occurencesInspection(InspectionArticle,
-                                       things,
-                                       state) {
+                                  things,
+                                  state) {
         return {
             inspect: inspect
         };
 
         function inspect(token, yeld) {
             var thing;
+            var assertions = [];
+            var scope = {
+                title: "Occurences"
+            };
 
-            if (token && token.type === "camelcase") {
-                var txt = token.value;
-                if (txt) {
+            if (token) {
+                scope.assertions = assertions;
 
-                    var scope = {};
-
-                    if (token && token.value) {
-                        thing = things.get(token.value);
-                        scope.title = "This is an object";
-                        scope.type = "objectReference";
-                        scope.usageCount = {
-                            total: 0,
-                            asObject: 0,
-                            asSubject: 0
-                        };
-                        scope.openAsSubject = openAsSubject;
-                        scope.openAsObject = openAsObject;
+                if (token.type === "camelcase") {
+                    thing = things.get(token.value, true);
+                    if (thing) {
+                        var allAssertions = state.assertions.all();
+                        angular.forEach(allAssertions, function (assertion) {
+                            var keep = false;
+                            if (assertion.subject === thing) keep = true;
+                            if (assertion.object === thing) keep = true;
+                            if (keep) assertions.push(assertion);
+                        });
                     }
-
-                    // Count usage
-
-                    var allAssertions = state.assertions.all();
-                    angular.forEach(allAssertions, function (assertion) {
-                        if (assertion.subject === thing) scope.usageCount.asSubject++;
-                        if (assertion.object === thing) scope.usageCount.asObject++;
-                        if (assertion.object === thing || assertion.subject === thing) scope.usageCount.total++;
-                    });
-
-                    yeld(new InspectionArticle(scope.title, "occurences", "occurences", scope))
+                } else if (token.type === "identifier") {
 
                 }
+
+                yeld(new InspectionArticle(scope.title, "occurences", "occurences", scope))
             }
 
-            function openAsSubject() {
-            }
-
-            function openAsObject() {
-            }
         }
 
     });
@@ -55,7 +42,13 @@ yarn.directive('occurences', function occurences() {
     return {
         replace: true,
         templateUrl: "./html/inspections/occurences.html",
-        controller: function ($scope) {
+        controller: function ($scope, editorFiles) {
+            $scope.goToSource = function (source) {
+                if (source) {
+                    editorFiles.open(source.uri, true, source.line);
+                }
+            };
+
         }
     };
 });

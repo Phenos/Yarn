@@ -21,7 +21,6 @@
 
             $scope.goToSource = function (source) {
                 editorFiles.open(source.uri, true, source.line);
-                console.log("GO TO SOURCE", source);
             };
 
             $scope.options = {

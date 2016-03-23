@@ -86,7 +86,6 @@
 
         service.inspect = function (token) {
             controller.token = token;
-            console.log("inspect()", token, controller);
             var self = this;
             if (controller && angular.isObject(token)) {
                 token.helpArticles = [];

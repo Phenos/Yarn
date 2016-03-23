@@ -16,7 +16,25 @@ yarn.directive('graph', function GraphDirective(state, assert) {
         var thingIsA = this.thingIsA || "room";
         var predicate = this.predicate.toLowerCase() || "linksto";
         var force = d3.layout.force();
-        var svg = d3.select($element[0]).append("svg");
+
+
+        var onZoom = function() {};
+        var doZoom = function () {
+            onZoom();
+        };
+        var zoom = d3.behavior.zoom()
+            .translate([0, 0])
+            .scale(10)
+            .scaleExtent([1,20])
+            .on("zoom", doZoom);
+
+
+        var svg = d3
+            .select($element[0])
+            .append("svg")
+            .call(zoom);
+
+
         var currentModel;
         //console.log("svg", svg);
 
@@ -156,6 +174,15 @@ yarn.directive('graph', function GraphDirective(state, assert) {
 
                 var nodes = modelData.nodes;
                 var links = modelData.links;
+
+                onZoom = function zoomed() {
+                    node.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                    link.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                    linkLabel.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                    //features.select(".state-border").style("stroke-width", 1.5 / d3.event.scale + "px");
+                    //features.select(".county-border").style("stroke-width", .5 / d3.event.scale + "px");
+                };
+
                 var radius = 140;
 
                 var width = svg[0][0].clientWidth;
@@ -178,15 +205,6 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                     .charge(-500)
                     .start();
 
-                force.on("tick", function (e) {
-
-                    // soft-center the root node
-                    var k = .01;
-                    var nodes = force.nodes();
-                    nodes[0].y += (h / 2 - nodes[0].y) * k;
-                    nodes[0].x += (w / 2 - nodes[0].x) * k;
-                });
-
                 var link = svg
                     .selectAll(".link")
                     .data(links)
@@ -194,17 +212,22 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                     .append("line")
                     .attr("class", "link")
                     .attr("x1", function (d) {
-                        return bound(d.source.x, 0, width);
+                        return d.source.x;
+                        //return bound(d.source.x, 0, width);
                     })
                     .attr("y1", function (d) {
-                        return bound(d.source.y, 0, height);
+                        return d.source.y;
+                        //return bound(d.source.y, 0, height);
                     })
                     .attr("x2", function (d) {
-                        return bound(d.target.x, 0, width);
+                        return d.target.x;
+                        //return bound(d.target.x, 0, width);
                     })
                     .attr("y2", function (d) {
-                        return bound(d.target.y, 0, height);
+                        return d.target.y;
+                        //return bound(d.target.y, 0, height);
                     })
+                    //.attr("transform", "scale(0.5)");
                     .attr("transform", "scale(1)");
 
                 //var link = svg
@@ -259,27 +282,42 @@ yarn.directive('graph', function GraphDirective(state, assert) {
 
                     link
                         .attr("x1", function (d) {
-                            return bound(d.source.x, 0, width);
+                            return d.source.x;
+                            //return bound(d.source.x, 0, width);
                         })
                         .attr("y1", function (d) {
-                            return bound(d.source.y, 0, height);
+                            return d.source.y;
+                            //return bound(d.source.y, 0, height);
                         })
                         .attr("x2", function (d) {
-                            return bound(d.target.x, 0, width);
+                            return d.target.x;
+                            //return bound(d.target.x, 0, width);
                         })
                         .attr("y2", function (d) {
-                            return bound(d.target.y, 0, height);
+                            return d.target.y;
+                            //return bound(d.target.y, 0, height);
                         })
                         .attr("transform", "scale(1)");
+                        //.attr("transform", "scale(0.5)");
 
                     node
                         .attr("transform", function (d) {
-                            var x = bound(d.x, 0, width);
-                            var y = bound(d.y, 0, height);
+                            var x = d.x;
+                            var y = d.y;
+                            //var x = bound(d.x, 0, width);
+                            //var y = bound(d.y, 0, height);
                             d.x = x;
                             d.y = y;
                             return "scale(1)translate(" + x + "," + y + ")";
+                            //return "scale(0.5)translate(" + x + "," + y + ")";
                         });
+
+                    // soft-center the root node
+                    //var k = .01;
+                    var k = .09;
+                    var nodes = force.nodes();
+                    nodes[0].y += (height / 2 - nodes[0].y) * k;
+                    nodes[0].x += (width / 2 - nodes[0].x) * k;
 
                 });
             }

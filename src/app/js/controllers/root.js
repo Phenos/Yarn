@@ -16,6 +16,7 @@ function rootController(user,
                         wallpaper,
                         hotkeys,
                         tools,
+                        $timeout,
                         fireOnResizeEvent) {
 
     $scope.IDE = IDE;
@@ -108,7 +109,10 @@ function rootController(user,
 
 
     $scope.toggleTools = function (value) {
-        fireOnResizeEvent();
+        // Trigger window resize to fix a glitch with the grid resize
+        $timeout(function () {
+            fireOnResizeEvent();
+        }, 500);
         if (angular.isDefined(value)) {
             $scope.toolsAreVisible = value;
             if ($scope.toolsAreVisible) {

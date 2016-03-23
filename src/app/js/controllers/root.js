@@ -4,6 +4,7 @@ yarn.service('root', rootService);
 
 
 function rootController(user,
+                        $localStorage,
                         $rootScope,
                         $scope,
                         IDE,
@@ -14,8 +15,7 @@ function rootController(user,
                         themes,
                         wallpaper,
                         hotkeys,
-                        tools,
-                        editors) {
+                        tools) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
@@ -108,19 +108,27 @@ function rootController(user,
 
     $scope.toggleTools = function (value) {
         if (angular.isDefined(value)) {
-            $scope.toolsAreVisible = !value;
-        }
-        if ($scope.toolsAreVisible) {
-            $scope.toolsAreVisible = false;
-            $scope.onConsoleEscapeFocus();
+            $scope.toolsAreVisible = value;
+            if ($scope.toolsAreVisible) {
+                $scope.onConsoleFocus();
+            } else {
+                $scope.onConsoleEscapeFocus();
+            }
         } else {
-            $scope.toolsAreVisible = true;
-            $scope.onConsoleFocus();
+            if ($scope.toolsAreVisible) {
+                $scope.toolsAreVisible = false;
+                $scope.onConsoleEscapeFocus();
+            } else {
+                $scope.toolsAreVisible = true;
+                $scope.onConsoleFocus();
+            }
         }
+        $localStorage.toolsAreVisible = $scope.toolsAreVisible;
     };
+    $scope.toggleTools($localStorage.toolsAreVisible);
+    tools.focusFromMemory();
 
 
-    $scope.toggleTools(true);
 
     // Check if a previously opened story should be loaded
     //IDE.loadRememberedStory();
@@ -129,7 +137,6 @@ function rootController(user,
         IDE.run();
     });
 
-    tools.focusFromMemory();
 }
 
 function rootService($localStorage, consoleService, player) {

@@ -2,7 +2,7 @@
     <md-tabs
             flex="100"
             md-selected="toolTabs.selected"
-            md-autoselect>
+            ng-click="expandIfNotExpanded($event)">
         <md-tab md-on-select="focus(tool)"
                 ng-repeat="tool in tools.all"
                 md-active="tool.isFocused">

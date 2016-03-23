@@ -113,6 +113,7 @@ function rootController(user,
 
 
     $scope.toggleTools(true);
+
     // Check if a previously opened story should be loaded
     //IDE.loadRememberedStory();
     IDE.run(function () {
@@ -123,7 +124,7 @@ function rootController(user,
     tools.focusFromMemory();
 }
 
-function rootService($localStorage, consoleService, help, player) {
+function rootService($localStorage, consoleService, player) {
     var service = {
         scope: null
     };
@@ -166,12 +167,17 @@ function rootService($localStorage, consoleService, help, player) {
             service.showConsole();
         }
     };
+
     service.toggleHelp = function () {
         if (service.helpIsVisible) {
             service.hideHelp();
         } else {
             service.showHelp();
         }
+    };
+
+    service.toggleTools = function (value) {
+        service.scope.toggleTools(value);
     };
 
     /*

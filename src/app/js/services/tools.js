@@ -1,8 +1,8 @@
+yarn.service("tools", function toolsService($injector,
+                                            storyLocalStorage,
+                                            root) {
 
-yarn.service("tools", function toolsService ($injector,
-                                             storyLocalStorage) {
-
-    function Tools () {
+    function Tools() {
         this.all = [];
         this.index = {};
     }
@@ -46,6 +46,7 @@ yarn.service("tools", function toolsService ($injector,
                 tool.blur();
             }
         });
+        root.toggleTools(true);
     };
 
     return new Tools();

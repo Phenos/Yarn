@@ -1,6 +1,7 @@
 yarn.service("occurencesInspection",
     function occurencesInspection(InspectionArticle,
                                   things,
+                                  predicates,
                                   state) {
         return {
             inspect: inspect
@@ -8,10 +9,12 @@ yarn.service("occurencesInspection",
 
         function inspect(token, yeld) {
             var thing;
+            var predicate;
             var assertions = [];
             var scope = {
                 title: "Occurences"
             };
+
 
             if (token) {
                 scope.assertions = assertions;
@@ -28,10 +31,20 @@ yarn.service("occurencesInspection",
                         });
                     }
                 } else if (token.type === "identifier") {
-
+                    predicate = predicates(token.value, true);
+                    if (predicate) {
+                        var allAssertions = state.assertions.all();
+                        angular.forEach(allAssertions, function (assertion) {
+                            var keep = false;
+                            if (assertion.predicate === predicate) keep = true;
+                            if (keep) assertions.push(assertion);
+                        });
+                    }
                 }
 
-                yeld(new InspectionArticle(scope.title, "occurences", "occurences", scope))
+                if (assertions.length > 0) {
+                    yeld(new InspectionArticle(scope.title, "occurences", "occurences", scope))
+                }
             }
 
         }

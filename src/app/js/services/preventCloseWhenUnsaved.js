@@ -1,32 +1,27 @@
 yarn.service("preventCloseWhenUnsaved", function ($window) {
 
-
     function PreventCloseWhenUnsaved() {
         var self = this;
-        this.isActive = false;
+        this.checks = [];
 
-        $window.addEventListener("beforeunload", function (e) {
-            var returnValue;
-            if (self.isActive) {
-                var confirmationMessage = 'You have unsaved files. Are you sure you want to '
-                    + 'close this window and loose those changes ?';
-                (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-                returnValue = confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+        function checkBeforeUnload(e) {
+            var confirmationMessage;
+            for (var i = 0; i < self.checks.length && !confirmationMessage; i++) {
+                confirmationMessage = self.checks[i]();
             }
-            return returnValue;
-        });
-
+            if (confirmationMessage) {
+                (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+            }
+        }
+        $window.addEventListener("beforeunload", checkBeforeUnload);
     }
 
-    PreventCloseWhenUnsaved.prototype.active = function(newValue) {
-        if (angular.isDefined(newValue)) {
-            this.isActive = newValue;
-        }
-        return this.isActive;
+    PreventCloseWhenUnsaved.prototype.check = function(checkFn) {
+        this.checks.push(checkFn);
     };
 
     return new PreventCloseWhenUnsaved();
 
 });
-
 

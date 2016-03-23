@@ -17,12 +17,23 @@ yarn.service('IDE', function IDEService(hotkeys,
         this.isWorking = false;
     }
 
-    IDE.prototype.working = function(newValue) {
+    IDE.prototype.working = function (newValue) {
         if (angular.isDefined(newValue)) {
             this.isWorking = newValue;
         }
         return this.isWorking;
     };
+
+
+    // Prevent closing if the are unsaved files
+    preventCloseWhenUnsaved.check(function () {
+        var confirmationMessage;
+        if (editorFiles.hasUnsaved()) {
+            confirmationMessage =
+                'You have UNSAVED files. If you leave this page you will loose these changes.';
+        }
+        return confirmationMessage;
+    });
 
 
     /**
@@ -157,28 +168,6 @@ yarn.service('IDE', function IDEService(hotkeys,
             } else {
                 yConsole.warning("Could not find which story should be run");
             }
-        }
-    };
-
-    IDE.prototype.runFile = function (file) {
-        if (file) {
-            this.working(true);
-            rememberLastStory.forget();
-            loader.fromURL(file.absoluteURI().toString());
-            this.working(false);
-        }
-    };
-
-
-    IDE.prototype.loadRememberedStory = function () {
-        // Reload the story that was previously loaded
-        var rememberedStory = rememberLastStory.get();
-        if (rememberedStory) {
-            yConsole.log("Story address found in memory");
-            loader.fromURL(rememberedStory);
-        } else {
-            yConsole.log("No story to load from either memory or url");
-            yConsole.tip("To load a story you can use the LOAD command. Ex.: LOAD http://somtehing.com/yourStoryFile.txt");
         }
     };
 

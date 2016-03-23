@@ -194,6 +194,16 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
 
     };
 
+    EditorFiles.prototype.hasUnsaved = function () {
+        var hasUnsaved = false;
+        var file;
+        for (var i = 0; i < this.files.length; i++) {
+            file = this.files[i];
+            if (file.isModified()) hasUnsaved = true;
+        }
+        return hasUnsaved;
+    };
+
     return new EditorFiles();
 
 

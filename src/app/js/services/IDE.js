@@ -10,17 +10,27 @@ yarn.service('IDE', function IDEService(hotkeys,
                                         commands,
                                         editorFiles,
                                         editors,
-                                        tools) {
+                                        tools,
+                                        preventCloseWhenUnsaved) {
 
-    var service = {
-        isWorking: false
+    function IDE() {
+        this.isWorking = false;
+    }
+
+    IDE.prototype.working = function(newValue) {
+        if (angular.isDefined(newValue)) {
+            this.isWorking = newValue;
+        }
+        return this.isWorking;
     };
+
 
     /**
      * Register the service to a scope to allow binding keystrokes
      * @param $scope
      */
-    service.register = function ($scope) {
+    IDE.prototype.register = function ($scope) {
+        var self = this;
         hotkeys
             .bindTo($scope)
             .add({
@@ -29,7 +39,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 description: 'Save and run the story',
                 callback: function (event) {
                     event.preventDefault();
-                    service.saveAllAndRun();
+                    self.saveAllAndRun();
                 }
             })
             .add({
@@ -38,7 +48,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 description: 'Open file...',
                 callback: function (event) {
                     event.preventDefault();
-                    service.openFromStorage();
+                    self.openFromStorage();
                 }
             })
             .add({
@@ -48,19 +58,19 @@ yarn.service('IDE', function IDEService(hotkeys,
                 callback: function (event) {
                     event.preventDefault();
 
-                    service.isWorking = true;
-                    service.saveAll(function () {
-                        service.isWorking = false;
+                    self.working(true);
+                    self.saveAll(function () {
+                        self.working(false);
                     });
                 }
             })
             .add({
-                combo: 'mod+shift+r',
+                combo: 'mod+shift+enter',
                 allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
                 description: 'Run the story',
                 callback: function (event) {
                     event.preventDefault();
-                    service.run();
+                    self.run();
                 }
             })
             .add({
@@ -70,19 +80,19 @@ yarn.service('IDE', function IDEService(hotkeys,
                 callback: function (event) {
                     event.preventDefault();
                     tools.focus("validator");
-                    service.validate();
+                    self.validate();
                 }
             });
     };
 
 
-    service.saveAllAndRun = function () {
+    IDE.prototype.saveAllAndRun = function () {
         var self = this;
         console.log(".saveAllAndRun()");
-        this.isWorking = true;
-        service.saveAll(function (story) {
-            service.run(story);
-            self.isWorking = false;
+        this.working(true);
+        self.saveAll(function (story) {
+            self.run(story);
+            self.working(false);
         }, function () {
             $mdDialog.show(
                 $mdDialog
@@ -95,13 +105,13 @@ yarn.service('IDE', function IDEService(hotkeys,
         })
     };
 
-    service.saveAll = function (success, failure) {
+    IDE.prototype.saveAll = function (success, failure) {
         editorFiles.saveAll(success, failure);
 
         console.log("IDE.save");
     };
 
-    service.openFromStorage = function (ev) {
+    IDE.prototype.openFromStorage = function (ev) {
 
         storage.refresh();
 
@@ -120,21 +130,21 @@ yarn.service('IDE', function IDEService(hotkeys,
                 $mdDialog.cancel();
             };
             $scope.open = function (file) {
-                self.isWorking = true;
+                self.working(true);
                 //console.log("open", file);
                 $mdDialog.cancel();
                 editorFiles.open(file, true);
                 editors.focus(file.uri.toString());
-                self.isWorking = false;
+                self.working(false);
             };
         }
     };
 
-    service.validate = function () {
+    IDE.prototype.validate = function () {
         commands.run("validate");
     };
 
-    service.run = function (fallback) {
+    IDE.prototype.run = function (fallback) {
         var mainFile = editorFiles.mainFile();
         if (mainFile) {
             var uri = mainFile.absoluteURI().toString();
@@ -150,17 +160,17 @@ yarn.service('IDE', function IDEService(hotkeys,
         }
     };
 
-    service.runFile = function (file) {
+    IDE.prototype.runFile = function (file) {
         if (file) {
-            this.isWorking = true;
+            this.working(true);
             rememberLastStory.forget();
             loader.fromURL(file.absoluteURI().toString());
-            this.isWorking = false;
+            this.working(false);
         }
     };
 
 
-    service.loadRememberedStory = function () {
+    IDE.prototype.loadRememberedStory = function () {
         // Reload the story that was previously loaded
         var rememberedStory = rememberLastStory.get();
         if (rememberedStory) {
@@ -172,7 +182,7 @@ yarn.service('IDE', function IDEService(hotkeys,
         }
     };
 
-    return service;
+    return new IDE();
 });
 
 

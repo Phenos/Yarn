@@ -40,9 +40,9 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         };
 
         this.save = function () {
-            IDE.isWorking = true;
+            IDE.working(true);
             editorFiles.save(this.file, function () {
-                IDE.isWorking = false;
+                IDE.working(false);
             });
         };
 

@@ -123,6 +123,7 @@ yarn.service('IDE', function IDEService(hotkeys,
     };
 
     IDE.prototype.openFromStorage = function (ev) {
+        var self = this;
 
         storage.refresh();
 
@@ -136,7 +137,6 @@ yarn.service('IDE', function IDEService(hotkeys,
         });
 
         function OpenFromStorageController($scope) {
-            var self = this;
             $scope.cancel = function () {
                 $mdDialog.cancel();
             };

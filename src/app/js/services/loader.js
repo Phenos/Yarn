@@ -9,14 +9,21 @@ yarn.service('loader', function (yarn,
 
     var service = {};
 
+     var timer = {
+         beforeLoad: null,
+         afterCompile: null
+     };
+
+
     service.fromURL = function fromURL(_url) {
         state.assertions.removeLayer('session');
         state.assertions.removeLayer('world');
-
         var url = _url;
 
         //console.log("loader.fromURL", url);
         yConsole.log("Loading story from : " + url);
+
+        timer.beforeLoad  = performance.now();
         return loadScript(url).then(onSuccess, onError);
 
         function onError() {
@@ -28,7 +35,10 @@ yarn.service('loader', function (yarn,
          * Called once all files are loaded (including imports)
          */
         function onSuccess(script) {
-            console.info("Game script loaded successfully", [script]);
+            timer.afterCompile  = performance.now();
+            var duration = Math.floor(timer.afterCompile - timer.beforeLoad) / 1000;
+            yConsole.log("Loading an compilation took " + duration + " seconds");
+            console.info("Loading an compilation took " + duration + " seconds");
 
             yarn.load(script.source, script.url).then(onSuccess, onError);
 

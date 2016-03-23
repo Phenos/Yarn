@@ -22,14 +22,6 @@ yarn.service('yarn', function ($localStorage,
             }
         });
 
-        this.run = function () {
-            this.scripts.forEach(function (script) {
-                script.run();
-            });
-
-            return this;
-        };
-
         this.restoreFromLocalState = function () {
             var localState = $localStorage.localState;
             var localStateObj;
@@ -47,7 +39,9 @@ yarn.service('yarn', function ($localStorage,
          * @param url
          */
         this.load = function (text, url) {
+            console.log("-========= === === ==== ");
             return script.load(text, url).then(function () {
+                console.log("!!!!@@");
                 //console.log("wtf", script);
                 return script;
             });
@@ -62,6 +56,3 @@ yarn.service('yarn', function ($localStorage,
 
     return yarn;
 });
-
-
-

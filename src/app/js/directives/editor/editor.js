@@ -88,9 +88,8 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
 
             angular.element(aceEditor.container).on("contextmenu", function () {
-                globalContextMenu.add("Inspector", "inspector.svg", function () {
-                    tools.focus("inspector");
-                });
+                console.log("inspector", inspector);
+                //updateInspection();
             });
 
         }
@@ -145,6 +144,19 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         function slowUpdateInspection() {
             if (aceEditor) {
+
+                globalContextMenu.flush();
+                globalContextMenu.add("Inspector", "inspector.svg", function () {
+                    tools.focus("inspector");
+                });
+                $timeout(function() {
+                    angular.forEach(inspector.articles, function(article) {
+                        angular.forEach(article.actions, function(action) {
+                            globalContextMenu.add(action.label, action.icon + ".svg", action.callback);
+                        });
+                    });
+                }, 200);
+
                 var pos = aceEditor.getCursorPosition();
                 var token = aceEditor.session.getTokenAt(pos.row, pos.column);
                 // Also check if the inspection is not just for whitespace

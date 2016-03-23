@@ -5,6 +5,7 @@
         <h2>
             {{ inspector.title() }}
         </h2>
+
         <div class="summary" ng-if="inspector.summary()">
             {{ inspector.summary() }}
         </div>
@@ -13,18 +14,28 @@
                      inspector-article
                      ng-class='"type-" + article.type'
             >
-                <md-fab-speed-dial ng-hide="demo.hidden"
-                                   md-direction="left"
-                                   md-open="demo.isOpen"
-                                   class="md-scale"
-                                   ng-mouseenter="demo.isOpen=true"
-                                   ng-mouseleave="demo.isOpen=false">
+                <md-fab-speed-dial md-direction="left"
+                                   md-open="true"
+                                   md-fab-top-right
+                                   md-hover-full
+                >
                     <md-fab-trigger>
-                        <md-button aria-label="menu" class="md-fab">
-                            <md-tooltip md-direction="top" md-visible="tooltipVisible">Menu</md-tooltip>
-                            <md-icon md-svg-src="/svg-icons/inspections/{{ article.type }}.svg" aria-label="menu"></md-icon>
+                        <md-button class="md-fab">
+                            <md-icon md-svg-src="/svg-icons/inspections/{{ article.type }}.svg"
+                                     aria-label="menu"></md-icon>
                         </md-button>
                     </md-fab-trigger>
+                    <md-fab-actions>
+                        <md-button aria-label="{{ action.label }}"
+                                   class="md-fab md-raised md-mini"
+                                   ng-click="action.callback();"
+                                   ng-repeat="action in article.actions">
+                            <md-tooltip md-direction="bottom">{{ action.label}}</md-tooltip>
+                            <md-icon
+                                    md-svg-src="/svg-icons/{{ action.icon }}.svg"
+                                    aria-label="{{ action.label }}"></md-icon>
+                        </md-button>
+                    </md-fab-actions>
                 </md-fab-speed-dial>
                 <h3>
                     {{ article.title }}

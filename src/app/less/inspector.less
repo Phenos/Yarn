@@ -2,20 +2,32 @@
 
     md-fab-speed-dial {
         top: -8px;
-        right: 20px;
-        bottom: auto;
-        left: auto;
+        right: 10px;
+        //bottom: auto;
+        //left: auto;
         position: absolute;
-        width: 48px;
-        height: 48px;
         .md-button {
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
+            margin: 2px 4px;
+
             background: #fff !important;
             md-icon {
                 color: #000;
             }
         }
+        md-fab-actions {
+            .md-button {
+                width: 36px !important;
+                height: 36px !important;
+                md-icon {
+                    width: 22px;
+                    height: 22px;
+                }
+                min-height: 36px !important;
+            }
+        }
+
     }
 
     h2 {

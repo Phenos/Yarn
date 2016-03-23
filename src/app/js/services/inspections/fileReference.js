@@ -25,7 +25,16 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
                     scope.url = txt;
                 }
 
-                yeld(new InspectionArticle("File Reference", "fileReference", "file-reference-inspection", scope))
+                var article = new InspectionArticle("File Reference", "fileReference", "file-reference-inspection", scope);
+                article.addAction("Open in editor", "load", function () {
+                    openInEditor();
+                });
+                article.addAction("Open in browser", "browser", function () {
+                    openInBrowser();
+                });
+                console.log("article", article);
+
+                yeld(article);
             }
         }
 

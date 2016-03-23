@@ -1,12 +1,8 @@
 <div>
     <p>
-        This <strong ng-if="isCustomPredicate">custom predicate</strong>
-        <span ng-if="!isCustomPredicate">recognized predicate</span>
-        is used in
-        <a ng-click="openAsSubject()">
-            {{ usageCount.total }} assertions
-        </a>
-        in your story.
+        This is a
+        <strong ng-if="isCustomPredicate">custom predicate</strong>
+        <span ng-if="!isCustomPredicate">standard predicate</span>.
     </p>
     <p ng-if="syntaxesForPredicate">
         <span ng-if="syntaxesForPredicate.positive.length === 0">

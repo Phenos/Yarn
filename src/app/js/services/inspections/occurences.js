@@ -11,6 +11,7 @@ yarn.service("occurencesInspection",
             var thing;
             var predicate;
             var assertions = [];
+            var allAssertions;
             var scope = {
                 title: "Occurences"
             };
@@ -19,24 +20,43 @@ yarn.service("occurencesInspection",
             if (token) {
                 scope.assertions = assertions;
 
+                scope.usageCount = {
+                    total: 0,
+                    asObject: 0,
+                    asSubject: 0
+                };
+
                 if (token.type === "camelcase") {
                     thing = things.get(token.value, true);
                     if (thing) {
-                        var allAssertions = state.assertions.all();
+                        allAssertions = state.assertions.all();
                         angular.forEach(allAssertions, function (assertion) {
                             var keep = false;
-                            if (assertion.subject === thing) keep = true;
-                            if (assertion.object === thing) keep = true;
+                            if (assertion.subject === thing) {
+                                scope.usageCount.asSubject++;
+                                keep = true;
+                            }
+                            if (assertion.object === thing) {
+                                keep = true;
+                                scope.usageCount.asObject++;
+                            }
+                            if (assertion.object === thing || assertion.subject === thing) {
+                                scope.usageCount.total++;
+                            }
+
                             if (keep) assertions.push(assertion);
                         });
                     }
                 } else if (token.type === "identifier") {
                     predicate = predicates(token.value, true);
                     if (predicate) {
-                        var allAssertions = state.assertions.all();
+                        allAssertions = state.assertions.all();
                         angular.forEach(allAssertions, function (assertion) {
                             var keep = false;
-                            if (assertion.predicate === predicate) keep = true;
+                            if (assertion.predicate === predicate) {
+                                scope.usageCount.total++;
+                                keep = true;
+                            }
                             if (keep) assertions.push(assertion);
                         });
                     }

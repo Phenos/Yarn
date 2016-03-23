@@ -1,4 +1,13 @@
 <div>
+    <div class="occurence-summary">
+        This item is used in {{ usageCount.total }} assertions in your story.
+        <br/>
+        <div ng-if="usageCount.asSubject || usageCount.asObject">
+            It occurs {{ usageCount.asSubject }} times as subject
+            and {{ usageCount.asObject }} times as the object
+        </div>
+    </div>
+    <md-divider></md-divider>
     <md-list>
         <md-list-item
                 ng-repeat="assertion in assertions"

@@ -1,7 +1,8 @@
 yarn.service("objectReferenceInspection",
     function objectReferenceInspection(InspectionArticle,
                                        things,
-                                       state) {
+                                       state,
+                                       assert) {
         return {
             inspect: inspect
         };
@@ -17,25 +18,12 @@ yarn.service("objectReferenceInspection",
 
                     if (token && token.value) {
                         thing = things.get(token.value);
-                        scope.title = "This is an object";
+                        var isStandard = state.resolveValue(assert(thing.id, "is", "Standard"));
+
+                        scope.title = "Is an object";
                         scope.type = "objectReference";
-                        scope.usageCount = {
-                            total: 0,
-                            asObject: 0,
-                            asSubject: 0
-                        };
-                        scope.openAsSubject = openAsSubject;
-                        scope.openAsObject = openAsObject;
+                        scope.isStandard = isStandard;
                     }
-
-                    // Count usage
-
-                    var allAssertions = state.assertions.all();
-                    angular.forEach(allAssertions, function (assertion) {
-                        if (assertion.subject === thing) scope.usageCount.asSubject++;
-                        if (assertion.object === thing) scope.usageCount.asObject++;
-                        if (assertion.object === thing || assertion.subject === thing) scope.usageCount.total++;
-                    });
 
                     token.helpArticles.push({
                         title: "YarnScrip Language Basics",
@@ -45,12 +33,6 @@ yarn.service("objectReferenceInspection",
                     yeld(new InspectionArticle(scope.title, "objectReference", "object-reference", scope))
 
                 }
-            }
-
-            function openAsSubject() {
-            }
-
-            function openAsObject() {
             }
         }
 

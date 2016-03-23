@@ -66,7 +66,7 @@ function rootController(user,
     };
 
     $scope.openMain = function () {
-        var main = editorFiles.open("./story.txt");
+        var main = editorFiles.open("./story.txt", true);
         editorFiles.mainFile(main);
     };
 

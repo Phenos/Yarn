@@ -123,7 +123,7 @@ yarn.service('IDE', function IDEService(hotkeys,
                 self.isWorking = true;
                 //console.log("open", file);
                 $mdDialog.cancel();
-                editorFiles.open(file);
+                editorFiles.open(file, true);
                 editors.focus(file.uri.toString());
                 self.isWorking = false;
             };

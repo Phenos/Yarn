@@ -37,7 +37,7 @@ function rootController(user,
         .add({
             combo: 'mod+esc',
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            description: 'Show/Hide the console',
+            description: 'Show/Hide the Editor',
             callback: function () {
                 root.toggleConsole();
             }
@@ -53,7 +53,7 @@ function rootController(user,
         .add({
             combo: 'esc',
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            description: '',
+            description: 'Show/hide the tools panel',
             callback: function () {
                 root.toggleTools();
             }

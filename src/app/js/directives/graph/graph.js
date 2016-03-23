@@ -25,7 +25,7 @@ yarn.directive('graph', function GraphDirective(state, assert) {
         var zoom = d3.behavior.zoom()
             .translate([0, 0])
             .scale(10)
-            .scaleExtent([1,20])
+            .scaleExtent([0,20])
             .on("zoom", doZoom);
 
 
@@ -169,6 +169,10 @@ yarn.directive('graph', function GraphDirective(state, assert) {
 
         function buildGraph(model) {
             var modelData;
+
+            var zoomScale = 10;
+            //var zoomTranslate = [0, 0];
+
             if (model) modelData = model();
             if (modelData.nodes.length) {
 
@@ -176,9 +180,13 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                 var links = modelData.links;
 
                 onZoom = function zoomed() {
-                    node.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-                    link.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-                    linkLabel.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                    zoomScale = d3.event.scale;
+                    //zoomTranslate = d3.event.translate;
+                    //console.log("z", zoomScale, zoomTranslate);
+                    //node.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                    //link.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                    //linkLabel.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
                     //features.select(".state-border").style("stroke-width", 1.5 / d3.event.scale + "px");
                     //features.select(".county-border").style("stroke-width", .5 / d3.event.scale + "px");
                 };
@@ -226,9 +234,8 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                     .attr("y2", function (d) {
                         return d.target.y;
                         //return bound(d.target.y, 0, height);
-                    })
+                    });
                     //.attr("transform", "scale(0.5)");
-                    .attr("transform", "scale(1)");
 
                 //var link = svg
                 //    .selectAll(".link")
@@ -278,7 +285,9 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                         })
                         .attr("x", function (d) {
                             return (d.source.x + d.target.x) / 2;
-                        });
+                        })
+                        .attr("transform", "scale(" + zoomScale + ")");
+                        //.attr("transform", "translate(" + zoomTranslate + ")scale(" + zoomScale + ")");
 
                     link
                         .attr("x1", function (d) {
@@ -297,8 +306,8 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                             return d.target.y;
                             //return bound(d.target.y, 0, height);
                         })
-                        .attr("transform", "scale(1)");
-                        //.attr("transform", "scale(0.5)");
+                        .attr("transform", "scale(" + zoomScale + ")");
+                        //.attr("transform", "translate(" + zoomTranslate + ")scale(" + zoomScale + ")");
 
                     node
                         .attr("transform", function (d) {
@@ -306,11 +315,12 @@ yarn.directive('graph', function GraphDirective(state, assert) {
                             var y = d.y;
                             //var x = bound(d.x, 0, width);
                             //var y = bound(d.y, 0, height);
-                            d.x = x;
-                            d.y = y;
-                            return "scale(1)translate(" + x + "," + y + ")";
+                            //d.x = x;
+                            //d.y = y;
+                            return "scale(" + zoomScale + ")translate(" + x + "," + y + ")";
                             //return "scale(0.5)translate(" + x + "," + y + ")";
-                        });
+                        })
+                        //.attr("transform", "translate(" + zoomTranslate + ")scale(" + zoomScale + ")");
 
                     // soft-center the root node
                     //var k = .01;

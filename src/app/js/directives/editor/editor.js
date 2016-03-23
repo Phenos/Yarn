@@ -147,8 +147,8 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             if (aceEditor) {
                 var pos = aceEditor.getCursorPosition();
                 var token = aceEditor.session.getTokenAt(pos.row, pos.column);
-                //console.log("token", token);
-                if (token) {
+                // Also check if the inspection is not just for whitespace
+                if (token && token.value.trim().length) {
                     token.file = self.file;
                     inspector.inspect(token);
                 }

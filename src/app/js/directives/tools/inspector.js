@@ -89,10 +89,11 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
                 });
 
                 $scope.types.sort(function (A, B) {
-                    return (A.object.id > B.object.id) ? 1 : -1;
+                    return A.object.id.localeCompare(B.object.id);
                 });
+
                 $scope.things.sort(function (A, B) {
-                    return (A.object.id > B.object.id) ? 1 : -1;
+                    return A.object.id.localeCompare(B.object.id);
                 });
 
                 $scope.thingsFiltered = $scope.applyFilter();

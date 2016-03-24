@@ -20,7 +20,8 @@
          md-whiteframe="10"
          flex="grow"
          layout="column">
-        <div layout="row">
+        <header layout="row"
+                md-whiteframe="10">
             <div flex="grow">
                 <md-input-container flex="no-shrink"
                                     md-no-float
@@ -54,18 +55,22 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
         <md-content flex="grow">
-            <section>
+            <section ng-repeat="directory in storageFiles.directories">
                 <md-subheader class="md-primary">
-                    winter-storm-draco
+                    <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
+                    /&nbsp;{{ directory.uri.toString() }}
                 </md-subheader>
-                <md-list>
-                    <md-list-item ng-if="storageFiles.storage.files.length > 0"
+                <md-list class="list-of-files">
+                    <md-list-item ng-if="directory.files.length > 0"
                                   ng-click="storageFiles.select({file: file})"
-                                  ng-repeat="file in storageFiles.files | filter: { filterOut: false }">
+                                  ng-repeat="file in directory.files | filter: { filterOut: false }">
                         <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
-                        <p>{{ file.uri.path() }}</p>
+                        <p>
+                            <span class="filename">{{ file.uri.filename() }}</span>
+                            <span class="filesize">{{ Math.floor(file.meta.Size+0.5 / 1000) }}kb</span>
+                        </p>
                         <md-checkbox class="md-secondary" ng-click="updateSelection()"
                                      ng-model="file.isSelected"></md-checkbox>
                     </md-list-item>

@@ -4,6 +4,34 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
         this.files = [];
     }
 
+    Storage.prototype.directories = function () {
+        var _directories = {};
+        //this.sort();
+        console.log("Grouping in directories: ", this.files);
+        angular.forEach(this.files, function (file){
+            var directoryURI = file.uri.directory();
+            var directory = _directories[directoryURI];
+            if (!directory) {
+                directory = _directories[directoryURI] = new Directory(directoryURI);
+            }
+            directory.files.push(file);
+        });
+        return _directories;
+    };
+
+    function Directory(uri) {
+        this.uri = uri;
+        this.files = [];
+    }
+
+    Storage.prototype.sort = function (fileA, fileB) {
+        var a = fileA.uri.toString().toLowerCase();
+        var b = fileB.uri.toString().toLowerCase();
+        this.files.sort(function () {
+            return a.localeCompare(b);
+        });
+    };
+
     Storage.prototype.add = function (uri, meta) {
         // Todo, first check if the file is already there
         var foundSameFile = null;

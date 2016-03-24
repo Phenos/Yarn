@@ -1,4 +1,4 @@
-<html ng-app="yarn">
+<html>
 <head>
     <title>Yarn Demo</title>
     <meta charset="UTF-8">
@@ -13,8 +13,10 @@
     <link rel="icon" type="image/png" href="./public/images/favicon.png"/>
 
     <link rel="stylesheet" type='text/css' href="./public/styles/all.css"/>
-    <link href='https://fonts.googleapis.com/css?family=Halant:400,300,600,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Halant:400,300,600,700&subset=latin,latin-ext' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
 
@@ -38,17 +40,23 @@
 
     <!--Start of Zopim Live Chat Script-->
     <!--<script type="text/javascript">-->
-        <!--window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=-->
-                <!--d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.-->
-        <!--_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");-->
-            <!--$.src="//v2.zopim.com/?3g7itxtqWDInMt8o7AQGPbVTSo3LDMIY";z.t=+new Date;$.-->
-                    <!--type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");-->
+    <!--window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=-->
+    <!--d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.-->
+    <!--_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");-->
+    <!--$.src="//v2.zopim.com/?3g7itxtqWDInMt8o7AQGPbVTSo3LDMIY";z.t=+new Date;$.-->
+    <!--type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");-->
     <!--</script>-->
     <!--End of Zopim Live Chat Script-->
 
 </head>
-<body layout="row">
-    <section layout="column" flex="1" ui-view></section>
-    <!--<support-chat></support-chat>-->
+<body layout="row"
+      ng-app="yarn">
+<section ui-view
+         layout="column"
+         flex="grow"
+         data-context-event="contextmenuexists"
+         data-context-menu="./html/editor-context-menus.html"
+></section>
+<!--<support-chat></support-chat>-->
 </body>
 </html>

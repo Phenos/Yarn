@@ -1,13 +1,11 @@
 <md-content style="z-index:5; overflow: hidden;"
             flex="1"
             layout="row"
-            get-context-menu
-            data-context-event="contextmenuexists"
-            data-context-menu="./html/editor-context-menus.html"
 >
     <assertion-browser></assertion-browser>
     <early-bird ng-if="false">
         <img src="/images/early-bird.png" class="hvr-buzz-out" ng-click="open()"/>
+
         <div class="message" ng-click="open()">
             <span>
                 Get early access with the <strong class="underline">Early Bird</strong> special.

@@ -146,7 +146,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             if (aceEditor) {
 
                 globalContextMenu.flush();
-                globalContextMenu.add("Inspector", "inspector.svg", function () {
+                globalContextMenu.add("Inspect", "inspector.svg", function () {
                     tools.focus("inspector");
                 });
                 $timeout(function() {

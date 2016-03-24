@@ -6,6 +6,7 @@ yarn.service('root', rootService);
 function rootController(user,
                         $localStorage,
                         $scope,
+                        $element,
                         IDE,
                         yConsole,
                         welcomeMessage,
@@ -15,13 +16,16 @@ function rootController(user,
                         wallpaper,
                         tools,
                         $timeout,
-                        fireOnResizeEvent) {
-
+                        fireOnResizeEvent,
+                        globalContextMenu) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
+
+    // Used by the global context menu
+    globalContextMenu.register($scope, $element);
 
     $scope.toolTabs = {
         selected: 0

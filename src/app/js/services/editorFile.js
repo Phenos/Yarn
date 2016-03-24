@@ -20,6 +20,14 @@ yarn.service("EditorFile", function (guid,
         this.isSelected = false;
     }
 
+    EditorFile.prototype.sizeInKB = function () {
+        var size = 0;
+        if (this.meta) {
+            size = Math.floor((this.meta.Size / 1000)+1);
+        }
+        return size;
+    };
+
     EditorFile.prototype.absoluteURI = function () {
         var uri = this.uri;
         if (session.user()) {

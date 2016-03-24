@@ -23,9 +23,22 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
 
         updateList();
 
+        $scope.selectAll = function() {
+            angular.forEach(self.files, function (file) {
+                file.isSelected = true;
+            });
+            this.updateSelection();
+        };
+
+        $scope.unselectAll = function() {
+            angular.forEach(self.files, function (file) {
+                file.isSelected = false;
+            });
+            this.updateSelection();
+        };
+
         $scope.updateSelection = function() {
             self.selection = self.storage.selection();
-            console.log("selection", self.selection);
         };
 
         $scope.deleteSelection = function(event) {

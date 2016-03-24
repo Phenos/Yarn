@@ -16,7 +16,7 @@ function UserInputDirective() {
         controller: UserInputController
     };
 
-    function UserInputController(commands, $scope, $element, hotkeys) {
+    function UserInputController(commands, $element) {
         var self = this;
 
         this.hasFocus = false;
@@ -64,14 +64,6 @@ function UserInputDirective() {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 self.submit();
-                this.focus();
-            }
-        };
-
-        this.toggleFocus = function () {
-            if (this.hasFocus) {
-                this.blur();
-            } else {
                 this.focus();
             }
         };

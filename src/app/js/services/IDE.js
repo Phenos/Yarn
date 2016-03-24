@@ -1,8 +1,7 @@
 /**
  * Service for handling IDE/editor operations
  */
-yarn.service('IDE', function IDEService(hotkeys,
-                                        rememberLastStory,
+yarn.service('IDE', function IDEService(rememberLastStory,
                                         $mdDialog,
                                         yConsole,
                                         loader,
@@ -42,58 +41,6 @@ yarn.service('IDE', function IDEService(hotkeys,
      */
     IDE.prototype.register = function ($scope) {
         var self = this;
-        hotkeys
-            .bindTo($scope)
-            .add({
-                combo: 'mod+enter',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Save and run the story',
-                callback: function (event) {
-                    event.preventDefault();
-                    self.saveAllAndRun();
-                }
-            })
-            .add({
-                combo: 'mod+o',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Open project files',
-                callback: function (event) {
-                    event.preventDefault();
-                    tools.focus("project");
-                }
-            })
-            .add({
-                combo: 'mod+s',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Save the story',
-                callback: function (event) {
-                    event.preventDefault();
-
-                    self.working(true);
-                    self.saveAll(function () {
-                        self.working(false);
-                    });
-                }
-            })
-            .add({
-                combo: 'mod+shift+enter',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Run the story',
-                callback: function (event) {
-                    event.preventDefault();
-                    self.run();
-                }
-            })
-            .add({
-                combo: 'mod+shift+v',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Validate Current State',
-                callback: function (event) {
-                    event.preventDefault();
-                    tools.focus("validator");
-                    self.validate();
-                }
-            });
     };
 
 
@@ -105,6 +52,8 @@ yarn.service('IDE', function IDEService(hotkeys,
             self.run(story);
             self.working(false);
         }, function () {
+            self.working(false);
+            // todo: put this in generic error popup handler
             $mdDialog.show(
                 $mdDialog
                     .alert()
@@ -118,8 +67,7 @@ yarn.service('IDE', function IDEService(hotkeys,
 
     IDE.prototype.saveAll = function (success, failure) {
         editorFiles.saveAll(success, failure);
-
-        console.log("IDE.save");
+        //console.log("IDE.save");
     };
 
     IDE.prototype.validate = function () {

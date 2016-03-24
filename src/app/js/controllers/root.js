@@ -5,7 +5,6 @@ yarn.service('root', rootService);
 
 function rootController(user,
                         $localStorage,
-                        $rootScope,
                         $scope,
                         IDE,
                         yConsole,
@@ -14,10 +13,10 @@ function rootController(user,
                         root,
                         themes,
                         wallpaper,
-                        hotkeys,
                         tools,
                         $timeout,
                         fireOnResizeEvent) {
+
 
     $scope.IDE = IDE;
     $scope.themes = themes;
@@ -34,33 +33,6 @@ function rootController(user,
 
     // Register with the service
     root.register($scope);
-
-    hotkeys.bindTo($rootScope)
-        .add({
-            combo: 'mod+esc',
-            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            description: 'Show/Hide the Editor',
-            callback: function () {
-                root.toggleConsole();
-            }
-        })
-        .add({
-            combo: 'mod+h',
-            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            description: 'Show/Hide the help',
-            callback: function () {
-                root.toggleHelp();
-            }
-        })
-        .add({
-            combo: 'esc',
-            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            description: 'Show/hide the tools panel',
-            callback: function () {
-                root.toggleTools();
-            }
-        });
-
 
     /*
      Show a welcome message in the yarn console

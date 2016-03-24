@@ -17,8 +17,7 @@
         function editorTabsController($rootScope,
                                       editors,
                                       editorTabs,
-                                      editorFiles,
-                                      hotkeys) {
+                                      editorFiles) {
             var self = this;
 
             self.selected = 0;
@@ -27,34 +26,6 @@
                 //console.log("file", file.uri.toString());
                 editors.focus(file.uri.toString());
             };
-
-            hotkeys.bindTo($rootScope)
-                .add({
-                    combo: 'alt+tab',
-                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                    description: 'Move to next open file',
-                    callback: function (ev) {
-                        ev.preventDefault();
-                        self.selected = self.selected + 1;
-                        if (self.selected > editorFiles.files.length - 1) {
-                            self.selected = 0;
-                        }
-                        //console.log("self.selected", self.selected);
-                    }
-                })
-                .add({
-                    combo: 'alt+shift+tab',
-                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                    description: 'Move to previous open file',
-                    callback: function (ev) {
-                        ev.preventDefault();
-                        self.selected = self.selected - 1;
-                        if (self.selected < 0) {
-                            self.selected = editorFiles.files.length - 1;
-                        }
-                        //console.log("self.selected", self.selected);
-                    }
-                });
 
             this.files = editorFiles.files;
 

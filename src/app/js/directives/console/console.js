@@ -26,26 +26,14 @@
         function ConsoleController(consoleService,
                                    yConsole,
                                    $scope,
-                                   $rootScope,
                                    $compile,
                                    $timeout,
-                                   $element,
-                                   hotkeys) {
+                                   $element) {
 
             var self = this;
             var lastStep = 0;
 
             this.commands = commands;
-
-            hotkeys.bindTo($rootScope)
-                .add({
-                    combo: 'mod+k',
-                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                    description: 'Clear the console',
-                    callback: function () {
-                        self.clear();
-                    }
-                });
 
             consoleService.register(this);
 

@@ -17,7 +17,6 @@ yarn.directive('projectTool', function ProjectTool() {
             };
 
             $scope.update = function () {
-                console.log("what?");
                 storage.refresh();
             };
 

@@ -1,24 +1,25 @@
 
 yarn.config(function(RollbarProvider) {
     var roolbarConfig = {
-        //accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
-        accessToken: "INVALID",
+        accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
         captureUncaught: true,
         payload: {
             environment: 'test'
         }
     };
-    console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
+    //console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
     //RollbarProvider.init(roolbarConfig);
 });
 
-yarn.run(function (commands, tools) {
+yarn.run(function (commands, tools, keyboardShortcuts) {
 
     var path = "/public/js/ace/";
     ace.config.set('basePath', path);
     ace.config.set('modePath', path);
     ace.config.set('themePath', path);
     ace.config.set('workerPath', path);
+
+    keyboardShortcuts.init();
 
     var buitInTools = [
         "projectTool",
@@ -29,7 +30,7 @@ yarn.run(function (commands, tools) {
         "inspectorTool",
         "validatorTool"
     ];
-
+    console.info("Loading buil-in tools ", [buitInTools]);
     tools.load(buitInTools);
 
     var builtInCommands = [

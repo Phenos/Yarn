@@ -2,7 +2,7 @@
  * Buffered console logging service
  * @returns {Logger}
  */
-yarn.factory('yConsole', function (soundEffects) {
+yarn.service('yConsole', function (soundEffects) {
 
     var buffer = [];
 

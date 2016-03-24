@@ -39,9 +39,7 @@ yarn.service('yarn', function ($localStorage,
          * @param url
          */
         this.load = function (text, url) {
-            console.log("-========= === === ==== ");
             return script.load(text, url).then(function () {
-                console.log("!!!!@@");
                 //console.log("wtf", script);
                 return script;
             });

@@ -32,7 +32,7 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
                 article.addAction("Open in browser", "browser", function () {
                     openInBrowser();
                 });
-                console.log("article", article);
+                //console.log("article", article);
 
                 yeld(article);
             }
@@ -45,7 +45,7 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
 
         function openInEditor() {
             var absoluteURI = URI(txt).absoluteTo(token.file.uri).toString();
-            console.log(absoluteURI);
+            //console.log(absoluteURI);
             editorFiles.open(absoluteURI, true);
             editors.focus(absoluteURI);
 

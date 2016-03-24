@@ -1,4 +1,10 @@
-yarn.service("editorFiles", function (EditorFile, editors, confirmAction, session, storage, yConsole) {
+yarn.service("editorFiles", function (EditorFile,
+                                      editors,
+                                      confirmAction,
+                                      session,
+                                      storage,
+                                      $timeout,
+                                      yConsole) {
 
     function EditorFiles() {
         this.files = [];
@@ -67,16 +73,29 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
     EditorFiles.prototype.save = function (file, callback) {
         file.status = "Saving...";
         storage.save(file, function (meta) {
+            refreshAfterAWhile();
+            file.errorCode = null;
             file.ready = true;
             file.status = "Saved";
             callback && callback(null, file);
         }, function (err) {
+            file.errorCode = err.status;
             file.status = "Failed to save";
             console.error("Error while saving file: ", file.absoluteURI(), err);
             yConsole.error("Error while saving file: " + file.absoluteURI().toString());
             callback && callback(err);
         });
     };
+
+    var refreshTimeout = null;
+    function refreshAfterAWhile() {
+        //console.log("refreshInAfterAWhile", refreshTimeout);
+        if (refreshTimeout) $timeout.cancel(refreshTimeout);
+        refreshTimeout = $timeout(function () {
+            //console.log("REFRESH!!!");
+            storage.refresh();
+        }, 1000);
+    }
 
     EditorFiles.prototype.saveAll = function (success, failure) {
         // Iterate trough all open files
@@ -100,6 +119,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
                     failure && failure(err);
                 })
             } else {
+                refreshAfterAWhile();
                 success && success()
             }
         }

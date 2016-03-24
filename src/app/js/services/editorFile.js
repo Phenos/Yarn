@@ -15,7 +15,7 @@ yarn.service("EditorFile", function (guid,
         this.uri = URI(this._uri);
         this.ready = false;
         this.status = "";
-        this.content = "";
+        this.content = null;
         this.originalContent = "";
         this.isSelected = false;
     }
@@ -53,14 +53,17 @@ yarn.service("EditorFile", function (guid,
         self.status = "Loading...";
         loadScript(this.absoluteURI().toString())
             .then(function (script) {
+                self.errorCode = null;
                 self.ready = true;
                 self.status = "Loaded";
                 self.content = script.source;
                 self.originalContent = script.source;
                 //console.log("script:", script);
             })
-            .catch(function () {
+            .catch(function (e) {
+                self.errorCode = e.status;
                 self.status = "Failed to load";
+                //console.log("Error: ", e);
                 yConsole.error("Error while loading file: " + self.absoluteURI().toString());
             });
     };

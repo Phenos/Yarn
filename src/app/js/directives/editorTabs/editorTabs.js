@@ -14,8 +14,7 @@
             controller: editorTabsController
         };
 
-        function editorTabsController($rootScope,
-                                      editors,
+        function editorTabsController(editors,
                                       editorTabs,
                                       editorFiles) {
             var self = this;
@@ -25,6 +24,14 @@
             this.focus = function (file) {
                 //console.log("file", file.uri.toString());
                 editors.focus(file.uri.toString());
+            };
+
+            this.createFile = function (file) {
+                editorFiles.save(file);
+            };
+
+            this.closeFile = function (file) {
+                editorFiles.close(file);
             };
 
             this.files = editorFiles.files;

@@ -38,20 +38,18 @@
                          flex="100"
                     >
                         <div flex="20"></div>
-                        <div>
                             <div layout="column">
                                 <div style="color: #666; text-align: center;">
                                     No files are curently open!
                                 </div>
                                 <br/>
-                                <md-button ng-click="openMain()">
-                                    Open the main "story.txt" file
+                                <md-button ng-click="openMain()" class="md-primary">
+                                    Open the main file
                                 </md-button>
-                                <md-button ng-click="openFile()">
-                                    Browse Files ...
+                                <md-button ng-click="openFile()" class="md-primary">
+                                    Browse Project files
                                 </md-button>
                             </div>
-                        </div>
                         <div flex="60"></div>
                     </div>
                     <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->

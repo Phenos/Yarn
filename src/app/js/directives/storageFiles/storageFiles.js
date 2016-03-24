@@ -17,7 +17,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         this.storage = storage;
         this.files = storage.files;
         this.directories = storage.directories();
-        console.log("directories", this.directories);
+        //console.log("directories", this.directories);
         this.selection = [];
         this.search = "";
 
@@ -65,8 +65,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         };
 
         function updateList() {
-            //console.log(self.files);
-            console.log("updateList", self);
+            //console.log("updateList", self);
             self.directories = storage.directories();
             angular.forEach(self.files, function (file) {
                 var filterOut = false;

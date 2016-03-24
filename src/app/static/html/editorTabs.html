@@ -14,7 +14,38 @@
                     source="file.content"
                     file="file"
                     layout="column"
+                    ng-if="!file.errorCode"
                     flex></editor>
+            <div style="background: #fff;"
+                 ng-if="file.errorCode"
+                 layout="column"
+                 layout-align="center center"
+                 flex="100"
+            >
+                <div flex="20"></div>
+                <div layout="column" ng-if="file.errorCode === 404">
+                    <div style="color: #666; text-align: center;">
+                        This file does not exists already.
+                    </div>
+                    <br/>
+                    <md-button ng-click="tabs.createFile(file)" class="md-primary">
+                        Create it
+                    </md-button>
+                    <md-button ng-click="tabs.closeFile(file)" class="md-primary">
+                        Close
+                    </md-button>
+                </div>
+                <div layout="column" ng-if="file.errorCode !== 404">
+                    <div style="color: #666; text-align: center;">
+                        Oups! An error occured while loading this file...
+                    </div>
+                    <br/>
+                    <md-button ng-click="tabs.closeFile(file)" class="md-primary">
+                        Close
+                    </md-button>
+                </div>
+                <div flex="60"></div>
+            </div>
         </md-tab-body>
     </md-tab>
 </md-tabs>

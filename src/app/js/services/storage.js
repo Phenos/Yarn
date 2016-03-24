@@ -6,8 +6,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
 
     Storage.prototype.directories = function () {
         var _directories = {};
-        //this.sort();
-        console.log("Grouping in directories: ", this.files);
+        //console.log("Grouping in directories: ", this.files);
         angular.forEach(this.files, function (file){
             var directoryURI = file.uri.directory();
             var directory = _directories[directoryURI];

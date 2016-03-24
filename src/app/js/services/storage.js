@@ -95,6 +95,34 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
 
     };
 
+    Storage.prototype.rename = function (file, newName, success, failed) {
+        self.isLoading = true;
+        var user = session.user();
+        if (user) {
+            var relativeToUserURI = file.relativeToUserURI();
+            var newNameRelativeToUserUID = relativeToUserURI.clone().filename(newName);
+            console.log("NEW NAME WILL BE: ", newNameRelativeToUserUID);
+            apiClient.action('renameFile', {
+                uri_source: relativeToUserURI.toString(),
+                uri_destination: newNameRelativeToUserUID.toString(),
+                token: user.token,
+                username: user.username
+            }, function(data){
+                if (!data.error) {
+                    //console.log("?",[savedContent], [file.originalContent]);
+                    //file.originalContent = savedContent;
+                    console.log("storage.renameFIle success", [data]);
+                    success(data);
+                } else {
+                    self.isLoading = false;
+                    yConsole.error("An error occurered while trying to rename file in storage : " + data.error);
+                    failed(data.error);
+                }
+            });
+        }
+
+    };
+
     Storage.prototype.refresh = function (uri) {
         var self = this;
         var user = session.user();

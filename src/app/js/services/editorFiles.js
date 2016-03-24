@@ -87,6 +87,24 @@ yarn.service("editorFiles", function (EditorFile,
         });
     };
 
+    EditorFiles.prototype.rename = function (file, newName, callback) {
+        file.status = "Renaming...";
+        storage.rename(file, newName, function (meta) {
+            console.log("RENAMED!!!! ", meta);
+            refreshAfterAWhile();
+            file.errorCode = null;
+            file.ready = true;
+            file.status = "Saved";
+            callback && callback(null, file);
+        }, function (err) {
+            file.errorCode = err.status;
+            file.status = "Failed to rename file";
+            console.error("Error while renaming file: ", file.absoluteURI(), err);
+            yConsole.error("Error while renaming file: " + file.absoluteURI().toString());
+            callback && callback(err);
+        });
+    };
+
     var refreshTimeout = null;
     function refreshAfterAWhile() {
         //console.log("refreshInAfterAWhile", refreshTimeout);

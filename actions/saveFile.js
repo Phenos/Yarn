@@ -50,7 +50,7 @@ function saveFile(api, data, next) {
                     //api.log("The file was saved!");
                     callback();
                 } else {
-                    api.error(err);
+                    api.log("ERROR: " + err);
                     callback(err);
                 }
             });
@@ -68,7 +68,7 @@ function saveFile(api, data, next) {
             //api.log("Save file to: : " + file.fullURI);
             var uploader = s3client.uploadFile(params);
             uploader.on('error', function (err) {
-                api.error("unable to upload to S3:", err.stack);
+                api.log("ERROR: unable to upload to S3:", err.stack);
                 callback(new Error(err));
             });
             uploader.on('end', function () {

@@ -13,6 +13,7 @@ yarn.service("EditorFile", function (guid,
         this.filterOut = false;
         this.isMain = false;
         this.uri = URI(this._uri);
+        this.renameTo = null;
         this.ready = false;
         this.status = "";
         this.content = null;

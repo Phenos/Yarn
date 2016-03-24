@@ -125,6 +125,12 @@
                     Search
                 </md-tooltip>
             </md-button>
+            <md-button ng-click="toolbar.editors.current.rename($event)" class="md-icon-button" aria-label="Rename">
+                <md-icon md-svg-icon="/svg-icons/rename.svg"></md-icon>
+                <md-tooltip>
+                    Rename
+                </md-tooltip>
+            </md-button>
             <span flex></span>
             <save-status>
                 <a target="_blank" ng-href="{{ toolbar.editors.current.file.absoluteURI().toString() }}"

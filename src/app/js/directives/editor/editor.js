@@ -6,7 +6,8 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                                                   confirmAction,
                                                   $timeout,
                                                   $throttle,
-                                                  $debounce) {
+                                                  $debounce,
+                                                  $mdDialog) {
     return {
         restrict: 'E',
         bindToController: {
@@ -58,6 +59,25 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         this.close = function () {
             editorFiles.close(this.file);
+        };
+
+        this.rename = function (ev) {
+            var filename = this.file.uri.filename();
+            var self = this;
+            var confirm = $mdDialog.prompt()
+                .title('Rename')
+                .textContent('Choose a new name for this file.')
+                .placeholder(filename)
+                .ariaLabel('Rename file')
+                .targetEvent(ev)
+                .ok('Rename')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function(newName) {
+                console.log("Renaming", newName);
+                editorFiles.rename(self.file, newName);
+            }, function() {
+                //$scope.status = 'You didn\'t name your dog.';
+            });
         };
 
         this.focus = function () {

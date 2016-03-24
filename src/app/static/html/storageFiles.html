@@ -1,4 +1,4 @@
-<div class="project-tool" layout="row">
+<div class="project-tool" flex="grow" layout="row">
     <md-content flex="40" class="list-of-folders" md-whiteframe="10">
         <md-button class="md-fab md-mini" ng-click="refresh()">
             <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
@@ -49,7 +49,8 @@
                     </div>
                     -->
                     <div ng-if="storageFiles.storage.files.length > 0 && storageFiles.selection.length === 0">
-                        <md-button ng-click="selectAll()">Select all {{ storageFiles.storage.files.length }} files</md-button>
+                        <md-button ng-click="selectAll()">Select all
+                        </md-button>
                     </div>
                     <div ng-if="storageFiles.selection.length > 0">
                         <md-button ng-click="deleteSelection($event)">
@@ -67,7 +68,8 @@
                     /&nbsp;{{ directory.uri.toString() }}
                 </md-subheader>
                 <md-list class="list-of-files">
-                    <md-list-item ng-if="directory.files.length > 0"
+                    <md-list-item class="noright md-with-secondary"
+                                  ng-if="directory.files.length > 0"
                                   ng-click="storageFiles.select({file: file})"
                                   ng-repeat="file in directory.files | filter: { filterOut: false }">
                         <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
@@ -75,8 +77,10 @@
                             <span class="filename">{{ file.uri.filename() }}</span>
                             <span class="filesize">{{ file.sizeInKB() }}kb</span>
                         </p>
-                        <md-checkbox class="md-secondary" ng-click="updateSelection()"
-                                     ng-model="file.isSelected"></md-checkbox>
+                        <md-checkbox class="md-secondary"
+                                     ng-click="updateSelection()"
+                                     ng-model="file.isSelected">
+                        </md-checkbox>
                     </md-list-item>
                 </md-list>
             </section>

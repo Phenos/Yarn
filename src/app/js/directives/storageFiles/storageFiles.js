@@ -11,7 +11,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         controller: StorageFilesController
     };
 
-    function StorageFilesController($element, $scope, storage, confirmAction) {
+    function StorageFilesController($element, $scope, storage, confirmAction, postal) {
         var self = this;
         //console.log("StorageFilesController", storage);
         this.storage = storage;
@@ -23,11 +23,23 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
 
         updateList();
 
+        postal.subscribe({
+            channel: "storage",
+            topic: "refresh",
+            callback: function () {
+                updateList();
+            }
+        });
+
         $scope.selectAll = function() {
             angular.forEach(self.files, function (file) {
                 file.isSelected = true;
             });
             this.updateSelection();
+        };
+
+        $scope.refresh = function() {
+            storage.refresh();
         };
 
         $scope.unselectAll = function() {

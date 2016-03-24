@@ -1,19 +1,23 @@
 <div class="project-tool" layout="row">
     <md-content flex="40" class="list-of-folders" md-whiteframe="10">
+        <md-button class="md-fab md-mini" ng-click="refresh()">
+            <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+        </md-button>
+        <section>
+            <md-subheader class="md-primary">
+                PROJECTS
+            </md-subheader>
+        </section>
         <md-list>
-            <md-list-item ng-click="filterByType()">
-                <p>PROJECTS</p>
-            </md-list-item>
             <md-list-item>
-                Main Project
+                Your Project
             </md-list-item>
+            <!--
             <md-divider></md-divider>
             <md-list-item>
                 Yarn Samples
             </md-list-item>
-            <md-list-item ng-click="filterByType(type)" ng-repeat="type in types">
-                <p><span class="count">{{ type.count}}</span><span>{{ type.object.label() }}</span></p>
-            </md-list-item>
+            -->
         </md-list>
     </md-content>
     <div class="storageFiles"

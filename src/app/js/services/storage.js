@@ -1,4 +1,4 @@
-yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI) {
+yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI, postal) {
 
     function Storage() {
         this.files = [];
@@ -116,6 +116,11 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
                                 self.add(path, file);
                             }
                         }
+                    });
+                    postal.publish({
+                        channel: "storage",
+                        topic: "refresh",
+                        data: {}
                     });
                     self.isLoading = false;
                 } else {

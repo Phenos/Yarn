@@ -91,7 +91,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
 
         function saveNextFile(success, failure) {
             var nextFile = filesToSave.pop();
-            console.log("nextFile", nextFile);
+            //console.log("nextFile", nextFile);
             if (nextFile) {
                 storage.save(nextFile, function () {
                     saveNextFile(success, failure);
@@ -143,12 +143,31 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         return file;
     };
 
-    EditorFiles.prototype.open = function (uriOrFile, setFocus, goToLine) {
-        var file;
+    EditorFiles.prototype.get = function (uriOrFile) {
+        var match = null;
+        var uri = uriOrFile;
         if (angular.isObject(uriOrFile)) {
-            file = uriOrFile;
-        } else {
-            file = new EditorFile(uriOrFile);
+            uri = uriOrFile.uri.toString();
+        }
+        angular.forEach(this.files, function (file) {
+            if (file.uri.toString() === uri) match = file;
+        });
+        //console.log("MATCH", match);
+        return match;
+    };
+
+    EditorFiles.prototype.open = function (uriOrFile, setFocus, goToLine) {
+        var file = this.get(uriOrFile);
+
+        // VERIFY if file is not already in the list of files loaded
+        // So we create it or take the object already created
+        if (!file) {
+            if (angular.isObject(uriOrFile)) {
+                file = uriOrFile;
+            } else {
+                file = new EditorFile(uriOrFile);
+            }
+            this.files.push(file);
         }
         if (setFocus) {
             file.isFocused = true;
@@ -159,7 +178,6 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         if (goToLine) {
             file.goToLine = goToLine;
         }
-        this.files.push(file);
         this.persist(file);
         return file;
     };

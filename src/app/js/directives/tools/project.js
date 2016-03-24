@@ -10,9 +10,7 @@ yarn.directive('projectTool', function ProjectTool() {
 
             $scope.open = function (file) {
                 IDE.working(true);
-                //console.log("open", file);
                 editorFiles.open(file, true);
-                editors.focus(file.uri.toString());
                 IDE.working(false);
             };
 

@@ -21,6 +21,7 @@ yarn.run(function (commands, tools) {
     ace.config.set('workerPath', path);
 
     var buitInTools = [
+        "projectTool",
         //"annotationsTool",
         "assertionsTool",
         "commandsTool",

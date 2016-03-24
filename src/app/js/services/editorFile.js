@@ -17,6 +17,7 @@ yarn.service("EditorFile", function (guid,
         this.status = "";
         this.content = "";
         this.originalContent = "";
+        this.isSelected = false;
     }
 
     EditorFile.prototype.absoluteURI = function () {

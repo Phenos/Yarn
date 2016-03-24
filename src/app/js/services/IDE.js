@@ -56,10 +56,10 @@ yarn.service('IDE', function IDEService(hotkeys,
             .add({
                 combo: 'mod+o',
                 allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Open file...',
+                description: 'Open project files',
                 callback: function (event) {
                     event.preventDefault();
-                    self.openFromStorage();
+                    tools.focus("project");
                 }
             })
             .add({
@@ -120,35 +120,6 @@ yarn.service('IDE', function IDEService(hotkeys,
         editorFiles.saveAll(success, failure);
 
         console.log("IDE.save");
-    };
-
-    IDE.prototype.openFromStorage = function (ev) {
-        var self = this;
-
-        storage.refresh();
-
-        $mdDialog.show({
-            controller: OpenFromStorageController,
-            templateUrl: './html/openFromStorage.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose: true,
-            fullscreen: false
-        });
-
-        function OpenFromStorageController($scope) {
-            $scope.cancel = function () {
-                $mdDialog.cancel();
-            };
-            $scope.open = function (file) {
-                self.working(true);
-                //console.log("open", file);
-                $mdDialog.cancel();
-                editorFiles.open(file, true);
-                editors.focus(file.uri.toString());
-                self.working(false);
-            };
-        }
     };
 
     IDE.prototype.validate = function () {

@@ -24,9 +24,10 @@
         <md-section layout="row" flex="" style="overflow: hidden; position: relative;">
             <md-section
                     ng-show="IDEisVisible"
+                    md-whiteframe="10"
                     class="layout-panel"
-                    flex="noshrink"
-                    style="width: 350px"
+                    flex="100"
+                    style="z-index: 10;"
                     layout="column">
                 <editor-toolbar></editor-toolbar>
                 <div flex="grow" layout="column">
@@ -60,8 +61,7 @@
             </md-section>
             <md-section ng-show="helpIsVisible"
                         md-whiteframe="10"
-                        flex="noshrink"
-                        style="width: 350px"
+                        flex="100"
                         layout="column"
                         class="layout-panel">
                 <help-toolbar></help-toolbar>

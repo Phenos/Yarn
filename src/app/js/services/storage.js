@@ -26,6 +26,14 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
         return file;
     };
 
+    Storage.prototype.selection = function () {
+        var selection = [];
+        angular.forEach(this.files, function (file) {
+            if (file.isSelected) selection.push(file);
+        });
+        return selection;
+    };
+
     Storage.prototype.clear = function (uri) {
         this.files = [];
         return this;

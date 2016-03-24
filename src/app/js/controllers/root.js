@@ -71,10 +71,6 @@ function rootController(user,
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
-    $scope.openFile = function () {
-        IDE.openFromStorage();
-    };
-
     $scope.openMain = function () {
         var main = editorFiles.open("./story.txt", true);
         editorFiles.mainFile(main);

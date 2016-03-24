@@ -11,14 +11,31 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         controller: StorageFilesController
     };
 
-    function StorageFilesController($scope, storage) {
+    function StorageFilesController($element, $scope, storage, confirmAction) {
         var self = this;
         //console.log("StorageFilesController", storage);
         this.storage = storage;
         this.files = storage.files;
+        this.selection = [];
         this.search = "";
 
         updateList();
+
+        $scope.updateSelection = function() {
+            self.selection = self.storage.selection();
+            console.log("selection", self.selection);
+        };
+
+        $scope.deleteSelection = function(event) {
+            var text = "Are you sure you want to delete <br/>the <strong>" +
+                    self.selection.length + " files</strong> you have selected?" +
+                    "<br/>This action cannot be undone";
+            confirmAction("Delete selection", text, ok, cancel, event, $element);
+            function ok() {
+                console.log("DELETING FILES!!!!!")
+            }
+            function cancel() {}
+        };
 
         function updateList() {
             //console.log(self.files);

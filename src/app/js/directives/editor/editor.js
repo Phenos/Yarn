@@ -109,15 +109,15 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         }
 
         function checkGoToLine() {
-                $timeout(function () {
-                    if (self.file && self.file.goToLine) {
-                        console.log("checkGoToLine", self.file.goToLine);
-                        //console.log("goToLine", self.file.goToLine);
-                        //aceEditor.resize(true);
-                        aceEditor.gotoLine(self.file.goToLine, 0, true);
-                        self.file.goToLine = null;
-                    }
-                }, 500);
+            $timeout(function () {
+                if (self.file && self.file.goToLine) {
+                    console.log("checkGoToLine", self.file.goToLine);
+                    //console.log("goToLine", self.file.goToLine);
+                    //aceEditor.resize(true);
+                    aceEditor.gotoLine(self.file.goToLine, 0, true);
+                    self.file.goToLine = null;
+                }
+            }, 500);
         }
 
         this.options = {

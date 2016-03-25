@@ -25,8 +25,16 @@ yarn.service("keyboardShortcuts", function keyboardShortcuts(hotkeys,
                 tools.focus("project");
             }
         }, {
-            combo: 'mod+s',
+            description: 'Create a new file',
+            combo: 'ctrl+shift+n',
+            allowIn: allowIn,
+            callback: function (event) {
+                event.preventDefault();
+                IDE.newFile();
+            }
+        }, {
             description: 'Save the story',
+            combo: 'mod+s',
             callback: function (event) {
                 event.preventDefault();
                 IDE.working(true);

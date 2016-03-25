@@ -24,6 +24,12 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
+                                <md-button ng-click="toolbar.IDE.newFile($event)">
+                                    Create new file
+                                    <span class="md-alt-text"> {{ 'C-S-N' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
                                 <md-button ng-click="toolbar.openFromProject()">
                                     Open from project
                                     <span class="md-alt-text"> {{ 'M-O' | keyboardShortcut }}</span>
@@ -88,6 +94,12 @@
 
     <md-toolbar flex="no-shrink" class="editorIconToolbar">
         <div class="md-toolbar-tools">
+            <md-button ng-click="toolbar.IDE.newFile($event)" class="md-icon-button" aria-label="New file">
+                <md-icon md-svg-icon="/svg-icons/new-file.svg"></md-icon>
+                <md-tooltip>
+                    New File
+                </md-tooltip>
+            </md-button>
             <md-button ng-click="toolbar.editors.current.save()" class="md-icon-button" aria-label="Save">
                 <md-icon md-svg-icon="/svg-icons/save.svg"></md-icon>
                 <md-tooltip>

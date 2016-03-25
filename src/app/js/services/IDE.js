@@ -74,6 +74,28 @@ yarn.service('IDE', function IDEService(rememberLastStory,
         commands.run("validate");
     };
 
+    IDE.prototype.newFile = function (event) {
+        var self = this;
+        var confirm = $mdDialog.prompt()
+            .title('Create a new file')
+            .textContent('Choose a name for this new file (ideally ends with .txt):')
+            .placeholder("optionnal-folder/some-filename.txt")
+            .ariaLabel('New file')
+            .ok('Create')
+            .cancel('Cancel');
+
+        if (event) confirm.targetEvent(event);
+
+        $mdDialog.show(confirm).then(function(newFilename) {
+            //console.log("Renaming", newName);
+            var newFile = editorFiles.open(newFilename, true);
+            editorFiles.save(newFile);
+
+        }, function() {
+            //$scope.status = 'You didn\'t name your dog.';
+        });
+    };
+
     IDE.prototype.run = function (fallback) {
         var mainFile = editorFiles.mainFile();
         if (mainFile) {

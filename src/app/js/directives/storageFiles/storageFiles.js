@@ -63,8 +63,10 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
                 $scope.updateSelection();
                 storage.delete(self.selection, function success() {
                     storage.refresh();
+                    $scope.updateSelection();
                 }, function fail() {
                     storage.refresh();
+                    $scope.updateSelection();
                 });
             }
             function cancel() {}

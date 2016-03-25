@@ -66,7 +66,7 @@
         </header>
         <md-content flex="grow">
             <section ng-repeat="directory in storageFiles.directories">
-                <md-subheader class="md-primary">
+                <md-subheader ng-if="directory.uri.toString()" class="md-primary">
                     <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
                     /&nbsp;{{ directory.uri.toString() }}
                 </md-subheader>

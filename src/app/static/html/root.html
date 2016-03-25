@@ -1,5 +1,5 @@
 <md-content style="z-index:5; overflow: hidden;"
-            flex="1"
+            flex="grow"
             layout="row"
 >
     <assertion-browser></assertion-browser>
@@ -12,12 +12,12 @@
             </span>
         </div>
     </early-bird>
-    <player class="layout-panel theme-{{ themes.current.id }}" flex="noshrink" user="user" layout="column"></player>
+    <player class="layout-panel theme-{{ themes.current.id }}" flex="auto" user="user" layout="column"></player>
     <md-section
             md-whiteframe="10"
             class="IDE"
             layout="column"
-            flex="50"
+            flex="grow"
             ng-show="IDEisVisible || helpIsVisible">
         <md-section layout="row" flex="" style="overflow: hidden; position: relative;">
             <md-section

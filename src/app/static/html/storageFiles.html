@@ -25,9 +25,9 @@
          flex="grow"
          layout="column">
         <header layout="row"
-                md-whiteframe="10">
+                md-whiteframe="4">
             <div flex="grow">
-                <md-input-container flex="no-shrink"
+                <md-input-container flex="grow"
                                     md-no-float
                                     class="md-block">
                     <md-icon md-svg-src="/svg-icons/search.svg"></md-icon>
@@ -38,7 +38,7 @@
 
                 </md-input-container>
             </div>
-            <div flex="noshrink">
+            <div flex="nogrow">
                 <div ng-if="storageFiles.storage.isLoading">
                     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                 </div>

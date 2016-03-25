@@ -83,7 +83,7 @@ yarn.service("EditorFile", function (guid,
     };
 
     EditorFile.prototype.name = function () {
-        return this.uri.filename().replace(".txt", "");
+        return this.uri.filename();
     };
 
     return EditorFile;

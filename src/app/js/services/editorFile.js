@@ -7,19 +7,24 @@ yarn.service("EditorFile", function (guid,
     var baseURI = "";
 
     function EditorFile(uri, meta) {
+        this._uri = "";
+        this.uri = null;
+        this.rename(uri);
         this.guid = guid();
-        this._uri = uri;
         this.meta = meta || {};
         this.filterOut = false;
         this.isMain = false;
-        this.uri = URI(this._uri);
-        this.renameTo = null;
         this.ready = false;
         this.status = "";
         this.content = null;
         this.originalContent = "";
         this.isSelected = false;
     }
+
+    EditorFile.prototype.rename = function (uri) {
+        this._uri = uri.toString();
+        this.uri = URI(this._uri);
+    };
 
     EditorFile.prototype.sizeInKB = function () {
         var size = 0;

@@ -1,11 +1,7 @@
 .storageFiles {
 
-    md-progress-circular .md-inner .md-right .md-half-circle {
-        border-right-color: rgba(255, 255, 255, 0.49) !important;
-    }
-    md-progress-circular .md-inner .md-gap {
-        border-top-color: rgba(255, 255, 255, 0.49) !important;
-        border-bottom-color: rgba(255, 255, 255, 0.49) !important;
+    md-progress-circular path {
+        stroke: rgba(255, 255, 255, 0.49) !important;
     }
 
     background: #fff;
@@ -15,6 +11,12 @@
         background: #445ABC;
         color: #fff;
         z-index: 100;
+
+        button {
+            margin-right: 0;
+            margin-left: 0;
+            min-width: 0;
+        }
 
         md-input-container {
             margin: 0.5em 1em;

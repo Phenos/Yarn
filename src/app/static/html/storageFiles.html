@@ -38,27 +38,30 @@
 
                 </md-input-container>
             </div>
-            <div flex="nogrow">
-                <div ng-if="storageFiles.storage.isLoading">
-                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            <div flex="noshrink"
+                 ng-if="storageFiles.storage.isLoading"
+                 layout="row"
+                 layout-align="center center"
+                 style="min-width:50px"
+                >
+                <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
+            </div>
+            <div flex="auto" style="white-space: nowrap;" ng-if="!storageFiles.storage.isLoading">
+                <!--
+                <div ng-if="storageFiles.storage.files.length === 0">
+                    You have no no files in storage!
                 </div>
-                <div ng-if="!storageFiles.storage.isLoading">
-                    <!--
-                    <div ng-if="storageFiles.storage.files.length === 0">
-                        You have no no files in storage!
-                    </div>
-                    -->
-                    <div ng-if="storageFiles.storage.files.length > 0 && storageFiles.selection.length === 0">
-                        <md-button ng-click="selectAll()">Select all
-                        </md-button>
-                    </div>
-                    <div ng-if="storageFiles.selection.length > 0">
-                        <md-button ng-click="deleteSelection($event)">
-                            Delete {{ storageFiles.selection.length }} files
-                        </md-button>
-                        <md-button ng-click="unselectAll()">Unselect</md-button>
-                    </div>
-                </div>
+                -->
+                <span ng-if="storageFiles.storage.files.length > 0 && storageFiles.selection.length === 0">
+                    <md-button ng-click="selectAll()">Select all
+                    </md-button>
+                </span>
+                <span ng-if="storageFiles.selection.length > 0">
+                    <md-button ng-click="deleteSelection($event)">
+                        Delete {{ storageFiles.selection.length }} files
+                    </md-button>
+                    <md-button ng-click="unselectAll()">Unselect</md-button>
+                </span>
             </div>
         </header>
         <md-content flex="grow">

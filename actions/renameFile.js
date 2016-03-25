@@ -1,4 +1,3 @@
-var fs = require('fs');
 var s3 = require('s3');
 
 exports.status = {

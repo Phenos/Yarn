@@ -73,7 +73,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 .ok('Rename')
                 .cancel('Cancel');
             $mdDialog.show(confirm).then(function(newName) {
-                console.log("Renaming", newName);
+                //console.log("Renaming", newName);
                 editorFiles.rename(self.file, newName);
             }, function() {
                 //$scope.status = 'You didn\'t name your dog.';

@@ -10,7 +10,7 @@ exports.default = {
         // 'es': 'en'
       },
 
-      updateFiles: true,
+      updateFiles: false,
 
       // this will configure logging and error messages in the log(s)
       defaultLocale: 'en',

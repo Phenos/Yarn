@@ -91,7 +91,7 @@ yarn.service("editorFiles", function (EditorFile,
         file.status = "Renaming...";
         var newURI = file.uri.clone().filename(newName);
         storage.rename(file, newName, function (meta) {
-            console.log("RENAMED!!!! ", meta);
+            //console.log("RENAMED!!!! ", meta);
             file.rename(newURI);
             refreshAfterAWhile();
             file.errorCode = null;

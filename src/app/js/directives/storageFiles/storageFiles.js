@@ -59,7 +59,13 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
                     "<br/>This action cannot be undone";
             confirmAction("Delete selection", text, ok, cancel, event, $element);
             function ok() {
-                console.log("DELETING FILES!!!!!")
+                console.log("DELETING FILES!!!!!");
+                $scope.updateSelection();
+                storage.delete(self.selection, function success() {
+                    storage.refresh();
+                }, function fail() {
+                    storage.refresh();
+                });
             }
             function cancel() {}
         };

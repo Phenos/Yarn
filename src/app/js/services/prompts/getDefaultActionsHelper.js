@@ -9,17 +9,19 @@ yarn.service("setDefaultOptionsHelper", function (state,
         var allowedActions = {};
 
         var space = state.one("You is in *");
-        var spaceIsRestricted = state.value("Space is Restricted", {Space: space});
 
+        var scope = {
+            Space: space
+        };
+
+        // If the space is restricted, build a list of allowed actions
+        var spaceIsRestricted = state.value("Space is Restricted", scope);
         if (spaceIsRestricted) {
-            allowedActions = {
-                "move": state.value("Space allows Move", {Space: space}),
-                "look": state.value("Space allows Look", {Space: space}),
-                "inventory": state.value("Space allows Inventory", {Space: space}),
-                "use": state.value("Space allows Use", {Space: space}),
-                "hint": state.value("Space allows Hint", {Space: space})
-            }
+            var allowedActionsObjs = state.many("Space allows *", scope);
 
+            angular.forEach(allowedActionsObjs, function (obj) {
+                allowedActions[obj.id] = obj;
+            });
         }
 
         if (space) {

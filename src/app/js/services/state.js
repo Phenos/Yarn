@@ -191,6 +191,11 @@ yarn.service('state', function ($localStorage,
             return this.resolveOne(_assert);
         };
 
+        State.prototype.many = function () {
+            var _assert = parseAssert.apply(this, arguments);
+            return this.resolveAll(_assert);
+        };
+
         State.prototype.render = function (template) {
             return templating.render(template, this.scope())
         };

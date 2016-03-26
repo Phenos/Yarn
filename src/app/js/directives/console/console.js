@@ -83,10 +83,11 @@
                 this.onClear();
             };
 
-            this.write = function (text, type) {
+            this.write = function (text, type, options) {
                 var scope = $scope.$new();
                 scope.text = text;
                 scope.type = type;
+                scope.options = options || {};
                 scope.step = state.step();
                 if (lastStep !== scope.step) {
                     scope.isNewStep = true;
@@ -95,12 +96,12 @@
                     scope.isNewStep = false;
                 }
                 scope.timestamp = Date.now();
-                var logElem = $compile('<log is-new-step="isNewStep" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
+                var logElem = $compile('<log is-new-step="isNewStep" options="options" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
                 logsElem.append(logElem);
                 $timeout(function () {
                     //console.log("WTF!", [logscrollElem]);
-                    //var scrollHeight = logscrollElem[0].scrollHeight;
-                    //logscrollElem.scrollTopAnimated(scrollHeight, 1000, easing.easeOutQuart)
+                    var scrollHeight = logscrollElem[0].scrollHeight;
+                    logscrollElem.scrollTopAnimated(scrollHeight, 1000, easing.easeOutQuart)
                 });
                 $scope.$emit("refreshScrollbars");
             };

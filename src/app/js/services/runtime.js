@@ -132,10 +132,14 @@ yarn.service('Runtime', function RuntimeService(state,
                             }
                             if (typeof(object) === "string") {
                                 yConsole.error("Invalid assertion, cannot use text as the object: " +
-                                    currentThis.id + " " + predicate.id + " " + object.id);
+                                    currentThis.id + " " + predicate.id + " " + object.id, {
+                                    source: node.source
+                                });
                             } else if (typeof(object) === "number") {
-                                yConsole.error("Invalid assertion, cannot use text as the object: " +
-                                    currentThis.id + " " + predicate.id + " " + object.id);
+                                yConsole.error("Invalid assertion, cannot use a number as the object: " +
+                                    currentThis.id + " " + predicate.id + " " + object.id, {
+                                    source: node.source
+                                });
                             } else {
                                 //console.log("node.source", node.source);
                                 createdAssertions.push(

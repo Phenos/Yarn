@@ -44,6 +44,7 @@ yarn.run(function (commands, tools, keyboardShortcuts) {
         "graphCommand",
         "hintCommand",
         "useCommand",
+        "doCommand",
         "validateCommand",
         "creditsCommand",
         "lookCommand",

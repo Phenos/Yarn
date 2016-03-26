@@ -1,14 +1,26 @@
 yarn.service('events', function (assert,
+                                 parseAssert,
                                  state,
                                  predicates,
-                                 things,
-                                 Assertion,
-                                 yConsole) {
+                                 things) {
 
     function Events() {
+        this.listeners = [];
     }
 
-    Events.prototype.process = function () {
+    function Listener(assert, eventId, callback) {
+        this.assert = assert; // In text form
+        this.eventId = eventId;
+        this.callback = callback;
+    }
+
+    Events.prototype.on = function (assert, eventID, callback) {
+        var listener = new Listener(assert, eventID, callback);
+        this.listeners.push(listener);
+    };
+
+    Events.prototype.process = function (_eventId) {
+        var eventId = _eventId || null;
         var self = this;
         //console.log("Events.process()");
 
@@ -19,7 +31,38 @@ yarn.service('events', function (assert,
 
         //console.log("triggerAssertions", triggerAssertions);
 
-        // First, figure out which assertions set will need to be triggered
+        // First, we trigger any hard-coded listeners
+        angular.forEach(this.listeners, function (listener) {
+            var assertValue;
+            var assertionsMatched;
+            var hasOneNonFalseMatch = false;
+            //console.log("--> ", eventId, listener.eventId);
+            // Continue if the eventId matches
+            if (eventId && listener.eventId === eventId) {
+                //console.log("2", listener.assert);
+                // Continue if the assert is either true or if it resolves at least
+                // one "true" object
+                assertValue = state.value(listener.assert);
+                var _assert = parseAssert(listener.assert, {
+                    parent: null
+                });
+                assertionsMatched = state.resolveAll(_assert, true);
+
+                angular.forEach(assertionsMatched, function (assertion) {
+                    var _assert = assert(assertion.subject, assertion.predicate, assertion.object);
+                    var value = state.resolveValue(_assert);
+                    if (value) hasOneNonFalseMatch = true;
+                });
+                //console.log("assertValue", assertValue);
+                //console.log("assertionsMatched", assertionsMatched);
+                if (assertValue || hasOneNonFalseMatch) {
+                    // todo: Figure out if the callback should pass any values
+                    listener.callback && listener.callback();
+                }
+            }
+        });
+
+        // Second, figure out which assertions set will need to be triggered
         angular.forEach(triggerAssertions, function (assertion) {
             // Fetch the list of assertions to be used as triggers
             var childAssertions;
@@ -27,10 +70,13 @@ yarn.service('events', function (assert,
             var object = assertion.object;
             var subject = assertion.subject;
 
-            // First we check if the triggerrer and the triggered are supplied
-            if (subject && object) {
-                //console.log("Testing : ", consoleHelper.assertion2log(assertion));
+            //todo: The value should be resolved from the state instead of being raw
+            var value = assertion.value();
 
+            //console.log("VALUE: ", value, eventId, [assertion]);
+
+            if ((eventId && value === eventId) || !eventId) {
+                //console.log("Testing : ", consoleHelper.assertion2log(assertion));
                 childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
                     parent: subject.id
                 }));
@@ -50,9 +96,6 @@ yarn.service('events', function (assert,
                     }
                 }
 
-            }
-            else {
-                yConsole.error("The trigger is not well formed. You must have a complete assertion with a subject and an object.")
             }
         });
 

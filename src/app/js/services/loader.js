@@ -37,8 +37,8 @@ yarn.service('loader', function (yarn,
         function onSuccess(script) {
             timer.afterCompile  = performance.now();
             var duration = Math.floor(timer.afterCompile - timer.beforeLoad) / 1000;
-            yConsole.log("Loading an compilation took " + duration + " seconds");
-            console.info("Loading an compilation took " + duration + " seconds");
+            yConsole.log("Loading and compilation took " + duration + " seconds");
+            console.info("Loading and compilation took " + duration + " seconds");
 
             yarn.load(script.source, script.url).then(onSuccess, onError);
 

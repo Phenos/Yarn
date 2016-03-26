@@ -186,7 +186,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
                         file.markForDiscard = true;
                     });
 
-                    console.log("Storagerefresh > apiClient.files", data);
+                    //console.log("Storagerefresh > apiClient.files", data);
                     angular.forEach(data.files, function (file) {
                         if (file && file.Size > 0) {
                             var path = file.Key && file.Key.replace(session.user().username + "/", "");

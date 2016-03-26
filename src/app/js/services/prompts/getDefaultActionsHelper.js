@@ -83,6 +83,23 @@ yarn.service("setDefaultOptionsHelper", function (state,
                 }
             }
 
+
+            // Add custom actions
+            var customActions = state.many("* is an Action");
+            angular.forEach(customActions, function (action) {
+                if (!(spaceIsRestricted && !allowedActions[action.id])) {
+
+                    var icon = state.value("Action has Icon", { Action: action });
+                    var name = state.value("Action has Name", { Action: action });
+                    option = prompt.option(name, "do " + action.id);
+                    option.iconId = icon;
+                    option.iconSize = size;
+                    option.iconOnly = true;
+                }
+            });
+
+
+
             if (!(spaceIsRestricted && !allowedActions.hint)) {
                 option = prompt.option("Hint?", "hint");
                 option.iconId = "question-mark";

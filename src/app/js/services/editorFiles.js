@@ -10,8 +10,6 @@ yarn.service("editorFiles", function (EditorFile,
         this.files = [];
         this._mainFile = null;
         this.goToLine = null;
-        this.reloadFromLocalStorage();
-
     }
 
     /**
@@ -22,6 +20,7 @@ yarn.service("editorFiles", function (EditorFile,
         var self = this;
         var mainFile = "";
         var sessionFiles = session.storage("editorFiles");
+        //console.log("-====>>>", sessionFiles);
         if (sessionFiles) {
             if (sessionFiles.mainFile) {
                 mainFile = sessionFiles.mainFile;
@@ -154,7 +153,7 @@ yarn.service("editorFiles", function (EditorFile,
     EditorFiles.prototype.persist = function (file) {
         var self = this;
         var sessionFiles = session.storage("editorFiles");
-
+        //console.log("persist -->", file);
         if (sessionFiles) {
             //console.log("this._mainFile", this._mainFile);
             if (angular.isObject(this._mainFile)) {
@@ -209,11 +208,7 @@ yarn.service("editorFiles", function (EditorFile,
             }
             this.files.push(file);
         }
-        if (setFocus) {
-            file.isFocused = true;
-        } else {
-            file.isFocused = false;
-        }
+        file.isFocused = !!setFocus;
         file.load();
         if (goToLine) {
             file.goToLine = goToLine;

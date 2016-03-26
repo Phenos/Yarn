@@ -27,6 +27,9 @@ function rootController(user,
     // Used by the global context menu
     globalContextMenu.register($scope, $element);
 
+    // Restore previously openned files
+    editorFiles.reloadFromLocalStorage();
+
     $scope.toolTabs = {
         selected: 0
     };

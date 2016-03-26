@@ -13,7 +13,7 @@ yarn.directive('graph', function GraphDirective(state, assert) {
 
     function GraphController($element, $timeout, graph) {
         var self = this;
-        var thingIsA = this.thingIsA || "room";
+        var thingIsA = this.thingIsA || "space";
         var predicate = this.predicate.toLowerCase() || "linksto";
         var force = d3.layout.force();
 

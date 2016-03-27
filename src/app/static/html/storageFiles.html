@@ -1,6 +1,6 @@
 <div class="project-tool" flex="grow" layout="row">
     <md-content flex="40" class="list-of-folders" md-whiteframe="10">
-        <md-button class="md-fab md-mini" ng-click="refresh()">
+        <md-button class="md-fab md-mini" ng-click="refresh()" aria-label="Refresh">
             <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
         </md-button>
         <section>
@@ -43,7 +43,7 @@
                  layout="row"
                  layout-align="center center"
                  style="min-width:50px"
-                >
+            >
                 <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
             </div>
             <div flex="auto" style="white-space: nowrap;" ng-if="!storageFiles.storage.isLoading">
@@ -82,7 +82,8 @@
                         </p>
                         <md-checkbox class="md-secondary"
                                      ng-click="updateSelection()"
-                                     ng-model="file.isSelected">
+                                     ng-model="file.isSelected"
+                                     aria-label="Select">
                         </md-checkbox>
                     </md-list-item>
                 </md-list>

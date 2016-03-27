@@ -4,7 +4,8 @@ yarn.service('script', function (Pointer,
                                  $q,
                                  loadScript,
                                  URI,
-                                 yConsole) {
+                                 yConsole,
+                                 state) {
 
     function Script() {
         this.reset();
@@ -37,7 +38,7 @@ yarn.service('script', function (Pointer,
         this.runtime.run();
         var afterRun = performance.now();
         var duration = Math.floor(afterRun - berofeRun) / 1000;
-        yConsole.log("Execution took " + duration + " seconds");
+        yConsole.log("Created " + state.assertions.count() + " assertions in " + duration + " seconds");
     };
 
     Script.prototype.compile = function (tokens) {

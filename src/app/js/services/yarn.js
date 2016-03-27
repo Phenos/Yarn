@@ -17,7 +17,9 @@ yarn.service('yarn', function ($localStorage,
             callback: function (data) {
                 // If the story has started, log state changes to the console
                 if (state.step() > 0 && data.value() === true) {
-                    yConsole.log("Changed: " + consoleHelper.assertion2log(data));
+                    yConsole.log("Changed: " + consoleHelper.assertion2log(data), {
+                        source: data.source
+                    });
                 }
             }
         });

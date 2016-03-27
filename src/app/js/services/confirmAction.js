@@ -8,7 +8,6 @@ yarn.service("confirmAction", function ($mdDialog) {
             .ok('YES')
             .cancel('Cancel');
 
-        console.log("parent", parent[0]);
         if (parent) confirm.parent = parent[0];
         confirm.targetEvent = event;
 

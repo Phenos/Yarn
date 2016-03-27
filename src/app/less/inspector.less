@@ -1,5 +1,53 @@
 .inspector {
 
+    md-fab-speed-dial {
+        top: -8px;
+        right: 10px;
+        //bottom: auto;
+        //left: auto;
+        position: absolute;
+        .md-button {
+            width: 50px;
+            height: 50px;
+            margin: 2px 4px;
+
+            background: #fff !important;
+            md-icon {
+                color: #000;
+            }
+        }
+        md-fab-actions {
+            .md-button {
+                width: 36px !important;
+                height: 36px !important;
+                md-icon {
+                    width: 22px;
+                    height: 22px;
+                }
+                min-height: 36px !important;
+            }
+        }
+
+    }
+
+    h2 {
+        font-weight: normal;
+        margin: 0;
+        padding: 0.6em 0.6em 0.6em 1em;
+        font-size: 1.4em;
+        background: #445ABC;
+        color: #fff;
+    }
+
+    .summary {
+        font-weight: normal;
+        margin: 0;
+        padding: 0.6em 5em 0.6em 1.5em;
+        font-size: 1em;
+        background: rgba(68, 90, 188, 0.9);
+        color: rgba(255, 255, 255, 0.8);
+    }
+
     articles {
         display: block;
         position: relative;
@@ -8,32 +56,22 @@
             position: relative;
             display: block;
             padding-bottom: 0;
-            margin: 0.8em;
             background: #fff;
 
             section {
                 position: relative;
                 display: block;
-                margin: 0.5em 0.5em 0.25em 1em;
+                margin: 0.5em 0.5em 0.25em 1.5em;
                 padding-bottom: 0.25em;
             }
 
-            h2, h3, h4, h5 {
-                margin: 0.5em 0 0.5em 0;
-            }
 
-            h2.type-help {
-                background: rgb(0, 85, 0);
-            }
-
-            h2 {
-                background: rgb(63, 81, 181);
-
+            h3 {
+                background: rgb(236, 236, 236);
                 font-weight: normal;
                 margin: 0;
-                padding: 0.3em 0.3em 0.3em 0.6em;
-                color: #fff;
-                font-size: 1.1em;
+                padding: 0.6em 0.6em 0.6em 1.5em;
+                font-size: 1em;
 
                 md-icon {
                     svg {
@@ -47,7 +85,7 @@
             ul {
                 margin-top: 0.5em;
                 margin-bottom: 0.5em;
-                padding-left: 1em;
+                padding-left: 1.2em;
 
                 li {
                     list-style-type: square;
@@ -58,17 +96,6 @@
 
                     }
                 }
-            }
-
-            .subHeading {
-                position: relative;
-                top: 0.5em;
-                float: right;
-                margin-right: 1em;
-                font-size: 0.9em;
-                font-weight: 400;
-                margin-left: 1em;
-                color: rgba(255, 255, 255, 0.6);
             }
         }
     }

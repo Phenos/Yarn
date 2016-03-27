@@ -7,17 +7,32 @@ yarn.service("EditorFile", function (guid,
     var baseURI = "";
 
     function EditorFile(uri, meta) {
+        this._uri = "";
+        this.uri = null;
+        this.rename(uri);
         this.guid = guid();
-        this._uri = uri;
         this.meta = meta || {};
         this.filterOut = false;
         this.isMain = false;
-        this.uri = URI(this._uri);
         this.ready = false;
         this.status = "";
-        this.content = "";
+        this.content = null;
         this.originalContent = "";
+        this.isSelected = false;
     }
+
+    EditorFile.prototype.rename = function (uri) {
+        this._uri = uri.toString();
+        this.uri = URI(this._uri);
+    };
+
+    EditorFile.prototype.sizeInKB = function () {
+        var size = 0;
+        if (this.meta) {
+            size = Math.floor((this.meta.Size / 1000)+1);
+        }
+        return size;
+    };
 
     EditorFile.prototype.absoluteURI = function () {
         var uri = this.uri;
@@ -44,14 +59,17 @@ yarn.service("EditorFile", function (guid,
         self.status = "Loading...";
         loadScript(this.absoluteURI().toString())
             .then(function (script) {
+                self.errorCode = null;
                 self.ready = true;
                 self.status = "Loaded";
                 self.content = script.source;
                 self.originalContent = script.source;
                 //console.log("script:", script);
             })
-            .catch(function () {
+            .catch(function (e) {
+                self.errorCode = e.status;
                 self.status = "Failed to load";
+                //console.log("Error: ", e);
                 yConsole.error("Error while loading file: " + self.absoluteURI().toString());
             });
     };
@@ -70,7 +88,7 @@ yarn.service("EditorFile", function (guid,
     };
 
     EditorFile.prototype.name = function () {
-        return this.uri.filename().replace(".txt", "");
+        return this.uri.filename();
     };
 
     return EditorFile;

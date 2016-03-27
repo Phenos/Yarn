@@ -14,7 +14,7 @@ yarn.service("usableItemInRoomHelper", function (state,
                 if (isUsable) foundUsableItems.push(thing);
             });
         }
-        console.log("foundUsableItems", foundUsableItems);
+        //console.log("foundUsableItems", foundUsableItems);
 
         return foundUsableItems;
     }

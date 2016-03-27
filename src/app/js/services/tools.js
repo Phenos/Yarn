@@ -1,8 +1,8 @@
+yarn.service("tools", function toolsService($injector,
+                                            storyLocalStorage,
+                                            root) {
 
-yarn.service("tools", function toolsService ($injector,
-                                             storyLocalStorage) {
-
-    function Tools () {
+    function Tools() {
         this.all = [];
         this.index = {};
     }
@@ -10,7 +10,7 @@ yarn.service("tools", function toolsService ($injector,
     Tools.prototype.focusFromMemory = function () {
         var storage = storyLocalStorage.get("tools");
         var toolId = storage.lastOpenTool;
-        if (toolId) this.focus(toolId);
+        if (toolId) this.focus(toolId, true);
         //console.log("focusFromMemory", toolId);
     };
 
@@ -35,7 +35,7 @@ yarn.service("tools", function toolsService ($injector,
         return this.index[id];
     };
 
-    Tools.prototype.focus = function (id) {
+    Tools.prototype.focus = function (id, dontExpand) {
         //console.log("focus", id);
         var storage = storyLocalStorage.get("tools");
         storage.lastOpenTool = id;
@@ -46,6 +46,7 @@ yarn.service("tools", function toolsService ($injector,
                 tool.blur();
             }
         });
+        if (!dontExpand) root.toggleTools(true);
     };
 
     return new Tools();

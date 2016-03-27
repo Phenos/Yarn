@@ -17,18 +17,12 @@ yarn.service('yarn', function ($localStorage,
             callback: function (data) {
                 // If the story has started, log state changes to the console
                 if (state.step() > 0 && data.value() === true) {
-                    yConsole.log("Changed: " + consoleHelper.assertion2log(data));
+                    yConsole.log("Changed: " + consoleHelper.assertion2log(data), {
+                        source: data.source
+                    });
                 }
             }
         });
-
-        this.run = function () {
-            this.scripts.forEach(function (script) {
-                script.run();
-            });
-
-            return this;
-        };
 
         this.restoreFromLocalState = function () {
             var localState = $localStorage.localState;
@@ -62,6 +56,3 @@ yarn.service('yarn', function ($localStorage,
 
     return yarn;
 });
-
-
-

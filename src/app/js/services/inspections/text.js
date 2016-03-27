@@ -10,7 +10,7 @@ yarn.service("textInspection", function textInspection(InspectionArticle) {
             var scope = {};
 
             if (token.value) {
-                scope.title = "Text";
+                scope.title = "This is a text";
                 scope.type = "text";
 
                 var regex = /\s+/gi;

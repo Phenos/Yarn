@@ -1,27 +1,35 @@
-<md-content style="z-index:5"
-            flex="1"
+<md-content style="z-index:5; overflow: hidden;"
+            flex="grow"
             layout="row"
-            get-context-menu
-            data-context-event="contextmenuexists"
-            data-context-menu="./html/editor-context-menus.html"
 >
     <assertion-browser></assertion-browser>
-    <player class="layout-panel theme-{{ themes.current.id }}" flex="noshrink" user="user" layout="column"></player>
+    <early-bird ng-if="false">
+        <img src="/images/early-bird.png" class="hvr-buzz-out" ng-click="open()"/>
+
+        <div class="message" ng-click="open()">
+            <span>
+                Get early access with the <strong class="underline">Early Bird</strong> special.
+            </span>
+        </div>
+    </early-bird>
+    <player class="layout-panel theme-{{ themes.current.id }}" flex="auto" user="user" layout="column"></player>
     <md-section
             md-whiteframe="10"
             class="IDE"
             layout="column"
-            flex="60"
+            flex="grow"
             ng-show="IDEisVisible || helpIsVisible">
-        <md-section layout="row" flex="" style="overflow: hidden">
+        <md-section layout="row" flex="" style="overflow: hidden; position: relative;">
             <md-section
                     ng-show="IDEisVisible"
+                    md-whiteframe="10"
                     class="layout-panel"
-                    flex="noshrink"
-                    style="width: 350px"
+                    flex="100"
+                    style="z-index: 10;"
                     layout="column">
                 <editor-toolbar></editor-toolbar>
                 <div flex="grow" layout="column">
+                    <div class="bottomShadow"></div>
                     <editor-tabs ng-show="editorFiles.files.length > 0" layout="column"></editor-tabs>
                     <div style="background: #fff;"
                          ng-show="editorFiles.files.length === 0"
@@ -30,20 +38,18 @@
                          flex="100"
                     >
                         <div flex="20"></div>
-                        <div>
                             <div layout="column">
                                 <div style="color: #666; text-align: center;">
                                     No files are curently open!
                                 </div>
                                 <br/>
-                                <md-button ng-click="openMain()">
-                                    Open the main "story.txt" file
+                                <md-button ng-click="openMain()" class="md-primary">
+                                    Open the main file
                                 </md-button>
-                                <md-button ng-click="openFile()">
-                                    Browse Files ...
+                                <md-button ng-click="openFile()" class="md-primary">
+                                    Browse Project files
                                 </md-button>
                             </div>
-                        </div>
                         <div flex="60"></div>
                     </div>
                     <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
@@ -51,8 +57,7 @@
             </md-section>
             <md-section ng-show="helpIsVisible"
                         md-whiteframe="10"
-                        flex="noshrink"
-                        style="width: 350px"
+                        flex="100"
                         layout="column"
                         class="layout-panel">
                 <help-toolbar></help-toolbar>
@@ -62,9 +67,11 @@
             </md-section>
         </md-section>
         <md-section
+                md-whiteframe="10"
                 layout="column"
                 class="toolTabs layout-panel"
                 flex="{{ consoleFlexHeight }}"
+                flex-order="5"
                 ng-show="IDEisVisible"
         >
             <div class="toolTabs-toggle">

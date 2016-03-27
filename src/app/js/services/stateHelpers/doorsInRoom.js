@@ -8,7 +8,7 @@ yarn.service("doorsInRoomHelper", function (state,
             var doorsInRoom = state.resolveAll(assert(undefined, "is in", room));
             doorsInRoom.forEach(function (thing) {
                 // Check if item is an InventoryItem
-                var isDoor = state.resolveValue(assert(thing, "is", "Door"));
+                var isDoor = state.resolveValue(assert(thing, "is", "Exit"));
                 //console.log("thingsThatAre", thingsThatAre, thing.id);
                 if (isDoor) foundDoors.push(thing);
             });

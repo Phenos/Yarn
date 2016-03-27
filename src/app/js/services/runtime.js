@@ -132,21 +132,33 @@ yarn.service('Runtime', function RuntimeService(state,
                             }
                             if (typeof(object) === "string") {
                                 yConsole.error("Invalid assertion, cannot use text as the object: " +
-                                    currentThis.id + " " + predicate.id + " " + object.id);
+                                    currentThis.id + " " + predicate.id + " " + object.id, {
+                                    source: node.source
+                                });
+                            } else if (typeof(value) === "object") {
+                                yConsole.error("Invalid assertion, cannot use an object as the value:", {
+                                    source: node.source
+                                });
                             } else if (typeof(object) === "number") {
-                                yConsole.error("Invalid assertion, cannot use text as the object: " +
-                                    currentThis.id + " " + predicate.id + " " + object.id);
+                                yConsole.error("Invalid assertion, cannot use a number as the object: " +
+                                    currentThis.id + " " + predicate.id + " " + object.id, {
+                                    source: node.source
+                                });
                             } else {
+                                //console.log("node.source", node.source);
                                 createdAssertions.push(
                                     state.createAssertion(currentThis, predicate, object, {
                                         parent: parent,
-                                        value: value
+                                        value: value,
+                                        source: node.source
                                     })
                                 );
                             }
                             //console.log("created assetion: ", assertion);
                         } else {
-                            yConsole.error("Invalid assertion, missing subject: " + predicate.id);
+                            yConsole.error("Invalid assertion, missing subject: " + predicate.id, {
+                                source: node.source
+                            });
                             // Nothing to do!
                             // Probably because a naked predicate such as "the" has been used on
                             // the root node.
@@ -155,9 +167,13 @@ yarn.service('Runtime', function RuntimeService(state,
                 } else {
                     var currentThis = runtime.stack.head().values.this;
                     if (currentThis) {
-                        yConsole.error("Invalid assertion, missing object: " + currentThis.id + " " + predicate.id);
+                        yConsole.error("Invalid assertion, missing object: " + currentThis.id + " " + predicate.id, {
+                            source: node.source
+                        });
                     } else {
-                        yConsole.error("Invalid assertion, missing subject: " + predicate.id);
+                        yConsole.error("Invalid assertion, missing subject: " + predicate.id, {
+                            source: node.source
+                        });
                     }
                 }
 

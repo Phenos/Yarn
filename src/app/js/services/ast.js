@@ -14,7 +14,7 @@
                 var command;
                 var type = token[0];
                 command = TokenCommands[type];
-                token[3] = command;
+                token[4] = command;
             });
         };
 
@@ -58,13 +58,16 @@
             var promise = $q(function (resolve) {
 
                 tokens.forEach(function (token) {
-                    var command = token[3];
+                    var command = token[4];
                     var tokenString = token[1];
+                    var tokenSource = token[3];
                     var tokenHandler = TokenHandlers[command];
                     if (!tokenHandler) {
                         console.error("Invalid token found during compilation : ", token);
                         yConsole.error("Invalid token found during compilation : " + token[2]);
                     } else {
+                        cursor.source = tokenSource;
+                        //console.log("tokenSource", tokenSource);
                         tokenHandler(cursor, tokenString);
                     }
                 });

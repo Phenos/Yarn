@@ -2,16 +2,17 @@
      md-whiteframe="4"
 >
     <md-toolbar
+            md-whiteframe="4"
             class="editorToolbar md-menu-toolbar"
+            flex="noshrink"
             layout="row">
         <div flex="100" layout="row">
             <md-toolbar-filler layout
-                               layout-align="center center"
-                               ng-click="toolbar.IDE.openFromStorage()">
+                               layout-align="center center">
                 <md-icon ng-show="!toolbar.IDE.isWorking" md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
                 <md-progress-circular
                         ng-if="toolbar.IDE.isWorking"
-                        md-diameter="70"
+                        md-diameter="30"
                         md-mode="indeterminate"></md-progress-circular>
             </md-toolbar-filler>
             <div flex="100">
@@ -23,8 +24,14 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="toolbar.IDE.openFromStorage()">
-                                    Open...
+                                <md-button ng-click="toolbar.IDE.newFile($event)">
+                                    Create new file
+                                    <span class="md-alt-text"> {{ 'C-S-N' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.openFromProject()">
+                                    Open from project
                                     <span class="md-alt-text"> {{ 'M-O' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
@@ -32,7 +39,7 @@
                     </md-menu>
                     <md-menu>
                         <button ng-click="$mdOpenMenu()">
-                            Story
+                            Project
                         </button>
                         <md-menu-content>
                             <md-menu-item>
@@ -50,13 +57,13 @@
                             <md-menu-item>
                                 <md-button ng-click="toolbar.run()">
                                     Run
-                                    <span class="md-alt-text"> {{ 'M-Shift-R' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{ 'M-S-Enter' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="toolbar.validate()">
                                     Validate Current State
-                                    <span class="md-alt-text"> {{ 'M-Shift-V' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{ 'M-S-V' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -85,8 +92,14 @@
         </div>
     </md-toolbar>
 
-    <md-toolbar class="editorIconToolbar">
+    <md-toolbar flex="no-shrink" class="editorIconToolbar">
         <div class="md-toolbar-tools">
+            <md-button ng-click="toolbar.IDE.newFile($event)" class="md-icon-button" aria-label="New file">
+                <md-icon md-svg-icon="/svg-icons/new-file.svg"></md-icon>
+                <md-tooltip>
+                    New File
+                </md-tooltip>
+            </md-button>
             <md-button ng-click="toolbar.editors.current.save()" class="md-icon-button" aria-label="Save">
                 <md-icon md-svg-icon="/svg-icons/save.svg"></md-icon>
                 <md-tooltip>
@@ -122,6 +135,12 @@
                 <md-icon md-svg-icon="/svg-icons/search.svg"></md-icon>
                 <md-tooltip>
                     Search
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="toolbar.editors.current.rename($event)" class="md-icon-button" aria-label="Rename">
+                <md-icon md-svg-icon="/svg-icons/rename.svg"></md-icon>
+                <md-tooltip>
+                    Rename
                 </md-tooltip>
             </md-button>
             <span flex></span>

@@ -3,8 +3,8 @@
 Light Theme - For light backgrounds and dark text.
 
 */
-.theme-light {
 
+.theme-light {
     md-toolbar.statusBar,
     md-toolbar.toolbar {
 
@@ -14,7 +14,7 @@ Light Theme - For light backgrounds and dark text.
             color: #000;
         }
         md-icon {
-            color: #000 !important;
+            fill: #000 !important;
         }
     }
 
@@ -26,21 +26,22 @@ Light Theme - For light backgrounds and dark text.
 
     story-log {
         log-item .logItem {
-            color: #000 !important;
+            color: #333333 !important;
             text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.5);
 
             a {
-                color: #333 !important;
+                color: #181818 !important;
                 text-shadow: 1px 1px 3px rgba(255, 255, 255, 1);
+                font-weight: 600;
             }
 
             &:hover {
                 a {
-                    text-decoration: underline;
+                    color: #000000 !important;
                     &:focus,
                     &:hover {
+                        text-decoration: underline;
                         color: #000 !important;
-                        top: -1px;
                     }
                 }
 
@@ -58,7 +59,7 @@ Light Theme - For light backgrounds and dark text.
             background-color: rgba(255, 255, 255, 0.6) !important;
 
             md-icon {
-                color: #000 !important;
+                fill: #000 !important;
             }
         }
     }

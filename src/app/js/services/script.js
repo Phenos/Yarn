@@ -3,17 +3,20 @@ yarn.service('script', function (Pointer,
                                  Runtime,
                                  $q,
                                  loadScript,
-                                 URI) {
+                                 URI,
+                                 yConsole,
+                                 state) {
 
     function Script() {
         this.reset();
     }
 
     Script.prototype.load = function (source, url) {
+        var self = this;
         this.reset();
         this.url = url || "";
+        this.pointer = new Pointer(this.url);
         this.source = source;
-        var self = this;
         this.pointer.tokenize(source);
         //console.log("yarn.script.load: ", url);
         return this.compile(this.pointer.tokens).then(function (ast) {
@@ -23,7 +26,6 @@ yarn.service('script', function (Pointer,
     };
 
     Script.prototype.reset = function () {
-        this.pointer = new Pointer();
         this.url = "";
         this.source = "";
         this.ast = new AST();
@@ -31,8 +33,12 @@ yarn.service('script', function (Pointer,
     };
 
     Script.prototype.run = function () {
+        var berofeRun = performance.now();
         this.runtime = new Runtime(this.ast);
         this.runtime.run();
+        var afterRun = performance.now();
+        var duration = Math.floor(afterRun - berofeRun) / 1000;
+        yConsole.log("Created " + state.assertions.count() + " assertions in " + duration + " seconds");
     };
 
     Script.prototype.compile = function (tokens) {

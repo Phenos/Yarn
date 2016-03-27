@@ -16,20 +16,10 @@ yarn.service("predicateReferenceInspection",
                     var scope = {};
 
                     if (token && token.value) {
-                        scope.title = txt;
+                        scope.title = "Is a predicate";
                         scope.type = "predicateReference";
-                        scope.usageCount = {
-                            total: 0
-                        };
+
                         var predicate = predicates(txt, true);
-                        //console.log("predicate", predicate);
-
-                        var allAssertions = state.assertions.all();
-                        angular.forEach(allAssertions, function (assertion) {
-                            if (assertion.predicate === predicate) scope.usageCount.total++;
-                        });
-
-
 
                         if (!predicate) {
                             scope.isCustomPredicate = true;
@@ -44,7 +34,7 @@ yarn.service("predicateReferenceInspection",
                         url: "./yarnscript-language.html"
                     });
 
-                    yeld(new InspectionArticle(txt.trim(), "predicateReference", "predicate-reference", scope))
+                    yeld(new InspectionArticle(scope.title, "predicateReference", "predicate-reference", scope))
                 }
             }
 

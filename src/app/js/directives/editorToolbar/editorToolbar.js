@@ -27,6 +27,10 @@ function EditorToolbarDirective() {
             this.IDE.validate();
         };
 
+        this.openFromProject = function () {
+            tools.focus("project");
+        };
+
         this.run = function() {
             tools.focus("commands");
             this.IDE.run();

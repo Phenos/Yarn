@@ -1,10 +1,15 @@
-yarn.service("editorFiles", function (EditorFile, editors, confirmAction, session, storage, yConsole) {
+yarn.service("editorFiles", function (EditorFile,
+                                      editors,
+                                      confirmAction,
+                                      session,
+                                      storage,
+                                      $timeout,
+                                      yConsole) {
 
     function EditorFiles() {
         this.files = [];
         this._mainFile = null;
-        this.reloadFromLocalStorage();
-
+        this.goToLine = null;
     }
 
     /**
@@ -15,6 +20,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         var self = this;
         var mainFile = "";
         var sessionFiles = session.storage("editorFiles");
+        //console.log("-====>>>", sessionFiles);
         if (sessionFiles) {
             if (sessionFiles.mainFile) {
                 mainFile = sessionFiles.mainFile;
@@ -66,16 +72,49 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
     EditorFiles.prototype.save = function (file, callback) {
         file.status = "Saving...";
         storage.save(file, function (meta) {
+            refreshAfterAWhile();
+            file.errorCode = null;
             file.ready = true;
             file.status = "Saved";
             callback && callback(null, file);
         }, function (err) {
+            file.errorCode = err.status;
             file.status = "Failed to save";
             console.error("Error while saving file: ", file.absoluteURI(), err);
             yConsole.error("Error while saving file: " + file.absoluteURI().toString());
             callback && callback(err);
         });
     };
+
+    EditorFiles.prototype.rename = function (file, newName, callback) {
+        file.status = "Renaming...";
+        var newURI = file.uri.clone().filename(newName);
+        storage.rename(file, newName, function (meta) {
+            //console.log("RENAMED!!!! ", meta);
+            file.rename(newURI);
+            refreshAfterAWhile();
+            file.errorCode = null;
+            file.ready = true;
+            file.status = "Saved";
+            callback && callback(null, file);
+        }, function (err) {
+            file.errorCode = err.status;
+            file.status = "Failed to rename file";
+            console.error("Error while renaming file: ", file.absoluteURI(), err);
+            yConsole.error("Error while renaming file: " + file.absoluteURI().toString());
+            callback && callback(err);
+        });
+    };
+
+    var refreshTimeout = null;
+    function refreshAfterAWhile() {
+        //console.log("refreshInAfterAWhile", refreshTimeout);
+        if (refreshTimeout) $timeout.cancel(refreshTimeout);
+        refreshTimeout = $timeout(function () {
+            //console.log("REFRESH!!!");
+            storage.refresh();
+        }, 1000);
+    }
 
     EditorFiles.prototype.saveAll = function (success, failure) {
         // Iterate trough all open files
@@ -90,7 +129,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
 
         function saveNextFile(success, failure) {
             var nextFile = filesToSave.pop();
-            console.log("nextFile", nextFile);
+            //console.log("nextFile", nextFile);
             if (nextFile) {
                 storage.save(nextFile, function () {
                     saveNextFile(success, failure);
@@ -99,6 +138,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
                     failure && failure(err);
                 })
             } else {
+                refreshAfterAWhile();
                 success && success()
             }
         }
@@ -113,7 +153,7 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
     EditorFiles.prototype.persist = function (file) {
         var self = this;
         var sessionFiles = session.storage("editorFiles");
-
+        //console.log("persist -->", file);
         if (sessionFiles) {
             //console.log("this._mainFile", this._mainFile);
             if (angular.isObject(this._mainFile)) {
@@ -142,20 +182,37 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         return file;
     };
 
-    EditorFiles.prototype.open = function (uriOrFile, setFocus) {
-        var file;
+    EditorFiles.prototype.get = function (uriOrFile) {
+        var match = null;
+        var uri = uriOrFile;
         if (angular.isObject(uriOrFile)) {
-            file = uriOrFile;
-        } else {
-            file = new EditorFile(uriOrFile);
+            uri = uriOrFile.uri.toString();
         }
-        if (setFocus) {
-            file.isFocused = true;
-        } else {
-            file.isFocused = false;
+        angular.forEach(this.files, function (file) {
+            if (file.uri.toString() === uri) match = file;
+        });
+        //console.log("MATCH", match);
+        return match;
+    };
+
+    EditorFiles.prototype.open = function (uriOrFile, setFocus, goToLine) {
+        var file = this.get(uriOrFile);
+
+        // VERIFY if file is not already in the list of files loaded
+        // So we create it or take the object already created
+        if (!file) {
+            if (angular.isObject(uriOrFile)) {
+                file = uriOrFile;
+            } else {
+                file = new EditorFile(uriOrFile);
+            }
+            this.files.push(file);
         }
+        file.isFocused = !!setFocus;
         file.load();
-        this.files.push(file);
+        if (goToLine) {
+            file.goToLine = goToLine;
+        }
         this.persist(file);
         return file;
     };
@@ -188,6 +245,16 @@ yarn.service("editorFiles", function (EditorFile, editors, confirmAction, sessio
         // Refresh this list of files in localStorage
         this.persist()
 
+    };
+
+    EditorFiles.prototype.hasUnsaved = function () {
+        var hasUnsaved = false;
+        var file;
+        for (var i = 0; i < this.files.length; i++) {
+            file = this.files[i];
+            if (file.isModified()) hasUnsaved = true;
+        }
+        return hasUnsaved;
     };
 
     return new EditorFiles();

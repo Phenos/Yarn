@@ -2,42 +2,45 @@
 
 yarn.directive('log', LogDirective);
 
-function LogDirective($sce) {
+function LogDirective($sce, editorFiles) {
     return {
         restrict: 'E',
-        bindToController: {
+        scope: {
             type: '=',
             text: '=',
+            options: '=',
             step: '=',
             isNewStep: '=',
             timestamp: '='
         },
-        scope: {},
-        controllerAs: 'log',
-        template: '',
-        controller: LogController
+        templateUrl: './html/log.html',
+        link: Link
     };
 
-    function LogController($scope, $element, $compile) {
-        var self = this;
+    function Link(scope, element) {
+        var _options = scope.options || {};
 
-        $scope.$watch('log.text', function(value) {
-            //console.log("timestam", self.timestamp);
-            var _time = new Date(self.timestamp);
-            self.time = _time.getHours() + ":" + _time.getMinutes();
-            $element.addClass("is-" + self.type);
+        var _time = new Date(scope.timestamp);
+        if (_options.source) scope.source = _options.source;
+        scope.time = _time.getHours() + ":" + _time.getMinutes();
+        element.addClass("is-" + scope.type);
 
-            //console.log("isNewStep", self.isNewStep);
-            if (self.isNewStep) {
-                $element.addClass("isNewStep");
+        if (scope.isNewStep) {
+            element.addClass("isNewStep");
+        }
+
+        scope.text2html = function() {
+            return $sce.trustAsHtml(scope.text);
+        };
+
+        scope.goToSource = function (source) {
+            if (source) {
+                editorFiles.open(source.uri, true, source.line);
             }
-
-            var elem = $compile("<div><span class='step'>#{{ log.step }}</span><span class='timestamp'>{{ log.time }}</span><span class='text'>" + value + "</span></div>")($scope);
-            //console.log("elem: ", elem);
-            $element.append(elem);
-        });
+        };
 
     }
+
 }
 
 })();

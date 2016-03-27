@@ -1,8 +1,7 @@
 /**
  * Service for handling IDE/editor operations
  */
-yarn.service('IDE', function IDEService(hotkeys,
-                                        rememberLastStory,
+yarn.service('IDE', function IDEService(rememberLastStory,
                                         $mdDialog,
                                         yConsole,
                                         loader,
@@ -10,80 +9,51 @@ yarn.service('IDE', function IDEService(hotkeys,
                                         commands,
                                         editorFiles,
                                         editors,
-                                        tools) {
+                                        tools,
+                                        preventCloseWhenUnsaved) {
 
-    var service = {
-        isWorking: false
+    function IDE() {
+        this.isWorking = false;
+    }
+
+    IDE.prototype.working = function (newValue) {
+        if (angular.isDefined(newValue)) {
+            this.isWorking = newValue;
+        }
+        return this.isWorking;
     };
+
+
+    // Prevent closing if the are unsaved files
+    preventCloseWhenUnsaved.check(function () {
+        var confirmationMessage;
+        if (editorFiles.hasUnsaved()) {
+            confirmationMessage =
+                'You have UNSAVED files. If you leave this page you will loose these changes.';
+        }
+        return confirmationMessage;
+    });
+
 
     /**
      * Register the service to a scope to allow binding keystrokes
      * @param $scope
      */
-    service.register = function ($scope) {
-        hotkeys
-            .bindTo($scope)
-            .add({
-                combo: 'mod+enter',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Save and run the story',
-                callback: function (event) {
-                    event.preventDefault();
-                    service.saveAllAndRun();
-                }
-            })
-            .add({
-                combo: 'mod+o',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Open file...',
-                callback: function (event) {
-                    event.preventDefault();
-                    service.openFromStorage();
-                }
-            })
-            .add({
-                combo: 'mod+s',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Save the story',
-                callback: function (event) {
-                    event.preventDefault();
-
-                    service.isWorking = true;
-                    service.saveAll(function () {
-                        service.isWorking = false;
-                    });
-                }
-            })
-            .add({
-                combo: 'mod+shift+r',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Run the story',
-                callback: function (event) {
-                    event.preventDefault();
-                    service.run();
-                }
-            })
-            .add({
-                combo: 'mod+shift+v',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Validate Current State',
-                callback: function (event) {
-                    event.preventDefault();
-                    tools.focus("validator");
-                    service.validate();
-                }
-            });
+    IDE.prototype.register = function ($scope) {
+        var self = this;
     };
 
 
-    service.saveAllAndRun = function () {
+    IDE.prototype.saveAllAndRun = function () {
         var self = this;
         console.log(".saveAllAndRun()");
-        this.isWorking = true;
-        service.saveAll(function (story) {
-            service.run(story);
-            self.isWorking = false;
+        this.working(true);
+        self.saveAll(function (story) {
+            self.run(story);
+            self.working(false);
         }, function () {
+            self.working(false);
+            // todo: put this in generic error popup handler
             $mdDialog.show(
                 $mdDialog
                     .alert()
@@ -95,46 +65,38 @@ yarn.service('IDE', function IDEService(hotkeys,
         })
     };
 
-    service.saveAll = function (success, failure) {
+    IDE.prototype.saveAll = function (success, failure) {
         editorFiles.saveAll(success, failure);
-
-        console.log("IDE.save");
+        //console.log("IDE.save");
     };
 
-    service.openFromStorage = function (ev) {
-
-        storage.refresh();
-
-        $mdDialog.show({
-            controller: OpenFromStorageController,
-            templateUrl: './html/openFromStorage.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose: true,
-            fullscreen: false
-        });
-
-        function OpenFromStorageController($scope) {
-            var self = this;
-            $scope.cancel = function () {
-                $mdDialog.cancel();
-            };
-            $scope.open = function (file) {
-                self.isWorking = true;
-                //console.log("open", file);
-                $mdDialog.cancel();
-                editorFiles.open(file);
-                editors.focus(file.uri.toString());
-                self.isWorking = false;
-            };
-        }
-    };
-
-    service.validate = function () {
+    IDE.prototype.validate = function () {
         commands.run("validate");
     };
 
-    service.run = function (fallback) {
+    IDE.prototype.newFile = function (event) {
+        var self = this;
+        var confirm = $mdDialog.prompt()
+            .title('Create a new file')
+            .textContent('Choose a name for this new file (ideally ends with .txt):')
+            .placeholder("optionnal-folder/some-filename.txt")
+            .ariaLabel('New file')
+            .ok('Create')
+            .cancel('Cancel');
+
+        if (event) confirm.targetEvent(event);
+
+        $mdDialog.show(confirm).then(function(newFilename) {
+            //console.log("Renaming", newName);
+            var newFile = editorFiles.open(newFilename, true);
+            editorFiles.save(newFile);
+
+        }, function() {
+            //$scope.status = 'You didn\'t name your dog.';
+        });
+    };
+
+    IDE.prototype.run = function (fallback) {
         var mainFile = editorFiles.mainFile();
         if (mainFile) {
             var uri = mainFile.absoluteURI().toString();
@@ -150,29 +112,7 @@ yarn.service('IDE', function IDEService(hotkeys,
         }
     };
 
-    service.runFile = function (file) {
-        if (file) {
-            this.isWorking = true;
-            rememberLastStory.forget();
-            loader.fromURL(file.absoluteURI().toString());
-            this.isWorking = false;
-        }
-    };
-
-
-    service.loadRememberedStory = function () {
-        // Reload the story that was previously loaded
-        var rememberedStory = rememberLastStory.get();
-        if (rememberedStory) {
-            yConsole.log("Story address found in memory");
-            loader.fromURL(rememberedStory);
-        } else {
-            yConsole.log("No story to load from either memory or url");
-            yConsole.tip("To load a story you can use the LOAD command. Ex.: LOAD http://somtehing.com/yourStoryFile.txt");
-        }
-    };
-
-    return service;
+    return new IDE();
 });
 
 

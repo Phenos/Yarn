@@ -3,7 +3,7 @@ yarn.service('graphCommand', graphCommand);
 function graphCommand(yConsole) {
 
     function handler() {
-        yConsole.debug('<graph width="800" height="400" thing-is-a="room" predicate="linksto"></graph>');
+        yConsole.debug('<graph width="800" height="400" thing-is-a="space" predicate="linksto"></graph>');
     }
 
     return {

@@ -1,6 +1,8 @@
 yarn.service("inspections", function (fileReferenceInspection,
                                       textInspection,
                                       commentInspection,
+                                      occurencesInspection,
+                                      punctuationInspection,
                                       predicateReferenceInspection,
                                       objectReferenceInspection,
                                       relatedHelpInspection) {
@@ -9,7 +11,9 @@ yarn.service("inspections", function (fileReferenceInspection,
         objectReferenceInspection,
         predicateReferenceInspection,
         commentInspection,
+        punctuationInspection,
         textInspection,
-        relatedHelpInspection
+        relatedHelpInspection,
+        occurencesInspection
     ];
 });

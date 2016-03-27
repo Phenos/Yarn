@@ -4,8 +4,10 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                                                   IDE,
                                                   globalContextMenu,
                                                   confirmAction,
+                                                  $timeout,
                                                   $throttle,
-                                                  $debounce) {
+                                                  $debounce,
+                                                  $mdDialog) {
     return {
         restrict: 'E',
         bindToController: {
@@ -39,9 +41,9 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         };
 
         this.save = function () {
-            IDE.isWorking = true;
+            IDE.working(true);
             editorFiles.save(this.file, function () {
-                IDE.isWorking = false;
+                IDE.working(false);
             });
         };
 
@@ -57,6 +59,25 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         this.close = function () {
             editorFiles.close(this.file);
+        };
+
+        this.rename = function (ev) {
+            var filename = this.file.uri.filename();
+            var self = this;
+            var confirm = $mdDialog.prompt()
+                .title('Rename')
+                .textContent('Choose a new name for this file.')
+                .placeholder(filename)
+                .ariaLabel('Rename file')
+                .targetEvent(ev)
+                .ok('Rename')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function(newName) {
+                //console.log("Renaming", newName);
+                editorFiles.rename(self.file, newName);
+            }, function() {
+                //$scope.status = 'You didn\'t name your dog.';
+            });
         };
 
         this.focus = function () {
@@ -81,12 +102,14 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             aceEditor = _editor;
 
             aceEditor.on("click", clickHandler);
+            aceEditor.on("focus", function() {
+                checkGoToLine();
+            });
             aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
 
             angular.element(aceEditor.container).on("contextmenu", function () {
-                globalContextMenu.add("Inspector", "inspector.svg", function () {
-                    tools.focus("inspector");
-                });
+                console.log("inspector", inspector);
+                //updateInspection();
             });
 
         }
@@ -100,6 +123,21 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             if (self.file) {
                 self.file.updateStatus();
             }
+            checkGoToLine();
+
+
+        }
+
+        function checkGoToLine() {
+            $timeout(function () {
+                if (self.file && self.file.goToLine) {
+                    console.log("checkGoToLine", self.file.goToLine);
+                    //console.log("goToLine", self.file.goToLine);
+                    //aceEditor.resize(true);
+                    aceEditor.gotoLine(self.file.goToLine, 0, true);
+                    self.file.goToLine = null;
+                }
+            }, 500);
         }
 
         this.options = {
@@ -126,10 +164,23 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         function slowUpdateInspection() {
             if (aceEditor) {
+
+                globalContextMenu.flush();
+                globalContextMenu.add("Inspect", "inspector.svg", function () {
+                    tools.focus("inspector");
+                });
+                $timeout(function() {
+                    angular.forEach(inspector.articles, function(article) {
+                        angular.forEach(article.actions, function(action) {
+                            globalContextMenu.add(action.label, action.icon + ".svg", action.callback);
+                        });
+                    });
+                }, 200);
+
                 var pos = aceEditor.getCursorPosition();
                 var token = aceEditor.session.getTokenAt(pos.row, pos.column);
-                //console.log("token", token);
-                if (token) {
+                // Also check if the inspection is not just for whitespace
+                if (token && token.value.trim().length) {
                     token.file = self.file;
                     inspector.inspect(token);
                 }

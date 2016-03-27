@@ -1,15 +1,7 @@
 <div>
     <p>
-        This item is used in {{ usageCount.total }} assertions in your story.
-    </p>
-    <p>
-        It occurs
-        <a ng-click="openAsSubject()">
-            {{ usageCount.asSubject }} times as subject
-        </a>
-        and
-        <a ng-click="openAsObject()">
-            {{ usageCount.asObject }} times as the object
-        </a>
+        This is a
+        <strong ng-if="!isStandard">custom object</strong>
+        <span ng-if="isStandard">standard object</span>.
     </p>
 </div>

@@ -38,7 +38,7 @@ function files(api, data, next) {
         //api.log("Get the list of objects from : " + storyPath);
         var stream = s3client.listObjects(params);
         stream.on('error', function (err) {
-            api.error("unable to download:", err.stack);
+            api.log("ERROR: unable to download:", err.stack);
             next(new Error(err));
         });
         stream.on('data', function (files) {

@@ -1,6 +1,12 @@
 yarn.service("globalContextMenu", function () {
     var service = {
+        element: null,
         menuItems: []
+    };
+
+    service.register = function (scope, element) {
+        scope.globalContextMenu = this;
+        this.element = element;
     };
 
     service.flush = function () {

@@ -11,17 +11,70 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         controller: StorageFilesController
     };
 
-    function StorageFilesController($scope, storage) {
+    function StorageFilesController($element, $scope, storage, confirmAction, postal) {
         var self = this;
         //console.log("StorageFilesController", storage);
         this.storage = storage;
         this.files = storage.files;
+        this.directories = storage.directories();
+        //console.log("directories", this.directories);
+        this.selection = [];
         this.search = "";
 
         updateList();
 
+        postal.subscribe({
+            channel: "storage",
+            topic: "refresh",
+            callback: function () {
+                updateList();
+            }
+        });
+
+        $scope.selectAll = function() {
+            angular.forEach(self.files, function (file) {
+                file.isSelected = true;
+            });
+            this.updateSelection();
+        };
+
+        $scope.refresh = function() {
+            storage.refresh();
+        };
+
+        $scope.unselectAll = function() {
+            angular.forEach(self.files, function (file) {
+                file.isSelected = false;
+            });
+            this.updateSelection();
+        };
+
+        $scope.updateSelection = function() {
+            self.selection = self.storage.selection();
+        };
+
+        $scope.deleteSelection = function(event) {
+            var text = "Are you sure you want to delete <br/>the <strong>" +
+                    self.selection.length + " files</strong> you have selected?" +
+                    "<br/>This action cannot be undone";
+            confirmAction("Delete selection", text, ok, cancel, event, $element);
+            function ok() {
+                console.log("DELETING FILES!!!!!");
+                $scope.updateSelection();
+                storage.delete(self.selection, function success() {
+                    storage.refresh();
+                    $scope.updateSelection();
+                }, function fail() {
+                    storage.refresh();
+                    $scope.updateSelection();
+                });
+            }
+            function cancel() {}
+        };
+
         function updateList() {
-            //console.log(self.files);
+            //console.log("updateList", self);
+            self.directories = storage.directories();
             angular.forEach(self.files, function (file) {
                 var filterOut = false;
                 if (self.search && file._uri.indexOf(self.search) === -1) {

@@ -21,7 +21,7 @@
     "angular-audio": "~1.7.1",
     "d3": "~3.5.16",
     "ngstorage": "~0.3.10",
-    "angular-material": "~1.0.6",
+    "angular-material": "~1.1.0",
     "angular-ui-ace": "bower",
     "angular-resource": "~1.4.9",
     "angular-sanitize": "~1.5.0",
@@ -36,7 +36,8 @@
     "angularfire": "~1.1.4",
     "angular-scroll": "~1.0.0",
     "nunjucks": "~2.4.1",
-    "ng-lodash": "~0.4.0"
+    "ng-lodash": "~0.4.0",
+    "hover": "Hover#^2.0.2"
   },
   "resolutions": {
     "lodash": "~4.5.1",

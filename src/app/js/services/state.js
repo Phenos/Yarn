@@ -12,6 +12,7 @@ yarn.service('state', function ($localStorage,
                                 guid,
                                 lodash,
                                 templating,
+                                parseAssert,
                                 storyLocalStorage) {
 
         function State() {
@@ -180,6 +181,21 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
+        State.prototype.value = function () {
+            var _assert = parseAssert.apply(this, arguments);
+            return this.resolveValue(_assert);
+        };
+
+        State.prototype.one = function () {
+            var _assert = parseAssert.apply(this, arguments);
+            return this.resolveOne(_assert);
+        };
+
+        State.prototype.many = function () {
+            var _assert = parseAssert.apply(this, arguments);
+            return this.resolveAll(_assert);
+        };
+
         State.prototype.render = function (template) {
             return templating.render(template, this.scope())
         };
@@ -193,10 +209,9 @@ yarn.service('state', function ($localStorage,
          * @returns {*}
          */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
-            var self = this;
             var options = _options || {};
             var assertion;
-
+            //console.log("options", options.source.uri);
             if (subject && predicate && object) {
                 var _predicate = predicate;
 
@@ -403,18 +418,18 @@ yarn.service('state', function ($localStorage,
                 assertRaw: assertRaw
             };
 
-            newScope.state ={
-                steps : this.step()
+            newScope.state = {
+                steps: this.step()
             };
 
-            newScope.format ={
-                timeOfDay : timeOfDay
+            newScope.format = {
+                timeOfDay: timeOfDay
             };
 
             function timeOfDay(value) {
                 var d = new Date(1976, 1, 1, 0, value, 0, 0);
                 var minutesStr = "00" + d.getMinutes();
-                return d.getHours() + ":" + (minutesStr).substr(minutesStr.length-2, 2);
+                return d.getHours() + ":" + (minutesStr).substr(minutesStr.length - 2, 2);
             }
 
             // todo: move this in the "templating" service
@@ -431,13 +446,6 @@ yarn.service('state', function ($localStorage,
                 return state.resolveRawValue(__assert);
             }
 
-            function parseAssert(assertion) {
-                var tokens = assertion.split(" ");
-                var subject = tokens.shift();
-                var object = tokens.pop();
-                var predicate = tokens.join(" ");
-                return assert(subject, predicate, object);
-            }
             return newScope;
         };
 

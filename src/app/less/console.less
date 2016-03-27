@@ -9,7 +9,7 @@
 
     .commands-tray {
         background: #006d00;
-        width: 8em;
+        width: 10em;
 
         md-list-item {
             color: #fff;
@@ -43,20 +43,22 @@
             display: block;
             position: relative;
 
-            margin: 0 20px;
-            padding: 0.4em 0;
+            margin: 0;
+            padding: 0.2em 1.5em 0.2em 1.5em;
             color: #333;
 
             &.isNewStep {
                 margin-top: 0.5em;
-                border-top: 2px solid rgba(0, 0, 0, 0.05);
+                padding-top: 1em;
+                border-top: 1px solid rgba(0, 0, 0, 0.2);
+                box-shadow: inset 0px 26px 19px -22px rgba(0,0,0,0.17);
             }
 
             &:nth-child(even) {
-                background-color: rgba(255, 255, 255, 0.02);
+                //background-color: rgba(255, 255, 255, 0.02);
             }
             &:nth-child(odd) {
-                background-color: rgba(0, 0, 0, 0.02);
+                background-color: rgba(0, 3, 99, 0.05);
             }
 
             a:visited,
@@ -70,13 +72,17 @@
             }
 
             .timestamp {
+                font-weight: normal;
+                font-style: normal;
                 float: right;
-                font-size: 0.9em;
+                font-size: 1em;
                 color: rgba(0, 0, 0, 0.4);
             }
             .step {
+                font-weight: normal;
+                font-style: normal;
                 float: right;
-                font-size: 0.9em;
+                font-size: 1em;
                 color: rgba(0, 0, 0, 0.4);
                 padding-left: 1em;
             }
@@ -84,7 +90,7 @@
             log-icon {
                 position: absolute;
                 font-size: 0.7em;
-                left: -1.3em;
+                left: 0.3em;
                 top: 0.7em;
             }
 
@@ -99,17 +105,15 @@
                 }
                 log-icon {
                     font-size: 1.2em;
-                    left: -0.9em;
+                    left: 0.3em;
                     top: 0.1em;
                     color: #6666CC;
                 }
             }
             &.is-error {
-                letter-spacing: 0.06em;
                 color: #CC3333;
             }
             &.is-warning {
-                letter-spacing: 0.06em;
                 color: #b08e00;
             }
             &.is-success {
@@ -124,13 +128,19 @@
                 }
                 log-icon {
                     font-style: normal;
-                    font-size: 0.8em;
-                    left: -1.1em;
+                    font-size: 1em;
+                    left: 0.3em;
                     top: 0.75em;
                     color: #1b7b1b;
                 }
             }
             &.is-debug {
+            }
+
+            .source {
+                text-decoration: underline;
+                color: #3434aa;
+                cursor: pointer;
             }
 
             .truthStatement {

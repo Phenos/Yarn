@@ -1,0 +1,50 @@
+.project-tool {
+    position: relative;
+
+    .list-of-folders {
+        background: #007500;
+        position: relative;
+        overflow-x: hidden;
+        z-index: 100;
+        color: #fff;
+
+        .md-subheader {
+            background: rgba(0, 91, 0, 0.71);
+            color: #fff;
+            font-size: 1.1em;
+            .md-subheader-inner {
+                //padding: 16px 16px;
+            }
+        }
+        .md-button.md-fab {
+            background: rgba(0, 117, 0, 0.52);
+            width: 34px;
+            height: 34px;
+            min-height: 34px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            box-shadow: none;
+
+            md-icon {
+                width: 18px;
+                height: 18px;
+                color: rgba(255, 255, 255, 0.7);
+                &:hover {
+                    color: rgb(255, 255, 255);
+                }
+            }
+        }
+
+        .count {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+            padding-right: 0.5em;
+        }
+    }
+
+    .storageFiles {
+        z-index: 200;
+    }
+
+}

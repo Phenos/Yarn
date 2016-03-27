@@ -1,6 +1,6 @@
-<div md-whiteframe="4"
-     style="z-index: 10000; position: absolute; background: #eee; width: 9em;">
-    <md-menu-item ng-repeat="menuItem in contextMenuItems">
+<div md-whiteframe="10"
+     style="z-index: 10000; position: absolute; background: #fff;">
+    <md-menu-item ng-repeat="menuItem in globalContextMenu.menuItems">
         <md-button ng-click="menuItem.click()">
             <md-icon md-svg-icon="./svg-icons/{{ menuItem.icon }}"></md-icon>
             {{ menuItem.label }}

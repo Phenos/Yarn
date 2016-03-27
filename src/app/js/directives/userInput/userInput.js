@@ -16,20 +16,10 @@ function UserInputDirective() {
         controller: UserInputController
     };
 
-    function UserInputController(commands, $scope, $element, hotkeys) {
+    function UserInputController(commands, $element) {
         var self = this;
 
         this.hasFocus = false;
-
-        hotkeys.bindTo($scope)
-            .add({
-                combo: 'esc',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                description: 'Focus back to the editor',
-                callback: function () {
-                    self.toggleFocus();
-                }
-            });
 
         this.getAutoCompleteMatches = function (searchText) {
             var allCommands = [];
@@ -74,14 +64,6 @@ function UserInputDirective() {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 self.submit();
-                this.focus();
-            }
-        };
-
-        this.toggleFocus = function () {
-            if (this.hasFocus) {
-                this.blur();
-            } else {
                 this.focus();
             }
         };

@@ -37,5 +37,9 @@ yarn.factory('Predicate', function PredicateService(syntaxes) {
 
     }
 
+    Predicate.prototype.text = function () {
+        return this._label || this.id;
+    };
+
     return Predicate;
 });

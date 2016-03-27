@@ -1,27 +1,93 @@
-<div flex="100" layout="column">
-    <md-input-container flex="1"
-                        md-no-float
-                        class="md-block">
-        <md-icon md-svg-src="/svg-icons/search.svg"></md-icon>
-        <input ng-model="storageFiles.search"
-               type="text"
-               placeholder="Enter search term">
-
-    </md-input-container>
-    <div ng-if="storageFiles.storage.isLoading && storageFiles.storage.files.length === 0">
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-    </div>
-    <md-content flex="100">
+<div class="project-tool" flex="grow" layout="row">
+    <md-content flex="40" class="list-of-folders" md-whiteframe="10">
+        <md-button class="md-fab md-mini" ng-click="refresh()" aria-label="Refresh">
+            <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+        </md-button>
+        <section>
+            <md-subheader class="md-primary">
+                PROJECTS
+            </md-subheader>
+        </section>
         <md-list>
-            <md-list-item ng-if="storageFiles.storage.files.length > 0"
-                          ng-click="storageFiles.select({file: file})"
-                          ng-repeat="file in storageFiles.files | filter: { filterOut: false }">
-                <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
-                <p>{{ file.uri.path() }}</p>
+            <md-list-item>
+                Your Project
             </md-list-item>
+            <!--
+            <md-divider></md-divider>
+            <md-list-item>
+                Yarn Samples
+            </md-list-item>
+            -->
         </md-list>
     </md-content>
-    <md-content ng-if="(!storageFiles.storage.isLoading) && storageFiles.storage.files.length === 0">
-        You have no no files in storage!
-    </md-content>
+    <div class="storageFiles"
+         md-whiteframe="10"
+         flex="grow"
+         layout="column">
+        <header layout="row"
+                md-whiteframe="4">
+            <div flex="grow">
+                <md-input-container flex="grow"
+                                    md-no-float
+                                    class="md-block">
+                    <md-icon md-svg-src="/svg-icons/search.svg"></md-icon>
+                    <input ng-model="storageFiles.search"
+                           type="text"
+                           autocomplete="off"
+                           placeholder="Enter search term">
+
+                </md-input-container>
+            </div>
+            <div flex="noshrink"
+                 ng-if="storageFiles.storage.isLoading"
+                 layout="row"
+                 layout-align="center center"
+                 style="min-width:50px"
+            >
+                <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
+            </div>
+            <div flex="auto" style="white-space: nowrap;" ng-if="!storageFiles.storage.isLoading">
+                <!--
+                <div ng-if="storageFiles.storage.files.length === 0">
+                    You have no no files in storage!
+                </div>
+                -->
+                <span ng-if="storageFiles.storage.files.length > 0 && storageFiles.selection.length === 0">
+                    <md-button ng-click="selectAll()">Select all
+                    </md-button>
+                </span>
+                <span ng-if="storageFiles.selection.length > 0">
+                    <md-button ng-click="deleteSelection($event)">
+                        Delete {{ storageFiles.selection.length }} files
+                    </md-button>
+                    <md-button ng-click="unselectAll()">Unselect</md-button>
+                </span>
+            </div>
+        </header>
+        <md-content flex="grow">
+            <section ng-repeat="directory in storageFiles.directories">
+                <md-subheader ng-if="directory.uri.toString()" class="md-primary">
+                    <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
+                    /&nbsp;{{ directory.uri.toString() }}
+                </md-subheader>
+                <md-list class="list-of-files">
+                    <md-list-item class="noright md-with-secondary"
+                                  ng-if="directory.files.length > 0"
+                                  ng-click="storageFiles.select({file: file})"
+                                  ng-repeat="file in directory.files | filter: { filterOut: false }">
+                        <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
+                        <p>
+                            <span class="filename">{{ file.uri.filename() }}</span>
+                            <span class="filesize">{{ file.sizeInKB() }}kb</span>
+                        </p>
+                        <md-checkbox class="md-secondary"
+                                     ng-click="updateSelection()"
+                                     ng-model="file.isSelected"
+                                     aria-label="Select">
+                        </md-checkbox>
+                    </md-list-item>
+                </md-list>
+            </section>
+        </md-content>
+    </div>
 </div>

@@ -1,8 +1,35 @@
-yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI) {
+yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI, postal) {
 
     function Storage() {
         this.files = [];
     }
+
+    Storage.prototype.directories = function () {
+        var _directories = {};
+        //console.log("Grouping in directories: ", this.files);
+        angular.forEach(this.files, function (file) {
+            var directoryURI = file.uri.directory();
+            var directory = _directories[directoryURI];
+            if (!directory) {
+                directory = _directories[directoryURI] = new Directory(directoryURI);
+            }
+            directory.files.push(file);
+        });
+        return _directories;
+    };
+
+    function Directory(uri) {
+        this.uri = uri;
+        this.files = [];
+    }
+
+    Storage.prototype.sort = function (fileA, fileB) {
+        var a = fileA.uri.toString().toLowerCase();
+        var b = fileB.uri.toString().toLowerCase();
+        this.files.sort(function () {
+            return a.localeCompare(b);
+        });
+    };
 
     Storage.prototype.add = function (uri, meta) {
         // Todo, first check if the file is already there
@@ -23,7 +50,29 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
             file = new EditorFile(uri, meta);
             this.files.push(file);
         }
+
+        file.markForDiscard = false;
+
         return file;
+    };
+
+    Storage.prototype.discardMarkedFiles = function () {
+        // Todo, first check if the file is already there
+        var keptFiles = [];
+        angular.forEach(this.files, function (file) {
+            if (!file.markForDiscard) {
+                keptFiles.push(file);
+            }
+        });
+        this.files = keptFiles;
+    };
+
+    Storage.prototype.selection = function () {
+        var selection = [];
+        angular.forEach(this.files, function (file) {
+            if (file.isSelected) selection.push(file);
+        });
+        return selection;
     };
 
     Storage.prototype.clear = function (uri) {
@@ -43,7 +92,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
                 content: savedContent,
                 token: user.token,
                 username: user.username
-            }, function(data){
+            }, function (data) {
                 if (!data.error) {
                     //console.log("?",[savedContent], [file.originalContent]);
                     file.originalContent = savedContent;
@@ -60,6 +109,67 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
 
     };
 
+    Storage.prototype.rename = function (file, newName, success, failed) {
+        self.isLoading = true;
+        var user = session.user();
+        if (user) {
+            var relativeToUserURI = file.relativeToUserURI();
+            var newNameRelativeToUserUID = relativeToUserURI.clone().filename(newName);
+            console.log("NEW NAME WILL BE: ", newNameRelativeToUserUID);
+            apiClient.action('renameFile', {
+                uri_source: relativeToUserURI.toString(),
+                uri_destination: newNameRelativeToUserUID.toString(),
+                token: user.token,
+                username: user.username
+            }, function (data) {
+                if (!data.error) {
+                    self.isLoading = false;
+                    //console.log("?",[savedContent], [file.originalContent]);
+                    //file.originalContent = savedContent;
+                    console.log("storage.renameFIle success", [data]);
+                    success && success(data);
+                } else {
+                    self.isLoading = false;
+                    yConsole.error("An error occurered while trying to rename file in storage : " + data.error);
+                    failed && failed(data.error);
+                }
+            });
+        }
+
+    };
+
+    Storage.prototype.delete = function (files, success, failed) {
+        var self = this;
+
+        self.isLoading = true;
+
+        var filesMeta = [];
+        angular.forEach(files, function (file) {
+            filesMeta.push(file.meta);
+        });
+
+        console.log("filesMeta", filesMeta);
+
+        var user = session.user();
+        if (user) {
+            apiClient.action('deleteFiles', {
+                files: filesMeta,
+                token: user.token,
+                username: user.username
+            }, function (data) {
+                if (!data.error) {
+                    self.isLoading = false;
+                    console.log("storage.deleteFiles", [data]);
+                    success && success(data);
+                } else {
+                    self.isLoading = false;
+                    yConsole.error("An error occurered while trying to delete files in storage : " + data.error);
+                    failed && failed(data.error);
+                }
+            });
+        }
+    };
+
     Storage.prototype.refresh = function (uri) {
         var self = this;
         var user = session.user();
@@ -72,6 +182,10 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
                 username: user.username
             }, function (data) {
                 if (!data.error) {
+                    angular.forEach(self.files, function (file) {
+                        file.markForDiscard = true;
+                    });
+
                     //console.log("Storagerefresh > apiClient.files", data);
                     angular.forEach(data.files, function (file) {
                         if (file && file.Size > 0) {
@@ -80,6 +194,14 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI)
                                 self.add(path, file);
                             }
                         }
+                    });
+
+                    self.discardMarkedFiles();
+
+                    postal.publish({
+                        channel: "storage",
+                        topic: "refresh",
+                        data: {}
                     });
                     self.isLoading = false;
                 } else {

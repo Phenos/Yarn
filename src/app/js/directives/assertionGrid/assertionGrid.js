@@ -3,7 +3,7 @@
     yarn.directive('assertionGrid', assertionGridDirective);
 
 
-    function assertionGridDirective() {
+    function assertionGridDirective(editorFiles) {
         return {
             restrict: 'E',
             scope: {
@@ -13,42 +13,77 @@
             controller: AssertionGridController
         };
 
-        function AssertionGridController($scope) {
+        function AssertionGridController($scope, $element) {
 
             $scope.$watch("data", function () {
                 $scope.options.data = $scope.data;
             });
 
+            $scope.goToSource = function (source) {
+                editorFiles.open(source.uri, true, source.line);
+            };
+
             $scope.options = {
+                rowHeight: 30,
                 enableFiltering: true,
+                enableRowReordering: true,
+                enableGridMenu: true,
+                onRegisterApi: function(gridApi){
+                    $scope.gridApi = gridApi;
+                },
                 columnDefs: [
                     {
                         field: 'subject.text()',
-                        displayName: 'subject'
+                        displayName: 'subject',
+                        width: "*"
                     },
                     {
                         field: 'predicate.label',
-                        displayName: 'predicate'},
+                        displayName: 'predicate',
+                        width: 80
+                    },
                     {
                         field: 'object.text()',
-                        displayName: 'object'},
+                        displayName: 'object',
+                        width: "*"
+                    },
                     {
                         field: '_value',
-                        displayName: 'value'},
+                        displayName: 'value',
+                        cellTooltip: true
+                    },
                     {
                         field: 'layer',
-                        displayName: 'layer'},
+                        displayName: 'layer',
+                        width: 60
+                    },
                     {
                         field: 'parent.text()',
-                        displayName: 'parent'},
+                        displayName: 'parent',
+                        width: 80
+                    },
                     {
                         field: 'weight()',
                         displayName: 'weight'
+                    },
+                    {
+                        field: 'source',
+                        cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><div class="ui-grid-cell-contents" ng-cell-text><a href="#" ng-click="grid.appScope.goToSource(COL_FIELD);$event.preventDefault();">{{ COL_FIELD.file }}:{{ COL_FIELD.line }}</a></div></div>',
+                        displayName: 'source'
                     }
                 ],
                 data: $scope.data
             };
 
+            $scope.state = {};
+
+            $scope.saveState = function() {
+                $scope.state = $scope.gridApi.saveState.save();
+            };
+
+            $scope.restoreState = function() {
+                $scope.gridApi.saveState.restore( $scope, $scope.state );
+            };
         }
 
     }

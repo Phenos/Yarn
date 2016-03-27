@@ -4,8 +4,9 @@ yarn.service('root', rootService);
 
 
 function rootController(user,
-                        $rootScope,
+                        $localStorage,
                         $scope,
+                        $element,
                         IDE,
                         yConsole,
                         welcomeMessage,
@@ -13,14 +14,21 @@ function rootController(user,
                         root,
                         themes,
                         wallpaper,
-                        hotkeys,
                         tools,
-                        editors) {
+                        $timeout,
+                        fireOnResizeEvent,
+                        globalContextMenu) {
 
     $scope.IDE = IDE;
     $scope.themes = themes;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead
     $scope.editorFiles = editorFiles;
+
+    // Used by the global context menu
+    globalContextMenu.register($scope, $element);
+
+    // Restore previously openned files
+    editorFiles.reloadFromLocalStorage();
 
     $scope.toolTabs = {
         selected: 0
@@ -33,25 +41,6 @@ function rootController(user,
     // Register with the service
     root.register($scope);
 
-    hotkeys.bindTo($rootScope)
-        .add({
-            combo: 'mod+esc',
-            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            description: 'Show/Hide the console',
-            callback: function () {
-                root.toggleConsole();
-            }
-        })
-        .add({
-            combo: 'mod+h',
-            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            description: 'Show/Hide the help',
-            callback: function () {
-                root.toggleHelp();
-            }
-        });
-
-
     /*
      Show a welcome message in the yarn console
      */
@@ -61,12 +50,8 @@ function rootController(user,
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
-    $scope.openFile = function () {
-        IDE.openFromStorage();
-    };
-
     $scope.openMain = function () {
-        var main = editorFiles.open("./story.txt");
+        var main = editorFiles.open("./story.txt", true);
         editorFiles.mainFile(main);
     };
 
@@ -84,8 +69,8 @@ function rootController(user,
         $scope.consoleFlexHeight = 0;
     };
     $scope.onConsoleFocus = function () {
-        $scope.editorFlexHeight = 60;
-        $scope.consoleFlexHeight = 40;
+        $scope.editorFlexHeight = 50;
+        $scope.consoleFlexHeight = 50;
     };
 
     $scope.focusInspector = function () {
@@ -99,20 +84,33 @@ function rootController(user,
 
 
     $scope.toggleTools = function (value) {
+        // Trigger window resize to fix a glitch with the grid resize
+        $timeout(function () {
+            fireOnResizeEvent();
+        }, 500);
         if (angular.isDefined(value)) {
-            $scope.toolsAreVisible = !value;
-        }
-        if ($scope.toolsAreVisible) {
-            $scope.toolsAreVisible = false;
-            $scope.onConsoleEscapeFocus();
+            $scope.toolsAreVisible = value;
+            if ($scope.toolsAreVisible) {
+                $scope.onConsoleFocus();
+            } else {
+                $scope.onConsoleEscapeFocus();
+            }
         } else {
-            $scope.toolsAreVisible = true;
-            $scope.onConsoleFocus();
+            if ($scope.toolsAreVisible) {
+                $scope.toolsAreVisible = false;
+                $scope.onConsoleEscapeFocus();
+            } else {
+                $scope.toolsAreVisible = true;
+                $scope.onConsoleFocus();
+            }
         }
+        $localStorage.toolsAreVisible = $scope.toolsAreVisible;
     };
+    $scope.toggleTools($localStorage.toolsAreVisible);
+    tools.focusFromMemory();
 
 
-    $scope.toggleTools(true);
+
     // Check if a previously opened story should be loaded
     //IDE.loadRememberedStory();
     IDE.run(function () {
@@ -120,10 +118,9 @@ function rootController(user,
         IDE.run();
     });
 
-    tools.focusFromMemory();
 }
 
-function rootService($localStorage, consoleService, help, player) {
+function rootService($localStorage, consoleService, player) {
     var service = {
         scope: null
     };
@@ -166,12 +163,17 @@ function rootService($localStorage, consoleService, help, player) {
             service.showConsole();
         }
     };
+
     service.toggleHelp = function () {
         if (service.helpIsVisible) {
             service.hideHelp();
         } else {
             service.showHelp();
         }
+    };
+
+    service.toggleTools = function (value) {
+        service.scope.toggleTools(value);
     };
 
     /*

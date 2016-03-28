@@ -1,10 +1,9 @@
 yarn.service("editorFiles", function (EditorFile,
                                       editors,
                                       confirmAction,
-                                      session,
-                                      storage,
                                       $timeout,
-                                      yConsole) {
+                                      yConsole,
+                                      postal) {
 
     function EditorFiles() {
         this.files = [];
@@ -15,7 +14,7 @@ yarn.service("editorFiles", function (EditorFile,
     /**
      * Reload the list open files from localStorage
      */
-    EditorFiles.prototype.reloadFromLocalStorage = function () {
+    EditorFiles.prototype.reloadFromLocalStorage = function (session) {
         var lastFocusFromMemory = editors.lastFocusFromMemory();
         var self = this;
         var mainFile = "";
@@ -55,7 +54,7 @@ yarn.service("editorFiles", function (EditorFile,
                     this._mainFile.isMain = false;
                 this._mainFile = null;
             }
-            this.persist();
+            this.publishChange();
         }
         var _mainFile;
         if (angular.isDefined(this._mainFile)) {
@@ -71,8 +70,10 @@ yarn.service("editorFiles", function (EditorFile,
 
     EditorFiles.prototype.save = function (file, callback) {
         file.status = "Saving...";
-        storage.save(file, function (meta) {
-            refreshAfterAWhile();
+        // todo: is this is circular ?
+        var storage = file.profile.storage;
+        storage.save(file, function () {
+            refreshAfterAWhile(storage);
             file.errorCode = null;
             file.ready = true;
             file.status = "Saved";
@@ -89,10 +90,12 @@ yarn.service("editorFiles", function (EditorFile,
     EditorFiles.prototype.rename = function (file, newName, callback) {
         file.status = "Renaming...";
         var newURI = file.uri.clone().filename(newName);
-        storage.rename(file, newName, function (meta) {
+        // todo: is this is circular ?
+        var storage = file.profile.storage;
+        storage.rename(file, newName, function () {
             //console.log("RENAMED!!!! ", meta);
             file.rename(newURI);
-            refreshAfterAWhile();
+            refreshAfterAWhile(storage);
             file.errorCode = null;
             file.ready = true;
             file.status = "Saved";
@@ -107,7 +110,7 @@ yarn.service("editorFiles", function (EditorFile,
     };
 
     var refreshTimeout = null;
-    function refreshAfterAWhile() {
+    function refreshAfterAWhile(storage) {
         //console.log("refreshInAfterAWhile", refreshTimeout);
         if (refreshTimeout) $timeout.cancel(refreshTimeout);
         refreshTimeout = $timeout(function () {
@@ -131,14 +134,16 @@ yarn.service("editorFiles", function (EditorFile,
             var nextFile = filesToSave.pop();
             //console.log("nextFile", nextFile);
             if (nextFile) {
+                // todo: is this is circular ?
+                var storage = nextFile.profile.storage;
                 storage.save(nextFile, function () {
                     saveNextFile(success, failure);
                 }, function (err) {
                     yConsole.error("An errror occured while saving all files");
                     failure && failure(err);
-                })
+                });
+                refreshAfterAWhile(storage);
             } else {
-                refreshAfterAWhile();
                 success && success()
             }
         }
@@ -146,38 +151,9 @@ yarn.service("editorFiles", function (EditorFile,
         saveNextFile(success, failure);
     };
 
-    /**
-     * Persist on or all files to localStorage
-     * @param file
-     */
-    EditorFiles.prototype.persist = function (file) {
-        var self = this;
-        var sessionFiles = session.storage("editorFiles");
-        //console.log("persist -->", file);
-        if (sessionFiles) {
-            //console.log("this._mainFile", this._mainFile);
-            if (angular.isObject(this._mainFile)) {
-                sessionFiles.mainFile = this._mainFile._uri;
-            } else {
-                delete sessionFiles.mainFile;
-            }
 
-            if (!angular.isArray(sessionFiles.files))
-                sessionFiles.files = [];
-
-            if (file) {
-                sessionFiles.files.push(file._uri);
-            } else {
-                sessionFiles.files = [];
-                angular.forEach(self.files, function (file) {
-                    sessionFiles.files.push(file._uri);
-                });
-            }
-        }
-    };
-
-    EditorFiles.prototype.new = function () {
-        var file = new EditorFile("untitled");
+    EditorFiles.prototype.new = function (profile) {
+        var file = new EditorFile("untitled", null, profile);
         this.files.push(file);
         return file;
     };
@@ -195,7 +171,7 @@ yarn.service("editorFiles", function (EditorFile,
         return match;
     };
 
-    EditorFiles.prototype.open = function (uriOrFile, setFocus, goToLine) {
+    EditorFiles.prototype.open = function (profile, uriOrFile, setFocus, goToLine) {
         var file = this.get(uriOrFile);
 
         // VERIFY if file is not already in the list of files loaded
@@ -204,7 +180,7 @@ yarn.service("editorFiles", function (EditorFile,
             if (angular.isObject(uriOrFile)) {
                 file = uriOrFile;
             } else {
-                file = new EditorFile(uriOrFile);
+                file = new EditorFile(uriOrFile, null, profile);
             }
             this.files.push(file);
         }
@@ -213,7 +189,7 @@ yarn.service("editorFiles", function (EditorFile,
         if (goToLine) {
             file.goToLine = goToLine;
         }
-        this.persist(file);
+        this.publishChange(file);
         return file;
     };
 
@@ -243,9 +219,18 @@ yarn.service("editorFiles", function (EditorFile,
         }
 
         // Refresh this list of files in localStorage
-        this.persist()
+        this.publishChange()
 
     };
+
+    EditorFiles.prototype.publishChange = function (file) {
+        postal.publish({
+            channel: "editorFiles",
+            topic: "change",
+            data: file
+        });
+    };
+
 
     EditorFiles.prototype.hasUnsaved = function () {
         var hasUnsaved = false;

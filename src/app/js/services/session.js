@@ -8,7 +8,7 @@ yarn.service("session", function ($localStorage) {
     Session.prototype.open = function (user) {
         console.info("Session open for " + user.username, [user]);
         if (user) {
-            this._user = user;
+            this.user(user);
             var key = "yarn-" + user.username;
             if (angular.isUndefined($localStorage[key])) {
                 $localStorage[key] = {}
@@ -19,7 +19,15 @@ yarn.service("session", function ($localStorage) {
     };
 
     Session.prototype.user = function (user) {
-        if (angular.isDefined(user)) this._user = user;
+        if (angular.isDefined(user)) {
+            //TODO: Find another methos to update profiles.authenticated to prevent circular dependency
+            //if (profiles.authenticated() &&
+            //    profiles.authenticated().username !== user.username) {
+            //    profiles.authenticated(new Profile(user.username, user));
+            //}
+            this._user = user;
+            //profiles.authenticated(user.username, user);
+        }
         return this._user;
     };
 

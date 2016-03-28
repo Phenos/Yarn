@@ -3,23 +3,24 @@
         <md-button class="md-fab md-mini" ng-click="refresh()" aria-label="Refresh">
             <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
         </md-button>
-        <section>
-            <md-subheader class="md-primary">
-                PROJECTS
-            </md-subheader>
-        </section>
-        <md-list>
-            <md-list-item ng-repeat="folder in storageFiles.storage.projectFolders"
-                          ng-click="openProjectFolder(folder)">
-                {{ folder.name }}
-            </md-list-item>
-            <!--
-            <md-divider></md-divider>
-            <md-list-item>
-                Yarn Samples
-            </md-list-item>
-            -->
-        </md-list>
+        <div ng-repeat="profile in storageFiles.profiles">
+            <section>
+                <md-subheader class="md-primary">
+                    {{ profile.username }}
+                </md-subheader>
+            </section>
+            <md-list>
+                <md-list-item ng-class="{selected: (storageFiles.selectedFolder === null)}"
+                              ng-click="selectProfile(profile); openProjectFolder(null)">
+                    ALL FILES
+                </md-list-item>
+                <md-list-item ng-repeat="folder in storageFiles.storage.projectFolders"
+                              ng-class="{selected: (storageFiles.selectedFolder === folder)}"
+                              ng-click="selectProfile(profile); openProjectFolder(folder)">
+                    {{ folder.name }}
+                </md-list-item>
+            </md-list>
+        </div>
     </md-content>
     <div class="storageFiles"
          md-whiteframe="10"

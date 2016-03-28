@@ -20,7 +20,7 @@
             });
 
             $scope.goToSource = function (source) {
-                editorFiles.open(source.uri, true, source.line);
+                editorFiles.open(null, source.uri, true, source.line);
             };
 
             $scope.options = {

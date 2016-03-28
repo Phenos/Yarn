@@ -13,13 +13,24 @@ yarn.service('state', function ($localStorage,
                                 lodash,
                                 templating,
                                 parseAssert,
-                                storyLocalStorage) {
+                                editorFiles,
+                                storyLocalStorage,
+                                postal) {
 
         function State() {
+            var self = this;
             this.assertions = new Assertions();
             this.currentLayer = "world";
             this.localState = null;
             storyLocalStorage.uid(this.uniqueKey());
+
+            postal.subscribe({
+                channel: "editorFiles",
+                topic: "change",
+                callback: function (file) {
+                    self.persistEditorFiles(file);
+                }
+            })
         }
 
         State.prototype.uniqueKey = function () {
@@ -34,6 +45,34 @@ yarn.service('state', function ($localStorage,
             return key;
         };
 
+        /**
+         * Persist on or all files to localStorage
+         * @param file
+         */
+        State.prototype.persistEditorFiles = function (file) {
+            var sessionFiles = session.storage("editorFiles");
+            //console.log("persist -->", file);
+            if (sessionFiles) {
+                //console.log("this._mainFile", this._mainFile);
+                if (angular.isObject(editorFiles._mainFile)) {
+                    sessionFiles.mainFile = editorFiles._mainFile._uri;
+                } else {
+                    delete sessionFiles.mainFile;
+                }
+
+                if (!angular.isArray(sessionFiles.files))
+                    sessionFiles.files = [];
+
+                if (file) {
+                    sessionFiles.files.push(file._uri);
+                } else {
+                    sessionFiles.files = [];
+                    angular.forEach(editorFiles.files, function (file) {
+                        sessionFiles.files.push(file._uri);
+                    });
+                }
+            }
+        };
 
         State.prototype.restoreFromLocalState = function () {
             var self = this;

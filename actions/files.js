@@ -16,7 +16,8 @@ exports.status = {
 };
 
 function files(api, data, next) {
-    var username = data.user && data.user.username;
+    //var username = data.user && data.user.username;
+    var username = data.params.profile;
     var allFiles = [];
 
     if (username) {

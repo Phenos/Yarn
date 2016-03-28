@@ -5,11 +5,11 @@ yarn.service('IDE', function IDEService(rememberLastStory,
                                         $mdDialog,
                                         yConsole,
                                         loader,
-                                        storage,
                                         commands,
                                         editorFiles,
                                         editors,
                                         tools,
+                                        profiles,
                                         preventCloseWhenUnsaved) {
 
     function IDE() {
@@ -88,7 +88,8 @@ yarn.service('IDE', function IDEService(rememberLastStory,
 
         $mdDialog.show(confirm).then(function(newFilename) {
             //console.log("Renaming", newName);
-            var newFile = editorFiles.open(newFilename, true);
+            var profile = profiles.authenticated();
+            var newFile = editorFiles.open(profile, newFilename, true);
             editorFiles.save(newFile);
 
         }, function() {

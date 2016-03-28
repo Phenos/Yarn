@@ -13,123 +13,131 @@ yarn.controller('root', function rootController(user,
                                                 $timeout,
                                                 fireOnResizeEvent,
                                                 globalContextMenu,
-                                                $state) {
+                                                $state,
+                                                session,
+                                                profiles,
+                                                Profile) {
 
-    console.log("state.params:", $state);
-    $scope.IDE = IDE;
-    $scope.themes = themes;
-    $scope.user = user; // Note: User not yet in a service, resolved in route instead
-    $scope.editorFiles = editorFiles;
+        console.log("state.params:", $state);
+        $scope.IDE = IDE;
+        $scope.themes = themes;
+        $scope.editorFiles = editorFiles;
+
+        $scope.user = user; // Note: User not yet in a service, resolved in route instead
+        profiles.authenticated(new Profile(user.username, user));
+
 
     // Used by the global context menu
-    globalContextMenu.register($scope, $element);
+        globalContextMenu.register($scope, $element);
 
-    // Restore previously openned files
-    editorFiles.reloadFromLocalStorage();
+        // Restore previously openned files
+        editorFiles.reloadFromLocalStorage(session);
 
-    $scope.toolTabs = {
-        selected: 0
-    };
+        $scope.toolTabs = {
+            selected: 0
+        };
 
-    wallpaper.change("/images/splash/splash-bg.jpg");
+        wallpaper.change("/images/splash/splash-bg.jpg");
 
-    IDE.register($scope);
+        IDE.register($scope);
 
-    // Register with the service
-    root.register($scope);
+        // Register with the service
+        root.register($scope);
 
-    /*
-     Show a welcome message in the yarn console
-     */
-    yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
-    yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
+        /*
+         Show a welcome message in the yarn console
+         */
+        yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
+        yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
 
-    // If needed, show a welcome message in a popup
-    welcomeMessage.openIfNew();
+        // If needed, show a welcome message in a popup
+        welcomeMessage.openIfNew();
 
-    $scope.openMain = function () {
-        var main = editorFiles.open("./story.txt", true);
-        editorFiles.mainFile(main);
-    };
+        $scope.openMain = function () {
+            // TODO ... Figure out what is the first/main project available ?
+            var main = editorFiles.open(profiles.authenticated(), "./story.txt", true);
+            editorFiles.mainFile(main);
+        };
 
-    /*
+        /*
 
-     Height permutation between Console and Editor on focus events
+         Height permutation between Console and Editor on focus events
 
-     */
-    $scope.editorFlexHeight_default = 100;
-    $scope.consoleFlexHeight_default = 0;
-    $scope.editorFlexHeight = $scope.editorFlexHeight_default;
-    $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
-    $scope.onConsoleEscapeFocus = function () {
-        $scope.editorFlexHeight = 100;
-        $scope.consoleFlexHeight = 0;
-    };
-    $scope.onConsoleFocus = function () {
-        $scope.editorFlexHeight = 50;
-        $scope.consoleFlexHeight = 50;
-    };
+         */
+        $scope.editorFlexHeight_default = 100;
+        $scope.consoleFlexHeight_default = 0;
+        $scope.editorFlexHeight = $scope.editorFlexHeight_default;
+        $scope.consoleFlexHeight = $scope.consoleFlexHeight_default;
+        $scope.onConsoleEscapeFocus = function () {
+            $scope.editorFlexHeight = 100;
+            $scope.consoleFlexHeight = 0;
+        };
+        $scope.onConsoleFocus = function () {
+            $scope.editorFlexHeight = 50;
+            $scope.consoleFlexHeight = 50;
+        };
 
-    $scope.focusInspector = function () {
-        //console.log($scope.toolTabs.selected);
-        $scope.toolTabs.selected = 1;
-    };
+        $scope.focusInspector = function () {
+            //console.log($scope.toolTabs.selected);
+            $scope.toolTabs.selected = 1;
+        };
 
-    $scope.focusConsole = function () {
-        $scope.toolTabs.selected = 0;
-    };
+        $scope.focusConsole = function () {
+            $scope.toolTabs.selected = 0;
+        };
 
 
-    $scope.toggleTools = function (value) {
-        // Trigger window resize to fix a glitch with the grid resize
-        $timeout(function () {
-            fireOnResizeEvent();
-        }, 500);
-        if (angular.isDefined(value)) {
-            $scope.toolsAreVisible = value;
-            if ($scope.toolsAreVisible) {
-                $scope.onConsoleFocus();
+        $scope.toggleTools = function (value) {
+            // Trigger window resize to fix a glitch with the grid resize
+            $timeout(function () {
+                fireOnResizeEvent();
+            }, 500);
+            if (angular.isDefined(value)) {
+                $scope.toolsAreVisible = value;
+                if ($scope.toolsAreVisible) {
+                    $scope.onConsoleFocus();
+                } else {
+                    $scope.onConsoleEscapeFocus();
+                }
             } else {
-                $scope.onConsoleEscapeFocus();
+                if ($scope.toolsAreVisible) {
+                    $scope.toolsAreVisible = false;
+                    $scope.onConsoleEscapeFocus();
+                } else {
+                    $scope.toolsAreVisible = true;
+                    $scope.onConsoleFocus();
+                }
             }
-        } else {
-            if ($scope.toolsAreVisible) {
-                $scope.toolsAreVisible = false;
-                $scope.onConsoleEscapeFocus();
-            } else {
-                $scope.toolsAreVisible = true;
-                $scope.onConsoleFocus();
-            }
-        }
-        $localStorage.toolsAreVisible = $scope.toolsAreVisible;
-    };
-    $scope.toggleTools($localStorage.toolsAreVisible);
-    tools.focusFromMemory();
+            $localStorage.toolsAreVisible = $scope.toolsAreVisible;
+        };
+        $scope.toggleTools($localStorage.toolsAreVisible);
+        tools.focusFromMemory();
 
 
-    if ($state.params.profile && $state.params.story) {
-        var path = [
-            "/twitter.",
-            $state.params.profile,
-            "/",
-            $state.params.story,
-            "/story.txt"
-        ].join("");
-        var main = editorFiles.open(path, true);
-        editorFiles.mainFile(main);
-        IDE.run();
-    } else {
-        // Check if a previously opened story should be loaded
-        //IDE.loadRememberedStory();
-        IDE.run(function () {
-            $scope.openMain();
+        if ($state.params.profile && $state.params.story) {
+            var path = [
+                "/twitter.",
+                $state.params.profile,
+                "/",
+                $state.params.story,
+                "/story.txt"
+            ].join("");
+            profiles.visited(new Profile("twitter." + $state.params.profile));
+            var main = editorFiles.open(profiles.visited(), path, true);
+            editorFiles.mainFile(main);
             IDE.run();
-        });
+        } else {
+            // Check if a previously opened story should be loaded
+            //IDE.loadRememberedStory();
+            IDE.run(function () {
+                $scope.openMain();
+                IDE.run();
+            });
+        }
+
     }
-
-});
-
-
+)
+;
 
 
 yarn.service('root', function rootService($localStorage, consoleService, player) {

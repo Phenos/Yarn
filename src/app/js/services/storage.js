@@ -1,6 +1,7 @@
-yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI, postal) {
+yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, session) {
 
-    function Storage() {
+    function Storage(profile) {
+        this.profile = profile;
         this.files = [];
         this.projectFolders = {};
     }
@@ -81,7 +82,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
                 file = foundSameFile;
                 file.meta = meta;
             } else {
-                file = new EditorFile(uri, meta);
+                file = new EditorFile(uri, meta, self.profile);
                 this.files.push(file);
                 if (projectFolder) projectFolder.files.push(file);
             }
@@ -117,8 +118,10 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
     };
 
     Storage.prototype.save = function (file, success, failed) {
+        var self=  this;
         self.isLoading = true;
         var savedContent = file.content;
+        var profile = this.profile;
         var user = session.user();
         if (user) {
             var relativeToUserURI = file.relativeToUserURI();
@@ -126,6 +129,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
                 filename: relativeToUserURI.filename(true),
                 uri: relativeToUserURI.toString(),
                 content: savedContent,
+                profile: profile.username,
                 token: user.token,
                 username: user.username
             }, function (data) {
@@ -146,7 +150,9 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
     };
 
     Storage.prototype.rename = function (file, newName, success, failed) {
+        var self=  this;
         self.isLoading = true;
+        var profile = this.profile;
         var user = session.user();
         if (user) {
             var relativeToUserURI = file.relativeToUserURI();
@@ -155,6 +161,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
             apiClient.action('renameFile', {
                 uri_source: relativeToUserURI.toString(),
                 uri_destination: newNameRelativeToUserUID.toString(),
+                profile: profile.username,
                 token: user.token,
                 username: user.username
             }, function (data) {
@@ -176,7 +183,6 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
 
     Storage.prototype.delete = function (files, success, failed) {
         var self = this;
-
         self.isLoading = true;
 
         var filesMeta = [];
@@ -187,9 +193,12 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
         console.log("filesMeta", filesMeta);
 
         var user = session.user();
+        var profile = this.profile;
+
         if (user) {
             apiClient.action('deleteFiles', {
                 files: filesMeta,
+                profile: profile.username,
                 token: user.token,
                 username: user.username
             }, function (data) {
@@ -208,15 +217,20 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
 
     Storage.prototype.refresh = function (uri) {
         var self = this;
+        var profile = this.profile;
         var user = session.user();
 
         if (user) {
             self.isLoading = true;
 
-            apiClient.action('files', {
+            var params = {
+                profile: profile.username,
                 token: user.token,
                 username: user.username
-            }, function (data) {
+            };
+
+            console.log("params", params);
+            apiClient.action('files', params , function (data) {
                 console.log("s3 data", data);
                 if (!data.error) {
                     angular.forEach(self.files, function (file) {
@@ -225,7 +239,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
 
                     //console.log("Storagerefresh > apiClient.files", data);
                     angular.forEach(data.files, function (file) {
-                        var path = file.Key && file.Key.replace(session.user().username + "/", "");
+                        var path = file.Key && file.Key.replace(profile.username+ "/", "");
                         if (path) {
                             self.add(path, file);
                         }
@@ -254,5 +268,6 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
         return this;
     };
 
-    return new Storage();
+    return Storage;
 });
+

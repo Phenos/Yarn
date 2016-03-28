@@ -1,16 +1,16 @@
 yarn.service("EditorFile", function (guid,
                                      URI,
-                                     session,
                                      loadScript,
                                      yConsole) {
 
     var baseURI = "";
 
-    function EditorFile(uri, meta) {
+    function EditorFile(uri, meta, profile) {
         this._uri = "";
         this.uri = null;
         this.rename(uri);
         this.guid = guid();
+        this.profile = profile;
         this.meta = meta || {};
         this.filterOut = false;
         this.isMain = false;
@@ -36,8 +36,8 @@ yarn.service("EditorFile", function (guid,
 
     EditorFile.prototype.absoluteURI = function () {
         var uri = this.uri;
-        if (session.user()) {
-            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
+        if (this.profile) {
+            baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
             uri = this.uri.absoluteTo(baseURI);
         }
         return uri;
@@ -45,8 +45,8 @@ yarn.service("EditorFile", function (guid,
 
     EditorFile.prototype.relativeToUserURI = function () {
         var uri = this.uri;
-        if (session.user()) {
-            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
+        if (this.profile) {
+            baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
             uri = this.absoluteURI().relativeTo(baseURI);
         }
         return uri;

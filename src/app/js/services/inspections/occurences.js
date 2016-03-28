@@ -78,7 +78,7 @@ yarn.directive('occurences', function occurences() {
         controller: function ($scope, editorFiles) {
             $scope.goToSource = function (source) {
                 if (source) {
-                    editorFiles.open(source.uri, true, source.line);
+                    editorFiles.open(null, source.uri, true, source.line);
                 }
             };
 

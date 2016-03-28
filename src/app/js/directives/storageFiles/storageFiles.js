@@ -11,18 +11,21 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         controller: StorageFilesController
     };
 
-    function StorageFilesController($element, $scope, storage, confirmAction, postal) {
+    function StorageFilesController($element, $scope, profiles, confirmAction, postal) {
         var self = this;
         //console.log("StorageFilesController", storage);
-        this.storage = storage;
-        this.files = storage.files;
-        this.directories = storage.directories();
+
+        this.profiles = profiles;
+        this.files = [];
+        this.directories = [];
+
+        //this.directories = storage.directories();
+
         //console.log("directories", this.directories);
         this.selection = [];
         this.search = "";
         this.selectedFolder = null;
-
-        updateList();
+        this.selectedStorage = null;
 
         postal.subscribe({
             channel: "storage",
@@ -39,13 +42,20 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
             this.updateSelection();
         };
 
+        $scope.selectProfile = function(profile) {
+            self.selectedStorage = profile.storage;
+            profile.storage.refresh();
+        };
+
         $scope.openProjectFolder = function(folder) {
-            self.directories = storage.directories(folder);
-            self.selectedFolder = folder;
+            if (self.selectedStorage) {
+                self.directories = self.selectedStorage.directories(folder);
+                self.selectedFolder = folder;
+            }
         };
 
         $scope.refresh = function() {
-            storage.refresh();
+            self.selectedStorage.refresh();
         };
 
         $scope.unselectAll = function() {
@@ -56,7 +66,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         };
 
         $scope.updateSelection = function() {
-            self.selection = self.storage.selection();
+            self.selection = self.selectedStorage.selection();
         };
 
         $scope.deleteSelection = function(event) {
@@ -67,11 +77,11 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
             function ok() {
                 console.log("DELETING FILES!!!!!");
                 $scope.updateSelection();
-                storage.delete(self.selection, function success() {
-                    storage.refresh();
+                self.selectedStorage.delete(self.selection, function success() {
+                    self.selectedStorage.refresh();
                     $scope.updateSelection();
                 }, function fail() {
-                    storage.refresh();
+                    self.selectedStorage.refresh();
                     $scope.updateSelection();
                 });
             }
@@ -80,19 +90,31 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
 
         function updateList() {
             //console.log("updateList", self);
-            self.directories = storage.directories();
-            angular.forEach(self.files, function (file) {
-                var filterOut = false;
-                if (self.search && file._uri.indexOf(self.search) === -1) {
-                    filterOut = true;
-                }
-                file.filterOut = filterOut;
-            });
+            if (self.selectedStorage) {
+                self.directories = self.selectedStorage.directories();
+                angular.forEach(self.files, function (file) {
+                    var filterOut = false;
+                    if (self.search && file._uri.indexOf(self.search) === -1) {
+                        filterOut = true;
+                    }
+                    file.filterOut = filterOut;
+                });
+            }
         }
 
         $scope.$watch('storageFiles.search', function (searchTerm) {
             self.search = searchTerm;
             updateList();
         });
+
+        if (profiles.visited()) {
+            $scope.selectProfile(profiles.visited());
+        } else {
+            $scope.selectProfile(profiles.authenticated());
+        }
+
+        updateList();
+
+
     }
 });

@@ -46,7 +46,7 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
         function openInEditor() {
             var absoluteURI = URI(txt).absoluteTo(token.file.uri).toString();
             //console.log(absoluteURI);
-            editorFiles.open(absoluteURI, true);
+            editorFiles.open(token.file.profile, absoluteURI, true);
             editors.focus(absoluteURI);
 
         }

@@ -12,6 +12,8 @@ yarn.factory('Pointer', function PointerService(URI) {
         this.pos = 0;
         this.line = 0;
         this.character = 0;
+        //TODO: FROM WHICH PROFILE ?
+        console.log("=====> this.uri", this.uri);
         this.source = new Source(this.uri);
         this.buffer = [];
         this.rawBuffer = [];

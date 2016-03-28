@@ -158,11 +158,20 @@ yarn.service("editorFiles", function (EditorFile,
                 }
                 this.files.push(file);
             }
-            file.isFocused = !!setFocus;
+
             file.load();
             if (goToLine) {
                 file.goToLine = goToLine;
             }
+
+            if (setFocus) {
+                // Before setting the focus we let the diget cycle complete
+                // Otherwise, the editor is not ready when focus is applied
+                $timeout(function () {
+                    editors.focus(file.uri.toString())
+                }, 100);
+            }
+
             this.publishChange(file);
             return file;
         } else {

@@ -1,24 +1,19 @@
-"use strict";
-yarn.controller('root', rootController);
-yarn.service('root', rootService);
-
-
-function rootController(user,
-                        $localStorage,
-                        $scope,
-                        $element,
-                        IDE,
-                        yConsole,
-                        welcomeMessage,
-                        editorFiles,
-                        root,
-                        themes,
-                        wallpaper,
-                        tools,
-                        $timeout,
-                        fireOnResizeEvent,
-                        globalContextMenu,
-                        $state) {
+yarn.controller('root', function rootController(user,
+                                                $localStorage,
+                                                $scope,
+                                                $element,
+                                                IDE,
+                                                yConsole,
+                                                welcomeMessage,
+                                                editorFiles,
+                                                root,
+                                                themes,
+                                                wallpaper,
+                                                tools,
+                                                $timeout,
+                                                fireOnResizeEvent,
+                                                globalContextMenu,
+                                                $state) {
 
     console.log("state.params:", $state);
     $scope.IDE = IDE;
@@ -112,17 +107,33 @@ function rootController(user,
     tools.focusFromMemory();
 
 
-
-    // Check if a previously opened story should be loaded
-    //IDE.loadRememberedStory();
-    IDE.run(function () {
-        $scope.openMain();
+    if ($state.params.profile && $state.params.story) {
+        var path = [
+            "/twitter.",
+            $state.params.profile,
+            "/",
+            $state.params.story,
+            "/story.txt"
+        ].join("");
+        console.log("path: ", path);
+        var main = editorFiles.open(path, true);
+        editorFiles.mainFile(main);
         IDE.run();
-    });
+    } else {
+        // Check if a previously opened story should be loaded
+        //IDE.loadRememberedStory();
+        IDE.run(function () {
+            $scope.openMain();
+            IDE.run();
+        });
+    }
 
-}
+});
 
-function rootService($localStorage, consoleService, player) {
+
+
+
+yarn.service('root', function rootService($localStorage, consoleService, player) {
     var service = {
         scope: null
     };
@@ -215,4 +226,8 @@ function rootService($localStorage, consoleService, player) {
     };
 
     return service;
-}
+});
+
+
+
+

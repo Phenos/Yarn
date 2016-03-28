@@ -20,6 +20,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         //console.log("directories", this.directories);
         this.selection = [];
         this.search = "";
+        this.selectedFolder = null;
 
         updateList();
 
@@ -36,6 +37,11 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
                 file.isSelected = true;
             });
             this.updateSelection();
+        };
+
+        $scope.openProjectFolder = function(folder) {
+            self.directories = storage.directories(folder);
+            self.selectedFolder = folder;
         };
 
         $scope.refresh = function() {

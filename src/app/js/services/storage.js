@@ -2,13 +2,23 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
 
     function Storage() {
         this.files = [];
+        this.projectFolders = {};
     }
 
-    Storage.prototype.directories = function () {
+    Storage.prototype.directories = function (projectFolder) {
         var _directories = {};
+        var filesSource = this.files;
+        if (projectFolder) filesSource = projectFolder.files;
+
         //console.log("Grouping in directories: ", this.files);
-        angular.forEach(this.files, function (file) {
+        angular.forEach(filesSource, function (file) {
             var directoryURI = file.uri.directory();
+            if (projectFolder) {
+                var directoryURIparts = directoryURI.split("/");
+                directoryURIparts.shift();
+                directoryURI = directoryURIparts.join("/");
+                //console.log("-->", directoryURI);
+            }
             var directory = _directories[directoryURI];
             if (!directory) {
                 directory = _directories[directoryURI] = new Directory(directoryURI);
@@ -32,26 +42,52 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
     };
 
     Storage.prototype.add = function (uri, meta) {
+        var self = this;
         // Todo, first check if the file is already there
         var foundSameFile = null;
         var file;
         var _uri = URI(uri);
+        var isAFolder = false;
 
-        angular.forEach(this.files, function (file) {
-            if (_uri.equals(file.uri)) {
-                foundSameFile = file;
+        //console.log(meta.Key);
+        // If it's a folder
+        if (meta.Key[meta.Key.length - 1] === "/") isAFolder = true;
+
+        // Create a projectFolder entry
+        // Get the project folder name, then get or create the projectFolder entry
+        var parts = meta.Key.split("/");
+        if (!isAFolder) parts.pop(); //Remove the filename
+        if (parts.length > 1) {
+            var key = parts[1];
+            var projectFolder = self.projectFolders[key];
+            if (!projectFolder) {
+                projectFolder = {
+                    name: key,
+                    files: [],
+                    meta: meta
+                };
+                self.projectFolders[key] = projectFolder;
             }
-        });
-
-        if (foundSameFile) {
-            file = foundSameFile;
-            file.meta = meta;
-        } else {
-            file = new EditorFile(uri, meta);
-            this.files.push(file);
         }
 
-        file.markForDiscard = false;
+        if (!isAFolder) {
+            angular.forEach(this.files, function (file) {
+                if (_uri.equals(file.uri)) {
+                    foundSameFile = file;
+                }
+            });
+
+            if (foundSameFile) {
+                file = foundSameFile;
+                file.meta = meta;
+            } else {
+                file = new EditorFile(uri, meta);
+                this.files.push(file);
+                if (projectFolder) projectFolder.files.push(file);
+            }
+
+            file.markForDiscard = false;
+        }
 
         return file;
     };
@@ -181,6 +217,7 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
                 token: user.token,
                 username: user.username
             }, function (data) {
+                console.log("s3 data", data);
                 if (!data.error) {
                     angular.forEach(self.files, function (file) {
                         file.markForDiscard = true;
@@ -188,11 +225,9 @@ yarn.service("storage", function (apiClient, EditorFile, session, yConsole, URI,
 
                     //console.log("Storagerefresh > apiClient.files", data);
                     angular.forEach(data.files, function (file) {
-                        if (file && file.Size > 0) {
-                            var path = file.Key && file.Key.replace(session.user().username + "/", "");
-                            if (path) {
-                                self.add(path, file);
-                            }
+                        var path = file.Key && file.Key.replace(session.user().username + "/", "");
+                        if (path) {
+                            self.add(path, file);
                         }
                     });
 

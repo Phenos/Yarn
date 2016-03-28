@@ -115,7 +115,6 @@ yarn.controller('root', function rootController(user,
             $state.params.story,
             "/story.txt"
         ].join("");
-        console.log("path: ", path);
         var main = editorFiles.open(path, true);
         editorFiles.mainFile(main);
         IDE.run();

@@ -39,6 +39,7 @@
     "gulp-using": "0.0.1",
     "gulp-watch": "^4.3.5",
     "s3": "^4.4.0",
+    "twit": "^2.2.3",
     "ws": "latest"
   },
   "engines": {

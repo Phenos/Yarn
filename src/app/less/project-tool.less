@@ -16,14 +16,33 @@
                     text-decoration: underline;
                 }
             }
+            md-icon {
+                fill: #fff;
+                margin-right: 0.8em !important;
+            }
         }
 
         .md-subheader {
-            background: rgba(0, 91, 0, 0.71);
+            background: rgb(0, 91, 0);
             color: #fff;
-            font-size: 1.1em;
-            .md-subheader-inner {
-                //padding: 16px 16px;
+            font-size: 1.5em;
+
+            -webkit-box-shadow: inset 0px 50px 26px -48px rgba(0,0,0,0.55);
+            -moz-box-shadow: inset 0px 50px 26px -48px rgba(0,0,0,0.55);
+            box-shadow: inset 0px 50px 26px -48px rgba(0,0,0,0.55);
+
+            background: linear-gradient(to bottom, #005b00 0%,#007500 100%);
+
+            ._md-subheader-inner {
+                padding: 16px 16px 8px 16px;
+            }
+            .avatar {
+                border-radius: 50%;
+                display: inline;
+                vertical-align: middle;
+                width: 48px;
+                height: 48px;
+                margin-right: 0.5em;
             }
         }
         .md-button.md-fab {
@@ -32,8 +51,8 @@
             height: 34px;
             min-height: 34px;
             position: absolute;
-            top: 0px;
-            right: 0px;
+            top: 15px;
+            right: 5px;
             box-shadow: none;
 
             md-icon {

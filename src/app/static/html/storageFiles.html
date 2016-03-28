@@ -3,9 +3,10 @@
         <md-button class="md-fab md-mini" ng-click="refresh()" aria-label="Refresh">
             <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
         </md-button>
-        <div ng-repeat="profile in storageFiles.profiles">
+        <div ng-repeat="profile in storageFiles.profiles.all">
             <section>
                 <md-subheader class="md-primary">
+                    <img alt="{{ profile.username.split('.')[1] }}" ng-src="{{ profile.twitterProfile.profile_image_url }}" class="avatar" />
                     {{ profile.username.split(".")[1] }}
                 </md-subheader>
             </section>
@@ -20,7 +21,10 @@
                 <md-list-item ng-repeat="folder in profile.storage.projectFolders"
                               ng-class="{selected: (storageFiles.selectedFolder === folder)}"
                               ng-click="selectProfile(profile); openProjectFolder(folder)">
-                    {{ folder.name }}
+                    <md-icon md-svg-icon="/svg-icons/project.svg"></md-icon>
+                    <p>
+                        {{ folder.name }}
+                    </p>
                 </md-list-item>
             </md-list>
         </div>

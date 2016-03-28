@@ -21,9 +21,10 @@ yarn.service("authUser", function (auth, authData2user) {
     return auth.$waitForAuth().then(function () {
         var user = null;
         var authData = auth.$getAuth();
-        //console.log("auth", auth);
-        //console.log("authUser authData", authData);
         if (authData) user = authData2user(authData);
+        console.log("user", user);
+        console.log("auth", auth);
+        console.log("authUser authData", authData);
         return user;
     });
 

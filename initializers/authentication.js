@@ -20,7 +20,8 @@ module.exports = {
                         next(new Error('Login Failed: ' + error));
                     } else {
                         data.user = {
-                            username: data.params.username
+                            username: data.params.username,
+                            authData: authData
                         };
                         next();
                     }

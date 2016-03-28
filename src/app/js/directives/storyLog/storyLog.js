@@ -30,7 +30,7 @@
 
                 // Render bracket links
                 parsedTxt = parsedTxt.replace(/\[([^\]]+)]/g, function (match) {
-                    var tokens = match.substring(1, match.length - 1).split("::");
+                    var tokens = match.substring(1, match.length - 1).split(":");
                     var name = tokens[0];
                     var id = tokens[1] || tokens[0];
                     return '<thing token="' + id + '" text="' + name + '"></thing>'

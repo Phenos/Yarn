@@ -20,6 +20,7 @@ yarn.service("synonyms", function (assert, things) {
         var result = null;
         if (angular.isString(text)) {
             var token = text.trim().toLowerCase();
+            console.log("self.all", self.all);
             var match = self.all[token];
             if (match) result = match;
         }

@@ -9,6 +9,7 @@ yarn.directive('projectTool', function ProjectTool() {
             var self = this;
 
             $scope.open = function (file) {
+                console.log("$scope.open", file);
                 IDE.working(true);
                 editorFiles.open(file.profile, file, true);
                 IDE.working(false);

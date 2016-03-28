@@ -9,6 +9,8 @@ yarn.service('state', function ($localStorage,
                                 yConsole,
                                 assert,
                                 session,
+                                editors,
+                                profiles,
                                 guid,
                                 lodash,
                                 templating,
@@ -64,11 +66,52 @@ yarn.service('state', function ($localStorage,
                     sessionFiles.files = [];
 
                 if (file) {
-                    sessionFiles.files.push(file._uri);
+                    // The filename stored is prefixed with the profile name
+                    // and will be re-used later when re-loading the file.
+                    sessionFiles.files.push({
+                        uri: file._uri,
+                        profile: file.profile.username
+                    });
                 } else {
                     sessionFiles.files = [];
                     angular.forEach(editorFiles.files, function (file) {
-                        sessionFiles.files.push(file._uri);
+                        sessionFiles.files.push({
+                            uri: file._uri,
+                            profile: file.profile.username
+                        });
+                    });
+                }
+            }
+        };
+
+        /**
+         * Reload the list open files from localStorage
+         */
+        State.prototype.reloadFromLocalStorage = function () {
+            var lastFocusFromMemory = editors.lastFocusFromMemory();
+            var mainFile = "";
+            var sessionFiles = session.storage("editorFiles");
+            console.log("-====>>>", sessionFiles);
+            if (sessionFiles) {
+                if (sessionFiles.mainFile) {
+                    mainFile = sessionFiles.mainFile;
+                }
+                if (angular.isArray(sessionFiles.files)) {
+                    var oldList = sessionFiles.files;
+                    sessionFiles.files = [];
+                    angular.forEach(oldList, function (file) {
+                        console.log("file", file);
+                        var setFocus = false;
+                        if (lastFocusFromMemory === file) {
+                            setFocus = true;
+                        }
+
+                        var profile = profiles.get(file.profile);
+                        var newFile = editorFiles.open(profile, file.uri, setFocus);
+                        if (mainFile === file) {
+                            newFile.isMain = true;
+                            editorFiles.mainFile(newFile);
+                        }
                     });
                 }
             }
@@ -76,6 +119,8 @@ yarn.service('state', function ($localStorage,
 
         State.prototype.restoreFromLocalState = function () {
             var self = this;
+
+            console.info("Restoring assersions from localStorage");
 
             //TOOD: Try to find a way notto inject state here...
             var storyStorage = storyLocalStorage.get(this);

@@ -11,37 +11,6 @@ yarn.service("editorFiles", function (EditorFile,
         this.goToLine = null;
     }
 
-    /**
-     * Reload the list open files from localStorage
-     */
-    EditorFiles.prototype.reloadFromLocalStorage = function (session) {
-        var lastFocusFromMemory = editors.lastFocusFromMemory();
-        var self = this;
-        var mainFile = "";
-        var sessionFiles = session.storage("editorFiles");
-        //console.log("-====>>>", sessionFiles);
-        if (sessionFiles) {
-            if (sessionFiles.mainFile) {
-                mainFile = sessionFiles.mainFile;
-            }
-            if (angular.isArray(sessionFiles.files)) {
-                var oldList = sessionFiles.files;
-                sessionFiles.files = [];
-                angular.forEach(oldList, function (file) {
-                    var setFocus = false;
-                    if (lastFocusFromMemory === file) {
-                        setFocus = true;
-                    }
-                    var newFile = self.open(file, setFocus);
-                    if (mainFile === file) {
-                        newFile.isMain = true;
-                        self.mainFile(newFile);
-                    }
-                });
-            }
-        }
-    };
-
     EditorFiles.prototype.mainFile = function (file) {
         if (angular.isDefined(file)) {
             if (file !== null) {
@@ -60,6 +29,7 @@ yarn.service("editorFiles", function (EditorFile,
         if (angular.isDefined(this._mainFile)) {
             _mainFile = this._mainFile;
         } else {
+            // TODO: This doesnt make sense since it is multi-project
             yConsole.log("Opening the default main story file.");
             var url = "http://storage.yarnstudio.io/" + session.user().username + "/story.txt";
             _mainFile = this.open(url);
@@ -174,23 +144,31 @@ yarn.service("editorFiles", function (EditorFile,
     EditorFiles.prototype.open = function (profile, uriOrFile, setFocus, goToLine) {
         var file = this.get(uriOrFile);
 
-        // VERIFY if file is not already in the list of files loaded
-        // So we create it or take the object already created
-        if (!file) {
-            if (angular.isObject(uriOrFile)) {
-                file = uriOrFile;
-            } else {
-                file = new EditorFile(uriOrFile, null, profile);
+        // If no profile name is supplied, it takes for granted that the
+        // profile name is in the url being oppened
+        if (profile !== null) {
+
+            // VERIFY if file is not already in the list of files loaded
+            // So we create it or take the object already created
+            if (!file) {
+                if (angular.isObject(uriOrFile)) {
+                    file = uriOrFile;
+                } else {
+                    file = new EditorFile(uriOrFile, null, profile);
+                }
+                this.files.push(file);
             }
-            this.files.push(file);
+            file.isFocused = !!setFocus;
+            file.load();
+            if (goToLine) {
+                file.goToLine = goToLine;
+            }
+            this.publishChange(file);
+            return file;
+        } else {
+            console.error("In order to open a file, you must provide a profile object");
+            return null
         }
-        file.isFocused = !!setFocus;
-        file.load();
-        if (goToLine) {
-            file.goToLine = goToLine;
-        }
-        this.publishChange(file);
-        return file;
     };
 
     EditorFiles.prototype.close = function (file) {

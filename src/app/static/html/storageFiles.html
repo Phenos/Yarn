@@ -6,15 +6,18 @@
         <div ng-repeat="profile in storageFiles.profiles">
             <section>
                 <md-subheader class="md-primary">
-                    {{ profile.username }}
+                    {{ profile.username.split(".")[1] }}
                 </md-subheader>
             </section>
             <md-list>
-                <md-list-item ng-class="{selected: (storageFiles.selectedFolder === null)}"
+                <md-list-item ng-class="{
+                                  selected: (storageFiles.selectedStorage === profile.storage &&
+                                  storageFiles.selectedFolder === null)
+                              }"
                               ng-click="selectProfile(profile); openProjectFolder(null)">
                     ALL FILES
                 </md-list-item>
-                <md-list-item ng-repeat="folder in storageFiles.storage.projectFolders"
+                <md-list-item ng-repeat="folder in profile.storage.projectFolders"
                               ng-class="{selected: (storageFiles.selectedFolder === folder)}"
                               ng-click="selectProfile(profile); openProjectFolder(folder)">
                     {{ folder.name }}

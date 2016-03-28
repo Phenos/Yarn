@@ -84,7 +84,7 @@ yarn.service("EditorFile", function (guid,
     };
 
     EditorFile.prototype.isModified = function () {
-        return (this.content !== this.originalContent);
+        return ((this.content !== this.originalContent) && (this.content !== null));
     };
 
     EditorFile.prototype.name = function () {

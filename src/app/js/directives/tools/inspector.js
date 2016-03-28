@@ -93,7 +93,9 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
                 });
 
                 $scope.things.sort(function (A, B) {
-                    return A.object.id.localeCompare(B.object.id);
+                    if (A.object.id) {
+                        return A.object.id.localeCompare(B.object.id);
+                    }
                 });
 
                 $scope.thingsFiltered = $scope.applyFilter();

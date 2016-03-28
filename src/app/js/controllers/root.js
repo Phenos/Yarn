@@ -14,6 +14,7 @@ yarn.controller('root', function rootController(user,
                                                 fireOnResizeEvent,
                                                 globalContextMenu,
                                                 $state,
+                                                state,
                                                 session,
                                                 profiles,
                                                 Profile) {
@@ -31,7 +32,7 @@ yarn.controller('root', function rootController(user,
         globalContextMenu.register($scope, $element);
 
         // Restore previously openned files
-        editorFiles.reloadFromLocalStorage(session);
+        state.reloadFromLocalStorage();
 
         $scope.toolTabs = {
             selected: 0
@@ -56,6 +57,7 @@ yarn.controller('root', function rootController(user,
         $scope.openMain = function () {
             // TODO ... Figure out what is the first/main project available ?
             var main = editorFiles.open(profiles.authenticated(), "./story.txt", true);
+            console.log("openMain", main);
             editorFiles.mainFile(main);
         };
 
@@ -123,9 +125,10 @@ yarn.controller('root', function rootController(user,
                 "/story.txt"
             ].join("");
             profiles.visited(new Profile("twitter." + $state.params.profile));
-            var main = editorFiles.open(profiles.visited(), path, true);
-            editorFiles.mainFile(main);
-            IDE.run();
+            console.log("what?");
+            //var main = editorFiles.open(profiles.visited(), path, true);
+            //editorFiles.mainFile(main);
+            //IDE.run();
         } else {
             // Check if a previously opened story should be loaded
             //IDE.loadRememberedStory();

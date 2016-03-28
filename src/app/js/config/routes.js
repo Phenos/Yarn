@@ -57,10 +57,10 @@ yarn.service("login", function (auth) {
 yarn.config(function ($stateProvider,
                       $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/');
+    //$urlRouterProvider.otherwise('/');
 
     $stateProvider.state('root', {
-        url: '/',
+        url: '',
         resolve: {
             "user": function (authUser, session) {
                 return authUser.then(function (user) {
@@ -73,6 +73,12 @@ yarn.config(function ($stateProvider,
         bindToController: {},
         templateUrl: './html/root.html',
         controller: 'root'
+    });
+    $stateProvider.state('root.profile', {
+        url: '/:profile'
+    });
+    $stateProvider.state('root.profile.story', {
+        url: '/:story'
     });
 
 });

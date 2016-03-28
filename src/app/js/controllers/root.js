@@ -17,8 +17,10 @@ function rootController(user,
                         tools,
                         $timeout,
                         fireOnResizeEvent,
-                        globalContextMenu) {
+                        globalContextMenu,
+                        $state) {
 
+    console.log("state.params:", $state);
     $scope.IDE = IDE;
     $scope.themes = themes;
     $scope.user = user; // Note: User not yet in a service, resolved in route instead

@@ -75,11 +75,9 @@ yarn.directive('occurences', function occurences() {
     return {
         replace: true,
         templateUrl: "./html/inspections/occurences.html",
-        controller: function ($scope, editorFiles) {
+        controller: function ($scope, openFileFromAbsoluteURL) {
             $scope.goToSource = function (source) {
-                if (source) {
-                    editorFiles.open(null, source.uri, true, source.line);
-                }
+                openFileFromAbsoluteURL(source.uri, source.line);
             };
 
         }

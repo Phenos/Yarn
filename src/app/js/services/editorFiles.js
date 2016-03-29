@@ -3,6 +3,7 @@ yarn.service("editorFiles", function (EditorFile,
                                       confirmAction,
                                       $timeout,
                                       yConsole,
+                                      URI,
                                       postal) {
 
     function EditorFiles() {
@@ -128,21 +129,23 @@ yarn.service("editorFiles", function (EditorFile,
         return file;
     };
 
-    EditorFiles.prototype.get = function (uriOrFile) {
+    EditorFiles.prototype.get = function (uriOrFile, profile) {
         var match = null;
         var uri = uriOrFile;
         if (angular.isObject(uriOrFile)) {
-            uri = uriOrFile.uri.toString();
+            uri = uriOrFile.absoluteURI().toString();
+        } else {
+            uri = URI("http://storage.yarnstudio.io/" + profile.username + "/" + uri).toString()
         }
         angular.forEach(this.files, function (file) {
-            if (file.uri.toString() === uri) match = file;
+            console.log("===>>>--", file.absoluteURI().toString(), uri);
+            if (file.absoluteURI().toString() === uri) match = file;
         });
         //console.log("MATCH", match);
         return match;
     };
 
     EditorFiles.prototype.open = function (profile, uriOrFile, setFocus, goToLine) {
-        var file = this.get(uriOrFile);
 
         // If no profile name is supplied, it takes for granted that the
         // profile name is in the url being oppened
@@ -150,6 +153,7 @@ yarn.service("editorFiles", function (EditorFile,
 
             // VERIFY if file is not already in the list of files loaded
             // So we create it or take the object already created
+            var file = this.get(uriOrFile, profile);
             if (!file) {
                 if (angular.isObject(uriOrFile)) {
                     file = uriOrFile;

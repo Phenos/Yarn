@@ -2,7 +2,7 @@
 
 yarn.directive('log', LogDirective);
 
-function LogDirective($sce, editorFiles) {
+function LogDirective($sce, editorFiles, openFileFromAbsoluteURL) {
     return {
         restrict: 'E',
         scope: {
@@ -35,7 +35,7 @@ function LogDirective($sce, editorFiles) {
 
         scope.goToSource = function (source) {
             if (source) {
-                editorFiles.open(null, source.uri, true, source.line);
+                openFileFromAbsoluteURL(source.uri, source.line);
             }
         };
 

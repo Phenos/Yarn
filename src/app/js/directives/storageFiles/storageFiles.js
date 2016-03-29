@@ -117,6 +117,11 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
             $scope.selectProfile(profiles.authenticated());
         }
 
+        // Refresh All profiles
+        angular.forEach(profiles.all(), function (profile) {
+            profile.storage.refresh();
+        });
+
         updateList();
 
 

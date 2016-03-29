@@ -250,7 +250,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
                     postal.publish({
                         channel: "storage",
                         topic: "refresh",
-                        data: {}
+                        data: self
                     });
                     self.isLoading = false;
                 } else {

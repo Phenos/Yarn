@@ -30,8 +30,11 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         postal.subscribe({
             channel: "storage",
             topic: "refresh",
-            callback: function () {
-                updateList();
+            callback: function (storage) {
+                console.log("what", storage);
+                if (storage === self.selectedStorage) {
+                    updateList();
+                }
             }
         });
 
@@ -49,8 +52,8 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
 
         $scope.openProjectFolder = function(folder) {
             if (self.selectedStorage) {
-                self.directories = self.selectedStorage.directories(folder);
                 self.selectedFolder = folder;
+                self.directories = self.selectedStorage.directories(self.selectedFolder);
             }
         };
 
@@ -89,9 +92,10 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         };
 
         function updateList() {
+
             //console.log("updateList", self);
             if (self.selectedStorage) {
-                self.directories = self.selectedStorage.directories();
+                self.directories = self.selectedStorage.directories(self.selectedFolder);
                 angular.forEach(self.files, function (file) {
                     var filterOut = false;
                     if (self.search && file._uri.indexOf(self.search) === -1) {

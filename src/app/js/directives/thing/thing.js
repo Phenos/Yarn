@@ -74,6 +74,7 @@ yarn.directive('thing', function ThingDirective(things,
             //thingsLinks.unselectAll();
             $timeout(function () {
                 if (self.thing) {
+                    contextActionMenu.update(self.thing);
                     contextActionMenu.position($element);
                     contextActionMenu.show();
                     self.select();

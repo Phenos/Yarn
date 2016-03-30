@@ -25,7 +25,7 @@ yarn.service("profiles", function (Profile) {
             this._authenticated = profile;
             this.index[profile.username] = profile;
         }
-        return this._authenticatedt;
+        return this._authenticated;
     };
 
     Profiles.prototype.visited = function (profile) {

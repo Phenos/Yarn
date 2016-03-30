@@ -1,0 +1,65 @@
+.context-action-menu {
+    position: absolute;
+    padding: 0 0 1em 0;
+    margin: 0;
+    width: 100%;
+    display: none;
+    z-index: 1000;
+    visibility: hidden;
+
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
+
+    &.is-visible {
+        visibility: visible;
+    }
+
+    button {
+        font-family: 'Source Sans Pro', sans-serif !important;
+        text-transform: none !important;
+        font-size: 1em !important;
+
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        color: #ddd !important;
+
+        &:hover {
+            color: #fff !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
+            md-icon {
+                color: #fff !important;
+            }
+        }
+
+        md-icon {
+            color: #ccc !important;
+        }
+
+        &.wide {
+            width: 95%;
+        }
+
+        &.md-fab {
+            md-icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        &.md-fab.md-mini {
+            md-icon {
+                width: 16px;
+                height: 16px;
+            }
+        }
+        &.md-fab.large {
+            box-shadow: none;
+
+            md-icon {
+                width: 48px;
+                height: 48px;
+            }
+            width: 72px;
+            height: 72px;
+        }
+
+    }
+}

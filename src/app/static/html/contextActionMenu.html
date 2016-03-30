@@ -1,0 +1,48 @@
+<div layout="column"
+     layout-align="center center"
+     class="context-action-menu"
+     ng-class="{ 'is-visible' : menu.visible }">
+    <div flex="0" layout="row" layout-align="center center">
+
+        <md-button
+                class="md-fab"
+                ng-click="$event.preventDefault(); choose(option.value);"
+                aria-label="option.label"
+        >
+            <md-icon
+                    md-svg-icon="/svg-icons/look.svg">
+            </md-icon>
+            <md-tooltip
+                    md-visible="option.tooltipIsVisible"
+                    md-direction="botton"
+            >
+                Test
+            </md-tooltip>
+        </md-button>
+        <!--
+            <md-button
+                    ng-repeat="option in prompt.options"
+                    ng-class="option.iconStyle()"
+                    ng-click="$event.preventDefault(); choose(option.value);"
+                    aria-label="option.label"
+            >
+                <md-icon
+                        ng-if="option.iconId"
+                        md-svg-icon="/svg-icons/{{ option.iconId }}.svg">
+                </md-icon>
+                    <span
+                            ng-if="!option.iconOnly"
+                            ng-bind="option.label">
+                    </span>
+                <md-tooltip
+                        md-visible="option.tooltipIsVisible"
+                        md-direction="botton"
+                        ng-if="option.iconOnly"
+                        ng-bind="option.label">
+                </md-tooltip>
+            </md-button>
+        -->
+    </div>
+
+
+</div>

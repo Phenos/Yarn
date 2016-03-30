@@ -1,4 +1,8 @@
-<a ng-class="{'unrecognized-thing': thing.unrecognized}"
+<a class="thing"
+   ng-class="{
+    'unrecognized-thing': thing.unrecognized,
+    'selected': thing.selected
+}"
    ng-href="{{thing.token}}"
    ng-click="thing.click($event)"
    ng-bind="thing.text"></a>

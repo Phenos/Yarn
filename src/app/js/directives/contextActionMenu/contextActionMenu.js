@@ -4,8 +4,6 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
     return {
         restrict: 'E',
         bindToController: {
-            thingIsA: "=",
-            predicate: "="
         },
         scope: true,
         replace: true,
@@ -20,6 +18,8 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.object = null;
         this.actions = [];
 
+        this.objectName = null;
+
         contextActionMenu.register(this);
 
         this.show = function () {
@@ -27,7 +27,27 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             self.visible = true;
         };
 
+        this.choose = function (action) {
+            console.log("CHOSEN", action)
+        };
+
+        this.mouseover = function (action) {
+            var label = action.name;
+            if (this.objectName) {
+                label = label + " " + this.objectName;
+            }
+            this.label = label;
+        };
+
+        this.mouseout = function (action) {
+            this.label = "";
+        };
+
         this.update = function (object) {
+            this.objectName = state.value("Object has Name", {
+                Object: object
+            });
+
             this.object = object;
             this.actions = [];
             var newActions = getContextActions(object);
@@ -38,6 +58,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.hide = function () {
             self.visible = false;
         };
+
 
         this.position = function (targetElement) {
             // We wait for the previously selected item to collapse before reading
@@ -100,7 +121,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 actions.push(new Action(object, {
                     icon: "question-mark",
                     iconSize: "small",
-                    name: "Hint?"
+                    name: "Hint"
                 }));
             }
         }

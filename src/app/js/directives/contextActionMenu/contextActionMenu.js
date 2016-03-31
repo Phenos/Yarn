@@ -32,9 +32,12 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         };
 
         this.mouseover = function (action) {
-            var label = action.name;
-            if (this.objectName) {
-                label = label + " " + this.objectName;
+            var label = action.label;
+            console.log("action.labelOnly", action.labelOnly);
+            if (!action.labelOnly) {
+                if (this.objectName) {
+                    label = label + " " + this.objectName;
+                }
             }
             this.label = label;
         };
@@ -107,6 +110,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                     icon: "close",
                     iconSize: "small",
                     label: "Close",
+                    labelOnly: true,
                     name: "close"
                 }));
             }
@@ -146,6 +150,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.object = object;
         this.icon = options.icon || "unknown";
         this.iconSize = options.iconSize || "";
+        this.labelOnly = options.labelOnly || false;
         this.name = options.name || "Unknown action!";
     }
 

@@ -99,7 +99,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             if (!(spaceIsRestricted && !allowedActions.hint)) {
                 actions.push(new Action(object, {
                     icon: "question-mark",
-                    iconSize: "mini",
+                    iconSize: "small",
                     name: "Hint?"
                 }));
             }

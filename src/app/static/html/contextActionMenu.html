@@ -4,8 +4,23 @@
      ng-class="{ 'is-visible' : menu.visible }">
     <div flex="0" layout="row" layout-align="center center">
         <md-button
+                class="md-fab is-size-small"
+                ng-click="$event.preventDefault(); close(action);"
+                aria-label="action.name"
+        >
+            <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
+            <md-tooltip
+                    md-visible="option.tooltipIsVisible"
+                    md-direction="botton">
+                Close
+            </md-tooltip>
+        </md-button>
+        <md-button
                 ng-repeat="action in menu.actions"
                 class="md-fab"
+                ng-class="{
+                    'is-size-small': action.iconSize === 'small'
+                }"
                 ng-click="$event.preventDefault(); choose(action);"
                 aria-label="action.name"
         >

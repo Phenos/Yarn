@@ -24,8 +24,10 @@ yarn.controller('root', function rootController(user,
         $scope.themes = themes;
         $scope.editorFiles = editorFiles;
 
-        $scope.user = user; // Note: User not yet in a service, resolved in route instead
-        profiles.authenticated(new Profile(user.username, user));
+        if (user) {
+            $scope.user = user; // Note: User not yet in a service, resolved in route instead
+            profiles.authenticated(new Profile(user.username, user));
+        }
 
 
     // Used by the global context menu

@@ -4,13 +4,6 @@
      ng-class="{ 'is-visible' : menu.visible }">
     <div layout="row" layout-align="center center">
         <md-button
-                class="md-fab is-size-small"
-                ng-click="$event.preventDefault(); menu.close();"
-                aria-label="action.name"
-        >
-            <md-icon md-svg-icon="/svg-icons/close.svg"></md-icon>
-        </md-button>
-        <md-button
                 ng-repeat="action in menu.actions"
                 class="md-fab"
                 ng-class="{

@@ -44,14 +44,16 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         };
 
         this.update = function (object) {
-            this.objectName = state.value("Object has Name", {
-                Object: object
-            });
+            if (object) {
+                this.objectName = state.value("Object has Name", {
+                    Object: object
+                });
 
-            this.object = object;
-            this.actions = [];
-            var newActions = getContextActions(object);
-            this.actions = this.actions.concat(newActions);
+                this.object = object;
+                this.actions = [];
+                var newActions = getContextActions(object);
+                this.actions = this.actions.concat(newActions);
+            }
             console.log("contextActionMenu.update");
         };
 
@@ -100,6 +102,15 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
 
         if (space) {
 
+            if (!(spaceIsRestricted && !allowedActions.hint)) {
+                actions.push(new Action(object, {
+                    icon: "close",
+                    iconSize: "small",
+                    label: "Close",
+                    name: "close"
+                }));
+            }
+
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {
                 if (!(spaceIsRestricted && !allowedActions[action.id])) {
@@ -121,6 +132,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 actions.push(new Action(object, {
                     icon: "question-mark",
                     iconSize: "small",
+                    label: "Hint",
                     name: "Hint"
                 }));
             }

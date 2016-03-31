@@ -91,14 +91,15 @@ yarn.service("setDefaultOptionsHelper", function (state,
 
                     var icon = state.value("Action has Icon", { Action: action });
                     var name = state.value("Action has Name", { Action: action });
-                    option = prompt.option(name, "do " + action.id);
-                    option.iconId = icon;
-                    option.iconSize = size;
-                    option.iconOnly = true;
+                    var isIntransitive = state.value("Action is Intransitive", { Action: action });
+                    if (isIntransitive) {
+                        option = prompt.option(name, "do " + action.id);
+                        option.iconId = icon;
+                        option.iconSize = size;
+                        option.iconOnly = true;
+                    }
                 }
             });
-
-
 
             if (!(spaceIsRestricted && !allowedActions.hint)) {
                 option = prompt.option("Hint?", "hint");

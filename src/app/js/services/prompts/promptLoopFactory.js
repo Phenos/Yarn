@@ -36,6 +36,10 @@ yarn.service('PromptLoop', function (Prompt) {
             prompt = new Prompt();
             this.currentPrompt = prompt;
             context.question(this, prompt);
+            // Update each options (to store icon types among other thigns)
+            angular.forEach(prompt.options, function (option) {
+                option.update();
+            });
             if (prompt.options.length) {
                 prompt.answer = function (promptLoop, value) {
                     var option = prompt.optionsRef[value];

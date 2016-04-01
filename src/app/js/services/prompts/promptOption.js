@@ -6,8 +6,8 @@ yarn.factory("PromptOption", function () {
         this.iconId = "";
         this.iconSize = "mini";
         this.iconOnly = false;
-        this._iconStyle = this.iconStyle();
-
+        this._iconStyle = "";
+        this.update();
     }
 
     PromptOption.prototype.iconStyle = function () {
@@ -25,6 +25,10 @@ yarn.factory("PromptOption", function () {
         }
         this._iconStyle = className;
         return className;
+    };
+
+    PromptOption.prototype.update = function () {
+        this.iconStyle();
     };
 
     return PromptOption;

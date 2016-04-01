@@ -342,14 +342,18 @@ yarn.service('state', function ($localStorage,
                     options.layer = this.currentLayer;
                 }
 
-                if (!options.parent && this.currentLayer !== "world") {
-                    // Find exquivalent assertions to be negated
-                    this.negate(assert(subject, _predicate, object));
-                }
+                // TODO:TEST: Dont negate assertions before knowing if an
+                // existing assertion can bemodifier
+                //if (!options.parent && this.currentLayer !== "world") {
+                //    // Find exquivalent assertions to be negated
+                //    this.negate(assert(subject, _predicate, object));
+                //}
+
                 var _assert = assert(subject, _predicate, object, {
                     layer: options.layer,
                     parent: options.parent
                 });
+
                 var identicalAssertions = this.assertions.filter(_assert);
                 if (identicalAssertions.count() > 0) {
                     var topAssertion = identicalAssertions.sortByWeight().top();

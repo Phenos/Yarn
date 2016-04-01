@@ -139,10 +139,12 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                         angular.forEach(unlessConditions, function (assertion) {
                             var expression = assertion.value();
                             var value = state.render(expression, scope);
-                            if (!value) actionDoesApply = false;
+                            if (!value) {
+                                actionDoesApply = false;
+                            }
                             console.log("---expression", expression);
                             console.log("---assertion", assertion);
-                            console.log("---value", value);
+                            console.log(">>VALUE", value);
                         });
                         //console.log("unlessConditions", unlessConditions);
                         if (actionDoesApply) {

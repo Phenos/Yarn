@@ -27,7 +27,7 @@ yarn.service("templating", function ($window, yConsole) {
                     if (output === "true") {
                         output = true;
                     } else if (output === "false") {
-                        output === false;
+                        output = false;
                     } else {
                         //console.log("COHERCING FLOAT: ", output);
                         output = parseFloat(output.substring(1));

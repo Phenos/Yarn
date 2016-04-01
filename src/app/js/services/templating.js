@@ -1,6 +1,16 @@
-yarn.service("templating", function ($window, yConsole) {
+yarn.service("templating", function ($window, yConsole, isNumeric) {
 
-    var nunjucks = $window.nunjucks;
+    var nunjucks = new $window.nunjucks.Environment();
+
+    nunjucks.addFilter('boolean', function(val) {
+        var output;
+        if (val) {
+            output = "true";
+        } else {
+            output = "false";
+        }
+        return output;
+    });
 
     function Templating() {
     }
@@ -22,16 +32,18 @@ yarn.service("templating", function ($window, yConsole) {
                 //console.log("output:: ", output);
 
                 // Coherce the value to a float if needed
-                if (output[0] === "#") {
-                    output = output.substring(1).trim();
+                if (output[0] !== "#") {
                     if (output === "true") {
                         output = true;
                     } else if (output === "false") {
                         output = false;
-                    } else {
-                        //console.log("COHERCING FLOAT: ", output);
-                        output = parseFloat(output.substring(1));
+                    } else if (output === "null") {
+                        output = null;
+                    } else if (isNumeric(output)) {
+                        output = parseFloat(output);
                     }
+                } else {
+                    output = output.substring(1);
                 }
 
             } catch (e) {

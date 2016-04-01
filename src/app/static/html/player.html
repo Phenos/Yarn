@@ -2,7 +2,6 @@
     <wallpaper></wallpaper>
     <sidebar></sidebar>
     <toolbar user="player.user"></toolbar>
-    <context-action-menu></context-action-menu>
     <md-content
             style="z-index:5; position: relative;"
             NOPE_layout="row"
@@ -11,6 +10,7 @@
             layout-fill
     >
         <div class="main-ui">
+            <context-action-menu></context-action-menu>
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>
             <div class="player-footer"></div>

@@ -120,17 +120,18 @@ yarn.controller('root', function rootController(user,
 
         if ($state.params.profile && $state.params.story) {
             var path = [
-                "/twitter.",
-                $state.params.profile,
-                "/",
+                //"/twitter.",
+                //$state.params.profile,
+                "./",
                 $state.params.story,
                 "/story.txt"
             ].join("");
             profiles.visited(new Profile("twitter." + $state.params.profile));
             console.log("what?");
-            //var main = editorFiles.open(profiles.visited(), path, true);
-            //editorFiles.mainFile(main);
-            //IDE.run();
+            console.log(">>>>>", path);
+            var main = editorFiles.open(profiles.visited(), path, true);
+            editorFiles.mainFile(main);
+            IDE.run();
         } else {
             // Check if a previously opened story should be loaded
             //IDE.loadRememberedStory();

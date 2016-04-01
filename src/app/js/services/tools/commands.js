@@ -1,6 +1,6 @@
 yarn.service("commandsTool", function (Tool) {
     return new Tool("commands", {
-        label: "Commands",
+        label: "Log",
         icon: "commands",
         directive: "commands-tool",
         order: 100

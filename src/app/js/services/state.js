@@ -255,33 +255,44 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
-        State.prototype.resolveValue = function (assert) {
+        State.prototype.resolveValue = function (assert, scope) {
             var value = this.resolveRawValue(assert);
             //console.log("rawValue: ", rawValue);
             if (angular.isString(value)) {
-                value = this.render(value);
+                value = this.render(value, scope);
             }
             //console.log("resolveValue: ", value);
             return value;
         };
 
-        State.prototype.value = function () {
-            var _assert = parseAssert.apply(this, arguments);
-            return this.resolveValue(_assert);
+        State.prototype.value = function (assertion, scope) {
+            var _assert = parseAssert(assertion, scope);
+            return this.resolveValue(_assert, scope);
         };
 
-        State.prototype.one = function () {
-            var _assert = parseAssert.apply(this, arguments);
+        State.prototype.one = function (assertion, scope) {
+            var _assert = parseAssert(assertion, scope);
             return this.resolveOne(_assert);
         };
 
-        State.prototype.many = function () {
-            var _assert = parseAssert.apply(this, arguments);
+        State.prototype.oneAssertion = function (assertion, scope) {
+            var _assert = parseAssert(assertion, scope);
+            return this.resolveOne(_assert, true);
+        };
+
+        State.prototype.many = function (assertion, scope) {
+            var _assert = parseAssert(assertion, scope);
             return this.resolveAll(_assert);
         };
 
-        State.prototype.render = function (template) {
-            return templating.render(template, this.scope())
+        State.prototype.manyAssertions = function (assertion, scope) {
+            var _assert = parseAssert(assertion, scope);
+            return this.resolveAll(_assert, true);
+        };
+
+        State.prototype.render = function (template, scope) {
+            var _scope = this.scope(scope);
+            return templating.render(template, _scope)
         };
 
         /**
@@ -493,22 +504,9 @@ yarn.service('state', function ($localStorage,
             return count;
         };
 
-        State.prototype.scope = function () {
+        State.prototype.scope = function (_scope) {
             var state = this;
-
-            var newScope = {
-                lodash: lodash,
-                assert: _assert,
-                assertRaw: assertRaw
-            };
-
-            newScope.state = {
-                steps: this.step()
-            };
-
-            newScope.format = {
-                timeOfDay: timeOfDay
-            };
+            var newScope = {};
 
             function timeOfDay(value) {
                 var d = new Date(1976, 1, 1, 0, value, 0, 0);
@@ -524,11 +522,34 @@ yarn.service('state', function ($localStorage,
             }
 
             // todo: move this in the "templating" service
+            function _value(assertion, scope) {
+                var _scope = angular.extend({}, newScope, scope);
+                var value = state.value(assertion, _scope);
+                console.log("value: " + value);
+                return value;
+            }
+
+            // todo: move this in the "templating" service
             function assertRaw(assertion) {
                 //console.log("assertRaw: " + assertion);
                 var __assert = parseAssert(assertion);
                 return state.resolveRawValue(__assert);
             }
+
+
+            var baseScope = {
+                lodash: lodash,
+                value: _value,
+                assert: _assert,
+                assertRaw: assertRaw,
+                state: {
+                    steps: this.step()
+                }, format: {
+                    timeOfDay: timeOfDay
+                }
+            };
+
+            angular.extend(newScope, baseScope, _scope);
 
             return newScope;
         };

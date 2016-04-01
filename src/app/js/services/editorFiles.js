@@ -135,7 +135,7 @@ yarn.service("editorFiles", function (EditorFile,
         if (angular.isObject(uriOrFile)) {
             uri = uriOrFile.absoluteURI().toString();
         } else {
-            uri = URI("http://storage.yarnstudio.io/" + profile.username + "/" + uri).toString()
+            uri = URI("http://storage.yarnstudio.io/" + profile.username + "/" + uri).normalize().toString()
         }
         angular.forEach(this.files, function (file) {
             console.log("===>>>--", file.absoluteURI().toString(), uri);

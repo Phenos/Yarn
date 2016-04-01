@@ -23,7 +23,7 @@ yarn.service("EditorFile", function (guid,
 
     EditorFile.prototype.rename = function (uri) {
         this._uri = uri.toString();
-        this.uri = URI(this._uri);
+        this.uri = new URI(this._uri).normalize();
     };
 
     EditorFile.prototype.sizeInKB = function () {

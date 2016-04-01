@@ -17,12 +17,21 @@ yarn.service("templating", function ($window, yConsole) {
         } else {
             var _scope = scope || {};
             try {
+                console.log("pre-output source : ", source);
                 output = nunjucks.renderString(source, _scope);
+                console.log("output:: ", output);
 
                 // Coherce the value to a float if needed
                 if (output[0] === "#") {
-                    //console.log("COHERCING FLOAT: ", output);
-                    output = parseFloat(output.substring(1));
+                    output = output.substring(1).trim();
+                    if (output === "true") {
+                        output = true;
+                    } else if (output === "false") {
+                        output === false;
+                    } else {
+                        //console.log("COHERCING FLOAT: ", output);
+                        output = parseFloat(output.substring(1));
+                    }
                 }
 
             } catch (e) {
@@ -30,6 +39,7 @@ yarn.service("templating", function ($window, yConsole) {
                     e.name + "\n",
                     e.message
                 ];
+                output = new Error(msg);
                 yConsole.error(msg.join(""));
             }
             recursion--;

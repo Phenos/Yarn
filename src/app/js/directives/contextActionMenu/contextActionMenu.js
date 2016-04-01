@@ -3,8 +3,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                                                                         state) {
     return {
         restrict: 'E',
-        bindToController: {
-        },
+        bindToController: {},
         scope: true,
         replace: true,
         controllerAs: 'menu',
@@ -17,8 +16,8 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.visible = false;
         this.object = null;
         this.actions = [];
-
         this.objectName = null;
+        this.label = null;
 
         contextActionMenu.register(this);
 
@@ -32,18 +31,23 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         };
 
         this.mouseover = function (action) {
-            var label = action.label;
-            console.log("action.labelOnly", action.labelOnly);
-            if (!action.labelOnly) {
-                if (this.objectName) {
-                    label = label + " " + this.objectName;
+            var label;
+            if (action.label) {
+                label = action.label;
+            } else {
+                label = action.name;
+                console.log("action.labelOnly", action.labelOnly);
+                if (!action.labelOnly) {
+                    if (this.objectName) {
+                        label = label + " " + this.objectName;
+                    }
                 }
             }
             this.label = label;
         };
 
         this.mouseout = function (action) {
-            this.label = "";
+            this.label = this.defaultLabel;
         };
 
         this.update = function (object) {
@@ -51,6 +55,9 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 this.objectName = state.value("Object has Name", {
                     Object: object
                 });
+
+                this.defaultLabel = "Do something with the " + this.objectName + " ?";
+                if (!this.label) this.label = this.defaultLabel;
 
                 this.object = object;
                 this.actions = [];
@@ -70,7 +77,6 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             // the new position
             $timeout(function () {
                 var top = targetElement[0].offsetTop;
-                top = top + targetElement[0].offsetParent.offsetTop;
                 top = top + targetElement[0].clientHeight;
                 console.log("targetElement", targetElement);
                 $element.css({
@@ -117,29 +123,41 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
 
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {
+                var actionDoesApply = true;
                 if (!(spaceIsRestricted && !allowedActions[action.id])) {
-                    var isTransitive = state.value("Action is Transitive", { Action: action });
+                    var scope = {
+                        CurrentAction: action,
+                        ActionObject: object
+                    };
+                    var isTransitive = state.value("CurrentAction is Transitive", scope);
                     if (isTransitive) {
-                        var icon = state.value("Action has Icon", { Action: action });
-                        var name = state.value("Action has Name", { Action: action });
-                        var action = new Action(object, {
-                            icon: icon,
-                            name: name
+                        var icon = state.value("CurrentAction has Icon", scope);
+                        var iconSize = state.value("CurrentAction has IconSize", scope);
+                        var name = state.value("CurrentAction has Name", scope);
+                        var label = state.value("CurrentAction has Label", scope);
+                        var unlessConditions = state.manyAssertions("CurrentAction unless *", scope);
+                        angular.forEach(unlessConditions, function (assertion) {
+                            var expression = assertion.value();
+                            var value = state.render(expression, scope);
+                            if (!value) actionDoesApply = false;
+                            console.log("---expression", expression);
+                            console.log("---assertion", assertion);
+                            console.log("---value", value);
                         });
-                        actions.push(action);
+                        //console.log("unlessConditions", unlessConditions);
+                        if (actionDoesApply) {
+                            var action = new Action(object, {
+                                icon: icon,
+                                name: name,
+                                label: label,
+                                iconSize: iconSize
+                            });
+                            actions.push(action);
+                        }
                     }
                 }
             });
 
-
-            if (!(spaceIsRestricted && !allowedActions.hint)) {
-                actions.push(new Action(object, {
-                    icon: "question-mark",
-                    iconSize: "small",
-                    label: "Hint",
-                    name: "Hint"
-                }));
-            }
         }
 
         return actions;
@@ -152,6 +170,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.iconSize = options.iconSize || "";
         this.labelOnly = options.labelOnly || false;
         this.name = options.name || "Unknown action!";
+        this.label = options.label || null;
     }
 
 

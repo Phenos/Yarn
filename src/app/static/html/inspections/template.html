@@ -1,0 +1,13 @@
+<div>
+    <div>
+        This text contains no templating instructions.
+    </div>
+    <div>
+        This text contains templating instructions and is evaluated
+        as a <span ng-bind="type"></span>.
+    </div>
+    <br/>
+    <div ng-class="'value-type-' + type">
+        {{ value }}
+    </div>
+</div>

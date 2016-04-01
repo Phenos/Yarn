@@ -7,7 +7,7 @@
                     <p>ALL TYPES</p>
                 </md-list-item>
                 <md-list-item ng-click="filterByType(type)" ng-repeat="type in types">
-                    <p><span class="count">{{ type.count}}</span><span>{{ type.object.label() }}</span></p>
+                    <p><span class="count">{{ type.count }}</span><span>{{ type.object._label }}</span></p>
                 </md-list-item>
             </md-list>
         </md-content>
@@ -16,7 +16,7 @@
                 <md-list-item
                         ng-repeat="thing in thingsFiltered"
                         ng-click="selectThing(thing)">
-                    <p>{{ thing.object.text() }}</p>
+                    <p>{{ thing.object._text }}</p>
                 </md-list-item>
             </md-list>
         </md-content>

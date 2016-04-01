@@ -7,10 +7,14 @@ yarn.service('Thing', function ThingService() {
      */
     function Thing(_id) {
         this.id = _id.toLowerCase();
+        this._text = this.text();
     }
 
     Thing.prototype.label = function (value) {
-        if (!angular.isUndefined(value)) this._label = value;
+        if (!angular.isUndefined(value)) {
+            this._label = value;
+            this._text = this.text();
+        }
         return this._label;
     };
 

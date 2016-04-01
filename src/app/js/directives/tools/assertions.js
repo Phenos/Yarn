@@ -1,8 +1,10 @@
-yarn.directive('assertionsTool', function CommandsTool() {
+yarn.directive('assertionsTool', function AssertionsTool() {
 
     return {
         restrict: 'E',
-        scope: {},
+        scope: {
+            isFocused: "="
+        },
         replace: true,
         templateUrl: './html/tools/assertions.html',
         controller: function Controller($scope, state) {
@@ -17,8 +19,8 @@ yarn.directive('assertionsTool', function CommandsTool() {
             });
 
             $scope.update = function () {
+                console.log("updateAssertions", $scope.allAssertions);
                 $scope.allAssertions = state.assertions.all();
-                //console.log("updateAssertions", $scope.allAssertions);
             };
 
         }

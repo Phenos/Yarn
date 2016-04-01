@@ -14,9 +14,9 @@
                 ng-click="goToSource(assertion.source);">
             <div>
                 <span class="assertion">
-                    <span class="is-object">{{ assertion.subject.text() }}</span>
-                    <span class="is-predicate">{{ assertion.predicate.text() }}</span>
-                    <span class="is-object">{{ assertion.object.text() }}</span>
+                    <span class="is-object">{{ assertion.subject._text }}</span>
+                    <span class="is-predicate">{{ assertion.predicate._text }}</span>
+                    <span class="is-object">{{ assertion.object._text }}</span>
                 </span>
                 <span ng-if="assertion.source"
                       class="source">[<span class="url">

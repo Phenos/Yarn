@@ -30,8 +30,10 @@
                 var self = this;
 
                 this.token = null;
+                this.summary = null;
+                this.title = null;
 
-                this.title = function () {
+                this.getTitle = function () {
                     var value = "Nothing to inspect!";
                     if (this.token) {
                         var title = this.token.value;
@@ -43,7 +45,7 @@
                     return value;
                 };
 
-                this.summary = function () {
+                this.getSummary = function () {
                     var value = null;
                     if (this.token) {
                         var summary = state.resolveValue(assert(this.token.value, "has", "DocSummary"));
@@ -58,6 +60,8 @@
                 };
 
                 this.update = function (articles) {
+                    self.summary = this.getSummary();
+                    self.title = this.getTitle();
                     self.articles = articles;
                 };
 

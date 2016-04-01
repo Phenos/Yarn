@@ -44,6 +44,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             IDE.working(true);
             editorFiles.save(this.file, function () {
                 IDE.working(false);
+                self.file.isModified();
             });
         };
 
@@ -53,6 +54,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 "You have unsaved changes in this file.<br/> Are you sure you want to " +
                 "close it and <br/><strong>loose those changes</strong> ?",
                 function () {
+                    self.file.isModified();
                     this.file.load();
                 })
         };
@@ -82,12 +84,14 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         this.focus = function () {
             this.file.isFocused = true;
+            self.file.isModified();
             if (aceEditor) {
                 aceEditor.focus();
             }
         };
 
         this.blur = function () {
+            self.file.isModified();
             this.file.isFocused = false;
         };
 
@@ -122,10 +126,10 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             updateInspection();
             if (self.file) {
                 self.file.updateStatus();
+                //Refresh the isModified status
+                self.file.isModified();
             }
             checkGoToLine();
-
-
         }
 
         function checkGoToLine() {

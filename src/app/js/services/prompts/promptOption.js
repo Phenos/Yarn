@@ -6,23 +6,26 @@ yarn.factory("PromptOption", function () {
         this.iconId = "";
         this.iconSize = "mini";
         this.iconOnly = false;
+        this._iconStyle = this.iconStyle();
 
-        this.iconStyle = function () {
-            var className = "";
-            if (this.iconOnly) {
-                if (this.iconSize === "mini") {
-                    className = "md-fab md-mini";
-                } else if (this.iconSize === "large") {
-                    className = "md-fab large";
-                } else {
-                    className = "md-fab";
-                }
-            } else {
-                className = 'md-raised wide';
-            }
-            return className;
-        };
     }
+
+    PromptOption.prototype.iconStyle = function () {
+        var className = "";
+        if (this.iconOnly) {
+            if (this.iconSize === "mini") {
+                className = "md-fab md-mini";
+            } else if (this.iconSize === "large") {
+                className = "md-fab large";
+            } else {
+                className = "md-fab";
+            }
+        } else {
+            className = 'md-raised wide';
+        }
+        this._iconStyle = className;
+        return className;
+    };
 
     return PromptOption;
 });

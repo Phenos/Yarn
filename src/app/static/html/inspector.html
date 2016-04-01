@@ -3,11 +3,11 @@
     <div layout="column"
          ng-show="inspector.articles.length > 0">
         <h2>
-            {{ inspector.title() }}
+            {{ inspector.title }}
         </h2>
 
-        <div class="summary" ng-if="inspector.summary()">
-            {{ inspector.summary() }}
+        <div class="summary" ng-if="inspector.summary">
+            {{ inspector.summary }}
         </div>
         <articles>
             <article ng-repeat="article in inspector.articles"

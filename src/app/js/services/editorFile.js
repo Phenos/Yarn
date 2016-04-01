@@ -7,6 +7,10 @@ yarn.service("EditorFile", function (guid,
 
     function EditorFile(uri, meta, profile) {
         this._uri = "";
+        this._filename = "";
+        this._sizeInKB = 0;
+        this._isModified = false;
+        this._absoluteURI = "";
         this.uri = null;
         this.rename(uri);
         this.guid = guid();
@@ -24,6 +28,8 @@ yarn.service("EditorFile", function (guid,
     EditorFile.prototype.rename = function (uri) {
         this._uri = uri.toString();
         this.uri = new URI(this._uri).normalize();
+        this._filename = this.filename();
+        this._absoluteURI = this.absoluteURI();
     };
 
     EditorFile.prototype.sizeInKB = function () {
@@ -31,6 +37,7 @@ yarn.service("EditorFile", function (guid,
         if (this.meta) {
             size = Math.floor((this.meta.Size / 1000)+1);
         }
+        this._sizeInKB = size;
         return size;
     };
 
@@ -64,6 +71,7 @@ yarn.service("EditorFile", function (guid,
                 self.status = "Loaded";
                 self.content = script.source;
                 self.originalContent = script.source;
+                self.sizeInKB();
                 //console.log("script:", script);
             })
             .catch(function (e) {
@@ -81,13 +89,18 @@ yarn.service("EditorFile", function (guid,
         } else {
             this.status = "Saved";
         }
+        this.sizeInKB();
     };
 
     EditorFile.prototype.isModified = function () {
-        return ((this.content !== this.originalContent) && (this.content !== null));
+        console.log("isModfied", this);
+        var isModified = ((this.content !== this.originalContent) && (this.content !== null));
+        this._isModified = isModified;
+        this.sizeInKB();
+        return isModified;
     };
 
-    EditorFile.prototype.name = function () {
+    EditorFile.prototype.filename = function () {
         return this.uri.filename();
     };
 

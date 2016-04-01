@@ -36,7 +36,7 @@ yarn.service("tools", function toolsService($injector,
     };
 
     Tools.prototype.focus = function (id, dontExpand) {
-        //console.log("focus", id);
+        console.log("focus", id);
         var storage = storyLocalStorage.get("tools");
         storage.lastOpenTool = id;
         angular.forEach(this.all, function (tool) {

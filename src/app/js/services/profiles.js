@@ -4,6 +4,7 @@ yarn.service("profiles", function (Profile) {
         this.index = {};
         this._authenticated = null;
         this._visited = null;
+        this._all = [];
         //console.log("profiles", this);
     }
 
@@ -16,6 +17,7 @@ yarn.service("profiles", function (Profile) {
                 this.index[profile.username] = profile;
             }
         }
+        this.all();
         return profile;
     };
 
@@ -25,6 +27,7 @@ yarn.service("profiles", function (Profile) {
             this._authenticated = profile;
             this.index[profile.username] = profile;
         }
+        this.all();
         return this._authenticated;
     };
 
@@ -34,6 +37,7 @@ yarn.service("profiles", function (Profile) {
             this._visited = profile;
             this.index[profile.username] = profile;
         }
+        this.all();
         return this._visited;
     };
 
@@ -42,6 +46,7 @@ yarn.service("profiles", function (Profile) {
         angular.forEach(this.index, function (profile) {
             all.push(profile);
         });
+        this._all = all;
         return all;
     };
 

@@ -31,6 +31,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
 
     function Directory(uri) {
         this.uri = uri;
+        this._uri = uri.toString();
         this.files = [];
     }
 

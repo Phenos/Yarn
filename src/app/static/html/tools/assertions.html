@@ -11,6 +11,10 @@
         </div>
     </md-toolbar>
     <div flex="grow" layout="column">
-        <assertion-grid flex="grow" layout="column" data="allAssertions"></assertion-grid>
+        <assertion-grid
+                ng-if="isFocused"
+                flex="grow"
+                layout="column"
+                data="allAssertions"></assertion-grid>
     </div>
 </div>

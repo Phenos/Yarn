@@ -1,13 +1,18 @@
-<div>
-    <div>
-        This text contains no templating instructions.
+<div class="template-inspection">
+    <div ng-if="type !== 'error'">
+        This template is currently valued as a '<strong ng-bind="type"></strong>' :
+        <br/>
+        <span ng-class="'value-type-' + type">
+            {{ value }}
+        </span>
     </div>
-    <div>
-        This text contains templating instructions and is evaluated
-        as a <span ng-bind="type"></span>.
-    </div>
-    <br/>
-    <div ng-class="'value-type-' + type">
-        {{ value }}
+    <div ng-if="type === 'error'">
+        This template has an <strong>error</strong> while trying to render:
+        <br />
+        <span class="is-error">
+            {{ error }}
+            <br/><br/>
+            {{ errorTrace }}
+        </span>
     </div>
 </div>

@@ -33,7 +33,7 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
                     value: thing.object.text(),
                     type: "camelcase"
                 };
-                //console.log("thing", thing);
+                console.log("thing", thing);
                 inspector.inspect(token);
             };
 

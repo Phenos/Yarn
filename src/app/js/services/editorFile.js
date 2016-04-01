@@ -93,7 +93,7 @@ yarn.service("EditorFile", function (guid,
     };
 
     EditorFile.prototype.isModified = function () {
-        console.log("isModfied", this);
+        //console.log("isModfied", this);
         var isModified = ((this.content !== this.originalContent) && (this.content !== null));
         this._isModified = isModified;
         this.sizeInKB();

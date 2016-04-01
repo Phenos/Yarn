@@ -18,7 +18,7 @@ yarn.service("templating", function ($window, yConsole, isNumeric) {
     // TODO: Try to handle better detection of recursion during templating
     var recursion = 0;
     var maxRecursion = 50;
-    Templating.prototype.render = function (source, scope) {
+    Templating.prototype.render = function (source, scope, runSilent) {
         var output;
         recursion++;
         if (recursion > maxRecursion) {
@@ -52,7 +52,7 @@ yarn.service("templating", function ($window, yConsole, isNumeric) {
                     e.message
                 ];
                 output = new Error(msg);
-                yConsole.error(msg.join(""));
+                if (!runSilent) yConsole.error(msg.join(""));
             }
             recursion--;
         }

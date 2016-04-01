@@ -57,8 +57,12 @@ yarn.service('yConsole', function (soundEffects) {
             yConsole.write("<log-icon>✔</log-icon>" + text, "success", options);
         };
 
+        this.transaction = function (text, options) {
+            yConsole.write("<log-icon>⬩</log-icon>" + text, "transaction", options);
+        };
+
         this.tip = function (text, options) {
-            yConsole.write("<log-icon>⬩</log-icon><strong>Tip: </strong> " + text, "tip", options);
+            yConsole.write("<log-icon>⚑</log-icon><strong>Tip: </strong> " + text, "tip", options);
         };
 
         this.command = function (text, options) {

@@ -36,6 +36,10 @@ yarn.service('state', function ($localStorage,
             })
         }
 
+        State.prototype.undo = function () {
+            transactions.undo(this);
+        };
+
         State.prototype.uniqueKey = function () {
             var key;
             var username = "anonymous";
@@ -101,7 +105,7 @@ yarn.service('state', function ($localStorage,
                     var oldList = sessionFiles.files;
                     sessionFiles.files = [];
                     angular.forEach(oldList, function (file) {
-                        console.log("file", file);
+                        //console.log("file", file);
                         var setFocus = false;
                         if (lastFocusFromMemory === file) {
                             setFocus = true;
@@ -159,6 +163,7 @@ yarn.service('state', function ($localStorage,
                     subject,
                     predicates(assertion.predicate),
                     object, {
+                        noTransaction: true,
                         value: assertion.value
                     }
                 );
@@ -353,11 +358,13 @@ yarn.service('state', function ($localStorage,
                         // We create a new assertion anyways
                         assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
-                        postal.publish({
-                            channel: "state",
-                            topic: "createAssertion",
-                            data: { assertion: assertion }
-                        });
+                        if (!options.noTransaction) {
+                            postal.publish({
+                                channel: "state",
+                                topic: "createAssertion",
+                                data: {assertion: assertion}
+                            });
+                        }
                         this.persistAssertion(assertion);
                     } else {
                         var replaced = topAssertion.value();
@@ -367,24 +374,28 @@ yarn.service('state', function ($localStorage,
                         } else {
                             topAssertion.value(options.value);
                         }
-                        postal.publish({
-                            channel: "state",
-                            topic: "updateAssertion",
-                            data: {
-                                replaced: replaced,
-                                assertion: topAssertion
-                            }
-                        });
+                        if (!options.noTransaction) {
+                            postal.publish({
+                                channel: "state",
+                                topic: "updateAssertion",
+                                data: {
+                                    replaced: replaced,
+                                    assertion: topAssertion
+                                }
+                            });
+                        }
                         this.persistAssertion(topAssertion);
                     }
                 } else {
                     assertion = new Assertion(subject, _predicate, object, options);
                     this.assertions.add(assertion);
-                    postal.publish({
-                        channel: "state",
-                        topic: "createAssertion",
-                        data: { assertion: assertion }
-                    });
+                    if (!options.noTransaction) {
+                        postal.publish({
+                            channel: "state",
+                            topic: "createAssertion",
+                            data: { assertion: assertion }
+                        });
+                    }
                     this.persistAssertion(assertion);
                 }
 

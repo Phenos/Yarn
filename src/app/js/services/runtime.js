@@ -148,6 +148,7 @@ yarn.service('Runtime', function RuntimeService(state,
                                 //console.log("node.source", node.source);
                                 createdAssertions.push(
                                     state.createAssertion(currentThis, predicate, object, {
+                                        noTransaction: true,
                                         parent: parent,
                                         value: value,
                                         source: node.source

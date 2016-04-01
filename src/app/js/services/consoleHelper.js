@@ -6,11 +6,12 @@ yarn.factory('consoleHelper', function () {
         var log = [];
         var object = assertion.object;
         var subject = assertion.subject;
-        log.push("<span command='inspect " + subject.id + " '>" + subject.id + "</span> ");
-        log.push(assertion.predicate.label);
+        log.push("&nbsp;&nbsp;<span class='assertion'>");
+        log.push("<span class='subject' command='inspect " + subject.id + " '>" + subject.text() + "</span> ");
+        log.push("<span class='predicate'>" + assertion.predicate.label + "</span>");
         if (object) {
             if (angular.isObject(object)) {
-                log.push(" <span command='inspect " + object.id + " '>" + object.id + "</span>");
+                log.push(" <span class='object' command='inspect " + object.id + " '>" + object.text() + "</span>");
             } else if (typeof object === "string") {
                 log.push(' "' + object + '"');
             } else if (typeof object === "number") {
@@ -18,8 +19,9 @@ yarn.factory('consoleHelper', function () {
             }
         }
 
-        log.push("<span class='truthStatement'>");
-        log.push(" (is " + assertion.value() + " in " + assertion.layer + ")");
+        log.push("&nbsp;<span class='value'>");
+        log.push('"' + assertion.value() + '"');
+        log.push("</span>");
         log.push("</span>");
 
         return log.join("");

@@ -138,7 +138,7 @@ yarn.service("editorFiles", function (EditorFile,
             uri = URI("http://storage.yarnstudio.io/" + profile.username + "/" + uri).normalize().toString()
         }
         angular.forEach(this.files, function (file) {
-            console.log("===>>>--", file.absoluteURI().toString(), uri);
+            //console.log("===>>>--", file.absoluteURI().toString(), uri);
             if (file.absoluteURI().toString() === uri) match = file;
         });
         //console.log("MATCH", match);

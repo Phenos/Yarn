@@ -1,5 +1,6 @@
 yarn.service("keyboardShortcuts", function keyboardShortcuts(hotkeys,
                                                              editorTabs,
+                                                             state,
                                                              root,
                                                              tools,
                                                              yConsole,
@@ -23,6 +24,14 @@ yarn.service("keyboardShortcuts", function keyboardShortcuts(hotkeys,
             callback: function (event) {
                 event.preventDefault();
                 tools.focus("project");
+            }
+        }, {
+            description: 'Undo last command',
+            combo: 'mod+u',
+            allowIn: allowIn,
+            callback: function (event) {
+                event.preventDefault();
+                state.undo();
             }
         }, {
             description: 'Create a new file',

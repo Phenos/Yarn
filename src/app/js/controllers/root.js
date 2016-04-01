@@ -19,7 +19,7 @@ yarn.controller('root', function rootController(user,
                                                 profiles,
                                                 Profile) {
 
-        console.log("state.params:", $state);
+        //console.log("state.params:", $state);
         $scope.IDE = IDE;
         $scope.themes = themes;
         $scope.editorFiles = editorFiles;
@@ -127,8 +127,8 @@ yarn.controller('root', function rootController(user,
                 "/story.txt"
             ].join("");
             profiles.visited(new Profile("twitter." + $state.params.profile));
-            console.log("what?");
-            console.log(">>>>>", path);
+            //console.log("what?");
+            //console.log(">>>>>", path);
             var main = editorFiles.open(profiles.visited(), path, true);
             editorFiles.mainFile(main);
             IDE.run();

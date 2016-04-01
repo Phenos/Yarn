@@ -17,9 +17,9 @@ yarn.service("templating", function ($window, yConsole) {
         } else {
             var _scope = scope || {};
             try {
-                console.log("pre-output source : ", source);
+                //console.log("pre-output source : ", source);
                 output = nunjucks.renderString(source, _scope);
-                console.log("output:: ", output);
+                //console.log("output:: ", output);
 
                 // Coherce the value to a float if needed
                 if (output[0] === "#") {

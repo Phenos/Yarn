@@ -4,7 +4,7 @@ yarn.service("profiles", function (Profile) {
         this.index = {};
         this._authenticated = null;
         this._visited = null;
-        console.log("profiles", this);
+        //console.log("profiles", this);
     }
 
     Profiles.prototype.get = function (username) {

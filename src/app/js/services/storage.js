@@ -157,7 +157,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
         if (user) {
             var relativeToUserURI = file.relativeToUserURI();
             var newNameRelativeToUserUID = relativeToUserURI.clone().filename(newName);
-            console.log("NEW NAME WILL BE: ", newNameRelativeToUserUID);
+            //console.log("NEW NAME WILL BE: ", newNameRelativeToUserUID);
             apiClient.action('renameFile', {
                 uri_source: relativeToUserURI.toString(),
                 uri_destination: newNameRelativeToUserUID.toString(),
@@ -169,7 +169,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
                     self.isLoading = false;
                     //console.log("?",[savedContent], [file.originalContent]);
                     //file.originalContent = savedContent;
-                    console.log("storage.renameFIle success", [data]);
+                    //console.log("storage.renameFIle success", [data]);
                     success && success(data);
                 } else {
                     self.isLoading = false;
@@ -190,7 +190,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
             filesMeta.push(file.meta);
         });
 
-        console.log("filesMeta", filesMeta);
+        //console.log("filesMeta", filesMeta);
 
         var user = session.user();
         var profile = this.profile;
@@ -204,7 +204,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
             }, function (data) {
                 if (!data.error) {
                     self.isLoading = false;
-                    console.log("storage.deleteFiles", [data]);
+                    //console.log("storage.deleteFiles", [data]);
                     success && success(data);
                 } else {
                     self.isLoading = false;
@@ -229,9 +229,9 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
                 username: user.username
             };
 
-            console.log("params", params);
+            //console.log("params", params);
             apiClient.action('files', params , function (data) {
-                console.log("s3 data", data);
+                //console.log("s3 data", data);
                 if (!data.error) {
                     angular.forEach(self.files, function (file) {
                         file.markForDiscard = true;

@@ -3,7 +3,7 @@ yarn.service("twitterProfile", function (apiClient, session, yConsole) {
     function twitterProfile(username, success, failed) {
         var user = session.user();
         if (user) {
-            console.log("twitterProfile > username", username);
+            //console.log("twitterProfile > username", username);
             var profile = username.split(".")[1];
             return apiClient.action('twitterProfile', {
                 token: user.token,

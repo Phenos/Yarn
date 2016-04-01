@@ -31,7 +31,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
             channel: "storage",
             topic: "refresh",
             callback: function (storage) {
-                console.log("what", storage);
+                //console.log("what", storage);
                 if (storage === self.selectedStorage) {
                     updateList();
                 }

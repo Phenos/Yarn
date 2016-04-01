@@ -9,7 +9,7 @@ yarn.service("transactions", function (Transactions, yConsole, consoleHelper) {
             transactions.add("create", {
                 assertion: data.assertion.pojo()
             });
-            yConsole.log("Transaction: Create: " + consoleHelper.assertion2log(data.assertion), {
+            yConsole.transaction("Created: " + consoleHelper.assertion2log(data.assertion), {
                 source: data.source
             });
         }
@@ -22,7 +22,7 @@ yarn.service("transactions", function (Transactions, yConsole, consoleHelper) {
             transactions.add("delete", {
                 assertion: data.assertion.pojo()
             });
-            yConsole.log("Transaction: Delete: " + consoleHelper.assertion2log(data.assertion), {
+            yConsole.transaction("Deleted: " + consoleHelper.assertion2log(data.assertion), {
                 source: data.source
             });
         }
@@ -36,7 +36,7 @@ yarn.service("transactions", function (Transactions, yConsole, consoleHelper) {
                 replaced: data.replaced,
                 assertion: data.assertion.pojo()
             });
-            yConsole.log("Transaction: Update: " + consoleHelper.assertion2log(data.assertion), {
+            yConsole.transaction("Updated: " + consoleHelper.assertion2log(data.assertion), {
                 source: data.source
             });
         }
@@ -46,7 +46,7 @@ yarn.service("transactions", function (Transactions, yConsole, consoleHelper) {
         channel: "commands",
         topic: "command",
         callback: function (data) {
-            transactions.add("command", {
+            transactions.transaction("command", {
                 command: data
             });
         }
@@ -72,11 +72,14 @@ yarn.service("Transactions", function (Transaction) {
 
     }
 
-
     Transactions.prototype.add = function (operation, metadata) {
         var transaction = new Transaction(operation, metadata);
         this.log.push(transaction);
         this.persist();
+    };
+
+    Transactions.prototype.undo = function (state) {
+        console.log("UNDO!", state);
     };
 
     Transactions.prototype.persist = function () {

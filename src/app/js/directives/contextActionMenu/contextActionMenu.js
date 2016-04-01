@@ -56,12 +56,16 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                     Object: object
                 });
 
-                this.defaultLabel = "Do something with the " + this.objectName + " ?";
-                if (!this.label) this.label = this.defaultLabel;
-
                 this.object = object;
                 this.actions = [];
                 var newActions = getContextActions(object);
+                this.defaultLabel = "Do something with the " + this.objectName || object.text() + "?";
+                if (newActions.length > 1) {
+                    if (!this.label) this.label = this.defaultLabel;
+                } else {
+                    this.label = "You see nothing to do with the " + this.objectName || object.text() + "!";
+                }
+
                 this.actions = this.actions.concat(newActions);
             }
             console.log("contextActionMenu.update");

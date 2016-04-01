@@ -1,6 +1,7 @@
 yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout,
                                                                         contextActionMenu,
-                                                                        state) {
+                                                                        state,
+                                                                        thingsLinks) {
     return {
         restrict: 'E',
         bindToController: {},
@@ -26,7 +27,23 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             self.visible = true;
         };
 
+        this.hide = function (onDelay) {
+            if (self.visible) {
+                self.visible = false;
+                thingsLinks.unselectAll();
+                $timeout(function () {
+                    if (onDelay) onDelay();
+                }, 200)
+            } else {
+                onDelay();
+            }
+        };
+
+
         this.choose = function (action) {
+            if (action.name === "close") {
+                this.hide();
+            }
             console.log("CHOSEN", action)
         };
 
@@ -71,10 +88,6 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             console.log("contextActionMenu.update");
         };
 
-        this.hide = function () {
-            self.visible = false;
-        };
-
 
         this.position = function (targetElement) {
             // We wait for the previously selected item to collapse before reading
@@ -86,7 +99,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 $element.css({
                     top: top
                 });
-            }, 50);
+            }, 300);
         }
 
     }
@@ -192,8 +205,8 @@ yarn.service('contextActionMenu', function contextActionMenuService() {
         service.controller = controller;
     };
 
-    service.hide = function () {
-        service.controller && service.controller.hide();
+    service.hide = function (onDelay) {
+        service.controller && service.controller.hide(onDelay);
     };
 
     service.show = function () {

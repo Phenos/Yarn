@@ -1,13 +1,13 @@
-yarn.service('thingsLinks', function ($rootElement, contextActionMenu) {
+yarn.service('thingsLinks', function ($rootElement) {
 
     function ThingsLinks() {
         var self = this;
         this.all = [];
 
-        $rootElement.on("click", function () {
-            contextActionMenu.hide();
-            self.unselectAll();
-        });
+        //$rootElement.on("click", function () {
+        //    contextActionMenu.hide();
+        //    self.unselectAll();
+        //});
     }
 
     ThingsLinks.prototype.register = function(thing) {
@@ -15,6 +15,7 @@ yarn.service('thingsLinks', function ($rootElement, contextActionMenu) {
     };
 
     ThingsLinks.prototype.unselectAll = function() {
+        console.log("unselect!");
         angular.forEach(this.all, function (thing) {
             thing.unselect();
         });
@@ -64,6 +65,7 @@ yarn.directive('thing', function ThingDirective(things,
         };
 
         this.select = function () {
+            thingsLinks.unselectAll();
             this.selected = true;
         };
 
@@ -74,9 +76,11 @@ yarn.directive('thing', function ThingDirective(things,
             //thingsLinks.unselectAll();
             $timeout(function () {
                 if (self.thing) {
-                    contextActionMenu.update(self.thing);
-                    contextActionMenu.position($element);
-                    contextActionMenu.show();
+                    contextActionMenu.hide(function () {
+                        contextActionMenu.update(self.thing);
+                        contextActionMenu.position($element);
+                        contextActionMenu.show();
+                    });
                     self.select();
                     //promptLoop.useThing(this.thing);
                 } else {

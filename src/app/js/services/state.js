@@ -1,6 +1,7 @@
 yarn.service('state', function ($localStorage,
                                 Assertion,
                                 Assertions,
+                                transactions,
                                 Thing,
                                 things,
                                 Syntax,
@@ -91,7 +92,7 @@ yarn.service('state', function ($localStorage,
             var lastFocusFromMemory = editors.lastFocusFromMemory();
             var mainFile = "";
             var sessionFiles = session.storage("editorFiles");
-            console.log("-====>>>", sessionFiles);
+            //console.log("sessionFiles", sessionFiles);
             if (sessionFiles) {
                 if (sessionFiles.mainFile) {
                     mainFile = sessionFiles.mainFile;
@@ -352,19 +353,38 @@ yarn.service('state', function ($localStorage,
                         // We create a new assertion anyways
                         assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
+                        postal.publish({
+                            channel: "state",
+                            topic: "createAssertion",
+                            data: { assertion: assertion }
+                        });
                         this.persistAssertion(assertion);
                     } else {
+                        var replaced = topAssertion.value();
                         // Else we re-use the existing assertion
                         if (angular.isDefined(options.evaluatedValue)) {
                             topAssertion.value(options.evaluatedValue);
                         } else {
                             topAssertion.value(options.value);
                         }
+                        postal.publish({
+                            channel: "state",
+                            topic: "updateAssertion",
+                            data: {
+                                replaced: replaced,
+                                assertion: topAssertion
+                            }
+                        });
                         this.persistAssertion(topAssertion);
                     }
                 } else {
                     assertion = new Assertion(subject, _predicate, object, options);
                     this.assertions.add(assertion);
+                    postal.publish({
+                        channel: "state",
+                        topic: "createAssertion",
+                        data: { assertion: assertion }
+                    });
                     this.persistAssertion(assertion);
                 }
 
@@ -445,7 +465,13 @@ yarn.service('state', function ($localStorage,
                         }
                         newAssertion.parent = null;
                         newAssertion.value(false);
+
                         self.assertions.add(newAssertion);
+                        postal.publish({
+                            channel: "state",
+                            topic: "createAssertion",
+                            data: { assertion: newAssertion }
+                        });
                         //console.log("---------- negate2 ----> created new", newAssertion);
                         self.persistAssertion(newAssertion);
                     } else {
@@ -455,11 +481,28 @@ yarn.service('state', function ($localStorage,
                         var valueExistsUnder = assertions.count() > 1;
 
                         if (valueExistsUnder) {
+                            var replaced = topAssertion.value();
                             topAssertion.value(false);
+
+                            postal.publish({
+                                channel: "state",
+                                topic: "updateAssertion",
+                                data: {
+                                    replaced: replaced,
+                                    assertion: topAssertion
+                                }
+                            });
+
                             self.persistAssertion(topAssertion);
                             //console.log("---------- negate2 ----> reassigned to false", topAssertion);
                         } else {
+                            var deleted = topAssertion;
                             self.assertions.remove(topAssertion);
+                            postal.publish({
+                                channel: "state",
+                                topic: "deleteAssertion",
+                                data: { assertion: deleted }
+                            });
                             self.UnpersistAssertions(topAssertion);
                             //console.log("---------- negate2 ----> Discarded", topAssertion);
                         }

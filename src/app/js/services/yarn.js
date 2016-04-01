@@ -11,19 +11,6 @@ yarn.service('yarn', function ($localStorage,
         this.localState = {};
         this.scripts = [];
 
-        postal.subscribe({
-            channel: "state",
-            topic: "setAssertion",
-            callback: function (data) {
-                // If the story has started, log state changes to the console
-                if (state.step() > 0 && data.value() === true) {
-                    yConsole.log("Changed: " + consoleHelper.assertion2log(data), {
-                        source: data.source
-                    });
-                }
-            }
-        });
-
         this.restoreFromLocalState = function () {
             var localState = $localStorage.localState;
             var localStateObj;

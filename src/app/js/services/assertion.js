@@ -99,6 +99,10 @@ yarn.service('Assertion', function (layerSetup,
         return weightAssertion(this);
     };
 
+    Assertion.prototype.pojo = function () {
+        return this.toJSON();
+    };
+
     return Assertion;
 })
 ;

@@ -1,8 +1,7 @@
-yarn.factory('consoleHelper', function (layerSetup,
-                                        script) {
+yarn.factory('consoleHelper', function () {
     var service = {};
 
-    service.assertion2log = function (assertion, parentThing, evenIfFalse) {
+    service.assertion2log = function (assertion) {
         var url = "";
         var log = [];
         var object = assertion.object;
@@ -13,17 +12,7 @@ yarn.factory('consoleHelper', function (layerSetup,
             if (angular.isObject(object)) {
                 log.push(" <span command='inspect " + object.id + " '>" + object.id + "</span>");
             } else if (typeof object === "string") {
-                if (
-                    object.substr(0, 5) === "http:" ||
-                    object.substr(0, 6) === "https:" ||
-                    object.substr(0, 2) === "./" ||
-                    object.substr(0, 2) === "//"
-                ) {
-                    url = script.resolveRelativeURI(object);
-                    log.push(' "<a href=' + url + '>' + object + '</a>"');
-                } else {
-                    log.push(' "' + object + '"');
-                }
+                log.push(' "' + object + '"');
             } else if (typeof object === "number") {
                 log.push(' ' + object);
             }

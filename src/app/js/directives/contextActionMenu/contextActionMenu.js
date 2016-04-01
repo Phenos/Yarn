@@ -76,12 +76,12 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 this.object = object;
                 this.actions = [];
                 var newActions = getContextActions(object);
-                this.defaultLabel = "Do something with the " + this.objectName || object.text() + "?";
                 if (newActions.length > 1) {
-                    if (!this.label) this.label = this.defaultLabel;
+                    this.defaultLabel = "Do something with the " + this.objectName || object.text() + "?";
                 } else {
-                    this.label = "You see nothing to do with the " + this.objectName || object.text() + "!";
+                    this.defaultLabel = "You see nothing to do with the " + this.objectName || object.text() + "!";
                 }
+                this.label = this.defaultLabel;
 
                 this.actions = this.actions.concat(newActions);
             }

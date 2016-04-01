@@ -2,7 +2,21 @@
     .thing {
         display: inline-block;
         &.selected {
-            margin-bottom: 7.5em;
+            margin-bottom: 0;
+            animation: swoop2 0.4s;
+            animation-delay: 0s;
+            animation-fill-mode: forwards;
+
+            @keyframes swoop2 {
+                0% {
+                    margin-bottom: 0;
+                }
+                100% {
+                    margin-bottom: 7.5em;
+                }
+            }
+
+
         }
     }
 }

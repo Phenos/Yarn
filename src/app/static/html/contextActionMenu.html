@@ -1,7 +1,10 @@
 <div layout="column"
      layout-align="top center"
      class="context-action-menu"
-     ng-class="{ 'is-visible' : menu.visible }">
+     ng-class="{
+      'is-visible' : menu.visible,
+      'is-invisible' : !menu.visible
+      }">
     <div layout="row" layout-align="center center">
         <md-button
                 ng-repeat="action in menu.actions"

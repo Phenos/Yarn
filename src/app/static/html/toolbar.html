@@ -68,6 +68,13 @@
                         </div>
                     </md-toolbar>
                     <md-menu-item>
+                        <md-button ng-click="toolbar.undo()">
+                            <md-icon md-svg-icon="/svg-icons/undo.svg"></md-icon>
+                            Undo
+                            <span class="md-alt-text">{{ 'M-U' | keyboardShortcut }}</span>
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
                         <md-button ng-click="toolbar.restartStory()">
                             <md-icon md-svg-icon="/svg-icons/restart.svg"></md-icon>
                             <span>Restart</span>

@@ -43,15 +43,23 @@ md-toolbar.toolbar {
     }
 }
 
-.story-menu md-toolbar {
-    background: #000;
-    height: 50px;
-    min-height: 50px;
+.story-menu {
+    .md-alt-text {
+        position: absolute;
+        right: 1em;
+        display: block;
+    }
 
-    .md-toolbar-tools {
-        padding: 0;
+    md-toolbar {
+        background: #000;
         height: 50px;
-        max-height: 50px;
+        min-height: 50px;
+
+        .md-toolbar-tools {
+            padding: 0;
+            height: 50px;
+            max-height: 50px;
+        }
     }
 }
 

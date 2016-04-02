@@ -238,7 +238,6 @@ yarn.factory('writers', function (Prompt,
                 option.iconOnly = true;
             }
 
-            storyLog.prompt(prompt);
         }
 
         return this;

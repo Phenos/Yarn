@@ -5,27 +5,28 @@
       'is-visible' : menu.visible,
       'is-invisible' : !menu.visible
       }">
-    <div layout="row" layout-align="center center">
-        <md-button
-                ng-repeat="action in menu.actions"
-                class="md-fab"
-                ng-class="{
+    <div class="context-action-menu-inner">
+        <div layout="row" layout-align="center center">
+            <md-button
+                    ng-repeat="action in menu.actions"
+                    class="md-fab"
+                    ng-class="{
                     'is-size-small': action.iconSize === 'small'
                 }"
-                ng-click="$event.preventDefault(); menu.choose(action);"
-                ng-mouseover="menu.mouseover(action)"
-                ng-mouseout="menu.mouseout(action)"
-                aria-label="action.name"
-        >
-            <md-icon
-                    ng-if="action.icon"
-                    md-svg-icon="/svg-icons/{{ action.icon }}.svg">
-            </md-icon>
-        </md-button>
-    </div>
-    <div class="label">
-        <span ng-bind="menu.label || ' '"></span>
-    </div>
+                    ng-click="$event.preventDefault(); menu.choose(action);"
+                    ng-mouseover="menu.mouseover(action)"
+                    ng-mouseout="menu.mouseout(action)"
+                    aria-label="action.name"
+            >
+                <md-icon
+                        ng-if="action.icon"
+                        md-svg-icon="/svg-icons/{{ action.icon }}.svg">
+                </md-icon>
+            </md-button>
+        </div>
+        <div class="label">
+            <span ng-bind="menu.label || ' '"></span>
+        </div>
 
-
+    </div>
 </div>

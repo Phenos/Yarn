@@ -34,7 +34,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 thingsLinks.unselectAll();
                 $timeout(function () {
                     if (onDelay) onDelay();
-                }, 200)
+                }, 0)
             } else {
                 onDelay();
             }
@@ -99,14 +99,12 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.position = function (targetElement) {
             // We wait for the previously selected item to collapse before reading
             // the new position
-            $timeout(function () {
-                var top = targetElement[0].offsetTop;
-                top = top + targetElement[0].clientHeight;
-                console.log("targetElement", targetElement);
-                $element.css({
-                    top: top
-                });
-            }, 300);
+            var top = targetElement[0].offsetTop;
+            top = top + targetElement[0].clientHeight;
+            console.log("targetElement", targetElement);
+            $element.css({
+                top: top
+            });
         }
 
     }

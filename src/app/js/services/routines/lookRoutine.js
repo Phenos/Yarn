@@ -5,6 +5,12 @@ yarn.service("lookRoutine", function (events,
                                       storyLog,
                                       stepRoutine) {
 
+    // Process movement triggered by creating an assertion
+    events.on("You did Look", "afterDefaultEvents", function () {
+        var object = state.one("You look at *");
+        lookRoutine(object);
+    });
+
     function lookRoutine(object) {
         if (object) {
 

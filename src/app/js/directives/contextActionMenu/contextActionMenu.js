@@ -138,15 +138,13 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
 
         if (space) {
 
-            if (!(spaceIsRestricted && !allowedActions.hint)) {
-                actions.push(new Action(object, {
-                    icon: "close",
-                    iconSize: "small",
-                    label: "Close",
-                    labelOnly: true,
-                    name: "close"
-                }));
-            }
+            actions.push(new Action(object, {
+                icon: "close",
+                iconSize: "small",
+                label: "Close",
+                labelOnly: true,
+                name: "close"
+            }));
 
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {

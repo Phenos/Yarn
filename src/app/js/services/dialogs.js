@@ -6,7 +6,11 @@ yarn.service("dialogs", function (state,
 
     service.process = function process() {
         console.log("dialogs.process");
-        var sayAssertions = state.assertions.find(assert(undefined, "say", "Monologue", {
+        var sayMonologues = state.assertions.find(assert(undefined, "say", "Monologue", {
+            parent: null
+        }));
+
+        var sayActions = state.assertions.find(assert(undefined, "say", "Action", {
             parent: null
         }));
 
@@ -14,7 +18,8 @@ yarn.service("dialogs", function (state,
             parent: null
         }));
 
-        outputStatement(sayAssertions, "log");
+        outputStatement(sayActions, "action");
+        outputStatement(sayMonologues, "log");
         outputStatement(sayInsight, "insight");
 
         //console.log("Dialog > sayAssertions", sayAssertions);

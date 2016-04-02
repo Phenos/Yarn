@@ -13,7 +13,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         controller: ContextActionMenuController
     };
 
-    function ContextActionMenuController($element) {
+    function ContextActionMenuController($element, $rootElement) {
         var self = this;
         this.visible = false;
         this.object = null;
@@ -22,6 +22,11 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.label = null;
 
         contextActionMenu.register(this);
+
+        $rootElement.on("click", function () {
+            self.hide();
+            //    self.unselectAll();
+        });
 
         this.show = function () {
             console.log(".show");

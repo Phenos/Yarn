@@ -4,10 +4,6 @@ yarn.service('thingsLinks', function ($rootElement) {
         var self = this;
         this.all = [];
 
-        //$rootElement.on("click", function () {
-        //    contextActionMenu.hide();
-        //    self.unselectAll();
-        //});
     }
 
     ThingsLinks.prototype.register = function(thing) {

@@ -5,7 +5,9 @@
       'is-visible' : menu.visible,
       'is-invisible' : !menu.visible
       }">
-    <div class="context-action-menu-inner">
+    <div class="context-action-menu-inner"
+         layout="column"
+         layout-align="top center">
         <div layout="row" layout-align="center center">
             <md-button
                     ng-repeat="action in menu.actions"

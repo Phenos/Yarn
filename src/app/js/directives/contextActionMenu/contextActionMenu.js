@@ -41,7 +41,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                     if (onDelay) onDelay();
                 }, 0)
             } else {
-                onDelay();
+                if (onDelay) onDelay();
             }
         };
 
@@ -144,12 +144,6 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 label: "Close",
                 labelOnly: true,
                 name: "close"
-            }));
-
-            actions.push(new Action(object, {
-                label: "Potatoe the ...",
-                labelOnly: true,
-                name: "Potatoe"
             }));
 
             var customActions = state.many("* is an Action");

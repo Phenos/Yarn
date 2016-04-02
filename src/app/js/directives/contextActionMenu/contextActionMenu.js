@@ -1,7 +1,8 @@
 yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout,
                                                                         contextActionMenu,
                                                                         state,
-                                                                        thingsLinks) {
+                                                                        thingsLinks,
+                                                                        commands) {
     return {
         restrict: 'E',
         bindToController: {},
@@ -43,8 +44,14 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
         this.choose = function (action) {
             if (action.name === "close") {
                 this.hide();
+            } else {
+                var cmd = [
+                    "do",
+                    action.name,
+                    this.object.id
+                ].join(" ");
+                commands.run(cmd)
             }
-            console.log("CHOSEN", action)
         };
 
         this.mouseover = function (action) {
@@ -63,7 +70,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             this.label = label;
         };
 
-        this.mouseout = function (action) {
+        this.mouseout = function () {
             this.label = this.defaultLabel;
         };
 
@@ -148,30 +155,36 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                     };
                     var isTransitive = state.value("CurrentAction is Transitive", scope);
                     if (isTransitive) {
+                        var isActive = state.value("CurrentAction is Active", scope);
                         var icon = state.value("CurrentAction has Icon", scope);
                         var iconSize = state.value("CurrentAction has IconSize", scope);
                         var name = state.value("CurrentAction has Name", scope);
                         var label = state.value("CurrentAction has Label", scope);
                         var unlessConditions = state.manyAssertions("CurrentAction unless *", scope);
-                        angular.forEach(unlessConditions, function (assertion) {
-                            var expression = assertion.value();
-                            var value = state.render(expression, scope);
-                            if (!value) {
-                                actionDoesApply = false;
-                            }
-                            console.log("---expression", expression);
-                            console.log("---assertion", assertion);
-                            console.log(">>VALUE", value);
-                        });
-                        //console.log("unlessConditions", unlessConditions);
-                        if (actionDoesApply) {
-                            var action = new Action(object, {
-                                icon: icon,
-                                name: name,
-                                label: label,
-                                iconSize: iconSize
+
+                        if (isActive || allowedActions[action.id]) {
+
+                            angular.forEach(unlessConditions, function (assertion) {
+                                var expression = assertion.value();
+                                var value = state.render(expression, scope);
+                                if (!value) {
+                                    actionDoesApply = false;
+                                }
+                                console.log("---expression", expression);
+                                console.log("---assertion", assertion);
+                                console.log(">>VALUE", value);
                             });
-                            actions.push(action);
+                            //console.log("unlessConditions", unlessConditions);
+                            if (actionDoesApply) {
+                                var action = new Action(object, {
+                                    icon: icon,
+                                    name: name,
+                                    label: label,
+                                    iconSize: iconSize
+                                });
+                                actions.push(action);
+                            }
+
                         }
                     }
                 }

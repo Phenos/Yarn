@@ -6,6 +6,11 @@ yarn.service("inventoryRoutine", function (events,
                                            stateHelpers,
                                            stepRoutine) {
 
+    // Process movement triggered by creating an assertion
+    events.on("You did LookAtInventory", "afterDefaultEvents", function () {
+        inventoryRoutine();
+    });
+
     function inventoryRoutine() {
         var phrase = [];
 

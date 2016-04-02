@@ -8,8 +8,6 @@ yarn.service("moveRoutine", function (state,
 
     // Process movement triggered by creating an assertion
     events.on("You move to *", "move", function () {
-
-        //console.log("||||||||||||||||||||||||||||||||||||");
         var MoveTo = state.many("You move to *");
         state.negate(assert("you", "move to"));
         //console.log("MoveTo", MoveTo);

@@ -6,7 +6,11 @@ yarn.service("lookAroundRoutine", function (events,
                                             stateHelpers,
                                             stepRoutine) {
 
-    return function lookAroundRoutine() {
+    events.on("You did LookAround", "afterDefaultEvents", function () {
+        lookAroundRoutine();
+    });
+
+    function lookAroundRoutine() {
         var phrase = [];
 
         storyLog.action("You look around");
@@ -58,6 +62,8 @@ yarn.service("lookAroundRoutine", function (events,
 
         return true;
     };
+
+    return lookAroundRoutine;
 
 });
 

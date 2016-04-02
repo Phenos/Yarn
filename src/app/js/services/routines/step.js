@@ -7,6 +7,7 @@ yarn.service("stepRoutine", function (events,
                                       statuses,
                                       wallpaper,
                                       player,
+                                      storyLog,
                                       writers) {
 
     /**
@@ -64,6 +65,9 @@ yarn.service("stepRoutine", function (events,
         events.process("beforeEndStep");
         events.process("endStep");
         events.process("afterEndStep");
+
+        // Flush the storyLog buffers
+        storyLog.flushBuffers();
 
         // Update the wallpaper in case it has changed
         state.assertions.removeLayer("step");

@@ -3,7 +3,7 @@ yarn.service("doRoutine", function (state,
                                     assert,
                                     stepRoutine) {
 
-    function doRoutine(action) {
+    function doRoutine(action, object) {
 
         // First check if the action is allowed in the current space
         if (action) {
@@ -16,6 +16,15 @@ yarn.service("doRoutine", function (state,
 
             events.trigger(assert("You", "did", action));
             events.trigger(assert("Action", "is", action));
+
+            var predicate = state.value("Action has Predicate", {
+                Action: action
+            });
+
+            if (predicate) {
+                events.trigger(assert("You", predicate, object));
+
+            }
 
             var space = state.one("You is in *");
             if (space) {

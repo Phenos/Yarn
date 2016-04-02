@@ -146,6 +146,12 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 name: "close"
             }));
 
+            actions.push(new Action(object, {
+                label: "Potatoe the ...",
+                labelOnly: true,
+                name: "Potatoe"
+            }));
+
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {
                 var actionDoesApply = true;
@@ -199,7 +205,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
 
     function Action(object, options) {
         this.object = object;
-        this.icon = options.icon || "unknown";
+        this.icon = options.icon || null;
         this.iconSize = options.iconSize || "";
         this.labelOnly = options.labelOnly || false;
         this.name = options.name || "Unknown action!";

@@ -93,7 +93,10 @@ yarn.service("stepRoutine", function (events,
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
             var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
             if (url) {
-                wallpaper.change(url);
+                wallpaper.change({
+                    image: url,
+                    layout: "fullscreen"
+                });
             } else {
                 wallpaper.clear();
             }

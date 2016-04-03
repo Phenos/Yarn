@@ -19,7 +19,7 @@ yarn.service("contextActions", function (state) {
                 allowedActions[obj.id] = obj;
             });
         }
-        console.log("getContextActions");
+        //console.log("getContextActions");
 
         if (space) {
 
@@ -34,7 +34,7 @@ yarn.service("contextActions", function (state) {
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {
                 var actionDoesApply = true;
-                console.log("hu??", !(spaceIsRestricted && !allowedActions[action.id]));
+                //console.log("hu??", !(spaceIsRestricted && !allowedActions[action.id]));
                 if (!(spaceIsRestricted && !allowedActions[action.id])) {
                     var scope = {
                         CurrentAction: action,
@@ -57,9 +57,9 @@ yarn.service("contextActions", function (state) {
                                 if (!value) {
                                     actionDoesApply = false;
                                 }
-                                console.log("---expression", expression);
-                                console.log("---assertion", assertion);
-                                console.log(">>VALUE", value);
+                                //console.log("---expression", expression);
+                                //console.log("---assertion", assertion);
+                                //console.log(">>VALUE", value);
                             });
                             //console.log("unlessConditions", unlessConditions);
                             if (actionDoesApply) {

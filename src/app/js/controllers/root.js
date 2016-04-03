@@ -40,7 +40,10 @@ yarn.controller('root', function rootController(user,
             selected: 0
         };
 
-        wallpaper.change("/images/splash/splash-bg.jpg");
+        wallpaper.change({
+            image: "/images/splash/splash-bg.jpg",
+            layout: "fullscreen"
+        });
 
         IDE.register($scope);
 

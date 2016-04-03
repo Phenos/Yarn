@@ -261,6 +261,19 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
+        State.prototype.applyObjectAsStageChange = function (object) {
+            var self = this;
+            var childAssertions = self.assertions.find(assert(undefined, undefined, undefined, {
+                parent: object.id
+            }));
+            angular.forEach(childAssertions, function (assertion) {
+                //console.log("triggerNow value", value);
+                self.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
+                    value: assertion.value()
+                });
+            });
+        };
+
         State.prototype.resolveValue = function (assert, scope) {
             var value = this.resolveRawValue(assert);
             //console.log("rawValue: ", rawValue);
@@ -342,12 +355,14 @@ yarn.service('state', function ($localStorage,
                     options.layer = this.currentLayer;
                 }
 
+                /* ----- */
                 // TODO:TEST: Dont negate assertions before knowing if an
                 // existing assertion can bemodifier
-                //if (!options.parent && this.currentLayer !== "world") {
-                //    // Find exquivalent assertions to be negated
-                //    this.negate(assert(subject, _predicate, object));
-                //}
+                if (!options.parent && this.currentLayer !== "world") {
+                    // Find exquivalent assertions to be negated
+                    this.negate(assert(subject, _predicate, object));
+                }
+                /* ----- */
 
                 var _assert = assert(subject, _predicate, object, {
                     layer: options.layer,
@@ -583,7 +598,7 @@ yarn.service('state', function ($localStorage,
             function _value(assertion, scope) {
                 var _scope = angular.extend({}, newScope, scope);
                 var value = state.value(assertion, _scope);
-                console.log("value: " + value);
+                //console.log("value: " + value);
                 return value;
             }
 

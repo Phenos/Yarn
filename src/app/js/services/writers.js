@@ -5,7 +5,7 @@ yarn.factory('writers', function (Prompt,
                                   state,
                                   script,
                                   commands,
-                                  themes,
+                                  theme,
                                   wallpaper) {
 
     // Describe where you are at the beginning
@@ -24,7 +24,7 @@ yarn.factory('writers', function (Prompt,
 
     function describeCoverpage() {
 
-        refreshTheme();
+        theme.refresh();
 
         // Set the wallpaper
         var wallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
@@ -78,7 +78,7 @@ yarn.factory('writers', function (Prompt,
     function describeTheEnd() {
         storyLog.markAsRead();
 
-        refreshTheme();
+        theme.refresh();
 
         // Show the story title
         var name = state.resolveValue(assert("TheEnd", "has", "Name"));
@@ -87,17 +87,8 @@ yarn.factory('writers', function (Prompt,
         }
 
         // Set the wallpaper
-        var wallpaperValue = state.resolveValue(assert("TheEnd", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("TheEnd", "has", "Coverpage"));
-        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = wallpaper_url || coverpage_url || false;
-
-        if (url) {
-            wallpaper.change(url);
-        } else {
-            wallpaper.clear();
-        }
 
         if (coverpage) {
             storyLog.image(coverpage_url);
@@ -111,31 +102,12 @@ yarn.factory('writers', function (Prompt,
         return this;
     }
 
-    function refreshTheme(room) {
-        var themeId = null;
-
-        if (room) {
-            themeId = state.resolveValue(assert(room, "has", "Theme"));
-        }
-        if (!themeId) {
-            themeId = state.resolveValue(assert("Story", "has", "Theme"));
-        }
-        if (themeId) {
-            var theme = themes.select(themeId);
-            if (theme && theme.id === themeId) {
-                yConsole.log("Theme changed to : " + themeId);
-            } else {
-                yConsole.warning("Wanted theme not found: " + themeId);
-            }
-        }
-    }
-
     function describeRoom() {
         storyLog.markAsRead();
 
         var room = state.resolveOne(assert("You", "is in"));
 
-        refreshTheme(room);
+        theme.refresh();
 
         if (room) {
             var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
@@ -213,7 +185,7 @@ yarn.factory('writers', function (Prompt,
 
     function objectMenu(thing) {
         if (thing) {
-
+            var option;
             var prompt = new Prompt();
 
             prompt.answer = function answer(promptLoop, option) {
@@ -224,7 +196,7 @@ yarn.factory('writers', function (Prompt,
 
             var isUsable = state.resolveValue(assert(thing, "is", "Usable"));
             if (isUsable) {
-                var option = prompt.option("Use " + name, "use " + thing.id);
+                option = prompt.option("Use " + name, "use " + thing.id);
                 option.iconId = "use";
                 option.iconSize = "small";
                 option.iconOnly = true;
@@ -232,7 +204,7 @@ yarn.factory('writers', function (Prompt,
 
             var isInventoryItem = state.resolveValue(assert(thing, "is", "InventoryItem"));
             if (isInventoryItem) {
-                var option = prompt.option("Take " + name, "take " + thing.id);
+                option = prompt.option("Take " + name, "take " + thing.id);
                 option.iconId = "inventory";
                 option.iconSize = "small";
                 option.iconOnly = true;
@@ -249,7 +221,6 @@ yarn.factory('writers', function (Prompt,
         describeThing: describeThing,
         describeRoom: describeRoom,
         describeCoverpage: describeCoverpage,
-        refreshTheme: refreshTheme,
         describeTheEnd: describeTheEnd,
         describeWhereYouAre: describeWhereYouAre,
         objectMenu: objectMenu

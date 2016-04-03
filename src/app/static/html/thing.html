@@ -6,5 +6,7 @@
 }"
    ng-href="{{thing.token}}"
    ng-click="thing.click($event)"
-   ng-bind="thing.text"></a>
+   ><span ng-bind="thing.text"></span>
+    <md-tooltip md-visible="thing.tooltipVisible" md-direction="bottom" ng-bind="thing.tooltip"></md-tooltip>
+</a>
 

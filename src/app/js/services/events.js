@@ -2,7 +2,8 @@ yarn.service('events', function (assert,
                                  parseAssert,
                                  state,
                                  predicates,
-                                 things) {
+                                 things,
+                                 yConsole) {
 
     function Events() {
         this.listeners = [];
@@ -92,7 +93,10 @@ yarn.service('events', function (assert,
                     });
                     //console.log("allConditionsAreTrue", allConditionsAreTrue);
                     if (allConditionsAreTrue) {
-                        setsToBeTriggered.push(object);
+                        setsToBeTriggered.push({
+                            object: object,
+                            assertion: assertion
+                        });
                     }
                 }
 
@@ -101,8 +105,8 @@ yarn.service('events', function (assert,
 
         // Then, we trigger each assertion sets that are supposed to be triggered
         //console.log("setsToBeTriggered ", setsToBeTriggered);
-        angular.forEach(setsToBeTriggered, function (object) {
-            var somethingHappenedNow = self.triggerNow(object);
+        angular.forEach(setsToBeTriggered, function (trigger) {
+            var somethingHappenedNow = self.triggerNow(trigger.object, trigger.assertion);
             if (somethingHappenedNow) somethingHappened = true;
         });
 
@@ -110,8 +114,12 @@ yarn.service('events', function (assert,
     };
 
 
-    Events.prototype.triggerNow = function (object) {
-        //console.log("Events.prototype.triggerNow", object);
+    Events.prototype.triggerNow = function (object, assertion) {
+
+        yConsole.log("Triggered: <span class='subject' command='inspect "  + object.id + "'>" + object.text() + "</span>", {
+            source: assertion.source
+        });
+
         var somethingHappened = false;
         var shouldOccur = true;
         var childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {

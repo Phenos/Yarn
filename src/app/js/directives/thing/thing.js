@@ -1,4 +1,4 @@
-yarn.service('thingsLinks', function ($rootElement) {
+yarn.service('thingsLinks', function () {
 
     function ThingsLinks() {
         var self = this;
@@ -26,7 +26,8 @@ yarn.directive('thing', function ThingDirective(things,
                                                 yConsole,
                                                 contextActionMenu,
                                                 thingsLinks,
-                                                promptLoop) {
+                                                commands,
+                                                contextActions) {
     return {
         restrict: 'E',
         bindToController: {
@@ -44,6 +45,7 @@ yarn.directive('thing', function ThingDirective(things,
         this.token = $attrs.token;
         this.text = $attrs.text;
         this.selected = false;
+        this.tooltip = null;
 
         var synonym = synonyms.match(this.token);
         if (synonym) {
@@ -54,6 +56,21 @@ yarn.directive('thing', function ThingDirective(things,
 
         if (!angular.isObject(this.thing)) {
             this.unrecognized = true;
+        } else {
+            this.actions = contextActions(this.thing);
+            this.actions.shift();
+
+            if (this.actions.length === 0) {
+                this.tooltip = "Nothing to do!";
+            } else if (this.actions.length === 1) {
+                this.tooltip = this.actions[0].name;
+            } else {
+                var actions = [];
+                angular.forEach(this.actions, function (action) {
+                    actions.push(action.name);
+                });
+                this.tooltip = actions.join(", ");
+            }
         }
 
         this.unselect = function () {
@@ -69,8 +86,20 @@ yarn.directive('thing', function ThingDirective(things,
             var self = this;
             console.log("e", e);
             e.preventDefault();
+            e.stopPropagation();
             //thingsLinks.unselectAll();
-            $timeout(function () {
+            if (this.actions.length === 0) {
+                yConsole.warning("Clicking this link did nothing: " + self.text);
+            } else if (this.actions.length === 1) {
+                var cmd = [
+                    "do",
+                    this.actions[0].name,
+                    this.thing.id
+                ].join(" ");
+                commands.run(cmd)
+
+            } else {
+                self.tooltipVisible = false;
                 if (self.thing) {
                     contextActionMenu.hide(function () {
                         contextActionMenu.update(self.thing);
@@ -82,8 +111,7 @@ yarn.directive('thing', function ThingDirective(things,
                 } else {
                     yConsole.warning("Clicking this link did nothing: " + self.text);
                 }
-                //console.log("thing: ", self.thing);
-            });
+            }
         }
     }
 

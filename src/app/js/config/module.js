@@ -10,7 +10,7 @@ var yarn = angular.module('yarn', [
     'ngSanitize',
     'ui.grid',
     'ngMaterial',
-    'duScroll',
+    'smoothScroll',
     'ui.router',
     'firebase',
     'ngDebottle',

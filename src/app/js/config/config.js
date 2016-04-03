@@ -1,4 +1,6 @@
 
+yarn.value('duScrollCancelOnEvents', false);
+
 yarn.config(function(RollbarProvider) {
     var roolbarConfig = {
         accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",

@@ -6,6 +6,7 @@
     function ConsoleDirective(commands,
                               state,
                               getSelectionText,
+                              smoothScroll,
                               easing) {
 
         return {
@@ -98,10 +99,11 @@
                 scope.timestamp = Date.now();
                 var logElem = $compile('<log is-new-step="isNewStep" options="options" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
                 logsElem.append(logElem);
-                $timeout(function () {
-                    //console.log("WTF!", [logscrollElem]);
-                    var scrollHeight = logscrollElem[0].scrollHeight;
-                    logscrollElem.scrollTopAnimated(scrollHeight, 1000, easing.easeOutQuart)
+                smoothScroll(logElem[0], {
+                    duration: 500,
+                    //easing: 'easeOutQuad',
+                    offset: 0,
+                    containerId: 'yarn-console'
                 });
                 $scope.$emit("refreshScrollbars");
             };

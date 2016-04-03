@@ -19,6 +19,7 @@ yarn.directive('player', function () {
                               promptLoop,
                               player,
                               state,
+                              smoothScroll,
                               easing) {
 
         var scrollAreaElem = $element[0].getElementsByClassName("player")[0];
@@ -55,16 +56,16 @@ yarn.directive('player', function () {
         };
 
         this.scroll = function (targetElement) {
-            var duration = 1500;
-            var offset = 200;
-
+            //console.log("player.scroll", [scrollAreaElem, targetElement]);
             // First we check to see if it's the first game step
             // to prevent scrolling when first showing the coverpage
             if (state.step() > 0 && targetElement) {
-                angular.element(scrollAreaElem)
-                    .scrollToElementAnimated(targetElement, offset, duration, function (t) {
-                        return t * (2 - t)
-                    });
+                smoothScroll(targetElement[0], {
+                    duration: 1500,
+                    easing: 'easeInOutQuint',
+                    offset: 0,
+                    containerId: 'yarn-player'
+                });
             }
         };
 

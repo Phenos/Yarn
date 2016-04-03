@@ -21,7 +21,7 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper) {
      * @param space
      */
     Theme.prototype.applyThemeFromContext = function (space) {
-        console.log("applyThemeFromContext", space);
+        //console.log("applyThemeFromContext", space);
         var themeId;
 
         if (space) {

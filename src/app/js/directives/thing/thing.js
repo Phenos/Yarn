@@ -11,7 +11,7 @@ yarn.service('thingsLinks', function () {
     };
 
     ThingsLinks.prototype.unselectAll = function() {
-        console.log("unselect!");
+        //console.log("unselect!");
         angular.forEach(this.all, function (thing) {
             thing.unselect();
         });
@@ -84,7 +84,7 @@ yarn.directive('thing', function ThingDirective(things,
 
         this.click = function (e) {
             var self = this;
-            console.log("e", e);
+            //console.log("e", e);
             e.preventDefault();
             e.stopPropagation();
             //thingsLinks.unselectAll();

@@ -5,7 +5,7 @@ yarn.service("dialogs", function (state,
     var service = {};
 
     service.process = function process() {
-        console.log("dialogs.process");
+        //console.log("dialogs.process");
         var sayMonologues = state.assertions.find(assert(undefined, "say", "Monologue", {
             parent: null
         }));

@@ -61,7 +61,7 @@ yarn.service('loader', function (yarn,
                 state.currentLayer = "session";
 
                 // Restore session state layer from localStorage
-                yarn.restoreFromLocalState();
+                state.restoreFromLocalState();
 
                 /*
                  Refresh the list of Statuses and Synonyms, in case they changed during game play

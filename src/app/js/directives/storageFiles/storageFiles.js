@@ -46,8 +46,12 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         };
 
         $scope.selectProfile = function(profile) {
-            self.selectedStorage = profile.storage;
-            profile.storage.refresh();
+            if (profile) {
+                self.selectedStorage = profile.storage;
+                profile.storage.refresh();
+            } else {
+                console.error("Profile does not exist!");
+            }
         };
 
         $scope.openProjectFolder = function(folder) {
@@ -58,7 +62,9 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         };
 
         $scope.refresh = function() {
-            self.selectedStorage.refresh();
+            if (self.selectedStorage) {
+                self.selectedStorage.refresh();
+            }
         };
 
         $scope.unselectAll = function() {
@@ -113,7 +119,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
 
         if (profiles.visited()) {
             $scope.selectProfile(profiles.visited());
-        } else {
+        } else if (profiles.authenticated()) {
             $scope.selectProfile(profiles.authenticated());
         }
 
@@ -123,7 +129,6 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         });
 
         updateList();
-
 
     }
 });

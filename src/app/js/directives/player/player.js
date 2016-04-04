@@ -13,14 +13,15 @@ yarn.directive('player', function () {
 
     function playerController($scope,
                               $element,
-                              $timeout,
                               sidebar,
                               writers,
                               promptLoop,
                               player,
                               state,
                               smoothScroll,
-                              easing) {
+                              login) {
+
+        this.state = state;
 
         var scrollAreaElem = $element[0].getElementsByClassName("player")[0];
 
@@ -43,6 +44,10 @@ yarn.directive('player', function () {
                 .describeWhereYouAre();
             promptLoop.update();
         };
+
+        this.login = function () {
+            login();
+        }
 
         /*
          Side navigation visibility

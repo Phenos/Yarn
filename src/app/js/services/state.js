@@ -20,11 +20,15 @@ yarn.service('state', function ($localStorage,
                                 storyLocalStorage,
                                 postal) {
 
+
         function State() {
             var self = this;
             this.assertions = new Assertions();
             this.currentLayer = "world";
             this.localState = null;
+
+            this.ready(false, "loading", "Loading...");
+
             storyLocalStorage.uid(this.uniqueKey());
 
             postal.subscribe({
@@ -35,6 +39,14 @@ yarn.service('state', function ($localStorage,
                 }
             })
         }
+
+        State.prototype.ready = function (isReady, status, message) {
+            var readyness = this.readyness = this.readyness || {};
+            if (angular.isDefined(isReady)) readyness.isReady = isReady;
+            if (angular.isDefined(status)) readyness.message = message;
+            if (angular.isDefined(message)) readyness.status = status;
+            return this.readyness;
+        };
 
         State.prototype.undo = function () {
             transactions.undo(this);
@@ -412,7 +424,7 @@ yarn.service('state', function ($localStorage,
                         postal.publish({
                             channel: "state",
                             topic: "createAssertion",
-                            data: { assertion: assertion }
+                            data: {assertion: assertion}
                         });
                     }
                     this.persistAssertion(assertion);
@@ -500,7 +512,7 @@ yarn.service('state', function ($localStorage,
                         postal.publish({
                             channel: "state",
                             topic: "createAssertion",
-                            data: { assertion: newAssertion }
+                            data: {assertion: newAssertion}
                         });
                         //console.log("---------- negate2 ----> created new", newAssertion);
                         self.persistAssertion(newAssertion);
@@ -531,7 +543,7 @@ yarn.service('state', function ($localStorage,
                             postal.publish({
                                 channel: "state",
                                 topic: "deleteAssertion",
-                                data: { assertion: deleted }
+                                data: {assertion: deleted}
                             });
                             self.UnpersistAssertions(topAssertion);
                             //console.log("---------- negate2 ----> Discarded", topAssertion);

@@ -1,20 +1,46 @@
-<div style="position:relative" layout-fill>
+<div style="position: relative"
+     layout="column"
+     layout-fill>
     <wallpaper></wallpaper>
     <sidebar></sidebar>
     <toolbar user="player.user"></toolbar>
     <md-content
             id="yarn-player"
-            style="z-index:5; position: relative;"
-            NOPE_layout="row"
             class="player"
-            NOPE_scrollbars
             layout-fill
+            ng-if="player.state.isReady"
     >
         <div class="main-ui">
             <context-action-menu></context-action-menu>
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>
             <div class="player-footer"></div>
+        </div>
+    </md-content>
+    <md-content
+            layout-fill>
+        <div ng-if="!player.state.readyness.isReady"
+             layout-fill
+             flex="grow"
+             layout="column"
+             class="readyness"
+             layout-align="center center">
+            <div ng-if="player.state.readyness.status === 'loading'">
+                <md-progress-circular
+                        md-diameter="70"
+                        md-mode="indeterminate"></md-progress-circular>
+            </div>
+            <div ng-if="player.state.readyness.status === 'error'">
+                <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
+                <p class="message" ng-bind="player.state.readyness.message"></p>
+            </div>
+            <div class="loginfirst"
+                 ng-if="player.state.readyness.status === 'loginfirst'">
+                <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                <p class="message"
+                   ng-click="player.login();"
+                   ng-bind-html="player.state.readyness.message"></p>
+            </div>
         </div>
     </md-content>
     <status-bar></status-bar>

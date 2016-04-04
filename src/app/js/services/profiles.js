@@ -1,4 +1,4 @@
-yarn.service("profiles", function (Profile) {
+yarn.service("profiles", function (Profile, postal) {
 
     function Profiles () {
         this.index = {};
@@ -8,6 +8,14 @@ yarn.service("profiles", function (Profile) {
         //console.log("profiles", this);
     }
 
+    Profiles.prototype.updated = function () {
+        postal.publish({
+            channel: "profiles",
+            topic: "updated",
+            data: this
+        });
+    };
+
     Profiles.prototype.get = function (username) {
         var profile;
         if (angular.isDefined(username)) {
@@ -16,6 +24,7 @@ yarn.service("profiles", function (Profile) {
                 profile = new Profile(username);
                 this.index[profile.username] = profile;
             }
+            this.updated();
         }
         this.all();
         return profile;
@@ -26,6 +35,7 @@ yarn.service("profiles", function (Profile) {
             profile.priority = 10;
             this._authenticated = profile;
             this.index[profile.username] = profile;
+            this.updated();
         }
         this.all();
         return this._authenticated;
@@ -36,6 +46,7 @@ yarn.service("profiles", function (Profile) {
             profile.priority = 20;
             this._visited = profile;
             this.index[profile.username] = profile;
+            this.updated();
         }
         this.all();
         return this._visited;

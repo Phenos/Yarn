@@ -8,7 +8,8 @@
             id="yarn-player"
             class="player"
             layout-fill
-            ng-if="player.state.isReady"
+            scrollbars
+            ng-if="player.state.readyness.isReady"
     >
         <div class="main-ui">
             <context-action-menu></context-action-menu>
@@ -18,17 +19,54 @@
         </div>
     </md-content>
     <md-content
-            layout-fill>
-        <div ng-if="!player.state.readyness.isReady"
-             layout-fill
-             flex="grow"
-             layout="column"
-             class="readyness"
-             layout-align="center center">
+            layout-fill
+            class="player"
+            layout="column"
+            scrollbars
+            layout-align="start center"
+            ng-if="!player.state.readyness.isReady">
+        <div class="readyness">
+            <div style="height:25%"></div>
             <div ng-if="player.state.readyness.status === 'loading'">
                 <md-progress-circular
                         md-diameter="70"
                         md-mode="indeterminate"></md-progress-circular>
+                <p class="message"
+                   ng-bind-html="player.state.readyness.message"></p>
+            </div>
+            <div ng-if="player.state.readyness.status === 'choosestory' && player.profile">
+                <div class="profile-info">
+                    <img alt="{{ player.profile.username.split('.')[1] }}"
+                         ng-src="{{ player.profile.twitterProfile.profile_image_url| biggerProfileImage }}"
+                         class="avatar"/>
+
+                    <h3>{{ player.profile.username.split(".")[1] }}</h3>
+                </div>
+                <div ng-if="player.profile.storage.allProjectFolders.length === 0">
+                    <div ng-if="player.isOwnProfile">
+                        <p class="message">
+                            You have no projects on Yarn Studio!
+                        </p>
+                    </div>
+                    <div ng-if="!player.isOwnProfile">
+                        <p class="message">
+                            Sorry, {{ player.profile.username.split(".")[1] }}
+                            doesn't have any project on YarnStudio!
+                        </p>
+                    </div>
+                </div>
+                <div ng-if="player.profile.storage.allProjectFolders.length > 0">
+                    <p class="message">
+                        To get started, choose a project:
+                    </p>
+                    <md-list>
+                        <md-list-item ng-repeat="folder in player.profile.storage.projectFolders">
+                            <md-button ui-sref="root.profile.story({ story: folder.name })">
+                                {{ folder.name }}
+                            </md-button>
+                        </md-list-item>
+                    </md-list>
+                </div>
             </div>
             <div ng-if="player.state.readyness.status === 'error'">
                 <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
@@ -38,8 +76,12 @@
                  ng-if="player.state.readyness.status === 'loginfirst'">
                 <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
                 <p class="message"
-                   ng-click="player.login();"
                    ng-bind-html="player.state.readyness.message"></p>
+                <md-list>
+                    <md-list-item>
+                        <md-button ng-click="player.login();">Login</md-button>
+                    </md-list-item>
+                </md-list>
             </div>
         </div>
     </md-content>

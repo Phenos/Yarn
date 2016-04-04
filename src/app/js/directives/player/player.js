@@ -13,15 +13,38 @@ yarn.directive('player', function () {
 
     function playerController($scope,
                               $element,
+                              postal,
                               sidebar,
                               writers,
                               promptLoop,
                               player,
                               state,
                               smoothScroll,
+                              profiles,
                               login) {
 
+        var self = this;
+
         this.state = state;
+        this.profile = profiles.visited();
+        this.isOwnProfile = false;
+
+        console.log("profile", this.profile);
+        console.log("auth", profiles.authenticated());
+
+        postal.subscribe({
+            channel: "profiles",
+            topic: "updated",
+            callback: function () {
+                self.profile = profiles.visited();
+                if (self.profile === profiles.authenticated()) {
+                    self.isOwnProfile = true;
+                }
+                console.log("profile", self.profile);
+                console.log("auth", profiles.authenticated());
+            }
+        });
+
 
         var scrollAreaElem = $element[0].getElementsByClassName("player")[0];
 

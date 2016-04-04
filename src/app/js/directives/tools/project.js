@@ -6,7 +6,6 @@ yarn.directive('projectTool', function ProjectTool() {
         replace: true,
         templateUrl: './html/tools/project.html',
         controller: function ProjectToolController($scope, editorFiles, editors, profiles, IDE) {
-            var self = this;
 
             $scope.open = function (file) {
                 console.log("$scope.open", file);

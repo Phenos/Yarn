@@ -121,6 +121,7 @@ yarn.controller('root', function rootController(user,
     tools.focusFromMemory();
 
     if ($state.params.profile) {
+        profiles.visited(new Profile("twitter." + $state.params.profile));
         if ($state.params.story) {
             var path = [
                 //"/twitter.",
@@ -129,18 +130,26 @@ yarn.controller('root', function rootController(user,
                 $state.params.story,
                 "/story.txt"
             ].join("");
-            profiles.visited(new Profile("twitter." + $state.params.profile));
             //console.log("what?");
             //console.log(">>>>>", path);
             var main = editorFiles.open(profiles.visited(), path, true);
             editorFiles.mainFile(main);
             IDE.run();
-        } else {
             state.ready(true, "ready", "");
+
+            // TODO: state when story is not found!
+
+        } else {
+            state.ready(false, "choosestory", "");
         }
     } else {
-        console.log("Login first!!!", state);
-        state.ready(false, "loginfirst", "You must <strong>first login</strong> with your twitter account or visit someone else's profile.");
+        if (profiles.authenticated()) {
+            $state.go("root.profile", {
+                profile: profiles.authenticated().username.split(".")[1]
+            })
+        } else {
+            state.ready(false, "loginfirst", "You must <strong>first login</strong> with your twitter account or visit someone else's profile.");
+        }
     }
 });
 

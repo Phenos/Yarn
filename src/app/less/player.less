@@ -32,27 +32,53 @@ player {
     }
 
     .readyness {
+        max-width: 35em;
 
         md-icon {
             fill: #fff;
         }
 
-        .loginfirst {
-            text-align: center;
-            md-icon {
-                width: 60px;
-                height: 60px;
-                fill: rgba(255, 255, 255, 0.63);
-            }
-            .message {
-                cursor: pointer;
-                font-size: 1.2em;
-                max-width: 20em;
-                color: rgba(255, 255, 255, 0.8);
+        text-align: center;
 
-                &:hover {
-                    color: rgba(255, 255, 255,1);
+        md-icon {
+            width: 60px;
+            height: 60px;
+            fill: rgba(255, 255, 255, 0.63);
+        }
+
+        .message {
+            font-size: 1.2em;
+            color: rgb(255, 255, 255);
+        }
+
+        md-list {
+            md-list-item {
+                button {
+                    width: 100%;
+                    color: #fff;
+                    text-align: center;
+                    border: 1px solid rgba(255, 255, 255, 0.6);
                 }
+                a {
+                    width: 100%;
+                    color: #fff;
+                    text-align: center;
+                    border: 1px solid rgba(255, 255, 255, 0.6);
+                }
+            }
+        }
+
+        .profile-info {
+            img {
+                width: 100px;
+                border-radius: 50%;
+                box-shadow: 0 9px 19px 0 rgba(0, 0, 0, 0.26);
+            }
+            h3 {
+                color: #fff;
+                font-weight: 200;
+                font-size: 1.7em;
+                margin-bottom: 1em;
             }
         }
     }

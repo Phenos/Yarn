@@ -4,6 +4,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
         this.profile = profile;
         this.files = [];
         this.projectFolders = {};
+        this.allProjectFolders = [];
     }
 
     Storage.prototype.directories = function (projectFolder) {
@@ -69,6 +70,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
                     meta: meta
                 };
                 self.projectFolders[key] = projectFolder;
+                self.allProjectFolders.push(projectFolder);
             }
         }
 
@@ -219,15 +221,15 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
     Storage.prototype.refresh = function (uri) {
         var self = this;
         var profile = this.profile;
-        var user = session.user();
+        //var user = session.user();
 
-        if (user) {
+        //if (user) {
             self.isLoading = true;
 
             var params = {
-                profile: profile.username,
-                token: user.token,
-                username: user.username
+                profile: profile.username
+                //token: user.token,
+                //username: user.username
             };
 
             //console.log("params", params);
@@ -262,9 +264,9 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
                 console.error(err);
             });
 
-        } else {
-            yConsole.error("You must me signed-in to load and save data from your storage.");
-        }
+        //} else {
+        //    yConsole.error("You must me signed-in to load and save data from your storage.");
+        //}
 
         return this;
     };

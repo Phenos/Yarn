@@ -11,11 +11,10 @@ exports.status = {
 };
 
 function twitterProfile(api, data, next) {
-    console.log("0");
     //var username = data.user && data.user.username;
     var profile = data.params.twitterProfile;
 
-    console.log("2",api.config.twitter);
+    console.log("api.config.twitter",api.config.twitter);
 
     var T = new Twit({
         consumer_key: api.config.twitter.consumer_key,

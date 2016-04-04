@@ -1,5 +1,5 @@
 yarn.service('yarn', function ($localStorage,
-                               postal,
+                               channel,
                                state,
                                script,
                                yConsole,

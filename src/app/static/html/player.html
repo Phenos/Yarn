@@ -61,7 +61,9 @@
                     </p>
                     <md-list>
                         <md-list-item ng-repeat="folder in player.profile.storage.projectFolders">
-                            <md-button ui-sref="root.profile.story({ story: folder.name })">
+                            <md-button ui-sref="story({
+                            profile: player.profile.username.split('.')[1],
+                            story: folder.name })">
                                 {{ folder.name }}
                             </md-button>
                         </md-list-item>

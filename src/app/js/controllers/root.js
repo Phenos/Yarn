@@ -17,9 +17,7 @@ yarn.controller('root', function rootController(user,
                                                 state,
                                                 session,
                                                 profiles,
-                                                Profile,
-                                                $localStorage,
-                                                postal) {
+                                                Profile) {
 
     //console.log("state.params:", $state);
     $scope.IDE = IDE;
@@ -150,7 +148,7 @@ yarn.controller('root', function rootController(user,
         }
     } else {
         if (profiles.authenticated()) {
-            $state.go("root.profile", {
+            $state.go("profile", {
                 profile: profiles.authenticated().username.split(".")[1]
             })
         } else {

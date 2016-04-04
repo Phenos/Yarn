@@ -1,4 +1,4 @@
-yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, session) {
+yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel, session) {
 
     function Storage(profile) {
         this.profile = profile;
@@ -250,11 +250,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, postal, 
 
                     self.discardMarkedFiles();
 
-                    postal.publish({
-                        channel: "storage",
-                        topic: "refresh",
-                        data: self
-                    });
+                    channel.publish("storage.refresh", self);
                     self.isLoading = false;
                 } else {
                     self.isLoading = false;

@@ -1,5 +1,5 @@
 yarn.service('Assertion', function (layerSetup,
-                                    postal,
+                                    channel,
                                     weightAssertion) {
 
     var internalCounter = 0;
@@ -85,11 +85,7 @@ yarn.service('Assertion', function (layerSetup,
         if (!angular.isUndefined(value)) {
             this._value = value;
 
-            postal.publish({
-                channel: "state",
-                topic: "setAssertion",
-                data: this
-            });
+            channel.publish("state.setAssertion", this);
 
         }
         return this._value;

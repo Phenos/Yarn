@@ -1,55 +1,39 @@
-yarn.service("transactions", function (Transactions, yConsole, consoleHelper) {
+yarn.service("transactions", function (Transactions, yConsole, consoleHelper, channel) {
     var transactions = new Transactions();
 
 
-    postal.subscribe({
-        channel: "state",
-        topic: "createAssertion",
-        callback: function (data) {
-            transactions.add("create", {
-                assertion: data.assertion.pojo()
-            });
-            yConsole.transaction("Created: " + consoleHelper.assertion2log(data.assertion), {
-                source: data.source
-            });
-        }
+    channel.subscribe("state.createAssertion", function (data) {
+        transactions.add("create", {
+            assertion: data.assertion.pojo()
+        });
+        yConsole.transaction("Created: " + consoleHelper.assertion2log(data.assertion), {
+            source: data.source
+        });
     });
 
-    postal.subscribe({
-        channel: "state",
-        topic: "deleteAssertion",
-        callback: function (data) {
-            transactions.add("delete", {
-                assertion: data.assertion.pojo()
-            });
-            yConsole.transaction("Deleted: " + consoleHelper.assertion2log(data.assertion), {
-                source: data.source
-            });
-        }
+    channel.subscribe("state.deleteAssertion", function (data) {
+        transactions.add("delete", {
+            assertion: data.assertion.pojo()
+        });
+        yConsole.transaction("Deleted: " + consoleHelper.assertion2log(data.assertion), {
+            source: data.source
+        });
     });
 
-    postal.subscribe({
-        channel: "state",
-        topic: "updateAssertion",
-        callback: function (data) {
-            transactions.add("create", {
-                replaced: data.replaced,
-                assertion: data.assertion.pojo()
-            });
-            yConsole.transaction("Updated: " + consoleHelper.assertion2log(data.assertion), {
-                source: data.source
-            });
-        }
+    channel.subscribe("state.updateAssertion", function (data) {
+        transactions.add("create", {
+            replaced: data.replaced,
+            assertion: data.assertion.pojo()
+        });
+        yConsole.transaction("Updated: " + consoleHelper.assertion2log(data.assertion), {
+            source: data.source
+        });
     });
 
-    postal.subscribe({
-        channel: "commands",
-        topic: "command",
-        callback: function (data) {
-            transactions.transaction("command", {
-                command: data
-            });
-        }
+    channel.subscribe("commands.command", function (data) {
+        transactions.transaction("command", {
+            command: data
+        });
     });
 
     return transactions;

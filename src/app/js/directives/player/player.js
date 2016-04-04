@@ -13,7 +13,7 @@ yarn.directive('player', function () {
 
     function playerController($scope,
                               $element,
-                              postal,
+                              channel,
                               sidebar,
                               writers,
                               promptLoop,
@@ -32,17 +32,13 @@ yarn.directive('player', function () {
         console.log("profile", this.profile);
         console.log("auth", profiles.authenticated());
 
-        postal.subscribe({
-            channel: "profiles",
-            topic: "updated",
-            callback: function () {
-                self.profile = profiles.visited();
-                if (self.profile === profiles.authenticated()) {
-                    self.isOwnProfile = true;
-                }
-                console.log("profile", self.profile);
-                console.log("auth", profiles.authenticated());
+        channel.subscribe("profiles.updated", function () {
+            self.profile = profiles.visited();
+            if (self.profile === profiles.authenticated()) {
+                self.isOwnProfile = true;
             }
+            console.log("profile", self.profile);
+            console.log("auth", profiles.authenticated());
         });
 
 

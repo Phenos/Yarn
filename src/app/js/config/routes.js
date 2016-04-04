@@ -55,31 +55,51 @@ yarn.service("login", function (auth) {
  });
 
 
-yarn.config(function ($stateProvider,
+yarn.config(function ($locationProvider,
+                      $stateProvider,
                       $urlRouterProvider) {
 
-    //$urlRouterProvider.otherwise('/');
+    //$locationProvider.html5Mode(true);
+    //$locationProvider.hashPrefix('!');
+
+    $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('root', {
         url: '',
         resolve: {
-            "user": function (authUser, session) {
-                return authUser.then(function (user) {
-                    if (user) session.open(user);
-                    return user;
-                });
-            }
+            "user": resolveUser
         },
         controllerAs: 'root',
         bindToController: {},
         templateUrl: './html/root.html',
         controller: 'root'
     });
-    $stateProvider.state('root.profile', {
-        url: '/:profile'
+    $stateProvider.state('profile', {
+        url: '/:profile',
+        resolve: {
+            "user": resolveUser
+        },
+        controllerAs: 'root',
+        bindToController: {},
+        templateUrl: './html/root.html',
+        controller: 'root'
     });
-    $stateProvider.state('root.profile.story', {
-        url: '/:story'
+    $stateProvider.state('story', {
+        url: '/:profile/:story',
+        resolve: {
+            "user": resolveUser
+        },
+        controllerAs: 'root',
+        bindToController: {},
+        templateUrl: './html/root.html',
+        controller: 'root'
     });
+
+    function resolveUser (authUser, session) {
+        return authUser.then(function (user) {
+            if (user) session.open(user);
+            return user;
+        });
+    }
 
 });

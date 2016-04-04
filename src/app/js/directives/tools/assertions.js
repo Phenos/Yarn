@@ -7,15 +7,11 @@ yarn.directive('assertionsTool', function AssertionsTool() {
         },
         replace: true,
         templateUrl: './html/tools/assertions.html',
-        controller: function Controller($scope, state) {
+        controller: function Controller($scope, state, channel) {
             $scope.allAssertions = [];
 
-            postal.subscribe({
-                channel: "runtime",
-                topic: "afterRun",
-                callback: function () {
-                    $scope.update();
-                }
+            channel.subscribe("runtine.afterRun", function () {
+                $scope.update();
             });
 
             $scope.update = function () {

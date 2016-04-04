@@ -1,4 +1,4 @@
-yarn.service("profiles", function (Profile, postal) {
+yarn.service("profiles", function (Profile, channel) {
 
     function Profiles () {
         this.index = {};
@@ -9,11 +9,7 @@ yarn.service("profiles", function (Profile, postal) {
     }
 
     Profiles.prototype.updated = function () {
-        postal.publish({
-            channel: "profiles",
-            topic: "updated",
-            data: this
-        });
+        channel.publish("profiles.updated", this);
     };
 
     Profiles.prototype.get = function (username) {

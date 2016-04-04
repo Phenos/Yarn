@@ -5,17 +5,13 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
         scope: {},
         replace: true,
         templateUrl: './html/tools/inspector.html',
-        controller: function Controller($scope, inspector, state, postal) {
+        controller: function Controller($scope, inspector, state, channel) {
 
             $scope.thingsFiltered = [];
             $scope.inspector = inspector;
 
-            postal.subscribe({
-                channel: "runtime",
-                topic: "afterRun",
-                callback: function () {
-                    $scope.update();
-                }
+            channel.subscribe("runtime.afterRun", function () {
+                $scope.update();
             });
 
             $scope.filterByType = function (type) {

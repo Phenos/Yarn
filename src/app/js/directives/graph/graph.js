@@ -11,7 +11,7 @@ yarn.directive('graph', function GraphDirective(state, assert) {
         controller: GraphController
     };
 
-    function GraphController($element, $timeout, graph) {
+    function GraphController($element, $timeout, graph, channel) {
         var self = this;
         var thingIsA = this.thingIsA || "space";
         var predicate = this.predicate.toLowerCase() || "linksto";
@@ -39,12 +39,8 @@ yarn.directive('graph', function GraphDirective(state, assert) {
         //console.log("svg", svg);
 
         graph.register(this);
-        postal.subscribe({
-            channel: "runtime",
-            topic: "afterRun",
-            callback: function () {
-                self.update();
-            }
+        channel.subscribe("runtime.afterRun", function () {
+            self.update();
         });
 
         this.update = function (newModel) {

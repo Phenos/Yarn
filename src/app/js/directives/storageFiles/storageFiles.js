@@ -11,7 +11,7 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         controller: StorageFilesController
     };
 
-    function StorageFilesController($element, $scope, profiles, confirmAction, postal) {
+    function StorageFilesController($element, $scope, profiles, confirmAction, channel) {
         var self = this;
         //console.log("StorageFilesController", storage);
 
@@ -27,25 +27,21 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
         this.selectedFolder = null;
         this.selectedStorage = null;
 
-        postal.subscribe({
-            channel: "storage",
-            topic: "refresh",
-            callback: function (storage) {
-                //console.log("what", storage);
-                if (storage === self.selectedStorage) {
-                    updateList();
-                }
+        channel.subscribe("storage.refresh", function (storage) {
+            //console.log("what", storage);
+            if (storage === self.selectedStorage) {
+                updateList();
             }
         });
 
-        $scope.selectAll = function() {
+        $scope.selectAll = function () {
             angular.forEach(self.files, function (file) {
                 file.isSelected = true;
             });
             this.updateSelection();
         };
 
-        $scope.selectProfile = function(profile) {
+        $scope.selectProfile = function (profile) {
             if (profile) {
                 self.selectedStorage = profile.storage;
                 profile.storage.refresh();
@@ -54,34 +50,34 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
             }
         };
 
-        $scope.openProjectFolder = function(folder) {
+        $scope.openProjectFolder = function (folder) {
             if (self.selectedStorage) {
                 self.selectedFolder = folder;
                 self.directories = self.selectedStorage.directories(self.selectedFolder);
             }
         };
 
-        $scope.refresh = function() {
+        $scope.refresh = function () {
             if (self.selectedStorage) {
                 self.selectedStorage.refresh();
             }
         };
 
-        $scope.unselectAll = function() {
+        $scope.unselectAll = function () {
             angular.forEach(self.files, function (file) {
                 file.isSelected = false;
             });
             this.updateSelection();
         };
 
-        $scope.updateSelection = function() {
+        $scope.updateSelection = function () {
             self.selection = self.selectedStorage.selection();
         };
 
-        $scope.deleteSelection = function(event) {
+        $scope.deleteSelection = function (event) {
             var text = "Are you sure you want to delete <br/>the <strong>" +
-                    self.selection.length + " files</strong> you have selected?" +
-                    "<br/>This action cannot be undone";
+                self.selection.length + " files</strong> you have selected?" +
+                "<br/>This action cannot be undone";
             confirmAction("Delete selection", text, ok, cancel, event, $element);
             function ok() {
                 console.log("DELETING FILES!!!!!");
@@ -94,7 +90,9 @@ yarn.directive('storageFiles', function StorageFilesDirective() {
                     $scope.updateSelection();
                 });
             }
-            function cancel() {}
+
+            function cancel() {
+            }
         };
 
         function updateList() {

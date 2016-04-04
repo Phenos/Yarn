@@ -18,7 +18,7 @@ yarn.service('state', function ($localStorage,
                                 parseAssert,
                                 editorFiles,
                                 storyLocalStorage,
-                                postal) {
+                                channel) {
 
 
         function State() {
@@ -31,13 +31,9 @@ yarn.service('state', function ($localStorage,
 
             storyLocalStorage.uid(this.uniqueKey());
 
-            postal.subscribe({
-                channel: "editorFiles",
-                topic: "change",
-                callback: function (file) {
-                    self.persistEditorFiles(file);
-                }
-            })
+            channel.subscribe("editorFiles.change", function (file) {
+                self.persistEditorFiles(file);
+            });
         }
 
         State.prototype.ready = function (isReady, status, message) {
@@ -390,11 +386,7 @@ yarn.service('state', function ($localStorage,
                         assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
                         if (!options.noTransaction) {
-                            postal.publish({
-                                channel: "state",
-                                topic: "createAssertion",
-                                data: {assertion: assertion}
-                            });
+                            channel.publish("state.createAssertion", {assertion: assertion});
                         }
                         this.persistAssertion(assertion);
                     } else {
@@ -406,13 +398,9 @@ yarn.service('state', function ($localStorage,
                             topAssertion.value(options.value);
                         }
                         if (!options.noTransaction) {
-                            postal.publish({
-                                channel: "state",
-                                topic: "updateAssertion",
-                                data: {
-                                    replaced: replaced,
-                                    assertion: topAssertion
-                                }
+                            channel.publish("state.updateAssertion", {
+                                replaced: replaced,
+                                assertion: topAssertion
                             });
                         }
                         this.persistAssertion(topAssertion);
@@ -421,10 +409,8 @@ yarn.service('state', function ($localStorage,
                     assertion = new Assertion(subject, _predicate, object, options);
                     this.assertions.add(assertion);
                     if (!options.noTransaction) {
-                        postal.publish({
-                            channel: "state",
-                            topic: "createAssertion",
-                            data: {assertion: assertion}
+                        channel.publish("state.createAssertion", {
+                            assertion: assertion
                         });
                     }
                     this.persistAssertion(assertion);
@@ -509,11 +495,7 @@ yarn.service('state', function ($localStorage,
                         newAssertion.value(false);
 
                         self.assertions.add(newAssertion);
-                        postal.publish({
-                            channel: "state",
-                            topic: "createAssertion",
-                            data: {assertion: newAssertion}
-                        });
+                        channel.publish("state.createAssertion", {assertion: newAssertion});
                         //console.log("---------- negate2 ----> created new", newAssertion);
                         self.persistAssertion(newAssertion);
                     } else {
@@ -526,13 +508,9 @@ yarn.service('state', function ($localStorage,
                             var replaced = topAssertion.value();
                             topAssertion.value(false);
 
-                            postal.publish({
-                                channel: "state",
-                                topic: "updateAssertion",
-                                data: {
-                                    replaced: replaced,
-                                    assertion: topAssertion
-                                }
+                            channel.publish("state.updateAssertion", {
+                                replaced: replaced,
+                                assertion: topAssertion
                             });
 
                             self.persistAssertion(topAssertion);
@@ -540,11 +518,7 @@ yarn.service('state', function ($localStorage,
                         } else {
                             var deleted = topAssertion;
                             self.assertions.remove(topAssertion);
-                            postal.publish({
-                                channel: "state",
-                                topic: "deleteAssertion",
-                                data: {assertion: deleted}
-                            });
+                            channel.publish("state.deleteAssertion", {assertion: deleted});
                             self.UnpersistAssertions(topAssertion);
                             //console.log("---------- negate2 ----> Discarded", topAssertion);
                         }

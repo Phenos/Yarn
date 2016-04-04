@@ -4,7 +4,7 @@ yarn.service('Runtime', function RuntimeService(state,
                                                 things,
                                                 Stack,
                                                 yConsole,
-                                                postal) {
+                                                channel) {
 
     /**
      * Runtime class user to execute the ast with the state
@@ -26,12 +26,8 @@ yarn.service('Runtime', function RuntimeService(state,
         this.cursor.start(this.ast.root);
         var node = this.runNode(this.ast.root);
 
-        postal.publish({
-            channel: "runtime",
-            topic: "afterRun",
-            data: {
-                root: node
-            }
+        channel.publish("runtime.afterRun", {
+            root: node
         });
 
         return node;

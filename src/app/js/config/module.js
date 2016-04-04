@@ -1,4 +1,3 @@
-"use strict";
 
 var yarn = angular.module('yarn', [
     'ngResource',

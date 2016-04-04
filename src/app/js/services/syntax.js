@@ -1,5 +1,4 @@
 (function () {
-    "use strict";
 
     yarn.factory('Syntax', SyntaxService);
 

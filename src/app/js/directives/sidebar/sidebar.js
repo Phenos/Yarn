@@ -23,7 +23,8 @@ yarn.directive('sidebar', function SidebarDirective() {
 
         if (this.user && this.user.username) {
             $scope.avatar = this.user.profileImageURL;
-            $scope.username = this.user.displayName;
+            $scope.displayName = this.user.displayName;
+            $scope.username = this.user.username;
         }
 
         this.showConsole = function () {

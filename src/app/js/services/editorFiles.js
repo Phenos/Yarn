@@ -4,7 +4,7 @@ yarn.service("editorFiles", function (EditorFile,
                                       $timeout,
                                       yConsole,
                                       URI,
-                                      postal) {
+                                      channel) {
 
     function EditorFiles() {
         this.files = [];
@@ -215,11 +215,7 @@ yarn.service("editorFiles", function (EditorFile,
     };
 
     EditorFiles.prototype.publishChange = function (file) {
-        postal.publish({
-            channel: "editorFiles",
-            topic: "change",
-            data: file
-        });
+        channel.publish("editorFiles.change", file);
     };
 
 

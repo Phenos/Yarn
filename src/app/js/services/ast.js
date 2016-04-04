@@ -1,5 +1,4 @@
 (function () {
-    "use strict";
     yarn.factory('AST', ASTService);
 
     function ASTService(yConsole, Cursor, Node, $q) {

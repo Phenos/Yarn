@@ -56,7 +56,11 @@ yarn.directive('player', function () {
         promptLoop.update();
 
         this.onStoryLogClear = function () {
-            scrollAreaElem.scrollTop = 0;
+            smoothScroll(0, {
+                duration: 0,
+                offset: 0,
+                containerId: 'yarn-player'
+            });
             $scope.$broadcast("refreshScrollbars");
         };
 

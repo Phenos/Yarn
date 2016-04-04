@@ -17,7 +17,9 @@ yarn.controller('root', function rootController(user,
                                                 state,
                                                 session,
                                                 profiles,
-                                                Profile) {
+                                                Profile,
+                                                $localStorage,
+                                                postal) {
 
     //console.log("state.params:", $state);
     $scope.IDE = IDE;
@@ -120,6 +122,10 @@ yarn.controller('root', function rootController(user,
     $scope.toggleTools($localStorage.toolsAreVisible);
     tools.focusFromMemory();
 
+    if (profiles.authenticated()) {
+        root.IDEisVisible($localStorage.IDEisVisible);
+    }
+
     if ($state.params.profile) {
         profiles.visited(new Profile("twitter." + $state.params.profile));
         if ($state.params.story) {
@@ -161,37 +167,37 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
 
     service.register = function (scope) {
         service.scope = scope;
-        scope.IDEisVisible = service.IDEisVisible;
-        scope.helpIsVisible = service.helpIsVisible;
+        scope._IDEisVisible = service._IDEisVisible;
+        scope._helpIsVisible = service._helpIsVisible;
     };
 
     /*
      Console visibility
      */
-    service.IDEisVisible = false;
-    service.helpIsVisible = false;
+    service._IDEisVisible = false;
+    service._helpIsVisible = false;
 
-    function IDEisVisible(value) {
+    service.IDEisVisible = function _IDEisVisible(value) {
         if (!angular.isUndefined(value)) {
-            service.IDEisVisible = value;
-            if (service.scope) service.scope.IDEisVisible = value;
+            service._IDEisVisible = value;
+            if (service.scope) service.scope._IDEisVisible = value;
         }
-        return service.IDEisVisible;
-    }
+        return service._IDEisVisible;
+    };
 
-    function helpIsVisible(value) {
+
+    service.helpIsVisible = function _helpIsVisible(value) {
         if (!angular.isUndefined(value)) {
-            service.helpIsVisible = value;
-            if (service.scope) service.scope.helpIsVisible = value;
+            service._helpIsVisible = value;
+            if (service.scope) service.scope._helpIsVisible = value;
         }
-        return service.helpIsVisible;
-    }
+        return service._helpIsVisible;
+    };
 
-    IDEisVisible($localStorage.IDEisVisible);
-    helpIsVisible($localStorage.helpIsVisible);
+    service.helpIsVisible($localStorage._helpIsVisible);
 
     service.toggleConsole = function () {
-        if (service.IDEisVisible) {
+        if (service._IDEisVisible) {
             service.hideConsole();
         } else {
             service.showConsole();
@@ -217,11 +223,11 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
      */
     service.showConsole = function () {
         player.closeSidenav();
-        $localStorage.IDEisVisible = IDEisVisible(true);
+        $localStorage.IDEisVisible = service.IDEisVisible(true);
         consoleService.focus();
     };
     service.hideConsole = function () {
-        $localStorage.IDEisVisible = IDEisVisible(false);
+        $localStorage.IDEisVisible = service.IDEisVisible(false);
     };
 
 
@@ -232,10 +238,10 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
      */
     service.showHelp = function () {
         player.closeSidenav();
-        $localStorage.helpIsVisible = helpIsVisible(true);
+        $localStorage._helpIsVisible = service.helpIsVisible(true);
     };
     service.hideHelp = function () {
-        $localStorage.helpIsVisible = helpIsVisible(false);
+        $localStorage._helpIsVisible = service.helpIsVisible(false);
     };
 
     service.focusConsole = function () {

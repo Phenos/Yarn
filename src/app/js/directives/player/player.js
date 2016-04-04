@@ -74,7 +74,7 @@ yarn.directive('player', function () {
 
         this.login = function () {
             login();
-        }
+        };
 
         /*
          Side navigation visibility

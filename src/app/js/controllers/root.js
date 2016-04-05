@@ -135,8 +135,15 @@ yarn.controller('root', function rootController(user,
         profiles.visited(visitedProfile);
         if ($state.params.story) {
             state.story = new Story($state.params.story, visitedProfile);
-            IDE.run();
-            state.ready(true, "ready", "");
+            console.log("-------- before iExists");
+            state.story.ifExists(function () {
+                console.log("STORY EXISTS!");
+                state.ready(true, "ready", "");
+                IDE.run();
+            }, function () {
+                console.log("STORY DOESNT EXIST!");
+                state.ready(false, "nostory", "");
+            });
 
             // TODO: state when story is not found!
 
@@ -201,7 +208,7 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
     };
 
     service.toggleHelp = function () {
-        if (service._helpIsVisible) {
+        if (service.helpIsVisible) {
             service.hideHelp();
         } else {
             service.showHelp();

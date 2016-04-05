@@ -74,6 +74,32 @@
                 <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
                 <p class="message" ng-bind="player.state.readyness.message"></p>
             </div>
+            <div ng-if="player.state.readyness.status === 'nostory'">
+                <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
+                <p class="message">
+                    Sorry! Could not find a story project
+                    called "{{ player.state.story.id }}"
+                </p>
+                <md-list>
+                    <md-list-item ng-if="player.isOwnProfile">
+                        <md-button ng-click="creatProject(player.state.story)">
+                            Create a new project called {{ player.state.story.id }}
+                        </md-button>
+                    </md-list-item>
+                    <md-list-item ng-if="player.profiles.authenticated()">
+                        <md-button ui-sref="profile({
+                            profile: player.profiles.authenticated().username.split('.')[1] })">
+                            Back to your profile
+                        </md-button>
+                    </md-list-item>
+                    <md-list-item ng-if="!player.isOwnProfile">
+                        <md-button ui-sref="profile({
+                            profile: player.profile.username.split('.')[1] })">
+                            Back to {{ player.profile.username.split(".")[1] }}
+                        </md-button>
+                    </md-list-item>
+                </md-list>
+            </div>
             <div class="loginfirst"
                  ng-if="player.state.readyness.status === 'loginfirst'">
                 <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>

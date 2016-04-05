@@ -26,20 +26,27 @@ yarn.directive('player', function () {
         var self = this;
 
         this.state = state;
-        this.profile = profiles.visited();
-        this.isOwnProfile = false;
+        this.profiles = profiles;
 
         //console.log("profile", this.profile);
         //console.log("auth", profiles.authenticated());
 
-        channel.subscribe("profiles.updated", function () {
-            self.profile = profiles.visited();
-            if (self.profile === profiles.authenticated()) {
+
+        this.profile = null;
+        this.isOwnProfile = false;
+        this.setProfile = function (profile) {
+            self.profile = profile;
+            if (self.profile.username === profiles.authenticated().username) {
                 self.isOwnProfile = true;
             }
             //console.log("profile", self.profile);
             //console.log("auth", profiles.authenticated());
+            console.log("profiles.updated", self.profile, profiles.authenticated(), self.isOwnProfile);
+        };
+        channel.subscribe("profiles.updated", function () {
+            self.setProfile(profiles.visited());
         });
+        this.setProfile(profiles.visited());
 
 
         var scrollAreaElem = $element[0].getElementsByClassName("player")[0];

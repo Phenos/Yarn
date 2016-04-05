@@ -1,6 +1,7 @@
 yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel, session) {
 
     function Storage(profile) {
+        this.refreshedOnce = false;
         this.profile = profile;
         this.files = [];
         this.projectFolders = {};
@@ -234,6 +235,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
 
             //console.log("params", params);
             apiClient.action('files', params , function (data) {
+                self.refreshedOnce = true;
                 //console.log("s3 data", data);
                 if (!data.error) {
                     angular.forEach(self.files, function (file) {
@@ -257,6 +259,7 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
                     yConsole.error("An error occurered while trying to load file from storage");
                 }
             }, function (err) {
+                self.refreshedOnce = true;
                 console.error(err);
             });
 

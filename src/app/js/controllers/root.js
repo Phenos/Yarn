@@ -62,7 +62,8 @@ yarn.controller('root', function rootController(user,
 
     $scope.openMain = function () {
         if (state.story) {
-            editorFiles.open(state.story.profile, state.story.uri.toString(), true);
+            console.log("!!!");
+            editorFiles.open(state.story.profile, state.story.url.toString(), true);
         }
     };
 

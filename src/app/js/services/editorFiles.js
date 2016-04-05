@@ -106,12 +106,14 @@ yarn.service("editorFiles", function (EditorFile,
     };
 
     EditorFiles.prototype.get = function (uriOrFile, profile) {
+        var baseUri = URI("http://storage.yarnstudio.io/");
         var match = null;
         var uri = uriOrFile;
         if (angular.isObject(uriOrFile)) {
             uri = uriOrFile.absoluteURI().toString();
         } else {
-            uri = URI("http://storage.yarnstudio.io/" + profile.username + "/" + uri).normalize().toString()
+            uri = URI(uri);
+            uri = uri.absoluteTo(baseUri).toString()
         }
         angular.forEach(this.files, function (file) {
             //console.log("===>>>--", file.absoluteURI().toString(), uri);
@@ -137,9 +139,9 @@ yarn.service("editorFiles", function (EditorFile,
                     file = new EditorFile(uriOrFile, null, profile);
                 }
                 this.files.push(file);
+                file.load();
             }
 
-            file.load();
             if (goToLine) {
                 file.goToLine = goToLine;
             }

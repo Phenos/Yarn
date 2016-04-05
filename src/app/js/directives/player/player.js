@@ -37,8 +37,8 @@ yarn.directive('player', function () {
             if (self.profile === profiles.authenticated()) {
                 self.isOwnProfile = true;
             }
-            console.log("profile", self.profile);
-            console.log("auth", profiles.authenticated());
+            //console.log("profile", self.profile);
+            //console.log("auth", profiles.authenticated());
         });
 
 

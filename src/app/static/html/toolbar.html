@@ -68,6 +68,15 @@
                             </div>
                         </div>
                     </md-toolbar>
+                    <md-menu-item ng-if="toolbar.visited">
+                        <md-button ui-sref="profile({ profile: toolbar.visited.username.split('.')[1] })"
+                                   aria-label="{{ toolbar.visited.username.split('.')[1] }}">
+                            <img alt="{{ toolbar.visited.username.split('.')[1] }}"
+                                 ng-src="{{ toolbar.visited.twitterProfile.profile_image_url | biggerProfileImage }}"
+                                 class="avatar" />
+                            {{ toolbar.visited.username.split(".")[1] }}
+                        </md-button>
+                    </md-menu-item>
                     <md-menu-item>
                         <md-button ng-click="toolbar.undo()">
                             <md-icon md-svg-icon="/svg-icons/undo.svg"></md-icon>

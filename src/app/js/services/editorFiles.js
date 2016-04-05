@@ -116,7 +116,9 @@ yarn.service("editorFiles", function (EditorFile,
             uri = uri.absoluteTo(baseUri).toString()
         }
         angular.forEach(this.files, function (file) {
-            //console.log("===>>>--", file.absoluteURI().toString(), uri);
+            //console.log("A:", file.absoluteURI().toString());
+            //console.log("B:", uri);
+            //console.log("-----");
             if (file.absoluteURI().toString() === uri) match = file;
         });
         //console.log("MATCH", match);

@@ -6,7 +6,7 @@
         <div ng-repeat="profile in storageFiles.profiles._all | orderBy : 'priority' : true">
             <section>
                 <md-subheader class="md-primary">
-                    <img alt="{{ profile.username.split('.')[1] }}" ng-src="{{ profile.twitterProfile.profile_image_url }}" class="avatar" />
+                    <img alt="{{ profile.username.split('.')[1] }}" ng-src="{{ profile.twitterProfile.profile_image_url | biggerProfileImage }}" class="avatar" />
                     {{ profile.username.split(".")[1] }}
                 </md-subheader>
             </section>

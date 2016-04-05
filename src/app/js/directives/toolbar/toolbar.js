@@ -10,9 +10,10 @@ yarn.directive('toolbar', function ToolbarDirective() {
         controller: ToolbarController
     };
 
-    function ToolbarController(sidebar, $scope, session, state, commands, login) {
+    function ToolbarController(sidebar, $scope, session, state, profiles, commands, login) {
 
         this.state = state;
+        this.visited = profiles.visited();
 
         if (session.user()) this.user = session.user();
 

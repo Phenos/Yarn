@@ -17,7 +17,8 @@ yarn.controller('root', function rootController(user,
                                                 state,
                                                 session,
                                                 profiles,
-                                                Profile) {
+                                                Profile,
+                                                Story) {
 
     //console.log("state.params:", $state);
     $scope.IDE = IDE;
@@ -60,10 +61,9 @@ yarn.controller('root', function rootController(user,
     welcomeMessage.openIfNew();
 
     $scope.openMain = function () {
-        // TODO ... Figure out what is the first/main project available ?
-        var main = editorFiles.open(profiles.authenticated(), "./story.txt", true);
-        console.log("openMain", main);
-        editorFiles.mainFile(main);
+        if (state.story) {
+            editorFiles.open(state.story.profile, state.story.uri.toString(), true);
+        }
     };
 
     /*
@@ -125,19 +125,10 @@ yarn.controller('root', function rootController(user,
     }
 
     if ($state.params.profile) {
-        profiles.visited(new Profile("twitter." + $state.params.profile));
+        var visitedProfile = new Profile("twitter." + $state.params.profile);
+        profiles.visited(visitedProfile);
         if ($state.params.story) {
-            var path = [
-                //"/twitter.",
-                //$state.params.profile,
-                "./",
-                $state.params.story,
-                "/story.txt"
-            ].join("");
-            //console.log("what?");
-            //console.log(">>>>>", path);
-            var main = editorFiles.open(profiles.visited(), path, true);
-            editorFiles.mainFile(main);
+            state.story = new Story($state.params.story, visitedProfile);
             IDE.run();
             state.ready(true, "ready", "");
 

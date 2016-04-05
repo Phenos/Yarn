@@ -68,12 +68,6 @@ yarn.service('state', function ($localStorage,
             var sessionFiles = session.storage("editorFiles");
             //console.log("persist -->", file);
             if (sessionFiles) {
-                //console.log("this._mainFile", this._mainFile);
-                if (angular.isObject(editorFiles._mainFile)) {
-                    sessionFiles.mainFile = editorFiles._mainFile._uri;
-                } else {
-                    delete sessionFiles.mainFile;
-                }
 
                 if (!angular.isArray(sessionFiles.files))
                     sessionFiles.files = [];
@@ -102,13 +96,10 @@ yarn.service('state', function ($localStorage,
          */
         State.prototype.reloadFromLocalStorage = function () {
             var lastFocusFromMemory = editors.lastFocusFromMemory();
-            var mainFile = "";
+
             var sessionFiles = session.storage("editorFiles");
             //console.log("sessionFiles", sessionFiles);
             if (sessionFiles) {
-                if (sessionFiles.mainFile) {
-                    mainFile = sessionFiles.mainFile;
-                }
                 if (angular.isArray(sessionFiles.files)) {
                     var oldList = sessionFiles.files;
                     sessionFiles.files = [];
@@ -121,10 +112,6 @@ yarn.service('state', function ($localStorage,
 
                         var profile = profiles.get(file.profile);
                         var newFile = editorFiles.open(profile, file.uri, setFocus);
-                        if (mainFile === file) {
-                            newFile.isMain = true;
-                            editorFiles.mainFile(newFile);
-                        }
                     });
                 }
             }

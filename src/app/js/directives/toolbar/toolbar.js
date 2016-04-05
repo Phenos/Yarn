@@ -12,6 +12,8 @@ yarn.directive('toolbar', function ToolbarDirective() {
 
     function ToolbarController(sidebar, $scope, session, state, commands, login) {
 
+        this.state = state;
+
         if (session.user()) this.user = session.user();
 
         if (this.user && this.user.username) {

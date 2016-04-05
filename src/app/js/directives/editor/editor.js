@@ -31,15 +31,6 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             IDE.saveAllAndRun();
         };
 
-        this.setAsMain = function () {
-            var currentMainFile = editorFiles.mainFile();
-            if (currentMainFile === this.file) {
-                editorFiles.mainFile(null);
-            } else {
-                editorFiles.mainFile(this.file);
-            }
-        };
-
         this.save = function () {
             IDE.working(true);
             editorFiles.save(this.file, function () {

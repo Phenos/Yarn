@@ -40,7 +40,8 @@
              layout="row"
              layout-align="end end">
             <div flex=""></div>
-            <md-menu md-offset="-8 0"
+            <md-menu ng-if="toolbar.state.story"
+                    md-offset="-8 0"
                      md-position-mode="target-right target">
                 <md-button
                         style="min-width: 0; padding: 0;"

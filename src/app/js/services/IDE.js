@@ -10,6 +10,7 @@ yarn.service('IDE', function IDEService(rememberLastStory,
                                         editors,
                                         tools,
                                         profiles,
+                                        state,
                                         preventCloseWhenUnsaved) {
 
     function IDE() {
@@ -37,10 +38,8 @@ yarn.service('IDE', function IDEService(rememberLastStory,
 
     /**
      * Register the service to a scope to allow binding keystrokes
-     * @param $scope
      */
-    IDE.prototype.register = function ($scope) {
-        var self = this;
+    IDE.prototype.register = function () {
     };
 
 
@@ -75,7 +74,6 @@ yarn.service('IDE', function IDEService(rememberLastStory,
     };
 
     IDE.prototype.newFile = function (event) {
-        var self = this;
         var confirm = $mdDialog.prompt()
             .title('Create a new file')
             .textContent('Choose a name for this new file (ideally ends with .txt):')
@@ -97,18 +95,12 @@ yarn.service('IDE', function IDEService(rememberLastStory,
         });
     };
 
-    IDE.prototype.run = function (fallback) {
-        var mainFile = editorFiles.mainFile();
-        if (mainFile) {
-            var uri = mainFile.absoluteURI().toString();
-            rememberLastStory.forget();
-            loader.fromURL(uri, true);
-        } else {
-            if (fallback) {
-                console.info("Could not find which story should be run, calling up the fallback");
-                fallback();
-            } else {
-                yConsole.warning("Could not find which story should be run");
+    IDE.prototype.run = function () {
+        if (state.story) {
+            var mainFile = editorFiles.open(state.story.profile, state.story.url.toString());
+            if (mainFile) {
+                var uri = mainFile.absoluteURI().toString();
+                loader.fromURL(uri, true);
             }
         }
     };

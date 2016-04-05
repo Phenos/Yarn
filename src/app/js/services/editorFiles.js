@@ -8,36 +8,8 @@ yarn.service("editorFiles", function (EditorFile,
 
     function EditorFiles() {
         this.files = [];
-        this._mainFile = null;
         this.goToLine = null;
     }
-
-    EditorFiles.prototype.mainFile = function (file) {
-        if (angular.isDefined(file)) {
-            if (file !== null) {
-                if (angular.isObject(this._mainFile))
-                    this._mainFile.isMain = false;
-                file.isMain = true;
-                this._mainFile = file;
-            } else {
-                if (angular.isObject(this._mainFile))
-                    this._mainFile.isMain = false;
-                this._mainFile = null;
-            }
-            this.publishChange();
-        }
-        var _mainFile;
-        if (angular.isDefined(this._mainFile)) {
-            _mainFile = this._mainFile;
-        } else {
-            // TODO: This doesnt make sense since it is multi-project
-            yConsole.log("Opening the default main story file.");
-            var url = "http://storage.yarnstudio.io/" + session.user().username + "/story.txt";
-            _mainFile = this.open(url);
-        }
-
-        return _mainFile;
-    };
 
     EditorFiles.prototype.save = function (file, callback) {
         file.status = "Saving...";

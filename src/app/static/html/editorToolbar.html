@@ -141,7 +141,7 @@
                 <a target="_blank" ng-href="{{ toolbar.editors.current.file._absoluteURI }}"
                    ng-bind="toolbar.editors.current.file.status"></a>
                 <md-tooltip md-direction="left" md-delay="250">
-                    File located at {{ toolbar.editors.current.file._absoluteURI }}
+                    File located at {{ toolbar.editors.current.file._absoluteURI.toString() }}
                 </md-tooltip>
             </save-status>
             <md-button ng-click="toolbar.editors.current.close()" class="md-icon-button" aria-label="Close">

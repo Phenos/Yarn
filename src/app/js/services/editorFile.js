@@ -6,6 +6,8 @@ yarn.service("EditorFile", function (guid,
     var baseURI = "";
 
     function EditorFile(uri, meta, profile) {
+        console.log("PRofile", profile);
+        this.profile = profile;
         this._uri = "";
         this._filename = "";
         this._sizeInKB = 0;
@@ -14,7 +16,6 @@ yarn.service("EditorFile", function (guid,
         this.uri = null;
         this.rename(uri);
         this.guid = guid();
-        this.profile = profile;
         this.meta = meta || {};
         this.filterOut = false;
         this.isMain = false;
@@ -46,6 +47,9 @@ yarn.service("EditorFile", function (guid,
         if (this.profile) {
             baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
             uri = this.uri.absoluteTo(baseURI);
+            console.log("---->", uri.toString());
+        } else {
+            console.warn("File has no profile: ", uri);
         }
         return uri;
     };

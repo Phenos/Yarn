@@ -118,6 +118,11 @@ yarn.controller('root', function rootController(user,
         }
         $localStorage.toolsAreVisible = $scope.toolsAreVisible;
     };
+
+    $scope.openProjectTool = function () {
+        tools.focus("project");
+    };
+
     $scope.toggleTools($localStorage.toolsAreVisible);
     tools.focusFromMemory();
 

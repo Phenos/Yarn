@@ -11,6 +11,7 @@ yarn.factory('soundEffects', function (ngAudio) {
     var errorSound = ngAudio.load("./sounds/error.mp3");
 
     function error() {
+        errorSound.currentTime = 0;
         errorSound.play();
     }
 

@@ -1,13 +1,17 @@
 yarn.service("EditorFile", function (guid,
                                      URI,
+                                     channel,
                                      loadScript,
                                      yConsole) {
 
-    var baseURI = "";
+
+
 
     function EditorFile(uri, meta, profile) {
+        var self = this;
         this.profile = profile;
         this._uri = "";
+        this.hasOwnership = false;
         this._filename = "";
         this._sizeInKB = 0;
         this._isModified = false;
@@ -23,6 +27,15 @@ yarn.service("EditorFile", function (guid,
         this.content = null;
         this.originalContent = "";
         this.isSelected = false;
+
+        var baseURI = "";
+
+        channel.subscribe("profiles.updated", function (profiles) {
+            if (self.profile === profiles.authenticated()) {
+                self.hasOwnership = true;
+            }
+        });
+
     }
 
     EditorFile.prototype.rename = function (uri) {

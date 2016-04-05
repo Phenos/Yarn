@@ -2,6 +2,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                                                   editors,
                                                   inspector,
                                                   IDE,
+                                                  soundEffects,
                                                   globalContextMenu,
                                                   confirmAction,
                                                   $timeout,
@@ -23,7 +24,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         controller: EditorController
     };
 
-    function EditorController(tools) {
+    function EditorController($element, tools) {
         var self = this;
         var aceEditor;
 
@@ -102,12 +103,17 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             aceEditor.on("focus", function() {
                 checkGoToLine();
             });
-            aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
-
-            angular.element(aceEditor.container).on("contextmenu", function () {
-                console.log("inspector", inspector);
-                //updateInspection();
+            var matchChars =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "\t !@#$%ˆ*_+{}[]:''\".,<>/\\" +
+                "()1234567890-=";
+            $element.on("keypress", function(e) {
+                if (matchChars.indexOf(String.fromCharCode(e.keyCode)) > -1) {
+                    soundEffects.error()
+                }
             });
+            aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
 
         }
 

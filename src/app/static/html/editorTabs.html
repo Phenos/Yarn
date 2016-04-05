@@ -9,7 +9,8 @@
                      md-svg-icon="/svg-icons/main-file.svg"></md-icon>
         </md-tab-label>
         <md-tab-body>
-            <editor read-only="!file.ready"
+            <editor
+                    read-only="!file.ready || !file.hasOwnership"
                     save-and-run="IDE.saveAllAndRun()"
                     source="file.content"
                     file="file"

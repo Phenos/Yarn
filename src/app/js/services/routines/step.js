@@ -23,12 +23,12 @@ yarn.service("stepRoutine", function (events,
 
 
         // We keep track of where you are before parsing the events.
-        var initialSpace = state.one("You is in *");
+        var initialSpace = state.one("Player is in *");
 
         events.process("beforeStep");
         state.step(1);
         events.trigger(assert("Story", "has", "Stepped"));
-        events.trigger(assert("You", "have", "Stepped"));
+        events.trigger(assert("Player", "has", "Stepped"));
         events.process("afterStep");
 
         /*
@@ -74,7 +74,7 @@ yarn.service("stepRoutine", function (events,
 
 
         // If the user was moves... we describe again where you are
-        var currentSpace = state.one("You is in *");
+        var currentSpace = state.one("Player is in *");
         if (initialSpace !== currentSpace) {
             writers.describeWhereYouAre(true);
         }
@@ -87,7 +87,7 @@ yarn.service("stepRoutine", function (events,
 
 
     function updateWallpaper() {
-        var room = state.resolveOne(assert("You", "is in"));
+        var room = state.resolveOne(assert("Player", "is in"));
         if (room) {
             var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));

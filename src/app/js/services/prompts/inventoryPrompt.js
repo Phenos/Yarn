@@ -10,7 +10,7 @@ yarn.service("inventoryPrompt", function (logic,
     function takePrompt(context) {
 
         context.when = function () {
-            return "inventory" === state.resolveValue(assert("You", "has", "Intention"));
+            return "inventory" === state.resolveValue(assert("Player", "has", "Intention"));
         };
 
         context.question = function (promptLoop, prompt) {

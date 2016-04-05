@@ -14,7 +14,7 @@ yarn.service("doRoutine", function (state,
                 events.triggerNow(object)
             });
 
-            events.trigger(assert("You", "did", action));
+            events.trigger(assert("Player", "did", action));
             events.trigger(assert("Action", "is", action));
 
             var predicate = state.value("Action has Predicate", {
@@ -22,11 +22,11 @@ yarn.service("doRoutine", function (state,
             });
 
             if (predicate) {
-                events.trigger(assert("You", predicate, object));
+                events.trigger(assert("Player", predicate, object));
 
             }
 
-            var space = state.one("You is in *");
+            var space = state.one("Player is in *");
             if (space) {
                 events.trigger(assert(action, "inside the", space));
             }

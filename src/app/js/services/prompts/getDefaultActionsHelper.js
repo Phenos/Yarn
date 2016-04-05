@@ -6,7 +6,7 @@ yarn.service("setDefaultOptionsHelper", function (state) {
         if (isSmall) size = "";
         var allowedActions = {};
 
-        var space = state.one("You is in *");
+        var space = state.one("Player is in *");
 
         var scope = {
             Space: space

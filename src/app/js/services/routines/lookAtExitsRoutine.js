@@ -14,7 +14,7 @@ yarn.service("lookAtExitsRoutine", function (events,
         var defaultText = state.resolveValue(assert("Default", "for", "NowhereToGo"));
         defaultText = defaultText || "You see nowhere else to go";
 
-        var room = state.resolveOne(assert("You", "is in"));
+        var room = state.resolveOne(assert("Player", "is in"));
         if (room) {
             var roomName = state.resolveValue(assert(room, "has", "Name"));
             roomName = roomName || room.id;
@@ -53,7 +53,7 @@ yarn.service("lookAtExitsRoutine", function (events,
 
         }
 
-        events.trigger(assert("You", "have looked at", "Doors"));
+        events.trigger(assert("Player", "has looked at", "Doors"));
 
         stepRoutine();
 

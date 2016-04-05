@@ -9,12 +9,12 @@ yarn.service("lookPrompt", function (writers,
     function lookPrompt(context) {
 
         context.when = function () {
-            return "look" === state.resolveValue(assert("You", "has", "Intention"));
+            return "look" === state.resolveValue(assert("Player", "has", "Intention"));
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to look at ?";
 
-            var room = state.resolveOne(assert("You", "is in"));
+            var room = state.resolveOne(assert("Player", "is in"));
 
             // Add the room to the list of objects to inspect
             var roomName = state.resolveValue(assert(room, "has", "Name"));

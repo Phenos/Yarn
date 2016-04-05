@@ -7,9 +7,9 @@ yarn.service("moveRoutine", function (state,
                                       stepRoutine) {
 
     // Process movement triggered by creating an assertion
-    events.on("You move to *", "move", function () {
-        var MoveTo = state.many("You move to *");
-        state.negate(assert("you", "move to"));
+    events.on("Player move to *", "move", function () {
+        var MoveTo = state.many("Player move to *");
+        state.negate(assert("Player", "move to"));
         //console.log("MoveTo", MoveTo);
         if (MoveTo) {
             MoveTo = MoveTo[MoveTo.length - 1];
@@ -22,7 +22,7 @@ yarn.service("moveRoutine", function (state,
         // Get the current room
         var door = doorOrSpace;
         var linkedSpace = doorOrSpace;
-        var previousRoom = state.resolveOne(assert("You", "is in"));
+        var previousRoom = state.resolveOne(assert("Player", "is in"));
 
         if (doorOrSpace) {
 
@@ -43,22 +43,22 @@ yarn.service("moveRoutine", function (state,
                 // If a triggered event already moved the player elsewhere
                 // the default move doesnt occur
                 // Get the current space
-                var currentSpace = state.resolveOne(assert("You", "is in"));
+                var currentSpace = state.resolveOne(assert("Player", "is in"));
                 if (previousRoom === currentSpace) {
                     // Remove player from current possition
-                    state.negate(assert("you", "is in"));
+                    state.negate(assert("Player", "is in"));
                     // Place the player in the new space
-                    state.createAssertion(things.get("You"), predicates("isIn"), linkedSpace, {
+                    state.createAssertion(things.get("Player"), predicates("isIn"), linkedSpace, {
                         layer: state.currentLayer
                     });
 
                     var spaceName = state.resolveValue(assert(linkedSpace, "has", "Name"));
                     storyLog.action("You move thoward the " + spaceName);
-                    events.trigger(assert("You", "entered", linkedSpace));
+                    events.trigger(assert("Player", "entered", linkedSpace));
                 }
             }
 
-            events.trigger(assert("You", "exited", previousRoom));
+            events.trigger(assert("Player", "exited", previousRoom));
 
             stepRoutine();
         }

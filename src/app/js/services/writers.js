@@ -105,7 +105,7 @@ yarn.factory('writers', function (Prompt,
     function describeRoom() {
         storyLog.markAsRead();
 
-        var room = state.resolveOne(assert("You", "is in"));
+        var room = state.resolveOne(assert("Player", "is in"));
 
         theme.refresh();
 
@@ -134,11 +134,11 @@ yarn.factory('writers', function (Prompt,
             }
 
         } else {
-            storyLog.log("You are nowhere to be found! Place your hero somewhere");
-            yConsole.error("Your hero is nowhere to be found!");
+            storyLog.log("The player is nowhere to be found! Place your player somewhere");
+            yConsole.error("The player is nowhere to be found!");
             yConsole.tip(
-                "For the story to start, you must place you hero in a room.<br/>" +
-                "Ex.: #You is in #YourBedroom.");
+                "For the story to start, you must place the player in a space.<br/>" +
+                "Ex.: Player is in the Bedroom.");
         }
 
         // Before ending, flush the log from any buffered logs

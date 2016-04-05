@@ -8,7 +8,7 @@ function inventoryPlayerCommand(state,
     function handler() {
         var itemList;
 
-        var thingsInInventory = state.resolveAll(assert("You", "have in inventory"));
+        var thingsInInventory = state.resolveAll(assert("Player", "have in inventory"));
 
         if (thingsInInventory.length) {
             itemList = [];

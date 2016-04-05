@@ -6,8 +6,8 @@ yarn.service("lookRoutine", function (events,
                                       stepRoutine) {
 
     // Process movement triggered by creating an assertion
-    events.on("You did Look", "afterDefaultEvents", function () {
-        var object = state.one("You look at *");
+    events.on("Player did Look", "afterDefaultEvents", function () {
+        var object = state.one("Player look at *");
         lookRoutine(object);
     });
 
@@ -20,7 +20,7 @@ yarn.service("lookRoutine", function (events,
 
             writers.describeThing(object);
             writers.objectMenu(object);
-            events.trigger(assert("You", "have looked at", object));
+            events.trigger(assert("Player", "has looked at", object));
 
 
             stepRoutine();

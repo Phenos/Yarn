@@ -6,7 +6,7 @@ yarn.service("lookAroundRoutine", function (events,
                                             stateHelpers,
                                             stepRoutine) {
 
-    events.on("You did LookAround", "afterDefaultEvents", function () {
+    events.on("Player did LookAround", "afterDefaultEvents", function () {
         lookAroundRoutine();
     });
 
@@ -18,7 +18,7 @@ yarn.service("lookAroundRoutine", function (events,
         var defaultText = state.resolveValue(assert("Default", "for", "NothingToLookAt"));
         defaultText = defaultText || "You see nothing to look at";
 
-        var room = state.resolveOne(assert("You", "is in"));
+        var room = state.resolveOne(assert("Player", "is in"));
         if (room) {
             var roomName = state.resolveValue(assert(room, "has", "Name"));
             roomName = roomName || room.id;
@@ -56,7 +56,7 @@ yarn.service("lookAroundRoutine", function (events,
 
         }
 
-        events.trigger(assert("You", "have looked at", "Things"));
+        events.trigger(assert("Player", "have looked at", "Things"));
 
         stepRoutine();
 

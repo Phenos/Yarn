@@ -7,7 +7,7 @@ yarn.service("inventoryRoutine", function (events,
                                            stepRoutine) {
 
     // Process movement triggered by creating an assertion
-    events.on("You did LookAtInventory", "afterDefaultEvents", function () {
+    events.on("Player did LookAtInventory", "afterDefaultEvents", function () {
         inventoryRoutine();
     });
 
@@ -25,7 +25,7 @@ yarn.service("inventoryRoutine", function (events,
 
         } else {
 
-            phrase.push("You have a ");
+            phrase.push("Player has a ");
             angular.forEach(inventory, function (thing, index) {
                 var thingName = state.resolveValue(assert(thing, "has", "Name"));
                 thingName = thingName || thing.id;
@@ -43,7 +43,7 @@ yarn.service("inventoryRoutine", function (events,
 
         }
 
-        events.trigger(assert("You", "have looked at", "Inventory"));
+        events.trigger(assert("Player", "has looked at", "Inventory"));
 
         stepRoutine();
 

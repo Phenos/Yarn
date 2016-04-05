@@ -14,7 +14,7 @@ yarn.service("lookAtUsablesRoutine", function (events,
         var defaultText = state.resolveValue(assert("Default", "for", "NothingToUse"));
         defaultText = defaultText || "You dont see anything that can be used.";
 
-        var room = state.resolveOne(assert("You", "is in"));
+        var room = state.resolveOne(assert("Player", "is in"));
 
         var usableItemsInCurrentRoom = stateHelpers.usableItemInRoom(room);
         var usableItemsInInventory = stateHelpers.usableItemInRoom("YourInventory");
@@ -66,7 +66,7 @@ yarn.service("lookAtUsablesRoutine", function (events,
 
         }
 
-        events.trigger(assert("You", "have looked at", "Doors"));
+        events.trigger(assert("Player", "have looked at", "Doors"));
 
         stepRoutine();
 

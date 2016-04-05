@@ -4,7 +4,7 @@ yarn.service("contextActions", function (state) {
         var allowedActions = {};
         var actions = [];
 
-        var space = state.one("You is in *");
+        var space = state.one("Player is in *");
 
         var scope = {
             Space: space

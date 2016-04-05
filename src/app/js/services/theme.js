@@ -44,7 +44,7 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper) {
     };
 
     Theme.prototype.refresh = function () {
-        var space = state.one("You is in *");
+        var space = state.one("Player is in *");
         this.applyThemeFromContext(space);
 
         /*

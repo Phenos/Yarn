@@ -7,12 +7,12 @@ yarn.service("movePrompt", function (logic,
     function movePrompt(context) {
 
         context.when = function () {
-            return "move" === state.resolveValue(assert("You", "has", "Intention"));
+            return "move" === state.resolveValue(assert("Player", "has", "Intention"));
         };
         context.question = function (promptLoop, prompt) {
             prompt.question = "Where do you want to go ?";
 
-            //var room = state.resolveOne(assert("You", "is in"));
+            //var room = state.resolveOne(assert("Player", "is in"));
             //
             //var linkedRooms = state.resolveAll(assert(room, "linksTo"));
             //

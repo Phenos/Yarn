@@ -29,8 +29,8 @@ yarn.directive('player', function () {
         this.profile = profiles.visited();
         this.isOwnProfile = false;
 
-        console.log("profile", this.profile);
-        console.log("auth", profiles.authenticated());
+        //console.log("profile", this.profile);
+        //console.log("auth", profiles.authenticated());
 
         channel.subscribe("profiles.updated", function () {
             self.profile = profiles.visited();

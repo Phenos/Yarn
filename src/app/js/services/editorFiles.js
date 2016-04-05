@@ -80,6 +80,10 @@ yarn.service("editorFiles", function (EditorFile,
                 // todo: is this is circular ?
                 var storage = nextFile.profile.storage;
                 storage.save(nextFile, function () {
+                    $timeout(function () {
+                        nextFile.isModified();
+                    });
+
                     saveNextFile(success, failure);
                 }, function (err) {
                     yConsole.error("An errror occured while saving all files");

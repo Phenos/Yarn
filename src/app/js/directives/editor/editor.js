@@ -33,9 +33,11 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         this.save = function () {
             IDE.working(true);
-            editorFiles.save(this.file, function () {
+            editorFiles.save(this.file, function (err, data) {
                 IDE.working(false);
-                self.file.isModified();
+                $timeout(function () {
+                    self.file.isModified();
+                })
             });
         };
 
@@ -116,9 +118,11 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         function aceChanged() {
             updateInspection();
             if (self.file) {
-                self.file.updateStatus();
+                //self.file.updateStatus();
                 //Refresh the isModified status
-                self.file.isModified();
+                $timeout(function (){
+                    self.file.isModified();
+                })
             }
             checkGoToLine();
         }

@@ -16,7 +16,9 @@
                         md-mode="indeterminate"></md-progress-circular>
             </md-toolbar-filler>
             <div flex="100">
-                <h2 class="md-toolbar-tools">Story Editor</h2>
+                <h2 class="md-toolbar-tools">
+                    {{ toolbar.state.story.id }}
+                </h2>
                 <md-menu-bar>
                     <md-menu>
                         <button ng-click="$mdOpenMenu()">

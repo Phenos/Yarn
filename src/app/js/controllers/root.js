@@ -23,6 +23,7 @@ yarn.controller('root', function rootController(user,
 //    console.log("state.params:", $state);
     $scope.IDE = IDE;
     // TODO: Move theme dependency in "player" directive
+    $scope.state = state;
     $scope.themes = themes;
     $scope.editorFiles = editorFiles;
 

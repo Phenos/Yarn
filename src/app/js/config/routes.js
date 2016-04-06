@@ -1,9 +1,8 @@
-yarn.service("firebaseConnection", function(Firebase) {
+yarn.service("firebaseConnection", function (Firebase) {
     return new Firebase("https://yarnstudiodev.firebaseio.com");
 });
 
-
-yarn.service("apiClient", function($window) {
+yarn.service("apiClient", function ($window) {
     var apiClient = null;
     if ($window.ActionheroClient) {
         apiClient = new ActionheroClient();
@@ -12,8 +11,7 @@ yarn.service("apiClient", function($window) {
     return apiClient;
 });
 
-
-yarn.service("auth", function(firebaseConnection, $firebaseAuth) {
+yarn.service("auth", function (firebaseConnection, $firebaseAuth) {
     return $firebaseAuth(firebaseConnection)
 });
 
@@ -36,7 +34,9 @@ yarn.service("authData2user", function authData2user() {
     return function (authData) {
         var profile = authData[authData.provider];
         return {
-            username: authData.provider + "." + authData[authData.provider].username,
+            username:
+                authData.provider + "." +
+                authData[authData.provider].username,
             profileImageURL: profile.profileImageURL,
             displayName: profile.displayName,
             token: authData.token,
@@ -48,14 +48,13 @@ yarn.service("authData2user", function authData2user() {
 
 yarn.service("login", function (auth) {
     return function login() {
-        return auth.$authWithOAuthRedirect("twitter").then(function(authData) {
-            console.log("Logged in as:", authData.uid);
-        }).catch(function(error) {
+        return auth.$authWithOAuthRedirect("twitter").then(function (authData) {
+            console.info("Logged in as:", authData.uid);
+        }).catch(function (error) {
             console.error("Authentication failed:", error);
         });
     };
- });
-
+});
 
 yarn.config(function ($locationProvider,
                       $stateProvider,
@@ -63,6 +62,15 @@ yarn.config(function ($locationProvider,
 
 //    $locationProvider.html5Mode(true);
 //    $locationProvider.hashPrefix('!');
+
+    function resolveUser(authUser, session) {
+        return authUser.then(function (user) {
+            if (user) {
+                session.open(user);
+            }
+            return user;
+        });
+    }
 
     $urlRouterProvider.otherwise('/');
 
@@ -96,14 +104,5 @@ yarn.config(function ($locationProvider,
         templateUrl: './html/root.html',
         controller: 'root'
     });
-
-    function resolveUser (authUser, session) {
-        return authUser.then(function (user) {
-            if (user) {
-                session.open(user);
-            }
-            return user;
-        });
-    }
 
 });

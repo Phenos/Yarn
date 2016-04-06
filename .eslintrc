@@ -32,7 +32,10 @@
   },
 
   "globals": {
-    "angular": true
+    "ace": true,
+    "angular": true,
+    "yarn": true,
+    "ActionheroClient": true
     // e.g. "angular": true
   },
 
@@ -43,9 +46,11 @@
   "rules": {
     ////////// Possible Errors //////////
 
-    "comma-dangle": 2,         // disallow trailing commas in object literals
-    "no-cond-assign": 0,          // disallow assignment in conditional expressions
-    "no-console": 0,              // disallow use of console (off by default in the node environment)
+    "comma-dangle": ["error", "never"],         // disallow trailing commas in object literals
+    "no-cond-assign": ["error", "always"],          // disallow assignment in conditional expressions
+    "no-console": ["error", { "allow": ["info", "warn", "error"] }],              // disallow use of console (off by default in the node environment)
+
+/* --- */
     "no-constant-condition": 2,   // disallow use of constant expressions in conditions
     "no-control-regex": 2,        // disallow control characters in regular expressions
     "no-debugger": 2,             // disallow use of debugger
@@ -121,6 +126,7 @@
     "wrap-iife": 0,             // require immediate function invocation to be wrapped in parentheses (off by default)
     "yoda": 0,                  // require or disallow Yoda conditions
 
+    /* --- */
 
     ////////// Strict Mode //////////
 
@@ -131,16 +137,16 @@
 
     ////////// Variables //////////
 
-    "no-catch-shadow": 0,             // disallow the catch clause parameter name being the same as a variable in the outer scope (off by default in the node environment)
-    "no-delete-var": 0,               // disallow deletion of variables
-    "no-label-var": 0,                // disallow labels that share a name with a variable
-    "no-shadow": 0,                   // disallow declaration of variables already declared in the outer scope
-    "no-shadow-restricted-names": 0,  // disallow shadowing of names such as arguments
-    "no-undef": 0,                    // disallow use of undeclared variables unless mentioned in a /*global */ block
-    "no-undef-init": 0,               // disallow use of undefined when initializing variables
-    "no-undefined": 0,                // disallow use of undefined variable (off by default)
-    "no-unused-vars": 0,              // disallow declaration of variables that are not used in the code
-    "no-use-before-define": 0,        // disallow use of variables before they are defined
+    "no-catch-shadow": 1,             // disallow the catch clause parameter name being the same as a variable in the outer scope (off by default in the node environment)
+    "no-delete-var": 1,               // disallow deletion of variables
+    "no-label-var": 1,                // disallow labels that share a name with a variable
+    "no-shadow": 1,                   // disallow declaration of variables already declared in the outer scope
+    "no-shadow-restricted-names": 1,  // disallow shadowing of names such as arguments
+    "no-undef": 1,                    // disallow use of undeclared variables unless mentioned in a /*global */ block
+    "no-undef-init": 1,               // disallow use of undefined when initializing variables
+    "no-undefined": 1,                // disallow use of undefined variable (off by default)
+    "no-unused-vars": 1,              // disallow declaration of variables that are not used in the code
+    "no-use-before-define": 1,        // disallow use of variables before they are defined
 
 
     ////////// Node.js //////////
@@ -156,15 +162,15 @@
 
     ////////// Stylistic Issues //////////
 
-    "brace-style": 0,               // enforce one true brace style (off by default)
+    "brace-style": 1,               // enforce one true brace style (off by default)
     "camelcase": 0,                 // require camel case names
     "comma-spacing": 0,             // enforce spacing before and after comma
-    "comma-style": 0,               // enforce one true comma style (off by default)
+    "comma-style": ["error", "last"],               // enforce one true comma style (off by default)
     "consistent-this": 0,           // enforces consistent naming when capturing the current execution context (off by default)
     "eol-last": 0,                  // enforce newline at the end of file, with no multiple empty lines
     "func-names": 0,                // require function expressions to have a name (off by default)
-    "func-style": 0,                // enforces use of function declarations or expressions (off by default)
-    "key-spacing": 0,               // enforces spacing between keys and values in object literal properties
+    "func-style": ["error", "declaration"],                // enforces use of function declarations or expressions (off by default)
+    "key-spacing": 1,               // enforces spacing between keys and values in object literal properties
     "max-nested-callbacks": 0,      // specify the maximum depth callbacks can be nested (off by default)
     "new-cap": 0,                   // require a capital letter for constructors
     "new-parens": 0,                // disallow the omission of parentheses when invoking a constructor with no arguments
@@ -208,10 +214,10 @@
 
     ////////// Legacy //////////
 
-    "max-depth": 0,       // specify the maximum depth that blocks can be nested (off by default)
-    "max-len": 0,         // specify the maximum length of a line in your program (off by default)
-    "max-params": 0,      // limits the number of parameters that can be used in the function declaration. (off by default)
-    "max-statements": 0,  // specify the maximum number of statement allowed in a function (off by default)
+    "max-depth": ["error", 5],       // specify the maximum depth that blocks can be nested (off by default)
+    "max-len": ["error", {"code": 100, "tabWidth": 4, "ignoreUrls": true}],         // specify the maximum length of a line in your program (off by default)
+    "max-params": ["error", 7],      // limits the number of parameters that can be used in the function declaration. (off by default)
+    "max-statements": ["error", 20, {"ignoreTopLevelFunctions": true}],  // specify the maximum number of statement allowed in a function (off by default)
     "no-bitwise": 0,      // disallow use of bitwise operators (off by default)
     "no-plusplus": 0      // disallow use of unary operators, ++ and -- (off by default)
   }

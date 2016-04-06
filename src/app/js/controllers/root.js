@@ -22,6 +22,7 @@ yarn.controller('root', function rootController(user,
 
 //    console.log("state.params:", $state);
     $scope.IDE = IDE;
+    // TODO: Move theme dependency in "player" directive
     $scope.themes = themes;
     $scope.editorFiles = editorFiles;
 
@@ -55,14 +56,15 @@ yarn.controller('root', function rootController(user,
      Show a welcome message in the yarn console
      */
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
-    yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
+    yConsole.tip('Enter "<span command>help</span>" in the command-line" +' +
+        '"bellow to see available commands!');
 
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
+    // TODO: Move openMain and dependency on "editorFiles" into an IDE directive
     $scope.openMain = function () {
         if (state.story) {
-            console.log("!!!");
             editorFiles.open(state.story.profile, state.story.url.toString(), true);
         }
     };
@@ -135,17 +137,15 @@ yarn.controller('root', function rootController(user,
         profiles.visited(visitedProfile);
         if ($state.params.story) {
             state.story = new Story($state.params.story, visitedProfile);
-            console.log("-------- before iExists");
+//            console.log("-------- before iExists");
             state.story.ifExists(function () {
-                console.log("STORY EXISTS!");
+//                console.log("STORY EXISTS!");
                 state.ready(true, "ready", "");
                 IDE.run();
             }, function () {
-                console.log("STORY DOESNT EXIST!");
+//                console.log("STORY DOESNT EXIST!");
                 state.ready(false, "nostory", "");
             });
-
-            // TODO: state when story is not found!
 
         } else {
             state.ready(false, "choosestory", "");
@@ -156,7 +156,9 @@ yarn.controller('root', function rootController(user,
                 profile: profiles.authenticated().username.split(".")[1]
             })
         } else {
-            state.ready(false, "loginfirst", "You must <strong>first login</strong> with your twitter account or visit someone else's profile.");
+            state.ready(false, "loginfirst",
+                "You must <strong>first login</strong> with your twitter account" +
+                "or visit someone else's profile.");
         }
     }
 });
@@ -191,7 +193,7 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
 
 
     service.helpIsVisible = function _helpIsVisible(value) {
-        console.log("helpIsVisible", value);
+//        console.log("helpIsVisible", value);
         if (!angular.isUndefined(value)) {
             service._helpIsVisible = value;
             if (service.scope) {

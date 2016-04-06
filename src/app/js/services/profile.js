@@ -10,8 +10,9 @@ yarn.service("Profile", function (Storage, twitterProfile) {
         this.priority = 0;
 
         twitterProfile(username, function (twitterProfile) {
-            //console.log("twitterProfile", twitterProfile);
             self.twitterProfile = twitterProfile;
+        }, function () {
+            self.twitterProfile = false;
         });
     }
 

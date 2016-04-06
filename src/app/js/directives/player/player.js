@@ -1,4 +1,12 @@
-yarn.directive('player', function () {
+yarn.directive('player', function (channel,
+                                   sidebar,
+                                   writers,
+                                   promptLoop,
+                                   player,
+                                   state,
+                                   smoothScroll,
+                                   profiles,
+                                   login) {
 
     return {
         restrict: 'E',
@@ -11,46 +19,44 @@ yarn.directive('player', function () {
         controller: playerController
     };
 
-    function playerController($scope,
-                              channel,
-                              sidebar,
-                              writers,
-                              promptLoop,
-                              player,
-                              state,
-                              smoothScroll,
-                              profiles,
-                              login) {
+    function playerController($scope) {
 
         var self = this;
 
         this.state = state;
         this.profiles = profiles;
 
-        //console.log("profile", this.profile);
-        //console.log("auth", profiles.authenticated());
-
+//        console.log("profile", this.profile);
+//        console.log("auth", profiles.authenticated());
 
         this.profile = null;
         this.isOwnProfile = false;
+
         this.setProfile = function (profile) {
-            self.profile = profile;
-            if (self.profile.username === profiles.authenticated().username) {
-                self.isOwnProfile = true;
+            if (profile) {
+
+                self.profile = profile;
+                if (profiles.authenticated()) {
+                    if (self.profile.username === profiles.authenticated().username) {
+                        self.isOwnProfile = true;
+                    }
+                }
+//            console.log("profile", self.profile);
+//            console.log("auth", profiles.authenticated());
+//            console.log("profiles.updated", self.profile,
+//              profiles.authenticated(), self.isOwnProfile);
             }
-            //console.log("profile", self.profile);
-            //console.log("auth", profiles.authenticated());
-            console.log("profiles.updated", self.profile, profiles.authenticated(), self.isOwnProfile);
         };
+
         channel.subscribe("profiles.updated", function () {
             self.setProfile(profiles.visited());
         });
+
         this.setProfile(profiles.visited());
 
-
-        promptLoop.onUpdate(function (promptLoop) {
+        promptLoop.onUpdate(function (_promptLoop) {
             // Load the appropriate prompt and setup the ui with the prompt
-            $scope.prompt = promptLoop.currentPrompt;
+            $scope.prompt = _promptLoop.currentPrompt;
         });
         promptLoop.update();
 
@@ -78,7 +84,7 @@ yarn.directive('player', function () {
         };
 
         this.scroll = function (targetElement) {
-            //console.log("player.scroll", [scrollAreaElem, targetElement]);
+//            console.log("player.scroll", [scrollAreaElem, targetElement]);
             // First we check to see if it's the first game step
             // to prevent scrolling when first showing the coverpage
             if (state.step() > 0 && targetElement) {
@@ -92,7 +98,6 @@ yarn.directive('player', function () {
         };
 
     }
-
 
 });
 

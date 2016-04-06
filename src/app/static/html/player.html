@@ -35,7 +35,8 @@
                    ng-bind-html="player.state.readyness.message"></p>
             </div>
             <div ng-if="player.state.readyness.status === 'choosestory' && player.profile">
-                <div class="profile-info">
+                <div class="profile-info"
+                     ng-if="player.profile.twitterProfile">
                     <img alt="{{ player.profile.username.split('.')[1] }}"
                          ng-src="{{ player.profile.twitterProfile.profile_image_url| biggerProfileImage }}"
                          class="avatar"/>
@@ -48,11 +49,39 @@
                             You have no projects on Yarn Studio!
                         </p>
                     </div>
-                    <div ng-if="!player.isOwnProfile">
+                    <div ng-if="player.profile.twitterProfile === false">
+                        <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
+                        <p class="message">
+                            Sorry, Could not find a twitter profile for
+                            <strong>{{ player.profile.username.split(".")[1] }}</strong>
+                        </p>
+                        <md-list>
+                            <md-list-item ng-if="player.profiles.authenticated()">
+                                <md-button ui-sref="profile({
+                            profile: player.profiles.authenticated().username.split('.')[1] })">
+                                    Back to your profile
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                    <div ng-if="!player.isOwnProfile && player.profile.twitterProfile">
                         <p class="message">
                             Sorry, {{ player.profile.username.split(".")[1] }}
                             doesn't have any project on YarnStudio!
                         </p>
+                        <md-list>
+                            <md-list-item ng-if="player.profiles.authenticated()">
+                                <md-button ui-sref="profile({
+                            profile: player.profiles.authenticated().username.split('.')[1] })">
+                                    Back to your profile
+                                </md-button>
+                            </md-list-item>
+                            <md-list-item ng-if="!player.profiles.authenticated()">
+                                <md-button ui-sref="root()">
+                                    Back home
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
                     </div>
                 </div>
                 <div ng-if="player.profile.storage.allProjectFolders.length > 0">

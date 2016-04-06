@@ -109,8 +109,10 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 "\t !@#$%ˆ*_+{}[]:''\".,<>/\\" +
                 "()1234567890-=";
             $element.on("keypress", function(e) {
-                if (matchChars.indexOf(String.fromCharCode(e.keyCode)) > -1) {
-                    soundEffects.error()
+                if (self.readOnly) {
+                    if (matchChars.indexOf(String.fromCharCode(e.keyCode)) > -1) {
+                        soundEffects.error()
+                    }
                 }
             });
             aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);

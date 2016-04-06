@@ -31,8 +31,10 @@ yarn.service("EditorFile", function (guid,
         var baseURI = "";
 
         channel.subscribe("profiles.updated", function (profiles) {
-            if (self.profile === profiles.authenticated()) {
-                self.hasOwnership = true;
+            if (profiles.authenticated()) {
+                if (self.profile.username === profiles.authenticated().username) {
+                    self.hasOwnership = true;
+                }
             }
         });
 

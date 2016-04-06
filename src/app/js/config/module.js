@@ -7,6 +7,7 @@ var yarn = angular.module('yarn', [
     'angular-uri',
     'ngAnimate',
     'ngSanitize',
+    'ngMessages',
     'ui.grid',
     'ngMaterial',
     'smoothScroll',

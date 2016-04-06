@@ -1,0 +1,141 @@
+<md-content style="z-index:5; overflow: hidden;"
+            flex="grow"
+            layout="row"
+>
+
+    <div style="position: relative"
+         layout="column"
+         layout-fill>
+        <wallpaper></wallpaper>
+        <sidebar></sidebar>
+        <toolbar user="player.user"></toolbar>
+        <md-content
+                layout-fill
+                class="player"
+                layout="column"
+                scrollbars
+                layout-align="start center"
+                ng-if="!player.state.readyness.isReady">
+
+            <div class="createNewProject">
+
+                <form name="createForm"
+                      layout="column">
+                    <div class="heading">
+                        <md-icon md-svg-icon="/svg-icons/story.svg"></md-icon>
+                        <h2>Create a new project</h2>
+                    </div>
+                    <div layout="column"
+                         ng-if="!profiles.authenticated()"
+                         layout-align="center center"
+                    >
+                        <p>
+                            Before creating a new story project, you must login
+                            with your twitter account.
+                        </p>
+                        <md-list>
+                            <md-list-item>
+                                <md-button ng-click="login()">Login</md-button>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                    <div layout="column"
+                         ng-if="error"
+                         layout-align="center center"
+                    >
+                        <p>
+                            A problem occured while trying to create the project.
+                            The problem has been sent to the Yarn team.
+                        </p>
+                        <p>
+                            You can try again or contact us if the problem persits.
+                        </p>
+                        <md-list>
+                            <md-list-item>
+                                <md-button ng-click="tryAgain()">Try Again</md-button>
+                            </md-list-item>
+                            <md-list-item>
+                                <md-button href="http://yarnstudio.io/contact">Contact Us</md-button>
+                            </md-list-item>
+                            <md-list-item>
+                                <md-button href="https://twitter.com/YarnStudioGames">Tweet Us!</md-button>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                    <div flex
+                         layout="column"
+                         ng-if="isLoading && profiles.authenticated()"
+                         layout-align="center center"
+                    >
+                        <md-progress-circular
+                                flex
+                                md-diameter="70"
+                                md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                    <div ng-show="!error && !isLoading && profiles.authenticated()">
+
+                        <div>
+
+                            <p>
+                                Do you want to create your own interative story with Yarn ?
+                            </p>
+
+                            <p>
+                                To start writing a new story, you must start by create a new project folder.
+                                Only use letters, numbers or a dash symbol :
+                            </p>
+                        </div>
+                        <fieldset>
+
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Project Folder Name</label>
+                                <input required
+                                       name="folderName"
+                                       md-maxlength="30"
+                                       maxlength="30"
+                                       ng-pattern="'[a-zA-Z-]*'"
+                                       ng-model="projectName">
+
+                                <div ng-messages="createForm.folderName.$error" class="md-input-messages">
+                                    <div ng-message="required">
+                                        The folder name is required.
+                                    </div>
+                                    <div ng-message="maxlength">
+                                        The folder name has to be less than 30 characters
+                                        long.
+                                    </div>
+                                    <div ng-message="pattern">
+                                        The folder name can only contain numbers, letters
+                                        or the dash symbol.
+                                    </div>
+                                </div>
+
+                            </md-input-container>
+                        </fieldset>
+                        <div>
+                            <p>
+                                Your new project will be created with a sample story already inside. Once
+                                created, you will be redirected to the story editor.
+                            </p>
+                        </div>
+                        <div>
+                            <md-list>
+                                <md-list-item>
+                                    <md-button ng-disabled="createForm.$invalid"
+                                               ng-click="confirm()">Create New Project</md-button>
+                                </md-list-item>
+                            </md-list>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </md-content>
+    </div>
+
+</md-content>
+
+
+
+

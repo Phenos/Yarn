@@ -84,6 +84,14 @@ yarn.config(function ($locationProvider,
         templateUrl: './html/root.html',
         controller: 'root'
     });
+    $stateProvider.state('createNewProject', {
+        url: '/CreateNewProject',
+        resolve: {
+            "user": resolveUser
+        },
+        templateUrl: './html/CreateNewProject.html',
+        controller: 'createNewProject'
+    });
     $stateProvider.state('profile', {
         url: '/:profile',
         resolve: {

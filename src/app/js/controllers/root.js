@@ -20,7 +20,7 @@ yarn.controller('root', function rootController(user,
                                                 Profile,
                                                 Story) {
 
-    //console.log("state.params:", $state);
+//    console.log("state.params:", $state);
     $scope.IDE = IDE;
     $scope.themes = themes;
     $scope.editorFiles = editorFiles;
@@ -86,7 +86,7 @@ yarn.controller('root', function rootController(user,
     };
 
     $scope.focusInspector = function () {
-        //console.log($scope.toolTabs.selected);
+//        console.log($scope.toolTabs.selected);
         $scope.toolTabs.selected = 1;
     };
 
@@ -182,7 +182,9 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
     service.IDEisVisible = function _IDEisVisible(value) {
         if (!angular.isUndefined(value)) {
             service._IDEisVisible = value;
-            if (service.scope) service.scope._IDEisVisible = value;
+            if (service.scope) {
+                service.scope._IDEisVisible = value;
+            }
         }
         return service._IDEisVisible;
     };
@@ -192,7 +194,9 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
         console.log("helpIsVisible", value);
         if (!angular.isUndefined(value)) {
             service._helpIsVisible = value;
-            if (service.scope) service.scope._helpIsVisible = value;
+            if (service.scope) {
+                service.scope._helpIsVisible = value;
+            }
         }
         return service._helpIsVisible;
     };

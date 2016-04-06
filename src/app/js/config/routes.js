@@ -8,7 +8,7 @@ yarn.service("apiClient", function($window) {
     if ($window.ActionheroClient) {
         apiClient = new ActionheroClient();
     }
-    //console.log("apiClient", [apiClient]);
+    // console.log("apiClient", [apiClient]);
     return apiClient;
 });
 
@@ -21,10 +21,12 @@ yarn.service("authUser", function (auth, authData2user) {
     return auth.$waitForAuth().then(function () {
         var user = null;
         var authData = auth.$getAuth();
-        if (authData) user = authData2user(authData);
-        //console.log("user", user);
-        //console.log("auth", auth);
-        //console.log("authUser authData", authData);
+        if (authData) {
+            user = authData2user(authData);
+        }
+//        console.log("user", user);
+//        console.log("auth", auth);
+//        console.log("authUser authData", authData);
         return user;
     });
 
@@ -59,8 +61,8 @@ yarn.config(function ($locationProvider,
                       $stateProvider,
                       $urlRouterProvider) {
 
-    //$locationProvider.html5Mode(true);
-    //$locationProvider.hashPrefix('!');
+//    $locationProvider.html5Mode(true);
+//    $locationProvider.hashPrefix('!');
 
     $urlRouterProvider.otherwise('/');
 
@@ -97,7 +99,9 @@ yarn.config(function ($locationProvider,
 
     function resolveUser (authUser, session) {
         return authUser.then(function (user) {
-            if (user) session.open(user);
+            if (user) {
+                session.open(user);
+            }
             return user;
         });
     }

@@ -9,8 +9,8 @@ yarn.config(function(RollbarProvider) {
             environment: 'test'
         }
     };
-    //console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
-    //RollbarProvider.init(roolbarConfig);
+//    console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
+//    RollbarProvider.init(roolbarConfig);
 });
 
 yarn.run(function (commands, tools, keyboardShortcuts) {
@@ -25,7 +25,7 @@ yarn.run(function (commands, tools, keyboardShortcuts) {
 
     var buitInTools = [
         "projectTool",
-        //"annotationsTool",
+//        "annotationsTool",
         "assertionsTool",
         "commandsTool",
         "graphTool",

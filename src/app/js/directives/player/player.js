@@ -12,7 +12,6 @@ yarn.directive('player', function () {
     };
 
     function playerController($scope,
-                              $element,
                               channel,
                               sidebar,
                               writers,
@@ -49,23 +48,11 @@ yarn.directive('player', function () {
         this.setProfile(profiles.visited());
 
 
-        var scrollAreaElem = $element[0].getElementsByClassName("player")[0];
-
         promptLoop.onUpdate(function (promptLoop) {
             // Load the appropriate prompt and setup the ui with the prompt
-            var prompt = promptLoop.currentPrompt;
-            $scope.prompt = prompt;
+            $scope.prompt = promptLoop.currentPrompt;
         });
         promptLoop.update();
-
-        this.onStoryLogClear = function () {
-            smoothScroll(0, {
-                duration: 0,
-                offset: 0,
-                containerId: 'yarn-player'
-            });
-            $scope.$broadcast("refreshScrollbars");
-        };
 
         player.register(this);
 

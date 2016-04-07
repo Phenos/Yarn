@@ -49,7 +49,9 @@
                     }
                     newScope.text = parsedTxt;
                     newScope.type = type;
-                    var logItemEl = $compile('<log-item class="unread" type="type" text="text" scope="scope"></log-item>')(newScope);
+                    var logItemEl = $compile(
+                        '<log-item class="unread" type="type" text="text" scope="scope"></log-item>'
+                    )(newScope);
                     $element.append(logItemEl);
 
                     player.scroll(logItemEl);

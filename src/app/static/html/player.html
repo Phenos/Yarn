@@ -1,28 +1,31 @@
 <div style="position: relative"
-     layout="column"
-     layout-fill>
+     layout-fill
+    layout="column">
     <wallpaper></wallpaper>
-    <sidebar></sidebar>
-    <toolbar user="player.user"></toolbar>
-    <md-content
+    <sidebar ></sidebar>
+    <toolbar flex="none" user="player.user"></toolbar>
+    <div
             id="yarn-player"
             class="player"
-            layout-fill
-            scrollbars
+            flex="auto"
+            style="NOpadding-top: 70px; !important;"
+            ng-scrollable="{usePadding: false}"
             ng-if="player.state.readyness.isReady"
     >
-        <div class="main-ui">
+        <div class="main-ui"
+             style="NOpadding-bottom: 70px; !important;"
+        >
             <context-action-menu></context-action-menu>
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>
             <div class="player-footer"></div>
         </div>
-    </md-content>
-    <md-content
+    </div>
+    <div
             layout-fill
             class="player"
             layout="column"
-            scrollbars
+            ng-scrollable
             layout-align="start center"
             ng-if="!player.state.readyness.isReady">
         <div class="readyness">
@@ -141,6 +144,6 @@
                 </md-list>
             </div>
         </div>
-    </md-content>
+    </div>
     <status-bar></status-bar>
 </div>

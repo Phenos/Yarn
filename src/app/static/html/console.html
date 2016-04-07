@@ -3,17 +3,22 @@
          md-whiteframe="10"
          layout="column"
          flex="grow">
-        <md-content flex="100"
-                    NO_scrollbars
-                    id="yarn-console"
+        <div console-main
+             flex="grow"
+             id="yarn-console"
+             layout="column"
+             ng-scrollable
         >
-            <logscroll>
+            <logscroll
+                    flex="grow"
+                    layout-fill>
                 <logs></logs>
             </logscroll>
-        </md-content>
+        </div>
         <user-input
+                flex="none"
                 layout="row"
-                style="min-height: 58px;"
+                style="height: 58px;"
                 text="console.text"
                 on-escape-focus="console.onInputEscapeFocus()"
                 on-focus="console.onInputFocus()"

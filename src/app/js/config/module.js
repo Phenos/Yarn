@@ -13,6 +13,7 @@ var yarn = angular.module('yarn', [
     'smoothScroll',
     'ui.router',
     'firebase',
+    'ngScrollable',
     'ngDebottle',
     'ngLodash',
     'ngContextMenu',

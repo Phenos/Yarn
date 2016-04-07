@@ -38,8 +38,7 @@
 
             consoleService.register(this);
 
-            var logsElem = $element.find("logs");
-            var logscrollElem = angular.element($element.find("md-content")[0]);
+//            var logscrollElem = angular.element($element.find("console-main")[0]);
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
@@ -97,14 +96,15 @@
                     scope.isNewStep = false;
                 }
                 scope.timestamp = Date.now();
+                var logsElem = $element.find("logs");
                 var logElem = $compile('<log is-new-step="isNewStep" options="options" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
                 logsElem.append(logElem);
-                smoothScroll(logElem[0], {
-                    duration: 500,
-                    //easing: 'easeOutQuad',
-                    offset: 0,
-                    containerId: 'yarn-console'
-                });
+//                smoothScroll(logElem[0], {
+//                    duration: 500,
+//                    //easing: 'easeOutQuad',
+//                    offset: 0,
+//                    containerId: 'yarn-console'
+//                });
                 $scope.$emit("refreshScrollbars");
             };
 

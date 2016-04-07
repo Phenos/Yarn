@@ -28,7 +28,6 @@
     "postal.js": "postal#~1.0.8",
     "lodash": "~4.5.1",
     "jquery": "~2.2.1",
-    "perfect-scrollbar": "~0.6.10",
     "angular-ui-grid": "~3.1.1",
     "ng-rollbar": "~1.8.3",
     "ng-contextmenu": "~0.4.1",
@@ -37,7 +36,8 @@
     "nunjucks": "~2.4.1",
     "ng-lodash": "~0.4.0",
     "hover": "Hover#^2.0.2",
-    "ngSmoothScroll": "^2.0.0"
+    "ngSmoothScroll": "^2.0.0",
+    "ngScrollable": "ng-scrollable#^0.2.5"
   },
   "resolutions": {
     "lodash": "~4.5.1",

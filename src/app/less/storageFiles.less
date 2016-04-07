@@ -54,8 +54,8 @@
         background: #EAEAEA;
         color: #000;
         font-size: 1.1em;
-        .md-subheader-inner {
-            padding: 8px 16px;
+        ._md-subheader-inner {
+            padding: 12px 16px 4px 16px;
         }
 
         md-icon:first-child {
@@ -68,7 +68,7 @@
 
     md-list {
         md-list-item {
-            min-height: 36px;
+            min-height: 28px;
 
             md-icon:first-child {
                 margin: 0 10px 0 0 !important;
@@ -76,18 +76,42 @@
                 height: 20px;
             }
 
+            p {
+                line-height: 28px;
+            }
+
             .md-list-item-inner {
                 min-height: 36px;
                 padding-left: 8px !important;
             }
             button {
-                min-height: 30px;
+                min-height: 28px;
             }
 
             .filesize {
                 padding-left: 1em;
                 color: #8d8d8d;
                 font-size: 0.9em;
+            }
+            ._md-secondary-container {
+                right: 0 !important;
+            }
+
+            md-checkbox {
+                margin-bottom: 0;
+                min-width: 16px;
+                min-height: 16px;
+                ._md-icon,
+                ._md-container {
+                    width: 16px;
+                    height: 16px;
+                }
+                &.md-checked ._md-icon {
+                    background-color: rgb(63,81,181);
+                }
+                ._md-icon:after {
+                    top: 0;
+                }
             }
 
         }

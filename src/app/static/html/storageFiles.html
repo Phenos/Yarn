@@ -82,7 +82,7 @@
         </header>
         <md-content flex="grow">
             <section ng-repeat="directory in storageFiles.directories">
-                <md-subheader ng-if="directory._uri" class="md-primary">
+                <md-subheader zng-if="directory._uri" class="md-primary">
                     <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
                     /&nbsp;{{ directory.uri }}
                 </md-subheader>

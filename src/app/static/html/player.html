@@ -29,7 +29,7 @@
             layout-align="start center"
             ng-if="!player.state.readyness.isReady">
         <div class="readyness">
-            <div style="height:25%"></div>
+            <div style="height:6em"></div>
             <div ng-if="player.state.readyness.status === 'loading'">
                 <md-progress-circular
                         md-diameter="70"
@@ -99,6 +99,12 @@
                                 {{ folder.name }}
                             </md-button>
                         </md-list-item>
+                        <md-list-item ng-if="player.isOwnProfile">
+                            <md-button ui-sref="createNewProject()">
+                                <md-icon style="margin-right: 10px;width:20px; height: 20px;" md-svg-icon="/svg-icons/add.svg"></md-icon>
+                                Create a new project
+                            </md-button>
+                        </md-list-item>
                     </md-list>
                 </div>
             </div>
@@ -114,7 +120,7 @@
                 </p>
                 <md-list>
                     <md-list-item ng-if="player.isOwnProfile">
-                        <md-button ng-click="creatProject(player.state.story)">
+                        <md-button ui-sref="createNewProject({ story: player.state.story.id })">
                             Create a new project called {{ player.state.story.id }}
                         </md-button>
                     </md-list-item>

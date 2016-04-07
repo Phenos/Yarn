@@ -85,7 +85,7 @@ yarn.config(function ($locationProvider,
         controller: 'root'
     });
     $stateProvider.state('createNewProject', {
-        url: '/CreateNewProject',
+        url: '/CreateNewProject/:story',
         resolve: {
             "user": resolveUser
         },

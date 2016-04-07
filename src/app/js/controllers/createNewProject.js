@@ -2,6 +2,7 @@ yarn.controller('createNewProject', function rootController(user,
                                                             $localStorage,
                                                             $scope,
                                                             $element,
+                                                            $state,
                                                             wallpaper,
                                                             login,
                                                             $timeout,
@@ -15,6 +16,12 @@ yarn.controller('createNewProject', function rootController(user,
 
     $scope.profiles = profiles;
     $scope.isLoading = false;
+
+    $scope.projectName = "";
+
+    if ($state.params.story) {
+        $scope.projectName = $state.params.story;
+    }
 
     wallpaper.change({
         image: "/images/splash/splash-bg.jpg",

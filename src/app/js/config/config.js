@@ -1,7 +1,7 @@
 
 yarn.value('duScrollCancelOnEvents', false);
 
-yarn.config(function(RollbarProvider) {
+yarn.config(function(RollbarProvider, $urlMatcherFactoryProvider) {
     var roolbarConfig = {
         accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
         captureUncaught: true,
@@ -9,6 +9,9 @@ yarn.config(function(RollbarProvider) {
             environment: 'test'
         }
     };
+
+    $urlMatcherFactoryProvider.strictMode(false);
+
 //    console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
 //    RollbarProvider.init(roolbarConfig);
 });

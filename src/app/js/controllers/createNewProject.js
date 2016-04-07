@@ -5,20 +5,45 @@ yarn.controller('createNewProject', function rootController(user,
                                                             $state,
                                                             wallpaper,
                                                             login,
+                                                            editorFiles,
+                                                            Story,
                                                             $timeout,
                                                             profiles,
                                                             Profile) {
 
-    if (user) {
-        $scope.user = user; // Note: User not yet in a service, resolved in route instead
-        profiles.authenticated(new Profile(user.username, user));
+    $scope.profiles = profiles;
+    $scope.profile = null;
+    $scope.isLoading = false;
+    $scope.isSuccess = false;
+    $scope.projectName = "";
+    var defaultStory;
+
+    var defaultStoryContent = "";
+
+    function success() {
+        editorFiles.close(defaultStory);
+        defaultStoryContent = defaultStory.content;
     }
 
-    $scope.profiles = profiles;
-    $scope.isLoading = false;
+    function fail() {
+        editorFiles.close(defaultStory);
+        console.log("Failed while loading default story");
+    }
 
-    $scope.projectName = "";
+    var YarnProfile = profiles.get("twitter.YarnStudioGames");
+    defaultStory = editorFiles.open(
+        YarnProfile, "default-story/story.txt",
+        false, null, success, fail);
+    var defaultStoryContent = "";
 
+
+    // Fetch current user
+    if (user) {
+        $scope.user = user; // Note: User not yet in a service, resolved in route instead
+        $scope.profile = profiles.authenticated(new Profile(user.username, user));
+    }
+
+    // Prefil the project name in the form
     if ($state.params.story) {
         $scope.projectName = $state.params.story;
     }
@@ -28,12 +53,30 @@ yarn.controller('createNewProject', function rootController(user,
         layout: "fullscreen"
     });
 
-    $scope.confirm = function confirm() {
+    $scope.confirm = function confirm(scope) {
         $scope.isLoading = true;
-        $timeout(function () {
+//        $timeout(function () {
+//            $scope.isLoading = false;
+//            $scope.error = true;
+//        }, 2000)
+        $scope.projectName = scope.projectName;
+        var profile = profiles.authenticated();
+        var url = $scope.projectName + "/story.txt";
+        var newStoryFile = editorFiles.open(profile, url, true);
+        console.log("createNewProject.confirm", url, newStoryFile);
+        if (!newStoryFile.content) {
+            newStoryFile.content = defaultStoryContent;
+        }
+        profile.storage.save(newStoryFile, function () {
+            console.log("SUCCESS!");
+            $scope.isLoading = false;
+            $scope.isSuccess = true;
+        }, function (err) {
+            console.log("Error while creating a new project", err);
             $scope.isLoading = false;
             $scope.error = true;
-        }, 2000)
+        })
+
     };
 
     $scope.login = function confirm() {

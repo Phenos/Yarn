@@ -53,14 +53,18 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
         var _uri = URI(uri);
         var isAFolder = false;
 
-        //console.log(meta.Key);
+//        console.log(meta.Key);
         // If it's a folder
-        if (meta.Key[meta.Key.length - 1] === "/") isAFolder = true;
+        if (meta.Key[meta.Key.length - 1] === "/") {
+            isAFolder = true;
+        }
 
         // Create a projectFolder entry
         // Get the project folder name, then get or create the projectFolder entry
         var parts = meta.Key.split("/");
-        if (!isAFolder) parts.pop(); //Remove the filename
+        if (!isAFolder) { // Remove the filename
+            parts.pop();
+        }
         if (parts.length > 1) {
             var key = parts[1];
             var projectFolder = self.projectFolders[key];
@@ -111,18 +115,20 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
     Storage.prototype.selection = function () {
         var selection = [];
         angular.forEach(this.files, function (file) {
-            if (file.isSelected) selection.push(file);
+            if (file.isSelected) {
+                selection.push(file);
+            }
         });
         return selection;
     };
 
-    Storage.prototype.clear = function (uri) {
+    Storage.prototype.clear = function () {
         this.files = [];
         return this;
     };
 
     Storage.prototype.save = function (file, success, failed) {
-        var self=  this;
+        var self =  this;
         self.isLoading = true;
         var savedContent = file.content;
         var profile = this.profile;
@@ -144,7 +150,9 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
                     success(data);
                 } else {
                     self.isLoading = false;
-                    yConsole.error("An error occurered while trying to load file from storage : " + data.error);
+                    yConsole.error(
+                        "An error occurered while trying to load file from storage : " +
+                        data.error);
                     failed(data.error);
                 }
                 // do stuff
@@ -154,14 +162,14 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
     };
 
     Storage.prototype.rename = function (file, newName, success, failed) {
-        var self=  this;
+        var self =  this;
         self.isLoading = true;
         var profile = this.profile;
         var user = session.user();
         if (user) {
             var relativeToUserURI = file.relativeToUserURI();
             var newNameRelativeToUserUID = relativeToUserURI.clone().filename(newName);
-            //console.log("NEW NAME WILL BE: ", newNameRelativeToUserUID);
+//            console.log("NEW NAME WILL BE: ", newNameRelativeToUserUID);
             apiClient.action('renameFile', {
                 uri_source: relativeToUserURI.toString(),
                 uri_destination: newNameRelativeToUserUID.toString(),
@@ -171,13 +179,15 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
             }, function (data) {
                 if (!data.error) {
                     self.isLoading = false;
-                    //console.log("?",[savedContent], [file.originalContent]);
-                    //file.originalContent = savedContent;
-                    //console.log("storage.renameFIle success", [data]);
+//                    console.log("?",[savedContent], [file.originalContent]);
+//                    file.originalContent = savedContent;
+//                    console.log("storage.renameFIle success", [data]);
                     success && success(data);
                 } else {
                     self.isLoading = false;
-                    yConsole.error("An error occurered while trying to rename file in storage : " + data.error);
+                    yConsole.error(
+                        "An error occurered while trying to rename file in storage : " +
+                        data.error);
                     failed && failed(data.error);
                 }
             });

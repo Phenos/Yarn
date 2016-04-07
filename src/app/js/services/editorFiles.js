@@ -125,7 +125,7 @@ yarn.service("editorFiles", function (EditorFile,
         return match;
     };
 
-    EditorFiles.prototype.open = function (profile, uriOrFile, setFocus, goToLine) {
+    EditorFiles.prototype.open = function (profile, uriOrFile, setFocus, goToLine, success, fail) {
 
         // If no profile name is supplied, it takes for granted that the
         // profile name is in the url being oppened
@@ -141,7 +141,7 @@ yarn.service("editorFiles", function (EditorFile,
                     file = new EditorFile(uriOrFile, null, profile);
                 }
                 this.files.push(file);
-                file.load();
+                file.load(success, fail);
             }
 
             if (goToLine) {

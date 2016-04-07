@@ -36,10 +36,15 @@ yarn.directive('player', function (channel,
             if (profile) {
 
                 self.profile = profile;
+
                 if (profiles.authenticated()) {
+                    console.log("setProfile", self.profile.username, profiles.authenticated().username);
+
                     if (self.profile.username === profiles.authenticated().username) {
                         self.isOwnProfile = true;
                     }
+                } else {
+                    console.log("no auth yet!");
                 }
 //            console.log("profile", self.profile);
 //            console.log("auth", profiles.authenticated());

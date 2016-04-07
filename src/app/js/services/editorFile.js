@@ -77,7 +77,7 @@ yarn.service("EditorFile", function (guid,
         return uri;
     };
 
-    EditorFile.prototype.load = function () {
+    EditorFile.prototype.load = function (success, fail) {
         var self = this;
 
         self.ready = false;
@@ -90,6 +90,7 @@ yarn.service("EditorFile", function (guid,
                 self.content = script.source;
                 self.originalContent = script.source;
                 self.sizeInKB();
+                success && success();
                 //console.log("script:", script);
             })
             .catch(function (e) {
@@ -97,6 +98,7 @@ yarn.service("EditorFile", function (guid,
                 self.status = "Failed to load";
                 //console.log("Error: ", e);
                 yConsole.error("Error while loading file: " + self.absoluteURI().toString());
+                fail && fail();
             });
     };
 

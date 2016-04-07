@@ -47,6 +47,7 @@
                             A problem occured while trying to create the project.
                             The problem has been sent to the Yarn team.
                         </p>
+
                         <p>
                             You can try again or contact us if the problem persits.
                         </p>
@@ -81,8 +82,14 @@
                             </p>
 
                             <p>
-                                To start writing a new story, you must start by create a new project folder.
-                                Only use letters, numbers or a dash symbol :
+                                <strong>Important:</strong> Yarn's free platform is aimed at creating an open
+                                and shared experience for everyone involved (authors and players). This is why
+                                we require that the works be published under a well known Creative Commons license.
+                            </p>
+
+                            <p>
+                                The first step to start writing a new story is to choose a folder name for your project.
+                                Only use letters, numbers or the dash symbol :
                             </p>
                         </div>
                         <fieldset>
@@ -111,6 +118,19 @@
                                 </div>
 
                             </md-input-container>
+                                <md-checkbox
+                                        style="float: left"
+                                        required
+                                        name="acceptLicense"
+                                        aria-label="I accept the license"
+                                        ng-model="acceptLicense"></md-checkbox>
+                                    <p>
+                                        This work is licensed under a
+                                        <a rel="license"
+                                           href="http://creativecommons.org/licenses/by-sa/4.0/">
+                                            Creative Commons Attribution-ShareAlike 4.0 International License
+                                        </a>.
+                                    </p>
                         </fieldset>
                         <div>
                             <p>
@@ -119,12 +139,19 @@
                             </p>
                         </div>
                         <div>
+                            <div ng-messages="createForm.acceptLicense.$error" class="md-input-messages">
+                                <p ng-message="required" class="must-accept-reminder">
+                                    * You must accept the license.
+                                </p>
+                            </div>
                             <md-list>
                                 <md-list-item>
                                     <md-button ng-disabled="createForm.$invalid"
-                                               ng-click="confirm()">Create New Project</md-button>
+                                               ng-click="confirm()">Create New Project
+                                    </md-button>
                                 </md-list-item>
                             </md-list>
+
                         </div>
                     </div>
                 </form>

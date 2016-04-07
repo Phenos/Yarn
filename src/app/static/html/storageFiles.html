@@ -26,6 +26,13 @@
                         {{ folder.name }}
                     </p>
                 </md-list-item>
+                <md-list-item ng-if="profile.username === storageFiles.profiles.authenticated().username"
+                              ui-sref="createNewProject()">
+                    <md-icon md-svg-icon="/svg-icons/add.svg"></md-icon>
+                    <p>
+                        Create a new project...
+                    </p>
+                </md-list-item>
             </md-list>
         </div>
     </md-content>

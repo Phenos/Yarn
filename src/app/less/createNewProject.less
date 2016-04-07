@@ -1,11 +1,17 @@
 .createNewProject {
 
     font-size: 0.9em;
-    max-width: 35em !important;
-    margin-top: 10em;
+    max-width: 45em !important;
+    margin-top: 5em;
 
     md-icon {
         fill: #fff;
+    }
+
+    a,
+    a:link,
+    a:visited {
+        color: #fff;
     }
 
     text-align: left;
@@ -17,9 +23,20 @@
     md-icon {
         width: 60px;
         height: 60px;
-        fill: rgba(255, 255, 255, 0.63);
     }
 
+    md-checkbox {
+        ._md-icon {
+            border-color: #fff;
+            &:after {
+                border-color: #000;
+            }
+        }
+        &.md-checked ._md-icon {
+            background-color: #fff;
+            fill: #000;
+        }
+    }
     fieldset {
         background: rgba(0, 0, 0, 0.2);
         padding: 1em;
@@ -27,6 +44,10 @@
         border: none;
         border-radius: 1em;
 
+    }
+
+    .must-accept-reminder {
+        color: #f6ffa4 !important;
     }
 
     md-input-container {
@@ -52,6 +73,7 @@
                 color: #fffdd1 !important;
             }
         }
+
         .md-input-messages {
             padding-top: 1em;
         }

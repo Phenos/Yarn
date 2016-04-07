@@ -22,28 +22,20 @@
                 <md-menu-bar>
                     <md-menu>
                         <button ng-click="$mdOpenMenu()">
-                            Files
+                            Project
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="toolbar.IDE.newFile($event)">
-                                    Create new file
-                                    <span class="md-alt-text"> {{ 'C-S-N' | keyboardShortcut }}</span>
+                                <md-button ui-sref="createNewProject()">
+                                    Create new project
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="toolbar.openFromProject()">
-                                    Open from project
+                                    Browse project files
                                     <span class="md-alt-text"> {{ 'M-O' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                    <md-menu>
-                        <button ng-click="$mdOpenMenu()">
-                            Project
-                        </button>
-                        <md-menu-content>
                             <md-menu-item>
                                 <md-button ng-click="toolbar.IDE.saveAllAndRun()">
                                     Save All and Run
@@ -66,6 +58,19 @@
                                 <md-button ng-click="toolbar.validate()">
                                     Validate Current State
                                     <span class="md-alt-text"> {{ 'M-S-V' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <md-menu>
+                        <button ng-click="$mdOpenMenu()">
+                            Files
+                        </button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.IDE.newFile($event)">
+                                    Create new file
+                                    <span class="md-alt-text"> {{ 'C-S-N' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -140,7 +145,7 @@
             </md-button>
             <span flex></span>
             <save-status>
-                <a target="_blank" ng-href="{{ toolbar.editors.current.file._absoluteURI }}"
+                <a target="_blank" ng-href="{{ toolbar.editors.current.file._absoluteURI.toString() }}"
                    ng-bind="toolbar.editors.current.file.status"></a>
                 <md-tooltip md-direction="left" md-delay="250">
                     File located at {{ toolbar.editors.current.file._absoluteURI.toString() }}

@@ -3,44 +3,29 @@ yarn.service('gamePedicates', function (predicates) {
     return function () {
 
         predicates("is")
-            .syntax("is a")
             .syntax("is an")
-            .syntax("are")
-            .syntax("are a")
-            .syntax("are an");
+            .syntax("is a");
 
         predicates("isNot")
             .isNegativeOf("is")
             .syntax("is not")
-            .syntax("is not a")
             .syntax("is not an")
-            .syntax("are not")
-            .syntax("are not a")
-            .syntax("are not an");
+            .syntax("is not a");
 
         predicates("has")
             .syntax("has an")
-            .syntax("have")
-            .syntax("have a")
-            .syntax("have an")
             .syntax("has a");
 
         predicates("hasNot")
             .isNegativeOf("has")
             .syntax("has not")
             .syntax("has not an")
-            .syntax("have not")
-            .syntax("dont have a")
-            .syntax("dont have an")
             .syntax("does not have")
             .syntax("does not have a")
             .syntax("does not have an")
             .syntax("doesn't have")
             .syntax("doesn't have a")
-            .syntax("doesn't have an")
-            .syntax("do not have")
-            .syntax("do not have a")
-            .syntax("do not have an");
+            .syntax("doesn't have an");
 
         predicates("isIn")
             .syntax("is in the")
@@ -48,12 +33,6 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("is at the")
             .syntax("is inside")
             .syntax("is at")
-            .syntax("are in the")
-            .syntax("are inside the")
-            .syntax("are at the")
-            .syntax("are in")
-            .syntax("are inside")
-            .syntax("are at")
             .syntax("is in");
 
         predicates("isNotIn")
@@ -63,12 +42,6 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("is not at the")
             .syntax("is not inside")
             .syntax("is not at")
-            .syntax("are not in the")
-            .syntax("are not inside the")
-            .syntax("are not at the")
-            .syntax("are not in")
-            .syntax("are not inside")
-            .syntax("are not at")
             .syntax("is not in");
 
         // When something has something else. Ex.: Kitchen has a Kitchen Table
@@ -76,11 +49,7 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("has in inventory the")
             .syntax("has in inventory a")
             .syntax("has in inventory")
-            .syntax("has inventory")
-            .syntax("have in inventory the")
-            .syntax("have in inventory a")
-            .syntax("have in inventory")
-            .syntax("have inventory");
+            .syntax("has inventory");
 
         // When a place is linked to another place
         predicates("linksTo")
@@ -171,8 +140,7 @@ yarn.service('gamePedicates', function (predicates) {
 
         predicates("hasLookedAt")
             .syntax("looked at")
-            .syntax("has looked at")
-            .syntax("have looked at");
+            .syntax("has looked at");
 
         predicates("take")
             .syntax("took")

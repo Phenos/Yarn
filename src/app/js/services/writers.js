@@ -6,21 +6,9 @@ yarn.factory('writers', function (Prompt,
                                   script,
                                   commands,
                                   theme,
-                                  wallpaper) {
+                                  wallpaper,
+                                  defaultTexts) {
 
-    // Describe where you are at the beginning
-    function describeWhereYouAre() {
-        var returnFn;
-        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
-        if (storyHasEnded) {
-            returnFn = describeTheEnd();
-        } else if (state.step() === 0) {
-            returnFn = describeCoverpage();
-        } else {
-            returnFn = describeRoom();
-        }
-        return returnFn;
-    }
 
     function describeCoverpage() {
 
@@ -119,10 +107,10 @@ yarn.factory('writers', function (Prompt,
                 wallpaper.clear();
             }
 
-
-
             var name = state.resolveValue(assert(room, "has", "Name"));
-            if (name) storyLog.heading(name);
+            if (name) {
+                storyLog.heading(name);
+            }
 
             var introduction = state.resolveValue(assert(room, "has", "Introduction"));
             var description = state.resolveValue(assert(room, "has", "Description"));
@@ -134,8 +122,8 @@ yarn.factory('writers', function (Prompt,
             }
 
         } else {
-            storyLog.log("The player is nowhere to be found! Place your player somewhere");
-            yConsole.error("The player is nowhere to be found!");
+            storyLog.log(defaultTexts.get("you-dont-know-where-you-are"));
+//            yConsole.error("The player is nowhere to be found!");
             yConsole.tip(
                 "For the story to start, you must place the player in a space.<br/>" +
                 "Ex.: Player is in the Bedroom.");
@@ -161,7 +149,8 @@ yarn.factory('writers', function (Prompt,
             if (description) {
                 storyLog.log(description);
             } else {
-                var defaultSeeNothingText = state.resolveValue(assert("Default", "for", "YouSeeNothing"));
+                var defaultSeeNothingText =
+                    state.resolveValue(assert("Default", "for", "YouSeeNothing"));
                 storyLog.log(defaultSeeNothingText || "Nothing interesting");
             }
         }
@@ -170,7 +159,7 @@ yarn.factory('writers', function (Prompt,
 
     // Describe where you are at the beginning
     function nothingHappened() {
-        storyLog.log("Nothing happened!");
+        storyLog.log(defaultTexts.get("nothing-happened"));
         return this;
     }
 
@@ -178,9 +167,25 @@ yarn.factory('writers', function (Prompt,
     function describeThingTakenInInventory(thing) {
         if (thing) {
             var name = state.resolveValue(assert(thing, "has", "Name"));
-            if (name) storyLog.action("You take the " + name);
+            if (name) {
+                storyLog.action("You take the " + name);
+            }
         }
         return this;
+    }
+
+    // Describe where you are at the beginning
+    function describeWhereYouAre() {
+        var returnFn;
+        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+        if (storyHasEnded) {
+            returnFn = describeTheEnd();
+        } else if (state.step() === 0) {
+            returnFn = describeCoverpage();
+        } else {
+            returnFn = describeRoom();
+        }
+        return returnFn;
     }
 
     function objectMenu(thing) {
@@ -188,8 +193,8 @@ yarn.factory('writers', function (Prompt,
             var option;
             var prompt = new Prompt();
 
-            prompt.answer = function answer(promptLoop, option) {
-                commands.run(option);
+            prompt.answer = function answer(promptLoop, _option) {
+                commands.run(_option);
             };
 
             var name = state.resolveValue(assert(thing, "has", "Name"));

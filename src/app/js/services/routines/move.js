@@ -55,12 +55,11 @@ yarn.service("moveRoutine", function (state,
                     var spaceName = state.resolveValue(assert(linkedSpace, "has", "Name"));
                     storyLog.action("You move thoward the " + spaceName);
                     events.trigger(assert("Player", "entered", linkedSpace));
+                    events.trigger(assert("Player", "did", "LookAround"));
                 }
             }
 
             events.trigger(assert("Player", "exited", previousRoom));
-
-            stepRoutine();
         }
 
         return true;

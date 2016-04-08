@@ -21,8 +21,6 @@ yarn.service("hintRoutine", function (writers,
 
         storyLog.log("Nothing else comes to mind.");
 
-        stepRoutine();
-
         return true;
     }
 

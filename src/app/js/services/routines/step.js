@@ -14,9 +14,9 @@ yarn.service("stepRoutine", function (events,
      * Increment the game session step counter
      */
     var alreadyInsideStep = false;
-    return function stepRoutine() {
+    return function stepRoutine(action) {
         if (alreadyInsideStep) {
-            console.log("Prevented step recursion!");
+            console.warn("Prevented step recursion!");
             return;
         }
         alreadyInsideStep = true;
@@ -27,9 +27,8 @@ yarn.service("stepRoutine", function (events,
 
         events.process("beforeStep");
         state.step(1);
-        events.trigger(assert("Story", "has", "Stepped"));
-        events.trigger(assert("Player", "has", "Stepped"));
-        events.process("afterStep");
+        events.trigger(assert("Story", "did", "Step"));
+        events.trigger(assert("Player", "did", "Step"));
 
         /*
          Refresh the list of Statuses and Synonyms, in case they changed during game play
@@ -38,6 +37,11 @@ yarn.service("stepRoutine", function (events,
         synonyms.update(state);
         statuses.update(state);
         events.process("afterStateUpdate");
+
+        // Calling the main action that triggered the step to be processed
+        events.process("beforeAction");
+        action && action();
+        events.process("afterAction");
 
         // Process all the events
         events.process("beforeDefaultEvents");

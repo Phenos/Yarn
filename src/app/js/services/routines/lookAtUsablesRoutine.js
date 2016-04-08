@@ -68,8 +68,6 @@ yarn.service("lookAtUsablesRoutine", function (events,
 
         events.trigger(assert("Player", "have looked at", "Doors"));
 
-        stepRoutine();
-
         return true;
     };
 

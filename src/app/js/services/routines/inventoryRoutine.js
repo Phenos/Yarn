@@ -45,8 +45,6 @@ yarn.service("inventoryRoutine", function (events,
 
         events.trigger(assert("Player", "has looked at", "Inventory"));
 
-        stepRoutine();
-
         return true;
     }
 

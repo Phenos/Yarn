@@ -223,23 +223,25 @@ yarn.service('state', function ($localStorage,
             return value;
         };
 
-        State.prototype.resolveRawValue = function (assert) {
+        State.prototype.resolveRawValue = function (_assert) {
             var value = null;
-            if (assert && (assert.subject && assert.predicate)) {
+            if (_assert && (_assert.subject && _assert.predicate)) {
 
                 // Exclused parented assertions
-                assert.parent = null;
+                _assert.parent = null;
 
                 // If no object is supplied as criteria,
                 // If no object is supplied as criteria,
                 // indicate is should match for "no objects"
-                if (!assert.object) assert.object = null;
+                if (!_assert.object) {
+                    _assert.object = null;
+                }
 
                 // Match all assertions to the criterias
-                var assertions = this.assertions.find(assert);
+                var assertions = this.assertions.find(_assert);
 
-                //console.log("criterias", criterias);
-                //console.log("assertions", assertions);
+//                console.log("criterias", criterias);
+//                console.log("assertions", assertions);
 
                 // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
@@ -252,7 +254,7 @@ yarn.service('state', function ($localStorage,
                 }
 
             }
-            //console.log("foundObjects", foundObjects);
+//            console.log("foundObjects", foundObjects);
             return value;
         };
 
@@ -262,20 +264,20 @@ yarn.service('state', function ($localStorage,
                 parent: object.id
             }));
             angular.forEach(childAssertions, function (assertion) {
-                //console.log("triggerNow value", value);
                 self.createAssertion(assertion.subject, assertion.predicate, assertion.object, {
-                    value: assertion.value()
+                    value: assertion.value(),
+                    source: assertion.source
                 });
             });
         };
 
         State.prototype.resolveValue = function (assert, scope) {
             var value = this.resolveRawValue(assert);
-            //console.log("rawValue: ", rawValue);
+//            console.log("rawValue: ", rawValue);
             if (angular.isString(value)) {
                 value = this.render(value, scope);
             }
-            //console.log("resolveValue: ", value);
+//            console.log("resolveValue: ", value);
             return value;
         };
 

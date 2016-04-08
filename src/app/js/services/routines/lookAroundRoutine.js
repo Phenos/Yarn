@@ -4,17 +4,18 @@ yarn.service("lookAroundRoutine", function (events,
                                             state,
                                             storyLog,
                                             stateHelpers,
-                                            stepRoutine) {
+                                            yConsole) {
 
-    events.on("Player did LookAround", "afterDefaultEvents", function () {
+    events.on("Player did LookAround", "afterDialogs", function () {
         lookAroundRoutine();
     });
 
     function lookAroundRoutine() {
         var phrase = [];
 
-        storyLog.action("You look around");
+        yConsole.log("Routine: lookAround");
 
+        // TODO: Use the defaultTexts class for this
         var defaultText = state.resolveValue(assert("Default", "for", "NothingToLookAt"));
         defaultText = defaultText || "You see nothing to look at";
 
@@ -22,7 +23,7 @@ yarn.service("lookAroundRoutine", function (events,
         if (room) {
             var roomName = state.resolveValue(assert(room, "has", "Name"));
             roomName = roomName || room.id;
-            phrase.push("You are at the [" + roomName + "]. ");
+            phrase.push("You are at the [" + roomName + ":" + room.id + "]. ");
         }
 
         var thingsInRoom = stateHelpers.thingsInRoom();
@@ -58,10 +59,10 @@ yarn.service("lookAroundRoutine", function (events,
 
         events.trigger(assert("Player", "have looked at", "Things"));
 
-        stepRoutine();
+//        stepRoutine();
 
         return true;
-    };
+    }
 
     return lookAroundRoutine;
 

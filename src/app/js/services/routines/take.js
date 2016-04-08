@@ -6,6 +6,7 @@ yarn.service("takeRoutine", function (state,
                                       storyLog,
                                       things,
                                       writers) {
+
     function takeRoutine(object) {
         if (object) {
             var hasInInventory = predicates("hasInInventory");
@@ -14,8 +15,6 @@ yarn.service("takeRoutine", function (state,
             // Put item in inventory and log it to the player
             state.createAssertion(you, hasInInventory, object);
             writers.describeThingTakenInInventory(object);
-
-            stepRoutine();
         }
         return true;
     }

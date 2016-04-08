@@ -55,8 +55,6 @@ yarn.service("lookAtExitsRoutine", function (events,
 
         events.trigger(assert("Player", "has looked at", "Doors"));
 
-        stepRoutine();
-
         return true;
     };
 

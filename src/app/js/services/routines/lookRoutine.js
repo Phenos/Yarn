@@ -22,8 +22,6 @@ yarn.service("lookRoutine", function (events,
             writers.objectMenu(object);
             events.trigger(assert("Player", "has looked at", object));
 
-
-            stepRoutine();
         }
         return true;
     }

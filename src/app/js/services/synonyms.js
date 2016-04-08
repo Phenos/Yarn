@@ -38,9 +38,9 @@ yarn.service("synonyms", function (assert, things) {
         });
 
         var synonymsAssertions = state.resolveAll(assert(undefined, "has", "Synonyms"), true);
-        //var nameAssertions = state.resolveAll(assert(undefined, "has", "Name"), true);
-        //var allAssertions = synonymsAssertions.concat(nameAssertions);
-        var allAssertions = synonymsAssertions;
+        var nameAssertions = state.resolveAll(assert(undefined, "has", "Name"), true);
+        var allAssertions = synonymsAssertions.concat(nameAssertions);
+//        var allAssertions = synonymsAssertions;
 
         angular.forEach(allAssertions, function (assertion) {
             var value = state.resolveValue(assert(

@@ -1,7 +1,6 @@
 yarn.service('thingsLinks', function () {
 
     function ThingsLinks() {
-        var self = this;
         this.all = [];
 
     }
@@ -11,7 +10,7 @@ yarn.service('thingsLinks', function () {
     };
 
     ThingsLinks.prototype.unselectAll = function() {
-        //console.log("unselect!");
+//        console.log("unselect!");
         angular.forEach(this.all, function (thing) {
             thing.unselect();
         });
@@ -39,8 +38,7 @@ yarn.directive('thing', function ThingDirective(things,
         controller: ThingController
     };
 
-    function ThingController($element, $attrs, $timeout) {
-        var self = this;
+    function ThingController($element, $attrs) {
         this.unrecognized = false;
         this.token = $attrs.token;
         this.text = $attrs.text;
@@ -56,6 +54,7 @@ yarn.directive('thing', function ThingDirective(things,
 
         if (!angular.isObject(this.thing)) {
             this.unrecognized = true;
+            this.text = this.token;
         } else {
             this.actions = contextActions(this.thing);
             this.actions.shift();
@@ -84,10 +83,10 @@ yarn.directive('thing', function ThingDirective(things,
 
         this.click = function (e) {
             var self = this;
-            //console.log("e", e);
+//            console.log("e", e);
             e.preventDefault();
             e.stopPropagation();
-            //thingsLinks.unselectAll();
+//            thingsLinks.unselectAll();
             if (this.actions.length === 0) {
                 yConsole.warning("Clicking this link did nothing: " + self.text);
             } else if (this.actions.length === 1) {
@@ -107,7 +106,7 @@ yarn.directive('thing', function ThingDirective(things,
                         contextActionMenu.show();
                     });
                     self.select();
-                    //promptLoop.useThing(this.thing);
+//                    promptLoop.useThing(this.thing);
                 } else {
                     yConsole.warning("Clicking this link did nothing: " + self.text);
                 }

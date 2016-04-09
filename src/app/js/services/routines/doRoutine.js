@@ -12,8 +12,8 @@ yarn.service("doRoutine", function (state,
 
                 // Process attached triggers
                 var triggeredObjects = state.resolveAll(assert(action, "triggers"));
-                angular.forEach(triggeredObjects, function (object) {
-                    events.triggerNow(object)
+                angular.forEach(triggeredObjects, function (_object) {
+                    events.triggerNow(_object)
                 });
 
                 events.trigger(assert("Player", "did", action));

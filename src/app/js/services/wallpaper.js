@@ -1,31 +1,27 @@
-yarn.service('wallpaper', function wallpaper() {
+/**
+ * Class used for applying changes to the Wallpaper ui
+ * @name Wallpaper
+ * @param {Object} options A set of options to configure the wallpaper.
+ * @class
+ */
+yarn.service("Wallpaper", function (script) {
+    function Wallpaper(options) {
+        var self = this;
 
-    function Wallpaper() {
-        this.options = "";
+        if (!angular.isObject(options)) {
+            options = {};
+        }
+        self.brightness = options.brightness || "dark";
+        self.color = options.color || "#000";
+        self.style = options.style || "";
+        self.layout = options.layout || "fullscreen";
+        self.effects = options.effects || "";
+
+        self.image = options.image || null;
+        self.colorMask = options.colorMask || 0;
+        if (self.image) {
+            self.image = script.resolveRelativeURI(this.image);
+        }
     }
-
-    Wallpaper.prototype.onChangeFn = function onChangeFn() {};
-
-    Wallpaper.prototype.onChange = function onChange(fn) {
-//        console.log("Registered wallpaper directive");
-        this.onChangeFn = fn;
-        this.onChangeFn(this.options);
-    };
-
-    Wallpaper.prototype.change = function change(options) {
-        this.options = options;
-        this.onChangeFn(this.options);
-    };
-
-    Wallpaper.prototype.clear = function clear() {
-        this.change(false);
-    };
-
-    return new Wallpaper();
-
+    return Wallpaper;
 });
-
-
-
-
-

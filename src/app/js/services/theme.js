@@ -1,41 +1,4 @@
 /**
- * Global instance of the current theme
- * @name theme
- * @class
- */
-yarn.service("theme", function (Theme) {
-    return new Theme();
-});
-
-/**
- * Class used for applying changes to the Wallpaper ui
- * @name Wallpaper
- * @param {Object} options A set of options to configure the wallpaper.
- * @class
- */
-yarn.service("Wallpaper", function (script) {
-    function Wallpaper(options) {
-        var self = this;
-
-        if (!angular.isObject(options)) {
-            options = {};
-        }
-        self.brightness = options.brightness || "dark";
-        self.color = options.color || "#000";
-        self.style = options.style || "";
-        self.layout = options.layout || "fullscreen";
-        self.effects = options.effects || "";
-
-        self.image = options.image || null;
-        self.colorMask = options.colorMask || 0;
-        if (self.image) {
-            self.image = script.resolveRelativeURI(this.image);
-        }
-    }
-    return Wallpaper;
-});
-
-/**
  * Class used for keeping track of which visual theme to use in a story and in spaces
  * @name Theme
  * @class
@@ -45,6 +8,12 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
     function Theme() {
         var self = this;
 
+        /**
+         * Wallpaper for this theme
+         * @name wallpaper
+         * @memberof Theme
+         * @type {Wallpaper}
+         */
         self.wallpaper = new Wallpaper({
             brightness: "dark",
             color: "#000",
@@ -57,8 +26,7 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
     }
 
     /**
-     * Apply state changes according to the Theme specified by the current context
-     * according to the room or story.
+     * Obtain and apply the theme for the current context (story or space).
      * @memberof Theme
      * @param {Object} space The space from which the theme should be read.
      * @returns {undefined}
@@ -90,6 +58,11 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
         }
     }
 
+    /**
+     * Refresh the Theme and UI with the latest values found in the game state.
+     * @memberof Theme
+     * @returns {undefined}
+     */
     Theme.prototype.refresh = function () {
         var self = this;
 

@@ -59,8 +59,6 @@ yarn.service("lookAroundRoutine", function (events,
 
         events.trigger(assert("Player", "have looked at", "Things"));
 
-//        stepRoutine();
-
         return true;
     }
 

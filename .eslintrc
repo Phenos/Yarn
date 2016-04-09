@@ -146,7 +146,7 @@
     "no-undef-init": 1,               // disallow use of undefined when initializing variables
     "no-undefined": 1,                // disallow use of undefined variable (off by default)
     "no-unused-vars": 1,              // disallow declaration of variables that are not used in the code
-    "no-use-before-define": 1,        // disallow use of variables before they are defined
+    "no-use-before-define": 0,        // disallow use of variables before they are defined
 
 
     ////////// Node.js //////////
@@ -216,7 +216,7 @@
 
     "max-depth": ["error", 5],       // specify the maximum depth that blocks can be nested (off by default)
     "max-len": ["error", {"code": 100, "tabWidth": 4, "ignoreUrls": true}],         // specify the maximum length of a line in your program (off by default)
-    "max-params": ["error", 7],      // limits the number of parameters that can be used in the function declaration. (off by default)
+    "max-params": ["error", 10],      // limits the number of parameters that can be used in the function declaration. (off by default)
     "max-statements": ["error", 20, {"ignoreTopLevelFunctions": true}],  // specify the maximum number of statement allowed in a function (off by default)
     "no-bitwise": 0,      // disallow use of bitwise operators (off by default)
     "no-plusplus": 0      // disallow use of unary operators, ++ and -- (off by default)

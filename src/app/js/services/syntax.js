@@ -1,24 +1,23 @@
-(function () {
+/**
+ * A syntax of natural language that be use to define a predicate
+ * @name Syntax
+ * @param {String} text The text token representing this syntax
+ * @param {Predicate} predicate The predicate to which this syntax is a synonym of
+ * @param {boolean} isPositive Specify if this syntax is a positive or negative predicate
+ * @constructor
+ */
+yarn.factory('Syntax', function SyntaxService() {
 
-    yarn.factory('Syntax', SyntaxService);
-
-    function SyntaxService() {
-
-        /**
-         * A syntax of natural language that be use to define a predicate
-         * @param text
-         * @param predicate
-         * @constructor
-         */
-        function Syntax(text, predicate, isPositive) {
-            this.text = text;
-            this.predicate = predicate;
-            this.isPositive = true;
-            if (!angular.isUndefined(isPositive)) this.isPositive = isPositive;
+    function Syntax(text, predicate, isPositive) {
+        var self = this;
+        self.text = text;
+        self.predicate = predicate;
+        self.isPositive = true;
+        if (!angular.isUndefined(isPositive)) {
+            self.isPositive = isPositive;
         }
-
-        return Syntax;
     }
 
-})();
+    return Syntax;
+});
 

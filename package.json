@@ -53,6 +53,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "gulp-jsdoc3": "^0.2.1",
     "mocha": "latest",
     "should": "latest"
   }

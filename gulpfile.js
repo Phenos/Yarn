@@ -40,13 +40,15 @@ gulp.task('dev', gulp.series(
     'build',
     'watch'
 ));
-
+gulp.task('lint', lintTask);
+gulp.task('doc', docTask);
 
 // -----[ Task Functions ]--------
 
-
-gulp.task('lint', lintTask);
-
+function docTask(cb) {
+    gulp.src(['README.md'].concat(paths.javascriptSource), {read: false})
+        .pipe($.jsdoc3(config.jsdoc, cb));
+}
 
 function lintTask() {
     // ESLint ignores files with "node_modules" paths.
@@ -83,7 +85,6 @@ function injectJsFilesTask() {
         .pipe($.using())
         .pipe(gulp.dest(paths.staticRoot), cwd);
 }
-
 
 function bumpTask() {
     return gulp.src(['bower.json', 'package.json', 'src/app/static/metadata.json'], {base: '.'})

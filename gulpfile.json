@@ -77,5 +77,30 @@
   },
   "cwd": {
     "cwd": "."
+  },
+  "jsdoc": {
+    "tags": {
+      "allowUnknownTags": true
+    },
+    "source": {
+      "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+      "destination": "./build/public/docs"
+    },
+    "plugins": [
+      "plugins/markdown"
+    ],
+    "templates": {
+      "cleverLinks": false,
+      "monospaceLinks": false,
+      "outputSourceFiles": true,
+      "outputSourcePath": true,
+      "path": "ink-docstrap",
+      "theme": "cosmo",
+      "navType": "vertical",
+      "linenums": true,
+      "dateFormat": "MMMM Do YYYY, h:mm:ss a"
+    }
   }
 }

@@ -1,11 +1,50 @@
+/**
+ * Global instance of the current theme
+ * @name theme
+ * @class
+ */
 yarn.service("theme", function (Theme) {
     return new Theme();
 });
 
-yarn.service("Theme", function (state, things, yConsole, wallpaper) {
+/**
+ * Class used for applying changes to the Wallpaper ui
+ * @name Wallpaper
+ * @param {Object} options A set of options to configure the wallpaper.
+ * @class
+ */
+yarn.service("Wallpaper", function (script) {
+    function Wallpaper(options) {
+        var self = this;
+
+        if (!angular.isObject(options)) {
+            options = {};
+        }
+        self.brightness = options.brightness || "dark";
+        self.color = options.color || "#000";
+        self.style = options.style || "";
+        self.layout = options.layout || "fullscreen";
+        self.effects = options.effects || "";
+
+        self.image = options.image || null;
+        if (self.image) {
+            self.image = script.resolveRelativeURI(this.image);
+        }
+    }
+    return Wallpaper;
+});
+
+/**
+ * Class used for keeping track of which visual theme to use in a story and in spaces
+ * @name Theme
+ * @class
+ */
+yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
 
     function Theme() {
-        this.wallpaper = new Wallpaper({
+        var self = this;
+
+        self.wallpaper = new Wallpaper({
             brightness: "dark",
             color: "#000",
             image: null,
@@ -18,10 +57,12 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper) {
     /**
      * Apply state changes according to the Theme specified by the current context
      * according to the room or story.
-     * @param space
+     * @memberof Theme
+     * @param {Object} space The space from which the theme should be read.
+     * @returns {undefined}
      */
     Theme.prototype.applyThemeFromContext = function (space) {
-        //console.log("applyThemeFromContext", space);
+//        console.log("applyThemeFromContext", space);
         var themeId;
 
         if (space) {
@@ -43,14 +84,22 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper) {
 
     };
 
+    function ifDefined(object, key, value) {
+        if (angular.isDefined(value)) {
+            object[key] = value;
+        }
+    }
+
     Theme.prototype.refresh = function () {
+        var self = this;
+
         var space = state.one("Player is in *");
-        this.applyThemeFromContext(space);
+        self.applyThemeFromContext(space);
 
         /*
          Read the global state for new theme values
          */
-        var wallpaperOptions = this.wallpaper;
+        var wallpaperOptions = self.wallpaper;
         ifDefined(wallpaperOptions, "brightness", state.value("Wallpaper has Brightness"));
         ifDefined(wallpaperOptions, "color", state.value("Wallpaper has Color"));
         ifDefined(wallpaperOptions, "image", state.value("Wallpaper has Image"));
@@ -60,26 +109,6 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper) {
 
         wallpaper.change(wallpaperOptions);
     };
-
-    function ifDefined(object, key, value) {
-        if (angular.isDefined(value)) {
-            object[key] = value;
-        }
-    }
-
-    function Wallpaper(options) {
-        if (!angular.isObject(options)) options = {};
-        this.brightness = options.brightness || "dark";
-        this.color = options.color || "#000";
-        this.style = options.style || "";
-        this.layout = options.layout || "fullscreen";
-        this.effects = options.effects || "";
-
-        this.image = options.image || null;
-        if (this.image) {
-            this.image = script.resolveRelativeURI(this.image);
-        }
-    }
 
     return Theme;
 });

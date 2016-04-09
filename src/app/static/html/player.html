@@ -1,8 +1,10 @@
-<div style="position: relative"
-     layout-fill
-    layout="column">
-    <wallpaper></wallpaper>
-    <sidebar ></sidebar>
+<div
+        ng-class="'theme-brightness-' + player.theme.wallpaper.brightness"
+        style="position: relative"
+        layout-fill
+        layout="column">
+<wallpaper></wallpaper>
+    <sidebar></sidebar>
     <toolbar flex="none" user="player.user"></toolbar>
     <div
             id="yarn-player"
@@ -101,7 +103,8 @@
                         </md-list-item>
                         <md-list-item ng-if="player.isOwnProfile">
                             <md-button ui-sref="createNewProject()">
-                                <md-icon style="margin-right: 10px;width:20px; height: 20px;" md-svg-icon="/svg-icons/add.svg"></md-icon>
+                                <md-icon style="margin-right: 10px;width:20px; height: 20px;"
+                                         md-svg-icon="/svg-icons/add.svg"></md-icon>
                                 Create a new project
                             </md-button>
                         </md-list-item>

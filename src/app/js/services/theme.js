@@ -27,6 +27,7 @@ yarn.service("Wallpaper", function (script) {
         self.effects = options.effects || "";
 
         self.image = options.image || null;
+        self.colorMask = options.colorMask || 0;
         if (self.image) {
             self.image = script.resolveRelativeURI(this.image);
         }
@@ -48,6 +49,7 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
             brightness: "dark",
             color: "#000",
             image: null,
+            colorMask: 0,
             style: "",
             layout: "fullscreen",
             effects: ""
@@ -75,11 +77,9 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
         }
 
         if (themeId) {
-
             var theme = things.get(themeId);
             state.applyObjectAsStageChange(theme);
-            // TODO: Change old theme according to Brightness
-            yConsole.log("Theme applied to : " + themeId);
+            yConsole.log("Theme changed to : " + themeId);
         }
 
     };
@@ -103,6 +103,7 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
         ifDefined(wallpaperOptions, "brightness", state.value("Wallpaper has Brightness"));
         ifDefined(wallpaperOptions, "color", state.value("Wallpaper has Color"));
         ifDefined(wallpaperOptions, "image", state.value("Wallpaper has Image"));
+        ifDefined(wallpaperOptions, "colorMask", state.value("Wallpaper has ColorMask"));
         ifDefined(wallpaperOptions, "style", state.value("Wallpaper has Style"));
         ifDefined(wallpaperOptions, "layout", state.value("Wallpaper has Layout"));
         ifDefined(wallpaperOptions, "effects", state.value("Wallpaper has Effects"));

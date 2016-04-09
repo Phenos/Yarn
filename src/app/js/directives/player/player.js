@@ -1,6 +1,7 @@
 yarn.directive('player', function (channel,
                                    sidebar,
                                    writers,
+                                   theme,
                                    promptLoop,
                                    player,
                                    state,
@@ -25,6 +26,7 @@ yarn.directive('player', function (channel,
 
         this.state = state;
         this.profiles = profiles;
+        this.theme = theme;
 
 //        console.log("profile", this.profile);
 //        console.log("auth", profiles.authenticated());

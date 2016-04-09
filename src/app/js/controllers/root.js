@@ -7,7 +7,6 @@ yarn.controller('root', function rootController(user,
                                                 welcomeMessage,
                                                 editorFiles,
                                                 root,
-                                                themes,
                                                 wallpaper,
                                                 tools,
                                                 $timeout,
@@ -24,7 +23,6 @@ yarn.controller('root', function rootController(user,
     $scope.IDE = IDE;
     // TODO: Move theme dependency in "player" directive
     $scope.state = state;
-    $scope.themes = themes;
     $scope.editorFiles = editorFiles;
 
     if (user) {

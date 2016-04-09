@@ -7,7 +7,7 @@ yarn.service('wallpaper', function wallpaper() {
     Wallpaper.prototype.onChangeFn = function onChangeFn() {};
 
     Wallpaper.prototype.onChange = function onChange(fn) {
-        //console.log("Registered wallpaper directive");
+//        console.log("Registered wallpaper directive");
         this.onChangeFn = fn;
         this.onChangeFn(this.options);
     };

@@ -5,27 +5,18 @@ yarn.factory('writers', function (Prompt,
                                   state,
                                   script,
                                   commands,
-                                  theme,
+                                  currentTheme,
                                   wallpaper,
                                   defaultTexts) {
 
 
     function describeCoverpage() {
 
-        theme.refresh();
+        currentTheme.refresh();
 
         // Set the wallpaper
-        var wallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
-        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
         var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = wallpaper_url || coverpage_url || false;
-
-        if (url) {
-            wallpaper.change(url);
-        } else {
-            wallpaper.clear();
-        }
 
         if (coverpage) {
             storyLog.image(coverpage_url);

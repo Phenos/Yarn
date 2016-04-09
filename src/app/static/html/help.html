@@ -1,17 +1,27 @@
-<div md-content
-     class="help"
-     flex="100"
-     scrollbars
-     >
-    <help-container>
+<div class="help"
+     flex="grow"
+     layout="column"
+>
+    <help-container
+            flex="grow"
+            layout="column"
+    >
         <help-content
+                flex="grow"
+                layout="column"
                 md-whiteframe="5">
             <link-bar
+                    flex="none"
                     layout="row"
                     layout-align="start start">
                 <md-button class="md-primary" href="./index.html">Home</md-button>
             </link-bar>
-            <help-article></help-article>
+            <div
+                    flex="100"
+                    layout="column"
+                    ng-scrollable>
+                <help-article></help-article>
+            </div>
         </help-content>
     </help-container>
 </div>

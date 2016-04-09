@@ -2,24 +2,27 @@
     <h1>The YarnScript Language</h1>
 
     <p>
-        Yarn interactive stories are built using the <em>YarnScript</em> language.
-        Authors can create and edit these YarnScript files from the <em>Yarn Studio Editor</em>.
+        Yarn interactive stories are written using the <em>YarnScript</em> language.
+    </p>
+    <p>
+        These plain text files can be created with any text editor, but are easier to create
+        using the <em>Yarn Studio Editor</em>, which provide a rich writting environment.
     </p>
 
-    <p>Here is a small sample how how the langage looks:</p>
+    <p>Here is a small sample how how this langage looks:</p>
     <code lang="javascript">
 TheCellar
-  is a Room,
+  is a Place,
   links to BoilerRoom,
-  is called "The Cellar",
-  is described as
+  has Name "The Cellar",
+  has Description
     "This cellar is dark, dusty and dry.
     A flight of stair go up."
 
 BookCase
   is a Thing,
-  is called "Old Bookcase",
-  is described as "An old bookcase with old books.",
+  has a Name "Old Bookcase",
+  has Description "An old bookcase with old books.",
   is in TheCellar.
 </code>
 
@@ -31,7 +34,7 @@ BookCase
     <h2>A "descriptive" language</h2>
 
     <p>
-        YarnScript is what is called a "Domain Specific Declarative Language".
+        YarnScript is what is what is known as a DSL (Domain Specific Language) and has a "Declarative" syntax.
         This means two important things:
     </p>
     <ul>
@@ -39,8 +42,8 @@ BookCase
             It has been tailor made for writing interactive stories. It is it's sole purpose.
         </li>
         <li>
-            You "describe" your story, instead of programming
-            every instructions and interactions.
+            The language is used to "describe" your story, instead of programming
+            complex and detailed instructions.
         </li>
     </ul>
     <p>
@@ -50,9 +53,13 @@ BookCase
     <p>
         <em>The actual gameplay mechanics to let the player move about and looking around are already built-in.</em>
     </p>
+    <p>
+        A lot of the hard work of game design is taken care of by the Yarn plateforme or supplied by
+        existing standard reusable libraries.
+    </p>
     <h2>The "Assertions" Structure</h2>
     <p>
-        While the "Cellar" example look like natural language, it is not. This story fragment follows
+        While the "Cellar" example shown above look like natural language, it is not. This story fragment follows
         a very specific and very simple syntax.
     </p>
     <p>
@@ -61,7 +68,7 @@ BookCase
         <strong>Predicate</strong> and usually an <strong>Object</strong>
     </p>
     <p>
-        To make things simpler, you can think of assertions as specialized sentences.
+        To make things simpler, you can think of assertions as statements of facts.
         Here is a series of simple assertions:
     </p>
     <code>
@@ -73,7 +80,7 @@ BottleOfGin is an InventoryItem.
         Lets explode the <em>MisterSniffle</em> assertion into it's parts:
     </p>
     <ul>
-        <li><strong>Subject</strong>: MisterSniffled</li>
+        <li><strong>Subject</strong>: MisterSniffle</li>
         <li><strong>Predicate</strong>: is a</li>
         <li><strong>Object</strong>: Cat</li>
     </ul>
@@ -89,14 +96,14 @@ BottleOfGin is an InventoryItem.
         which words start with either lowercase or uppercase letters. The rules are very simple:
     </p>
     <ul>
-        <li>Subject and Object references start with an uppercase and have no spaces.</li>
+        <li>Things like Subjects and Objects start with an uppercase and have no spaces.</li>
         <li>Pedicates are in lowercase and can have spaces in them.</li>
     </ul>
     <p>Now let's look at a few more examples and notice how these rules apply:</p>
     <code>
-YouEnterTheCastle triggers GatesClose.
-Story is authored by JohnDoe.
+Story has Author "John Doe".
 You are in YourBedroom.
+YouEnterTheCastle triggers GatesClose.
     </code>
     <p>
         The way that uppercase letters are also used in the middle of object names is called

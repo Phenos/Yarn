@@ -213,7 +213,7 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
     };
 
     service.toggleHelp = function () {
-        if (service.helpIsVisible) {
+        if (service._helpIsVisible) {
             service.hideHelp();
         } else {
             service.showHelp();

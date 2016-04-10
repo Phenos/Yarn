@@ -54,8 +54,8 @@ yarn.service('state', function ($localStorage,
             if (session.user()) {
                 username = session.user().username;
             }
-            var uniqueID = this.resolveValue("Story", "has", "UniqueID");
-            var releaseNumber = this.resolveValue("Story", "has", "ReleaseNumber") || 0;
+            var uniqueID = this.resolveValue("Story", "has", "Unique ID");
+            var releaseNumber = this.resolveValue("Story", "has", "Release Number") || 0;
             key = [username, uniqueID, releaseNumber].join("-");
             return key;
         };

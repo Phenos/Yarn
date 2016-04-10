@@ -96,7 +96,8 @@ yarn.factory('Pointer', function PointerService(URI) {
                 this.state("default");
                 this.buffer = [];
                 this.rawBuffer = [];
-                //console.log("token source:", source.uri, source.position, source.line, source.character);
+//                console.log("token source:", source.uri, source.position,
+//                    source.line, source.character);
             }
         }
 
@@ -125,6 +126,7 @@ yarn.factory('Pointer', function PointerService(URI) {
 
 
     Pointer.prototype.tokenize = function (text) {
+        var exit = false;
         var pointer = this;
         var cycle = 0;
         var maxCycle = 1000000;
@@ -133,6 +135,7 @@ yarn.factory('Pointer', function PointerService(URI) {
         var numericExtended = numeric + ".";
         var lowerAlpha = "abcdefghijklmnopqrstuvwxyz";
         var upperAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var CamelCaseSeries = /([@A-Z][a-z_A-Z0-9]*[\s]*)+/g;
         var alpha = upperAlpha + lowerAlpha;
         var alphaNum = alpha + numeric;
         var alphaNumExtended = alphaNum + "_";
@@ -256,7 +259,17 @@ yarn.factory('Pointer', function PointerService(URI) {
                 pointer.state() === "at" ||
                 pointer.state() === "dollar"
             ) {
-                if ((alphaNumExtended + "@").indexOf(pointer.chr) < 0) {
+                var bufferPlusOne = pointer.rawBuffer.join("") + pointer.chr;
+                var match = bufferPlusOne.match(CamelCaseSeries) || [];
+                var matchStr = match[0] || "";
+                exit = !(matchStr.length === bufferPlusOne.length);
+//                if ((alphaNumExtended + "@ ").indexOf(pointer.chr) < 0) {
+//                    exit = true;
+//                }
+//                if (!bufferPlusOne.match(CamelCaseSeries)) {
+//                    exit = true;
+//                }
+                if (exit) {
                     pointer
                         .flush(pointer.state());
                     continue;

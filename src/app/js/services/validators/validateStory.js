@@ -24,20 +24,20 @@ yarn.service("validateStory", function validateStory(Validation,
     });
 
     validation.assert({
-        pass: "The Story must have a ReleaseNumber in a number format",
-        fail: "The Story object doesnt have a ReleaseNumber in a number format",
+        pass: "The Story must have a Release Number in a number format",
+        fail: "The Story object doesnt have a Release Number in a number format",
         type: "error"
     }, function (state) {
-        var releaseNumber = state.resolveValue(assert("Story", "has", "ReleaseNumber"));
+        var releaseNumber = state.resolveValue(assert("Story", "has", "Release Number"));
         return typeof(releaseNumber) === "number" && releaseNumber !== "";
     });
 
     validation.assert({
-        pass: "The Story must have a UniqueID",
-        fail: "The Story object doesnt have a UniqueID",
+        pass: "The Story must have a Unique ID",
+        fail: "The Story object doesnt have a Unique ID",
         type: "error"
     }, function (state) {
-        var uniqueID = state.resolveValue(assert("Story", "has", "UniqueID"));
+        var uniqueID = state.resolveValue(assert("Story", "has", "Unique ID"));
         return typeof(uniqueID) === "string" && uniqueID !== "";
     });
 

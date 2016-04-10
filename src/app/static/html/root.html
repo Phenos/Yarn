@@ -20,7 +20,7 @@
             class="IDE"
             layout="column"
             flex="grow"
-            ng-show="_IDEisVisible || _helpIsVisible">
+            ng-show="_IDEisVisible">
         <md-section layout="row" flex="" style="overflow: hidden; position: relative;">
             <md-section
                     ng-show="_IDEisVisible"
@@ -71,18 +71,6 @@
                 </div>
                 <div flex="60"></div>
             </div>
-            <md-section ng-show="_helpIsVisible"
-                        md-whiteframe="10"
-                        flex="100"
-                        layout="column"
-                        class="layout-panel">
-                <help-toolbar></help-toolbar>
-                <div flex="100"
-                     layout="row">
-                    <help on-escape-focus="onHelpEscapeFocus()"
-                          on-focus="onHelpFocus()"></help>
-                </div>
-            </md-section>
         </md-section>
         <md-section
                 md-whiteframe="10"
@@ -105,5 +93,17 @@
             <tools></tools>
         </md-section>
 
+    </md-section>
+    <md-section ng-show="_helpIsVisible"
+                md-whiteframe="10"
+                flex="100"
+                layout="column"
+                class="layout-panel">
+        <help-toolbar></help-toolbar>
+        <div flex="100"
+             layout="row">
+            <help on-escape-focus="onHelpEscapeFocus()"
+                  on-focus="onHelpFocus()"></help>
+        </div>
     </md-section>
 </md-content>

@@ -13,8 +13,7 @@
     </p>
 
     <p>
-        Here is a comparison of how you can simplify longer text by creating more compact
-        sentences using commas.
+        Here is an example of how you can simplify longer texts by using commas.
     </p>
     <code>
 Peter The Dog is a Dog.
@@ -46,11 +45,11 @@ is Tired
     <h2>Indentation</h2>
 
     <p>
-        You can also use indentation (additionnal spaces and tabs) if you want to
+        You can also use indentation (additionnal spaces) if you want to
         give more structure to your code. This is purely aesthetics and will not change
         the behavior of the code.
     </p>
-    <p>Let's add some to PeterTheDog:</p>
+    <p>Let's add some to <em>Peter The Dog</em>:</p>
     <code>
 Peter The Dog
   is a Dog,
@@ -67,18 +66,42 @@ Peter The Dog
   is in the Kennel,
   has a Description
     'Peter your dog has had a long day.
-     He looks very tired'
+    He looks very tired'
     </code>
     <p>
         Notice how you can also add line breaks to break long texts.
     </p>
+    <h3>Quotes inside quotes</h3>
+    <p>
+        If you need to use quotes in your text, you have to be careful not to use the same
+        type of quotes you used to start the text block. For example, these examples are valid:
+    </p>
+    <code>
+Dog has a Description "This is a 'great' dog!".
+Dog has a Description 'This is a "great" dog!'.
+    </code>
+    <p>
+        But these examples will break your text:
+    </p>
+    <code>
+Dog has a Description "This is a "great" dog!".
+Dog has a Description 'This is a 'great' dog!'.
+    </code>
+    <p>
+        Also, you can use the html "&amp;quot;" symbol for using double quotes inside double quotes.
+        So this example is valid:
+    </p>
+    <code>
+Dog has a Description "This is a &amp;quot;great&amp;quot; dog!".
+Dog has a Description 'This is a &amp;quot;great&amp;quot; dog!'.
+    </code>
     <h2>Add periods to prevent chaining.</h2>
     <p>
         Whenever you have assertions which precede or follow each others, you can
         make sure they dont automatically chain by adding a period.
     </p>
     <p>
-        Here we make sure John and PeterTheDog dont get mixed up:
+        Here we make sure <em>John</em> and <em>PeterTheDog</em> dont get mixed up:
     </p>
     <code>
 John loves Peter The Dog.
@@ -92,7 +115,7 @@ Peter The Dog
     <code>
 John loves Peter The Dog
 
-Peter The Dog is a Dog, called "Peter T. Dog"
+Peter The Dog is a Dog, has a Name "Peter T. Dog"
 
 Silly Susan loves John
     </code>

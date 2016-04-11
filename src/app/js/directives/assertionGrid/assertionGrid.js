@@ -13,7 +13,7 @@
             controller: AssertionGridController
         };
 
-        function AssertionGridController($scope, $element) {
+        function AssertionGridController($scope) {
 
             $scope.$watch("data", function () {
                 $scope.options.data = $scope.data;
@@ -39,7 +39,7 @@
                     },
                     {
                         field: 'predicate.label',
-                        displayName: 'predicate',
+                        displayName: 'verb',
                         width: 80
                     },
                     {
@@ -68,7 +68,12 @@
                     },
                     {
                         field: 'source',
-                        cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><div class="ui-grid-cell-contents" ng-cell-text><a href="#" ng-click="$event.preventDefault();grid.appScope.goToSource(COL_FIELD);">{{ COL_FIELD.file }}:{{ COL_FIELD.line }}</a></div></div>',
+                        cellTemplate:
+                            /* eslint max-len:0 */
+                            '<div class="ngCellText" ng-class="col.colIndex()">' +
+                            '<div class="ui-grid-cell-contents" ng-cell-text>' +
+                            '<a href="#" ng-click="$event.preventDefault();grid.appScope.goToSource(COL_FIELD);">' +
+                            '{{ COL_FIELD.file }}:{{ COL_FIELD.line }}</a></div></div>',
                         displayName: 'source'
                     }
                 ],

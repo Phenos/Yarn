@@ -1,70 +1,83 @@
-<article>
+<article
+        previous="language-templating.html"
+        parent="index.html"
+        next="">
     <h1>Theming</h1>
 
     <p>
         Theming allows you can change the visual appearance of various aspects of your story.
     </p>
+
     <p>
         While you dont have total control over all visual elements, what is provided goes a long
         way in creating a distinct and unique ambiance for your story.
     </p>
+
     <h2>Accessibility and User Preferences</h2>
+
     <p>
         It is important that you use theming as something "optionnal" to the players experience.
         In other words, users might have disabled themes or simply specified their own. Also,
         many players will not be able to see your visual theme because they are visually impaired.
     </p>
+
     <p>
         Finally, at some point you might have people playing your story trough a more restrictive
         player such as a chat interface or even texting.
     </p>
+
     <p>
         As a golden rule, never use images or colors that the player would need to see to properly
         understand what is happening. Instead, use it for ambiance. Also, if you use very specific
         imagery, it is recommended that you provide an equivalent description somewhere in your story.
     </p>
+
     <h2>Defining a theme</h2>
+
     <p>
         Currently, themes are defined mostly as a wallpaper and brightness setting. Eventually, we
         will include control on fonts, text color, buttons and etc.
     </p>
+
     <p>Here is an example of a theme:</p>
 <code>
-  WinterTheme (
+Winter Theme (
     Wallpaper
     has a Brightness "light",
     has a Layout "Fulllscreen",
     has an Image "http://i.imgur.com/uqOOaVr.jpg",
-    has a ColorMask 0.3,
+    has a Color Mask 0.3,
     has a Color "white".
-  )
+)
 </code>
+
     <p>
         Here's a summary of what each item means:
     </p>
     <ul>
         <li><strong>Wallpaper</strong>: The object representing the color and or image shown behind the story text.</li>
-        <li><strong>Brightness</strong>: Defines if the theme is either "light" or "dark". This will change the color of text and buttons.</li>
+        <li><strong>Brightness</strong>: Defines if the theme is either "light" or "dark". This will change the color of
+            text and buttons.
+        </li>
         <li><strong>Layout</strong>: How to display the wallpaper image. Specify either "fullscreen" or "pattern".</li>
         <li><strong>Image</strong>: The image to use for the wallpaper.</li>
         <li><strong>Color</strong>: The background color to use as the wallpaper.</li>
-        <li><strong>ColorMask</strong>: Transparency setting to use the color over the image as a semi-transparent mask.</li>
+        <li><strong>Color Mask</strong>: Transparency setting to use the color over the image as a semi-transparent mask.
+        </li>
     </ul>
     <h2>Applying a theme</h2>
+
     <p>
         Once you have defined a theme, you can apply it to either your story as a whole, or
         to a specific space in the story. Simply use the "has" verb:
     </p>
 <code>
-    Story has WinterTheme.
+Story has WinterTheme.
 
-    Bedroom has WinterTheme.
+Bedroom has WinterTheme.
 
-    JailCell has PrisonTheme.
+JailCell has PrisonTheme.
 </code>
-    <p>
-        <a href="index.html">Back home</a>
-    </p>
 
 </article>
 

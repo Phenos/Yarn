@@ -1,4 +1,4 @@
-yarn.directive('inspectorTool', function CommandsTool(tools) {
+yarn.directive('inspectorTool', function CommandsTool() {
 
     return {
         restrict: 'E',
@@ -15,7 +15,7 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
             });
 
             $scope.filterByType = function (type) {
-                //console.log("filterByType", type);
+//                console.log("filterByType", type);
                 if (type && type.object) {
                     $scope.filter = type.object.id;
                 } else {
@@ -29,7 +29,7 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
                     value: thing.object.text(),
                     type: "camelcase"
                 };
-                console.log("thing", thing);
+//                console.log("thing", thing);
                 inspector.inspect(token);
             };
 
@@ -54,7 +54,6 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
 
                 var allAssertions = state.assertions.all();
                 $scope.assertions = allAssertions.filter(function (assertion) {
-                    var keep = false;
                     var type = $scope.typesIndex[assertion.object.id];
                     var thing = $scope.thingsIndex[assertion.subject.id];
                     if (assertion.predicate.id === "is") {
@@ -69,7 +68,6 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
                         } else {
                             type.count++;
                         }
-                        keep = true;
                     }
                     if (!thing) {
                         thing = {
@@ -89,9 +87,11 @@ yarn.directive('inspectorTool', function CommandsTool(tools) {
                 });
 
                 $scope.things.sort(function (A, B) {
+                    var value;
                     if (A.object.id) {
-                        return A.object.id.localeCompare(B.object.id);
+                        value = A.object.id.localeCompare(B.object.id);
                     }
+                    return value;
                 });
 
                 $scope.thingsFiltered = $scope.applyFilter();

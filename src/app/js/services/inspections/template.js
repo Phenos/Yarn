@@ -7,6 +7,7 @@ yarn.service("templateInspection", function templateInspection(InspectionArticle
         if (token) {
             if (token.type === "string") {
                 if (token.value.indexOf("{%") > -1 ||
+                    token.value.indexOf("[") > -1 ||
                     token.value.indexOf("{{") > -1) {
                     var txt = token.value.substring(1, token.value.length - 1);
 

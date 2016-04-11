@@ -92,6 +92,9 @@
             this.setContent = function (content) {
                 var helpContent = $element.find("help-article");
                 var elem = $compile(content)($scope);
+                this.nextArticle = elem.attr("next");
+                this.parentArticle = elem.attr("parent");
+                this.previousArticle = elem.attr("previous");
                 helpContent.empty().append(elem);
                 $scope.$broadcast("refreshScrollbars");
             };

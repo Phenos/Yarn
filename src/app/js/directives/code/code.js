@@ -48,6 +48,7 @@ yarn.directive('code', function CodeDirective(soundEffects) {
         }
 
         $scope.options = {
+            showGutter: false,
             useWrapMode: false,
             useWorker: false,
             mode: 'javascript',

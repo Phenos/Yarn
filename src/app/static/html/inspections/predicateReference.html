@@ -22,6 +22,7 @@
     <h4 ng-if="syntaxesForPredicate.negative.length > 0">
         Found {{ syntaxesForPredicate.negative.length }} antonyms:<br/>
     </h4>
+    <p>
         <span ng-repeat="syntax in syntaxesForPredicate.negative">
             <em>{{ syntax.text }}</em><span ng-if="!last">,&nbsp;&nbsp;</span><span ng-if="$last">.</span>
         </span>

@@ -95,8 +95,9 @@
                 this.nextArticle = elem.attr("next");
                 this.parentArticle = elem.attr("parent");
                 this.previousArticle = elem.attr("previous");
+
+                $element.find("md-content")[0].scrollTop = 0;
                 helpContent.empty().append(elem);
-                $scope.$broadcast("refreshScrollbars");
             };
 
             help.register(this);

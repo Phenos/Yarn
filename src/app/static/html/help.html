@@ -38,11 +38,9 @@
                     <md-tooltip>Next article</md-tooltip>
                 </md-button>
             </link-bar>
-            <div
+            <md-content
                     flex="100"
-                    layout="column"
-                    style="overflow: hidden"
-                    ng-scrollable>
+                    layout="column">
                 <help-article md-whiteframe="5"></help-article>
                 <div layout="row" class="footer-navigation">
                     <md-button flex="none" ng-if="help.previousArticle"
@@ -67,7 +65,7 @@
                     </md-button>
 
                 </div>
-            </div>
+            </md-content>
         </help-content>
     </help-container>
 </div>

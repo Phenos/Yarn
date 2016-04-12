@@ -14,9 +14,10 @@ yarn.service("parseAssert", function (assert) {
 
 
         function applyScope(token) {
+            var _token = token.trim();
             var value = token.trim();
-            if (_scope.hasOwnProperty(token)) {
-                value = _scope[token];
+            if (_scope.hasOwnProperty(_token.trim())) {
+                value = _scope[_token];
             }
             return value;
         }

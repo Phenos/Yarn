@@ -82,6 +82,8 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeRoom() {
+        console.log("describeRoom");
+
         storyLog.markAsRead();
 
         var room = state.resolveOne(assert("Player", "is in"));

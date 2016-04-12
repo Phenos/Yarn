@@ -14,6 +14,7 @@ yarn.service("setDefaultOptionsHelper", function (state) {
 
         // If the space is restricted, build a list of allowed actions
         var spaceIsRestricted = state.value("Space is Restricted", scope);
+        console.log("spaceIsRestricted", spaceIsRestricted);
         if (spaceIsRestricted) {
             var allowedActionsObjs = state.many("Space allows *", scope);
 
@@ -22,12 +23,17 @@ yarn.service("setDefaultOptionsHelper", function (state) {
             });
         }
 
+        console.log("space", space);
         if (space) {
 
             // Add custom actions
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {
-                if (!(spaceIsRestricted && !allowedActions[action.id])) {
+                var isAllowed = true;
+                if (spaceIsRestricted && !allowedActions[action.id]) {
+                    isAllowed = false;
+                }
+                if (isAllowed) {
 
                     var scope = { Action: action };
                     var isActive = state.value("Action is Active", scope);
@@ -35,11 +41,13 @@ yarn.service("setDefaultOptionsHelper", function (state) {
                     var name = state.value("Action has Name", scope);
                     var iconSize = state.value("Action has IconSize", scope);
                     var isIntransitive = state.value("Action is Intransitive", scope);
-                    if (isIntransitive && (isActive || allowedActions[action.id])) {
+                    console.log("isIntransitive", isIntransitive);
+                    if (isIntransitive && isActive) {
                         option = prompt.option(name, "do " + action.id);
                         option.iconId = icon;
                         option.iconSize = iconSize || size;
                         option.iconOnly = true;
+                        console.log("option", option);
                     }
                 }
             });

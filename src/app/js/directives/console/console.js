@@ -124,11 +124,11 @@
         };
 
         service.focus = function () {
-            controller.focus()
+            controller && controller.focus()
         };
 
         service.clear = function () {
-            controller.clear()
+            controller && controller.clear()
         };
 
         return service;

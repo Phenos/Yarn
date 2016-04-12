@@ -221,7 +221,7 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
     };
 
     service.toggleTools = function (value) {
-        service.scope.toggleTools(value);
+        service.scope && service.scope.toggleTools(value);
     };
 
     /*
@@ -253,11 +253,11 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
     };
 
     service.focusConsole = function () {
-        service.scope.focusConsole();
+        service.scope && service.scope.focusConsole();
     };
 
     service.focusInspector = function () {
-        service.scope.focusInspector();
+        service.scope && service.scope.focusInspector();
     };
 
     return service;

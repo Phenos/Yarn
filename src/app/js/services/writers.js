@@ -86,7 +86,7 @@ yarn.factory('writers', function (Prompt,
 
         var room = state.resolveOne(assert("Player", "is in"));
 
-        theme.refresh();
+        currentTheme.refresh();
 
         if (room) {
             var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));

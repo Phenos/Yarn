@@ -20,12 +20,12 @@ yarn.service("templateInspection", function templateInspection(InspectionArticle
                         var output = state.render(txt);
 
                         if (angular.isObject(output) && output.constructor.name === "Error") {
-                            console.log("output: ", [output]);
-                            //scope.value = output;
+//                            console.log("output: ", [output]);
+//                            scope.value = output;
                             scope.type = 'error';
                             scope.error = output.message;
                             scope.errorStact = output.stack.replace("\n", "<br/>");
-                            console.log("stack", [output.stack]);
+//                            console.log("stack", [output.stack]);
                         } else {
                             scope.value = output;
                             scope.type = typeof(output);
@@ -37,7 +37,10 @@ yarn.service("templateInspection", function templateInspection(InspectionArticle
                         url: "./language-templating.html"
                     });
 
-                    yeld(new InspectionArticle("Template", "template", "template-inspection", scope))
+                    yeld(new InspectionArticle("Template",
+                        "template",
+                        "template-inspection",
+                        scope))
                 }
             }
         }
@@ -49,7 +52,7 @@ yarn.directive('templateInspection', function templateInspection() {
     return {
         replace: true,
         templateUrl: "./html/inspections/template.html",
-        controller: function ($scope) {
+        controller: function () {
         }
     };
 });

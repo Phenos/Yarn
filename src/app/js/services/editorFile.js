@@ -39,7 +39,7 @@ yarn.service("EditorFile", function (guid,
                 self.hasOwnership = true;
             }
         }
-        console.log("profiles.updated > self.hasOwnership ", self.hasOwnership)
+//        console.log("profiles.updated > self.hasOwnership ", self.hasOwnership)
     };
 
 
@@ -53,7 +53,7 @@ yarn.service("EditorFile", function (guid,
     EditorFile.prototype.sizeInKB = function () {
         var size = 0;
         if (this.meta) {
-            size = Math.floor((this.meta.Size / 1000)+1);
+            size = Math.floor((this.meta.Size / 1000) + 1);
         }
         this._sizeInKB = size;
         return size;

@@ -17,13 +17,20 @@ yarn.service("lookAroundRoutine", function (events,
 
         // TODO: Use the defaultTexts class for this
         var defaultText = state.resolveValue(assert("Default", "for", "NothingToLookAt"));
-        defaultText = defaultText || "You see nothing to look at";
+        defaultText = defaultText || "You see nothing to look at.";
 
         var room = state.resolveOne(assert("Player", "is in"));
         if (room) {
+            console.log("room", room);
             var roomName = state.resolveValue(assert(room, "has", "Name"));
+            var roomDescription = state.resolveValue(assert(room, "has", "Description"));
             roomName = roomName || room.id;
             phrase.push("You are at the [" + roomName + ":" + room.id + "]. ");
+            if (roomDescription) {
+                phrase.push("<br/><br/>");
+                phrase.push(roomDescription);
+                phrase.push("<br/><br/>");
+            }
         }
 
         var thingsInRoom = stateHelpers.thingsInRoom();

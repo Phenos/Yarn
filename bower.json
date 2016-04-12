@@ -36,8 +36,7 @@
     "nunjucks": "~2.4.1",
     "ng-lodash": "~0.4.0",
     "hover": "Hover#^2.0.2",
-    "ngSmoothScroll": "^2.0.0",
-    "ngScrollable": "ng-scrollable#^0.2.5"
+    "ng-scrollbars": "^0.0.10"
   },
   "resolutions": {
     "lodash": "~4.5.1",

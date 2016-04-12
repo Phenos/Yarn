@@ -5,9 +5,7 @@
 
     function ConsoleDirective(commands,
                               state,
-                              getSelectionText,
-                              smoothScroll,
-                              easing) {
+                              getSelectionText) {
 
         return {
             restrict: 'E',
@@ -34,6 +32,20 @@
             var self = this;
             var lastStep = 0;
 
+            this.isReady = false;
+            $timeout(function () {
+                self.isReady = true;
+            }, 1000);
+
+            this.scrollbarsConfig = {
+                autoHideScrollbar: true,
+                theme: 'light',
+                advanced: {
+                    updateOnContentResize: true
+                },
+                scrollInertia: 200
+            };
+
             this.commands = commands;
 
             consoleService.register(this);
@@ -58,12 +70,12 @@
             };
 
             this.onInputEscapeFocus = function () {
-                //console.log("console.onInputEscapeFocus");
+//                console.log("console.onInputEscapeFocus");
                 this.onEscapeFocus();
             };
 
             this.onInputFocus = function () {
-                //console.log("console.onInputFocus");
+//                console.log("console.onInputFocus");
                 this.onFocus();
             };
 
@@ -97,15 +109,15 @@
                 }
                 scope.timestamp = Date.now();
                 var logsElem = $element.find("logs");
-                var logElem = $compile('<log is-new-step="isNewStep" options="options" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
+                var logItemTemplate =
+                    '<log is-new-step="isNewStep" options="options" timestamp="timestamp" ' +
+                    'step="step" type="type" text="text"></log>';
+                var logElem = $compile(logItemTemplate)(scope);
                 logsElem.append(logElem);
-//                smoothScroll(logElem[0], {
-//                    duration: 500,
-//                    //easing: 'easeOutQuad',
-//                    offset: 0,
-//                    containerId: 'yarn-console'
-//                });
-                $scope.$emit("refreshScrollbars");
+
+                if (self.updateScrollbar) {
+                    self.updateScrollbar('scrollTo', 10000000);
+                }
             };
 
             yConsole.register(this);

@@ -5,7 +5,6 @@ yarn.directive('player', function (channel,
                                    promptLoop,
                                    player,
                                    state,
-                                   smoothScroll,
                                    lookAroundRoutine,
                                    profiles,
                                    login,
@@ -29,6 +28,15 @@ yarn.directive('player', function (channel,
         this.state = state;
         this.profiles = profiles;
         this.currentTheme = currentTheme;
+
+        this.scrollbarsConfig = {
+            autoHideScrollbar: true,
+            theme: 'light',
+            advanced: {
+                updateOnContentResize: true
+            },
+            scrollInertia: 500
+        };
 
 //        console.log("profile", this.profile);
 //        console.log("auth", profiles.authenticated());
@@ -103,17 +111,11 @@ yarn.directive('player', function (channel,
             sidebar.close();
         };
 
-        this.scroll = function (targetElement) {
-//            console.log("player.scroll", [scrollAreaElem, targetElement]);
+        this.scroll = function () {
             // First we check to see if it's the first game step
             // to prevent scrolling when first showing the coverpage
-            if (state.step() > 0 && targetElement) {
-                smoothScroll(targetElement[0], {
-                    duration: 1500,
-                    easing: 'easeInOutQuint',
-                    offset: 0,
-                    containerId: 'yarn-player'
-                });
+            if (state.step() > 0) {
+                    self.updateScrollbar('scrollTo', 10000000);
             }
         };
 

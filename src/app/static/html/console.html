@@ -1,13 +1,17 @@
 <div class="console" layout="row" flex="100">
-    <div class="console"
+    <div class="console-inner"
          md-whiteframe="10"
          layout="column"
-         flex="grow">
+         flex="grow"
+         ng-if="console.isReady;"
+        >
         <div console-main
              flex="grow"
              id="yarn-console"
              layout="column"
-             ng-scrollable
+             ng-scrollbars
+             ng-scrollbars-update=console.updateScrollbar
+             ng-scrollbars-config="console.scrollbarsConfig"
         >
             <logscroll
                     flex="grow"
@@ -16,9 +20,7 @@
             </logscroll>
         </div>
         <user-input
-                flex="none"
                 layout="row"
-                style="height: 58px;"
                 text="console.text"
                 on-escape-focus="console.onInputEscapeFocus()"
                 on-focus="console.onInputFocus()"

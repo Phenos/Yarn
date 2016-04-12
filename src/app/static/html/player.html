@@ -3,20 +3,19 @@
         style="position: relative"
         layout-fill
         layout="column">
-<wallpaper></wallpaper>
+    <wallpaper></wallpaper>
     <sidebar></sidebar>
-    <toolbar flex="none" user="player.user"></toolbar>
+    <toolbar user="player.user"></toolbar>
     <div
             id="yarn-player"
             class="player"
-            flex="auto"
-            style="NOpadding-top: 70px; !important;"
-            ng-scrollable="{usePadding: false}"
+            flex="grow"
+            ng-scrollbars
+            ng-scrollbars-update=player.updateScrollbar
+            ng-scrollbars-config="player.scrollbarsConfig"
             ng-if="player.state.readyness.isReady"
     >
-        <div class="main-ui"
-             style="NOpadding-bottom: 70px; !important;"
-        >
+        <div class="main-ui">
             <context-action-menu></context-action-menu>
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>

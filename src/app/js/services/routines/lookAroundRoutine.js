@@ -21,7 +21,7 @@ yarn.service("lookAroundRoutine", function (events,
 
         var room = state.resolveOne(assert("Player", "is in"));
         if (room) {
-            console.log("room", room);
+//            console.log("room", room);
             var roomName = state.resolveValue(assert(room, "has", "Name"));
             var roomDescription = state.resolveValue(assert(room, "has", "Description"));
             roomName = roomName || room.id;
@@ -66,7 +66,6 @@ yarn.service("lookAroundRoutine", function (events,
 
         events.trigger(assert("Player", "have looked at", "Things"));
 
-        return true;
     }
 
     return lookAroundRoutine;

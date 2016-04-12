@@ -6,8 +6,10 @@ yarn.directive('player', function (channel,
                                    player,
                                    state,
                                    smoothScroll,
+                                   lookAroundRoutine,
                                    profiles,
-                                   login) {
+                                   login,
+                                   assert) {
 
     return {
         restrict: 'E',
@@ -40,7 +42,9 @@ yarn.directive('player', function (channel,
                 self.profile = profile;
 
                 if (profiles.authenticated()) {
-                    console.log("setProfile", self.profile.username, profiles.authenticated().username);
+                    console.log("setProfile",
+                        self.profile.username,
+                        profiles.authenticated().username);
 
                     if (self.profile.username === profiles.authenticated().username) {
                         self.isOwnProfile = true;
@@ -70,8 +74,17 @@ yarn.directive('player', function (channel,
         player.register(this);
 
         this.refresh = function () {
-            writers
-                .describeWhereYouAre();
+            console.log("player.refresh");
+
+            var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+            if (storyHasEnded) {
+                writers.describeTheEnd();
+            } else if (state.step() === 0) {
+                writers.describeCoverpage();
+            } else {
+                lookAroundRoutine();
+            }
+
             promptLoop.update();
         };
 

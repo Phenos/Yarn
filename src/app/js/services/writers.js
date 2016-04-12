@@ -82,7 +82,7 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeRoom() {
-//        console.log("describeRoom");
+        console.log("describeRoom");
 
         storyLog.markAsRead();
 

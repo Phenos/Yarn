@@ -17,7 +17,7 @@ yarn.service("lookAroundRoutine", function (events,
 
         // TODO: Use the defaultTexts class for this
         var defaultText = state.resolveValue(assert("Default", "for", "NothingToLookAt"));
-        defaultText = defaultText || "You see nothing to look at.";
+        defaultText = defaultText || "You see nothing of interest.";
 
         var room = state.resolveOne(assert("Player", "is in"));
         if (room) {

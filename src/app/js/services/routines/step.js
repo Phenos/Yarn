@@ -78,10 +78,11 @@ yarn.service("stepRoutine", function (events,
 
 
         // If the user was moves... we describe again where you are
-        var currentSpace = state.one("Player is in *");
-        if (initialSpace !== currentSpace) {
-            writers.describeWhereYouAre(true);
-        }
+        // REMOVE? This was replaced with the "look around" event
+//        var currentSpace = state.one("Player is in *");
+//        if (initialSpace !== currentSpace) {
+//            writers.describeWhereYouAre(true);
+//        }
 
         updateWallpaper();
 

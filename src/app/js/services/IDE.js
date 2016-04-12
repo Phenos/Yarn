@@ -82,16 +82,18 @@ yarn.service('IDE', function IDEService(rememberLastStory,
             .ok('Create')
             .cancel('Cancel');
 
-        if (event) confirm.targetEvent(event);
+        if (event) {
+            confirm.targetEvent(event);
+        }
 
         $mdDialog.show(confirm).then(function(newFilename) {
-            //console.log("Renaming", newName);
+//            console.log("Renaming", newName);
             var profile = profiles.authenticated();
             var newFile = editorFiles.open(profile, newFilename, true);
             editorFiles.save(newFile);
 
         }, function() {
-            //$scope.status = 'You didn\'t name your dog.';
+//            $scope.status = 'You didn\'t name your dog.';
         });
     };
 

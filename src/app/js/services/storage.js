@@ -1,4 +1,9 @@
-yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel, session) {
+yarn.service("Storage", function (apiClient,
+                                  EditorFile,
+                                  yConsole,
+                                  URI,
+                                  channel,
+                                  session) {
 
     function Storage(profile) {
         this.refreshedOnce = false;
@@ -11,16 +16,18 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
     Storage.prototype.directories = function (projectFolder) {
         var _directories = {};
         var filesSource = this.files;
-        if (projectFolder) filesSource = projectFolder.files;
+        if (projectFolder) {
+            filesSource = projectFolder.files;
+        }
 
-        //console.log("Grouping in directories: ", this.files);
+//        console.log("Grouping in directories: ", this.files);
         angular.forEach(filesSource, function (file) {
             var directoryURI = file.uri.directory();
             if (projectFolder) {
                 var directoryURIparts = directoryURI.split("/");
                 directoryURIparts.shift();
                 directoryURI = directoryURIparts.join("/");
-                //console.log("-->", directoryURI);
+//                console.log("-->", directoryURI);
             }
             var directory = _directories[directoryURI];
             if (!directory) {
@@ -80,9 +87,9 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
         }
 
         if (!isAFolder) {
-            angular.forEach(this.files, function (file) {
-                if (_uri.equals(file.uri)) {
-                    foundSameFile = file;
+            angular.forEach(this.files, function (_file) {
+                if (_uri.equals(_file.uri)) {
+                    foundSameFile = _file;
                 }
             });
 
@@ -92,7 +99,9 @@ yarn.service("Storage", function (apiClient, EditorFile, yConsole, URI, channel,
             } else {
                 file = new EditorFile(uri, meta, self.profile);
                 this.files.push(file);
-                if (projectFolder) projectFolder.files.push(file);
+                if (projectFolder) {
+                    projectFolder.files.push(file);
+                }
             }
 
             file.markForDiscard = false;

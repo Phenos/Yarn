@@ -4,11 +4,9 @@ yarn.service("EditorFile", function (guid,
                                      loadScript,
                                      yConsole) {
 
-
-
-
     function EditorFile(uri, meta, profile) {
         var self = this;
+
         this.profile = profile;
         this._uri = "";
         this.hasOwnership = false;
@@ -28,17 +26,22 @@ yarn.service("EditorFile", function (guid,
         this.originalContent = "";
         this.isSelected = false;
 
-        var baseURI = "";
-
         channel.subscribe("profiles.updated", function (profiles) {
-            if (profiles.authenticated()) {
-                if (self.profile.username === profiles.authenticated().username) {
-                    self.hasOwnership = true;
-                }
-            }
+            self.checkOwnership(profiles);
         });
 
     }
+
+    EditorFile.prototype.checkOwnership = function (profiles) {
+        var self = this;
+        if (profiles.authenticated()) {
+            if (self.profile.username === profiles.authenticated().username) {
+                self.hasOwnership = true;
+            }
+        }
+        console.log("profiles.updated > self.hasOwnership ", self.hasOwnership)
+    };
+
 
     EditorFile.prototype.rename = function (uri) {
         this._uri = uri.toString();
@@ -59,9 +62,9 @@ yarn.service("EditorFile", function (guid,
     EditorFile.prototype.absoluteURI = function () {
         var uri = this.uri;
         if (this.profile) {
-            baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
+            var baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
             uri = this.uri.absoluteTo(baseURI);
-            //console.log("---->", uri.toString());
+//            console.log("---->", uri.toString());
         } else {
             console.warn("File has no profile: ", uri);
         }
@@ -71,7 +74,7 @@ yarn.service("EditorFile", function (guid,
     EditorFile.prototype.relativeToUserURI = function () {
         var uri = this.uri;
         if (this.profile) {
-            baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
+            var baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
             uri = this.absoluteURI().relativeTo(baseURI);
         }
         return uri;
@@ -91,12 +94,12 @@ yarn.service("EditorFile", function (guid,
                 self.originalContent = script.source;
                 self.sizeInKB();
                 success && success();
-                //console.log("script:", script);
+//                console.log("script:", script);
             })
             .catch(function (e) {
                 self.errorCode = e.status;
                 self.status = "Failed to load";
-                //console.log("Error: ", e);
+//                console.log("Error: ", e);
                 yConsole.error("Error while loading file: " + self.absoluteURI().toString());
                 fail && fail();
             });
@@ -116,7 +119,7 @@ yarn.service("EditorFile", function (guid,
         var isModified = ((this.content !== this.originalContent) && (this.content !== null));
         this._isModified = isModified;
         this.sizeInKB();
-        //console.log("isModfied", isModified);
+//        console.log("isModfied", isModified);
         return isModified;
     };
 

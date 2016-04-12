@@ -2,6 +2,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                                                   editors,
                                                   inspector,
                                                   IDE,
+                                                  profiles,
                                                   soundEffects,
                                                   globalContextMenu,
                                                   confirmAction,
@@ -79,6 +80,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         this.focus = function () {
             this.file.isFocused = true;
             self.file.isModified();
+            self.file.checkOwnership(profiles);
             if (aceEditor) {
                 aceEditor.focus();
             }
@@ -98,6 +100,8 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         function aceLoaded(_editor) {
             _editor.$blockScrolling = Infinity;
             aceEditor = _editor;
+
+            self.file.checkOwnership(profiles);
 
             aceEditor.on("click", clickHandler);
             aceEditor.on("focus", function() {

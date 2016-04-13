@@ -19,14 +19,18 @@ yarn.service("Story", function (URI, channel) {
 
     Story.prototype.ifExists = function (success, fail) {
         var self = this;
-        console.log("Story.isExists()");
+
+//        console.log("Story.isExists()");
         var refreshedOnce = this.profile.storage.refreshedOnce;
         var folders = this.profile.storage.allProjectFolders;
         if (refreshedOnce) {
-            console.log("resolving ifExists");
+
+//            console.log("resolving ifExists");
             var exists = false;
             angular.forEach(folders, function (folder) {
-                if (folder.name === self.id) exists = true;
+                if (folder.name === self.id) {
+                    exists = true;
+                }
             });
             this.exists = exists;
             if (this.exists) {
@@ -35,11 +39,12 @@ yarn.service("Story", function (URI, channel) {
                 fail && fail();
             }
         } else {
-            console.log("ifExists defered!");
 
+//            console.log("ifExists defered!");
             var onRefresh = channel.subscribe("storage.refresh", function (storage) {
                 if (storage.profile === self.profile) {
-                    console.log("Story storage refreshed!");
+
+//                    console.log("Story storage refreshed!");
                     onRefresh.unsubscribe();
                     self.ifExists(success, fail);
                 }

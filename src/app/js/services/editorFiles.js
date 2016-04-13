@@ -36,7 +36,7 @@ yarn.service("editorFiles", function (EditorFile,
         // todo: is this is circular ?
         var storage = file.profile.storage;
         storage.rename(file, newName, function () {
-            //console.log("RENAMED!!!! ", meta);
+//            console.log("RENAMED!!!! ", meta);
             file.rename(newURI);
             refreshAfterAWhile(storage);
             file.errorCode = null;
@@ -54,10 +54,12 @@ yarn.service("editorFiles", function (EditorFile,
 
     var refreshTimeout = null;
     function refreshAfterAWhile(storage) {
-        //console.log("refreshInAfterAWhile", refreshTimeout);
-        if (refreshTimeout) $timeout.cancel(refreshTimeout);
+//        console.log("refreshInAfterAWhile", refreshTimeout);
+        if (refreshTimeout) {
+            $timeout.cancel(refreshTimeout);
+        }
         refreshTimeout = $timeout(function () {
-            //console.log("REFRESH!!!");
+//            console.log("REFRESH!!!");
             storage.refresh();
         }, 1000);
     }
@@ -73,9 +75,9 @@ yarn.service("editorFiles", function (EditorFile,
             }
         });
 
-        function saveNextFile(success, failure) {
+        function saveNextFile(_success, _failure) {
             var nextFile = filesToSave.pop();
-            //console.log("nextFile", nextFile);
+//            console.log("nextFile", nextFile);
             if (nextFile) {
                 // todo: is this is circular ?
                 var storage = nextFile.profile.storage;
@@ -84,14 +86,14 @@ yarn.service("editorFiles", function (EditorFile,
                         nextFile.isModified();
                     });
 
-                    saveNextFile(success, failure);
+                    saveNextFile(_success, _failure);
                 }, function (err) {
                     yConsole.error("An errror occured while saving all files");
-                    failure && failure(err);
+                    _failure && _failure(err);
                 });
                 refreshAfterAWhile(storage);
             } else {
-                success && success()
+                _success && _success()
             }
         }
 
@@ -105,7 +107,8 @@ yarn.service("editorFiles", function (EditorFile,
         return file;
     };
 
-    EditorFiles.prototype.get = function (uriOrFile, profile) {
+    EditorFiles.prototype.get = function (uriOrFile) {
+        // TODO: Put this baseUri uri in a config
         var baseUri = URI("http://storage.yarnstudio.io/");
         var match = null;
         var uri = uriOrFile;
@@ -116,24 +119,26 @@ yarn.service("editorFiles", function (EditorFile,
             uri = uri.absoluteTo(baseUri).toString()
         }
         angular.forEach(this.files, function (file) {
-            //console.log("A:", file.absoluteURI().toString());
-            //console.log("B:", uri);
-            //console.log("-----");
-            if (file.absoluteURI().toString() === uri) match = file;
+//            console.log("A:", file.absoluteURI().toString());
+//            console.log("B:", uri);
+//            console.log("-----");
+            if (file.absoluteURI().toString() === uri) {
+                match = file;
+            }
         });
-        //console.log("MATCH", match);
+//        console.log("MATCH", match);
         return match;
     };
 
     EditorFiles.prototype.open = function (profile, uriOrFile, setFocus, goToLine, success, fail) {
-
+        var file = null;
         // If no profile name is supplied, it takes for granted that the
         // profile name is in the url being oppened
         if (profile !== null) {
 
             // VERIFY if file is not already in the list of files loaded
             // So we create it or take the object already created
-            var file = this.get(uriOrFile, profile);
+            file = this.get(uriOrFile, profile);
             if (!file) {
                 if (angular.isObject(uriOrFile)) {
                     file = uriOrFile;
@@ -157,18 +162,18 @@ yarn.service("editorFiles", function (EditorFile,
             }
 
             this.publishChange(file);
-            return file;
         } else {
             console.error("In order to open a file, you must provide a profile object");
-            return null
         }
+        return file;
     };
 
     EditorFiles.prototype.close = function (file) {
         var self = this;
         var _file;
         var index = null;
-        for (var i = 0; i < this.files.length; i++) {
+        var i;
+        for (i = 0; i < this.files.length; i++) {
             _file = this.files[i];
             if (_file.uri.toString() === file.uri.toString()) {
                 index = i;
@@ -204,7 +209,9 @@ yarn.service("editorFiles", function (EditorFile,
         var file;
         for (var i = 0; i < this.files.length; i++) {
             file = this.files[i];
-            if (file.isModified()) hasUnsaved = true;
+            if (file.isModified()) {
+                hasUnsaved = true;
+            }
         }
         return hasUnsaved;
     };

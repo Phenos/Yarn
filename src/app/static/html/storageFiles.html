@@ -1,6 +1,6 @@
 <div class="project-tool" flex="grow" layout="row">
     <md-content flex="40" class="list-of-folders" md-whiteframe="10">
-        <md-button class="md-fab md-mini" ng-click="refresh()" aria-label="Refresh">
+        <md-button class="md-fab md-mini" ng-click="storageFiles.refresh()" aria-label="Refresh">
             <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
         </md-button>
         <div ng-repeat="profile in storageFiles.profiles._all | orderBy : 'priority' : true">
@@ -15,19 +15,19 @@
                                   selected: (storageFiles.selectedStorage === profile.storage &&
                                   storageFiles.selectedFolder === null)
                               }"
-                              ng-click="selectProfile(profile); openProjectFolder(null)">
+                              ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(null)">
                     BROWSE ALL PROJECTS
                 </md-list-item>
                 <md-list-item ng-repeat="folder in profile.storage.projectFolders"
                               ng-class="{selected: (storageFiles.selectedFolder === folder)}"
-                              ng-click="selectProfile(profile); openProjectFolder(folder)">
+                              ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(folder)">
                     <md-icon md-svg-icon="/svg-icons/project.svg"></md-icon>
                     <p>
                         {{ folder.name }}
                     </p>
                 </md-list-item>
                 <md-list-item ng-if="profile.username === storageFiles.profiles.authenticated().username"
-                              ui-sref="createNewProject()">
+                              ui-sref="storageFiles.createNewProject()">
                     <md-icon md-svg-icon="/svg-icons/add.svg"></md-icon>
                     <p>
                         Create a new project...
@@ -68,25 +68,27 @@
                     You have no no files in storage!
                 </div>
                 -->
-                <span ng-if="storageFiles.storage.files.length > 0 && storageFiles.selection.length === 0">
-                    <md-button ng-click="selectAll()">Select all
+                <span ng-if="storageFiles.selectedStorage.files.length > 0 && storageFiles.selection.length === 0">
+                    <md-button ng-click="storageFiles.selectAll()">Select all
                     </md-button>
                 </span>
                 <span ng-if="storageFiles.selection.length > 0">
-                    <md-button ng-click="deleteSelection($event)">
+                    <md-button ng-click="storageFiles.deleteSelection($event)">
                         Delete {{ storageFiles.selection.length }} files
                     </md-button>
-                    <md-button ng-click="unselectAll()">Unselect</md-button>
+                    <md-button ng-click="storageFiles.unselectAll()">Unselect</md-button>
                 </span>
             </div>
         </header>
         <md-content flex="grow">
             <section ng-repeat="directory in storageFiles.directories">
-                <md-subheader zng-if="directory._uri" class="md-primary">
+                <md-subheader ng-if="directory.matches"
+                              class="md-primary">
                     <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
                     /&nbsp;{{ directory.uri }}
                 </md-subheader>
-                <md-list class="list-of-files">
+                <md-list ng-if="directory.matches"
+                         class="list-of-files">
                     <md-list-item class="noright md-with-secondary"
                                   ng-if="directory.files.length > 0"
                                   ng-click="storageFiles.select({file: file})"
@@ -97,7 +99,7 @@
                             <span class="filesize">{{ file._sizeInKB }}kb</span>
                         </p>
                         <md-checkbox class="md-secondary"
-                                     ng-click="updateSelection()"
+                                     ng-click="storageFiles.updateSelection()"
                                      ng-model="file.isSelected"
                                      aria-label="Select">
                         </md-checkbox>

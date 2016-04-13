@@ -57,7 +57,7 @@ yarn.factory('writers', function (Prompt,
     function describeTheEnd() {
         storyLog.markAsRead();
 
-        theme.refresh();
+        currentTheme.refresh();
 
         // Show the story title
         var name = state.resolveValue(assert("TheEnd", "has", "Name"));

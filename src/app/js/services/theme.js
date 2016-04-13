@@ -53,7 +53,7 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
     };
 
     function ifDefined(object, key, value) {
-        if (angular.isDefined(value)) {
+        if (angular.isDefined(value) && value !== null) {
             object[key] = value;
         }
     }

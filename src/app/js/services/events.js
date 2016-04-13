@@ -5,6 +5,8 @@ yarn.service('events', function (assert,
                                  things,
                                  yConsole) {
 
+    var undef = void 0;
+
     function Events() {
         this.listeners = [];
     }
@@ -30,7 +32,7 @@ yarn.service('events', function (assert,
 
         yConsole.log("Processing events :" + (_eventId || "default"));
 
-        var triggerAssertions = state.assertions.find(assert(undefined, "trigger"));
+        var triggerAssertions = state.assertions.find(assert(undef, "trigger"));
 
 //        console.log("triggerAssertions", triggerAssertions);
 
@@ -52,8 +54,8 @@ yarn.service('events', function (assert,
                 assertionsMatched = state.resolveAll(_assert, true);
 
                 angular.forEach(assertionsMatched, function (assertion) {
-                    var _assert = assert(assertion.subject, assertion.predicate, assertion.object);
-                    var value = state.resolveValue(_assert);
+                    var __assert = assert(assertion.subject, assertion.predicate, assertion.object);
+                    var value = state.resolveValue(__assert);
                     if (value) {
                         hasOneNonFalseMatch = true;
                     }
@@ -82,7 +84,7 @@ yarn.service('events', function (assert,
 
             if ((eventId && value === eventId) || !eventId) {
 //                console.log("Testing : ", consoleHelper.assertion2log(assertion));
-                childAssertions = state.assertions.find(assert(undefined, undefined, undefined, {
+                childAssertions = state.assertions.find(assert(undef, undef, undef, {
                     parent: subject.id
                 }));
 
@@ -110,10 +112,12 @@ yarn.service('events', function (assert,
         });
 
         // Then, we trigger each assertion sets that are supposed to be triggered
-//        console.log("setsToBeTriggered ", setsToBeTriggered);
+        console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (trigger) {
             var somethingHappenedNow = self.triggerNow(trigger.object, trigger.assertion);
-            if (somethingHappenedNow) somethingHappened = true;
+            if (somethingHappenedNow) {
+                somethingHappened = true;
+            }
         });
 
         return somethingHappened;
@@ -159,9 +163,9 @@ yarn.service('events', function (assert,
     };
 
 
-    Events.prototype.trigger = function (assert) {
+    Events.prototype.trigger = function (_assert) {
 //        console.log("Trigger", assert);
-        state.createAssertion(assert.subject, assert.predicate, assert.object, {
+        state.createAssertion(_assert.subject, _assert.predicate, _assert.object, {
             layer: "step"
         });
     };

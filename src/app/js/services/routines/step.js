@@ -8,12 +8,13 @@ yarn.service("stepRoutine", function (events,
                                       wallpaper,
                                       player,
                                       storyLog,
-                                      writers) {
+                                      currentTheme) {
 
     /**
      * Increment the game session step counter
      */
     var alreadyInsideStep = false;
+    // TODO: This should be a for-each sequence with all item bound with same mechanic
     return function stepRoutine(action) {
         if (alreadyInsideStep) {
             console.warn("Prevented step recursion!");
@@ -106,6 +107,7 @@ yarn.service("stepRoutine", function (events,
                 wallpaper.clear();
             }
         }
+        currentTheme.refresh();
     }
 });
 

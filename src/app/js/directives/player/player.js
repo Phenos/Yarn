@@ -93,6 +93,7 @@ yarn.directive('player', function (channel,
                 lookAroundRoutine();
             }
 
+            currentTheme.refresh();
             promptLoop.update();
         };
 

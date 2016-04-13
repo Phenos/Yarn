@@ -13,7 +13,7 @@ yarn.service('events', function (assert,
 
     function Listener(_assert, eventId, callback) {
         this.assert = _assert; // In text form
-        this.eventId = eventId;
+        this.eventId = eventId.toLowerCase();
         this.callback = callback;
     }
 
@@ -24,6 +24,12 @@ yarn.service('events', function (assert,
 
     Events.prototype.process = function (_eventId) {
         var eventId = _eventId || null;
+        var eventIdNormalized = eventId;
+
+        if (eventId) {
+            eventIdNormalized = eventId.trim().toLowerCase();
+        }
+
         var self = this;
 //        console.log("Events.process()");
 
@@ -43,7 +49,7 @@ yarn.service('events', function (assert,
             var hasOneNonFalseMatch = false;
 //            console.log("--> ", eventId, listener.eventId);
             // Continue if the eventId matches
-            if (eventId && listener.eventId === eventId) {
+            if (eventId && listener.eventId === eventIdNormalized) {
 //                console.log("2", listener.assert);
                 // Continue if the assert is either true or if it resolves at least
                 // one "true" object
@@ -81,13 +87,15 @@ yarn.service('events', function (assert,
                 Action: assertion.subject,
                 Event: assertion.object
             });
-            console.log("triggerValue", triggerValue);
-
-//            console.log("VALUE: ", value, eventId, [assertion]);
+            var triggerValueNormalized = triggerValue;
+            if (angular.isString(triggerValue)) {
+                triggerValueNormalized = triggerValue.trim().toLowerCase()
+            }
+//            console.log("triggerValueNormalized", triggerValueNormalized);
 
             // Check if the eventId provided matches
-            if ((eventId && triggerValue === eventId) ||
-                !eventId && triggerValue === true) {
+            if ((eventId && triggerValueNormalized === eventIdNormalized) ||
+                !eventId && triggerValueNormalized === true) {
 //                console.log("Testing : ", consoleHelper.assertion2log(assertion));
                 childAssertions = state.assertions.find(assert(undef, undef, undef, {
                     parent: subject.id
@@ -106,7 +114,7 @@ yarn.service('events', function (assert,
                     });
 //                    console.log("allConditionsAreTrue", allConditionsAreTrue);
                     if (allConditionsAreTrue) {
-                        console.log("TRIGGERED!", object.id, eventId, triggerValue);
+//                        console.log("TRIGGERED!", object.id, eventId, triggerValue);
                         setsToBeTriggered.push({
                             object: object,
                             assertion: assertion,

@@ -1,11 +1,10 @@
 yarn.service("useRoutine", function (assert,
                                      events,
-                                     stepRoutine) {
+                                     step) {
 
     return function useRoutine(object) {
         events.trigger(assert("Player", "use", object));
-        var somethingHappened = stepRoutine();
-        return somethingHappened;
+        step();
     }
 
 });

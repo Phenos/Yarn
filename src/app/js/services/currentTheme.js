@@ -3,6 +3,14 @@
  * @name theme
  * @class
  */
-yarn.service("currentTheme", function (Theme) {
-    return new Theme();
+yarn.service("currentTheme", function (step, Theme, wallpaper) {
+
+    var currentTheme = new Theme();
+
+    step.on("before endStep", function () {
+        currentTheme.refresh();
+        wallpaper.update();
+    });
+
+    return currentTheme;
 });

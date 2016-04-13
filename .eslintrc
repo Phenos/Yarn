@@ -217,7 +217,7 @@
     "max-depth": ["error", 5],       // specify the maximum depth that blocks can be nested (off by default)
     "max-len": ["error", {"code": 100, "tabWidth": 4, "ignoreUrls": true}],         // specify the maximum length of a line in your program (off by default)
     "max-params": ["error", 10],      // limits the number of parameters that can be used in the function declaration. (off by default)
-    "max-statements": ["error", 20, {"ignoreTopLevelFunctions": true}],  // specify the maximum number of statement allowed in a function (off by default)
+    "max-statements": ["error", 30, {"ignoreTopLevelFunctions": true}],  // specify the maximum number of statement allowed in a function (off by default)
     "no-bitwise": 0,      // disallow use of bitwise operators (off by default)
     "no-plusplus": 0      // disallow use of unary operators, ++ and -- (off by default)
   }

@@ -6,7 +6,7 @@ yarn.service("lookAroundRoutine", function (events,
                                             stateHelpers,
                                             yConsole) {
 
-    events.on("Player did LookAround", "afterDialogs", function () {
+    events.on("Player did LookAround", "after dialogs", function () {
         lookAroundRoutine();
     });
 

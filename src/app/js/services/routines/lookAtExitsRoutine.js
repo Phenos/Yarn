@@ -3,8 +3,7 @@ yarn.service("lookAtExitsRoutine", function (events,
                                             assert,
                                             state,
                                             storyLog,
-                                            stateHelpers,
-                                            stepRoutine) {
+                                            stateHelpers) {
 
     return function lookAtExitsRoutine() {
         var phrase = [];

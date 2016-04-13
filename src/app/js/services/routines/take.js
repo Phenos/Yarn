@@ -1,6 +1,5 @@
 yarn.service("takeRoutine", function (state,
                                       events,
-                                      stepRoutine,
                                       assert,
                                       predicates,
                                       storyLog,

@@ -1,107 +1,108 @@
-yarn.service("stepRoutine", function (events,
-                                      state,
-                                      dialogs,
-                                      script,
-                                      assert,
-                                      synonyms,
-                                      statuses,
-                                      wallpaper,
-                                      player,
-                                      storyLog,
-                                      currentTheme) {
+yarn.service("step", function (postal,
+                               events,
+                               state,
+                               dialogs,
+                               assert,
+                               synonyms,
+                               statuses,
+                               player,
+                               storyLog) {
 
-    /**
-     * Increment the game session step counter
-     */
-    var alreadyInsideStep = false;
-    // TODO: This should be a for-each sequence with all item bound with same mechanic
+    function Step () {
+        this.alreadyInsideStep = false;
+        this.listeners = [];
+        this.scope = {};
+        this.channel = postal.channel("yarn.step");
+        this.sequence = [
+            "startStep",
+            "stepIncrement",
+            "stateUpdate",
+            "actions",
+            "events",
+            "move",
+            "dialogs",
+            "storyEnds",
+            "endStep"
+        ];
+    }
 
-    return function stepRoutine(action) {
-        if (alreadyInsideStep) {
-            console.warn("Prevented step recursion!");
-            return;
+    Step.prototype.on = function on(sequenceItemId, callback) {
+        this.channel.subscribe(sequenceItemId.toLowerCase(), callback);
+    };
+
+    Step.prototype.run = function run(action) {
+        var self = this;
+
+        self.scope.action = action || null;
+
+        if (!this.alreadyInsideStep) {
+            this.alreadyInsideStep = true;
+            angular.forEach(this.sequence, function (eventId) {
+                self.walk(eventId);
+            });
+        } else {
+            console.warn("Prevented accidental step recursion!");
         }
-        alreadyInsideStep = true;
+        this.alreadyInsideStep = false;
+    };
+
+    Step.prototype.walk = function walk(sequenceItemId) {
+        var self = this;
+//        console.log("step.walk", sequenceItemId);
+
+        publish("before " + sequenceItemId);
+        publish(sequenceItemId);
+        publish("after " + sequenceItemId);
+
+        function publish(id) {
+            self.channel.publish(id.toLowerCase(), self);
+            events.process(id);
+        }
+    };
 
 
-        // We keep track of where you are before parsing the events.
-        var initialSpace = state.one("Player is in *");
 
-        events.process("beforeStep");
+    var step = new Step();
+
+    step.on("startStep", function () {
         state.step(1);
         events.trigger(assert("Story", "did", "Step"));
         events.trigger(assert("Player", "did", "Step"));
+    });
 
-        /*
-         Refresh the list of Statuses and Synonyms, in case they changed during game play
-         */
-        events.process("beforeStateUpdate");
+    step.on("stateUpdate", function () {
         synonyms.update(state);
         statuses.update(state);
-        events.process("afterStateUpdate");
+    });
 
-        // Calling the main action that triggered the step to be processed
-        events.process("beforeAction");
-        action && action();
-        events.process("afterAction");
+    step.on("actions", function (_step) {
+//        console.log("ACTIONS >>> ", step);
+        _step.scope.action && _step.scope.action();
+    });
 
-        // Process all the events
-        events.process("beforeDefaultEvents");
-        var somethingHappened = events.process();
-        events.process("afterDefaultEvents");
+    step.on("events", function () {
+        events.process();
+    });
 
-        // Process movement by asertion. Ex.: You move to HouseInterior
-        events.process("beforeMove");
-        events.process("move");
-        events.process("afterMove");
-
-        // Check if dialogs are supposed to be said
-        events.process("beforeDialogs");
+    step.on("dialogs", function () {
         dialogs.process();
-        events.process("afterDialogs");
+    });
 
-        // todo: Refactor... this type of reaction should go trough some sort of command or routine ?
-        events.process("beforeEnded");
+    step.on("storyEnds", function () {
         var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
         if (storyHasEnded) {
             player.refresh();
         }
-        events.process("afterEnded");
+    });
 
-        events.process("beforeEndStep");
-        events.process("endStep");
-        events.process("afterEndStep");
-
+    step.on("endStep", function () {
         // Flush the storyLog buffers
         storyLog.flushBuffers();
-
-        // Update the wallpaper in case it has changed
+        // Remove the temporary "step" layer of assertions
         state.assertions.removeLayer("step");
-
-        updateWallpaper();
-
-        alreadyInsideStep = false;
-        return somethingHappened;
-    };
+    });
 
 
-    // todo: Place somewhere else!!!
-    function updateWallpaper() {
-        var room = state.resolveOne(assert("Player", "is in"));
-        if (room) {
-            var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
-            var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
-            if (url) {
-                wallpaper.change({
-                    image: url,
-                    layout: "fullscreen"
-                });
-            } else {
-                wallpaper.clear();
-            }
-        }
-        currentTheme.refresh();
-    }
+    return step;
 });
 

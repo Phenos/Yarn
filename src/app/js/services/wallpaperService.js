@@ -1,4 +1,4 @@
-yarn.service('wallpaper', function wallpaper() {
+yarn.service('wallpaper', function wallpaper(state, script, assert) {
 
     function Wallpaper() {
         this.options = "";
@@ -20,6 +20,26 @@ yarn.service('wallpaper', function wallpaper() {
     Wallpaper.prototype.clear = function clear() {
         this.change(false);
     };
+
+    Wallpaper.prototype.update = function clear() {
+
+        var self = this;
+        var room = state.resolveOne(assert("Player", "is in"));
+        if (room) {
+            var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
+            var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
+            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
+            if (url) {
+                self.change({
+                    image: url,
+                    layout: "fullscreen"
+                });
+            } else {
+                self.clear();
+            }
+        }
+    };
+
 
     return new Wallpaper();
 

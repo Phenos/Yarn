@@ -1,14 +1,14 @@
 yarn.service("doRoutine", function (state,
                                     events,
                                     assert,
-                                    stepRoutine) {
+                                    step) {
 
     function doRoutine(action, object) {
 
         // First check if the action is allowed in the current space
         if (action) {
 
-            stepRoutine(function () {
+            step.run(function () {
 
                 // Process attached triggers
                 var triggeredObjects = state.resolveAll(assert(action, "triggers"));

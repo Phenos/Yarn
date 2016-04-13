@@ -2,10 +2,9 @@ yarn.service("hintRoutine", function (writers,
                                       assert,
                                       state,
                                       events,
-                                      storyLog,
-                                      stepRoutine) {
+                                      storyLog) {
 
-    events.on("Player did Hint", "afterDefaultEvents", function () {
+    events.on("Player did Hint", "after events", function () {
         hintRoutine();
     });
 

@@ -2,13 +2,13 @@ yarn.service('beginStoryCommand', beginStoryCommand);
 
 function beginStoryCommand(yConsole,
                            logic,
-                           stepRoutine,
+                           step,
                            events,
                            assert) {
 
     function handler() {
         events.trigger(assert("Story", "did", "Begin"));
-        stepRoutine(function () {
+        step.run(function () {
             yConsole.log("Beginning the story!");
         });
     }

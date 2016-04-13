@@ -6,7 +6,7 @@ yarn.service("lookRoutine", function (events,
                                       yConsole) {
 
     // Process movement triggered by creating an assertion
-    events.on("Player did Look", "afterDefaultEvents", function () {
+    events.on("Player did Look", "after events", function () {
         var object = state.one("Player look at *");
         lookRoutine(object);
     });

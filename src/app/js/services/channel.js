@@ -1,6 +1,5 @@
-yarn.service("channel", function ($window) {
+yarn.service("channel", function (postal) {
 
-    var postal = $window["postal"];
     return postal.channel("yarn");
 
 });

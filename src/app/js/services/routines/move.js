@@ -3,14 +3,13 @@ yarn.service("moveRoutine", function (state,
                                       assert,
                                       predicates,
                                       things,
-                                      storyLog,
-                                      stepRoutine) {
+                                      storyLog) {
 
     // Process movement triggered by creating an assertion
     events.on("Player move to *", "move", function () {
         var MoveTo = state.many("Player move to *");
         state.negate(assert("Player", "move to"));
-        //console.log("MoveTo", MoveTo);
+//        console.log("MoveTo", MoveTo);
         if (MoveTo) {
             MoveTo = MoveTo[MoveTo.length - 1];
             moveRoutine(MoveTo);
@@ -32,7 +31,7 @@ yarn.service("moveRoutine", function (state,
                 linkedSpace = state.resolveOne(assert(door, "links to"));
                 var triggeredObjects = state.resolveAll(assert(door, "triggers"));
                 angular.forEach(triggeredObjects, function (object) {
-                    //todo: figure out if this should REALLY be triggered now...
+                    // todo: figure out if this should REALLY be triggered now...
                     events.triggerNow(object)
                 });
             }

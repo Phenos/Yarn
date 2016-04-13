@@ -3,8 +3,7 @@ yarn.service("lookAtUsablesRoutine", function (events,
                                             assert,
                                             state,
                                             storyLog,
-                                            stateHelpers,
-                                            stepRoutine) {
+                                            stateHelpers) {
 
     return function lookAtUsablesRoutine() {
         var phrase = [];

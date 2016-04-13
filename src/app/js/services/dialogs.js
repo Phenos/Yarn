@@ -56,7 +56,12 @@ yarn.service("dialogs", function (state,
                 }
 
                 // Then remove the "say" assertion
-                state.assertions.remove(assertion);
+//                state.assertions.remove(assertion);
+                state.negate(assert(
+                    assertion.subject,
+                    assertion.predicate,
+                    assertion.object
+                ));
 
             });
 

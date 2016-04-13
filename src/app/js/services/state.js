@@ -38,9 +38,15 @@ yarn.service('state', function ($localStorage,
 
         State.prototype.ready = function (isReady, status, message) {
             var readyness = this.readyness = this.readyness || {};
-            if (angular.isDefined(isReady)) readyness.isReady = isReady;
-            if (angular.isDefined(status)) readyness.message = message;
-            if (angular.isDefined(message)) readyness.status = status;
+            if (angular.isDefined(isReady)) {
+                readyness.isReady = isReady;
+            }
+            if (angular.isDefined(status)) {
+                readyness.message = message;
+            }
+            if (angular.isDefined(message)) {
+                readyness.status = status;
+            }
             return this.readyness;
         };
 
@@ -61,16 +67,18 @@ yarn.service('state', function ($localStorage,
         };
 
         /**
-         * Persist on or all files to localStorage
-         * @param file
+         * Persist one or all files to localStorage
+         * @param {EditorFile} file A file to persist to local storage
+         * @returns {undefined}
          */
         State.prototype.persistEditorFiles = function (file) {
             var sessionFiles = session.storage("editorFiles");
-            //console.log("persist -->", file);
+//            console.log("persist -->", file);
             if (sessionFiles) {
 
-                if (!angular.isArray(sessionFiles.files))
+                if (!angular.isArray(sessionFiles.files)) {
                     sessionFiles.files = [];
+                }
 
                 if (file) {
                     // The filename stored is prefixed with the profile name
@@ -93,18 +101,19 @@ yarn.service('state', function ($localStorage,
 
         /**
          * Reload the list open files from localStorage
+         * @returns {undefined}
          */
         State.prototype.reloadFromLocalStorage = function () {
             var lastFocusFromMemory = editors.lastFocusFromMemory();
 
             var sessionFiles = session.storage("editorFiles");
-            //console.log("sessionFiles", sessionFiles);
+//            console.log("sessionFiles", sessionFiles);
             if (sessionFiles) {
                 if (angular.isArray(sessionFiles.files)) {
                     var oldList = sessionFiles.files;
                     sessionFiles.files = [];
                     angular.forEach(oldList, function (file) {
-                        //console.log("file", file);
+//                        console.log("file", file);
                         var setFocus = false;
                         if (lastFocusFromMemory === file) {
                             setFocus = true;
@@ -122,11 +131,11 @@ yarn.service('state', function ($localStorage,
 
             console.info("Restoring assersions from localStorage");
 
-            //TOOD: Try to find a way notto inject state here...
+            // TODO: Try to find a way notto inject state here...
             var storyStorage = storyLocalStorage.get(this);
             var localAssertions = storyStorage.assertions || {};
 
-            //console.log("Restoring assertion from localState", localAssertions);
+//            console.log("Restoring assertion from localState", localAssertions);
 
             angular.forEach(localAssertions, function (assertion) {
                 var object = null;
@@ -169,11 +178,14 @@ yarn.service('state', function ($localStorage,
         State.prototype.resolveAll = function resolveAll(assert, returnAssertions) {
             var foundAssertions = [];
             var foundThings = [];
-            if (assert && (assert.subject && assert.predicate) || (assert.object && assert.predicate)) {
+            if (assert && (assert.subject && assert.predicate) ||
+                (assert.object && assert.predicate)) {
                 var foundObjectsSets = {};
 
                 // Exclused parented assertions unless already specified
-                if (angular.isUndefined(assert.parent)) assert.parent = null;
+                if (angular.isUndefined(assert.parent)) {
+                    assert.parent = null;
+                }
 
                 // Match all assertions to the criterias
                 var assertions = this.assertions.find(assert);
@@ -191,7 +203,9 @@ yarn.service('state', function ($localStorage,
                     var foundObjectSet;
                     if (assertion[typeToResolve]) {
                         foundObjectSet = foundObjectsSets[assertion[typeToResolve].id];
-                        if (!foundObjectSet) foundObjectSet = foundObjectsSets[assertion[typeToResolve].id] = [];
+                        if (!foundObjectSet) {
+                            foundObjectSet = foundObjectsSets[assertion[typeToResolve].id] = [];
+                        }
                         foundObjectSet.push(assertion);
                     }
                 });
@@ -203,11 +217,11 @@ yarn.service('state', function ($localStorage,
                         foundThings.push(topAssertion[typeToResolve]);
                     }
                 });
-                //console.log("FOUND: ", foundObjects);
+//                console.log("FOUND: ", foundObjects);
 
             }
 
-            //console.log("foundObjects", foundObjects);
+//            console.log("foundObjects", foundObjects);
             return (returnAssertions) ? foundAssertions : foundThings;
         };
 
@@ -436,19 +450,20 @@ yarn.service('state', function ($localStorage,
         };
 
         State.prototype.UnpersistAssertions = function (_assertions) {
-            // todo: refactor: Initialising the localStorage this way is not elegant.... use .ensure() pattern
+            // todo: refactor: Initialising the localStorage this
+            // way is not elegant.... use .ensure() pattern
             var storyStorage = storyLocalStorage.get(this);
 
             if (!storyStorage.assertions) {
                 storyStorage.assertions = {}
             }
 
-            //console.log("State.UnpersistAssertions", _assertions);
+//            console.log("State.UnpersistAssertions", _assertions);
             var assertions = _assertions;
             if (!angular.isArray(assertions)) assertions = [assertions];
 
             angular.forEach(assertions, function (assertion) {
-                //console.log("persistAssertion", assertion, assertion.layer);
+//                console.log("persistAssertion", assertion, assertion.layer);
                 if (assertion.layer === "session") {
                     delete storyStorage.assertions[assertion.id()];
                 }
@@ -458,14 +473,18 @@ yarn.service('state', function ($localStorage,
         State.prototype.negate = function (assert) {
             var self = this;
 
-            if (assert.layer) throw "Cannot specify layer when negating assertions";
-            if (assert.parent) throw "Cannot specify parent when negating assertions";
+            if (assert.layer) {
+                throw "Cannot specify layer when negating assertions";
+            }
+            if (assert.parent) {
+                throw "Cannot specify parent when negating assertions";
+            }
 
             var groupedAssertions = this.assertions
                 .filter(assert)
                 .groupByTripple();
 
-            //console.log("groupedAssertions", groupedAssertions);
+//            console.log("groupedAssertions", groupedAssertions);
 
             angular.forEach(groupedAssertions, function (assertions) {
                 var topAssertion = assertions.sortByWeight().top();
@@ -485,7 +504,7 @@ yarn.service('state', function ($localStorage,
 
                         self.assertions.add(newAssertion);
                         channel.publish("state.createAssertion", {assertion: newAssertion});
-                        //console.log("---------- negate2 ----> created new", newAssertion);
+//                        console.log("---------- negate2 ----> created new", newAssertion);
                         self.persistAssertion(newAssertion);
                     } else {
                         // Now we test if we have an underlying layer with a value,
@@ -503,17 +522,18 @@ yarn.service('state', function ($localStorage,
                             });
 
                             self.persistAssertion(topAssertion);
-                            //console.log("---------- negate2 ----> reassigned to false", topAssertion);
+//                            console.log("---------- negate2 ----> reassigned to false",
+//                              topAssertion);
                         } else {
                             var deleted = topAssertion;
                             self.assertions.remove(topAssertion);
                             channel.publish("state.deleteAssertion", {assertion: deleted});
                             self.UnpersistAssertions(topAssertion);
-                            //console.log("---------- negate2 ----> Discarded", topAssertion);
+//                            console.log("---------- negate2 ----> Discarded", topAssertion);
                         }
                     }
                 } else {
-                    //console.log("---------- negate2 ----> already negative", topAssertion);
+//                    console.log("---------- negate2 ----> already negative", topAssertion);
                 }
             });
 
@@ -564,7 +584,7 @@ yarn.service('state', function ($localStorage,
 
             // todo: move this in the "templating" service
             function _assert(assertion) {
-                //console.log("assert: " + assertion);
+//                console.log("assert: " + assertion);
                 var __assert = parseAssert(assertion);
                 return state.resolveValue(__assert);
             }
@@ -573,13 +593,13 @@ yarn.service('state', function ($localStorage,
             function _value(assertion, scope) {
                 var _scope = angular.extend({}, newScope, scope);
                 var value = state.value(assertion, _scope);
-                //console.log("value: " + value);
+//                console.log("value: " + value);
                 return value;
             }
 
             // todo: move this in the "templating" service
             function assertRaw(assertion) {
-                //console.log("assertRaw: " + assertion);
+//                console.log("assertRaw: " + assertion);
                 var __assert = parseAssert(assertion);
                 return state.resolveRawValue(__assert);
             }

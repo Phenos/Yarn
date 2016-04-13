@@ -15,6 +15,7 @@ yarn.service("stepRoutine", function (events,
      */
     var alreadyInsideStep = false;
     // TODO: This should be a for-each sequence with all item bound with same mechanic
+
     return function stepRoutine(action) {
         if (alreadyInsideStep) {
             console.warn("Prevented step recursion!");
@@ -77,14 +78,6 @@ yarn.service("stepRoutine", function (events,
         // Update the wallpaper in case it has changed
         state.assertions.removeLayer("step");
 
-
-        // If the user was moves... we describe again where you are
-        // REMOVE? This was replaced with the "look around" event
-//        var currentSpace = state.one("Player is in *");
-//        if (initialSpace !== currentSpace) {
-//            writers.describeWhereYouAre(true);
-//        }
-
         updateWallpaper();
 
         alreadyInsideStep = false;
@@ -92,6 +85,7 @@ yarn.service("stepRoutine", function (events,
     };
 
 
+    // todo: Place somewhere else!!!
     function updateWallpaper() {
         var room = state.resolveOne(assert("Player", "is in"));
         if (room) {

@@ -77,12 +77,17 @@ yarn.service('events', function (assert,
             var object = assertion.object;
             var subject = assertion.subject;
 
-            // todo: The value should be resolved from the state instead of being raw
-            var value = assertion.value();
+            var triggerValue = state.value("Action triggers Event", {
+                Action: assertion.subject,
+                Event: assertion.object
+            });
+            console.log("triggerValue", triggerValue);
 
 //            console.log("VALUE: ", value, eventId, [assertion]);
 
-            if ((eventId && value === eventId) || !eventId) {
+            // Check if the eventId provided matches
+            if ((eventId && triggerValue === eventId) ||
+                !eventId && triggerValue === true) {
 //                console.log("Testing : ", consoleHelper.assertion2log(assertion));
                 childAssertions = state.assertions.find(assert(undef, undef, undef, {
                     parent: subject.id
@@ -101,9 +106,11 @@ yarn.service('events', function (assert,
                     });
 //                    console.log("allConditionsAreTrue", allConditionsAreTrue);
                     if (allConditionsAreTrue) {
+                        console.log("TRIGGERED!", object.id, eventId, triggerValue);
                         setsToBeTriggered.push({
                             object: object,
-                            assertion: assertion
+                            assertion: assertion,
+                            event: triggerValue
                         });
                     }
                 }
@@ -112,7 +119,7 @@ yarn.service('events', function (assert,
         });
 
         // Then, we trigger each assertion sets that are supposed to be triggered
-        console.log("setsToBeTriggered ", setsToBeTriggered);
+//        console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (trigger) {
             var somethingHappenedNow = self.triggerNow(trigger.object, trigger.assertion);
             if (somethingHappenedNow) {
@@ -136,7 +143,7 @@ yarn.service('events', function (assert,
         var somethingHappened = false;
         var shouldOccur = true;
 
-        var maximumOccurrence = state.resolveValue(assert(object, "has", "MaximumOccurrence"));
+        var maximumOccurrence = state.resolveValue(assert(object, "has", "Maximum Occurrence"));
         var Occurrence = state.resolveValue(assert(object, "has", "Occurrence"));
 
         // Here we check if the event has reached the maximum allowed

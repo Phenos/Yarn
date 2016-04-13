@@ -3,7 +3,7 @@ yarn.service("lookRoutine", function (events,
                                       assert,
                                       state,
                                       storyLog,
-                                      stepRoutine) {
+                                      yConsole) {
 
     // Process movement triggered by creating an assertion
     events.on("Player did Look", "afterDefaultEvents", function () {
@@ -13,6 +13,9 @@ yarn.service("lookRoutine", function (events,
 
     function lookRoutine(object) {
         if (object) {
+
+            yConsole.log("Routine: look");
+            console.log("TRIGGERED! Routine: look");
 
             var thingName = state.resolveValue(assert(object, "has", "Name"));
             thingName = thingName || object.id;

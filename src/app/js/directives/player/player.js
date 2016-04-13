@@ -82,7 +82,7 @@ yarn.directive('player', function (channel,
         player.register(this);
 
         this.refresh = function () {
-            console.log("player.refresh");
+//            console.log("player.refresh");
 
             var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
             if (storyHasEnded) {

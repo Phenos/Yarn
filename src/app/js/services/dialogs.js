@@ -74,7 +74,8 @@ yarn.service("dialogs", function (state,
                             ellipsis = "[…]";
                         }
                         var dialogExerpt = '"' + _statement[0].substring(0, 20) + ellipsis + '"';
-                        yConsole.log("Dialog: <strong>" + voice + "</strong>:" + dialogExerpt, {
+                        yConsole.log("Dialog: <strong>" + _statement[1] + "</strong>:"
+                            + dialogExerpt, {
                             source: assertion.source
                         });
 
@@ -109,11 +110,10 @@ yarn.service("dialogs", function (state,
 
             var logType = matchvoiceToLogTypes[voice];
             if (logType) {
-                console.log("Found builtin voice", voice);
-                var handler = storyLog.buffer()[logType];
+//                console.log("Found builtin voice", voice);
                 storyLog.buffer()[logType](statement);
             } else {
-                console.log("Looking for alternate voice", voice);
+//                console.log("Looking for alternate voice", voice);
                 // The voice doesnt match any standard voice, so we look for an actor
                 var isActor = state.value("Subject is Actor", { Subject: voice });
                 if (isActor) {

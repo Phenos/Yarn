@@ -67,9 +67,9 @@ yarn.service('storyLog', function (state) {
     };
 
     StoryLog.prototype.dialog = function (text, scope) {
-        console.log("SCOPE>>>>>> ", scope);
+//        console.log("SCOPE>>>>>> ", scope);
         var actorName = state.value("Subject has a Name", { Subject: scope.actor });
-        var voiceLabel = actorName || voice;
+        var voiceLabel = actorName || scope.actor;
         this.controller.write("<strong>" + voiceLabel + " —</strong> " + text, "dialog");
     };
 

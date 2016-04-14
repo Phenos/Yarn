@@ -1,8 +1,7 @@
 /**
  * Service for handling IDE/editor operations
  */
-yarn.service('IDE', function IDEService(rememberLastStory,
-                                        $mdDialog,
+yarn.service('IDE', function IDEService($mdDialog,
                                         yConsole,
                                         loader,
                                         commands,
@@ -35,17 +34,9 @@ yarn.service('IDE', function IDEService(rememberLastStory,
         return confirmationMessage;
     });
 
-
-    /**
-     * Register the service to a scope to allow binding keystrokes
-     */
-    IDE.prototype.register = function () {
-    };
-
-
     IDE.prototype.saveAllAndRun = function () {
         var self = this;
-        console.log(".saveAllAndRun()");
+//        console.log(".saveAllAndRun()");
         this.working(true);
         self.saveAll(function (story) {
             self.run(story);
@@ -58,7 +49,8 @@ yarn.service('IDE', function IDEService(rememberLastStory,
                     .alert()
                     .clickOutsideToClose(true)
                     .title('Oups!')
-                    .textContent('A problem occured while saving your story. Your changes were not saved.')
+                    .textContent('A problem occured while saving' +
+                        'your story. Your changes were not saved.')
                     .ok('Ok')
             );
         })
@@ -66,7 +58,7 @@ yarn.service('IDE', function IDEService(rememberLastStory,
 
     IDE.prototype.saveAll = function (success, failure) {
         editorFiles.saveAll(success, failure);
-        //console.log("IDE.save");
+//        console.log("IDE.save");
     };
 
     IDE.prototype.validate = function () {

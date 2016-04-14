@@ -46,8 +46,6 @@ yarn.controller('root', function rootController(user,
         layout: "fullscreen"
     });
 
-    IDE.register($scope);
-
     // Register with the service
     root.register($scope);
 

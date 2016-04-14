@@ -1,4 +1,4 @@
-yarn.service('storyLog', function () {
+yarn.service('storyLog', function (state) {
 
     function StoryLog() {
         var self = this;
@@ -64,6 +64,13 @@ yarn.service('storyLog', function () {
 
     StoryLog.prototype.action = function (text) {
         this.controller.write("—" + text, "action");
+    };
+
+    StoryLog.prototype.dialog = function (text, scope) {
+        console.log("SCOPE>>>>>> ", scope);
+        var actorName = state.value("Subject has a Name", { Subject: scope.actor });
+        var voiceLabel = actorName || voice;
+        this.controller.write("<strong>" + voiceLabel + " —</strong> " + text, "dialog");
     };
 
     StoryLog.prototype.insight = function (text) {

@@ -8,33 +8,25 @@ yarn.service("dialogs", function (state,
 
     var service = {};
     service.process = function process() {
-        console.log("dialogs.process");
+//        console.log("dialogs.process");
 
-        var dialogs = state.assertions.find(assert(undefined, "says", undefined, {
+        var undef = void 0;
+        var dialogs = state.assertions.find(assert(undef, "says", undef, {
             parent: null
         }));
 
         outputStatements(dialogs);
 
-//        outputStatement(sayActions, "action");
-//        outputStatement(sayMonologues, "log");
-//        outputStatement(sayInsight, "insight");
-
-//        console.log("Dialog > sayAssertions", sayAssertions);
-
         function outputStatements(dialogsAssertions) {
             angular.forEach(dialogsAssertions, function (assertion) {
                 var statements = [];
 
-                var type = assertion.object.id;
-
                 var statement;
-//                console.log("assertion", assertion);
 
                 var isDialog = state.value("Object is a Dialog", {
                     Object: assertion.object
                 });
-                console.log("--isDialog", isDialog);
+//                console.log("--isDialog", isDialog);
                 if (isDialog) {
                     var script = state.value("Object has a Script", {
                         Object: assertion.object
@@ -42,7 +34,7 @@ yarn.service("dialogs", function (state,
 
                     // Her we start cutting the script in pieces
                     var matches = script.match(scriptCuttingRegex);
-                    console.log("matches", matches);
+//                    console.log("matches", matches);
                     var buffer = [];
                     var voice = "DEFAULT";
                     function flushBuffer() {
@@ -50,7 +42,7 @@ yarn.service("dialogs", function (state,
                             var text = buffer.join("");
                             statements.push([text, voice]);
                             buffer = [];
-                            console.log("flushed", [text, voice]);
+//                            console.log("flushed", [text, voice]);
                             voice = "DEFAULT";
                         }
                     }
@@ -59,7 +51,7 @@ yarn.service("dialogs", function (state,
                         if (isVoice.test(match)) {
                             flushBuffer();
                             voice = match.substring(0, match.length - 1);
-                            console.log("voice: ", voice);
+//                            console.log("voice: ", voice);
                         } else {
                             buffer.push(match);
                         }
@@ -94,8 +86,7 @@ yarn.service("dialogs", function (state,
                     });
                 }
 
-                // Then remove the "say" assertion
-//                state.assertions.remove(assertion);
+                // Then remove the "say" assertions
                 state.negate(assert(
                     assertion.subject,
                     assertion.predicate,
@@ -118,14 +109,18 @@ yarn.service("dialogs", function (state,
 
             var logType = matchvoiceToLogTypes[voice];
             if (logType) {
+                console.log("Found builtin voice", voice);
                 var handler = storyLog.buffer()[logType];
-                if (angular.isDefined(handler)) {
-                    storyLog.buffer()[logType](statement);
-                } else {
-                    console.log("voice----> ", voice);
-                }
+                storyLog.buffer()[logType](statement);
             } else {
-                console.log("voice----> ", voice);
+                console.log("Looking for alternate voice", voice);
+                // The voice doesnt match any standard voice, so we look for an actor
+                var isActor = state.value("Subject is Actor", { Subject: voice });
+                if (isActor) {
+                    storyLog.buffer().dialog(statement, {
+                        actor: voice
+                    });
+                }
             }
 
         }

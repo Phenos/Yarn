@@ -19,7 +19,7 @@ yarn.service("contextActions", function (state) {
                 allowedActions[obj.id] = obj;
             });
         }
-        //console.log("getContextActions");
+//        console.log("getContextActions");
 
         if (space) {
 
@@ -34,9 +34,10 @@ yarn.service("contextActions", function (state) {
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {
                 var actionDoesApply = true;
-                //console.log("hu??", !(spaceIsRestricted && !allowedActions[action.id]));
+//                console.log("hu??", !(spaceIsRestricted && !allowedActions[action.id]));
                 if (!(spaceIsRestricted && !allowedActions[action.id])) {
                     var scope = {
+                        CurrentSpace: space,
                         CurrentAction: action,
                         ActionObject: object
                     };
@@ -47,7 +48,8 @@ yarn.service("contextActions", function (state) {
                         var iconSize = state.value("CurrentAction has IconSize", scope);
                         var name = state.value("CurrentAction has Name", scope);
                         var label = state.value("CurrentAction has Label", scope);
-                        var unlessConditions = state.manyAssertions("CurrentAction unless *", scope);
+                        var unlessConditions =
+                            state.manyAssertions("CurrentAction unless *", scope);
 
                         if (isActive || allowedActions[action.id]) {
 
@@ -57,11 +59,11 @@ yarn.service("contextActions", function (state) {
                                 if (!value) {
                                     actionDoesApply = false;
                                 }
-                                //console.log("---expression", expression);
-                                //console.log("---assertion", assertion);
-                                //console.log(">>VALUE", value);
+//                                console.log("---expression", expression);
+//                                console.log("---assertion", assertion);
+//                                console.log(">>VALUE", value);
                             });
-                            //console.log("unlessConditions", unlessConditions);
+//                            console.log("unlessConditions", unlessConditions);
                             if (actionDoesApply) {
                                 var action = new Action(object, {
                                     icon: icon,

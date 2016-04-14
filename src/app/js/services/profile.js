@@ -4,6 +4,7 @@ yarn.service("Profile", function (Storage, twitterProfile) {
         var self = this;
 
         this.username = username;
+        this.shortUsername = username.split(".")[1];
         this.user = user || null;
         this.storage = new Storage(this);
         this.twitterProfile = null;

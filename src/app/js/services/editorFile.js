@@ -14,6 +14,7 @@ yarn.service("EditorFile", function (guid,
         this._sizeInKB = 0;
         this._isModified = false;
         this._absoluteURI = "";
+        this.__absoluteURI = "";
         this.uri = null;
         this.rename(uri);
         this.guid = guid();
@@ -48,6 +49,7 @@ yarn.service("EditorFile", function (guid,
         this.uri = new URI(this._uri).normalize();
         this._filename = this.filename();
         this._absoluteURI = this.absoluteURI();
+        this.__absoluteURI = this.absoluteURI().toString();
     };
 
     EditorFile.prototype.sizeInKB = function () {

@@ -19,12 +19,14 @@ yarn.directive('sidebar', function SidebarDirective() {
                                login,
                                root) {
 
-        if (session.user()) this.user = session.user();
+        if (session.user()) {
+            this.user = session.user();
+        }
 
         if (this.user && this.user.username) {
             $scope.avatar = this.user.profileImageURL;
             $scope.displayName = this.user.displayName;
-            $scope.username = this.user.username;
+            $scope.username = this.user.username.split('.')[1];
         }
 
         this.showConsole = function () {
@@ -61,13 +63,17 @@ yarn.factory('sidebar', function sidebarService() {
     var controller;
 
     function open() {
-        //console.log(".open");
-        if (controller) controller.open();
+//        console.log(".open");
+        if (controller) {
+            controller.open();
+        }
     }
 
     function close() {
-        //console.log(".close");
-        if (controller) controller.close();
+//        console.log(".close");
+        if (controller) {
+            controller.close();
+        }
     }
 
     function register(ctrl) {

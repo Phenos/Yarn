@@ -33,31 +33,31 @@
                             <md-menu-item>
                                 <md-button ng-click="toolbar.openFromProject()">
                                     Browse project files
-                                    <span class="md-alt-text"> {{ 'M-O' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'M-O' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="toolbar.IDE.saveAllAndRun()">
                                     Save All and Run
-                                    <span class="md-alt-text"> {{ 'M-Enter' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'M-Enter' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="toolbar.IDE.saveAll()">
                                     Save All
-                                    <span class="md-alt-text"> {{ 'M-S' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'M-S' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="toolbar.run()">
                                     Run
-                                    <span class="md-alt-text"> {{ 'M-S-Enter' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'M-S-Enter' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="toolbar.validate()">
                                     Validate Current State
-                                    <span class="md-alt-text"> {{ 'M-S-V' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'M-S-V' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -70,7 +70,7 @@
                             <md-menu-item>
                                 <md-button ng-click="toolbar.IDE.newFile($event)">
                                     Create new file
-                                    <span class="md-alt-text"> {{ 'C-S-N' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'C-S-N' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -83,7 +83,7 @@
                             <md-menu-item>
                                 <md-button ng-click="toolbar.hideConsole()">
                                     Close Editor
-                                    <span class="md-alt-text"> {{ 'M-Esc' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'M-Esc' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -145,10 +145,10 @@
             </md-button>
             <span flex></span>
             <save-status>
-                <a target="_blank" ng-href="{{ toolbar.editors.current.file._absoluteURI.toString() }}"
+                <a target="_blank" ng-href="{{ toolbar.editors.current.file.__absoluteURI }}"
                    ng-bind="toolbar.editors.current.file.status"></a>
                 <md-tooltip md-direction="left" md-delay="250">
-                    File located at {{ toolbar.editors.current.file._absoluteURI.toString() }}
+                    File located at {{ toolbar.editors.current.file.__absoluteURI }}
                 </md-tooltip>
             </save-status>
             <md-button ng-click="toolbar.editors.current.close()" class="md-icon-button" aria-label="Close">

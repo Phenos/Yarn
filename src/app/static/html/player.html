@@ -41,11 +41,11 @@
             <div ng-if="player.state.readyness.status === 'choosestory' && player.profile">
                 <div class="profile-info"
                      ng-if="player.profile.twitterProfile">
-                    <img alt="{{ player.profile.username.split('.')[1] }}"
+                    <img alt="{{ player.profile.shortUsername }}"
                          ng-src="{{ player.profile.twitterProfile.profile_image_url| biggerProfileImage }}"
                          class="avatar"/>
 
-                    <h3>{{ player.profile.username.split(".")[1] }}</h3>
+                    <h3>{{ player.profile.shortUsername }}</h3>
                 </div>
                 <div ng-if="player.profile.storage.allProjectFolders.length === 0">
                     <div ng-if="player.isOwnProfile">
@@ -57,12 +57,12 @@
                         <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
                         <p class="message">
                             Sorry, Could not find a twitter profile for
-                            <strong>{{ player.profile.username.split(".")[1] }}</strong>
+                            <strong>{{ player.profile.shortUsername }}</strong>
                         </p>
                         <md-list>
                             <md-list-item ng-if="player.profiles.authenticated()">
                                 <md-button ui-sref="profile({
-                            profile: player.profiles.authenticated().username.split('.')[1] })">
+                            profile: player.profiles.authenticated().shortUsername })">
                                     Back to your profile
                                 </md-button>
                             </md-list-item>
@@ -70,13 +70,13 @@
                     </div>
                     <div ng-if="!player.isOwnProfile && player.profile.twitterProfile">
                         <p class="message">
-                            Sorry, {{ player.profile.username.split(".")[1] }}
+                            Sorry, {{ player.profile.shortUsername }}
                             doesn't have any project on YarnStudio!
                         </p>
                         <md-list>
                             <md-list-item ng-if="player.profiles.authenticated()">
                                 <md-button ui-sref="profile({
-                            profile: player.profiles.authenticated().username.split('.')[1] })">
+                            profile: player.profiles.authenticated().shortUsername })">
                                     Back to your profile
                                 </md-button>
                             </md-list-item>
@@ -95,7 +95,7 @@
                     <md-list>
                         <md-list-item ng-repeat="folder in player.profile.storage.projectFolders">
                             <md-button ui-sref="story({
-                            profile: player.profile.username.split('.')[1],
+                            profile: player.profile.shortUsername,
                             story: folder.name })">
                                 {{ folder.name }}
                             </md-button>
@@ -128,14 +128,14 @@
                     </md-list-item>
                     <md-list-item ng-if="player.profiles.authenticated()">
                         <md-button ui-sref="profile({
-                            profile: player.profiles.authenticated().username.split('.')[1] })">
+                            profile: player.profiles.authenticated().shortUsername })">
                             Back to your profile
                         </md-button>
                     </md-list-item>
                     <md-list-item ng-if="!player.isOwnProfile">
                         <md-button ui-sref="profile({
-                            profile: player.profile.username.split('.')[1] })">
-                            Back to {{ player.profile.username.split(".")[1] }}
+                            profile: player.profile.shortUsername })">
+                            Back to {{ player.profile.shortUsername }}
                         </md-button>
                     </md-list-item>
                 </md-list>

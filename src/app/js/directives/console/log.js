@@ -6,32 +6,30 @@ function LogDirective($sce, editorFiles, openFileFromAbsoluteURL) {
     return {
         restrict: 'E',
         scope: {
-            type: '=',
-            text: '=',
-            options: '=',
-            step: '=',
-            isNewStep: '=',
-            timestamp: '='
+            line: '='
         },
         templateUrl: './html/log.html',
         link: Link
     };
 
     function Link(scope, element) {
-        var _options = scope.options || {};
+        var _options = scope.line.options || {};
 
-        var _time = new Date(scope.timestamp);
-        if (_options.source) scope.source = _options.source;
+        var _time = new Date(scope.line.timestamp);
+        if (_options.source) {
+            scope.source = _options.source;
+        }
         scope.time = _time.getHours() + ":" + _time.getMinutes();
-        element.addClass("is-" + scope.type);
+        element.addClass("is-" + scope.line.type);
 
-        if (scope.isNewStep) {
+        if (scope.line.isNewStep) {
             element.addClass("isNewStep");
         }
 
         scope.text2html = function() {
-            return $sce.trustAsHtml(scope.text);
+            return $sce.trustAsHtml(scope.line.text);
         };
+        scope._text2html = scope.text2html();
 
         scope.goToSource = function (source) {
             if (source) {

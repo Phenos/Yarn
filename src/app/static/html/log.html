@@ -1,14 +1,14 @@
 <div>
-    <span class='step'>#{{ step }}</span>
-    <span class='timestamp'>{{ time }}</span>
-    <span class='text' ng-bind-html="text2html()"></span>
-    <span ng-if="source"
+    <span class='step'>#{{:: line.step }}</span>
+    <span class='timestamp'>{{:: time }}</span>
+    <span class='text' ng-bind-html="::_text2html"></span>
+    <span ng-if="::source"
           ng-click="goToSource(source)"
           class="source">
         [<span class="url">
-                {{ source.file }}
-                <span class="line">:{{ source.line }}</span>
-                <md-tooltip md-direction="left">{{ source.uri }}</md-tooltip>
+                {{:: source.file }}
+                <span class="line">:{{:: source.line }}</span>
+                <md-tooltip md-direction="left">{{:: source.uri }}</md-tooltip>
             </span>]
     </span>
 </div>

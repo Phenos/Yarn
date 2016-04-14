@@ -21,31 +21,31 @@
                 >
                     <md-fab-trigger>
                         <md-button class="md-fab">
-                            <md-icon md-svg-src="/svg-icons/inspections/{{ article.type }}.svg"
+                            <md-icon md-svg-src="/svg-icons/inspections/{{::article.type }}.svg"
                                      aria-label="menu"></md-icon>
                         </md-button>
                     </md-fab-trigger>
                     <md-fab-actions>
-                        <md-button aria-label="{{ action.label }}"
+                        <md-button aria-label="{{::action.label }}"
                                    class="md-fab md-raised md-mini"
                                    ng-click="action.callback();"
-                                   ng-repeat="action in article.actions">
-                            <md-tooltip md-direction="bottom">{{ action.label}}</md-tooltip>
+                                   ng-repeat="action in ::article.actions">
+                            <md-tooltip md-direction="bottom">{{::action.label}}</md-tooltip>
                             <md-icon
-                                    md-svg-src="/svg-icons/{{ action.icon }}.svg"
-                                    aria-label="{{ action.label }}"></md-icon>
+                                    md-svg-src="/svg-icons/{{::action.icon }}.svg"
+                                    aria-label="{{::action.label }}"></md-icon>
                         </md-button>
                     </md-fab-actions>
                 </md-fab-speed-dial>
                 <h3>
-                    {{ article.title }}
+                    {{:: article.title }}
                 </h3>
                 <section>
                 </section>
             </article>
         </articles>
     </div>
-    <div ng-show="!inspector.articles || inspector.articles.length === 0"
+    <div ng-if="!inspector.articles || inspector.articles.length === 0"
          layout-fill
          layout="column"
          layout-align="center center">

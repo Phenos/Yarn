@@ -37,6 +37,8 @@
                 self.isReady = true;
             }, 1000);
 
+            this.lines = [];
+
             this.scrollbarsConfig = {
                 autoHideScrollbar: true,
                 theme: 'light',
@@ -89,13 +91,38 @@
             };
 
             this.clear = function () {
-                var logElement = $element.find("logs");
-                logElement.empty();
+                this.lines = [];
 
                 this.onClear();
             };
 
             this.write = function (text, type, options) {
+                var scope = $scope.$new();
+                var step = state.step();
+                var isNewStep = false;
+                if (lastStep !== scope.step) {
+                    isNewStep = true;
+                    lastStep = scope.step;
+                }
+
+                var newLine = new Line(text, type, step, isNewStep, options);
+                this.lines.push(newLine);
+
+                if (self.updateScrollbar) {
+                    self.updateScrollbar('scrollTo', 10000000);
+                }
+            };
+
+            function Line(text, type, step, isNewStep, options) {
+                this.text = text;
+                this.type = type;
+                this.step = step;
+                this.isNewStep = isNewStep;
+                this.timestamp = Date.now();
+                this.options = options;
+            }
+
+            this.old_write = function (text, type, options) {
                 var scope = $scope.$new();
                 scope.text = text;
                 scope.type = type;
@@ -110,8 +137,8 @@
                 scope.timestamp = Date.now();
                 var logsElem = $element.find("logs");
                 var logItemTemplate =
-                    '<log is-new-step="isNewStep" options="options" timestamp="timestamp" ' +
-                    'step="step" type="type" text="text"></log>';
+                    '<log is-new-step="::isNewStep" options="::options" timestamp="::timestamp" ' +
+                    'step="{{::step}}" type="{{::type}}" text="{{::text}}"></log>';
                 var logElem = $compile(logItemTemplate)(scope);
                 logsElem.append(logElem);
 
@@ -129,7 +156,6 @@
     function consoleService() {
         var service = {};
         var controller;
-
 
         service.register = function (_controller) {
             controller = _controller;

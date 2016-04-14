@@ -23,7 +23,6 @@
             ng-show="_IDEisVisible">
         <md-section layout="row" flex="" style="overflow: hidden; position: relative;">
             <md-section
-                    ng-show="_IDEisVisible"
                     ng-if="state.story.exists"
                     md-whiteframe="10"
                     class="layout-panel"
@@ -77,8 +76,7 @@
                 layout="column"
                 class="toolTabs layout-panel"
                 flex="{{ consoleFlexHeight }}"
-                flex-order="5"
-                ng-show="_IDEisVisible">
+                flex-order="5">
             <div class="toolTabs-toggle">
                 <md-button class="md-icon-button"
                            ng-click="toggleTools()"
@@ -94,7 +92,7 @@
         </md-section>
 
     </md-section>
-    <md-section ng-show="_helpIsVisible"
+    <md-section ng-if="_helpIsVisible"
                 md-whiteframe="10"
                 flex="100"
                 layout="column"

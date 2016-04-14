@@ -27,7 +27,9 @@ yarn.factory('Pointer', function PointerService(URI) {
     };
 
     Pointer.prototype.state = function (id) {
-        if (id || id === "") this._state = id;
+        if (id || id === "") {
+            this._state = id;
+        }
         return this._state;
     };
 
@@ -131,6 +133,8 @@ yarn.factory('Pointer', function PointerService(URI) {
     };
 
 
+    /* eslint max-statements:0 */
+    /* eslint complexity:0 */
     Pointer.prototype.tokenize = function (text) {
         var exit = false;
         var pointer = this;
@@ -139,12 +143,8 @@ yarn.factory('Pointer', function PointerService(URI) {
 
         var numeric = "0123456789";
         var numericExtended = numeric + ".";
-        var lowerAlpha = "abcdefghijklmnopqrstuvwxyz";
         var upperAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var CamelCaseSeries = /([@A-Z][a-z_A-Z0-9]*[\s]*)+/g;
-        var alpha = upperAlpha + lowerAlpha;
-        var alphaNum = alpha + numeric;
-        var alphaNumExtended = alphaNum + "_";
 
         pointer.text = text;
 
@@ -283,7 +283,7 @@ yarn.factory('Pointer', function PointerService(URI) {
         var grid = ["<table class='testGrid'><thead><tr><td>Type</td>" +
         "<td>AST Operation</td><td>Token</td>" +
         "<td>Raw</td></tr></thead>"];
-        tokens.forEach(function (token, index, tokens) {
+        tokens.forEach(function (token) {
             grid.push("<tr><td>");
             grid.push(token[0]);
             grid.push("</td><td>");

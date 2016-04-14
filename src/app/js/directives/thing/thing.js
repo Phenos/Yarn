@@ -39,6 +39,8 @@ yarn.directive('thing', function ThingDirective(things,
     };
 
     function ThingController($element, $attrs) {
+        var self = this;
+
         this.unrecognized = false;
         this.token = $attrs.token;
         this.text = $attrs.text;
@@ -52,36 +54,47 @@ yarn.directive('thing', function ThingDirective(things,
 
         thingsLinks.register(this);
 
-        if (!angular.isObject(this.thing)) {
-            this.unrecognized = true;
-            this.text = this.token;
-        } else {
-            this.actions = contextActions(this.thing);
-            this.actions.shift();
+        this.hover = function hover() {
+            self.update();
+        };
 
-            if (this.actions.length === 0) {
-                this.tooltip = "Nothing to do!";
-            } else if (this.actions.length === 1) {
-                this.tooltip = this.actions[0].name;
+        this.update = function update() {
+
+            if (!angular.isObject(self.thing)) {
+                self.unrecognized = true;
+                self.text = self.token;
             } else {
-                var actions = [];
-                angular.forEach(this.actions, function (action) {
-                    actions.push(action.name);
-                });
-                this.tooltip = actions.join(", ");
+                self.actions = contextActions(self.thing);
+                self.actions.shift();
+
+                if (self.actions.length === 0) {
+                    self.tooltip = "Nothing to do!";
+                } else if (self.actions.length === 1) {
+                    self.tooltip = self.actions[0].name;
+                } else {
+                    var actions = [];
+                    angular.forEach(self.actions, function (action) {
+                        actions.push(action.name);
+                    });
+                    self.tooltip = actions.join(", ");
+                }
             }
-        }
+            console.log("--actions", self.tooltip);
+        };
 
         this.unselect = function () {
             this.selected = false;
         };
 
         this.select = function () {
+            this.update();
             thingsLinks.unselectAll();
             this.selected = true;
         };
 
         this.click = function (e) {
+            this.update();
+
             var self = this;
 //            console.log("e", e);
             e.preventDefault();
@@ -111,7 +124,8 @@ yarn.directive('thing', function ThingDirective(things,
                     yConsole.warning("Clicking this link did nothing: " + self.text);
                 }
             }
-        }
+        };
+
     }
 
 });

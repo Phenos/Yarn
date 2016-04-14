@@ -6,7 +6,8 @@
 }"
    ng-href="{{thing.token}}"
    ng-click="thing.click($event)"
+   ng-mouseover="thing.hover()"
    ><span ng-bind="thing.text"></span>
-    <md-tooltip md-visible="thing.tooltipVisible" md-direction="bottom" ng-bind="thing.tooltip"></md-tooltip>
+    <md-tooltip md-delay="200" md-visible="thing.tooltipVisible" md-direction="bottom" ng-bind="thing.tooltip"></md-tooltip>
 </a>
 

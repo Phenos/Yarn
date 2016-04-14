@@ -43,8 +43,9 @@
         }
     }
 
-    console-main {
-        background-color: transparent !important;
+    .console-inner {
+        //background-color: transparent !important;
+        background-color: #333 !important;
     }
 
     logscroll {
@@ -62,14 +63,14 @@
             position: relative;
 
             margin: 0;
-            padding: 0.2em 1.5em 0.2em 1.7em;
-            color: #333;
+            padding: 0.2em 1.5em 0.2em 7em;
+            color: #dddddd;
 
             &.isNewStep {
                 margin-top: 0.5em;
                 padding-top: 1em;
-                border-top: 1px solid rgba(0, 0, 0, 0.2);
-                box-shadow: inset 0px 26px 19px -22px rgba(0,0,0,0.17);
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: inset 0 26px 19px -22px rgba(0,0,0,0.17);
             }
 
             &:nth-child(even) {
@@ -90,26 +91,28 @@
             }
 
             .timestamp {
+                position: absolute;
+                left: 0.25em;
                 font-weight: normal;
                 font-style: normal;
-                float: right;
                 font-size: 1em;
-                color: rgba(0, 0, 0, 0.4);
+                color: rgba(255, 255, 255, 0.2);
             }
             .step {
+                position: absolute;
+                left: 2em;
                 font-weight: normal;
                 font-style: normal;
-                float: right;
                 font-size: 1em;
-                color: rgba(0, 0, 0, 0.4);
+                color: rgba(255, 255, 255, 0.2);
                 padding-left: 1em;
             }
 
             log-icon {
                 position: absolute;
-                font-size: 0.7em;
-                left: 0.3em;
-                top: 0.7em;
+                font-size: 1em;
+                left: 6em;
+                top: 0;
             }
 
             &.is-log {
@@ -117,38 +120,35 @@
             }
             &.is-tip {
                 font-weight: 400;
-                log-icon,
+                log-icon span,
                 strong {
                     color: #6666CC;
                 }
-                log-icon {
+                log-icon span {
                     font-size: 1.2em;
-                    left: 0.3em;
-                    top: 0.1em;
+                    top: 0;
                     color: #6666CC;
                 }
             }
             &.is-error {
-                color: #CC3333;
+                color: #dc4f4d;
             }
             &.is-warning {
                 color: #b08e00;
             }
             &.is-success {
-                log-icon {
+                log-icon span {
                     font-style: normal;
                     font-size: 0.9em;
-                    left: 0.5em;
-                    top: 0.45em;
+                    top: 0.5em;
                     color: #298d14;
                 }
             }
             &.is-transaction {
-                log-icon {
+                log-icon span {
                     font-style: normal;
                     font-size: 1.2em;
-                    left: 0.5em;
-                    top: -0.2em;
+                    top: 0;
                     color: #6d6c69;
                 }
             }
@@ -158,11 +158,10 @@
                 [command] {
                     //color: #1b7b1b !important;
                 }
-                log-icon {
+                log-icon span {
                     font-style: normal;
                     font-size: 0.8em;
-                    left: 0.5em;
-                    top: 0.55em;
+                    top: 0.5em;
                     color: #1b7b1b;
                 }
             }
@@ -179,19 +178,19 @@
                 font-size: 0.9em;
                 font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
                 .predicate {
-                    color: #696969;
+                    color: #838383;
                 }
                 .object,
                 .subject {
                     cursor: pointer;
-                    color: #22439E;
+                    color: #396ae0;
                     text-decoration: none;
                     &:hover {
                         text-decoration: underline;
                     }
                 }
                 .value {
-                    color: #718C00;
+                    color: #48bc06;
                 }
                 .layer {
                     color: #696969;

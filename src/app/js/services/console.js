@@ -46,27 +46,27 @@ yarn.service('yConsole', function (soundEffects) {
 
         this.error = function (text, options) {
             soundEffects.error();
-            yConsole.write("<log-icon>✖</log-icon>" + text, "error", options);
+            yConsole.write("<log-icon><span>✖</span></log-icon>" + text, "error", options);
         };
 
         this.warning = function (text, options) {
-            yConsole.write("<log-icon>⚠</log-icon>" + text, "warning", options);
+            yConsole.write("<log-icon><span>⚠</span></log-icon>" + text, "warning", options);
         };
 
         this.success = function (text, options) {
-            yConsole.write("<log-icon>✔</log-icon>" + text, "success", options);
+            yConsole.write("<log-icon><span>✔</span></log-icon>" + text, "success", options);
         };
 
         this.transaction = function (text, options) {
-            yConsole.write("<log-icon>⬩</log-icon>" + text, "transaction", options);
+            yConsole.write("<log-icon><span>⬩</span></log-icon>" + text, "transaction", options);
         };
 
         this.tip = function (text, options) {
-            yConsole.write("<log-icon>⚑</log-icon><strong>Tip: </strong> " + text, "tip", options);
+            yConsole.write("<log-icon><span>⚑</span></log-icon><strong>Tip: </strong> " + text, "tip", options);
         };
 
         this.command = function (text, options) {
-            yConsole.write("<log-icon>▶</log-icon><span command>" + text + "</span>", "command", options);
+            yConsole.write("<log-icon><span>▶</span></log-icon><span command>" + text + "</span>", "command", options);
         };
 
         this.clear = function () {

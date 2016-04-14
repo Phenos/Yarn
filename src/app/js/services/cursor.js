@@ -152,6 +152,11 @@ yarn.factory('Cursor', function CursorService(Node) {
     Cursor.prototype.nextArgument = function () {
         this.sequenceBroken = true;
         if (this.size() > 1) {
+            // Pop until you back at a "symbol reference"
+            while (this.head().type !== 'instruction') {
+                this.pop();
+            }
+            // Pop one last time to get to the subject of the assertion.
             this.pop();
         }
         return this;

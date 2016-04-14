@@ -12,14 +12,6 @@ ace.define("ace/mode/javascript_highlight_rules",
 
         var JavaScriptHighlightRules = function () {
 
-            var escapedRe = "\\\\(?:x[0-9a-fA-F]{2}|" + // hex
-                "u[0-9a-fA-F]{4}|" + // unicode
-                "u{[0-9a-fA-F]{1,6}}|" + // es6 unicode
-                "[0-2][0-7]{0,2}|" + // oct
-                "3[0-7][0-7]?|" + // oct
-                "[4-7][0-7]?|" + //oct
-                ".)";
-
             this.$rules = {
                 "start": [
                     comments("start"),
@@ -60,14 +52,14 @@ ace.define("ace/mode/javascript_highlight_rules",
                 ],
                 "qqstring": [
                     {
-                        token: "constant.language.escape",
-                        regex: escapedRe
-                    }, {
-                        token: "string",
-                        regex: "\\\\$",
-                        merge : true,
-                        next: "qqstring"
-                    }, {
+//                        token: "constant.language.escape",
+//                        regex: escapedRe
+//                    }, {
+//                        token: "string",
+//                        regex: "\\\\$",
+//                        merge : true,
+//                        next: "qqstring"
+//                    }, {
                         token: "string",
                         regex: '"',
                         next: "start"
@@ -78,14 +70,14 @@ ace.define("ace/mode/javascript_highlight_rules",
                 ],
                 "qstring": [
                     {
-                        token: "constant.language.escape",
-                        regex: escapedRe
-                    }, {
-                        token: "string",
-                        regex: "\\\\$",
-                        merge : true,
-                        next: "qstring"
-                    }, {
+//                        token: "constant.language.escape",
+//                        regex: escapedRe
+//                    }, {
+//                        token: "string",
+//                        regex: "\\\\$",
+//                        merge : true,
+//                        next: "qstring"
+//                    }, {
                         token: "string",
                         regex: "'",
                         next: "start"
@@ -93,8 +85,6 @@ ace.define("ace/mode/javascript_highlight_rules",
                         merge : true,
                         defaultToken: "string"
                     }
-                ],
-                "camelcase": [
                 ]
             };
 

@@ -11,14 +11,17 @@ yarn.service('Node', function NodeService(Set) {
 
     Node.prototype.html = function () {
         var html = [];
+        var value = this.value.toString().substr(0, 80) || "-";
         html.push("<div class='node'>");
         html.push(
             "<span class='label'><span class='value'>" +
-            this.value.toString().substr(0, 80) +
+            value +
             "</span> <span class='type'>"
             + this.type +
             "</span>");
-        if (this.variant) html.push("<span class='variant'>" + this.variant + "</span>");
+        if (this.variant) {
+            html.push("<span class='variant'>" + this.variant + "</span>");
+        }
         html.push("</span>");
         html.push(this.set.html());
         html.push("</div>");

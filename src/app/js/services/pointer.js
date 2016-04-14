@@ -12,8 +12,8 @@ yarn.factory('Pointer', function PointerService(URI) {
         this.pos = 0;
         this.line = 0;
         this.character = 0;
-        //TODO: FROM WHICH PROFILE ?
-        //console.log("=====> this.uri", this.uri);
+        // TODO: FROM WHICH PROFILE ?
+//        console.log("=====> this.uri", this.uri);
         this.source = new Source(this.uri);
         this.buffer = [];
         this.rawBuffer = [];
@@ -79,7 +79,13 @@ yarn.factory('Pointer', function PointerService(URI) {
 
 
             if (txt === "" && this.state() === "default") {
+                this.state("default");
+                this.buffer = [];
+                this.rawBuffer = [];
                 // Ignore whitespace here!
+            } else if (txt === "" && this.state() === "camelCase") {
+                // This should never happen
+                console.error("Empty camelCase token!!!");
             } else {
                 // Collapse line-breaks into multiLinebreak
                 previousToken = this.tokens[this.tokens.length - 1];
@@ -90,16 +96,16 @@ yarn.factory('Pointer', function PointerService(URI) {
                     previousToken[2] = previousToken[2] + txtRaw;
                 } else {
                     token = [this.state(), txt, txtRaw, source];
+//                    console.log("token-->", token);
                     this.tokens.push(token);
                 }
-                // Reset the state
-                this.state("default");
-                this.buffer = [];
-                this.rawBuffer = [];
 //                console.log("token source:", source.uri, source.position,
 //                    source.line, source.character);
             }
         }
+        this.state("default");
+        this.buffer = [];
+        this.rawBuffer = [];
 
         return this;
     };
@@ -149,7 +155,7 @@ yarn.factory('Pointer', function PointerService(URI) {
 
             cycle++;
             if (cycle > maxCycle) {
-                console.log(pointer);
+//                console.log(pointer);
                 throw("Too many cycles!");
             }
 
@@ -179,9 +185,6 @@ yarn.factory('Pointer', function PointerService(URI) {
                         .flush()
                         .state("numeric");
                     continue;
-                    //} else if (pointer.chr === '@') {
-                    //    pointer.startSingleCharBlock("camelCase");
-                    //    continue;
                 } else if (pointer.chr === '#') {
                     pointer.startSingleCharBlock("hash");
                     continue;
@@ -250,7 +253,7 @@ yarn.factory('Pointer', function PointerService(URI) {
             } else if (pointer.state() === "numeric") {
                 if (numericExtended.indexOf(pointer.chr) < 0) {
                     pointer
-                        .flush(pointer.state());
+                        .flush();
                     continue;
                 }
             } else if (
@@ -263,15 +266,9 @@ yarn.factory('Pointer', function PointerService(URI) {
                 var match = bufferPlusOne.match(CamelCaseSeries) || [];
                 var matchStr = match[0] || "";
                 exit = !(matchStr.length === bufferPlusOne.length);
-//                if ((alphaNumExtended + "@ ").indexOf(pointer.chr) < 0) {
-//                    exit = true;
-//                }
-//                if (!bufferPlusOne.match(CamelCaseSeries)) {
-//                    exit = true;
-//                }
                 if (exit) {
                     pointer
-                        .flush(pointer.state());
+                        .flush();
                     continue;
                 }
             }
@@ -283,7 +280,9 @@ yarn.factory('Pointer', function PointerService(URI) {
 
     Pointer.prototype.html = function () {
         var tokens = this.tokens;
-        var grid = ["<table class='testGrid'><thead><tr><td>Type</td><td>AST Operation</td><td>Token</td><td>Raw</td></tr></thead>"];
+        var grid = ["<table class='testGrid'><thead><tr><td>Type</td>" +
+        "<td>AST Operation</td><td>Token</td>" +
+        "<td>Raw</td></tr></thead>"];
         tokens.forEach(function (token, index, tokens) {
             grid.push("<tr><td>");
             grid.push(token[0]);

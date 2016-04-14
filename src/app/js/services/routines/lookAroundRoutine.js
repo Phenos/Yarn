@@ -6,8 +6,9 @@ yarn.service("lookAroundRoutine", function (events,
                                             stateHelpers,
                                             yConsole) {
 
-    events.on("Player did LookAround", "after dialogs", function () {
+    events.on("Player did Look Around", "after dialogs", function () {
         lookAroundRoutine();
+        state.negate(assert("Player", "did", "Look Around"));
     });
 
     function lookAroundRoutine() {

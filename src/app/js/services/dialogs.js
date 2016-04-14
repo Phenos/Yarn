@@ -63,7 +63,7 @@ yarn.service("dialogs", function (state,
                         assertion.predicate,
                         assertion.object
                     ));
-                    statement.push([statement, assertion.object.id]);
+                    statements.push([statement, assertion.object.id]);
                 }
 
                 if (statements) {

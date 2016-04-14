@@ -6,7 +6,7 @@ yarn.service("inventoryRoutine", function (events,
                                            stateHelpers) {
 
     // Process movement triggered by creating an assertion
-    events.on("Player did LookAtInventory", "after events", function () {
+    events.on("Player did Look At Inventory", "after events", function () {
         inventoryRoutine();
     });
 

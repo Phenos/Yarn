@@ -79,7 +79,7 @@ yarn.directive('thing', function ThingDirective(things,
                     self.tooltip = actions.join(", ");
                 }
             }
-            console.log("--actions", self.tooltip);
+//            console.log("--actions", self.tooltip);
         };
 
         this.unselect = function () {
@@ -93,12 +93,11 @@ yarn.directive('thing', function ThingDirective(things,
         };
 
         this.click = function (e) {
-            this.update();
-
-            var self = this;
-//            console.log("e", e);
             e.preventDefault();
             e.stopPropagation();
+
+            this.update();
+
 //            thingsLinks.unselectAll();
             if (this.actions.length === 0) {
                 yConsole.warning("Clicking this link did nothing: " + self.text);

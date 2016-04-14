@@ -26,11 +26,11 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
 
         $rootElement.on("click", function () {
             self.hide();
-            //    self.unselectAll();
+//            self.unselectAll();
         });
 
         this.show = function () {
-            console.log(".show");
+//            console.log(".show");
             self.visible = true;
         };
 
@@ -39,10 +39,14 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 self.visible = false;
                 thingsLinks.unselectAll();
                 $timeout(function () {
-                    if (onDelay) onDelay();
+                    if (onDelay) {
+                        onDelay();
+                    }
                 }, 0)
             } else {
-                if (onDelay) onDelay();
+                if (onDelay) {
+                    onDelay();
+                }
             }
         };
 
@@ -66,7 +70,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 label = action.label;
             } else {
                 label = action.name;
-                console.log("action.labelOnly", action.labelOnly);
+//                console.log("action.labelOnly", action.labelOnly);
                 if (!action.labelOnly) {
                     if (this.objectName) {
                         label = label + " " + this.objectName;
@@ -90,15 +94,17 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 this.actions = [];
                 var newActions = contextActions(object);
                 if (newActions.length > 1) {
-                    this.defaultLabel = "Do something with the " + this.objectName || object.text() + "?";
+                    this.defaultLabel = "Do something with the " +
+                        this.objectName || object.text() + "?";
                 } else {
-                    this.defaultLabel = "You see nothing to do with the " + this.objectName || object.text() + "!";
+                    this.defaultLabel = "You see nothing to do with the " +
+                        this.objectName || object.text() + "!";
                 }
                 this.label = this.defaultLabel;
 
                 this.actions = this.actions.concat(newActions);
             }
-            console.log("contextActionMenu.update");
+//            console.log("contextActionMenu.update");
         };
 
 
@@ -107,7 +113,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             // the new position
             var top = targetElement[0].offsetTop;
             top = top + targetElement[0].clientHeight;
-            console.log("targetElement", targetElement);
+//            console.log("targetElement", targetElement);
             $element.css({
                 top: top
             });

@@ -39,7 +39,7 @@ yarn.service("dialogs", function (state,
                     var voice = "DEFAULT";
                     function flushBuffer() {
                         if (buffer.length > 0) {
-                            var text = buffer.join("");
+                            var text = buffer.join(" ");
                             statements.push([text, voice]);
                             buffer = [];
 //                            console.log("flushed", [text, voice]);

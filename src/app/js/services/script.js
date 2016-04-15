@@ -18,9 +18,9 @@ yarn.service('script', function (Pointer,
         this.pointer = new Pointer(this.url);
         this.source = source;
         this.pointer.tokenize(source);
-        //console.log("yarn.script.load: ", url);
+//        console.log("yarn.script.load: ", url);
         return this.compile(this.pointer.tokens).then(function (ast) {
-            //console.log("after compile");
+//            console.log("after compile");
             return self.processImports(ast);
         });
     };
@@ -33,12 +33,19 @@ yarn.service('script', function (Pointer,
     };
 
     Script.prototype.run = function () {
+        // We start by clearing the existing world layer
+//        console.log("Removing layers", state.assertions._all.length);
+        state.assertions.removeLayer('code');
+        state.assertions.removeLayer('step');
+//        console.log("Removing layers done", state.assertions._all.length);
+
         var berofeRun = performance.now();
         this.runtime = new Runtime(this.ast);
         this.runtime.run();
         var afterRun = performance.now();
         var duration = Math.floor(afterRun - berofeRun) / 1000;
-        yConsole.log("Created " + state.assertions.count() + " assertions in " + duration + " seconds");
+        yConsole.log("Created " + state.assertions.count() +
+            " assertions in " + duration + " seconds");
     };
 
     Script.prototype.compile = function (tokens) {
@@ -46,8 +53,8 @@ yarn.service('script', function (Pointer,
     };
 
     Script.prototype.processImports = function (ast) {
-        //console.log("Parsing AST for imports");
-        //console.log("ast", ast);
+//        console.log("Parsing AST for imports");
+//        console.log("ast", ast);
         return this.parseNode(ast.root);
     };
 
@@ -77,7 +84,7 @@ yarn.service('script', function (Pointer,
 
     Script.prototype.importNode = function (node) {
         var url = this.resolveRelativeURI(node.value);
-        //console.log("-------> ", this, node.value);
+//        console.log("-------> ", this, node.value);
 
         return loadScript(url).then(function (loadedScript) {
             var script = new Script();
@@ -89,7 +96,7 @@ yarn.service('script', function (Pointer,
                 node.value = "IMPORT";
                 node.variant = "statement";
                 node.set = script.ast.root.set;
-                //console.log("Grafted imported AST into parent AST")
+//                console.log("Grafted imported AST into parent AST")
             });
         });
     };
@@ -109,7 +116,7 @@ yarn.service('script', function (Pointer,
         var resolvedURI = "";
         var tmpBaseURI = this.url;
         if (uri) {
-            //console.log("relative to uri: ", tmpBaseURI);
+//            console.log("relative to uri: ", tmpBaseURI);
             resolvedURI = URI(uri).absoluteTo(tmpBaseURI).toString();
         } else {
             resolvedURI = uri;

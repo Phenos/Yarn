@@ -15,8 +15,8 @@ yarn.directive('assertionsTool', function AssertionsTool() {
             });
 
             $scope.update = function () {
-                //console.log("updateAssertions", $scope.allAssertions);
                 $scope.allAssertions = state.assertions.all();
+//                console.log("updateAssertions", $scope.allAssertions.length);
             };
 
         }

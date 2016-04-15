@@ -5,7 +5,7 @@
  */
 yarn.factory('layerSetup', function layerSetup() {
 
-    return ["world", "session", "step"];
+    return ["code", "session", "step"];
 
 });
 

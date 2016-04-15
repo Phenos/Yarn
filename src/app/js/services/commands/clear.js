@@ -10,10 +10,10 @@ function clearCommand(storyLocalStorage,
             description: "Clear the current player session from the game state.",
             handler: clearSession
         },
-        "world": {
-            name: "world",
-            description: "Clear the world state, without clearing the game session state.",
-            handler: clearWorld
+        "code": {
+            name: "code",
+            description: "Clear the code state, without clearing the game session state.",
+            handler: clearCode
         },
         "localstorage": {
             name: "localstorage",
@@ -76,14 +76,14 @@ function clearCommand(storyLocalStorage,
         yConsole.success("Game session is clear. Story is back at beginning.");
     }
 
-    function clearWorld() {
-        state.assertions.removeLayer('world');
-        yConsole.success("World state is cleared. This story world is now empty.");
+    function clearCode() {
+        state.assertions.removeLayer('code');
+        yConsole.success("Source code state is cleared.");
     }
 
     function clearAll() {
         clearItems([
-            "world",
+            "code",
             "session",
             "localstorage"
         ]);

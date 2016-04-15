@@ -3,7 +3,9 @@ yarn.service("Assertions", function (assert,
 
     function Assertions(assertions) {
         this._all = [];
-        if (angular.isArray(assertions)) this._all = assertions;
+        if (angular.isArray(assertions)) {
+            this._all = assertions;
+        }
     }
 
     Assertions.prototype.all = function () {
@@ -30,18 +32,18 @@ yarn.service("Assertions", function (assert,
     /**
      * Add an assertion... if an identical assertion with a different value is added.
      * The old one is kept and updated.
-     * @param assertion
-     * @returns {Array}
+     * @param {Assertion} assertions One assertion or array of assertions to be added
+     * @returns {Array} An array of added assertions
      */
-    Assertions.prototype.add = function (assertion) {
+    Assertions.prototype.add = function (assertions) {
         var self = this;
-        var assertions = ensureArray(assertion);
+        var _assertions = ensureArray(assertions);
         var addedAssertions = [];
 
-        assertions.forEach(function (assertion) {
-            if (assertion) {
-                self._all.push(assertion);
-                addedAssertions.push(assertion);
+        _assertions.forEach(function (__assertion) {
+            if (__assertion) {
+                self._all.push(__assertion);
+                addedAssertions.push(__assertion);
             }
         });
         return addedAssertions;
@@ -49,13 +51,12 @@ yarn.service("Assertions", function (assert,
 
     Assertions.prototype.remove = function (assertion) {
         var self = this;
-        var deleted;
         var assertions = ensureArray(assertion);
-        //console.log("Assertion>", self._all.length);
+//        console.log("Assertion>", self._all.length);
         assertions.forEach(function (toDelete) {
-            self._all.forEach(function (assertion, index) {
-                if (assertion === toDelete) {
-                    deleted = self._all.splice(index, 1);
+            self._all.forEach(function (_assertion, index) {
+                if (_assertion === toDelete) {
+                    self._all.splice(index, 1);
                 }
             })
         });
@@ -63,25 +64,30 @@ yarn.service("Assertions", function (assert,
     };
 
     Assertions.prototype.removeLayer = function (layer) {
-        var assertions = this.find(assert(undefined, undefined, undefined, {
-            layer: layer
+        var undef = void 0;
+        var assertions = this.find(assert(undef, undef, undef, {
+            layer: layer,
+            parent: undef
         }));
+//        console.log("found: ", assertions);
         this.remove(assertions);
         return this;
     };
 
 
-    Assertions.prototype.find = function (assert) {
+    Assertions.prototype.find = function (_assert) {
         var self = this;
         var matches = [];
         self._all.forEach(function (assertion) {
-            if (match(assertion, assert)) matches.push(assertion);
+            if (match(assertion, _assert)) {
+                matches.push(assertion);
+            }
         });
         return matches;
     };
 
-    Assertions.prototype.filter = function (assert) {
-        return new Assertions(this.find(assert));
+    Assertions.prototype.filter = function (_assert) {
+        return new Assertions(this.find(_assert));
     };
 
     Assertions.prototype.sortByWeight = function () {
@@ -96,7 +102,9 @@ yarn.service("Assertions", function (assert,
         var trippleGroupsArray = [];
         angular.forEach(this._all, function (assertion) {
             var key = [assertion.object.id, assertion.predicate.id, assertion.object.id].join("-");
-            if (!trippleGroups[key]) trippleGroups[key] = [];
+            if (!trippleGroups[key]) {
+                trippleGroups[key] = [];
+            }
             trippleGroups[key].push(assertion);
         });
         angular.forEach(trippleGroups, function (group) {

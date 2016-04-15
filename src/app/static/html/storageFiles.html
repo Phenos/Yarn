@@ -23,7 +23,7 @@
                               ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(folder)">
                     <md-icon md-svg-icon="/svg-icons/project.svg"></md-icon>
                     <p>
-                        {{:: folder.name }}
+                        {{::folder.name }}
                     </p>
                 </md-list-item>
                 <md-list-item ng-if="profile.username === storageFiles.profiles.authenticated().username"
@@ -82,21 +82,21 @@
         </header>
         <md-content flex="grow">
             <section ng-repeat="directory in storageFiles.directories">
-                <md-subheader ng-if=":: directory.matches"
+                <md-subheader ng-if="::directory.matches"
                               class="md-primary">
                     <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
-                    /&nbsp;{{:: directory.uri }}
+                    /&nbsp;{{::directory.uri }}
                 </md-subheader>
-                <md-list ng-if=":: directory.matches"
+                <md-list ng-if="::directory.matches"
                          class="list-of-files">
                     <md-list-item class="noright md-with-secondary"
-                                  ng-if=":: directory.files.length > 0"
+                                  ng-if="::directory.files.length > 0"
                                   ng-click="storageFiles.select({file: file})"
                                   ng-repeat="file in directory.files | filter: { filterOut: false }">
                         <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
                         <p>
-                            <span class="filename">{{:: file._filename }}</span>
-                            <span class="filesize">{{:: file._sizeInKB }}kb</span>
+                            <span class="filename">{{::file._filename }}</span>
+                            <span class="filesize">{{::file._sizeInKB }}kb</span>
                         </p>
                         <md-checkbox class="md-secondary"
                                      ng-click="storageFiles.updateSelection()"

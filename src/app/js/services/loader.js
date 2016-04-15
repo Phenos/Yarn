@@ -17,18 +17,21 @@ yarn.service('loader', function (yarn,
 
     service.fromURL = function fromURL(_url) {
         state.assertions.removeLayer('session');
-        state.assertions.removeLayer('world');
+        state.assertions.removeLayer('code');
         var url = _url;
 
-        //console.log("loader.fromURL", url);
+//        console.log("loader.fromURL", url);
         yConsole.log("Loading story from : " + url);
 
         timer.beforeLoad  = performance.now();
         return loadScript(url).then(onSuccess, onError);
 
         function onError() {
-            yConsole.error("Failed to load story from this location: <a target='_blank' href='" + url + "'>" + url + "</a>");
-            yConsole.tip("This error can happen when either the address of the story file is not correct or the file has been moved or deleted. You can check the address for mistakes or check your connection.");
+            yConsole.error("Failed to load story from this location: " +
+                "<a target='_blank' href='" + url + "'>" + url + "</a>");
+            yConsole.tip("This error can happen when either the address of the " +
+                "story file is not correct or the file has been moved or deleted. " +
+                "You can check the address for mistakes or check your connection.");
         }
 
         /**
@@ -43,13 +46,14 @@ yarn.service('loader', function (yarn,
             yarn.load(script.source, script.url).then(onSuccess, onError);
 
             function onSuccess(script) {
-                //console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
-                //console.log("script WHOO", script);
+//                console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
+//                console.log("script WHOO", script);
                 yConsole.success("Successfully loaded the story script");
                 yConsole.log("Running the <span command='inspect story'>story</span>");
 
-                // Change the current state layer to the static world (should be the default anyways).
-                state.currentLayer = "world";
+                // Change the current state layer to the static
+                // code (should be the default anyways).
+                state.currentLayer = "code";
 
                 // Run the script to load the initial game state
                 script.run();

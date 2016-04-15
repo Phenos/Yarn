@@ -36,8 +36,8 @@
             <md-list flex>
                 <md-list-item ng-repeat="command in console.commands.all"
                 >
-                    <md-button aria-label="{{command.name}}"
-                               ng-click="console.runCommand(command)">{{:: command.name }}
+                    <md-button aria-label="{{::command.name}}"
+                               ng-click="console.runCommand(command)">{{::command.name }}
                     </md-button>
                 </md-list-item>
                 </md-button></md-list>

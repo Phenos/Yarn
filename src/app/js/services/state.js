@@ -24,7 +24,7 @@ yarn.service('state', function ($localStorage,
         function State() {
             var self = this;
             this.assertions = new Assertions();
-            this.currentLayer = "world";
+            this.currentLayer = "code";
             this.localState = null;
 
             this.ready(false, "loading", "Loading...");
@@ -369,7 +369,7 @@ yarn.service('state', function ($localStorage,
                 /* ----- */
                 // TODO:TEST: Dont negate assertions before knowing if an
                 // existing assertion can bemodifier
-                if (!options.parent && this.currentLayer !== "world") {
+                if (!options.parent && this.currentLayer !== "code") {
                     // Find exquivalent assertions to be negated
                     this.negate(assert(subject, _predicate, object));
                 }
@@ -383,8 +383,8 @@ yarn.service('state', function ($localStorage,
                 var identicalAssertions = this.assertions.filter(_assert);
                 if (identicalAssertions.count() > 0) {
                     var topAssertion = identicalAssertions.sortByWeight().top();
-                    if (topAssertion.layer === "world") {
-                        // If the top assertion in on the static world layer
+                    if (topAssertion.layer === "code") {
+                        // If the top assertion in on the static code layer
                         // We create a new assertion anyways
                         assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
@@ -491,10 +491,10 @@ yarn.service('state', function ($localStorage,
                 // First, we check wether the top assertion is already negative
                 if (topAssertion.value() !== false) {
                     // Then we check if the topAssertion is on the static world layer
-                    if (topAssertion.layer === "world") {
+                    if (topAssertion.layer === "code") {
                         // If so, we create a new assertion on top to negate it
                         var newAssertion = topAssertion.clone();
-                        if (self.currentLayer === "world") {
+                        if (self.currentLayer === "code") {
                             newAssertion.layer = "session";
                         } else {
                             newAssertion.layer = self.currentLayer;

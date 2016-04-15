@@ -18,7 +18,7 @@ yarn.service("assert", function (things,
             object: object
         };
 
-        if (angular.isUndefined(options.parent)) {
+        if (!options.hasOwnProperty("parent")) {
             c.parent = null;
         } else {
             c.parent = options.parent;

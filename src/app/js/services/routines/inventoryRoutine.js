@@ -24,7 +24,7 @@ yarn.service("inventoryRoutine", function (events,
 
         } else {
 
-            phrase.push("Player has a ");
+            phrase.push("You have a ");
             angular.forEach(inventory, function (thing, index) {
                 var thingName = state.resolveValue(assert(thing, "has", "Name"));
                 thingName = thingName || thing.id;

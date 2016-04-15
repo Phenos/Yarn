@@ -16,7 +16,7 @@ yarn.service("lookAtUsablesRoutine", function (events,
         var room = state.resolveOne(assert("Player", "is in"));
 
         var usableItemsInCurrentRoom = stateHelpers.usableItemInRoom(room);
-        var usableItemsInInventory = stateHelpers.usableItemInRoom("YourInventory");
+        var usableItemsInInventory = stateHelpers.usableItemInRoom("Your Inventory");
 
         if (room) {
             if (usableItemsInCurrentRoom.length) {

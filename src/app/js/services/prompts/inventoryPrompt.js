@@ -15,7 +15,7 @@ yarn.service("inventoryPrompt", function (logic,
 
         context.question = function (promptLoop, prompt) {
 
-            var inventoryItems = state.resolveAll(assert(undefined, "is in", "YourInventory"));
+            var inventoryItems = state.resolveAll(assert(undefined, "is in", "Your Inventory"));
             if (inventoryItems.length) {
                 prompt.question = "Take anything or look at what you have ?";
                 //inventoryItems.forEach(function (thing) {

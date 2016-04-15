@@ -10,7 +10,7 @@ yarn.directive('assertionsTool', function AssertionsTool() {
         controller: function Controller($scope, state, channel) {
             $scope.allAssertions = [];
 
-            channel.subscribe("runtine.afterRun", function () {
+            channel.subscribe("runtime.afterRun", function () {
                 $scope.update();
             });
 

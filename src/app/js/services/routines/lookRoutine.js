@@ -15,7 +15,7 @@ yarn.service("lookRoutine", function (events,
         if (object) {
 
             yConsole.log("Routine: look");
-            console.log("TRIGGERED! Routine: look");
+//            console.log("TRIGGERED! Routine: look");
 
             var thingName = state.resolveValue(assert(object, "has", "Name"));
             thingName = thingName || object.id;

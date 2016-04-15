@@ -8,6 +8,7 @@ function LogDirective($sce, editorFiles, openFileFromAbsoluteURL) {
         scope: {
             line: '='
         },
+        replace: true,
         templateUrl: './html/log.html',
         link: Link
     };
@@ -20,11 +21,7 @@ function LogDirective($sce, editorFiles, openFileFromAbsoluteURL) {
             scope.source = _options.source;
         }
         scope.time = _time.getHours() + ":" + _time.getMinutes();
-        element.addClass("is-" + scope.line.type);
-
-        if (scope.line.isNewStep) {
-            element.addClass("isNewStep");
-        }
+//        element.addClass("is-" + scope.line.type);
 
         scope.text2html = function() {
             return $sce.trustAsHtml(scope.line.text);

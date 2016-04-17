@@ -31,7 +31,7 @@ yarn.run(function (commands, tools, keyboardShortcuts) {
 //        "annotationsTool",
         "assertionsTool",
         "commandsTool",
-        "graphTool",
+//        "graphTool",
         "inspectorTool",
         "validatorTool"
     ];

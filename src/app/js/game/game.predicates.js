@@ -29,19 +29,23 @@ yarn.service('gamePedicates', function (predicates) {
 
         predicates("isIn")
             .syntax("is in the")
+            .syntax("is on the")
             .syntax("is inside the")
             .syntax("is at the")
             .syntax("is inside")
             .syntax("is at")
+            .syntax("is on")
             .syntax("is in");
 
         predicates("isNotIn")
             .isNegativeOf("isIn")
-            .syntax("is not in the")
-            .syntax("is not inside the")
             .syntax("is not at the")
+            .syntax("is not in the")
+            .syntax("is not on the")
+            .syntax("is not inside the")
             .syntax("is not inside")
             .syntax("is not at")
+            .syntax("is not on")
             .syntax("is not in");
 
         // When something has something else. Ex.: Kitchen has a Kitchen Table

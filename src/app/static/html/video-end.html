@@ -1,0 +1,58 @@
+<html>
+<head>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+</head>
+    <style>
+        body {
+
+        }
+        .fullscreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: url('../images/yarn-video-end.jpg') no-repeat center center;
+            background-size: cover;
+            overflow: hidden;
+        }
+        a.cat {
+            display: block;
+            position: absolute;
+            bottom: -5%;
+            height: 25%;
+            left: 50%;
+            z-index: 1000;
+        }
+        a.cat:hover {
+            height: 30%;
+            bottom: 0px;
+        }
+        .cat img {
+            display: block;
+            border: none;
+            height: 100%;
+        }
+        a.social {
+            position: absolute;
+            display: block;
+            height: 60%;
+            top: 40%;
+        }
+        #twitter {
+            left: 0;
+            width: 53%;
+        }
+        #patreon {
+            right: 0;
+            width: 46%;
+        }
+    </style>
+    <body>
+        <div class="fullscreen">
+            <a class="cat" target="_blank" href="https://www.youtube.com/watch?v=LRhbcDzbGSU"><img src="../images/cat1.gif"/></a>
+            <a class="social" id="twitter" href="http://www.twitter.com/YarnStudioGames"></a>
+            <a class="social" id="patreon" href="http://www.patreon.com/YarnStudioGames"></a>
+        </div>
+    </body>
+</html>

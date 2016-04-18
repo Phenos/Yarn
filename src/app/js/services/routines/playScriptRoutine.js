@@ -1,3 +1,4 @@
+// todo: Rename playScriptRoutine to actRoutine
 yarn.service("playScriptRoutine", function (events,
                                             writers,
                                             assert,
@@ -5,21 +6,21 @@ yarn.service("playScriptRoutine", function (events,
                                             storyLog,
                                             Script,
                                             yConsole) {
-// todo: hook event for triggering script
 
-//    events.on("Player did Look Around", "after dialogs", function () {
-//        lookAroundRoutine();
-//        state.negate(assert("Player", "did", "Look Around"));
-//    });
+    events.on("Player is acting *", "after dialogs", function () {
+        playScriptRoutine();
+        state.negate(assert("Player", "is acting"));
+    });
 
     function playScriptRoutine() {
 
         yConsole.log("Routine: playScript");
 
-        var actedScript = state.one("Player is acting *");
-        if (actedScript) {
-            var scriptText = state.value("Script has Text", { Script: actedScript});
-            var script = new Script(scriptText, actedScript.source);
+        var act = state.one("Player is acting *");
+        if (act) {
+            var scriptText = state.value("CurrentAct has a Script", { CurrentAct: act});
+            console.log("--->", scriptText, act);
+            var script = new Script(scriptText, act.source);
             script.play();
         }
 

@@ -5,6 +5,7 @@ yarn.service("contextActions", function (state) {
         var actions = [];
 
         var space = state.one("Player is in *");
+        var currentAct = state.one("Player is acting  *");
 
         var scope = {
             Space: space
@@ -32,43 +33,56 @@ yarn.service("contextActions", function (state) {
             }));
 
             var customActions = state.many("* is an Action");
-            angular.forEach(customActions, function (action) {
+            angular.forEach(customActions, function (actionAssertion) {
                 var actionDoesApply = true;
 //                console.log("hu??", !(spaceIsRestricted && !allowedActions[action.id]));
-                if (!(spaceIsRestricted && !allowedActions[action.id])) {
-                    var scope = {
+                if (!(spaceIsRestricted && !allowedActions[actionAssertion.id])) {
+                    var actionScope = {
+                        CurrentAct: currentAct,
                         CurrentSpace: space,
-                        CurrentAction: action,
+                        CurrentAction: actionAssertion,
                         ActionObject: object
                     };
-                    var isTransitive = state.value("CurrentAction is Transitive", scope);
-                    if (isTransitive) {
-                        var isActive = state.value("CurrentAction is Active", scope);
-                        var icon = state.value("CurrentAction has Icon", scope);
-                        var iconSize = state.value("CurrentAction has IconSize", scope);
-                        var name = state.value("CurrentAction has Name", scope);
-                        var label = state.value("CurrentAction has Label", scope);
-                        var unlessConditions =
-                            state.manyAssertions("CurrentAction unless *", scope);
 
-                        if (isActive || allowedActions[action.id]) {
+                    var isTransitive = state.value("CurrentAction is Transitive", actionScope);
+                    if (isTransitive) {
+                        var isActive = state.value("CurrentAction is Active", actionScope);
+                        var icon = state.value("CurrentAction has Icon", actionScope);
+                        var iconSize = state.value("CurrentAction has IconSize", actionScope);
+                        var name = state.value("CurrentAction has Name", actionScope);
+                        var command = state.value("CurrentAction has Command", actionScope);
+                        var label = state.value("CurrentAction has Label", actionScope);
+
+                        var unlessConditions =
+                            state.manyAssertions("CurrentAction unless *", actionScope);
+
+                        var onlyIfConditions =
+                            state.manyAssertions("CurrentAction only if *", actionScope);
+
+                        if (isActive || allowedActions[actionAssertion.id]) {
 
                             angular.forEach(unlessConditions, function (assertion) {
                                 var expression = assertion.value();
-                                var value = state.render(expression, scope);
+                                var value = state.render(expression, actionScope);
+                                if (value) {
+                                    actionDoesApply = false;
+                                }
+                            });
+                            angular.forEach(onlyIfConditions, function (assertion) {
+                                var expression = assertion.value();
+                                var value = state.render(expression, actionScope);
                                 if (!value) {
                                     actionDoesApply = false;
                                 }
-//                                console.log("---expression", expression);
-//                                console.log("---assertion", assertion);
-//                                console.log(">>VALUE", value);
                             });
+
 //                            console.log("unlessConditions", unlessConditions);
                             if (actionDoesApply) {
                                 var action = new Action(object, {
                                     icon: icon,
                                     name: name,
                                     label: label,
+                                    command: command,
                                     iconSize: iconSize
                                 });
                                 actions.push(action);
@@ -91,6 +105,7 @@ yarn.service("contextActions", function (state) {
         this.iconSize = options.iconSize || "";
         this.labelOnly = options.labelOnly || false;
         this.name = options.name || "Unknown action!";
+        this.command = options.command || "unknown_command";
         this.label = options.label || null;
     }
 

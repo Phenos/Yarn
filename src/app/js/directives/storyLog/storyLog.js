@@ -35,7 +35,7 @@
                         var name = tokens[0];
                         var id = tokens[1] || tokens[0];
                         // Sanitize the id
-                        id = id = id.toLowerCase().replace(/ /g, "_");
+                        id = id.trim().toLowerCase().replace(/ /g, "_");
                         return '<thing token="' + id + '" text="' + name + '"></thing>'
                     });
 

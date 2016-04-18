@@ -27,9 +27,9 @@ yarn.service("templating", function ($window, yConsole, isNumeric) {
         } else {
             var _scope = scope || {};
             try {
-                //console.log("pre-output source : ", source);
+//                console.log("pre-output source : ", source);
                 output = nunjucks.renderString(source, _scope);
-                //console.log("output:: ", output);
+//                console.log("output:: ", output);
 
                 // Coherce the value to a float if needed
                 if (output[0] !== "#") {
@@ -52,7 +52,9 @@ yarn.service("templating", function ($window, yConsole, isNumeric) {
                     e.message
                 ];
                 output = new Error(msg);
-                if (!runSilent) yConsole.error(msg.join(""));
+                if (!runSilent) {
+                    yConsole.error(msg.join(""));
+                }
             }
             recursion--;
         }

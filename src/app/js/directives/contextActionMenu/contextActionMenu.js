@@ -57,7 +57,7 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
             } else {
                 var cmd = [
                     "do",
-                    action.name,
+                    action.command,
                     this.object.id
                 ].join(" ");
                 commands.run(cmd)

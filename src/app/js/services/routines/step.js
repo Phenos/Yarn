@@ -65,6 +65,7 @@ yarn.service("step", function (postal,
     var step = new Step();
 
     step.on("startStep", function () {
+        storyLog.markAsRead();
         state.step(1);
         events.trigger(assert("Story", "did", "Step"));
         events.trigger(assert("Player", "did", "Step"));

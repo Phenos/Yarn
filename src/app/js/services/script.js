@@ -1,13 +1,30 @@
 yarn.service("Script", function (yConsole, storyLog, state) {
 
-    var scriptCuttingRegex = /((^[A-Z ]+:)|(.*))/gm;
-    var isActorRegex = /(^[A-Z ]+:)/g;
+//    var scriptCuttingRegex = /((^[A-Z ]+:)|(.*))/gm;
+//    var isActorRegex = /(^[A-Z ]+:)/g;
+    var isActorRegex =
+        /(?:(^[@A-Z][a-z_A-Z0-9]+)([\s]*(?:[@A-Z]+[a-z_A-Z0-9]*))*(:))/g;
+    var scriptCuttingRegex =
+        /((?:(^[@A-Z][a-z_A-Z0-9]+)([\s]*(?:[@A-Z]+[a-z_A-Z0-9]*))*(:))|(.*))/gm;
+
+    var matchvoiceToLogTypes = {
+        default: "log",
+        action: "action",
+        monologue: "log",
+        insight: "insight",
+        narrator: "log",
+        topic: "topic"
+    };
 
     function Script(text, source) {
-        this.text = text;
+        this.text = "";
+        if (angular.isString(text)) {
+            this.text = text;
+        }
         this.lines = [];
         this.position = 0;
         this.source = source;
+        this.parse(this.text);
     }
 
     Script.prototype.next = function () {
@@ -19,11 +36,14 @@ yarn.service("Script", function (yConsole, storyLog, state) {
     };
 
     Script.prototype.play = function () {
+        console.log("Script.play");
         var ellipsis = "";
-        if (this.text > 30) {
+        if (this.text.length > 50) {
             ellipsis = "[…]";
         }
-        var textCropped = '"' + this.text.substring(0, 20) + ellipsis + '"';
+        var textCropped = '<span class="value">' +
+            this.text.substring(0, 50) + ellipsis +
+            '"</span>';
 
         yConsole.log("Playing script: " + textCropped, {
             source: self.source
@@ -42,12 +62,6 @@ yarn.service("Script", function (yConsole, storyLog, state) {
 
     function outputLine(statement, _voice) {
         var voice = _voice.toLowerCase();
-        var matchvoiceToLogTypes = {
-            action: "action",
-            monologue: "log",
-            insight: "insight",
-            narrator: "log"
-        };
 
         var logType = matchvoiceToLogTypes[voice];
         if (logType) {

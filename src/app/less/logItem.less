@@ -2,24 +2,27 @@
 
 log-item {
     display: block;
-/*
     &.read {
-        opacity: 0.5;
-        animation: markAsRead 2s;
+        opacity: 0.3;
+        animation: markAsRead 1s;
 
         @keyframes markAsRead {
             0% {
                 opacity: 1;
             }
             100% {
-                opacity: 0.5;
+                opacity: 0.3;
             }
         }
         &:hover {
             opacity: 1;
         }
     }
-*/
+
+    // Find a better way to hide useless topics
+    &.read .is-topic {
+        display: none;
+    }
 
     .logItem {
 
@@ -82,6 +85,14 @@ log-item {
             font-weight: 400;
             text-align: justify;
             font-style: italic;
+        }
+
+        &.is-topic {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0 1em;
+            font-weight: 400;
+            text-align: justify;
         }
 
         &.is-insight {

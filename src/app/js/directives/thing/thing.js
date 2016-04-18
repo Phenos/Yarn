@@ -42,7 +42,7 @@ yarn.directive('thing', function ThingDirective(things,
         var self = this;
 
         this.unrecognized = false;
-        this.token = $attrs.token;
+        this.token = $attrs.token.trim();
         this.text = $attrs.text;
         this.selected = false;
         this.tooltip = null;
@@ -70,7 +70,8 @@ yarn.directive('thing', function ThingDirective(things,
                 if (self.actions.length === 0) {
                     self.tooltip = "Nothing to do!";
                 } else if (self.actions.length === 1) {
-                    self.tooltip = self.actions[0].name;
+//                    console.log("--->>>");
+                    self.tooltip = self.actions[0].label;
                 } else {
                     var actions = [];
                     angular.forEach(self.actions, function (action) {
@@ -104,7 +105,7 @@ yarn.directive('thing', function ThingDirective(things,
             } else if (this.actions.length === 1) {
                 var cmd = [
                     "do",
-                    this.actions[0].name,
+                    this.actions[0].command,
                     this.thing.id
                 ].join(" ");
                 commands.run(cmd)

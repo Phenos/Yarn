@@ -73,6 +73,11 @@ yarn.service('storyLog', function (state) {
         this.controller.write("<strong>" + voiceLabel + " —</strong> " + text, "dialog");
     };
 
+    StoryLog.prototype.topic = function (text, scope) {
+//        console.log("SCOPE>>>>>> ", scope);
+        this.controller.write("<strong> ></strong> " + text, "topic");
+    };
+
     StoryLog.prototype.insight = function (text) {
         this.controller.write(
             "<md-icon md-svg-icon='./svg-icons/insight.svg'></md-icon>" +

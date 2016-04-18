@@ -12,7 +12,7 @@ yarn.service("playScriptRoutine", function (events,
 //        state.negate(assert("Player", "did", "Look Around"));
 //    });
 
-    function lookAroundRoutine() {
+    function playScriptRoutine() {
 
         yConsole.log("Routine: playScript");
 
@@ -28,7 +28,7 @@ yarn.service("playScriptRoutine", function (events,
 
     }
 
-    return lookAroundRoutine;
+    return playScriptRoutine;
 
 });
 

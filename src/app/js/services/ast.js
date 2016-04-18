@@ -20,8 +20,10 @@
         var TokenCommands = {
             "default": "appendInstruction",
             "period": "endSequence",
-            "startParen": "startSubset",
-            "endParen": "endSubset",
+//            "startParen": "startSubset",
+//            "endParen": "endSubset",
+            "startCurly": "startSubset",
+            "endCurly": "endSubset",
             "multiLinebreak": "endSequence",
             "numeric": "appendNumeric",
             "singleQuote": "appendText",

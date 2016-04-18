@@ -171,11 +171,17 @@ yarn.factory('Pointer', function PointerService(URI) {
                 } else if (pointer.chr === "'") {
                     pointer.startSingleCharBlock("singleQuote");
                     continue;
-                } else if (pointer.chr === "(") {
-                    pointer.endPunctuationToken("startParen");
+//                } else if (pointer.chr === "(") {
+//                    pointer.endPunctuationToken("startParen");
+//                    continue;
+//                } else if (pointer.chr === ")") {
+//                    pointer.endPunctuationToken("endParen");
+//                    continue;
+                } else if (pointer.chr === "{") {
+                    pointer.endPunctuationToken("startCurly");
                     continue;
-                } else if (pointer.chr === ")") {
-                    pointer.endPunctuationToken("endParen");
+                } else if (pointer.chr === "}") {
+                    pointer.endPunctuationToken("endCurly");
                     continue;
                 } else if (pointer.chr === "[") {
                     pointer.startSingleCharBlock("bracket");

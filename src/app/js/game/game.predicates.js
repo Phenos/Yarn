@@ -44,10 +44,10 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("is acting the");
 
         predicates("talksAbout")
-            .syntax("talks about")
+            .syntax("asks about")
             .syntax("talks")
             .syntax("asks")
-            .syntax("asks about");
+            .syntax("talks about");
 
         predicates("isNotIn")
             .isNegativeOf("isIn")

@@ -1,4 +1,4 @@
-yarn.service('wallpaper', function wallpaper(state, script, assert) {
+yarn.service('wallpaper', function wallpaper(state, yarnScript, assert) {
 
     function Wallpaper() {
         this.options = "";
@@ -28,7 +28,7 @@ yarn.service('wallpaper', function wallpaper(state, script, assert) {
         if (room) {
             var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
+            var url = yarnScript.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
             if (url) {
                 self.change({
                     image: url,

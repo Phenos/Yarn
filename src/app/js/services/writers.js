@@ -3,7 +3,7 @@ yarn.factory('writers', function (Prompt,
                                   yConsole,
                                   storyLog,
                                   state,
-                                  script,
+                                  yarnScript,
                                   commands,
                                   currentTheme,
                                   wallpaper,
@@ -16,7 +16,7 @@ yarn.factory('writers', function (Prompt,
 
         // Set the wallpaper
         var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
-        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
+        var coverpage_url = coverpage && yarnScript.resolveRelativeURI(coverpage);
 
         if (coverpage) {
             storyLog.image(coverpage_url);
@@ -67,7 +67,7 @@ yarn.factory('writers', function (Prompt,
 
         // Set the wallpaper
         var coverpage = state.resolveValue(assert("TheEnd", "has", "Coverpage"));
-        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
+        var coverpage_url = coverpage && yarnScript.resolveRelativeURI(coverpage);
 
         if (coverpage) {
             storyLog.image(coverpage_url);
@@ -93,7 +93,7 @@ yarn.factory('writers', function (Prompt,
         if (room) {
             var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
+            var url = yarnScript.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
             if (url) {
                 wallpaper.change(url);
             } else {
@@ -136,7 +136,7 @@ yarn.factory('writers', function (Prompt,
             var image = state.resolveValue(assert(thing, "has", "Image"));
             if (image) {
                 storyLog.thingImage(
-                    script.resolveRelativeURI(image)
+                    yarnScript.resolveRelativeURI(image)
                 );
             }
             if (description) {

@@ -4,7 +4,7 @@
  * @param {Object} options A set of options to configure the wallpaper.
  * @class
  */
-yarn.service("Wallpaper", function (script) {
+yarn.service("Wallpaper", function (yarnScript) {
     function Wallpaper(options) {
         var self = this;
 
@@ -20,7 +20,7 @@ yarn.service("Wallpaper", function (script) {
         self.image = options.image || null;
         self.colorMask = options.colorMask || 0;
         if (self.image) {
-            self.image = script.resolveRelativeURI(this.image);
+            self.image = yarnScript.resolveRelativeURI(this.image);
         }
     }
     return Wallpaper;

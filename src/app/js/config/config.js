@@ -16,13 +16,15 @@ yarn.config(function(RollbarProvider, $urlMatcherFactoryProvider) {
 //    RollbarProvider.init(roolbarConfig);
 });
 
-yarn.run(function (commands, tools, keyboardShortcuts) {
+yarn.run(function (commands, tools, keyboardShortcuts, gamePedicates) {
 
     var path = "/public/js/ace/";
     ace.config.set('basePath', path);
     ace.config.set('modePath', path);
     ace.config.set('themePath', path);
     ace.config.set('workerPath', path);
+
+    gamePedicates();
 
     keyboardShortcuts.init();
 

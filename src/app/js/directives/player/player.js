@@ -6,6 +6,7 @@ yarn.directive('player', function (channel,
                                    player,
                                    state,
                                    lookAroundRoutine,
+                                   playScriptRoutine,
                                    profiles,
                                    login,
                                    assert) {
@@ -86,11 +87,21 @@ yarn.directive('player', function (channel,
 
             var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
             if (storyHasEnded) {
+                // The story is at the end
                 writers.describeTheEnd();
             } else if (state.step() === 0) {
+                // The story is at the begining
                 writers.describeCoverpage();
             } else {
-                lookAroundRoutine();
+                // The story is ongoing
+                var space = state.one("Player is in *");
+                var script = state.one("Player is acting *");
+                if (space) {
+                    lookAroundRoutine();
+                }
+                if (script) {
+                    playScriptRoutine();
+                }
             }
 
             currentTheme.refresh();

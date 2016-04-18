@@ -1,4 +1,4 @@
-yarn.service("statuses", function (state, assert, script) {
+yarn.service("statuses", function (state, assert, yarnScript) {
 
     function Statuses() {
         this.all = {};
@@ -53,7 +53,7 @@ yarn.service("statuses", function (state, assert, script) {
         this.standardIcon = state.resolveValue(assert(this.object, "has", "Icon"));
         this.SVGIcon = state.resolveValue(assert(this.object, "has", "SVGIcon"));
         if (this.SVGIcon) {
-            this.SVGIcon = script.resolveRelativeURI(this.SVGIcon);
+            this.SVGIcon = yarnScript.resolveRelativeURI(this.SVGIcon);
         }
 
     }

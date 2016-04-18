@@ -37,6 +37,12 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("is on")
             .syntax("is in");
 
+        predicates("isActing")
+            .syntax("acts")
+            .syntax("acts the")
+            .syntax("is acting")
+            .syntax("is acting the");
+
         predicates("isNotIn")
             .isNegativeOf("isIn")
             .syntax("is not at the")

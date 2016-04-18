@@ -1,10 +1,4 @@
-yarn.service('yarn', function ($localStorage,
-                               channel,
-                               state,
-                               script,
-                               yConsole,
-                               consoleHelper,
-                               gamePedicates) {
+yarn.service('yarn', function (yarnScript) {
 
     function Yarn() {
 
@@ -12,22 +6,16 @@ yarn.service('yarn', function ($localStorage,
 
         /**
          * Parse a text into various semantic parts to be consumed by Yarn
-         * @param text
-         * @param url
+         * @param {string} text The source code text to be parsed
+         * @param {string} url The reference url from where the text was loaded
+         * @returns {undefined}
          */
         this.load = function (text, url) {
-            return script.load(text, url).then(function () {
-                //console.log("wtf", script);
-                return script;
+            return yarnScript.load(text, url).then(function () {
+                return yarnScript;
             });
         };
-
     }
 
-    gamePedicates();
-
-    var yarn = new Yarn();
-
-
-    return yarn;
+    return new Yarn();
 });

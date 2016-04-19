@@ -69,6 +69,7 @@ yarn.service('state', function (Assertion,
                     // and will be re-used later when re-loading the file.
                     projectFiles.files.push({
                         uri: file._uri,
+                        isFocused: file.isFocused,
                         position: file.position || 0,
                         profile: file.profile.username
                     });
@@ -77,6 +78,7 @@ yarn.service('state', function (Assertion,
                     angular.forEach(editorFiles.files, function (_file) {
                         projectFiles.files.push({
                             uri: _file._uri,
+                            isFocused: file.isFocused,
                             position: _file.position,
                             profile: _file.profile.username
                         });
@@ -110,10 +112,11 @@ yarn.service('state', function (Assertion,
                         if (file.position) {
                             row = file.position.row
                         }
-                        editorFiles.open(profile,
+                        var newFile = editorFiles.open(profile,
                             file.uri,
                             setFocus,
                             row);
+                        newFile.isFocused = file.isFocused;
                     });
                 }
             }

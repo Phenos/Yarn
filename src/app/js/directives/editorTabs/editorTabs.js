@@ -14,7 +14,8 @@
             controller: editorTabsController
         };
 
-        function editorTabsController(editors,
+        function editorTabsController(state,
+                                      editors,
                                       editorTabs,
                                       editorFiles) {
             var self = this;
@@ -22,8 +23,10 @@
             self.selected = 0;
 
             this.focus = function (file) {
-                //console.log("file", file.uri.toString());
                 editors.focus(file.uri.toString());
+//                console.log("====================================");
+//                console.log("file > ", file);
+                state.persistEditorFiles(file);
             };
 
             this.createFile = function (file) {

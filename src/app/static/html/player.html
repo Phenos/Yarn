@@ -7,29 +7,18 @@
     <sidebar></sidebar>
     <toolbar user="player.user"></toolbar>
     <div
-            id="yarn-player"
             class="player"
             flex="grow"
             ng-scrollbars
             ng-scrollbars-update=player.updateScrollbar
-            ng-scrollbars-config="player.scrollbarsConfig"
-            ng-if="player.state.readyness.isReady"
-    >
-        <div class="main-ui">
+            ng-scrollbars-config="player.scrollbarsConfig">
+        <div class="main-ui" ng-if="player.state.readyness.isReady">
             <context-action-menu></context-action-menu>
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>
             <div class="player-footer"></div>
         </div>
-    </div>
-    <div
-            layout-fill
-            class="player"
-            layout="column"
-            ng-scrollable
-            layout-align="start center"
-            ng-if="!player.state.readyness.isReady">
-        <div class="readyness">
+        <div class="readyness" ng-if="!player.state.readyness.isReady">
             <div style="height:6em"></div>
             <div ng-if="player.state.readyness.status === 'loading'">
                 <md-progress-circular

@@ -1,4 +1,7 @@
-yarn.directive('storageFiles', function StorageFilesDirective(confirmAction) {
+yarn.directive('storageFiles', function StorageFilesDirective(channel,
+                                                              profiles,
+                                                              state,
+                                                              confirmAction) {
 
     var directive = {
         restrict: 'E',
@@ -12,7 +15,7 @@ yarn.directive('storageFiles', function StorageFilesDirective(confirmAction) {
         controller: StorageFilesController
     };
 
-    function StorageFilesController($element, $scope, profiles, channel) {
+    function StorageFilesController($element, $scope) {
         var self = this;
 //        console.log("StorageFilesController", storage);
 
@@ -53,6 +56,16 @@ yarn.directive('storageFiles', function StorageFilesDirective(confirmAction) {
                         file.filterOut = filterOut;
                     });
                     directory.matches = matchCount;
+                });
+            }
+
+            if (self.selectedStorage && !self.selectedFolder) {
+//                console.log("Pre-selecting folder", self.selectedStorage.allProjectFolders);
+                angular.forEach(self.selectedStorage.allProjectFolders, function (folder) {
+//                    console.log(" state.story >> ", state.story);
+                    if (folder.name === state.story.id) {
+                        self.openProjectFolder(folder);
+                    }
                 });
             }
         }

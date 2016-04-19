@@ -16,7 +16,7 @@
                                   storageFiles.selectedFolder === null)
                               }"
                               ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(null)">
-                    BROWSE ALL PROJECTS
+                    ALL PROJECTS FILES
                 </md-list-item>
                 <md-list-item ng-repeat="folder in profile.storage.projectFolders"
                               ng-class="{selected: (storageFiles.selectedFolder === folder)}"

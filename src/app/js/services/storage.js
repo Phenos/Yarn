@@ -59,6 +59,7 @@ yarn.service("Storage", function (apiClient,
         var file;
         var _uri = URI(uri);
         var isAFolder = false;
+        var projectFolder;
 
 //        console.log(meta.Key);
         // If it's a folder
@@ -74,7 +75,7 @@ yarn.service("Storage", function (apiClient,
         }
         if (parts.length > 1) {
             var key = parts[1];
-            var projectFolder = self.projectFolders[key];
+            projectFolder = self.projectFolders[key];
             if (!projectFolder) {
                 projectFolder = {
                     name: key,
@@ -153,9 +154,9 @@ yarn.service("Storage", function (apiClient,
                 username: user.username
             }, function (data) {
                 if (!data.error) {
-                    //console.log("?",[savedContent], [file.originalContent]);
+//                    console.log("?",[savedContent], [file.originalContent]);
                     file.originalContent = savedContent;
-                    //console.log("storage.save success", [data]);
+//                    console.log("storage.save success", [data]);
                     success(data);
                 } else {
                     self.isLoading = false;
@@ -213,7 +214,7 @@ yarn.service("Storage", function (apiClient,
             filesMeta.push(file.meta);
         });
 
-        //console.log("filesMeta", filesMeta);
+//        console.log("filesMeta", filesMeta);
 
         var user = session.user();
         var profile = this.profile;
@@ -227,43 +228,44 @@ yarn.service("Storage", function (apiClient,
             }, function (data) {
                 if (!data.error) {
                     self.isLoading = false;
-                    //console.log("storage.deleteFiles", [data]);
+//                    console.log("storage.deleteFiles", [data]);
                     success && success(data);
                 } else {
                     self.isLoading = false;
-                    yConsole.error("An error occurered while trying to delete files in storage : " + data.error);
+                    yConsole.error("An error occurered while trying" +
+                        "to delete files in storage : " + data.error);
                     failed && failed(data.error);
                 }
             });
         }
     };
 
-    Storage.prototype.refresh = function (uri) {
+    Storage.prototype.refresh = function () {
         var self = this;
         var profile = this.profile;
-        //var user = session.user();
+//        var user = session.user();
 
-        //if (user) {
+//        if (user) {
             self.isLoading = true;
 
             var params = {
                 profile: profile.username
-                //token: user.token,
-                //username: user.username
+//                token: user.token,
+//                username: user.username
             };
 
-            //console.log("params", params);
+//            console.log("params", params);
             apiClient.action('files', params , function (data) {
                 self.refreshedOnce = true;
-                //console.log("s3 data", data);
+//                console.log("s3 data", data);
                 if (!data.error) {
                     angular.forEach(self.files, function (file) {
                         file.markForDiscard = true;
                     });
 
-                    //console.log("Storagerefresh > apiClient.files", data);
+//                    console.log("Storagerefresh > apiClient.files", data);
                     angular.forEach(data.files, function (file) {
-                        var path = file.Key && file.Key.replace(profile.username+ "/", "");
+                        var path = file.Key && file.Key.replace(profile.username + "/", "");
                         if (path) {
                             self.add(path, file);
                         }
@@ -282,9 +284,9 @@ yarn.service("Storage", function (apiClient,
                 console.error(err);
             });
 
-        //} else {
-        //    yConsole.error("You must me signed-in to load and save data from your storage.");
-        //}
+//        } else {
+//            yConsole.error("You must me signed-in to load and save data from your storage.");
+//        }
 
         return this;
     };

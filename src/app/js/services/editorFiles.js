@@ -107,16 +107,15 @@ yarn.service("editorFiles", function (EditorFile,
         return file;
     };
 
-    EditorFiles.prototype.get = function (uriOrFile) {
-        // TODO: Put this baseUri uri in a config
-        var baseUri = URI("http://storage.yarnstudio.io/");
+    EditorFiles.prototype.get = function (uriOrFile, profile) {
+        var baseURI = profile.baseURI();
         var match = null;
         var uri = uriOrFile;
         if (angular.isObject(uriOrFile)) {
             uri = uriOrFile.absoluteURI().toString();
         } else {
             uri = URI(uri);
-            uri = uri.absoluteTo(baseUri).toString()
+            uri = uri.absoluteTo(baseURI).toString()
         }
         angular.forEach(this.files, function (file) {
 //            console.log("A:", file.absoluteURI().toString());

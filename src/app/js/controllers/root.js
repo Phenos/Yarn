@@ -248,7 +248,6 @@ yarn.service('root', function rootService(storyLocalStorage, consoleService, pla
         player.closeSidenav();
         var IDELocalStorage = storyLocalStorage.get("IDE");
         IDELocalStorage.IDEisVisible = service.IDEisVisible(true);
-        consoleService.focus();
     };
     service.hideConsole = function () {
         var IDELocalStorage = storyLocalStorage.get("IDE");

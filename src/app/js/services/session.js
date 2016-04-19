@@ -20,13 +20,7 @@ yarn.service("session", function ($localStorage) {
 
     Session.prototype.user = function (user) {
         if (angular.isDefined(user)) {
-            //TODO: Find another methos to update profiles.authenticated to prevent circular dependency
-            //if (profiles.authenticated() &&
-            //    profiles.authenticated().username !== user.username) {
-            //    profiles.authenticated(new Profile(user.username, user));
-            //}
             this._user = user;
-            //profiles.authenticated(user.username, user);
         }
         return this._user;
     };
@@ -34,8 +28,8 @@ yarn.service("session", function ($localStorage) {
     /**
      * Return either the global session storage object, or return a key.
      * Initialize the key as a new object if needed.
-     * @param key
-     * @returns {null|*}
+     * @param {string} key A unique key identifying the storage object
+     * @returns {Object} A object which will be persited in local storage
      */
     Session.prototype.storage = function (key) {
         var obj = this._storage;

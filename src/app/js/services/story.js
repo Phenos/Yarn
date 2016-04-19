@@ -17,6 +17,12 @@ yarn.service("Story", function (URI, channel) {
         this.url = new URI(uri);
     }
 
+    Story.prototype.key = function () {
+        var projectFolder = this.id;
+        var username = this.profile.username;
+        return [username, projectFolder].join("-");
+    };
+
     Story.prototype.ifExists = function (success, fail) {
         var self = this;
 

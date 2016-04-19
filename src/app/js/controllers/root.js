@@ -1,7 +1,8 @@
-yarn.controller('root', function rootController(user,
-                                                $localStorage,
-                                                $scope,
+yarn.controller('root', function rootController($scope,
                                                 $element,
+                                                $state,
+                                                user,
+                                                storyLocalStorage,
                                                 IDE,
                                                 yConsole,
                                                 welcomeMessage,
@@ -9,15 +10,18 @@ yarn.controller('root', function rootController(user,
                                                 root,
                                                 wallpaper,
                                                 tools,
+
+                                                // todo: Not needed anymore ?
                                                 $timeout,
                                                 fireOnResizeEvent,
+
                                                 globalContextMenu,
-                                                $state,
                                                 state,
-                                                session,
                                                 profiles,
                                                 Profile,
                                                 Story) {
+
+    var IDELocalStorage;
 
 //    console.log("state.params:", $state);
     $scope.IDE = IDE;
@@ -34,9 +38,6 @@ yarn.controller('root', function rootController(user,
     // Used by the global context menu
     globalContextMenu.register($scope, $element);
 
-    // Restore previously openned files
-    state.reloadFromLocalStorage();
-
     $scope.toolTabs = {
         selected: 0
     };
@@ -45,9 +46,6 @@ yarn.controller('root', function rootController(user,
         image: "/images/splash/splash-bg.jpg",
         layout: "fullscreen"
     });
-
-    // Register with the service
-    root.register($scope);
 
     /*
      Show a welcome message in the yarn console
@@ -67,10 +65,9 @@ yarn.controller('root', function rootController(user,
     };
 
     /*
-
      Height permutation between Console and Editor on focus events
-
      */
+
     $scope.editorFlexHeight_default = 100;
     $scope.consoleFlexHeight_default = 0;
     $scope.editorFlexHeight = $scope.editorFlexHeight_default;
@@ -115,25 +112,23 @@ yarn.controller('root', function rootController(user,
                 $scope.onConsoleFocus();
             }
         }
-        $localStorage.toolsAreVisible = $scope.toolsAreVisible;
+        IDELocalStorage.toolsAreVisible = $scope.toolsAreVisible;
     };
 
     $scope.openProjectTool = function () {
         tools.focus("project");
     };
 
-    $scope.toggleTools($localStorage.toolsAreVisible);
-    tools.focusFromMemory();
 
-    if (profiles.authenticated()) {
-        root.IDEisVisible($localStorage.IDEisVisible);
-    }
-
+    // Set the current visited and authenticated profile, and current project
     if ($state.params.profile) {
         var visitedProfile = new Profile("twitter." + $state.params.profile);
         profiles.visited(visitedProfile);
         if ($state.params.story) {
             state.story = new Story($state.params.story, visitedProfile);
+
+            storyLocalStorage.uid(state.story.key());
+
 //            console.log("-------- before iExists");
             state.story.ifExists(function () {
 //                console.log("STORY EXISTS!");
@@ -158,18 +153,41 @@ yarn.controller('root', function rootController(user,
                 "or visit someone else's profile.");
         }
     }
+
+    IDELocalStorage = storyLocalStorage.get("IDE");
+
+    // Register with the service
+    root.register($scope);
+
+    $scope.toggleTools(IDELocalStorage.toolsAreVisible);
+
+    // Restore previously openned files
+    state.reloadFromLocalStorage();
+
+    tools.focusFromMemory();
+
+    if (profiles.authenticated()) {
+        root.IDEisVisible(IDELocalStorage.IDEisVisible);
+    }
+
+
 });
 
 
-yarn.service('root', function rootService($localStorage, consoleService, player) {
+yarn.service('root', function rootService(storyLocalStorage, consoleService, player) {
+
     var service = {
         scope: null
     };
+
 
     service.register = function (scope) {
         service.scope = scope;
         scope._IDEisVisible = service._IDEisVisible;
         scope._helpIsVisible = service._helpIsVisible;
+
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        service.helpIsVisible(IDELocalStorage._helpIsVisible);
     };
 
     /*
@@ -200,7 +218,6 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
         return service._helpIsVisible;
     };
 
-    service.helpIsVisible($localStorage._helpIsVisible);
 
     service.toggleConsole = function () {
         if (service._IDEisVisible) {
@@ -229,11 +246,13 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
      */
     service.showConsole = function () {
         player.closeSidenav();
-        $localStorage.IDEisVisible = service.IDEisVisible(true);
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage.IDEisVisible = service.IDEisVisible(true);
         consoleService.focus();
     };
     service.hideConsole = function () {
-        $localStorage.IDEisVisible = service.IDEisVisible(false);
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage.IDEisVisible = service.IDEisVisible(false);
     };
 
 
@@ -244,10 +263,12 @@ yarn.service('root', function rootService($localStorage, consoleService, player)
      */
     service.showHelp = function () {
         player.closeSidenav();
-        $localStorage._helpIsVisible = service.helpIsVisible(true);
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage._helpIsVisible = service.helpIsVisible(true);
     };
     service.hideHelp = function () {
-        $localStorage._helpIsVisible = service.helpIsVisible(false);
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage._helpIsVisible = service.helpIsVisible(false);
     };
 
     service.focusConsole = function () {

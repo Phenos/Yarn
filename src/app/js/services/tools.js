@@ -10,8 +10,10 @@ yarn.service("tools", function toolsService($injector,
     Tools.prototype.focusFromMemory = function () {
         var storage = storyLocalStorage.get("tools");
         var toolId = storage.lastOpenTool;
-        if (toolId) this.focus(toolId, true);
-        //console.log("focusFromMemory", toolId);
+        if (toolId) {
+            this.focus(toolId, true);
+        }
+//        console.log("focusFromMemory", toolId);
     };
 
     Tools.prototype.add = function (tool) {
@@ -24,7 +26,7 @@ yarn.service("tools", function toolsService($injector,
 
     Tools.prototype.load = function (tools) {
         var self = this;
-        //console.log("Loading commands into command registry", commands);
+//        console.log("Loading commands into command registry", commands);
         angular.forEach(tools, function (toolServiceName) {
             var tool = $injector.get(toolServiceName);
             self.add(tool);
@@ -36,7 +38,7 @@ yarn.service("tools", function toolsService($injector,
     };
 
     Tools.prototype.focus = function (id, dontExpand) {
-        //console.log("focus", id);
+//        console.log("focus", id);
         var storage = storyLocalStorage.get("tools");
         storage.lastOpenTool = id;
         angular.forEach(this.all, function (tool) {
@@ -46,7 +48,9 @@ yarn.service("tools", function toolsService($injector,
                 tool.blur();
             }
         });
-        if (!dontExpand) root.toggleTools(true);
+        if (!dontExpand) {
+            root.toggleTools(true);
+        }
     };
 
     return new Tools();

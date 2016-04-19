@@ -1,5 +1,4 @@
-yarn.service('state', function ($localStorage,
-                                Assertion,
+yarn.service('state', function (Assertion,
                                 Assertions,
                                 transactions,
                                 Thing,
@@ -20,7 +19,6 @@ yarn.service('state', function ($localStorage,
                                 storyLocalStorage,
                                 channel) {
 
-
         function State() {
             var self = this;
             this.assertions = new Assertions();
@@ -28,8 +26,6 @@ yarn.service('state', function ($localStorage,
             this.localState = null;
 
             this.ready(false, "loading", "Loading...");
-
-            storyLocalStorage.uid(this.uniqueKey());
 
             channel.subscribe("editorFiles.change", function (file) {
                 self.persistEditorFiles(file);
@@ -54,45 +50,34 @@ yarn.service('state', function ($localStorage,
             transactions.undo(this);
         };
 
-        State.prototype.uniqueKey = function () {
-            var key;
-            var username = "anonymous";
-            if (session.user()) {
-                username = session.user().username;
-            }
-            var uniqueID = this.resolveValue("Story", "has", "Unique ID");
-            var releaseNumber = this.resolveValue("Story", "has", "Release Number") || 0;
-            key = [username, uniqueID, releaseNumber].join("-");
-            return key;
-        };
-
         /**
          * Persist one or all files to localStorage
          * @param {EditorFile} file A file to persist to local storage
          * @returns {undefined}
          */
         State.prototype.persistEditorFiles = function (file) {
-            var sessionFiles = session.storage("editorFiles");
-//            console.log("persist -->", file);
-            if (sessionFiles) {
+            var projectFiles = storyLocalStorage.get("editorFiles");
 
-                if (!angular.isArray(sessionFiles.files)) {
-                    sessionFiles.files = [];
+//            console.log("persist -->", file);
+            if (projectFiles) {
+
+                if (!angular.isArray(projectFiles.files)) {
+                    projectFiles.files = [];
                 }
 
                 if (file) {
                     // The filename stored is prefixed with the profile name
                     // and will be re-used later when re-loading the file.
-                    sessionFiles.files.push({
+                    projectFiles.files.push({
                         uri: file._uri,
                         profile: file.profile.username
                     });
                 } else {
-                    sessionFiles.files = [];
-                    angular.forEach(editorFiles.files, function (file) {
-                        sessionFiles.files.push({
-                            uri: file._uri,
-                            profile: file.profile.username
+                    projectFiles.files = [];
+                    angular.forEach(editorFiles.files, function (_file) {
+                        projectFiles.files.push({
+                            uri: _file._uri,
+                            profile: _file.profile.username
                         });
                     });
                 }
@@ -104,14 +89,15 @@ yarn.service('state', function ($localStorage,
          * @returns {undefined}
          */
         State.prototype.reloadFromLocalStorage = function () {
+            var projectFiles = storyLocalStorage.get("editorFiles");
+
             var lastFocusFromMemory = editors.lastFocusFromMemory();
 
-            var sessionFiles = session.storage("editorFiles");
 //            console.log("sessionFiles", sessionFiles);
-            if (sessionFiles) {
-                if (angular.isArray(sessionFiles.files)) {
-                    var oldList = sessionFiles.files;
-                    sessionFiles.files = [];
+            if (projectFiles) {
+                if (angular.isArray(projectFiles.files)) {
+                    var oldList = projectFiles.files;
+                    projectFiles.files = [];
                     angular.forEach(oldList, function (file) {
 //                        console.log("file", file);
                         var setFocus = false;
@@ -225,9 +211,9 @@ yarn.service('state', function ($localStorage,
             return (returnAssertions) ? foundAssertions : foundThings;
         };
 
-        State.prototype.resolveOne = function (assert) {
+        State.prototype.resolveOne = function (_assert) {
             var value = null;
-            var objs = this.resolveAll(assert);
+            var objs = this.resolveAll(_assert);
             if (objs.length) {
                 // We make sure that the top-most item is taken, in a case where
                 // multiple assertions would have been true, the heaviest one
@@ -274,7 +260,8 @@ yarn.service('state', function ($localStorage,
 
         State.prototype.applyObjectAsStageChange = function (object) {
             var self = this;
-            var childAssertions = self.assertions.find(assert(undefined, undefined, undefined, {
+            var undef = void 0;
+            var childAssertions = self.assertions.find(assert(undef, undef, undef, {
                 parent: object.id
             }));
             angular.forEach(childAssertions, function (assertion) {
@@ -325,18 +312,10 @@ yarn.service('state', function ($localStorage,
             return templating.render(template, _scope)
         };
 
-        /**
-         * Get a new assertion
-         * @param subject
-         * @param predicate
-         * @param object
-         * @param _options
-         * @returns {*}
-         */
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
             var options = _options || {};
             var assertion;
-            //console.log("options", options.source.uri);
+//            console.log("options", options.source.uri);
             if (subject && predicate && object) {
                 var _predicate = predicate;
 
@@ -422,12 +401,12 @@ yarn.service('state', function ($localStorage,
             } else {
                 console.error("Impossible to create an incomplete assertion.", arguments);
             }
-            //console.log("created: ", assertion);
+//            console.log("created: ", assertion);
 
             return assertion;
         };
 
-        /**
+        /*
          * Persist an assertion to localState for it "session" state layer (aka localStorage)
          * If the session layer is empty, the assertion is removed
          */
@@ -438,7 +417,7 @@ yarn.service('state', function ($localStorage,
                 storyStorage.assertions = {}
             }
 
-            //console.log("persistAssertion", assertion, assertion.layer);
+//            console.log("persistAssertion", assertion, assertion.layer);
             if (assertion.layer === "session") {
                 var json = assertion.toJSON();
                 if (json) {
@@ -460,7 +439,9 @@ yarn.service('state', function ($localStorage,
 
 //            console.log("State.UnpersistAssertions", _assertions);
             var assertions = _assertions;
-            if (!angular.isArray(assertions)) assertions = [assertions];
+            if (!angular.isArray(assertions)) {
+                assertions = [assertions];
+            }
 
             angular.forEach(assertions, function (assertion) {
 //                console.log("persistAssertion", assertion, assertion.layer);
@@ -591,10 +572,9 @@ yarn.service('state', function ($localStorage,
 
             // todo: move this in the "templating" service
             function _value(assertion, scope) {
-                var _scope = angular.extend({}, newScope, scope);
-                var value = state.value(assertion, _scope);
+                var __scope = angular.extend({}, newScope, scope);
 //                console.log("value: " + value);
-                return value;
+                return state.value(assertion, __scope);
             }
 
             // todo: move this in the "templating" service
@@ -603,7 +583,6 @@ yarn.service('state', function ($localStorage,
                 var __assert = parseAssert(assertion);
                 return state.resolveRawValue(__assert);
             }
-
 
             var baseScope = {
                 lodash: lodash,

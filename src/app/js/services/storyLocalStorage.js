@@ -12,7 +12,7 @@ yarn.service("storyLocalStorage", function ($localStorage) {
     };
 
     StoryLocalStorage.prototype.get = function (key) {
-        console.log("=== StoryLocalStorage ===>", this.uid());
+//        console.log("=== StoryLocalStorage ===>", this.uid());
         var storyKey = this.uid();
         var storyStorage = $localStorage[storyKey];
         if (angular.isUndefined(storyStorage)) {

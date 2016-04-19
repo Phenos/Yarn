@@ -70,6 +70,7 @@ yarn.service('state', function (Assertion,
                     // and will be re-used later when re-loading the file.
                     projectFiles.files.push({
                         uri: file._uri,
+                        position: file.position || 0,
                         profile: file.profile.username
                     });
                 } else {
@@ -77,6 +78,7 @@ yarn.service('state', function (Assertion,
                     angular.forEach(editorFiles.files, function (_file) {
                         projectFiles.files.push({
                             uri: _file._uri,
+                            position: _file.position,
                             profile: _file.profile.username
                         });
                     });
@@ -90,7 +92,6 @@ yarn.service('state', function (Assertion,
          */
         State.prototype.reloadFromLocalStorage = function () {
             var projectFiles = storyLocalStorage.get("editorFiles");
-
             var lastFocusFromMemory = editors.lastFocusFromMemory();
 
 //            console.log("sessionFiles", sessionFiles);
@@ -99,14 +100,18 @@ yarn.service('state', function (Assertion,
                     var oldList = projectFiles.files;
                     projectFiles.files = [];
                     angular.forEach(oldList, function (file) {
-//                        console.log("file", file);
                         var setFocus = false;
+
                         if (lastFocusFromMemory === file) {
                             setFocus = true;
                         }
 
                         var profile = profiles.get(file.profile);
-                        var newFile = editorFiles.open(profile, file.uri, setFocus);
+                        var newFile = editorFiles.open(profile,
+                            file.uri,
+                            setFocus,
+                            file.position.row);
+//                        console.log("file.position.row = ", file.position.row);
                     });
                 }
             }

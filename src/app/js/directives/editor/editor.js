@@ -2,6 +2,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                                                   editors,
                                                   inspector,
                                                   IDE,
+                                                  state,
                                                   profiles,
                                                   soundEffects,
                                                   globalContextMenu,
@@ -35,7 +36,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         this.save = function () {
             IDE.working(true);
-            editorFiles.save(this.file, function (err, data) {
+            editorFiles.save(this.file, function (err) {
                 IDE.working(false);
                 $timeout(function () {
                     self.file.isModified();
@@ -60,7 +61,6 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         this.rename = function (ev) {
             var filename = this.file.uri.filename();
-            var self = this;
             var confirm = $mdDialog.prompt()
                 .title('Rename')
                 .textContent('Choose a new name for this file.')
@@ -70,10 +70,10 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 .ok('Rename')
                 .cancel('Cancel');
             $mdDialog.show(confirm).then(function(newName) {
-                //console.log("Renaming", newName);
+//                console.log("Renaming", newName);
                 editorFiles.rename(self.file, newName);
             }, function() {
-                //$scope.status = 'You didn\'t name your dog.';
+//                $scope.status = 'You didn\'t name your dog.';
             });
         };
 
@@ -130,8 +130,8 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         function aceChanged() {
             updateInspection();
             if (self.file) {
-                //self.file.updateStatus();
-                //Refresh the isModified status
+//                self.file.updateStatus();
+//                Refresh the isModified status
                 $timeout(function (){
                     self.file.isModified();
                 })
@@ -142,9 +142,9 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         function checkGoToLine() {
             $timeout(function () {
                 if (self.file && self.file.goToLine) {
-                    console.log("checkGoToLine", self.file.goToLine);
-                    //console.log("goToLine", self.file.goToLine);
-                    //aceEditor.resize(true);
+//                    console.log("checkGoToLine", self.file.goToLine);
+//                    console.log("goToLine", self.file.goToLine);
+//                    aceEditor.resize(true);
                     aceEditor.gotoLine(self.file.goToLine, 0, true);
                     self.file.goToLine = null;
                 }
@@ -183,12 +183,20 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 $timeout(function() {
                     angular.forEach(inspector.articles, function(article) {
                         angular.forEach(article.actions, function(action) {
-                            globalContextMenu.add(action.label, action.icon + ".svg", action.callback);
+                            globalContextMenu.add(
+                                action.label,
+                                action.icon + ".svg",
+                                action.callback);
                         });
                     });
                 }, 200);
 
                 var pos = aceEditor.getCursorPosition();
+
+                self.file.position = pos;
+                state.persistEditorFiles(self.file);
+//                console.log("=====> pos  >> ", pos);
+
                 var token = aceEditor.session.getTokenAt(pos.row, pos.column);
                 // Also check if the inspection is not just for whitespace
                 if (token && token.value.trim().length) {

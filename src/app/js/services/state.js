@@ -107,6 +107,10 @@ yarn.service('state', function (Assertion,
                         }
 
                         var profile = profiles.get(file.profile);
+                        var row = 0;
+                        if (file.position) {
+                            row = file.position.row
+                        }
                         var newFile = editorFiles.open(profile,
                             file.uri,
                             setFocus,

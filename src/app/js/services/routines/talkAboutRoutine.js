@@ -19,7 +19,7 @@ yarn.service("talkAboutRoutine", function (events,
             var scriptText = state.value("CurrentTopic has a Script", {
                 CurrentTopic: topic
             });
-            console.log("--->", scriptText, topic);
+//            console.log("--->", scriptText, topic);
             var script = new Script(scriptText, topic.source);
             script.play();
 

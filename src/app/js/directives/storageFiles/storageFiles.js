@@ -63,8 +63,10 @@ yarn.directive('storageFiles', function StorageFilesDirective(channel,
 //                console.log("Pre-selecting folder", self.selectedStorage.allProjectFolders);
                 angular.forEach(self.selectedStorage.allProjectFolders, function (folder) {
 //                    console.log(" state.story >> ", state.story);
-                    if (folder.name === state.story.id) {
-                        self.openProjectFolder(folder);
+                    if (state.story) {
+                        if (folder.name === state.story.id) {
+                            self.openProjectFolder(folder);
+                        }
                     }
                 });
             }

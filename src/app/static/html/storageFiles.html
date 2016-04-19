@@ -13,9 +13,9 @@
             <md-list>
                 <md-list-item ng-class="{
                                   selected: (storageFiles.selectedStorage === profile.storage &&
-                                  storageFiles.selectedFolder === null)
+                                  storageFiles.selectedFolder === false)
                               }"
-                              ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(null)">
+                              ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(false)">
                     ALL PROJECTS FILES
                 </md-list-item>
                 <md-list-item ng-repeat="folder in profile.storage.projectFolders"

@@ -59,7 +59,7 @@ yarn.directive('storageFiles', function StorageFilesDirective(channel,
                 });
             }
 
-            if (self.selectedStorage && !self.selectedFolder) {
+            if (self.selectedStorage && self.selectedFolder === null) {
 //                console.log("Pre-selecting folder", self.selectedStorage.allProjectFolders);
                 angular.forEach(self.selectedStorage.allProjectFolders, function (folder) {
 //                    console.log(" state.story >> ", state.story);

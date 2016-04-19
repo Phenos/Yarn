@@ -114,7 +114,7 @@ yarn.service('state', function (Assertion,
                         var newFile = editorFiles.open(profile,
                             file.uri,
                             setFocus,
-                            file.position.row);
+                            row);
 //                        console.log("file.position.row = ", file.position.row);
                     });
                 }

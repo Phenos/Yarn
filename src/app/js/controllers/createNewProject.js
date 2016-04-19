@@ -1,13 +1,10 @@
 yarn.controller('createNewProject', function rootController(user,
-                                                            $localStorage,
                                                             $scope,
-                                                            $element,
                                                             $state,
                                                             wallpaper,
                                                             login,
                                                             editorFiles,
                                                             Story,
-                                                            $timeout,
                                                             profiles,
                                                             Profile) {
 
@@ -27,14 +24,13 @@ yarn.controller('createNewProject', function rootController(user,
 
     function fail() {
         editorFiles.close(defaultStory);
-        console.log("Failed while loading default story");
+        console.error("Failed while loading default story");
     }
 
     var YarnProfile = profiles.get("twitter.YarnStudioGames");
     defaultStory = editorFiles.open(
         YarnProfile, "default-story/story.txt",
         false, null, success, fail);
-    var defaultStoryContent = "";
 
 
     // Fetch current user
@@ -55,24 +51,20 @@ yarn.controller('createNewProject', function rootController(user,
 
     $scope.confirm = function confirm(scope) {
         $scope.isLoading = true;
-//        $timeout(function () {
-//            $scope.isLoading = false;
-//            $scope.error = true;
-//        }, 2000)
         $scope.projectName = scope.projectName;
         var profile = profiles.authenticated();
         var url = $scope.projectName + "/story.txt";
         var newStoryFile = editorFiles.open(profile, url, true);
-        console.log("createNewProject.confirm", url, newStoryFile);
+//        console.log("createNewProject.confirm", url, newStoryFile);
         if (!newStoryFile.content) {
             newStoryFile.content = defaultStoryContent;
         }
         profile.storage.save(newStoryFile, function () {
-            console.log("SUCCESS!");
+//            console.log("SUCCESS!");
             $scope.isLoading = false;
             $scope.isSuccess = true;
         }, function (err) {
-            console.log("Error while creating a new project", err);
+            console.error("Error while creating a new project", err);
             $scope.isLoading = false;
             $scope.error = true;
         })

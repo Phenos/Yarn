@@ -11,7 +11,6 @@ yarn.service('state', function (Assertion,
                                 session,
                                 editors,
                                 profiles,
-                                guid,
                                 lodash,
                                 templating,
                                 parseAssert,
@@ -111,11 +110,10 @@ yarn.service('state', function (Assertion,
                         if (file.position) {
                             row = file.position.row
                         }
-                        var newFile = editorFiles.open(profile,
+                        editorFiles.open(profile,
                             file.uri,
                             setFocus,
                             row);
-//                        console.log("file.position.row = ", file.position.row);
                     });
                 }
             }
@@ -169,21 +167,20 @@ yarn.service('state', function (Assertion,
             });
         };
 
-
-        State.prototype.resolveAll = function resolveAll(assert, returnAssertions) {
+        State.prototype.resolveAll = function resolveAll(_assert, returnAssertions) {
             var foundAssertions = [];
             var foundThings = [];
-            if (assert && (assert.subject && assert.predicate) ||
-                (assert.object && assert.predicate)) {
+            if (_assert && (_assert.subject && _assert.predicate) ||
+                (_assert.object && _assert.predicate)) {
                 var foundObjectsSets = {};
 
                 // Exclused parented assertions unless already specified
-                if (angular.isUndefined(assert.parent)) {
-                    assert.parent = null;
+                if (angular.isUndefined(_assert.parent)) {
+                    _assert.parent = null;
                 }
 
                 // Match all assertions to the criterias
-                var assertions = this.assertions.find(assert);
+                var assertions = this.assertions.find(_assert);
 
                 // Sort assertion by weight
                 assertions = assertions.sort(function (a, b) {
@@ -191,7 +188,7 @@ yarn.service('state', function (Assertion,
                 });
 
                 // Check if the item to be resolved is the object or the subject
-                var typeToResolve = (assert.object) ? "subject" : "object";
+                var typeToResolve = (_assert.object) ? "subject" : "object";
 
                 // Split all assertion by their unique thing to be resolved
                 assertions.forEach(function (assertion) {
@@ -281,8 +278,8 @@ yarn.service('state', function (Assertion,
             });
         };
 
-        State.prototype.resolveValue = function (assert, scope) {
-            var value = this.resolveRawValue(assert);
+        State.prototype.resolveValue = function (_assert, scope) {
+            var value = this.resolveRawValue(_assert);
 //            console.log("rawValue: ", rawValue);
             if (angular.isString(value)) {
                 value = this.render(value, scope);
@@ -460,18 +457,18 @@ yarn.service('state', function (Assertion,
             });
         };
 
-        State.prototype.negate = function (assert) {
+        State.prototype.negate = function (_assert) {
             var self = this;
 
-            if (assert.layer) {
+            if (_assert.layer) {
                 throw "Cannot specify layer when negating assertions";
             }
-            if (assert.parent) {
+            if (_assert.parent) {
                 throw "Cannot specify parent when negating assertions";
             }
 
             var groupedAssertions = this.assertions
-                .filter(assert)
+                .filter(_assert)
                 .groupByTripple();
 
 //            console.log("groupedAssertions", groupedAssertions);
@@ -529,16 +526,6 @@ yarn.service('state', function (Assertion,
 
 
         };
-        /*
-
-
-
-         console.log("wasInAssertions", wasInAssertions);
-         angular.forEach(wasInAssertions, function (assertion) {
-         });
-
-         */
-
 
         State.prototype.step = function (increment) {
             var count = 0;

@@ -70,6 +70,7 @@ yarn.directive('storageFiles', function StorageFilesDirective(channel,
                     }
                 });
             }
+
         }
 
         $scope.$watch('storageFiles.search', function (searchTerm) {

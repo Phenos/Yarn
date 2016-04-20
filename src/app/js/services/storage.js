@@ -138,7 +138,7 @@ yarn.service("Storage", function (apiClient,
     };
 
     Storage.prototype.save = function (file, success, failed) {
-        var self =  this;
+        var self = this;
         self.isLoading = true;
         var savedContent = file.content;
         var profile = this.profile;
@@ -172,7 +172,7 @@ yarn.service("Storage", function (apiClient,
     };
 
     Storage.prototype.rename = function (file, newName, success, failed) {
-        var self =  this;
+        var self = this;
         self.isLoading = true;
         var profile = this.profile;
         var user = session.user();
@@ -240,49 +240,58 @@ yarn.service("Storage", function (apiClient,
         }
     };
 
+    Storage.prototype.sortFolders = function () {
+        this.allProjectFolders = this.allProjectFolders.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        console.log("this.allProjectFolders", this.allProjectFolders);
+    };
+
     Storage.prototype.refresh = function () {
         var self = this;
         var profile = this.profile;
 //        var user = session.user();
 
 //        if (user) {
-            self.isLoading = true;
+        self.isLoading = true;
 
-            var params = {
-                profile: profile.username
+        var params = {
+            profile: profile.username
 //                token: user.token,
 //                username: user.username
-            };
+        };
 
 //            console.log("params", params);
-            apiClient.action('files', params , function (data) {
-                self.refreshedOnce = true;
+        apiClient.action('files', params, function (data) {
+            self.refreshedOnce = true;
 //                console.log("s3 data", data);
-                if (!data.error) {
-                    angular.forEach(self.files, function (file) {
-                        file.markForDiscard = true;
-                    });
+            if (!data.error) {
+                angular.forEach(self.files, function (file) {
+                    file.markForDiscard = true;
+                });
 
 //                    console.log("Storagerefresh > apiClient.files", data);
-                    angular.forEach(data.files, function (file) {
-                        var path = file.Key && file.Key.replace(profile.username + "/", "");
-                        if (path) {
-                            self.add(path, file);
-                        }
-                    });
+                angular.forEach(data.files, function (file) {
+                    var path = file.Key && file.Key.replace(profile.username + "/", "");
+                    if (path) {
+                        self.add(path, file);
+                    }
+                });
 
-                    self.discardMarkedFiles();
+                self.discardMarkedFiles();
 
-                    channel.publish("storage.refresh", self);
-                    self.isLoading = false;
-                } else {
-                    self.isLoading = false;
-                    yConsole.error("An error occurered while trying to load file from storage");
-                }
-            }, function (err) {
-                self.refreshedOnce = true;
-                console.error(err);
-            });
+                self.sortFolders();
+
+                channel.publish("storage.refresh", self);
+                self.isLoading = false;
+            } else {
+                self.isLoading = false;
+                yConsole.error("An error occurered while trying to load file from storage");
+            }
+        }, function (err) {
+            self.refreshedOnce = true;
+            console.error(err);
+        });
 
 //        } else {
 //            yConsole.error("You must me signed-in to load and save data from your storage.");

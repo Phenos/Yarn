@@ -18,7 +18,7 @@
                               ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(false)">
                     ALL PROJECTS FILES
                 </md-list-item>
-                <md-list-item ng-repeat="folder in profile.storage.projectFolders"
+                <md-list-item ng-repeat="folder in profile.storage.allProjectFolders"
                               ng-class="{selected: (storageFiles.selectedFolder === folder)}"
                               ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(folder)">
                     <md-icon md-svg-icon="/svg-icons/project.svg"></md-icon>
@@ -81,7 +81,7 @@
             </div>
         </header>
         <md-content flex="grow">
-            <section ng-repeat="directory in storageFiles.directories">
+            <section ng-repeat="directory in storageFiles.directories | orderObjectBy:'uri'">
                 <md-subheader ng-if="::directory.matches"
                               class="md-primary">
                     <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
@@ -91,7 +91,7 @@
                          class="list-of-files">
                     <md-list-item class="noright md-with-secondary"
                                   ng-if="::directory.files.length > 0"
-                                  ng-click="storageFiles.select({file: file})"
+                                  ng-click="storageFiles.select({ file: file })"
                                   ng-repeat="file in directory.files | filter: { filterOut: false }">
                         <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
                         <p>

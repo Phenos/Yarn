@@ -26,11 +26,12 @@ yarn.service("lookAroundRoutine", function (events,
             var roomName = state.resolveValue(assert(space, "has", "Name"));
             var roomDescription = state.resolveValue(assert(space, "has", "Description"));
             roomName = roomName || space.id;
-            phrase.push("You are at the [" + roomName + ":" + space.id + "]. ");
             if (roomDescription) {
                 phrase.push("<br/><br/>");
                 phrase.push(roomDescription);
                 phrase.push("<br/><br/>");
+            } else {
+                phrase.push("You are at the [" + roomName + ":" + space.id + "]. ");
             }
         }
 

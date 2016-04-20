@@ -33,7 +33,7 @@ yarn.service("takeRoutine", function (state,
 
             // Put item in inventory and log it to the player
             var YourInventory = things.get("Your Inventory");
-            var isIn = predicates.get("Is In");
+            var isIn = predicates("Is In");
             state.createAssertion(object, isIn, YourInventory);
         }
         return true;

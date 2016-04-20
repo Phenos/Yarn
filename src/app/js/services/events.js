@@ -93,6 +93,7 @@ yarn.service('events', function (assert,
             }
 //            console.log("triggerValueNormalized", triggerValueNormalized);
 
+//            console.log("triggerValueNormalized", triggerValueNormalized);
             // Check if the eventId provided matches
             if ((eventId && triggerValueNormalized === eventIdNormalized) ||
                 !eventId && triggerValueNormalized === true) {
@@ -112,7 +113,7 @@ yarn.service('events', function (assert,
                             allConditionsAreTrue = false;
                         }
                     });
-//                    console.log("allConditionsAreTrue", allConditionsAreTrue);
+
                     if (allConditionsAreTrue) {
 //                        console.log("TRIGGERED!", object.id, eventId, triggerValue);
                         setsToBeTriggered.push({
@@ -122,7 +123,6 @@ yarn.service('events', function (assert,
                         });
                     }
                 }
-
             }
         });
 
@@ -140,6 +140,7 @@ yarn.service('events', function (assert,
 
 
     Events.prototype.triggerNow = function (object, assertion) {
+        var self = this;
 
         var logOptions = {};
         if (assertion) {
@@ -176,6 +177,7 @@ yarn.service('events', function (assert,
             var isAnAct = state.value("Object is an Act", {
                 Object: object
             });
+
             if (isAnAct) {
                 self.trigger(assert("Player", "acts", object));
             }

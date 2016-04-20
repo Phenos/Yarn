@@ -244,7 +244,7 @@ yarn.service("Storage", function (apiClient,
         this.allProjectFolders = this.allProjectFolders.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        console.log("this.allProjectFolders", this.allProjectFolders);
+//        console.log("this.allProjectFolders", this.allProjectFolders);
     };
 
     Storage.prototype.refresh = function () {

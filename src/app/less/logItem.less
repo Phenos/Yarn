@@ -21,9 +21,18 @@ log-item {
 
     .logItem {
 
+        &:hover {
+            a:visited,
+            a:link,
+            a {
+                color: #ffffff;
+            }
+
+        }
+
         padding: 0 20px;
         margin: 0.2em 0.2em;
-        color: #fff;
+        color: #eee;
         text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
 
         md-icon {
@@ -41,8 +50,9 @@ log-item {
         a:link,
         a {
             position: relative;
-            color: #ff9;
+            color: #eee;
             text-decoration: none;
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
             font-weight: 400;
 
             &.unrecognized-thing {
@@ -52,6 +62,10 @@ log-item {
             }
 
         }
+        a:hover {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
         strong {
             font-weight: 600;
         }

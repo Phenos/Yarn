@@ -16,10 +16,6 @@ yarn.service("lookAroundRoutine", function (events,
 
         yConsole.log("Routine: lookAround");
 
-        // TODO: Use the defaultTexts class for this
-        var defaultText = state.resolveValue(assert("Default", "for", "NothingToLookAt"));
-        defaultText = defaultText || "You see nothing else.";
-
         var space = state.resolveOne(assert("Player", "is in"));
         if (space) {
 //            console.log("room", room);
@@ -27,7 +23,6 @@ yarn.service("lookAroundRoutine", function (events,
             var roomDescription = state.resolveValue(assert(space, "has", "Description"));
             roomName = roomName || space.id;
             if (roomDescription) {
-                phrase.push("<br/><br/>");
                 phrase.push(roomDescription);
                 phrase.push("<br/><br/>");
             } else {
@@ -54,15 +49,9 @@ yarn.service("lookAroundRoutine", function (events,
                     }
                 });
 
-            } else {
-                phrase.push(defaultText);
             }
 
             storyLog.log(phrase.join(""));
-
-        } else {
-
-            storyLog.log(defaultText);
 
         }
 

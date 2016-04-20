@@ -173,6 +173,13 @@ yarn.service('events', function (assert,
 
             state.applyObjectAsStageChange(object);
 
+            var isAnAct = state.value("Object is an Act", {
+                Object: object
+            });
+            if (isAnAct) {
+                self.trigger(assert("Player", "acts", object));
+            }
+
         }
         return somethingHappened;
     };

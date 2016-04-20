@@ -159,6 +159,9 @@ yarn.service('gamePedicates', function (predicates) {
             .syntax("has looked at");
 
         predicates("take")
+            .syntax("took the")
+            .syntax("has taken the")
+            .syntax("takes the")
             .syntax("took")
             .syntax("has taken")
             .syntax("takes");

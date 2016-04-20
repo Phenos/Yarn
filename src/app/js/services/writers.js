@@ -200,7 +200,7 @@ yarn.factory('writers', function (Prompt,
                 option.iconOnly = true;
             }
 
-            var isInventoryItem = state.resolveValue(assert(thing, "is", "InventoryItem"));
+            var isInventoryItem = state.resolveValue(assert(thing, "is", "Inventory Item"));
             if (isInventoryItem) {
                 option = prompt.option("Take " + name, "take " + thing.id);
                 option.iconId = "inventory";

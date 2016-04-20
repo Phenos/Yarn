@@ -6,12 +6,15 @@ yarn.service("inventoryInRoomHelper", function (state,
 
         if (room) {
 
-            var thingsInRoom = state.resolveAll(assert(undefined, "is in", room));
+            var undef = 0;
+            var thingsInRoom = state.resolveAll(assert(undef, "is in", room));
 
             thingsInRoom.forEach(function (thing) {
                 // Check if item is an InventoryItem
-                var isInventoryItem = state.resolveValue(assert(thing, "is", "InventoryItem"));
-                if (isInventoryItem) foundInventory.push(thing);
+                var isInventoryItem = state.resolveValue(assert(thing, "is", "Inventory Item"));
+                if (isInventoryItem){
+                    foundInventory.push(thing);
+                }
             });
         }
 

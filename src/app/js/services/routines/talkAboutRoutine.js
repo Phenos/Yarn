@@ -2,6 +2,7 @@ yarn.service("talkAboutRoutine", function (events,
                                            assert,
                                            state,
                                            Script,
+                                           storyLog,
                                            yConsole) {
 
     events.on("Player talks about *", "after dialogs", function () {
@@ -16,6 +17,16 @@ yarn.service("talkAboutRoutine", function (events,
         var topic = chainedTopic || state.one("Player talks about *");
 
         if (topic) {
+            var topicName = state.value("CurrentTopic has a Name", {
+                CurrentTopic: topic
+            });
+
+            if (topicName) {
+                storyLog.action("You decide to talk about the " + topicName);
+            } else {
+                storyLog.action("You start talking");
+            }
+
             var scriptText = state.value("CurrentTopic has a Script", {
                 CurrentTopic: topic
             });

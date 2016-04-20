@@ -12,11 +12,11 @@ yarn.service("playScriptRoutine", function (events,
         state.negate(assert("Player", "is acting"));
     });
 
-    function playScriptRoutine() {
+    function playScriptRoutine(forcedAct) {
 
         yConsole.log("Routine: playScript");
 
-        var act = state.one("Player is acting *");
+        var act = forcedAct || state.one("Player is acting *");
         if (act) {
             var scriptText = state.value("CurrentAct has a Script", { CurrentAct: act});
             console.log("--->", scriptText, act);

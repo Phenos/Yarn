@@ -78,7 +78,7 @@ yarn.service('state', function (Assertion,
                     angular.forEach(editorFiles.files, function (_file) {
                         projectFiles.files.push({
                             uri: _file._uri,
-                            isFocused: file.isFocused,
+                            isFocused: _file.isFocused,
                             position: _file.position,
                             profile: _file.profile.username
                         });

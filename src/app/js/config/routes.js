@@ -85,11 +85,11 @@ yarn.config(function ($locationProvider,
         controller: 'root'
     });
     $stateProvider.state('createNewProject', {
-        url: '/CreateNewProject/:story',
+        url: '/createNewProject/:story',
         resolve: {
             "user": resolveUser
         },
-        templateUrl: './html/CreateNewProject.html',
+        templateUrl: './html/createNewProject.html',
         controller: 'createNewProject'
     });
     $stateProvider.state('profile', {

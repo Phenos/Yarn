@@ -36,7 +36,7 @@ yarn.service("Script", function (yConsole, storyLog, state) {
     };
 
     Script.prototype.play = function () {
-        console.log("Script.play");
+//        console.log("Script.play");
         var ellipsis = "";
         if (this.text.length > 50) {
             ellipsis = "[…]";

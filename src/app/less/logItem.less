@@ -62,7 +62,8 @@ log-item {
             }
 
         }
-        a:hover {
+        a:hover,
+        a:hover span {
             border-bottom: 1px solid rgba(255, 255, 255, 0.8);
         }
 
@@ -127,12 +128,13 @@ log-item {
         &.is-image {
             .fadeIn();
             font-size: 1.2em;
-            margin: 1em 1em;
+            padding: 1em 1em;
+            margin: 0em 0em;
             font-weight: 400;
             text-align: center;
 
             img {
-                .defaultShadow();
+                box-shadow: 0 9px 19px 0 rgba(0, 0, 0, 0.36);
                 max-width: 400px;
                 width: 80%;
             }

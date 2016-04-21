@@ -1,7 +1,6 @@
 (function () {
 
     yarn.directive('console', ConsoleDirective);
-    yarn.service('consoleService', consoleService);
 
     function ConsoleDirective(commands,
                               state,
@@ -22,8 +21,7 @@
             controller: ConsoleController
         };
 
-        function ConsoleController(consoleService,
-                                   yConsole,
+        function ConsoleController(yConsole,
                                    $scope,
                                    $compile,
                                    $timeout,
@@ -37,7 +35,7 @@
                 self.isReady = true;
             }, 1000);
 
-            this.lines = [];
+            this.lines = yConsole.lines;
 
             this.scrollbarsConfig = {
                 autoHideScrollbar: true,
@@ -49,10 +47,6 @@
             };
 
             this.commands = commands;
-
-            consoleService.register(this);
-
-//            var logscrollElem = angular.element($element.find("console-main")[0]);
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
@@ -91,8 +85,7 @@
             };
 
             this.clear = function () {
-                this.lines = [];
-
+                this.lines.splice(0, this.lines.length);
                 this.onClear();
             };
 
@@ -109,8 +102,8 @@
 
                 // todo: Put maximum number of line in a config
                 // Everytime the log overflows by 50 items it is cropped
-                var overflow = this.lines.length - 300;
-                if (overflow > 50) {
+                var overflow = this.lines.length - 200;
+                if (overflow > 20) {
                     this.lines.splice(0, overflow);
                 }
 
@@ -138,25 +131,6 @@
 
         }
 
-    }
-
-    function consoleService() {
-        var service = {};
-        var controller;
-
-        service.register = function (_controller) {
-            controller = _controller;
-        };
-
-        service.focus = function () {
-            controller && controller.focus()
-        };
-
-        service.clear = function () {
-            controller && controller.clear()
-        };
-
-        return service;
     }
 
 })();

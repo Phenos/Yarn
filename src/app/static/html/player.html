@@ -10,14 +10,25 @@
             class="player"
             flex="grow"
             ng-scrollbars
-            ng-scrollbars-update=player.updateScrollbar
-            ng-scrollbars-config="player.scrollbarsConfig">
-        <div class="main-ui" ng-if="player.state.readyness.isReady">
-            <context-action-menu></context-action-menu>
+            ng-scrollbars-update="updateScrollbar"
+            ng-scrollbars-config="player.scrollbarsConfig"
+    >
+        <div
+                class="main-ui"
+                ng-if="player.state.readyness.isReady">
             <story-log on-clear="player.onStoryLogClear()"></story-log>
+            <context-action-menu></context-action-menu>
             <user-choice prompt="prompt"></user-choice>
             <div class="player-footer"></div>
         </div>
+    </div>
+    <div
+            class="player"
+            flex="grow"
+            ng-scrollbars
+            ng-scrollbars-update="updateScrollbar"
+            ng-scrollbars-config="player.scrollbarsConfig"
+    >
         <div class="readyness" ng-if="!player.state.readyness.isReady">
             <div style="height:6em"></div>
             <div ng-if="player.state.readyness.status === 'loading'">

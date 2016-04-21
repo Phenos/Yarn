@@ -12,7 +12,7 @@ yarn.directive('getContextMenu', function (globalContextMenu, $timeout) {
                             event.clientY = e.clientY;
                             globalContextMenu.element[0].dispatchEvent(event);
                         }
-                    }, 300);
+                    }, 50);
                 }
             });
         }

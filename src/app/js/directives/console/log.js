@@ -30,7 +30,6 @@ function LogDirective($sce, $parse, editorFiles, openFileFromAbsoluteURL) {
         element.find("text").html(scope._text2htmlRaw);
 //        console.log("scope._text2htmlRaw", scope._text2htmlRaw);
 
-
         scope.goToSource = function (source) {
             if (source) {
                 openFileFromAbsoluteURL(source.uri, source.line);

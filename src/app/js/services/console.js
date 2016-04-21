@@ -8,6 +8,7 @@ yarn.service('yConsole', function (soundEffects) {
 
     function Logger() {
 
+        this.lines = [];
 
         var yConsole = {
             write: mockFunction("write"),
@@ -66,7 +67,7 @@ yarn.service('yConsole', function (soundEffects) {
         };
 
         this.tip = function (text, options) {
-            yConsole.write("<span class='log-icon>'<span>⚑</span></span>" +
+            yConsole.write("<span class='log-icon'><span>⚑</span></span>" +
                 "<strong>Tip: </strong> " +
                 text, "tip", options);
         };

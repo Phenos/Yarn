@@ -5,6 +5,9 @@ yarn.service('storyLog', function (state) {
         this._buffer = [];
         this.bufferedLogs = [];
 
+        this.items = [];
+        this.lastItemRead = 0;
+
         this.controller = {
             write: mockFunction("write"),
             clear: mockFunction("clear")

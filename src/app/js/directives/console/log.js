@@ -2,7 +2,7 @@
 
 yarn.directive('log', LogDirective);
 
-function LogDirective($sce, editorFiles, openFileFromAbsoluteURL) {
+function LogDirective($sce, $parse, editorFiles, openFileFromAbsoluteURL) {
     return {
         restrict: 'E',
         scope: {
@@ -21,12 +21,15 @@ function LogDirective($sce, editorFiles, openFileFromAbsoluteURL) {
             scope.source = _options.source;
         }
         scope.time = _time.getHours() + ":" + _time.getMinutes();
-//        element.addClass("is-" + scope.line.type);
 
-        scope.text2html = function() {
-            return $sce.trustAsHtml(scope.line.text);
+        scope.text2htmlRaw = function() {
+            return $sce.getTrustedHtml(scope.line.text) || '';
         };
-        scope._text2html = scope.text2html();
+
+        scope._text2htmlRaw = scope.text2htmlRaw();
+        element.find("text").html(scope._text2htmlRaw);
+//        console.log("scope._text2htmlRaw", scope._text2htmlRaw);
+
 
         scope.goToSource = function (source) {
             if (source) {

@@ -107,6 +107,13 @@
                 var newLine = new Line(text, type, step, isNewStep, options);
                 this.lines.push(newLine);
 
+                // todo: Put maximum number of line in a config
+                // Everytime the log overflows by 50 items it is cropped
+                var overflow = this.lines.length - 300;
+                if (overflow > 50) {
+                    this.lines.splice(0, overflow);
+                }
+
                 if (self.updateScrollbar) {
                     self.updateScrollbar('scrollTo', 10000000);
                 }
@@ -117,7 +124,13 @@
                 this.type = type;
                 this.step = step;
                 this.isNewStep = isNewStep;
+                this.isNewStepClass = isNewStep ? 'isNewStep' : '';
                 this.timestamp = Date.now();
+                if (options && options.source) {
+                    this.source = options.source;
+                } else {
+                    this.source = null;
+                }
                 this.options = options;
             }
 

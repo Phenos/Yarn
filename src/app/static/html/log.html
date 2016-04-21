@@ -1,7 +1,7 @@
-<div class="log {{ line.isNewStep ? 'isNewStep' : '' }}  is-{{ ::line.type }}">
-    <span class='step'>#{{::line.step }}</span>
+<div class="log {{::line.isNewStepClass}}  is-{{::line.type}}">
+    <span class='step' ng-bind="::line.step">#</span>
     <span class='timestamp'>{{::time }}</span>
-    <span class='text' ng-bind-html="::_text2html"></span>
+    <text class='text'></text>
     <span ng-if="::source"
           ng-click="goToSource(source)"
           class="source">

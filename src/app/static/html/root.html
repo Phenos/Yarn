@@ -2,7 +2,6 @@
             flex="grow"
             layout="row"
 >
-    <assertion-browser></assertion-browser>
     <early-bird ng-if="false">
         <img src="/images/early-bird.png" class="hvr-buzz-out" ng-click="open()"/>
 
@@ -12,16 +11,19 @@
             </span>
         </div>
     </early-bird>
-    <player class="layout-panel theme-{{ themes.current.id }}" flex="auto" user="user" layout="column"></player>
+    <player class="layout-panel"
+            flex="auto"
+            user="user"
+            layout="column"></player>
     <md-section
             md-whiteframe="10"
             class="IDE"
             layout="column"
             flex="grow"
-            ng-show="IDEisVisible || helpIsVisible">
+            ng-show="_IDEisVisible">
         <md-section layout="row" flex="" style="overflow: hidden; position: relative;">
             <md-section
-                    ng-show="IDEisVisible"
+                    ng-if="state.story.exists"
                     md-whiteframe="10"
                     class="layout-panel"
                     flex="100"
@@ -38,51 +40,69 @@
                          flex="100"
                     >
                         <div flex="20"></div>
-                            <div layout="column">
-                                <div style="color: #666; text-align: center;">
-                                    No files are curently open!
-                                </div>
-                                <br/>
-                                <md-button ng-click="openMain()" class="md-primary">
-                                    Open the main file
-                                </md-button>
-                                <md-button ng-click="openFile()" class="md-primary">
-                                    Browse Project files
-                                </md-button>
+                        <div layout="column">
+                            <div style="color: #666; text-align: center;">
+                                No files are curently open!
                             </div>
+                            <br/>
+                            <md-button ng-click="openMain()" class="md-primary">
+                                Open the main story.txt file
+                            </md-button>
+                            <md-button ng-click="openProjectTool()" class="md-primary">
+                                Browse Project files
+                            </md-button>
+                        </div>
                         <div flex="60"></div>
                     </div>
-                    <!-- editor save-and-run="IDE.saveAndRun()" source="currentStory.content" layout="column" flex></editor -->
                 </div>
             </md-section>
-            <md-section ng-show="helpIsVisible"
-                        md-whiteframe="10"
-                        flex="100"
-                        layout="column"
-                        class="layout-panel">
-                <help-toolbar></help-toolbar>
-                <div flex="100" layout="row">
-                    <help on-escape-focus="onHelpEscapeFocus()" on-focus="onHelpFocus()"></help>
+            <div style="background: #fff;"
+                 ng-if="!state.story.exists"
+                 layout="column"
+                 layout-align="center center"
+                 flex="100">
+                <div flex="30"></div>
+                <div layout="column">
+                    <div style="color: #666; text-align: center;">
+                        You must first choose an existing
+                        project before using the story editor
+                    </div>
                 </div>
-            </md-section>
+                <div flex="60"></div>
+            </div>
         </md-section>
         <md-section
                 md-whiteframe="10"
                 layout="column"
                 class="toolTabs layout-panel"
                 flex="{{ consoleFlexHeight }}"
-                flex-order="5"
-                ng-show="IDEisVisible"
-        >
+                flex-order="5">
             <div class="toolTabs-toggle">
-                <md-button class="md-icon-button" ng-click="toggleTools()" aria-label="Show&Hide tools">
-                    <md-icon ng-show="!toolsAreVisible" md-svg-icon="/svg-icons/pull-up.svg"></md-icon>
-                    <md-icon ng-show="toolsAreVisible" md-svg-icon="/svg-icons/pull-down.svg"></md-icon>
+                <md-button class="md-icon-button"
+                           ng-click="toggleTools()"
+                           aria-label="Show&Hide tools">
+                    <md-icon ng-show="!toolsAreVisible"
+                             md-svg-icon="/svg-icons/pull-up.svg"></md-icon>
+                    <md-icon ng-show="toolsAreVisible"
+                             md-svg-icon="/svg-icons/pull-down.svg"></md-icon>
                 </md-button>
             </div>
 
             <tools></tools>
         </md-section>
 
+    </md-section>
+    <md-section ng-if="_helpIsVisible"
+                md-whiteframe="10"
+                flex="100"
+                layout="column"
+                class="layout-panel">
+        <help-toolbar></help-toolbar>
+        <div style="overflow: hidden;"
+             flex="100"
+             layout="row">
+            <help on-escape-focus="onHelpEscapeFocus()"
+                  on-focus="onHelpFocus()"></help>
+        </div>
     </md-section>
 </md-content>

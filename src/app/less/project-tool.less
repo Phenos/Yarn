@@ -8,30 +8,73 @@
         z-index: 100;
         color: #fff;
 
-        .md-subheader {
-            background: rgba(0, 91, 0, 0.71);
-            color: #fff;
+        md-list-item {
             font-size: 1.1em;
-            .md-subheader-inner {
-                //padding: 16px 16px;
+            min-height: 0;
+            &.selected {
+                button {
+                    font-weight: 800;
+                    text-decoration: underline;
+                }
+            }
+            md-icon {
+                fill: #fff;
+                width: 22px !important;
+                margin: 6px 12px 6px 0 !important;
+            }
+            ._md-list-item-inner {
+                min-height: 24px;
+            }
+        }
+
+        .md-subheader {
+            background: rgb(0, 91, 0);
+            color: #fff;
+            font-size: 1.5em;
+
+            -webkit-box-shadow: inset 0px 50px 26px -48px rgba(0,0,0,0.55);
+            -moz-box-shadow: inset 0px 50px 26px -48px rgba(0,0,0,0.55);
+            box-shadow: inset 0px 50px 26px -48px rgba(0,0,0,0.55);
+
+            background: linear-gradient(to bottom, #005b00 0%,#007500 100%);
+
+            ._md-subheader-inner {
+                padding: 12px 16px 12px 16px !important;
+            }
+            .avatar {
+                border-radius: 50%;
+                display: inline;
+                vertical-align: middle;
+                width: 30px;
+                height: 30px;
+                margin-right: 0.5em;
             }
         }
         .md-button.md-fab {
             background: rgba(0, 117, 0, 0.52);
-            width: 34px;
-            height: 34px;
-            min-height: 34px;
+            width: 26px;
+            height: 26px;
+            min-height: 0;
+            line-height: 26px;
             position: absolute;
-            top: 0px;
+            top: 10px;
             right: 0px;
             box-shadow: none;
 
+            &:hover {
+                background: #fff;
+            }
+
             md-icon {
-                width: 18px;
-                height: 18px;
+                width: 12px;
+                height: 12px;
+                line-height: 12px;
                 color: rgba(255, 255, 255, 0.7);
-                &:hover {
-                    color: rgb(255, 255, 255);
+            }
+            &:hover {
+                md-icon {
+                    color: rgb(0, 0, 0);
+                    fill: #000;
                 }
             }
         }

@@ -10,7 +10,10 @@ yarn.directive('toolbar', function ToolbarDirective() {
         controller: ToolbarController
     };
 
-    function ToolbarController(sidebar, $scope, session, commands, login) {
+    function ToolbarController(sidebar, $scope, session, state, profiles, commands, login) {
+
+        this.state = state;
+        this.visited = profiles.visited();
 
         if (session.user()) this.user = session.user();
 
@@ -21,6 +24,10 @@ yarn.directive('toolbar', function ToolbarDirective() {
 
         this.restartStory = function () {
             commands.run("restart");
+        };
+
+        this.undo = function () {
+            state.undo();
         };
 
         this.login = function () {

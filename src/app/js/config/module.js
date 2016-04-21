@@ -1,4 +1,3 @@
-"use strict";
 
 var yarn = angular.module('yarn', [
     'ngResource',
@@ -8,11 +7,12 @@ var yarn = angular.module('yarn', [
     'angular-uri',
     'ngAnimate',
     'ngSanitize',
+    'ngMessages',
     'ui.grid',
     'ngMaterial',
-    'duScroll',
     'ui.router',
     'firebase',
+    'ngScrollbars',
     'ngDebottle',
     'ngLodash',
     'ngContextMenu',

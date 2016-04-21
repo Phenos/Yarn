@@ -11,6 +11,7 @@ yarn.factory('Predicate', function PredicateService(syntaxes) {
         var id = _id.toLowerCase();
         this.id = id;
         this.label = id;
+        this._text = this.text();
 
         /**
          * Define a new syntax for this predicate
@@ -22,6 +23,7 @@ yarn.factory('Predicate', function PredicateService(syntaxes) {
             // todo: refactor this method is calling the parentdirectly instead of using a service or emmiting
             // This prevents the method from being put on the prototype
             syntaxes.set(text, this);
+            this._text = this.text();
             return this;
         };
 
@@ -38,7 +40,7 @@ yarn.factory('Predicate', function PredicateService(syntaxes) {
     }
 
     Predicate.prototype.text = function () {
-        return this._label || this.id;
+        return this.label || this.id;
     };
 
     return Predicate;

@@ -1,11 +1,27 @@
 
 .console {
+    overflow: hidden;
     display: block;
     position: relative;
     z-index: 1000;
     font-size: 1em;
     font-weight: 400;
-    min-height: 60px;
+
+    .mCSB_container_wrapper {
+        margin-right: 0;
+        .mCSB_container {
+            padding-right: 0;
+        }
+    }
+
+    .console-inner {
+        overflow: hidden;
+        display: block;
+        position: relative;
+        z-index: 1000;
+        font-size: 1em;
+        font-weight: 400;
+    }
 
     .commands-tray {
         background: #006d00;
@@ -27,8 +43,9 @@
         }
     }
 
-    md-content {
-        background-color: transparent !important;
+    .console-inner {
+        //background-color: transparent !important;
+        background-color: #333 !important;
     }
 
     logscroll {
@@ -39,26 +56,35 @@
         margin-top: 1em;
         margin-bottom: 1em;
 
-        log {
+        padding-bottom: 80px;
+
+        .log {
             display: block;
             position: relative;
 
             margin: 0;
-            padding: 0.2em 1.5em 0.2em 1.5em;
-            color: #333;
+            padding: 0.15em 1.5em 0.25em 7em;
+            color: #dddddd;
+
+            &:hover {
+                //background-color: #444 !important;
+                background-color: #222 !important;
+            }
 
             &.isNewStep {
-                margin-top: 0.5em;
-                padding-top: 1em;
-                border-top: 1px solid rgba(0, 0, 0, 0.2);
-                box-shadow: inset 0px 26px 19px -22px rgba(0,0,0,0.17);
+                border-top: 2px solid rgba(255, 255, 255, 0.1);
+                //box-shadow: inset 0 26px 19px -22px rgba(0,0,0,0.17);
+            }
+
+            .value {
+                color: #48bc06;
             }
 
             &:nth-child(even) {
                 //background-color: rgba(255, 255, 255, 0.02);
             }
             &:nth-child(odd) {
-                background-color: rgba(0, 3, 99, 0.05);
+                //background-color: rgba(0, 3, 99, 0.05);
             }
 
             a:visited,
@@ -72,26 +98,36 @@
             }
 
             .timestamp {
+                position: absolute;
+                left: 0.25em;
                 font-weight: normal;
                 font-style: normal;
-                float: right;
                 font-size: 1em;
-                color: rgba(0, 0, 0, 0.4);
+                color: rgba(255, 255, 255, 0.3);
             }
             .step {
+                position: absolute;
+                left: 2em;
                 font-weight: normal;
                 font-style: normal;
-                float: right;
                 font-size: 1em;
-                color: rgba(0, 0, 0, 0.4);
+                color: rgba(255, 255, 255, 0.3);
                 padding-left: 1em;
+            }
+            &:hover .timestamp,
+            &:hover .step {
+                color: rgba(255, 255, 255, 0.6);
             }
 
             log-icon {
                 position: absolute;
-                font-size: 0.7em;
-                left: 0.3em;
-                top: 0.7em;
+                font-size: 1em;
+                left: 5.7em;
+                top: 0;
+                span {
+                    position: relative;
+                    display: block;
+                }
             }
 
             &.is-log {
@@ -99,38 +135,48 @@
             }
             &.is-tip {
                 font-weight: 400;
-                log-icon,
+                log-icon span,
                 strong {
-                    color: #6666CC;
+                    color: #496eeb;
                 }
-                log-icon {
+                log-icon span {
                     font-size: 1.2em;
-                    left: 0.3em;
                     top: 0.1em;
-                    color: #6666CC;
+                    color: #496eeb;
                 }
             }
             &.is-error {
-                color: #CC3333;
+                color: #dc4f4d;
             }
             &.is-warning {
                 color: #b08e00;
             }
             &.is-success {
-                color: #29b829;
+                log-icon span {
+                    font-style: normal;
+                    font-size: 0.9em;
+                    top: 0.4em;
+                    color: #298d14;
+                }
+            }
+            &.is-transaction {
+                log-icon span {
+                    font-style: normal;
+                    font-size: 1.2em;
+                    top: 0;
+                    color: #6d6c69;
+                }
             }
             &.is-command {
                 font-weight: bold;
                 font-style: italic;
-                color: #1b7b1b;
                 [command] {
-                    color: #1b7b1b !important;
+                    //color: #1b7b1b !important;
                 }
-                log-icon {
+                log-icon span {
                     font-style: normal;
-                    font-size: 1em;
-                    left: 0.3em;
-                    top: 0.75em;
+                    font-size: 0.8em;
+                    top: 0.5em;
                     color: #1b7b1b;
                 }
             }
@@ -139,12 +185,31 @@
 
             .source {
                 text-decoration: underline;
-                color: #3434aa;
+                color: #496eeb;
                 cursor: pointer;
             }
 
-            .truthStatement {
-                opacity: 0.5;
+            .assertion {
+                font-size: 0.9em;
+                font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+                .predicate {
+                    color: #a4a4a4;
+                }
+                .object,
+                .subject {
+                    cursor: pointer;
+                    color: #496eeb;
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+                .value {
+                    color: #48bc06;
+                }
+                .layer {
+                    color: #696969;
+                }
             }
         }
 

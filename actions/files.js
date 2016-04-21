@@ -3,7 +3,7 @@ var s3 = require('s3');
 exports.status = {
     name: 'files',
     description: "Returns the list of available files in the user' storage",
-    middleware: ['authentication'],
+    //middleware: ['authentication'],
     outputExample: [{
             Key: 'twitter.YarnStudioGames/folder/story.txt',
             LastModified: "Thu Mar 10 2016 14:03:28 GMT-0500 (EST)",
@@ -16,7 +16,8 @@ exports.status = {
 };
 
 function files(api, data, next) {
-    var username = data.user && data.user.username;
+    //var username = data.user && data.user.username;
+    var username = data.params.profile;
     var allFiles = [];
 
     if (username) {

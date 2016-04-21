@@ -1,42 +1,61 @@
-<article>
+<article
+        previous="language-comments.html"
+        parent="for-authors.html"
+        next="language-templating.html">
+
     <h1>Importing</h1>
 
     <p>
-        More interactive stories will quickly grow into files with thousands of lines of
-        code. The more thay grow the more unmanageable and confusing the become.
+        Most interactive stories will quickly grow up to thousands of lines of
+        code. The more they grow the more unmanageable and confusing they can
+        become.
     </p>
     <p>
-        So it is a good idea to separate your stories into multiple files. And then
-        import them from your main story file.
+        So it is a good idea to separate your stories into multiple files. When you
+        start separating your story into multiple files, you need to tell which file
+        should be "imported" where.
     </p>
 
-    <h2>The @import keyword</h2>
+    <h2>The "import" keyword</h2>
 
     <p>
-        Here is an example with 3 files. A main file using the "<strong>@import</strong>"
+        Here is an example with 3 files. A main file using the "<strong>import</strong>"
         keyword to import the other two.
     </p>
-    <h4>story.yarn.txt</h4>
+    <h4>story.txt</h4>
 <code>
-  Story is called "John's bedroom".
+Story has Name "John's crummy bedroom".
 
-  @import "characters.yarn.txt".
-  @import "bedroom.yarn.txt".
+import "characters.txt".
+import "bedroom.txt".
 </code>
-    <h4>characters.yarn.txt</h4>
+    <h4>characters.txt</h4>
 <code>
-  John is an Actor,
-  named "John Johnson",
-  is in the Bedroom.
+John is an Actor,
+named "John Johnson",
+is in the Bedroom.
 </code>
-    <h4>bedroom.yarn.txt</h4>
+    <h4>bedroom.txt</h4>
 <code>
-  Bedroom is a Room,
-  called "The Bedroom".
+Bedroom is a Place,
+called "The Bedroom".
 </code>
 
+    <h2>Importing Standard and Custom Libraries</h2>
     <p>
-        <a href="index.html">Back home</a>
+        The import feature is also crucial for importing in your story many of the standard
+        game behaviors and mechanics. These standard libraries are provided by the Yarn team
+        and are often the first thing you import in your story.
+    </p>
+    <p>
+        Also, if you have created parts of a story you would like reuse in another story, the import
+        feature becomes crucial.
+    </p>
+    <p>
+        These reusable part can be common locations, functionnal object (ex.: A camera that takes photos,
+        a pencil that is empty after X uses, a usable set of coffee, coffee machine and coffee cups)
+        or more fundamental game mechanics
+        (ex.: Loosing blood & transfusion, Special Day Night cycles, etc).
     </p>
 
 </article>

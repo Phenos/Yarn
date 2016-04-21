@@ -27,7 +27,7 @@ yarn.service("aboutToRoutine", function (state,
             lookAtUsablesRoutine();
         }
 
-        var you = things.get("you");
+        var you = things.get("Player");
         var has = predicates("has");
         var intentionObj = things.get("intention");
         state.createAssertion(you, has, intentionObj, {

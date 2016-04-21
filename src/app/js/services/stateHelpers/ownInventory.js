@@ -4,9 +4,10 @@ yarn.service("ownInventoryHelper", function (state,
     return function ownInventory() {
         var foundInventory = [];
 
-        var thingsInInventory = state.resolveAll(assert(undefined, "is in", "YourInventory"));
+        var undef = void 0;
+        var thingsInInventory = state.resolveAll(assert(undef, "is in", "Your Inventory"));
 
-        console.log("thingsInInventory", thingsInInventory);
+//        console.log("thingsInInventory", thingsInInventory);
 
         thingsInInventory.forEach(function (thing) {
             foundInventory.push(thing);

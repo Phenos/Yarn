@@ -3,16 +3,13 @@ yarn.service("moveRoutine", function (state,
                                       assert,
                                       predicates,
                                       things,
-                                      storyLog,
-                                      stepRoutine) {
+                                      storyLog) {
 
     // Process movement triggered by creating an assertion
-    events.on("You move to *", "move", function () {
-
-        //console.log("||||||||||||||||||||||||||||||||||||");
-        var MoveTo = state.many("You move to *");
-        state.negate(assert("you", "move to"));
-        //console.log("MoveTo", MoveTo);
+    events.on("Player move to *", "move", function () {
+        var MoveTo = state.many("Player move to *");
+        state.negate(assert("Player", "move to"));
+//        console.log("MoveTo", MoveTo);
         if (MoveTo) {
             MoveTo = MoveTo[MoveTo.length - 1];
             moveRoutine(MoveTo);
@@ -24,7 +21,7 @@ yarn.service("moveRoutine", function (state,
         // Get the current room
         var door = doorOrSpace;
         var linkedSpace = doorOrSpace;
-        var previousRoom = state.resolveOne(assert("You", "is in"));
+        var previousRoom = state.resolveOne(assert("Player", "is in"));
 
         if (doorOrSpace) {
 
@@ -34,7 +31,7 @@ yarn.service("moveRoutine", function (state,
                 linkedSpace = state.resolveOne(assert(door, "links to"));
                 var triggeredObjects = state.resolveAll(assert(door, "triggers"));
                 angular.forEach(triggeredObjects, function (object) {
-                    //todo: figure out if this should REALLY be triggered now...
+                    // todo: figure out if this should REALLY be triggered now...
                     events.triggerNow(object)
                 });
             }
@@ -45,24 +42,23 @@ yarn.service("moveRoutine", function (state,
                 // If a triggered event already moved the player elsewhere
                 // the default move doesnt occur
                 // Get the current space
-                var currentSpace = state.resolveOne(assert("You", "is in"));
+                var currentSpace = state.resolveOne(assert("Player", "is in"));
                 if (previousRoom === currentSpace) {
                     // Remove player from current possition
-                    state.negate(assert("you", "is in"));
+                    state.negate(assert("Player", "is in"));
                     // Place the player in the new space
-                    state.createAssertion(things.get("You"), predicates("isIn"), linkedSpace, {
+                    state.createAssertion(things.get("Player"), predicates("isIn"), linkedSpace, {
                         layer: state.currentLayer
                     });
 
                     var spaceName = state.resolveValue(assert(linkedSpace, "has", "Name"));
                     storyLog.action("You move thoward the " + spaceName);
-                    events.trigger(assert("You", "entered", linkedSpace));
+                    events.trigger(assert("Player", "entered", linkedSpace));
+                    events.trigger(assert("Player", "did", "Look Around"));
                 }
             }
 
-            events.trigger(assert("You", "exited", previousRoom));
-
-            stepRoutine();
+            events.trigger(assert("Player", "exited", previousRoom));
         }
 
         return true;

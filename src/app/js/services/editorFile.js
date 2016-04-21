@@ -1,13 +1,20 @@
 yarn.service("EditorFile", function (guid,
                                      URI,
-                                     session,
+                                     channel,
                                      loadScript,
                                      yConsole) {
 
-    var baseURI = "";
+    function EditorFile(uri, meta, profile) {
+        var self = this;
 
-    function EditorFile(uri, meta) {
+        this.profile = profile;
         this._uri = "";
+        this.hasOwnership = false;
+        this._filename = "";
+        this._sizeInKB = 0;
+        this._isModified = false;
+        this._absoluteURI = "";
+        this.__absoluteURI = "";
         this.uri = null;
         this.rename(uri);
         this.guid = guid();
@@ -19,40 +26,63 @@ yarn.service("EditorFile", function (guid,
         this.content = null;
         this.originalContent = "";
         this.isSelected = false;
+
+        channel.subscribe("profiles.updated", function (profiles) {
+            self.checkOwnership(profiles);
+        });
+
     }
+
+    EditorFile.prototype.checkOwnership = function (profiles) {
+        var self = this;
+        if (profiles.authenticated()) {
+            if (self.profile.username === profiles.authenticated().username) {
+                self.hasOwnership = true;
+            }
+        }
+//        console.log("profiles.updated > self.hasOwnership ", self.hasOwnership)
+    };
+
 
     EditorFile.prototype.rename = function (uri) {
         this._uri = uri.toString();
-        this.uri = URI(this._uri);
+        this.uri = new URI(this._uri).normalize();
+        this._filename = this.filename();
+        this._absoluteURI = this.absoluteURI();
+        this.__absoluteURI = this.absoluteURI().toString();
     };
 
     EditorFile.prototype.sizeInKB = function () {
         var size = 0;
         if (this.meta) {
-            size = Math.floor((this.meta.Size / 1000)+1);
+            size = Math.floor((this.meta.Size / 1000) + 1);
         }
+        this._sizeInKB = size;
         return size;
     };
 
     EditorFile.prototype.absoluteURI = function () {
         var uri = this.uri;
-        if (session.user()) {
-            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
+        if (this.profile) {
+            var baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
             uri = this.uri.absoluteTo(baseURI);
+//            console.log("---->", uri.toString());
+        } else {
+            console.warn("File has no profile: ", uri);
         }
         return uri;
     };
 
     EditorFile.prototype.relativeToUserURI = function () {
         var uri = this.uri;
-        if (session.user()) {
-            baseURI = "http://storage.yarnstudio.io/" + session.user().username + "/";
+        if (this.profile) {
+            var baseURI = "http://storage.yarnstudio.io/" + this.profile.username + "/";
             uri = this.absoluteURI().relativeTo(baseURI);
         }
         return uri;
     };
 
-    EditorFile.prototype.load = function () {
+    EditorFile.prototype.load = function (success, fail) {
         var self = this;
 
         self.ready = false;
@@ -64,13 +94,16 @@ yarn.service("EditorFile", function (guid,
                 self.status = "Loaded";
                 self.content = script.source;
                 self.originalContent = script.source;
-                //console.log("script:", script);
+                self.sizeInKB();
+                success && success();
+//                console.log("script:", script);
             })
             .catch(function (e) {
                 self.errorCode = e.status;
                 self.status = "Failed to load";
-                //console.log("Error: ", e);
+//                console.log("Error: ", e);
                 yConsole.error("Error while loading file: " + self.absoluteURI().toString());
+                fail && fail();
             });
     };
 
@@ -81,13 +114,18 @@ yarn.service("EditorFile", function (guid,
         } else {
             this.status = "Saved";
         }
+        this.sizeInKB();
     };
 
     EditorFile.prototype.isModified = function () {
-        return (this.content !== this.originalContent);
+        var isModified = ((this.content !== this.originalContent) && (this.content !== null));
+        this._isModified = isModified;
+        this.sizeInKB();
+//        console.log("isModfied", isModified);
+        return isModified;
     };
 
-    EditorFile.prototype.name = function () {
+    EditorFile.prototype.filename = function () {
         return this.uri.filename();
     };
 

@@ -5,8 +5,7 @@
 
     function ConsoleDirective(commands,
                               state,
-                              getSelectionText,
-                              easing) {
+                              getSelectionText) {
 
         return {
             restrict: 'E',
@@ -33,12 +32,27 @@
             var self = this;
             var lastStep = 0;
 
+            this.isReady = false;
+            $timeout(function () {
+                self.isReady = true;
+            }, 1000);
+
+            this.lines = [];
+
+            this.scrollbarsConfig = {
+                autoHideScrollbar: true,
+                theme: 'light',
+                advanced: {
+                    updateOnContentResize: true
+                },
+                scrollInertia: 200
+            };
+
             this.commands = commands;
 
             consoleService.register(this);
 
-            var logsElem = $element.find("logs");
-            var logscrollElem = angular.element($element.find("md-content")[0]);
+//            var logscrollElem = angular.element($element.find("console-main")[0]);
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
@@ -58,12 +72,12 @@
             };
 
             this.onInputEscapeFocus = function () {
-                //console.log("console.onInputEscapeFocus");
+//                console.log("console.onInputEscapeFocus");
                 this.onEscapeFocus();
             };
 
             this.onInputFocus = function () {
-                //console.log("console.onInputFocus");
+//                console.log("console.onInputFocus");
                 this.onFocus();
             };
 
@@ -77,34 +91,35 @@
             };
 
             this.clear = function () {
-                var logElement = $element.find("logs");
-                logElement.empty();
+                this.lines = [];
 
                 this.onClear();
             };
 
             this.write = function (text, type, options) {
-                var scope = $scope.$new();
-                scope.text = text;
-                scope.type = type;
-                scope.options = options || {};
-                scope.step = state.step();
-                if (lastStep !== scope.step) {
-                    scope.isNewStep = true;
-                    lastStep = scope.step;
-                } else {
-                    scope.isNewStep = false;
+                var step = state.step();
+                var isNewStep = false;
+                if (lastStep !== step) {
+                    isNewStep = true;
+                    lastStep = step;
                 }
-                scope.timestamp = Date.now();
-                var logElem = $compile('<log is-new-step="isNewStep" options="options" timestamp="timestamp" step="step" type="type" text="text"></log>')(scope);
-                logsElem.append(logElem);
-                $timeout(function () {
-                    //console.log("WTF!", [logscrollElem]);
-                    var scrollHeight = logscrollElem[0].scrollHeight;
-                    logscrollElem.scrollTopAnimated(scrollHeight, 1000, easing.easeOutQuart)
-                });
-                $scope.$emit("refreshScrollbars");
+
+                var newLine = new Line(text, type, step, isNewStep, options);
+                this.lines.push(newLine);
+
+                if (self.updateScrollbar) {
+                    self.updateScrollbar('scrollTo', 10000000);
+                }
             };
+
+            function Line(text, type, step, isNewStep, options) {
+                this.text = text;
+                this.type = type;
+                this.step = step;
+                this.isNewStep = isNewStep;
+                this.timestamp = Date.now();
+                this.options = options;
+            }
 
             yConsole.register(this);
 
@@ -116,17 +131,16 @@
         var service = {};
         var controller;
 
-
         service.register = function (_controller) {
             controller = _controller;
         };
 
         service.focus = function () {
-            controller.focus()
+            controller && controller.focus()
         };
 
         service.clear = function () {
-            controller.clear()
+            controller && controller.clear()
         };
 
         return service;

@@ -1,6 +1,6 @@
 yarn.service("validator", function (state,
                                     validateStory,
-                                    postal) {
+                                    channel) {
 
     /**
      * Class for validator
@@ -26,11 +26,7 @@ yarn.service("validator", function (state,
         this.reset();
         this.validate(validateStory, state);
 
-        postal.publish({
-            channel: "validator",
-            topic: "results",
-            data: this.results
-        });
+        channel.publish("validator.results", this.results);
 
         return this.results;
     };

@@ -1,4 +1,4 @@
-yarn.directive('validatorTool', function CommandsTool() {
+yarn.directive('validatorTool', function CommandsTool(channel) {
 
     return {
         restrict: 'E',
@@ -8,16 +8,12 @@ yarn.directive('validatorTool', function CommandsTool() {
         controller: Controller
     };
 
-    function Controller($scope, validator, state) {
+    function Controller($scope, validator) {
 
         $scope.results = validator.results;
 
-        postal.subscribe({
-            channel: "validator",
-            topic: "results",
-            callback: function (results) {
-                $scope.results = results;
-            }
+        channel.subscribe("validator.results", function (results) {
+            $scope.results = results;
         });
 
         $scope.update = function () {

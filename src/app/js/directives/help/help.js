@@ -41,12 +41,9 @@
 
             this.load = function (uri) {
                 this.lastHelpFileLoaded(uri);
-
-                var self = this;
                 var resolvedURI = URI(uri).absoluteTo("./help/").toString();
 
-
-                //console.log("resolvedURI", resolvedURI);
+//                console.log("resolvedURI", resolvedURI);
 
                 var config = {
                     method: 'GET',
@@ -56,7 +53,7 @@
 
                 function then(response) {
                     self.setContent(response.data);
-                    //console.log("response", response);
+//                    console.log("response", response);
 
                     return {
                         source: response.data,
@@ -69,8 +66,10 @@
 
             $element.on("click", function (e) {
                 var target = e.target;
-                //console.log("-", e);
-                if (target.parentElement.tagName === "A") target = target.parentElement;
+//                console.log("-", e);
+                if (target.parentElement.tagName === "A") {
+                    target = target.parentElement;
+                }
                 if (target.tagName === "A") {
                     e.preventDefault();
                     var $target = angular.element(target);
@@ -93,8 +92,12 @@
             this.setContent = function (content) {
                 var helpContent = $element.find("help-article");
                 var elem = $compile(content)($scope);
+                this.nextArticle = elem.attr("next");
+                this.parentArticle = elem.attr("parent");
+                this.previousArticle = elem.attr("previous");
+
+                $element.find("md-content")[0].scrollTop = 0;
                 helpContent.empty().append(elem);
-                $scope.$broadcast("refreshScrollbars");
             };
 
             help.register(this);
@@ -114,7 +117,7 @@
         };
 
         service.focus = function () {
-            //console.log("focus!");
+//            console.log("focus!");
             controller.focus();
             return this;
         };

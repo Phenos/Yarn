@@ -10,7 +10,9 @@
             link: function($scope, $element) {
                 var scope = $scope.$new(false);
                 angular.extend(scope, $scope.article.scope);
-                var articleElement = $compile("<" + $scope.article.directive + "></" + $scope.article.directive + ">")(scope);
+                var articleElement =
+                    $compile("<" + $scope.article.directive +
+                        "></" + $scope.article.directive + ">")(scope);
                 $element.find("section").append(articleElement);
             }
         };
@@ -30,8 +32,10 @@
                 var self = this;
 
                 this.token = null;
+                this.summary = null;
+                this.title = null;
 
-                this.title = function () {
+                this.getTitle = function () {
                     var value = "Nothing to inspect!";
                     if (this.token) {
                         var title = this.token.value;
@@ -43,10 +47,12 @@
                     return value;
                 };
 
-                this.summary = function () {
+                this.getSummary = function () {
                     var value = null;
                     if (this.token) {
-                        var summary = state.resolveValue(assert(this.token.value, "has", "DocSummary"));
+                        var summary = state.resolveValue(
+                            assert(this.token.value, "has", "DocSummary")
+                        );
                         if (summary) {
                             if (summary.length > 140) {
                                 summary = summary.substring(0, 135) + "…";
@@ -58,6 +64,8 @@
                 };
 
                 this.update = function (articles) {
+                    self.summary = this.getSummary();
+                    self.title = this.getTitle();
                     self.articles = articles;
                 };
 
@@ -85,13 +93,17 @@
         };
 
         service.inspect = function (token) {
+            // Trim the token value to simplify matching
+            if (token.value) {
+                token.value = token.value.trim();
+            }
             controller.token = token;
             var self = this;
             if (controller && angular.isObject(token)) {
                 token.helpArticles = [];
                 this.clear();
                 angular.forEach(inspections, function (inspection) {
-                    //console.log("token", token);
+//                    console.log("token", token);
                     inspection.inspect(token, onYeld);
                 });
                 function onYeld(article) {

@@ -1,5 +1,4 @@
 (function () {
-    "use strict";
     yarn.factory('AST', ASTService);
 
     function ASTService(yConsole, Cursor, Node, $q) {
@@ -21,8 +20,10 @@
         var TokenCommands = {
             "default": "appendInstruction",
             "period": "endSequence",
-            "startParen": "startSubset",
-            "endParen": "endSubset",
+//            "startParen": "startSubset",
+//            "endParen": "endSubset",
+            "startCurly": "startSubset",
+            "endCurly": "endSubset",
             "multiLinebreak": "endSequence",
             "numeric": "appendNumeric",
             "singleQuote": "appendText",

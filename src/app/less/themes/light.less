@@ -4,11 +4,11 @@ Light Theme - For light backgrounds and dark text.
 
 */
 
-.theme-light {
+.theme-brightness-light {
     md-toolbar.statusBar,
     md-toolbar.toolbar {
 
-        background-color: rgba(255, 255, 255, 0.5) !important;
+        background-color: rgba(255, 255, 255, 0.2) !important;
 
         .md-button {
             color: #000;
@@ -19,9 +19,6 @@ Light Theme - For light backgrounds and dark text.
     }
 
     wallpaper {
-        .mask {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
     }
 
     story-log {
@@ -57,6 +54,33 @@ Light Theme - For light backgrounds and dark text.
         button {
             color: #000 !important;
             background-color: rgba(255, 255, 255, 0.6) !important;
+
+            &:hover {
+                background-color: rgb(255, 255, 255) !important;
+            }
+
+            md-icon {
+                fill: #000 !important;
+            }
+        }
+    }
+
+    .context-action-menu {
+        background: rgba(220, 220, 220, 1);
+        .question {
+            color: #000;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
+        }
+        .label {
+            color: #000;
+        }
+        button {
+            color: #000 !important;
+            background-color: rgba(255, 255, 255, 0.6) !important;
+
+            &:hover {
+                background-color: rgb(255, 255, 255) !important;
+            }
 
             md-icon {
                 fill: #000 !important;

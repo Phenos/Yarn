@@ -15,11 +15,12 @@ function EditorToolbarDirective() {
     };
 
     function EditorToolbarController(editors,
+                                     state,
                                      root,
                                      tools,
                                      IDE) {
         this.IDE = IDE;
-
+        this.state = state;
         this.editors = editors;
 
         this.validate = function() {

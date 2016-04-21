@@ -1,15 +1,15 @@
 /**
  * Service for handling IDE/editor operations
  */
-yarn.service('IDE', function IDEService(rememberLastStory,
-                                        $mdDialog,
+yarn.service('IDE', function IDEService($mdDialog,
                                         yConsole,
                                         loader,
-                                        storage,
                                         commands,
                                         editorFiles,
                                         editors,
                                         tools,
+                                        profiles,
+                                        state,
                                         preventCloseWhenUnsaved) {
 
     function IDE() {
@@ -34,19 +34,9 @@ yarn.service('IDE', function IDEService(rememberLastStory,
         return confirmationMessage;
     });
 
-
-    /**
-     * Register the service to a scope to allow binding keystrokes
-     * @param $scope
-     */
-    IDE.prototype.register = function ($scope) {
-        var self = this;
-    };
-
-
     IDE.prototype.saveAllAndRun = function () {
         var self = this;
-        console.log(".saveAllAndRun()");
+//        console.log(".saveAllAndRun()");
         this.working(true);
         self.saveAll(function (story) {
             self.run(story);
@@ -59,7 +49,8 @@ yarn.service('IDE', function IDEService(rememberLastStory,
                     .alert()
                     .clickOutsideToClose(true)
                     .title('Oups!')
-                    .textContent('A problem occured while saving your story. Your changes were not saved.')
+                    .textContent('A problem occured while saving' +
+                        'your story. Your changes were not saved.')
                     .ok('Ok')
             );
         })
@@ -67,7 +58,7 @@ yarn.service('IDE', function IDEService(rememberLastStory,
 
     IDE.prototype.saveAll = function (success, failure) {
         editorFiles.saveAll(success, failure);
-        //console.log("IDE.save");
+//        console.log("IDE.save");
     };
 
     IDE.prototype.validate = function () {
@@ -75,7 +66,6 @@ yarn.service('IDE', function IDEService(rememberLastStory,
     };
 
     IDE.prototype.newFile = function (event) {
-        var self = this;
         var confirm = $mdDialog.prompt()
             .title('Create a new file')
             .textContent('Choose a name for this new file (ideally ends with .txt):')
@@ -84,30 +74,27 @@ yarn.service('IDE', function IDEService(rememberLastStory,
             .ok('Create')
             .cancel('Cancel');
 
-        if (event) confirm.targetEvent(event);
+        if (event) {
+            confirm.targetEvent(event);
+        }
 
         $mdDialog.show(confirm).then(function(newFilename) {
-            //console.log("Renaming", newName);
-            var newFile = editorFiles.open(newFilename, true);
+//            console.log("Renaming", newName);
+            var profile = profiles.authenticated();
+            var newFile = editorFiles.open(profile, newFilename, true);
             editorFiles.save(newFile);
 
         }, function() {
-            //$scope.status = 'You didn\'t name your dog.';
+//            $scope.status = 'You didn\'t name your dog.';
         });
     };
 
-    IDE.prototype.run = function (fallback) {
-        var mainFile = editorFiles.mainFile();
-        if (mainFile) {
-            var uri = mainFile.absoluteURI().toString();
-            rememberLastStory.forget();
-            loader.fromURL(uri, true);
-        } else {
-            if (fallback) {
-                console.info("Could not find which story should be run, calling up the fallback");
-                fallback();
-            } else {
-                yConsole.warning("Could not find which story should be run");
+    IDE.prototype.run = function () {
+        if (state.story) {
+            var mainFile = editorFiles.open(state.story.profile, state.story.url.toString());
+            if (mainFile) {
+                var uri = mainFile.absoluteURI().toString();
+                loader.fromURL(uri, true);
             }
         }
     };

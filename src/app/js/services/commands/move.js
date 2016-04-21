@@ -2,15 +2,15 @@ yarn.factory('moveCommand', function (yConsole,
                                       events,
                                       things,
                                       state,
-                                      logic,
-                                      writers) {
+                                      logic) {
 
     function handler(args) {
         if (args.length) {
             var door = things.get(args[0], true);
             if (door) {
-                var success = logic.routines.move(door);
-                if (success) writers.describeWhereYouAre(true);
+                logic.routines.move(door);
+//                var success = logic.routines.move(door);
+//                if (success) writers.describeWhereYouAre(true);
             } else {
                 yConsole.error("Could not find any object called : " + args[0]);
             }

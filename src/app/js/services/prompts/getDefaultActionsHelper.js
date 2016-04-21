@@ -1,14 +1,14 @@
-yarn.service("setDefaultOptionsHelper", function (state,
-                                                  assert,
-                                                  stateHelpers) {
+yarn.service("setDefaultOptionsHelper", function (state) {
 
     return function setDefaultOptionsHelper(prompt, isSmall) {
         var option;
-        var size = "large";
-        if (isSmall) size = "";
+        var size = "normal";
+        if (isSmall) {
+            size = "";
+        }
         var allowedActions = {};
 
-        var space = state.one("You is in *");
+        var space = state.one("Player is in *");
 
         var scope = {
             Space: space
@@ -16,6 +16,8 @@ yarn.service("setDefaultOptionsHelper", function (state,
 
         // If the space is restricted, build a list of allowed actions
         var spaceIsRestricted = state.value("Space is Restricted", scope);
+
+//        console.log("spaceIsRestricted", spaceIsRestricted);
         if (spaceIsRestricted) {
             var allowedActionsObjs = state.many("Space allows *", scope);
 
@@ -24,88 +26,35 @@ yarn.service("setDefaultOptionsHelper", function (state,
             });
         }
 
+//        console.log("space", space);
         if (space) {
-            var doorsInSpace = stateHelpers.doorsInRoom(space);
-
-            if (!(spaceIsRestricted && !allowedActions.move)) {
-                //console.log("linksToCurrentRoom", linksToCurrentRoom);
-                if (doorsInSpace.length) {
-                    option = prompt.option("Move", "aboutTo move");
-                    option.iconId = "move";
-                    option.iconSize = size;
-                    option.iconOnly = true;
-                }
-            }
-
-            if (!(spaceIsRestricted && !allowedActions.look)) {
-                // Enable the look action for if the room contains Things
-                var thingsInSpace = stateHelpers.thingsInRoom(space);
-                // Filter out things that dont have a label
-                var thingsInSpaceWithDescriptions = thingsInSpace.filter(function (thing) {
-                    var description = state.resolveValue(assert(thing, "has", "Description"));
-                    return typeof(description) === "string";
-                });
-
-                var spaceName = state.resolveValue(assert(space, "has", "Name"));
-                if (thingsInSpaceWithDescriptions.length || spaceName) {
-                    option = prompt.option("Look", "aboutTo look");
-                    option.iconId = "look";
-                    option.iconSize = size;
-                    option.iconOnly = true;
-                }
-            }
-
-            // Enable the "take" option if there are inventory items
-            // in the current room
-            if (!(spaceIsRestricted && !allowedActions.inventory)) {
-                var inventoryInSpace = stateHelpers.inventoryInRoom(space);
-                // Enable the "inventory" action if the user has inventory
-                var inventoryItems = state.resolveAll(assert(undefined, "is in", "YourInventory"));
-
-                if (inventoryItems.length || inventoryInSpace.length) {
-                    option = prompt.option("Inventory", "aboutTo inventory");
-                    option.iconId = "inventory";
-                    option.iconSize = size;
-                    option.iconOnly = true;
-                }
-            }
-
-            // Enable the "use" option if there are inventory items
-            // in the current room
-            if (!(spaceIsRestricted && !allowedActions.use)) {
-                var usableItemInCurrentSpace = stateHelpers.usableItemInRoom(space);
-                var usableItemInInventory = stateHelpers.usableItemInRoom("YourInventory");
-                if (usableItemInCurrentSpace.length || usableItemInInventory.length) {
-                    option = prompt.option("Use", "aboutTo use");
-                    option.iconId = "use";
-                    option.iconSize = size;
-                    option.iconOnly = true;
-                }
-            }
-
 
             // Add custom actions
             var customActions = state.many("* is an Action");
             angular.forEach(customActions, function (action) {
-                if (!(spaceIsRestricted && !allowedActions[action.id])) {
+                var isAllowed = true;
+                if (spaceIsRestricted && !allowedActions[action.id]) {
+                    isAllowed = false;
+                }
+                if (isAllowed) {
 
-                    var icon = state.value("Action has Icon", { Action: action });
-                    var name = state.value("Action has Name", { Action: action });
-                    option = prompt.option(name, "do " + action.id);
-                    option.iconId = icon;
-                    option.iconSize = size;
-                    option.iconOnly = true;
+                    var _scope = { Action: action };
+                    var isActive = state.value("Action is Active", _scope);
+                    var icon = state.value("Action has Icon", _scope);
+                    var name = state.value("Action has Name", _scope);
+                    var iconSize = state.value("Action has IconSize", _scope);
+                    var isIntransitive = state.value("Action is Intransitive", _scope);
+
+//                    console.log("isIntransitive", isIntransitive);
+                    if (isIntransitive && isActive) {
+                        option = prompt.option(name, "do " + action.id);
+                        option.iconId = icon;
+                        option.iconSize = iconSize || size;
+                        option.iconOnly = true;
+//                        console.log("option", option);
+                    }
                 }
             });
-
-
-
-            if (!(spaceIsRestricted && !allowedActions.hint)) {
-                option = prompt.option("Hint?", "hint");
-                option.iconId = "question-mark";
-                option.iconSize = "mini";
-                option.iconOnly = true;
-            }
 
         }
 

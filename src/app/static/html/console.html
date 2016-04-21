@@ -1,18 +1,30 @@
 <div class="console" layout="row" flex="100">
-    <div class="console"
+    <div class="console-inner"
          md-whiteframe="10"
          layout="column"
-         flex="grow">
-        <md-content flex="100"
-                    scrollbars>
-            <logscroll>
-                <logs></logs>
+         flex="grow"
+         ng-if="console.isReady;"
+    >
+        <div console-main
+             flex="grow"
+             id="yarn-console"
+             layout="column"
+             ng-scrollbars
+             ng-scrollbars-update=console.updateScrollbar
+             ng-scrollbars-config="console.scrollbarsConfig"
+        >
+            <logscroll
+                    flex="grow"
+                    layout-fill>
+                <logs>
+                    <log ng-repeat="line in console.lines"
+                         line="::line"></log>
+                </logs>
             </logscroll>
-        </md-content>
+        </div>
         <user-input
                 layout="row"
-                style="min-height: 58px;"
-                text=""
+                text="console.text"
                 on-escape-focus="console.onInputEscapeFocus()"
                 on-focus="console.onInputFocus()"
                 on-submit="console.onInput(text)">
@@ -24,9 +36,9 @@
             <md-list flex>
                 <md-list-item ng-repeat="command in console.commands.all"
                 >
-                    <md-button aria-label="{{command.name}}"
-                               ng-click="console.runCommand(command)"
-                               ng-bind="command.name"></md-button>
+                    <md-button aria-label="{{::command.name}}"
+                               ng-click="console.runCommand(command)">{{::command.name }}
+                    </md-button>
                 </md-list-item>
                 </md-button></md-list>
         </md-content>

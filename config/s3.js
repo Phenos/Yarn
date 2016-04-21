@@ -10,11 +10,3 @@ exports.default = {
     }
   }
 };
-
-exports.test = {
-  logger: function(api){
-    return {
-      transports: null
-    };
-  }
-};

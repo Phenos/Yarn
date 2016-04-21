@@ -20,10 +20,16 @@ function LogItemDirective() {
 
         angular.extend($scope, this.scope);
 
-        $scope.$watch('logItem.text', function(value) {
-            var logItemEl = $compile("<div class='logItem is-" + self.type + "'>" + value + "<div>")($scope);
-            $element.append(logItemEl);
-        });
+//        $scope.$watch('logItem.text', function(value) {
+//            var logItemEl = $compile("<div class='logItem is-" +
+//                self.type + "'>" + value + "<div>")($scope);
+//            $element.append(logItemEl);
+//        });
+
+        var logItemEl = $compile(
+            "<div class='logItem is-" + self.type + "'>" + this.text + "<div>"
+        )($scope);
+        $element.append(logItemEl);
 
     }
 }

@@ -16,7 +16,7 @@ yarn.service("predicateReferenceInspection",
                     var scope = {};
 
                     if (token && token.value) {
-                        scope.title = "Is a predicate";
+                        scope.title = "Verb";
                         scope.type = "predicateReference";
 
                         var predicate = predicates(txt, true);

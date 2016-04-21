@@ -44,27 +44,17 @@ yarn.factory('Cursor', function CursorService(Node) {
 
         if (this.head().set.last() &&
             this.head().set.last().type === 'symbol' && !this.sequenceBroken) {
-            // If the instruction follows a symbol, the instruction is considered to be "absorbed" as
-            // a unique argument by the symble (and vice versa)
+            // If the instruction follows a symbol, the instruction is considered to
+            // be "absorbed" as a unique argument by the symble (and vice versa)
 
             this.sequenceBroken = false;
             this.push(this.head().set.last());
             this.head().set.add(node);
-            //this.pop();
+//            this.pop();
         } else {
             this.sequenceBroken = false;
             this.head().set.add(node);
         }
-        return this;
-    };
-
-    Cursor.prototype.endSequence = function () {
-        while (this.size() > 1) {
-            this.pop();
-        }
-        // if the next sequence starts with a value following an instruction
-        // this will prevent the value from being "absorbed" by the instruction
-        this.sequenceBroken = true;
         return this;
     };
 
@@ -74,14 +64,17 @@ yarn.factory('Cursor', function CursorService(Node) {
         var lastPreviousNode = this.head().set.last();
 
         if (lastPreviousNode) {
-            if (lastPreviousNode.type === 'instruction' && !this.sequenceBroken) {
+            if (this.head().subSetOpen) {
+                // ...
+                this.sequenceBroken = false;
+                this.head().set.add(node);
+            } else if (lastPreviousNode.type === 'instruction' && !this.sequenceBroken) {
                 // If the symbol follows an instruction, the value is considered to be "absorbed" as
                 // a unique argument by the instruction
 
                 this.sequenceBroken = false;
                 this.push(this.head().set.last());
                 this.head().set.add(node);
-                //this.pop();
             } else if (
                 lastPreviousNode.type === 'symbol' &&
                 lastPreviousNode.variant === 'reference' &&
@@ -93,6 +86,7 @@ yarn.factory('Cursor', function CursorService(Node) {
                 this.push(this.head().set.last());
                 this.head().set.add(node);
             } else {
+//                console.log(node);
                 this.sequenceBroken = false;
                 this.head().set.add(node);
             }
@@ -124,13 +118,19 @@ yarn.factory('Cursor', function CursorService(Node) {
 
     Cursor.prototype.startSubset = function () {
         this.sequenceBroken = false;
-        var node = this.head().set.last();
-        this.push(node);
+        var node = this.head();
+        if (node.type === "root") {
+            node = this.head().set.last();
+        }
+//        console.log("head... ", node);
 
         node.subSetOpen = true;
 
+        this.push(node);
+
         return this;
     };
+
     Cursor.prototype.endSubset = function () {
         while (this.size() > 1 && !this.head().subSetOpen) {
             this.pop();
@@ -152,6 +152,11 @@ yarn.factory('Cursor', function CursorService(Node) {
     Cursor.prototype.nextArgument = function () {
         this.sequenceBroken = true;
         if (this.size() > 1) {
+            // Pop until you back at a "symbol reference"
+            while (this.head().type !== 'instruction') {
+                this.pop();
+            }
+            // Pop one last time to get to the subject of the assertion.
             this.pop();
         }
         return this;

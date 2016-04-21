@@ -1,0 +1,127 @@
+.context-action-menu {
+    position: absolute;
+    padding: 0.5em 0 0.5em 0;
+    margin: 0.5em 0 0 0;
+    width: 100%;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+
+    //background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
+    //box-shadow: outset 0 75px 33px -79px rgba(0,0,0,0.33);
+    box-shadow: 0px -1px 36px -1px rgba(0,0,0,0.75);
+    background: rgba(66, 66, 66, 1);
+
+    .context-action-menu-inner {
+    }
+
+    &.is-visible {
+        opacity: 0;
+        visibility: visible;
+        animation: contextFadeIn 0.25s;
+        animation-delay: 0s;
+        animation-fill-mode: forwards;
+
+        @keyframes contextFadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    }
+
+
+    &.is-invisible {
+        opacity: 1;
+        visibility: visible;
+        animation: contextFadeOut 0.5s;
+        animation-delay: 0s;
+        animation-fill-mode: forwards;
+
+        @keyframes contextFadeOut {
+            0% {
+                opacity: 1;
+            }
+            99% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    }
+
+    .label {
+        font-family: 'Halant', serif;
+        font-size: 1.2em;
+        margin: 0;
+        padding: 0 1em 0 0;
+        min-height: 1em;
+        color: #fff;
+    }
+
+    button {
+        font-family: 'Source Sans Pro', sans-serif !important;
+        text-transform: none !important;
+        font-size: 1em !important;
+
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        color: #ddd !important;
+
+        min-height: 40px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: 1.5em;
+
+        p {
+            min-height: 40px;
+            margin: 0;
+        }
+
+        &:hover {
+            color: #fff !important;
+            background-color: rgb(0, 0, 0);
+            md-icon {
+                color: #fff !important;
+            }
+        }
+
+        md-icon {
+            color: #ccc !important;
+        }
+
+        &.wide {
+            width: 95%;
+        }
+
+        &.md-fab {
+            md-icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        &.md-fab.is-size-small {
+            width: 40px;
+            height: 40px;
+            md-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        &.md-fab.large {
+            box-shadow: none;
+
+            md-icon {
+                width: 48px;
+                height: 48px;
+            }
+            width: 72px;
+            height: 72px;
+        }
+
+    }
+}

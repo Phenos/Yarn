@@ -1,5 +1,7 @@
 
-yarn.config(function(RollbarProvider) {
+yarn.value('duScrollCancelOnEvents', false);
+
+yarn.config(function(RollbarProvider, $urlMatcherFactoryProvider) {
     var roolbarConfig = {
         accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
         captureUncaught: true,
@@ -7,11 +9,14 @@ yarn.config(function(RollbarProvider) {
             environment: 'test'
         }
     };
-    //console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
-    //RollbarProvider.init(roolbarConfig);
+
+    $urlMatcherFactoryProvider.strictMode(false);
+
+//    console.info("Configured Roolbar Error Reporting", [roolbarConfig]);
+//    RollbarProvider.init(roolbarConfig);
 });
 
-yarn.run(function (commands, tools, keyboardShortcuts) {
+yarn.run(function (commands, tools, keyboardShortcuts, gamePedicates) {
 
     var path = "/public/js/ace/";
     ace.config.set('basePath', path);
@@ -19,14 +24,16 @@ yarn.run(function (commands, tools, keyboardShortcuts) {
     ace.config.set('themePath', path);
     ace.config.set('workerPath', path);
 
+    gamePedicates();
+
     keyboardShortcuts.init();
 
     var buitInTools = [
         "projectTool",
-        //"annotationsTool",
+//        "annotationsTool",
         "assertionsTool",
         "commandsTool",
-        "graphTool",
+//        "graphTool",
         "inspectorTool",
         "validatorTool"
     ];

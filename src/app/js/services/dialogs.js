@@ -1,43 +1,69 @@
 yarn.service("dialogs", function (state,
                                   assert,
-                                  storyLog) {
+                                  Script,
+                                  storyLog,
+                                  yConsole) {
+
 
     var service = {};
-
     service.process = function process() {
-        var sayAssertions = state.assertions.find(assert(undefined, "say", "Monologue", {
+//        console.log("dialogs.process");
+
+        var undef = void 0;
+        var dialogs = state.assertions.find(assert(undef, "says", undef, {
             parent: null
         }));
 
-        var sayInsight = state.assertions.find(assert(undefined, "say", "Insight", {
-            parent: null
-        }));
+        outputStatements(dialogs);
 
-        outputStatement(sayAssertions, "log");
-        outputStatement(sayInsight, "insight");
+        function outputStatements(dialogsAssertions) {
+            angular.forEach(dialogsAssertions, function (assertion) {
+                var script;
+                var scriptText = "";
+                var statement;
 
-        //console.log("Dialog > sayAssertions", sayAssertions);
+                var isDialog = state.value("Object is a Dialog", {
+                    Object: assertion.object
+                });
+//                console.log("--isDialog", isDialog);
+                if (isDialog) {
+                    scriptText = state.value("Object has a Script", {
+                        Object: assertion.object
+                    });
+                    script = new Script(scriptText, assertion.source);
 
-        function outputStatement(sayAssertions, type) {
-            angular.forEach(sayAssertions, function (assertion) {
-                //console.log("assertion", assertion);
-                var statement = state.resolveValue(assert(
+                } else {
+                    // TODO: Parse if Dialog is a script without being an object
+                    statement = state.resolveValue(assert(
+                        assertion.subject,
+                        assertion.predicate,
+                        assertion.object
+                    ));
+                    scriptText = assertion.object.id.toUpperCase() + ": " + statement;
+                    script = new Script(scriptText, assertion.source);
+                }
+
+                if (script.lines) {
+                    script.play();
+                } else {
+                    yConsole.warn("Empty script!", {
+                        source: assertion.source
+                    });
+                }
+
+                // Then remove the "say" assertions
+                state.negate(assert(
                     assertion.subject,
                     assertion.predicate,
                     assertion.object
                 ));
 
-                // Then remove the "say" assertion
-                state.assertions.remove(assertion);
-
-                if (statement) {
-                    storyLog.buffer()[type](statement);
-                }
             });
+
+            storyLog.flushBuffers();
         }
 
     };
-
 
     return service;
 });

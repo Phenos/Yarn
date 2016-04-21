@@ -7,7 +7,8 @@ yarn.service("things", function (Thing) {
     Things.prototype.get = function (_id, dontAutoCreate) {
         var thing = null;
         if (_id) {
-            var id = _id.toLowerCase();
+            // Sanitize the id
+            var id = _id.toLowerCase().replace(/ /g, "_");
             thing = this.all[id];
             if (!thing) {
                 if (dontAutoCreate) {

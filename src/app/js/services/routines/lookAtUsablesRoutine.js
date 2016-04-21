@@ -3,8 +3,7 @@ yarn.service("lookAtUsablesRoutine", function (events,
                                             assert,
                                             state,
                                             storyLog,
-                                            stateHelpers,
-                                            stepRoutine) {
+                                            stateHelpers) {
 
     return function lookAtUsablesRoutine() {
         var phrase = [];
@@ -14,10 +13,10 @@ yarn.service("lookAtUsablesRoutine", function (events,
         var defaultText = state.resolveValue(assert("Default", "for", "NothingToUse"));
         defaultText = defaultText || "You dont see anything that can be used.";
 
-        var room = state.resolveOne(assert("You", "is in"));
+        var room = state.resolveOne(assert("Player", "is in"));
 
         var usableItemsInCurrentRoom = stateHelpers.usableItemInRoom(room);
-        var usableItemsInInventory = stateHelpers.usableItemInRoom("YourInventory");
+        var usableItemsInInventory = stateHelpers.usableItemInRoom("Your Inventory");
 
         if (room) {
             if (usableItemsInCurrentRoom.length) {
@@ -66,9 +65,7 @@ yarn.service("lookAtUsablesRoutine", function (events,
 
         }
 
-        events.trigger(assert("You", "have looked at", "Doors"));
-
-        stepRoutine();
+        events.trigger(assert("Player", "have looked at", "Doors"));
 
         return true;
     };

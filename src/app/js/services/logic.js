@@ -4,10 +4,11 @@ yarn.service('logic', function (aboutToRoutine,
                                 lookAroundRoutine,
                                 inventoryRoutine,
                                 lookAtExitsRoutine,
+                                talkAboutRoutine,
+                                talkToRoutine,
                                 doRoutine,
                                 takeRoutine,
                                 useRoutine,
-                                stepRoutine,
                                 hintRoutine) {
 
     var routines = {
@@ -16,10 +17,11 @@ yarn.service('logic', function (aboutToRoutine,
         use: useRoutine,
         inventory: inventoryRoutine,
         do: doRoutine,
+        talkAbout: talkAboutRoutine,
+        talkTo: talkToRoutine,
         lookAround: lookAroundRoutine,
         lookAtExits: lookAtExitsRoutine,
         take: takeRoutine,
-        step: stepRoutine,
         hint: hintRoutine
     };
 

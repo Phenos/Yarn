@@ -3,8 +3,12 @@ yarn.service("inventoryRoutine", function (events,
                                            assert,
                                            state,
                                            storyLog,
-                                           stateHelpers,
-                                           stepRoutine) {
+                                           stateHelpers) {
+
+    // Process movement triggered by creating an assertion
+    events.on("Player did Look At Inventory", "after events", function () {
+        inventoryRoutine();
+    });
 
     function inventoryRoutine() {
         var phrase = [];
@@ -38,9 +42,7 @@ yarn.service("inventoryRoutine", function (events,
 
         }
 
-        events.trigger(assert("You", "have looked at", "Inventory"));
-
-        stepRoutine();
+        events.trigger(assert("Player", "has looked at", "Inventory"));
 
         return true;
     }

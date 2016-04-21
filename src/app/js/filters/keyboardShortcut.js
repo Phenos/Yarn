@@ -7,6 +7,7 @@ yarn.filter('keyboardShortcut', function keyboardShortcutFilter($window) {
             var isOSX = /Mac OS X/.test($window.navigator.userAgent);
             var seperator = (!isOSX || keys.length > 2) ? '+' : '';
             var abbreviations = {
+                C: 'Ctrl',
                 M: isOSX ? '⌘' : 'Ctrl',
                 A: isOSX ? 'Option' : 'Alt',
                 S: 'Shift'

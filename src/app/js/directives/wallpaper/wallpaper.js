@@ -10,11 +10,38 @@ yarn.directive('wallpaper', function WallpaperDirective() {
     };
 
     function WallpaperController(wallpaper, $element) {
-        wallpaper.onChange(function (image) {
-            if (image) {
-                $element.css("background-image", "url(" + image + ")");
-            } else {
-                $element.css("background-image", "none");
+        var self = this;
+        wallpaper.onChange(function (options) {
+
+            if (angular.isObject(options)) {
+                if (angular.isDefined(options.image)) {
+                    $element.css("background-image", "url(" + options.image + ")");
+                }
+
+                if (angular.isDefined(options.colorMask)) {
+                    self.colorMask = options.colorMask;
+                }
+
+                if (angular.isDefined(options.color)) {
+                    self.backgroundColor = options.color;
+                    $element.css("background-color", options.color);
+                }
+
+                if (angular.isDefined(options.layout)) {
+                    if (options.layout === "fullscreen") {
+                        $element.css( {
+                            "background-repeat": "no-repeat",
+                            "background-position": "center center",
+                            "background-size": "cover"
+                        });
+                    } else if (options.layout === "pattern") {
+                        $element.css( {
+                            "background-repeat": "repeat",
+                            "background-position": "center center",
+                            "background-size": "inherit"
+                        });
+                    }
+                }
             }
         });
     }

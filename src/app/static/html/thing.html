@@ -1,5 +1,13 @@
-<a ng-class="{'unrecognized-thing': thing.unrecognized}"
-   ng-href="{{thing.token}}"
+<a class="thing"
+   ng-class="{
+    'unrecognized-thing': thing.unrecognized,
+    'selected': thing.selected,
+    'unselected': !thing.selected
+}"
+   ng-href="{{::thing.token}}"
    ng-click="thing.click($event)"
-   ng-bind="thing.text"></a>
+   ng-mouseover="thing.hover()"
+   ><span>{{::thing.text }}</span>
+    <md-tooltip md-delay="200" md-visible="thing.tooltipVisible" md-direction="bottom" ng-bind="thing.tooltip"></md-tooltip>
+</a>
 

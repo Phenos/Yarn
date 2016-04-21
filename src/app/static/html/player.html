@@ -1,19 +1,146 @@
-<div style="position:relative" layout-fill>
+<div
+        ng-class="'theme-brightness-' + player.currentTheme.wallpaper.brightness"
+        style="position: relative"
+        layout-fill
+        layout="column">
     <wallpaper></wallpaper>
     <sidebar></sidebar>
     <toolbar user="player.user"></toolbar>
-    <md-content
-            style="z-index:5; position: relative;"
-            NOPE_layout="row"
+    <div
             class="player"
-            NOPE_scrollbars
-            layout-fill
-    >
-        <div class="main-ui">
+            flex="grow"
+            ng-scrollbars
+            ng-scrollbars-update=player.updateScrollbar
+            ng-scrollbars-config="player.scrollbarsConfig">
+        <div class="main-ui" ng-if="player.state.readyness.isReady">
+            <context-action-menu></context-action-menu>
             <story-log on-clear="player.onStoryLogClear()"></story-log>
             <user-choice prompt="prompt"></user-choice>
             <div class="player-footer"></div>
         </div>
-    </md-content>
+        <div class="readyness" ng-if="!player.state.readyness.isReady">
+            <div style="height:6em"></div>
+            <div ng-if="player.state.readyness.status === 'loading'">
+                <md-progress-circular
+                        md-diameter="70"
+                        md-mode="indeterminate"></md-progress-circular>
+                <p class="message"
+                   ng-bind-html="player.state.readyness.message"></p>
+            </div>
+            <div ng-if="player.state.readyness.status === 'choosestory' && player.profile">
+                <div class="profile-info"
+                     ng-if="player.profile.twitterProfile">
+                    <img alt="{{ player.profile.shortUsername }}"
+                         ng-src="{{ player.profile.twitterProfile.profile_image_url| biggerProfileImage }}"
+                         class="avatar"/>
+
+                    <h3>{{ player.profile.shortUsername }}</h3>
+                </div>
+                <div ng-if="player.profile.storage.allProjectFolders.length === 0">
+                    <div ng-if="player.isOwnProfile">
+                        <p class="message">
+                            You have no projects on Yarn Studio!
+                        </p>
+                    </div>
+                    <div ng-if="player.profile.twitterProfile === false">
+                        <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
+                        <p class="message">
+                            Sorry, Could not find a twitter profile for
+                            <strong>{{ player.profile.shortUsername }}</strong>
+                        </p>
+                        <md-list>
+                            <md-list-item ng-if="player.profiles.authenticated()">
+                                <md-button ui-sref="profile({
+                            profile: player.profiles.authenticated().shortUsername })">
+                                    Back to your profile
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                    <div ng-if="!player.isOwnProfile && player.profile.twitterProfile">
+                        <p class="message">
+                            Sorry, {{ player.profile.shortUsername }}
+                            doesn't have any project on YarnStudio!
+                        </p>
+                        <md-list>
+                            <md-list-item ng-if="player.profiles.authenticated()">
+                                <md-button ui-sref="profile({
+                            profile: player.profiles.authenticated().shortUsername })">
+                                    Back to your profile
+                                </md-button>
+                            </md-list-item>
+                            <md-list-item ng-if="!player.profiles.authenticated()">
+                                <md-button ui-sref="root()">
+                                    Back home
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </div>
+                <div ng-if="player.profile.storage.allProjectFolders.length > 0">
+                    <p class="message">
+                        To get started, choose a project:
+                    </p>
+                    <md-list>
+                        <md-list-item ng-repeat="folder in player.profile.storage.projectFolders">
+                            <md-button ui-sref="story({
+                            profile: player.profile.shortUsername,
+                            story: folder.name })">
+                                {{ folder.name }}
+                            </md-button>
+                        </md-list-item>
+                        <md-list-item ng-if="player.isOwnProfile">
+                            <md-button ui-sref="createNewProject()">
+                                <md-icon style="margin-right: 10px;width:20px; height: 20px;"
+                                         md-svg-icon="/svg-icons/add.svg"></md-icon>
+                                Create a new project
+                            </md-button>
+                        </md-list-item>
+                    </md-list>
+                </div>
+            </div>
+            <div ng-if="player.state.readyness.status === 'error'">
+                <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
+                <p class="message" ng-bind="player.state.readyness.message"></p>
+            </div>
+            <div ng-if="player.state.readyness.status === 'nostory'">
+                <md-icon md-svg-icon="/svg-icons/warning.svg"></md-icon>
+                <p class="message">
+                    Sorry! Could not find a story project
+                    called "{{ player.state.story.id }}"
+                </p>
+                <md-list>
+                    <md-list-item ng-if="player.isOwnProfile">
+                        <md-button ui-sref="createNewProject({ story: player.state.story.id })">
+                            Create a new project called {{ player.state.story.id }}
+                        </md-button>
+                    </md-list-item>
+                    <md-list-item ng-if="player.profiles.authenticated()">
+                        <md-button ui-sref="profile({
+                            profile: player.profiles.authenticated().shortUsername })">
+                            Back to your profile
+                        </md-button>
+                    </md-list-item>
+                    <md-list-item ng-if="!player.isOwnProfile">
+                        <md-button ui-sref="profile({
+                            profile: player.profile.shortUsername })">
+                            Back to {{ player.profile.shortUsername }}
+                        </md-button>
+                    </md-list-item>
+                </md-list>
+            </div>
+            <div class="loginfirst"
+                 ng-if="player.state.readyness.status === 'loginfirst'">
+                <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                <p class="message"
+                   ng-bind-html="player.state.readyness.message"></p>
+                <md-list>
+                    <md-list-item>
+                        <md-button ng-click="player.login();">Login</md-button>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+    </div>
     <status-bar></status-bar>
 </div>

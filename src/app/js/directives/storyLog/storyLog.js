@@ -26,32 +26,39 @@
             };
 
             this.write = function (text, type, scope) {
-                var parsedTxt = text;
+                if (angular.isString(text)) {
+                    var parsedTxt = text;
 
-                // Render bracket links
-                parsedTxt = parsedTxt.replace(/\[([^\]]+)]/g, function (match) {
-                    var tokens = match.substring(1, match.length - 1).split("::");
-                    var name = tokens[0];
-                    var id = tokens[1] || tokens[0];
-                    return '<thing token="' + id + '" text="' + name + '"></thing>'
-                });
-
-                // Render paragraph breaks and line breaks
-                parsedTxt = parsedTxt.replace(/(\\[n])/g, '<br/>');
-
-
-                var newScope = $scope.$new(false);
-                if (scope) {
-                    angular.extend(newScope, {
-                        scope: scope
+                    // Render bracket links
+                    parsedTxt = parsedTxt.replace(/\[([^\]]+)]/g, function (match) {
+                        var tokens = match.substring(1, match.length - 1).split(":");
+                        var name = tokens[0];
+                        var id = tokens[1] || tokens[0];
+                        // Sanitize the id
+                        id = id.trim().toLowerCase().replace(/ /g, "_");
+                        return '<thing token="' + id + '" text="' + name + '"></thing>'
                     });
-                }
-                newScope.text = parsedTxt;
-                newScope.type = type;
-                var logItemEl = $compile('<log-item class="unread" type="type" text="text" scope="scope"></log-item>')(newScope);
-                $element.append(logItemEl);
 
-                player.scroll(logItemEl);
+                    // Render paragraph breaks and line breaks
+                    parsedTxt = parsedTxt.replace(/(\\[n])/g, '<br/>');
+
+
+                    var newScope = $scope.$new(false);
+                    if (scope) {
+                        angular.extend(newScope, {
+                            scope: scope
+                        });
+                    }
+                    newScope.text = parsedTxt;
+                    newScope.type = type;
+                    var logItemEl = $compile(
+                        '<log-item class="unread" type="type" text="text" scope="scope"></log-item>'
+                    )(newScope);
+                    $element.append(logItemEl);
+
+                    player.scroll(logItemEl);
+                }
+
             };
 
             this.markAsRead = function () {

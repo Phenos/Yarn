@@ -2,7 +2,7 @@
 /* Import CSS from vendors */
 @import (inline) "../../../bower_components/angular-material/angular-material.css";
 @import (inline) "../../../bower_components/angular-hotkeys/src/hotkeys.css";
-@import (inline) "../../../bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css";
+@import (inline) "../../../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css";
 @import (inline) "../../../bower_components/angular-ui-grid/ui-grid.css";
 @import (inline) "../../../bower_components/hover/css/hover-min.css";
 
@@ -19,6 +19,11 @@
     font-style: normal;
 }
 
+
+body {
+    // Prevent elastic scrolling when reaching bottom
+    overflow: hidden;
+}
 
 md-toolbar {
     .md-toolbar-tools {
@@ -48,13 +53,35 @@ md-list-item._md-button-wrap > .md-button:first-child ._md-list-item-inner {
     min-height: 30px !important;
 }
 
+md-progress-circular {
+    path {
+        stroke: #fff;
+    }
+}
+
 html body md-menu-content {
     padding: 0;
 }
+
+a:not(.md-button) {
+    &:link,
+    &:hover,
+    &:visited {
+        color: rgb(63,81,181);
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+}
+
 // Otherwise all icons endup white!
 //html body md-toolbar:not(.md-menu-toolbar) md-icon {
 //    fill: inherit !important;
 //}
+
+
 
 
 

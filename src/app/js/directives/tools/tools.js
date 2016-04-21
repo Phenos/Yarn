@@ -16,7 +16,9 @@ yarn.directive('tools', function ToolsDirective() {
         };
         $scope.focus = function (tool) {
             tools.focus(tool.id, true)
-        }
+        };
+        $scope.blur = function (tool) {
+        };
     }
 
 });

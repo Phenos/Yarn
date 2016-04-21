@@ -17,6 +17,20 @@
 
     .assertion {
         font-weight: 400;
+        font-size: 0.9em;
+        font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+        .predicate {
+            color: #696969;
+        }
+        .object,
+        .subject {
+            cursor: pointer;
+            color: #22439E;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .source {

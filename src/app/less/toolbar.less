@@ -1,8 +1,9 @@
 md-toolbar.toolbar {
 
     position: absolute;
+    top: 0;
     z-index: 9;
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
     height: 70px;
 
     .md-toolbar-tools {
@@ -43,15 +44,32 @@ md-toolbar.toolbar {
     }
 }
 
-.story-menu md-toolbar {
-    background: #000;
-    height: 50px;
-    min-height: 50px;
+.story-menu {
+    .md-alt-text {
+        position: absolute;
+        right: 1em;
+        display: block;
+    }
 
-    .md-toolbar-tools {
-        padding: 0;
+    md-toolbar {
+        background: #000;
         height: 50px;
-        max-height: 50px;
+        min-height: 50px;
+
+        .md-toolbar-tools {
+            padding: 0;
+            height: 50px;
+            max-height: 50px;
+        }
+    }
+
+    .avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        margin-top: 5px;
+        margin-right: 10px;
+        margin-left: -5px;
     }
 }
 

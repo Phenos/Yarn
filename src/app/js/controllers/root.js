@@ -1,65 +1,73 @@
-"use strict";
-yarn.controller('root', rootController);
-yarn.service('root', rootService);
+yarn.controller('root', function rootController($scope,
+                                                $element,
+                                                $state,
+                                                user,
+                                                storyLocalStorage,
+                                                IDE,
+                                                yConsole,
+                                                welcomeMessage,
+                                                editorFiles,
+                                                root,
+                                                wallpaper,
+                                                tools,
 
+                                                // todo: Not needed anymore ?
+                                                $timeout,
+                                                fireOnResizeEvent,
 
-function rootController(user,
-                        $localStorage,
-                        $scope,
-                        $element,
-                        IDE,
-                        yConsole,
-                        welcomeMessage,
-                        editorFiles,
-                        root,
-                        themes,
-                        wallpaper,
-                        tools,
-                        $timeout,
-                        fireOnResizeEvent,
-                        globalContextMenu) {
+                                                globalContextMenu,
+                                                state,
+                                                profiles,
+                                                Profile,
+                                                Story) {
 
+    var IDELocalStorage;
+
+//    console.log("state.params:", $state);
     $scope.IDE = IDE;
-    $scope.themes = themes;
-    $scope.user = user; // Note: User not yet in a service, resolved in route instead
+    // TODO: Move theme dependency in "player" directive
+    $scope.state = state;
     $scope.editorFiles = editorFiles;
+
+    if (user) {
+        $scope.user = user; // Note: User not yet in a service, resolved in route instead
+        profiles.authenticated(new Profile(user.username, user));
+    }
+
 
     // Used by the global context menu
     globalContextMenu.register($scope, $element);
-
-    // Restore previously openned files
-    editorFiles.reloadFromLocalStorage();
 
     $scope.toolTabs = {
         selected: 0
     };
 
-    wallpaper.change("/images/splash/splash-bg.jpg");
-
-    IDE.register($scope);
-
-    // Register with the service
-    root.register($scope);
+    wallpaper.change({
+        image: "/images/splash/splash-bg.jpg",
+        layout: "fullscreen"
+    });
 
     /*
      Show a welcome message in the yarn console
      */
     yConsole.log("Welcome to <strong>Yarn Studio!</strong>");
-    yConsole.tip('Enter "<span command>help</span>" in the command-line bellow to see available commands!');
+    yConsole.tip('Enter "<span command>help</span>" in the command-line" +' +
+        '"bellow to see available commands!');
 
     // If needed, show a welcome message in a popup
     welcomeMessage.openIfNew();
 
+    // TODO: Move openMain and dependency on "editorFiles" into an IDE directive
     $scope.openMain = function () {
-        var main = editorFiles.open("./story.txt", true);
-        editorFiles.mainFile(main);
+        if (state.story) {
+            editorFiles.open(state.story.profile, state.story.url.toString(), true);
+        }
     };
 
     /*
-
      Height permutation between Console and Editor on focus events
-
      */
+
     $scope.editorFlexHeight_default = 100;
     $scope.consoleFlexHeight_default = 0;
     $scope.editorFlexHeight = $scope.editorFlexHeight_default;
@@ -74,7 +82,7 @@ function rootController(user,
     };
 
     $scope.focusInspector = function () {
-        //console.log($scope.toolTabs.selected);
+//        console.log($scope.toolTabs.selected);
         $scope.toolTabs.selected = 1;
     };
 
@@ -104,60 +112,115 @@ function rootController(user,
                 $scope.onConsoleFocus();
             }
         }
-        $localStorage.toolsAreVisible = $scope.toolsAreVisible;
+        IDELocalStorage.toolsAreVisible = $scope.toolsAreVisible;
     };
-    $scope.toggleTools($localStorage.toolsAreVisible);
+
+    $scope.openProjectTool = function () {
+        tools.focus("project");
+    };
+
+
+    // Set the current visited and authenticated profile, and current project
+    if ($state.params.profile) {
+        var visitedProfile = new Profile("twitter." + $state.params.profile);
+        profiles.visited(visitedProfile);
+        if ($state.params.story) {
+            state.story = new Story($state.params.story, visitedProfile);
+
+            storyLocalStorage.uid(state.story.key());
+
+//            console.log("-------- before iExists");
+            state.story.ifExists(function () {
+//                console.log("STORY EXISTS!");
+                state.ready(true, "ready", "");
+                IDE.run();
+            }, function () {
+//                console.log("STORY DOESNT EXIST!");
+                state.ready(false, "nostory", "");
+            });
+
+        } else {
+            state.ready(false, "choosestory", "");
+        }
+    } else {
+        if (profiles.authenticated()) {
+            $state.go("profile", {
+                profile: profiles.authenticated().username.split(".")[1]
+            })
+        } else {
+            state.ready(false, "loginfirst",
+                "You must <strong>first login</strong> with your twitter account" +
+                "or visit someone else's profile.");
+        }
+    }
+
+    IDELocalStorage = storyLocalStorage.get("IDE");
+
+    // Register with the service
+    root.register($scope);
+
+    $scope.toggleTools(IDELocalStorage.toolsAreVisible);
+
+    // Restore previously openned files
+    state.reloadFromLocalStorage();
+
     tools.focusFromMemory();
 
+    if (profiles.authenticated()) {
+        root.IDEisVisible(IDELocalStorage.IDEisVisible);
+    }
 
 
-    // Check if a previously opened story should be loaded
-    //IDE.loadRememberedStory();
-    IDE.run(function () {
-        $scope.openMain();
-        IDE.run();
-    });
+});
 
-}
 
-function rootService($localStorage, consoleService, player) {
+yarn.service('root', function rootService(storyLocalStorage, consoleService, player) {
+
     var service = {
         scope: null
     };
 
+
     service.register = function (scope) {
         service.scope = scope;
-        scope.IDEisVisible = service.IDEisVisible;
-        scope.helpIsVisible = service.helpIsVisible;
+        scope._IDEisVisible = service._IDEisVisible;
+        scope._helpIsVisible = service._helpIsVisible;
+
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        service.helpIsVisible(IDELocalStorage._helpIsVisible);
     };
 
     /*
      Console visibility
      */
-    service.IDEisVisible = false;
-    service.helpIsVisible = false;
+    service._IDEisVisible = false;
+    service._helpIsVisible = false;
 
-    function IDEisVisible(value) {
+    service.IDEisVisible = function _IDEisVisible(value) {
         if (!angular.isUndefined(value)) {
-            service.IDEisVisible = value;
-            if (service.scope) service.scope.IDEisVisible = value;
+            service._IDEisVisible = value;
+            if (service.scope) {
+                service.scope._IDEisVisible = value;
+            }
         }
-        return service.IDEisVisible;
-    }
+        return service._IDEisVisible;
+    };
 
-    function helpIsVisible(value) {
+
+    service.helpIsVisible = function _helpIsVisible(value) {
+//        console.log("helpIsVisible", value);
         if (!angular.isUndefined(value)) {
-            service.helpIsVisible = value;
-            if (service.scope) service.scope.helpIsVisible = value;
+            service._helpIsVisible = value;
+            if (service.scope) {
+                service.scope._helpIsVisible = value;
+            }
         }
-        return service.helpIsVisible;
-    }
+        return service._helpIsVisible;
+    };
 
-    IDEisVisible($localStorage.IDEisVisible);
-    helpIsVisible($localStorage.helpIsVisible);
 
     service.toggleConsole = function () {
-        if (service.IDEisVisible) {
+        if (service._IDEisVisible) {
             service.hideConsole();
         } else {
             service.showConsole();
@@ -165,7 +228,7 @@ function rootService($localStorage, consoleService, player) {
     };
 
     service.toggleHelp = function () {
-        if (service.helpIsVisible) {
+        if (service._helpIsVisible) {
             service.hideHelp();
         } else {
             service.showHelp();
@@ -173,7 +236,7 @@ function rootService($localStorage, consoleService, player) {
     };
 
     service.toggleTools = function (value) {
-        service.scope.toggleTools(value);
+        service.scope && service.scope.toggleTools(value);
     };
 
     /*
@@ -183,11 +246,12 @@ function rootService($localStorage, consoleService, player) {
      */
     service.showConsole = function () {
         player.closeSidenav();
-        $localStorage.IDEisVisible = IDEisVisible(true);
-        consoleService.focus();
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage.IDEisVisible = service.IDEisVisible(true);
     };
     service.hideConsole = function () {
-        $localStorage.IDEisVisible = IDEisVisible(false);
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage.IDEisVisible = service.IDEisVisible(false);
     };
 
 
@@ -198,19 +262,25 @@ function rootService($localStorage, consoleService, player) {
      */
     service.showHelp = function () {
         player.closeSidenav();
-        $localStorage.helpIsVisible = helpIsVisible(true);
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage._helpIsVisible = service.helpIsVisible(true);
     };
     service.hideHelp = function () {
-        $localStorage.helpIsVisible = helpIsVisible(false);
+        var IDELocalStorage = storyLocalStorage.get("IDE");
+        IDELocalStorage._helpIsVisible = service.helpIsVisible(false);
     };
 
     service.focusConsole = function () {
-        service.scope.focusConsole();
+        service.scope && service.scope.focusConsole();
     };
 
     service.focusInspector = function () {
-        service.scope.focusInspector();
+        service.scope && service.scope.focusInspector();
     };
 
     return service;
-}
+});
+
+
+
+

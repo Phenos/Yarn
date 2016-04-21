@@ -3,41 +3,20 @@ yarn.factory('writers', function (Prompt,
                                   yConsole,
                                   storyLog,
                                   state,
-                                  script,
+                                  yarnScript,
                                   commands,
-                                  themes,
-                                  wallpaper) {
+                                  currentTheme,
+                                  wallpaper,
+                                  defaultTexts) {
 
-    // Describe where you are at the beginning
-    function describeWhereYouAre() {
-        var returnFn;
-        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
-        if (storyHasEnded) {
-            returnFn = describeTheEnd();
-        } else if (state.step() === 0) {
-            returnFn = describeCoverpage();
-        } else {
-            returnFn = describeRoom();
-        }
-        return returnFn;
-    }
 
     function describeCoverpage() {
 
-        refreshTheme();
+        currentTheme.refresh();
 
         // Set the wallpaper
-        var wallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("Story", "has", "Coverpage"));
-        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
-        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = wallpaper_url || coverpage_url || false;
-
-        if (url) {
-            wallpaper.change(url);
-        } else {
-            wallpaper.clear();
-        }
+        var coverpage_url = coverpage && yarnScript.resolveRelativeURI(coverpage);
 
         if (coverpage) {
             storyLog.image(coverpage_url);
@@ -78,7 +57,7 @@ yarn.factory('writers', function (Prompt,
     function describeTheEnd() {
         storyLog.markAsRead();
 
-        refreshTheme();
+        currentTheme.refresh();
 
         // Show the story title
         var name = state.resolveValue(assert("TheEnd", "has", "Name"));
@@ -87,17 +66,8 @@ yarn.factory('writers', function (Prompt,
         }
 
         // Set the wallpaper
-        var wallpaperValue = state.resolveValue(assert("TheEnd", "has", "Wallpaper"));
         var coverpage = state.resolveValue(assert("TheEnd", "has", "Coverpage"));
-        var wallpaper_url = wallpaperValue && script.resolveRelativeURI(wallpaperValue);
-        var coverpage_url = coverpage && script.resolveRelativeURI(coverpage);
-        var url = wallpaper_url || coverpage_url || false;
-
-        if (url) {
-            wallpaper.change(url);
-        } else {
-            wallpaper.clear();
-        }
+        var coverpage_url = coverpage && yarnScript.resolveRelativeURI(coverpage);
 
         if (coverpage) {
             storyLog.image(coverpage_url);
@@ -111,46 +81,29 @@ yarn.factory('writers', function (Prompt,
         return this;
     }
 
-    function refreshTheme(room) {
-        var themeId = null;
-
-        if (room) {
-            themeId = state.resolveValue(assert(room, "has", "Theme"));
-        }
-        if (!themeId) {
-            themeId = state.resolveValue(assert("Story", "has", "Theme"));
-        }
-        if (themeId) {
-            var theme = themes.select(themeId);
-            if (theme && theme.id === themeId) {
-                yConsole.log("Theme changed to : " + themeId);
-            } else {
-                yConsole.warning("Wanted theme not found: " + themeId);
-            }
-        }
-    }
-
     function describeRoom() {
+        console.log("describeRoom");
+
         storyLog.markAsRead();
 
-        var room = state.resolveOne(assert("You", "is in"));
+        var room = state.resolveOne(assert("Player", "is in"));
 
-        refreshTheme(room);
+        currentTheme.refresh();
 
         if (room) {
             var defaultWallpaperValue = state.resolveValue(assert("Story", "has", "Wallpaper"));
             var wallpaperValue = state.resolveValue(assert(room, "has", "Wallpaper"));
-            var url = script.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
+            var url = yarnScript.resolveRelativeURI(wallpaperValue || defaultWallpaperValue);
             if (url) {
                 wallpaper.change(url);
             } else {
                 wallpaper.clear();
             }
 
-
-
             var name = state.resolveValue(assert(room, "has", "Name"));
-            if (name) storyLog.heading(name);
+            if (name) {
+                storyLog.heading(name);
+            }
 
             var introduction = state.resolveValue(assert(room, "has", "Introduction"));
             var description = state.resolveValue(assert(room, "has", "Description"));
@@ -162,11 +115,11 @@ yarn.factory('writers', function (Prompt,
             }
 
         } else {
-            storyLog.log("You are nowhere to be found! Place your hero somewhere");
-            yConsole.error("Your hero is nowhere to be found!");
+            storyLog.log(defaultTexts.get("you-dont-know-where-you-are"));
+//            yConsole.error("The player is nowhere to be found!");
             yConsole.tip(
-                "For the story to start, you must place you hero in a room.<br/>" +
-                "Ex.: #You is in #YourBedroom.");
+                "For the story to start, you must place the player in a space.<br/>" +
+                "Ex.: Player is in the Bedroom.");
         }
 
         // Before ending, flush the log from any buffered logs
@@ -183,13 +136,14 @@ yarn.factory('writers', function (Prompt,
             var image = state.resolveValue(assert(thing, "has", "Image"));
             if (image) {
                 storyLog.thingImage(
-                    script.resolveRelativeURI(image)
+                    yarnScript.resolveRelativeURI(image)
                 );
             }
             if (description) {
                 storyLog.log(description);
             } else {
-                var defaultSeeNothingText = state.resolveValue(assert("Default", "for", "YouSeeNothing"));
+                var defaultSeeNothingText =
+                    state.resolveValue(assert("Default", "for", "YouSeeNothing"));
                 storyLog.log(defaultSeeNothingText || "Nothing interesting");
             }
         }
@@ -198,7 +152,7 @@ yarn.factory('writers', function (Prompt,
 
     // Describe where you are at the beginning
     function nothingHappened() {
-        storyLog.log("Nothing happened!");
+        storyLog.log(defaultTexts.get("nothing-happened"));
         return this;
     }
 
@@ -206,39 +160,54 @@ yarn.factory('writers', function (Prompt,
     function describeThingTakenInInventory(thing) {
         if (thing) {
             var name = state.resolveValue(assert(thing, "has", "Name"));
-            if (name) storyLog.action("You take the " + name);
+            if (name) {
+                storyLog.action("You take the " + name);
+            }
         }
         return this;
     }
 
+    // Describe where you are at the beginning
+    function describeWhereYouAre() {
+        var returnFn;
+        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+        if (storyHasEnded) {
+            returnFn = describeTheEnd();
+        } else if (state.step() === 0) {
+            returnFn = describeCoverpage();
+        } else {
+            returnFn = describeRoom();
+        }
+        return returnFn;
+    }
+
     function objectMenu(thing) {
         if (thing) {
-
+            var option;
             var prompt = new Prompt();
 
-            prompt.answer = function answer(promptLoop, option) {
-                commands.run(option);
+            prompt.answer = function answer(promptLoop, _option) {
+                commands.run(_option);
             };
 
             var name = state.resolveValue(assert(thing, "has", "Name"));
 
             var isUsable = state.resolveValue(assert(thing, "is", "Usable"));
             if (isUsable) {
-                var option = prompt.option("Use " + name, "use " + thing.id);
+                option = prompt.option("Use " + name, "use " + thing.id);
                 option.iconId = "use";
                 option.iconSize = "small";
                 option.iconOnly = true;
             }
 
-            var isInventoryItem = state.resolveValue(assert(thing, "is", "InventoryItem"));
+            var isInventoryItem = state.resolveValue(assert(thing, "is", "Inventory Item"));
             if (isInventoryItem) {
-                var option = prompt.option("Take " + name, "take " + thing.id);
+                option = prompt.option("Take " + name, "take " + thing.id);
                 option.iconId = "inventory";
                 option.iconSize = "small";
                 option.iconOnly = true;
             }
 
-            storyLog.prompt(prompt);
         }
 
         return this;
@@ -250,7 +219,6 @@ yarn.factory('writers', function (Prompt,
         describeThing: describeThing,
         describeRoom: describeRoom,
         describeCoverpage: describeCoverpage,
-        refreshTheme: refreshTheme,
         describeTheEnd: describeTheEnd,
         describeWhereYouAre: describeWhereYouAre,
         objectMenu: objectMenu

@@ -1,18 +1,19 @@
 yarn.service("thingsInRoomHelper", function (state,
                                              assert) {
 
-    return function thingsInRoom(room) {
+    return function thingsInRoom(space) {
         var foundThings = [];
 
-        if (room) {
-            var thingsInRoom = state.resolveAll(assert(undefined, "is in", room));
-
-            thingsInRoom.forEach(function (thing) {
+        if (space) {
+            var undef = void 0;
+            var things = state.resolveAll(assert(undef, "is in", space));
+//            console.log("thingsInRoom", thingsInRoom);
+            things.forEach(function (thing) {
                 // Check if item is an InventoryItem
                 var isThing = state.resolveValue(assert(thing, "is", "Thing"));
-                var isScenery = state.resolveValue(assert(thing, "is", "Scenery"));
-                //console.log("thingsThatAre", thingsThatAre, thing.id);
-                if (isThing || isScenery) foundThings.push(thing);
+                if (isThing) {
+                    foundThings.push(thing);
+                }
             });
         }
 

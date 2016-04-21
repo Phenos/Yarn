@@ -1,0 +1,119 @@
+
+
+Learn Bobs Name ( Player know Bobs Name )
+
+
+
+What Are You Doing Here is a Script
+"
+Narrator:
+    Looking surprised, a man with a [large scar:Ask About Scar] turns around and looks back at your with contempt.
+Bob:
+    Huu... hey there. What are you doing here?
+
+Reply: Who are you? [Reply Who Are You]
+Reply: I dont know... [Reply I Dont Know]
+Reply: Sorry... I'm leaving... [Reply Sorry Im Laving]
+Reply: I'm just here to brush... [Reply Here To Brush]
+"
+
+/*------------------------------------------------*/
+
+Reply Who Are You is a Script, can occur 1,
+"
+Player:
+    Who are you ?
+Bob:
+    I'm Bob
+Player:
+    Bob who ?
+Narrator:
+    Bob
+Bob:
+    Just Bob to you... like I said, what are you doing here ?
+
+Trigger: Learn Bobs Name
+"
+
+/*------------------------------------------------*/
+
+Ask About Scar is a Script, can occur 1,
+"
+Player:
+    Wow... that scar looks fierce, where did you get that ?
+Narrator:
+    Raising his hand to his face he almost strart answering, but then
+    {{ "Bob" if value("Player know Bobs Name") else "the man" }}
+    frowns and simply says —
+Bob:
+    None. Of. Your. F***ing. Beeswax!
+"
+
+/*------------------------------------------------*/
+
+Reply I Dont Know is a Script
+"
+Player:
+    I dont know... what are YOU doing here?
+Bob:
+    I'm shaving... leave me alone!
+Narrator:
+    {{ "Annoid, Bob" if value("Player know Bobs Name") else "The annoid man" }}
+    snears and turns around to continues shaving.
+
+Reply: Sorry I'm Leaving [Reply Sorry Im Leaving]
+Reply: Just here to brush... [Reply Here To Brush]
+Reply: That scar... [Ask About Scar]
+Reply: Ho nothing... [Reply Nothing]
+"
+
+/*------------------------------------------------*/
+
+Reply Sorry Im Leaving is a Script
+"
+Player:
+    Ho, sorry, I'm leaving!
+Bob:
+    Yeah.. that's it, leave me alone please..
+
+Trigger: Leaving Bob Alone.
+"
+
+/*------------------------------------------------*/
+
+Reply Here To Brush My Teeth is a Script
+"
+Player:
+    I'm just here to brush my teeth, can you leave?
+Bob:
+    I'm **ALSO** brushing my teeth... how about **YOU** leave!!!
+Narrator:
+    Bob flexes his muscles, cracks his knuckles and pushes you out of the bathroom!    
+
+Trigger: Leaving Bob Alone.
+"
+
+/* Affect a state change */
+
+BobsBigSecret is a knowledgeItem.
+LearnBobsBigSecret (
+    Bob has already said BobIsShaving.
+    You learn BobsBigSecret.
+)
+
+/* Should work without comas ?  */
+
+Leaving Bob Alone (
+    NARRATOR says "As you exit the bathroom, you can hear Bob closing the door.".
+    Playermoves to Corridor
+)
+
+
+
+
+
+
+
+
+
+

@@ -3,10 +3,19 @@ yarn.service("lookRoutine", function (events,
                                       assert,
                                       state,
                                       storyLog,
-                                      stepRoutine) {
+                                      yConsole) {
+
+    // Process movement triggered by creating an assertion
+    events.on("Player did Look", "after events", function () {
+        var object = state.one("Player look at *");
+        lookRoutine(object);
+    });
 
     function lookRoutine(object) {
         if (object) {
+
+            yConsole.log("Routine: look");
+//            console.log("TRIGGERED! Routine: look");
 
             var thingName = state.resolveValue(assert(object, "has", "Name"));
             thingName = thingName || object.id;
@@ -14,10 +23,8 @@ yarn.service("lookRoutine", function (events,
 
             writers.describeThing(object);
             writers.objectMenu(object);
-            events.trigger(assert("You", "have looked at", object));
+            events.trigger(assert("Player", "has looked at", object));
 
-
-            stepRoutine();
         }
         return true;
     }

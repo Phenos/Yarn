@@ -1,4 +1,15 @@
-yarn.directive('player', function () {
+yarn.directive('player', function (channel,
+                                   sidebar,
+                                   writers,
+                                   currentTheme,
+                                   promptLoop,
+                                   player,
+                                   state,
+                                   lookAroundRoutine,
+                                   playScriptRoutine,
+                                   profiles,
+                                   login,
+                                   assert) {
 
     return {
         restrict: 'E',
@@ -11,36 +22,94 @@ yarn.directive('player', function () {
         controller: playerController
     };
 
-    function playerController($scope,
-                              $element,
-                              $timeout,
-                              sidebar,
-                              writers,
-                              promptLoop,
-                              player,
-                              state,
-                              easing) {
+    function playerController($scope) {
 
-        var scrollAreaElem = $element[0].getElementsByClassName("player")[0];
+        var self = this;
 
-        promptLoop.onUpdate(function (promptLoop) {
+        this.state = state;
+        this.profiles = profiles;
+        this.currentTheme = currentTheme;
+
+        this.scrollbarsConfig = {
+            autoHideScrollbar: true,
+            theme: 'light',
+            advanced: {
+                updateOnContentResize: true
+            },
+            scrollInertia: 500
+        };
+
+//        console.log("profile", this.profile);
+//        console.log("auth", profiles.authenticated());
+
+        this.profile = null;
+        this.isOwnProfile = false;
+
+        this.setProfile = function (profile) {
+            if (profile) {
+
+                self.profile = profile;
+
+                if (profiles.authenticated()) {
+                    console.log("setProfile",
+                        self.profile.username,
+                        profiles.authenticated().username);
+
+                    if (self.profile.username === profiles.authenticated().username) {
+                        self.isOwnProfile = true;
+                    }
+                } else {
+                    console.log("no auth yet!");
+                }
+//            console.log("profile", self.profile);
+//            console.log("auth", profiles.authenticated());
+//            console.log("profiles.updated", self.profile,
+//              profiles.authenticated(), self.isOwnProfile);
+            }
+        };
+
+        channel.subscribe("profiles.updated", function () {
+            self.setProfile(profiles.visited());
+        });
+
+        this.setProfile(profiles.visited());
+
+        promptLoop.onUpdate(function (_promptLoop) {
             // Load the appropriate prompt and setup the ui with the prompt
-            var prompt = promptLoop.currentPrompt;
-            $scope.prompt = prompt;
+            $scope.prompt = _promptLoop.currentPrompt;
         });
         promptLoop.update();
-
-        this.onStoryLogClear = function () {
-            scrollAreaElem.scrollTop = 0;
-            $scope.$broadcast("refreshScrollbars");
-        };
 
         player.register(this);
 
         this.refresh = function () {
-            writers
-                .describeWhereYouAre();
+//            console.log("player.refresh");
+
+            var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+            if (storyHasEnded) {
+                // The story is at the end
+                writers.describeTheEnd();
+            } else if (state.step() === 0) {
+                // The story is at the begining
+                writers.describeCoverpage();
+            } else {
+                // The story is ongoing
+                var space = state.one("Player is in *");
+                var script = state.one("Player is acting *");
+                if (space) {
+                    lookAroundRoutine();
+                }
+                if (script) {
+                    playScriptRoutine();
+                }
+            }
+
+            currentTheme.refresh();
             promptLoop.update();
+        };
+
+        this.login = function () {
+            login();
         };
 
         /*
@@ -54,22 +123,15 @@ yarn.directive('player', function () {
             sidebar.close();
         };
 
-        this.scroll = function (targetElement) {
-            var duration = 1500;
-            var offset = 200;
-
+        this.scroll = function () {
             // First we check to see if it's the first game step
             // to prevent scrolling when first showing the coverpage
-            if (state.step() > 0 && targetElement) {
-                angular.element(scrollAreaElem)
-                    .scrollToElementAnimated(targetElement, offset, duration, function (t) {
-                        return t * (2 - t)
-                    });
+            if (state.step() > 0) {
+                    self.updateScrollbar('scrollTo', 10000000);
             }
         };
 
     }
-
 
 });
 

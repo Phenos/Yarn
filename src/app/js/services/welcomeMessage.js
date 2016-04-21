@@ -1,4 +1,3 @@
-"use strict";
 yarn.factory('welcomeMessage', WelcomeMessageService);
 
 function WelcomeMessageService($mdDialog,

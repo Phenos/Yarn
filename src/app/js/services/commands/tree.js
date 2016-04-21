@@ -1,8 +1,8 @@
 yarn.factory('treeCommand', function (yConsole,
-                                      script) {
+                                      yarnScript) {
 
     function handler() {
-        var html = script.ast.html();
+        var html = yarnScript.ast.html();
         yConsole.debug("Outputing execution tree:");
         yConsole.debug(html);
     }

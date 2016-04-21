@@ -4,26 +4,35 @@ yarn.service("lookAroundRoutine", function (events,
                                             state,
                                             storyLog,
                                             stateHelpers,
-                                            stepRoutine) {
+                                            yConsole) {
 
-    return function lookAroundRoutine() {
+    events.on("Player did Look Around", "after dialogs", function () {
+        lookAroundRoutine();
+        state.negate(assert("Player", "did", "Look Around"));
+    });
+
+    function lookAroundRoutine() {
         var phrase = [];
 
-        storyLog.action("You look around");
+        yConsole.log("Routine: lookAround");
 
-        var defaultText = state.resolveValue(assert("Default", "for", "NothingToLookAt"));
-        defaultText = defaultText || "You see nothing to look at";
-
-        var room = state.resolveOne(assert("You", "is in"));
-        if (room) {
-            var roomName = state.resolveValue(assert(room, "has", "Name"));
-            roomName = roomName || room.id;
-            phrase.push("You are at the [" + roomName + "]. ");
+        var space = state.resolveOne(assert("Player", "is in"));
+        if (space) {
+//            console.log("room", room);
+            var roomName = state.resolveValue(assert(space, "has", "Name"));
+            var roomDescription = state.resolveValue(assert(space, "has", "Description"));
+            roomName = roomName || space.id;
+            if (roomDescription) {
+                phrase.push(roomDescription);
+                phrase.push("<br/><br/>");
+            } else {
+                phrase.push("You are at the [" + roomName + ":" + space.id + "]. ");
+            }
         }
 
-        var thingsInRoom = stateHelpers.thingsInRoom();
+        var thingsInRoom = stateHelpers.thingsInRoom(space);
 
-        if (thingsInRoom.length || room) {
+        if (thingsInRoom.length || space) {
             if (thingsInRoom.length) {
 
                 phrase.push("You see a ");
@@ -40,24 +49,17 @@ yarn.service("lookAroundRoutine", function (events,
                     }
                 });
 
-            } else {
-                phrase.push(defaultText);
             }
 
             storyLog.log(phrase.join(""));
 
-        } else {
-
-            storyLog.log(defaultText);
-
         }
 
-        events.trigger(assert("You", "have looked at", "Things"));
+        events.trigger(assert("Player", "have looked at", "Things"));
 
-        stepRoutine();
+    }
 
-        return true;
-    };
+    return lookAroundRoutine;
 
 });
 

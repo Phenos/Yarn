@@ -7,7 +7,7 @@ function inventoryCommand(yConsole,
     function handler() {
         var itemList;
 
-        var thingsInInventory = state.resolveAll(assert("You", "have in inventory"));
+        var thingsInInventory = state.resolveAll(assert("Player", "has in inventory"));
 
         if (thingsInInventory.length) {
             itemList = [];

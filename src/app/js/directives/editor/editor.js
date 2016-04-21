@@ -2,6 +2,9 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                                                   editors,
                                                   inspector,
                                                   IDE,
+                                                  state,
+                                                  profiles,
+                                                  soundEffects,
                                                   globalContextMenu,
                                                   confirmAction,
                                                   $timeout,
@@ -23,7 +26,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         controller: EditorController
     };
 
-    function EditorController(tools) {
+    function EditorController($element, tools) {
         var self = this;
         var aceEditor;
 
@@ -31,19 +34,13 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             IDE.saveAllAndRun();
         };
 
-        this.setAsMain = function () {
-            var currentMainFile = editorFiles.mainFile();
-            if (currentMainFile === this.file) {
-                editorFiles.mainFile(null);
-            } else {
-                editorFiles.mainFile(this.file);
-            }
-        };
-
         this.save = function () {
             IDE.working(true);
-            editorFiles.save(this.file, function () {
+            editorFiles.save(this.file, function (err) {
                 IDE.working(false);
+                $timeout(function () {
+                    self.file.isModified();
+                })
             });
         };
 
@@ -53,6 +50,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 "You have unsaved changes in this file.<br/> Are you sure you want to " +
                 "close it and <br/><strong>loose those changes</strong> ?",
                 function () {
+                    self.file.isModified();
                     this.file.load();
                 })
         };
@@ -63,7 +61,6 @@ yarn.directive('editor', function EditorDirective(editorFiles,
 
         this.rename = function (ev) {
             var filename = this.file.uri.filename();
-            var self = this;
             var confirm = $mdDialog.prompt()
                 .title('Rename')
                 .textContent('Choose a new name for this file.')
@@ -73,21 +70,24 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 .ok('Rename')
                 .cancel('Cancel');
             $mdDialog.show(confirm).then(function(newName) {
-                //console.log("Renaming", newName);
+//                console.log("Renaming", newName);
                 editorFiles.rename(self.file, newName);
             }, function() {
-                //$scope.status = 'You didn\'t name your dog.';
+//                $scope.status = 'You didn\'t name your dog.';
             });
         };
 
         this.focus = function () {
             this.file.isFocused = true;
+            self.file.isModified();
+            self.file.checkOwnership(profiles);
             if (aceEditor) {
                 aceEditor.focus();
             }
         };
 
         this.blur = function () {
+            self.file.isModified();
             this.file.isFocused = false;
         };
 
@@ -101,16 +101,25 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             _editor.$blockScrolling = Infinity;
             aceEditor = _editor;
 
+            self.file.checkOwnership(profiles);
+
             aceEditor.on("click", clickHandler);
             aceEditor.on("focus", function() {
                 checkGoToLine();
             });
-            aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
-
-            angular.element(aceEditor.container).on("contextmenu", function () {
-                console.log("inspector", inspector);
-                //updateInspection();
+            var matchChars =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "\t !@#$%ˆ*_+{}[]:''\".,<>/\\" +
+                "()1234567890-=";
+            $element.on("keypress", function(e) {
+                if (self.readOnly) {
+                    if (matchChars.indexOf(String.fromCharCode(e.keyCode)) > -1) {
+                        soundEffects.error()
+                    }
+                }
             });
+            aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
 
         }
 
@@ -121,19 +130,21 @@ yarn.directive('editor', function EditorDirective(editorFiles,
         function aceChanged() {
             updateInspection();
             if (self.file) {
-                self.file.updateStatus();
+//                self.file.updateStatus();
+//                Refresh the isModified status
+                $timeout(function (){
+                    self.file.isModified();
+                })
             }
             checkGoToLine();
-
-
         }
 
         function checkGoToLine() {
             $timeout(function () {
                 if (self.file && self.file.goToLine) {
-                    console.log("checkGoToLine", self.file.goToLine);
-                    //console.log("goToLine", self.file.goToLine);
-                    //aceEditor.resize(true);
+//                    console.log("checkGoToLine", self.file.goToLine);
+//                    console.log("goToLine", self.file.goToLine);
+//                    aceEditor.resize(true);
                     aceEditor.gotoLine(self.file.goToLine, 0, true);
                     self.file.goToLine = null;
                 }
@@ -172,12 +183,20 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 $timeout(function() {
                     angular.forEach(inspector.articles, function(article) {
                         angular.forEach(article.actions, function(action) {
-                            globalContextMenu.add(action.label, action.icon + ".svg", action.callback);
+                            globalContextMenu.add(
+                                action.label,
+                                action.icon + ".svg",
+                                action.callback);
                         });
                     });
                 }, 200);
 
                 var pos = aceEditor.getCursorPosition();
+
+                self.file.position = pos;
+                state.persistEditorFiles(self.file);
+//                console.log("=====> pos  >> ", pos);
+
                 var token = aceEditor.session.getTokenAt(pos.row, pos.column);
                 // Also check if the inspection is not just for whitespace
                 if (token && token.value.trim().length) {

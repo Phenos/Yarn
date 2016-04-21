@@ -16,8 +16,52 @@
                         md-mode="indeterminate"></md-progress-circular>
             </md-toolbar-filler>
             <div flex="100">
-                <h2 class="md-toolbar-tools">Story Editor</h2>
+                <h2 class="md-toolbar-tools">
+                    {{ toolbar.state.story.id }}
+                </h2>
                 <md-menu-bar>
+                    <md-menu>
+                        <button ng-click="$mdOpenMenu()">
+                            Project
+                        </button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button ui-sref="createNewProject()">
+                                    Create new project
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.openFromProject()">
+                                    Browse project files
+                                    <span class="md-alt-text"> {{:: 'M-O' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.IDE.saveAllAndRun()">
+                                    Save All and Run
+                                    <span class="md-alt-text"> {{:: 'M-Enter' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.IDE.saveAll()">
+                                    Save All
+                                    <span class="md-alt-text"> {{:: 'M-S' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.run()">
+                                    Run
+                                    <span class="md-alt-text"> {{:: 'M-S-Enter' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="toolbar.validate()">
+                                    Validate Current State
+                                    <span class="md-alt-text"> {{:: 'M-S-V' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
                     <md-menu>
                         <button ng-click="$mdOpenMenu()">
                             Files
@@ -26,44 +70,7 @@
                             <md-menu-item>
                                 <md-button ng-click="toolbar.IDE.newFile($event)">
                                     Create new file
-                                    <span class="md-alt-text"> {{ 'C-S-N' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="toolbar.openFromProject()">
-                                    Open from project
-                                    <span class="md-alt-text"> {{ 'M-O' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                    <md-menu>
-                        <button ng-click="$mdOpenMenu()">
-                            Project
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ng-click="toolbar.IDE.saveAllAndRun()">
-                                    Save All and Run
-                                    <span class="md-alt-text"> {{ 'M-Enter' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="toolbar.IDE.saveAll()">
-                                    Save All
-                                    <span class="md-alt-text"> {{ 'M-S' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="toolbar.run()">
-                                    Run
-                                    <span class="md-alt-text"> {{ 'M-S-Enter' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="toolbar.validate()">
-                                    Validate Current State
-                                    <span class="md-alt-text"> {{ 'M-S-V' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'C-S-N' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -76,7 +83,7 @@
                             <md-menu-item>
                                 <md-button ng-click="toolbar.hideConsole()">
                                     Close Editor
-                                    <span class="md-alt-text"> {{ 'M-Esc' | keyboardShortcut }}</span>
+                                    <span class="md-alt-text"> {{:: 'M-Esc' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -112,13 +119,6 @@
                     Reload
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="toolbar.editors.current.setAsMain()" ng-class="toolbar.editors.current.file.isMain ? 'isOn' : ''" class="md-icon-button"
-                       aria-label="Set as main story file">
-                <md-icon md-svg-icon="/svg-icons/main-file.svg"></md-icon>
-                <md-tooltip>
-                    Set as main story file
-                </md-tooltip>
-            </md-button>
             <md-button ng-click="toolbar.editors.current.saveAllAndRun()" class="md-icon-button" aria-label="Save and run story">
                 <md-icon md-svg-icon="/svg-icons/play-toolbar.svg"></md-icon>
                 <md-tooltip>
@@ -145,10 +145,10 @@
             </md-button>
             <span flex></span>
             <save-status>
-                <a target="_blank" ng-href="{{ toolbar.editors.current.file.absoluteURI().toString() }}"
+                <a target="_blank" ng-href="{{ toolbar.editors.current.file.__absoluteURI }}"
                    ng-bind="toolbar.editors.current.file.status"></a>
                 <md-tooltip md-direction="left" md-delay="250">
-                    File located at {{ toolbar.editors.current.file.absoluteURI().toString() }}
+                    File located at {{ toolbar.editors.current.file.__absoluteURI }}
                 </md-tooltip>
             </save-status>
             <md-button ng-click="toolbar.editors.current.close()" class="md-icon-button" aria-label="Close">

@@ -1,24 +1,22 @@
-yarn.directive('assertionsTool', function CommandsTool() {
+yarn.directive('assertionsTool', function AssertionsTool() {
 
     return {
         restrict: 'E',
-        scope: {},
+        scope: {
+            isFocused: "="
+        },
         replace: true,
         templateUrl: './html/tools/assertions.html',
-        controller: function Controller($scope, state) {
+        controller: function Controller($scope, state, channel) {
             $scope.allAssertions = [];
 
-            postal.subscribe({
-                channel: "runtime",
-                topic: "afterRun",
-                callback: function () {
-                    $scope.update();
-                }
+            channel.subscribe("runtime.afterRun", function () {
+                $scope.update();
             });
 
             $scope.update = function () {
                 $scope.allAssertions = state.assertions.all();
-                //console.log("updateAssertions", $scope.allAssertions);
+//                console.log("updateAssertions", $scope.allAssertions.length);
             };
 
         }

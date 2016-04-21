@@ -1,6 +1,6 @@
 yarn.service("assertionsTool", function (Tool) {
     return new Tool("assertions", {
-        label: "Assertions",
+        label: "Statements",
         icon: "assertions",
         directive: "assertions-tool"
     });

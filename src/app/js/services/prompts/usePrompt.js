@@ -9,13 +9,13 @@ yarn.service("usePrompt", function (stateHelpers,
     function usePrompt(context) {
 
         context.when = function () {
-            return "use" === state.resolveValue(assert("You", "has", "Intention"));
+            return "use" === state.resolveValue(assert("Player", "has", "Intention"));
         };
 
         context.question = function (promptLoop, prompt) {
             prompt.question = "What do you want to use ?";
 
-            var room = state.resolveOne(assert("You", "is in"));
+            var room = state.resolveOne(assert("Player", "is in"));
             var thingsInRoom = stateHelpers.usableItemInRoom(room);
 
             //console.log('thingsInRoom', thingsInRoom);

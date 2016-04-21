@@ -10,7 +10,10 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
     function inspect(token, yeld) {
         if (token && token.type === "string") {
             var txt = token.value.substring(1, token.value.length - 1);
-            if (txt.substring(0, 2) === "./" ||
+            if (
+                txt.substring(0, 1) === "/" ||
+                txt.substring(0, 2) === "./" ||
+                txt.substring(0, 3) === "../" ||
                 txt.substring(0, 5) === "http:" ||
                 txt.substring(0, 6) === "https:"
             ) {
@@ -46,7 +49,7 @@ yarn.service("fileReferenceInspection", function fileReferenceInspection(Inspect
         function openInEditor() {
             var absoluteURI = URI(txt).absoluteTo(token.file.uri).toString();
             //console.log(absoluteURI);
-            editorFiles.open(absoluteURI, true);
+            editorFiles.open(token.file.profile, absoluteURI, true);
             editors.focus(absoluteURI);
 
         }

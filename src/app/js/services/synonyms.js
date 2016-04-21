@@ -1,5 +1,10 @@
 yarn.service("synonyms", function (assert, things) {
 
+    function Synonym(object, text) {
+        this.object = object;
+        this.text = text;
+    }
+
     function Synonyms() {
         this.all = {};
     }
@@ -20,14 +25,17 @@ yarn.service("synonyms", function (assert, things) {
         var result = null;
         if (angular.isString(text)) {
             var token = text.trim().toLowerCase();
+//            console.log("self.all", self.all);
             var match = self.all[token];
-            if (match) result = match;
+            if (match) {
+                result = match;
+            }
         }
         return result;
     };
 
     Synonyms.prototype.update = function (state) {
-        //console.log("Synonyms.update()");
+//        console.log("Synonyms.update()");
         var self = this;
 
         self.all = {};
@@ -37,26 +45,21 @@ yarn.service("synonyms", function (assert, things) {
         });
 
         var synonymsAssertions = state.resolveAll(assert(undefined, "has", "Synonyms"), true);
-        //var nameAssertions = state.resolveAll(assert(undefined, "has", "Name"), true);
-        //var allAssertions = synonymsAssertions.concat(nameAssertions);
-        var allAssertions = synonymsAssertions;
+        var nameAssertions = state.resolveAll(assert(undefined, "has", "Name"), true);
+        var allAssertions = synonymsAssertions.concat(nameAssertions);
+//        var allAssertions = synonymsAssertions;
 
         angular.forEach(allAssertions, function (assertion) {
             var value = state.resolveValue(assert(
                 assertion.subject,
                 assertion.predicate,
                 assertion.object));
-            //console.log("value", value);
+//            console.log("value", value);
             self.add(assertion.subject, value);
         });
 
-        //console.log("self.all", self.all);
+//        console.log("self.all", self.all);
     };
-
-    function Synonym(object, text) {
-        this.object = object;
-        this.text = text;
-    }
 
     return new Synonyms();
 

@@ -6,7 +6,8 @@ yarn.service("step", function (postal,
                                synonyms,
                                statuses,
                                player,
-                               storyLog) {
+                               storyLog,
+                               $timeout) {
 
     function Step () {
         this.alreadyInsideStep = false;
@@ -44,6 +45,8 @@ yarn.service("step", function (postal,
             console.warn("Prevented accidental step recursion!");
         }
         this.alreadyInsideStep = false;
+
+        player.scroll();
     };
 
     Step.prototype.walk = function walk(sequenceItemId) {

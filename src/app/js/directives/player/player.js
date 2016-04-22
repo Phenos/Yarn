@@ -9,7 +9,8 @@ yarn.directive('player', function (channel,
                                    playScriptRoutine,
                                    profiles,
                                    login,
-                                   assert) {
+                                   assert,
+                                   $timeout) {
 
     return {
         restrict: 'E',
@@ -33,10 +34,15 @@ yarn.directive('player', function (channel,
         this.scrollbarsConfig = {
             autoHideScrollbar: true,
             theme: 'light',
+            scrollButtons: {
+                enable: false
+            },
             advanced: {
                 updateOnContentResize: true
             },
-            scrollInertia: 500
+            axis: "y",
+            scrollInertia: 700
+//            scrollInertia: 0
         };
 
 //        console.log("profile", this.profile);
@@ -51,15 +57,15 @@ yarn.directive('player', function (channel,
                 self.profile = profile;
 
                 if (profiles.authenticated()) {
-                    console.log("setProfile",
-                        self.profile.username,
-                        profiles.authenticated().username);
+//                    console.log("setProfile",
+//                        self.profile.username,
+//                        profiles.authenticated().username);
 
                     if (self.profile.username === profiles.authenticated().username) {
                         self.isOwnProfile = true;
                     }
                 } else {
-                    console.log("no auth yet!");
+//                    console.log("no auth yet!");
                 }
 //            console.log("profile", self.profile);
 //            console.log("auth", profiles.authenticated());
@@ -124,11 +130,13 @@ yarn.directive('player', function (channel,
         };
 
         this.scroll = function () {
-            // First we check to see if it's the first game step
-            // to prevent scrolling when first showing the coverpage
-            if (state.step() > 0) {
-                    self.updateScrollbar('scrollTo', 10000000);
-            }
+            $timeout(function () {
+                // First we check to see if it's the first game step
+                // to prevent scrolling when first showing the coverpage
+                if (state.step() > 0) {
+                    $scope.updateScrollbar('scrollTo', "bottom");
+                }
+            }, 50);
         };
 
     }

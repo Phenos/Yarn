@@ -24,7 +24,6 @@ yarn.service("lookAroundRoutine", function (events,
             roomName = roomName || space.id;
             if (roomDescription) {
                 phrase.push(roomDescription);
-                phrase.push("<br/><br/>");
             } else {
                 phrase.push("You are at the [" + roomName + ":" + space.id + "]. ");
             }

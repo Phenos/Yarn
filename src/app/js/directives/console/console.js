@@ -1,7 +1,6 @@
 (function () {
 
     yarn.directive('console', ConsoleDirective);
-    yarn.service('consoleService', consoleService);
 
     function ConsoleDirective(commands,
                               state,
@@ -22,8 +21,7 @@
             controller: ConsoleController
         };
 
-        function ConsoleController(consoleService,
-                                   yConsole,
+        function ConsoleController(yConsole,
                                    $scope,
                                    $compile,
                                    $timeout,
@@ -37,7 +35,7 @@
                 self.isReady = true;
             }, 1000);
 
-            this.lines = [];
+            this.lines = yConsole.lines;
 
             this.scrollbarsConfig = {
                 autoHideScrollbar: true,
@@ -49,10 +47,6 @@
             };
 
             this.commands = commands;
-
-            consoleService.register(this);
-
-//            var logscrollElem = angular.element($element.find("console-main")[0]);
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
@@ -91,8 +85,7 @@
             };
 
             this.clear = function () {
-                this.lines = [];
-
+                this.lines.splice(0, this.lines.length);
                 this.onClear();
             };
 
@@ -107,6 +100,13 @@
                 var newLine = new Line(text, type, step, isNewStep, options);
                 this.lines.push(newLine);
 
+                // todo: Put maximum number of line in a config
+                // Everytime the log overflows by 50 items it is cropped
+                var overflow = this.lines.length - 200;
+                if (overflow > 20) {
+                    this.lines.splice(0, overflow);
+                }
+
                 if (self.updateScrollbar) {
                     self.updateScrollbar('scrollTo', 10000000);
                 }
@@ -117,7 +117,13 @@
                 this.type = type;
                 this.step = step;
                 this.isNewStep = isNewStep;
+                this.isNewStepClass = isNewStep ? 'isNewStep' : '';
                 this.timestamp = Date.now();
+                if (options && options.source) {
+                    this.source = options.source;
+                } else {
+                    this.source = null;
+                }
                 this.options = options;
             }
 
@@ -125,25 +131,6 @@
 
         }
 
-    }
-
-    function consoleService() {
-        var service = {};
-        var controller;
-
-        service.register = function (_controller) {
-            controller = _controller;
-        };
-
-        service.focus = function () {
-            controller && controller.focus()
-        };
-
-        service.clear = function () {
-            controller && controller.clear()
-        };
-
-        return service;
     }
 
 })();

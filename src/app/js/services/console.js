@@ -8,6 +8,7 @@ yarn.service('yConsole', function (soundEffects) {
 
     function Logger() {
 
+        this.lines = [];
 
         var yConsole = {
             write: mockFunction("write"),
@@ -46,27 +47,34 @@ yarn.service('yConsole', function (soundEffects) {
 
         this.error = function (text, options) {
             soundEffects.error();
-            yConsole.write("<log-icon><span>✖</span></log-icon>" + text, "error", options);
+            yConsole.write("<span class='log-icon'><span>✖</span></span>" +
+                text, "error", options);
         };
 
         this.warning = function (text, options) {
-            yConsole.write("<log-icon><span>⚠</span></log-icon>" + text, "warning", options);
+            yConsole.write("<span class='log-icon'><span>⚠</span></span>" +
+                text, "warning", options);
         };
 
         this.success = function (text, options) {
-            yConsole.write("<log-icon><span>✔</span></log-icon>" + text, "success", options);
+            yConsole.write("<span class='log-icon'><span>✔</span></span>" +
+                text, "success", options);
         };
 
         this.transaction = function (text, options) {
-            yConsole.write("<log-icon><span>⬩</span></log-icon>" + text, "transaction", options);
+            yConsole.write("<span class='log-icon'><span>⬩</span></span>" +
+                text, "transaction", options);
         };
 
         this.tip = function (text, options) {
-            yConsole.write("<log-icon><span>⚑</span></log-icon><strong>Tip: </strong> " + text, "tip", options);
+            yConsole.write("<span class='log-icon'><span>⚑</span></span>" +
+                "<strong>Tip: </strong> " +
+                text, "tip", options);
         };
 
         this.command = function (text, options) {
-            yConsole.write("<log-icon><span>▶</span></log-icon><span command>" + text + "</span>", "command", options);
+            yConsole.write("<span class='log-icon'><span>▶</span></span>" +
+                "<span command>" + text + "</span>", "command", options);
         };
 
         this.clear = function () {

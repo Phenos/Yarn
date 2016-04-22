@@ -6,9 +6,7 @@ function LogItemDirective() {
     return {
         restrict: 'E',
         bindToController: {
-            scope: '=',
-            type: '=',
-            text: '='
+            item: '='
         },
         scope: {},
         controllerAs: 'logItem',
@@ -16,18 +14,11 @@ function LogItemDirective() {
     };
 
     function LogItemController($scope, $element, $compile) {
-        var self = this;
-
         angular.extend($scope, this.scope);
 
-//        $scope.$watch('logItem.text', function(value) {
-//            var logItemEl = $compile("<div class='logItem is-" +
-//                self.type + "'>" + value + "<div>")($scope);
-//            $element.append(logItemEl);
-//        });
-
         var logItemEl = $compile(
-            "<div class='logItem is-" + self.type + "'>" + this.text + "<div>"
+            "<div id='logItem-" + this.item.number + "' class='logItem unread is-" +
+            this.item.type + "'>" + this.item.text + "<div>"
         )($scope);
         $element.append(logItemEl);
 

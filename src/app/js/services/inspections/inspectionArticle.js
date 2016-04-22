@@ -6,6 +6,7 @@ yarn.service("InspectionArticle", function () {
         this.directive = directive;
         this.scope = scope;
         this.actions = [];
+        this.menuIsOpen = true;
     }
 
     InspectionArticle.prototype.addAction = function (label, icon, callback) {

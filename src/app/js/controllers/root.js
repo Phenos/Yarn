@@ -174,7 +174,7 @@ yarn.controller('root', function rootController($scope,
 });
 
 
-yarn.service('root', function rootService(storyLocalStorage, consoleService, player) {
+yarn.service('root', function rootService(storyLocalStorage, player) {
 
     var service = {
         scope: null

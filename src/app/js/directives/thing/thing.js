@@ -42,6 +42,7 @@ yarn.directive('thing', function ThingDirective(things,
         var self = this;
 
         this.unrecognized = false;
+        this.unrecognizedClass = this.unrecognized ? 'unrecognized' : '';
         this.token = $attrs.token.trim();
         this.text = $attrs.text;
         this.selected = false;
@@ -56,6 +57,11 @@ yarn.directive('thing', function ThingDirective(things,
 
         this.hover = function hover() {
             self.update();
+            self.tooltipVisible = true;
+        };
+
+        this.out = function out() {
+            self.tooltipVisible = false;
         };
 
         this.update = function update() {

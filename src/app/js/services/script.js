@@ -72,6 +72,20 @@ yarn.service("Script", function (yConsole, storyLog, state) {
             // The voice doesnt match any standard voice, so we look for an actor
             var isActor = state.value("Subject is Actor", {Subject: voice});
             if (isActor) {
+
+                var statementParts = statement.split("--");
+                var quotedStatement = [];
+                angular.forEach(statementParts, function (part, index) {
+                    if ((index + 1) % 2) {
+                        quotedStatement.push(
+                            "<span class='dialogText'>“" + part.trim() + "”</span>");
+                    } else {
+                        quotedStatement.push(
+                            " <span class='dialogMeta'>" + part.trim() + "</span>. ");
+                    }
+                });
+                statement = quotedStatement.join("");
+
                 storyLog.buffer().dialog(statement, {
                     actor: voice
                 });

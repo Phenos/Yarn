@@ -21,8 +21,14 @@ log-item {
         //        opacity: 0.3;
         //    }
         //}
-        &:hover {
+        &:hover.logItem {
             opacity: 1;
+
+            a:visited,
+            a:link,
+            a {
+                border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+            }
         }
         &.logItem {
             a:visited,
@@ -109,6 +115,15 @@ log-item {
             margin: 0.5em 1em;
             font-weight: 400;
             text-align: justify;
+            line-height: 1.4em;
+
+            .dialogText {
+                color: #eee;
+            }
+
+            .dialogMeta {
+                color: rgba(221, 221, 221, 0.8);
+            }
         }
 
         &.is-topic {

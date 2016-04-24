@@ -10,22 +10,18 @@ yarn.controller('root', function rootController($scope,
                                                 root,
                                                 wallpaper,
                                                 tools,
-
-                                                // todo: Not needed anymore ?
-                                                $timeout,
-                                                fireOnResizeEvent,
-
                                                 globalContextMenu,
                                                 state,
                                                 profiles,
                                                 Profile,
                                                 Story) {
 
+    console.info("Starting controller:root");
+
     var IDELocalStorage;
 
 //    console.log("state.params:", $state);
     $scope.IDE = IDE;
-    // TODO: Move theme dependency in "player" directive
     $scope.state = state;
     $scope.editorFiles = editorFiles;
 
@@ -93,9 +89,7 @@ yarn.controller('root', function rootController($scope,
 
     $scope.toggleTools = function (value) {
         // Trigger window resize to fix a glitch with the grid resize
-        $timeout(function () {
-            fireOnResizeEvent();
-        }, 500);
+
         if (angular.isDefined(value)) {
             $scope.toolsAreVisible = value;
             if ($scope.toolsAreVisible) {
@@ -169,6 +163,8 @@ yarn.controller('root', function rootController($scope,
     if (profiles.authenticated()) {
         root.IDEisVisible(IDELocalStorage.IDEisVisible);
     }
+
+    console.info("Completed controller:root");
 
 
 });

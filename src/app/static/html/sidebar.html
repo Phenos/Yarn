@@ -14,7 +14,7 @@
         <md-content layout-padding>
             <div ng-if="username" class="logged-in-as" layout="row">
                 <div style="width: 60px;">
-                    <img ng-if="username" class="avatar" ng-src="{{ avatar | biggerProfileImage}}"></img>
+                    <img ng-if="username" class="avatar" ng-src="{{ avatar | biggerProfileImage}}" />
                 </div>
                 <div flex="">
                     <span class="connected-as-label">You are connected as</span><br/>
@@ -36,7 +36,7 @@
                 </md-button>
             </md-menu-item>
 
-            <md-menu-item ng-if="username">
+            <md-menu-item ng-if="username" hide-xs>
                 <md-button ng-click="sidebar.showConsole()" aria-label="Open console">
                     <md-icon md-svg-icon="/svg-icons/author.svg"></md-icon>
                     Story Editor

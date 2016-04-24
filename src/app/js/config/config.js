@@ -65,6 +65,8 @@ yarn.run(function (commands, tools, keyboardShortcuts, gamePedicates) {
         "helpCommand"
     ];
     console.info("Loading buil-in commands ", [builtInCommands]);
+
     commands.load(builtInCommands);
 
+    console.info("Completed config");
 });

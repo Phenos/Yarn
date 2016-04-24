@@ -104,40 +104,47 @@ Light Theme - For light backgrounds and dark text.
 
 
 /*
-
 Mobile optimization test
-
 */
 
 wallpaper {
-    background-image: none !important;
+    //background-image: none !important;
     mask {
-        display: none !important;
+        //display: none !important;
     }
 }
 
-.theme-brightness-light {
+.player {
 
     .story-log {
         log-item .logItem {
-            text-shadow: none;
+            text-shadow: none !important;
             a {
-                text-shadow: none;
+                text-shadow: none !important;
             }
+
+            &.is-image {
+
+                img {
+                    //box-shadow: none !important;
+                }
+            }
+
         }
     }
 
     user-choice {
         .question {
-            text-shadow: none;
+            text-shadow: none !important;
         }
     }
 
     .context-action-menu {
         .question {
-            text-shadow: none;
+            text-shadow: none !important;
         }
     }
+
 
 }
 

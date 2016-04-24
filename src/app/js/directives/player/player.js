@@ -6,7 +6,6 @@ yarn.directive('player', function (channel,
                                    player,
                                    state,
                                    lookAroundRoutine,
-                                   playScriptRoutine,
                                    profiles,
                                    login,
                                    assert,
@@ -106,7 +105,10 @@ yarn.directive('player', function (channel,
                     lookAroundRoutine();
                 }
                 if (script) {
-                    playScriptRoutine();
+
+//                    playScriptRoutine();
+                    console.warn("Auto-replay script of reload is deactivated")
+
                 }
             }
 

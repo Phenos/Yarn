@@ -16,11 +16,15 @@ yarn.service("auth", function (firebaseConnection, $firebaseAuth) {
 });
 
 yarn.service("authUser", function (auth, authData2user) {
+    console.info("Authenticating user");
     return auth.$waitForAuth().then(function () {
         var user = null;
         var authData = auth.$getAuth();
         if (authData) {
             user = authData2user(authData);
+            console.info("Found authenticated user", authData);
+        } else {
+            console.info("No authenticated user");
         }
 //        console.log("user", user);
 //        console.log("auth", auth);

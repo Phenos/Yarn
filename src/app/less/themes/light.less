@@ -35,13 +35,24 @@ Light Theme - For light backgrounds and dark text.
             &:hover {
                 a {
                     color: #000000 !important;
+                    border-bottom: 1px dotted rgba(0, 0, 0, 0.4);
+
                     &:focus,
                     &:hover {
-                        text-decoration: underline;
+                        border-bottom: 1px solid rgba(0, 0, 0, 1);
                         color: #000 !important;
                     }
                 }
 
+            }
+
+            &.is-dialog {
+                .dialogText {
+                    color: #000;
+                }
+                .dialogMeta {
+                    color: rgba(0, 0, 0, 0.8);
+                }
             }
         }
     }
@@ -85,6 +96,46 @@ Light Theme - For light backgrounds and dark text.
             md-icon {
                 fill: #000 !important;
             }
+        }
+    }
+
+}
+
+
+
+/*
+
+Mobile optimization test
+
+*/
+
+wallpaper {
+    background-image: none !important;
+    mask {
+        display: none !important;
+    }
+}
+
+.theme-brightness-light {
+
+    .story-log {
+        log-item .logItem {
+            text-shadow: none;
+            a {
+                text-shadow: none;
+            }
+        }
+    }
+
+    user-choice {
+        .question {
+            text-shadow: none;
+        }
+    }
+
+    .context-action-menu {
+        .question {
+            text-shadow: none;
         }
     }
 

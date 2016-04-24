@@ -2,10 +2,12 @@ yarn.service("Script", function (yConsole, storyLog, state) {
 
 //    var scriptCuttingRegex = /((^[A-Z ]+:)|(.*))/gm;
 //    var isActorRegex = /(^[A-Z ]+:)/g;
+//    var isActorRegex =
+//        /(?:(^[@A-Z][a-z_A-Z0-9]+)([\s]*(?:[@A-Z]+[a-z_A-Z0-9]*))*(:))/g;
     var isActorRegex =
-        /(?:(^[@A-Z][a-z_A-Z0-9]+)([\s]*(?:[@A-Z]+[a-z_A-Z0-9]*))*(:))/g;
+        /(^(?:[ ]*)[@A-Z][a-z_A-Z0-9]+)(([ ]*)([@A-Z]+[a-z_A-Z0-9]*)*)*([ ]*)(?::)/g;
     var scriptCuttingRegex =
-        /((?:(^[@A-Z][a-z_A-Z0-9]+)([\s]*(?:[@A-Z]+[a-z_A-Z0-9]*))*(:))|(.*))/gm;
+        /(^(?:[ ]*)[@A-Z][a-z_A-Z0-9]+)(([ ]*)([@A-Z]+[a-z_A-Z0-9]*)*)*([ ]*)(?::)|(.*)/gm;
 
     var matchvoiceToLogTypes = {
         default: "log",
@@ -13,6 +15,7 @@ yarn.service("Script", function (yConsole, storyLog, state) {
         monologue: "log",
         insight: "insight",
         narrator: "log",
+        heading: "heading",
         topic: "topic"
     };
 
@@ -36,7 +39,7 @@ yarn.service("Script", function (yConsole, storyLog, state) {
     };
 
     Script.prototype.play = function () {
-//        console.log("Script.play");
+        console.log("play", this);
         var ellipsis = "";
         if (this.text.length > 50) {
             ellipsis = "[…]";
@@ -66,6 +69,7 @@ yarn.service("Script", function (yConsole, storyLog, state) {
         var logType = matchvoiceToLogTypes[voice];
         if (logType) {
 //                console.log("Found builtin voice", voice);
+//                console.log("Statement", statement);
             storyLog.buffer()[logType](statement);
         } else {
 //          console.log("Looking for alternate voice", voice);
@@ -112,13 +116,14 @@ yarn.service("Script", function (yConsole, storyLog, state) {
             }
         }
 
+//        console.log("matches... ", matches);
         angular.forEach(matches, function (_match) {
             var match = _match.trim();
             if (isActorRegex.test(match)) {
                 flushBuffer();
                 actor = match.substring(0, match.length - 1);
 //                            console.log("voice: ", voice);
-            } else {
+            } else if (match.trim().length > 0) {
                 buffer.push(match);
             }
         });

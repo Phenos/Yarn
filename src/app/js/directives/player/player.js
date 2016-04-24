@@ -134,7 +134,8 @@ yarn.directive('player', function (channel,
                 // First we check to see if it's the first game step
                 // to prevent scrolling when first showing the coverpage
                 if (state.step() > 0) {
-                    $scope.updateScrollbar('scrollTo', "bottom");
+                    console.warn("Auto scrolling de-activated");
+//                    $scope.updateScrollbar('scrollTo', "bottom");
                 }
             }, 50);
         };

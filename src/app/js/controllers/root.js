@@ -123,7 +123,7 @@ yarn.controller('root', function rootController($scope,
 
             storyLocalStorage.uid(state.story.key());
 
-//            console.log("-------- before iExists");
+            console.log("-------- before iExists");
             state.story.ifExists(function () {
 //                console.log("STORY EXISTS!");
                 state.ready(true, "ready", "");

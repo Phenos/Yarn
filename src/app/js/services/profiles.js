@@ -43,6 +43,9 @@ yarn.service("profiles", function (Profile, channel) {
             this._visited = profile;
             this.index[profile.username] = profile;
             this.updated();
+            // Trigger a storage refresh to ensure the
+            // story ends-up loaded
+            profile.storage.refresh();
         }
         this.all();
         return this._visited;

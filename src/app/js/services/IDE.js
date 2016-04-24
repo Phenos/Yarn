@@ -91,6 +91,7 @@ yarn.service('IDE', function IDEService($mdDialog,
 
     IDE.prototype.run = function () {
         if (state.story) {
+            console.info("Running story from IDE");
             var mainFile = editorFiles.open(state.story.profile, state.story.url.toString());
             if (mainFile) {
                 var uri = mainFile.absoluteURI().toString();

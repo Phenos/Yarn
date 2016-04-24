@@ -75,8 +75,8 @@ yarn.service("contextActions", function (state) {
                             }
                         });
 
-                        console.log("unlessConditions", unlessConditions);
-                        console.log("actionDoesApply", actionDoesApply);
+//                        console.log("unlessConditions", unlessConditions);
+//                        console.log("actionDoesApply", actionDoesApply);
                         if (actionDoesApply) {
                             var action = new Action(object, {
                                 icon: icon,

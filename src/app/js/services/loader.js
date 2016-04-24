@@ -34,7 +34,7 @@ yarn.service('loader', function (yarn,
                 "You can check the address for mistakes or check your connection.");
         }
 
-        /**
+        /*
          * Called once all files are loaded (including imports)
          */
         function onSuccess(script) {
@@ -73,6 +73,7 @@ yarn.service('loader', function (yarn,
                 synonyms.update(state);
                 statuses.update(state);
 
+                console.info("Successfuly loaded story. Now refreshing player.");
 
                 player.refresh();
             }

@@ -1,7 +1,7 @@
 <div class="project-tool" flex="grow" layout="row">
     <md-content flex="40" class="list-of-folders" md-whiteframe="10">
         <md-button class="md-fab md-mini" ng-click="storageFiles.refresh()" aria-label="Refresh">
-            <md-icon md-svg-icon="/svg-icons/refresh.svg"></md-icon>
+            <md-icon md-svg-icon="./svg-icons/refresh.svg"></md-icon>
         </md-button>
         <div ng-repeat="profile in storageFiles.profiles._all | orderBy : 'priority' : true">
             <section>
@@ -21,14 +21,14 @@
                 <md-list-item ng-repeat="folder in profile.storage.allProjectFolders"
                               ng-class="{selected: (storageFiles.selectedFolder === folder)}"
                               ng-click="storageFiles.selectProfile(profile); storageFiles.openProjectFolder(folder)">
-                    <md-icon md-svg-icon="/svg-icons/project.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/project.svg"></md-icon>
                     <p>
                         {{::folder.name }}
                     </p>
                 </md-list-item>
                 <md-list-item ng-if="profile.username === storageFiles.profiles.authenticated().username"
                               ui-sref="storageFiles.createNewProject()">
-                    <md-icon md-svg-icon="/svg-icons/add.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/add.svg"></md-icon>
                     <p>
                         Create a new project...
                     </p>
@@ -84,7 +84,7 @@
             <section ng-repeat="directory in storageFiles.directories | orderObjectBy:'uri'">
                 <md-subheader ng-if="::directory.matches"
                               class="md-primary">
-                    <md-icon md-svg-icon="/svg-icons/folder.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/folder.svg"></md-icon>
                     /&nbsp;{{::directory.uri }}
                 </md-subheader>
                 <md-list ng-if="::directory.matches"
@@ -93,7 +93,7 @@
                                   ng-if="::directory.files.length > 0"
                                   ng-click="storageFiles.select({ file: file })"
                                   ng-repeat="file in directory.files | filter: { filterOut: false }">
-                        <md-icon md-svg-icon="/svg-icons/storyFile.svg"></md-icon>
+                        <md-icon md-svg-icon="./svg-icons/storyFile.svg"></md-icon>
                         <p>
                             <span class="filename">{{::file._filename }}</span>
                             <span class="filesize">{{::file._sizeInKB }}kb</span>

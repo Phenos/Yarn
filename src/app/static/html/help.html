@@ -16,25 +16,25 @@
                     layout-align="start start">
                 <md-button ng-href="./index.html"
                            aria-label="Help home">
-                    <md-icon md-svg-icon="/svg-icons/home.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/home.svg"></md-icon>
                     <md-tooltip>Help home</md-tooltip>
                 </md-button>
                 <md-button ng-disabled="!help.previousArticle"
                            ng-href="{{ help.previousArticle }}"
                            aria-label="Previous article">
-                    <md-icon md-svg-icon="/svg-icons/pull-left.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/pull-left.svg"></md-icon>
                     <md-tooltip>Previous Article</md-tooltip>
                 </md-button>
                 <md-button ng-disabled="!help.parentArticle"
                            ng-href="{{ help.parentArticle }}"
                            aria-label="Parent article">
-                    <md-icon md-svg-icon="/svg-icons/pull-up.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/pull-up.svg"></md-icon>
                     <md-tooltip>Parent article</md-tooltip>
                 </md-button>
                 <md-button ng-disabled="!help.nextArticle"
                            ng-href="{{ help.nextArticle }}"
                            aria-label="Next">
-                    <md-icon md-svg-icon="/svg-icons/pull-right.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/pull-right.svg"></md-icon>
                     <md-tooltip>Next article</md-tooltip>
                 </md-button>
             </link-bar>
@@ -46,14 +46,14 @@
                     <md-button ng-if="help.previousArticle"
                                ng-href="{{ help.previousArticle }}"
                                aria-label="Previous article">
-                        <md-icon md-svg-icon="/svg-icons/pull-left.svg"></md-icon>
+                        <md-icon md-svg-icon="./svg-icons/pull-left.svg"></md-icon>
                         Previous
                     </md-button>
                     <div flex="auto"></div>
                     <md-button ng-if="help.parentArticle"
                                ng-href="{{ help.parentArticle }}"
                                aria-label="Parent article">
-                        <md-icon md-svg-icon="/svg-icons/pull-up.svg"></md-icon>
+                        <md-icon md-svg-icon="./svg-icons/pull-up.svg"></md-icon>
                         <md-tooltip>Parent article</md-tooltip>
                     </md-button>
                     <div flex="auto"></div>
@@ -61,7 +61,7 @@
                                ng-href="{{ help.nextArticle }}"
                                aria-label="Next">
                         Next
-                        <md-icon md-svg-icon="/svg-icons/pull-right.svg"></md-icon>
+                        <md-icon md-svg-icon="./svg-icons/pull-right.svg"></md-icon>
                     </md-button>
 
                 </div>

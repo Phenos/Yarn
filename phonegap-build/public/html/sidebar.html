@@ -6,7 +6,7 @@
                         ng-click="sidebar.close()"
                         class="md-icon-button"
                         aria-label="Close menu">
-                    <md-icon md-svg-icon="/svg-icons/back.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/back.svg"></md-icon>
                 </md-button>
                 <h2>Menu</h2>
             </div>
@@ -24,47 +24,47 @@
 
             <md-menu-item ng-if="username">
                 <md-button ui-sref="profile({ profile: username })" aria-label="Your profile">
-                    <md-icon md-svg-icon="/svg-icons/profile.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/profile.svg"></md-icon>
                     Your Profile
                 </md-button>
             </md-menu-item>
 
             <md-menu-item ng-if="!username" class="login-with-twitter">
                 <md-button ng-click="sidebar.login()">
-                    <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/twitter.svg"></md-icon>
                     Login with Twitter
                 </md-button>
             </md-menu-item>
 
             <md-menu-item ng-if="username" hide-xs>
                 <md-button ng-click="sidebar.showConsole()" aria-label="Open console">
-                    <md-icon md-svg-icon="/svg-icons/author.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/author.svg"></md-icon>
                     Story Editor
                 </md-button>
             </md-menu-item>
             <md-divider></md-divider>
             <md-menu-item>
                 <md-button ng-click="sidebar.openHelp()">
-                    <md-icon md-svg-icon="/svg-icons/question.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/question.svg"></md-icon>
                     <span>Help</span>
                 </md-button>
             </md-menu-item>
             <md-menu-item>
                 <md-button ng-href="http://www.yarnstudio.io/" target="_blank">
-                    <md-icon md-svg-icon="/svg-icons/blog.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/blog.svg"></md-icon>
                     News and Development Blog
                 </md-button>
             </md-menu-item>
             <md-menu-item>
                 <md-button ng-href="https://twitter.com/YarnStudioGames" target="_blank">
-                    <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/twitter.svg"></md-icon>
                     Follow Us
                 </md-button>
             </md-menu-item>
             <md-divider></md-divider>
             <md-menu-item>
                 <md-button ng-click="sidebar.logout()">
-                    <md-icon md-svg-icon="/svg-icons/logout.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/logout.svg"></md-icon>
                     Logout
                 </md-button>
             </md-menu-item>

@@ -8,13 +8,13 @@
                     ng-click="toolbar.openSidebar()"
                     class="md-icon-button main-menu-button"
                     aria-label="Open menu">
-                <md-icon md-svg-icon="/svg-icons/menu.svg"></md-icon>
+                <md-icon md-svg-icon="./svg-icons/menu.svg"></md-icon>
             </md-button>
             <span layout="row"
                   layout-align="end center"
                   ng-if="!username">
                 <md-button ng-click="toolbar.login()">
-                    <md-icon md-svg-icon="/svg-icons/twitter.svg"></md-icon>
+                    <md-icon md-svg-icon="./svg-icons/twitter.svg"></md-icon>
                     <span hide-xs>
                         Login
                     </span>
@@ -30,12 +30,12 @@
                      style="width: auto; height: 2em;"
                      hide-xs
                      show-gt-xs
-                     md-svg-icon="/svg-icons/logo-name-small.svg"></md-icon>
+                     md-svg-icon="./svg-icons/logo-name-small.svg"></md-icon>
             <md-icon show-xs
                      hide-gt-xs
                      flex="100"
                      style="width: auto; height: 2em;"
-                     md-svg-icon="/svg-icons/yarn-logo-small-white.svg"></md-icon>
+                     md-svg-icon="./svg-icons/yarn-logo-small-white.svg"></md-icon>
         </div>
         <div flex="30"
              layout="row"
@@ -50,7 +50,7 @@
                         class="md-icon-button story-menu-button"
                         aria-label="Story menu">
                     <md-icon md-menu-origin
-                             md-svg-icon="/svg-icons/story.svg"></md-icon>
+                             md-svg-icon="./svg-icons/story.svg"></md-icon>
                 </md-button>
                 <md-menu-content width="4" class="story-menu">
                     <md-toolbar>
@@ -65,7 +65,7 @@
                                 <md-icon
                                         style="height: 30px; width: 30px; margin: 0 10px;"
                                         md-menu-align-target
-                                        md-svg-icon="/svg-icons/story.svg"></md-icon>
+                                        md-svg-icon="./svg-icons/story.svg"></md-icon>
                             </div>
                         </div>
                     </md-toolbar>
@@ -80,14 +80,14 @@
                     </md-menu-item>
                     <md-menu-item>
                         <md-button ng-click="toolbar.undo()">
-                            <md-icon md-svg-icon="/svg-icons/undo.svg"></md-icon>
+                            <md-icon md-svg-icon="./svg-icons/undo.svg"></md-icon>
                             Undo
                             <span class="md-alt-text">{{:: 'M-U' | keyboardShortcut }}</span>
                         </md-button>
                     </md-menu-item>
                     <md-menu-item>
                         <md-button ng-click="toolbar.restartStory()">
-                            <md-icon md-svg-icon="/svg-icons/restart.svg"></md-icon>
+                            <md-icon md-svg-icon="./svg-icons/restart.svg"></md-icon>
                             <span>Restart</span>
                         </md-button>
                     </md-menu-item>

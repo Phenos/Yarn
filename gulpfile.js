@@ -87,12 +87,13 @@ function lintTask() {
 
 function injectJsFilesTask() {
 
-    return gulp.src(paths.staticRoot + '/index-template/index.html')
+    return gulp.src(paths.staticRoot + '/index-template/index.html', cwd)
         .pipe($.inject(gulp.src(paths.javascriptSource, {
             read: false
         }), {
-            ignorePath: ['src/', 'app/'],
-            addPrefix: ''
+            ignorePath: ['../../../src/app'],
+            addPrefix: '',
+            relative: true
         }))
         .pipe($.using())
         .pipe(gulp.dest(paths.staticRoot), cwd);
@@ -100,7 +101,7 @@ function injectJsFilesTask() {
 
 function bumpTask() {
     return gulp.src(['bower.json', 'package.json', 'src/app/static/metadata.json'], {base: '.'})
-//        .pipe(using())
+        //        .pipe(using())
         .pipe($.bump({type: 'patch'}))
         .pipe(gulp.dest('./'), cwd);
 }
@@ -108,21 +109,21 @@ function bumpTask() {
 function copyStaticTask() {
     // Copy static folder
     return gulp.src(paths.staticSource)
-//        .pipe(using())
+        //        .pipe(using())
         .pipe(gulp.dest(paths.staticRoot, cwd));
 }
 
 function copyPhonegapAssetsTask() {
     // Copy static folder
     return gulp.src(paths.phonegapAssets)
-//        .pipe(using())
+        //        .pipe(using())
         .pipe(gulp.dest(paths.staticRoot, cwd));
 }
 
 function buildPhonegapTask() {
     // Copy static folder
     return gulp.src(paths.buildRoot + "/**")
-//        .pipe(using())
+        //        .pipe(using())
         .pipe(gulp.dest(paths.phonegapBuildRoot, cwd));
 }
 function cleanPhonegapTask() {
@@ -137,30 +138,30 @@ function copyJsTask() {
         .pipe($.angularEmbedTemplates({
             basePath: paths.staticRoot
         }))
-//        .pipe(using())
+        //        .pipe(using())
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
 
 function compressJsTask() {
     return gulp.src(paths.javascriptSource)
-//        .pipe(using())
+        //        .pipe(using())
         .pipe($.sourcemaps.init())
         .pipe($.sourcemaps.write())
-//        .pipe(uglify({
-//            mangle: false
-//        }))
+        //        .pipe(uglify({
+        //            mangle: false
+        //        }))
         .pipe($.concat('all.js'))
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
 
 function compressJsVendorsTask() {
     return gulp.src(paths.javascriptVendorsSource)
-//        .pipe(using())
-//        .pipe(sourcemaps.init())
-//        .pipe(sourcemaps.write())
-//        .pipe(uglify({
-//            mangle: false
-//        }))
+        //        .pipe(using())
+        //        .pipe(sourcemaps.init())
+        //        .pipe(sourcemaps.write())
+        //        .pipe(uglify({
+        //            mangle: false
+        //        }))
         .pipe($.concat('vendors.js'))
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
@@ -168,7 +169,7 @@ function compressJsVendorsTask() {
 function copyLess() {
     // move less files into the styles folder
     return gulp.src(paths.distTempLess + "/**")
-//        .pipe(using())
+        //        .pipe(using())
         .pipe($.concat('all.css'))
         .pipe(gulp.dest(paths.distStylesRoot, cwd));
 }

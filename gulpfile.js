@@ -37,6 +37,7 @@ gulp.task('build', gulp.series(
 gulp.task('buildPhonegap', gulp.series(
     'cleanPhonegap',
     'build',
+    copyPhonegapAssetsTask,
     buildPhonegapTask
 ));
 gulp.task('devServerless', gulp.series(
@@ -107,6 +108,13 @@ function bumpTask() {
 function copyStaticTask() {
     // Copy static folder
     return gulp.src(paths.staticSource)
+//        .pipe(using())
+        .pipe(gulp.dest(paths.staticRoot, cwd));
+}
+
+function copyPhonegapAssetsTask() {
+    // Copy static folder
+    return gulp.src(paths.phonegapAssets)
 //        .pipe(using())
         .pipe(gulp.dest(paths.staticRoot, cwd));
 }

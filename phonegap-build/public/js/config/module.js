@@ -12,7 +12,6 @@ var yarn = angular.module('yarn', [
     'ngMaterial',
     'ui.router',
     'firebase',
-    'ngScrollbars',
     'ngDebottle',
     'ngLodash',
     'ngContextMenu',

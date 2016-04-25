@@ -8,6 +8,7 @@
   "paths": {
     "buildRoot": "build",
     "phonegapBuildRoot": "phonegap-build",
+    "phonegapAssets": ["config.xml", "platforms", "plugins"],
     "staticRoot": "build/public",
     "distStylesRoot": "build/public/styles",
     "distTempLess": "build/public/less-temp",

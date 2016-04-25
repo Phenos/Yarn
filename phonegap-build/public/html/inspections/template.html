@@ -1,0 +1,18 @@
+<div class="template-inspection">
+    <div ng-if="type !== 'error'">
+        This template is currently valued as a '<strong ng-bind="type"></strong>' :
+        <br/>
+        <span ng-class="'value-type-' + type">
+            {{ value }}
+        </span>
+    </div>
+    <div ng-if="type === 'error'">
+        This template has an <strong>error</strong> while trying to render:
+        <br />
+        <span class="is-error">
+            {{ error }}
+            <br/><br/>
+            {{ errorTrace }}
+        </span>
+    </div>
+</div>

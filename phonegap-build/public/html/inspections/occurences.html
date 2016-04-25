@@ -1,0 +1,34 @@
+<div class="occurences-inspection">
+    <div class="occurence-summary">
+        This item is used in {{ usageCount.total }} assertions in your story.
+        <br/>
+        <div ng-if="usageCount.asSubject || usageCount.asObject">
+            It occurs {{ usageCount.asSubject }} times as subject
+            and {{ usageCount.asObject }} times as the object
+        </div>
+    </div>
+    <md-divider></md-divider>
+    <md-list>
+        <md-list-item
+                ng-repeat="assertion in assertions"
+                ng-click="goToSource(assertion.source);">
+            <div>
+                <span class="assertion">
+                    <span class="subject">{{ assertion.subject._text }}</span>
+                    <span class="predicate">{{ assertion.predicate._text }}</span>
+                    <span class="object">{{ assertion.object._text }}</span>
+                </span>
+                <span ng-if="assertion.source"
+                      class="source">[<span class="url">
+                        {{ assertion.source.file }}
+                        <span class="line">:{{ assertion.source.line }}</span>
+                        <md-tooltip md-direction="left">{{ assertion.source.uri }}</md-tooltip>
+                    </span>]</span>
+                <span
+                        ng-if="!assertion.source"
+                        class="source">[set during play]</span>
+            </div>
+        </md-list-item>
+    </md-list>
+
+</div>

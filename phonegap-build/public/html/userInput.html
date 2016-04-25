@@ -1,0 +1,24 @@
+<form layout="row" flex>
+    <div flex="100" class="md-block inputContainer">
+        <md-autocomplete
+                md-whiteframe="4"
+                placeholder="Enter a command"
+                md-no-cache="true"
+                ng-keypress="userInput.keypress($event)"
+                ng-focus="userInput.focus()"
+                ng-blur="userInput.blur()"
+                md-select-on-focus
+                md-selected-item="selectedItem"
+                md-item-text="selectedItem.autocomplete"
+                md-search-text="userInput.text"
+                md-items="item in userInput.getAutoCompleteMatches(userInput.text)"
+        >
+            <div class="autocomplete-match">
+                <div class="autocomplete-command"
+                     ng-bind-html="item.display"></div>
+                <div class="autocomplete-description"
+                     ng-bind-html="item.description"></div>
+            </div>
+        </md-autocomplete>
+    </div>
+</form>

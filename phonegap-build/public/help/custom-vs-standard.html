@@ -1,0 +1,118 @@
+<article
+        previous="the-yarnscript-language.html"
+        parent="for-authors.html"
+        next="language-punctuation.html"
+>
+    <h1>Custom vs Standard</h1>
+
+    <p>
+        As you start to read the source code for stories and go trough the samples in the help
+        articles, the first important notion to learn beside the syntax is that...
+        <br/><br/>
+        <strong>You have total freedom on the vocabulary you use.</strong>
+    </p>
+
+    <h2>Anything goes...</h2>
+    <p>
+        As long you you respect the basic <em>YarnScript</em> syntax you will learn
+        in the next few articles, you can compose you sentences pretty much any way
+        you want. Here is an example of what free form sentences you could write:
+    </p>
+<code>
+Grandma has folded The Laundry.
+The Eiffel Tower is taller than The Pyramid Of Giza.
+Navin exclaims Offscreen "I am not a bum, I'm a jerk.".
+Draxx them Sklounst.
+Ted Cruze is certainly not the Zodiak Killer.
+Mom has paid the Ransom 2000.
+</code>
+    <p>
+        All the names, verbs and values used above are valid and will be created in
+        the "state" of the game when the story is loaded.
+    </p>
+    <p>
+        But all those will be considered as "<strong>Custom</strong>" words as opposed to
+        "<strong>Standard</strong>" words.
+    </p>
+    <h2>With some conventions...</h2>
+    <p>
+        While you can use a very diverse vocabulary, there are built-in <strong>standard</strong>
+        words which you can use to trigger specific game mechanics.
+    </p>
+    <p>
+        Here is a few example of standard words:
+    </p>
+<code>
+Bedroom is a Place.
+Player is in the Bedroom.
+Bedroom links to Kitchen.
+Narrator says Monologue
+    "While entering the room you tripped on the dog."
+Kitchen has an Image "http://imgur.com/yeh82h.jpg".
+</code>
+    <p>
+        The object names such as "Player", "Place", "Image" and the verbs such as
+        "links to", "is a", "is in the" are all recognised by the Yarn platform.
+        These words will trigger very specific behaviors when used
+        correctly.
+    </p>
+    <p>
+        All those conventions and behaviors are documented in further help articles.
+    </p>
+    <p>
+        Beside reading the help articles, you can figure out which words are Custom or Standard
+        by using the "Inspector" tool in the editor. This tool will also highlight interesting
+        facts about the words your selected and bring up
+        any relevant help articles about them.
+    </p>
+    <h2>In summary</h2>
+    <p>
+        So, let's summarize this:
+    </p>
+    <ul>
+        <li><strong>Standard words : Words that trigger special behaviors and game mechanics.</strong> </li>
+        <li><strong>Custom words : Any other words you want to use.</strong> </li>
+    </ul>
+    <h2>Custom but Useful</h2>
+    <p>
+        While you "must" use the standard words for many game mechanics, resorting to custom
+        words can be just as usefull. The more complexe you story mechanics will become, the
+        more you will profit from a rich custom vocabulary.
+    </p>
+    <p>
+        You can use custom words to:
+    </p>
+    <ul>
+        <li>Store more complexe game state.</li>
+        <li>Use very specific sentences as condition for triggering events.</li>
+        <li>Create your own custom game mechanics</li>
+    </ul>
+    <p>
+        Here is a simple example where we used the custome "owes" verb to keep
+        track of how much money a character owes to the player, then add an event
+        when the character pays his dept:
+    </p>
+<code>
+John owes money to Player 200.
+
+John Pays His Debt {
+    Player has Money "{{ value('Player has Money') + value('John owes money to Player') }}".
+    John owes Money 0.
+    Narrator says Monologue "John has paid his debt!".
+}
+
+// Once you go trough a specific dialog with John,
+// he will pay his debt
+John Got The Money Dialog triggers John Pays His Debt.
+</code>
+    <p>
+        So, a combination of custom and standard vocabulray is often the best way to get things done.
+    </p>
+
+</article>
+
+
+
+
+
+

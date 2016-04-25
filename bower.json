@@ -35,8 +35,7 @@
     "angularfire": "~1.1.4",
     "nunjucks": "~2.4.1",
     "ng-lodash": "~0.4.0",
-    "hover": "Hover#^2.0.2",
-    "ng-scrollbars": "^0.0.10"
+    "hover": "Hover#^2.0.2"
   },
   "resolutions": {
     "lodash": "~4.5.1",

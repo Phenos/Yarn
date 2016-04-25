@@ -1,0 +1,221 @@
+yarn.service("editorFiles", function (EditorFile,
+                                      editors,
+                                      confirmAction,
+                                      $timeout,
+                                      yConsole,
+                                      URI,
+                                      channel) {
+
+    function EditorFiles() {
+        this.files = [];
+        this.goToLine = null;
+    }
+
+    EditorFiles.prototype.save = function (file, callback) {
+        file.status = "Saving...";
+        // todo: is this is circular ?
+        var storage = file.profile.storage;
+        storage.save(file, function () {
+            refreshAfterAWhile(storage);
+            file.errorCode = null;
+            file.ready = true;
+            file.status = "Saved";
+            callback && callback(null, file);
+        }, function (err) {
+            file.errorCode = err.status;
+            file.status = "Failed to save";
+            console.error("Error while saving file: ", file.absoluteURI(), err);
+            yConsole.error("Error while saving file: " + file.absoluteURI().toString());
+            callback && callback(err);
+        });
+    };
+
+    EditorFiles.prototype.rename = function (file, newName, callback) {
+        file.status = "Renaming...";
+        var newURI = file.uri.clone().filename(newName);
+        // todo: is this is circular ?
+        var storage = file.profile.storage;
+        storage.rename(file, newName, function () {
+//            console.log("RENAMED!!!! ", meta);
+            file.rename(newURI);
+            refreshAfterAWhile(storage);
+            file.errorCode = null;
+            file.ready = true;
+            file.status = "Saved";
+            callback && callback(null, file);
+        }, function (err) {
+            file.errorCode = err.status;
+            file.status = "Failed to rename file";
+            console.error("Error while renaming file: ", file.absoluteURI(), err);
+            yConsole.error("Error while renaming file: " + file.absoluteURI().toString());
+            callback && callback(err);
+        });
+    };
+
+    var refreshTimeout = null;
+    function refreshAfterAWhile(storage) {
+//        console.log("refreshInAfterAWhile", refreshTimeout);
+        if (refreshTimeout) {
+            $timeout.cancel(refreshTimeout);
+        }
+        refreshTimeout = $timeout(function () {
+//            console.log("REFRESH!!!");
+            storage.refresh();
+        }, 1000);
+    }
+
+    EditorFiles.prototype.saveAll = function (success, failure) {
+        // Iterate trough all open files
+        // If they have changed, then them
+        var files = this.files;
+        var filesToSave = [];
+        angular.forEach(files, function (file) {
+            if (file.isModified()) {
+                filesToSave.push(file);
+            }
+        });
+
+        function saveNextFile(_success, _failure) {
+            var nextFile = filesToSave.pop();
+//            console.log("nextFile", nextFile);
+            if (nextFile) {
+                // todo: is this is circular ?
+                var storage = nextFile.profile.storage;
+                storage.save(nextFile, function () {
+                    $timeout(function () {
+                        nextFile.isModified();
+                    });
+
+                    saveNextFile(_success, _failure);
+                }, function (err) {
+                    yConsole.error("An errror occured while saving all files");
+                    _failure && _failure(err);
+                });
+                refreshAfterAWhile(storage);
+            } else {
+                _success && _success()
+            }
+        }
+
+        saveNextFile(success, failure);
+    };
+
+
+    EditorFiles.prototype.new = function (profile) {
+        var file = new EditorFile("untitled", null, profile);
+        this.files.push(file);
+        return file;
+    };
+
+    EditorFiles.prototype.get = function (uriOrFile, profile) {
+        var baseURI = profile.baseURI();
+        var match = null;
+        var uri = uriOrFile;
+        if (angular.isObject(uriOrFile)) {
+            uri = uriOrFile.absoluteURI().toString();
+        } else {
+            uri = URI(uri);
+            uri = uri.absoluteTo(baseURI).toString()
+        }
+        angular.forEach(this.files, function (file) {
+//            console.log("A:", file.absoluteURI().toString());
+//            console.log("B:", uri);
+//            console.log("-----");
+            if (file.absoluteURI().toString() === uri) {
+                match = file;
+            }
+        });
+//        console.log("MATCH", match);
+        return match;
+    };
+
+    EditorFiles.prototype.open = function (profile, uriOrFile, setFocus, goToLine, success, fail) {
+        var file = null;
+        // If no profile name is supplied, it takes for granted that the
+        // profile name is in the url being oppened
+        if (profile !== null) {
+
+            // VERIFY if file is not already in the list of files loaded
+            // So we create it or take the object already created
+            file = this.get(uriOrFile, profile);
+            if (!file) {
+                if (angular.isObject(uriOrFile)) {
+                    file = uriOrFile;
+                } else {
+                    file = new EditorFile(uriOrFile, null, profile);
+                }
+                this.files.push(file);
+                file.load(success, fail);
+            }
+
+            if (goToLine) {
+                file.goToLine = goToLine;
+            }
+
+            if (setFocus) {
+                // Before setting the focus we let the diget cycle complete
+                // Otherwise, the editor is not ready when focus is applied
+                $timeout(function () {
+                    editors.focus(file.uri.toString())
+                }, 100);
+            }
+
+            this.publishChange(file);
+        } else {
+            console.error("In order to open a file, you must provide a profile object");
+        }
+        return file;
+    };
+
+    EditorFiles.prototype.close = function (file) {
+        var self = this;
+        var _file;
+        var index = null;
+        var i;
+        for (i = 0; i < this.files.length; i++) {
+            _file = this.files[i];
+            if (_file.uri.toString() === file.uri.toString()) {
+                index = i;
+                break;
+            }
+        }
+        if (index !== null) {
+            if (_file.isModified()) {
+                confirmAction(
+                    "Unsaved changes",
+                    "You have unsaved changes in this file.<br/> Are you sure you want to " +
+                    "reload this file from storage and <br/><strong>loose those changes</strong> ?",
+                    function () {
+                        self.files.splice(i, 1);
+                    })
+            } else {
+                self.files.splice(i, 1);
+            }
+        }
+
+        // Refresh this list of files in localStorage
+        this.publishChange()
+
+    };
+
+    EditorFiles.prototype.publishChange = function (file) {
+        channel.publish("editorFiles.change", file);
+    };
+
+
+    EditorFiles.prototype.hasUnsaved = function () {
+        var hasUnsaved = false;
+        var file;
+        for (var i = 0; i < this.files.length; i++) {
+            file = this.files[i];
+            if (file.isModified()) {
+                hasUnsaved = true;
+            }
+        }
+        return hasUnsaved;
+    };
+
+    return new EditorFiles();
+
+
+});

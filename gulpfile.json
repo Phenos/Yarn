@@ -7,6 +7,8 @@
   },
   "paths": {
     "buildRoot": "build",
+    "phonegapBuildRoot": "phonegap-build",
+    "phonegapAssets": ["config.xml", "platforms", "plugins"],
     "staticRoot": "build/public",
     "distStylesRoot": "build/public/styles",
     "distTempLess": "build/public/less-temp",
@@ -49,9 +51,7 @@
       "./bower_components/nunjucks/browser/nunjucks.min.js",
       "./bower_components/angular-hotkeys/build/hotkeys.min.js",
       "./bower_components/d3/d3.min.js",
-      "./bower_components/angular-ui-grid/ui-grid.min.js",
-      "./bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js",
-      "./bower_components/ng-scrollbars/dist/scrollbars.min.js"
+      "./bower_components/angular-ui-grid/ui-grid.min.js"
     ],
     "javacriptTarget": "build/public/js",
     "bowerComponentsTarteg": "build/public/bower_components",

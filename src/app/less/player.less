@@ -4,7 +4,7 @@ player {
     background: #000 no-repeat center center;
     background-size: cover;
     width: 100%;
-    min-width: 350px;
+    min-width: 320px;
     overflow: visible;
 
     .mCSB_container_wrapper {
@@ -18,10 +18,13 @@ player {
         padding-top: 70px;
         z-index:5;
 
+        overflow: auto;
+        overflow-y: none;
+
         .mCustomScrollBox {
-            //overflow: visible;
+            overflow: visible;
             .mCSB_container_wrapper {
-                //overflow: visible;
+                overflow: visible;
             }
         }
     }

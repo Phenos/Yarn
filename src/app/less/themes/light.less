@@ -35,13 +35,24 @@ Light Theme - For light backgrounds and dark text.
             &:hover {
                 a {
                     color: #000000 !important;
+                    border-bottom: 1px dotted rgba(0, 0, 0, 0.4);
+
                     &:focus,
                     &:hover {
-                        text-decoration: underline;
+                        border-bottom: 1px solid rgba(0, 0, 0, 1);
                         color: #000 !important;
                     }
                 }
 
+            }
+
+            &.is-dialog {
+                .dialogText {
+                    color: #000;
+                }
+                .dialogMeta {
+                    color: rgba(0, 0, 0, 0.8);
+                }
             }
         }
     }
@@ -87,6 +98,53 @@ Light Theme - For light backgrounds and dark text.
             }
         }
     }
+
+}
+
+
+
+/*
+Mobile optimization test
+*/
+
+wallpaper {
+    //background-image: none !important;
+    mask {
+        //display: none !important;
+    }
+}
+
+.player {
+
+    .story-log {
+        log-item .logItem {
+            text-shadow: none !important;
+            a {
+                text-shadow: none !important;
+            }
+
+            &.is-image {
+
+                img {
+                    //box-shadow: none !important;
+                }
+            }
+
+        }
+    }
+
+    user-choice {
+        .question {
+            text-shadow: none !important;
+        }
+    }
+
+    .context-action-menu {
+        .question {
+            text-shadow: none !important;
+        }
+    }
+
 
 }
 

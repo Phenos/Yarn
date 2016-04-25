@@ -6,7 +6,6 @@ yarn.directive('player', function (channel,
                                    player,
                                    state,
                                    lookAroundRoutine,
-                                   playScriptRoutine,
                                    profiles,
                                    login,
                                    assert,
@@ -106,7 +105,10 @@ yarn.directive('player', function (channel,
                     lookAroundRoutine();
                 }
                 if (script) {
-                    playScriptRoutine();
+
+//                    playScriptRoutine();
+                    console.warn("Auto-replay script of reload is deactivated")
+
                 }
             }
 
@@ -134,7 +136,8 @@ yarn.directive('player', function (channel,
                 // First we check to see if it's the first game step
                 // to prevent scrolling when first showing the coverpage
                 if (state.step() > 0) {
-                    $scope.updateScrollbar('scrollTo', "bottom");
+                    console.warn("Auto scrolling de-activated");
+//                    $scope.updateScrollbar('scrollTo', "bottom");
                 }
             }, 50);
         };

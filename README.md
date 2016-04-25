@@ -44,8 +44,19 @@ Yarn is based on a collection of technology:
 
 We deploy on multiple environments on the Heroku cloud platform.
 
+## Cordova
+
+Folders specific to cordova:
+
+- hooks
+- platforms
+- plugins
+- config.xml
+
 ## Contact
 
 For more information contact mathieu.sylvain@phenos.ca
+
+
 
 

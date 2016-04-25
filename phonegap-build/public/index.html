@@ -1,23 +1,27 @@
 <html>
 <head>
     <title>Yarn Demo</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-title" content="Yarn">
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Yarn" />
 
     <!-- Phonegap specific metas -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+          content="default-src * 'unsafe-eval' data: gap: https://ssl.gstatic.com ; style-src * 'unsafe-eval' 'unsafe-inline'; media-src *" />
+    <access href="http://localhost/*"></access>
+    <access href="http://*.local/*"></access>
+    <access href="http://*.yarnstudio.io/*"></access>
+    <access href="http://*.firebase.com/*"></access>
+
     <meta name="format-detection"
-          content="telephone=no">
+          content="telephone=no" />
     <meta name="msapplication-tap-highlight"
-          content="no">
-    <access origin="*" />
-    <!-- End Phonegap-->
+          content="no" />
+    <!-- End Phonegap -->
 
     <link rel="icon" type="image/png" href="./public/images/favicon.png"/>
 
@@ -26,6 +30,8 @@
           type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700&subset=latin,latin-ext'
           rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="../../cordova.js"></script>
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
 
@@ -109,6 +115,9 @@
     <script src="/js/services/stateHelpers/thingsInRoom.js"></script>
     <script src="/js/services/stateHelpers/usableItemInRoom.js"></script>
     <script src="/js/services/status/statuses.js"></script>
+    <script src="/js/services/utils/isNumeric.js"></script>
+    <script src="/js/services/validators/main.js"></script>
+    <script src="/js/services/validators/validateStory.js"></script>
     <script src="/js/services/tools/annotations.js"></script>
     <script src="/js/services/tools/assertions.js"></script>
     <script src="/js/services/tools/commands.js"></script>
@@ -116,9 +125,6 @@
     <script src="/js/services/tools/inspector.js"></script>
     <script src="/js/services/tools/project.js"></script>
     <script src="/js/services/tools/validator.js"></script>
-    <script src="/js/services/utils/isNumeric.js"></script>
-    <script src="/js/services/validators/main.js"></script>
-    <script src="/js/services/validators/validateStory.js"></script>
     <script src="/js/services/vendors_hacked/postal.js"></script>
     <script src="/js/services/commands/player/inventory.js"></script>
     <script src="/js/services/Assertions.js"></script>
@@ -199,21 +205,21 @@
     <script src="/js/filters/keyboardShortcut.js"></script>
     <script src="/js/filters/orderObjectBy.js"></script>
     <script src="/js/filters/rawHTML.js"></script>
-    <script src="/js/directives/code/code.js"></script>
     <script src="/js/directives/assertionGrid/assertionGrid.js"></script>
+    <script src="/js/directives/code/code.js"></script>
+    <script src="/js/directives/command/command.js"></script>
     <script src="/js/directives/console/console.js"></script>
     <script src="/js/directives/console/log.js"></script>
-    <script src="/js/directives/command/command.js"></script>
     <script src="/js/directives/contextActionMenu/contextActionMenu.js"></script>
     <script src="/js/directives/editor/editor.js"></script>
     <script src="/js/directives/editorTabs/editorTabs.js"></script>
     <script src="/js/directives/editorToolbar/editorToolbar.js"></script>
     <script src="/js/directives/getContextMenu/getContextMenu.js"></script>
-    <script src="/js/directives/help/help.js"></script>
     <script src="/js/directives/graph/graph.js"></script>
+    <script src="/js/directives/help/help.js"></script>
     <script src="/js/directives/helpToolbar/helpToolbar.js"></script>
-    <script src="/js/directives/player/player.js"></script>
     <script src="/js/directives/inspector/inspector.js"></script>
+    <script src="/js/directives/player/player.js"></script>
     <script src="/js/directives/sidebar/sidebar.js"></script>
     <script src="/js/directives/statusBar/statusBar.js"></script>
     <script src="/js/directives/storageFiles/storageFiles.js"></script>

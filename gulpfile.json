@@ -7,6 +7,7 @@
   },
   "paths": {
     "buildRoot": "build",
+    "phonegapBuildRoot": "phonegap-build",
     "staticRoot": "build/public",
     "distStylesRoot": "build/public/styles",
     "distTempLess": "build/public/less-temp",

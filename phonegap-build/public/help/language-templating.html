@@ -1,0 +1,74 @@
+<article
+        previous="language-importing.html"
+        parent="for-authors.html"
+        next="theming.html">
+
+    <h1>Templating</h1>
+
+    <p>
+        Whenever you use text in your source code, this text can contain special
+        instructions to make this text dynamic.
+    </p>
+
+    <p>
+        Templating is usefull for:
+    </p>
+    <ul>
+        <li>Vary text blocks according to conditions</li>
+        <li>Insert values in text such as names, numbers, time and other values.</li>
+        <li>Outputing dynamic lists of items.</li>
+        <li>Doing maths with values in the game state.</li>
+    </ul>
+    <p>
+        Also, whenever a resulting text can be converted into a non-text value such as
+        a number or a true/false value, the conversion will happen automatically.
+    </p>
+    <p>
+        Here is an example of a description that varies according to the player's
+        current location.
+    </p>
+<code>
+Magic Hat has a Description
+"Your trusty pointy hat.
+{% if value('Player is in the Castle') %}
+    Too large and flappy as usual.
+{% else %}
+    Weirdly it is glowing octarine... you must
+    be near the magic shop!.
+{% endif %}"
+
+</code>
+    <p>
+        Now, here an example where a character uses the players hair color in a sentence.
+    </p>
+<code>
+Jenny says Dialog
+"Wow you changed you hair! This {{ value('Player has Hair Color') }} suits you very well."
+</code>
+    <h3>Under the hood</h3>
+    <p>
+        This templating language is a fairly complexe piece of technology. It is both very powerful
+        but can require a longer learning cureve than the rest of the YarnScript language.
+    </p>
+    <p>
+        Yarn is not the only product using this type of templating. It is called "Nunjucks" and is
+        a distinct Mozilla open source project.
+    </p>
+    <p>
+        A more extensive and generic purpose documentation is available on their website at:<br/>
+        <a href="http://mozilla.github.io/nunjucks/templating.html">http://mozilla.github.io/nunjucks/templating.html</a>
+    </p>
+    <p>
+        As Yarn grows in capacity, we will provide more easy-to-reuse examples of templating. Until
+        then you can pay attention whenever you see the "&#123; &#123; something } }" and "&#123% %}" curly brackets
+        somewhere in Yarn's sample files.
+    </p>
+    <h2>Using the Inspector</h2>
+    <p>
+        Whenever you see a template in a story, you can check what would be the current "rendered"
+        value by opening the inspector. It will render the value as you type and show you any error
+        in the template.
+    </p>
+
+
+</article>

@@ -7,7 +7,7 @@
     <author email="mathieu.sylvain@yarnstudio.io" href="http://yarnstudio.io">
         Yarn Studio
     </author>
-    <content src="build/index.html" />
+    <content src="phonegap-build/public/index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

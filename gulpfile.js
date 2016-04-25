@@ -1,3 +1,4 @@
+/* eslint-env node */
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
@@ -17,12 +18,13 @@ gulp.task('compressJSVendors', compressJsVendorsTask);
 gulp.task('copyAssets', gulp.series(
     'copyStatic',
     'compressJSVendors',
-    //'compressJS',
+//    'compressJS',
     'injectJsFiles',
     'copyJs',
     'copyLess'
 ));
 gulp.task('clean', cleanTask);
+gulp.task('cleanPhonegap', cleanPhonegapTask);
 gulp.task('cleanAfterBuild', cleanAfterTask);
 gulp.task('server', serverTask);
 gulp.task('watch', watchTask);
@@ -32,12 +34,21 @@ gulp.task('build', gulp.series(
     'copyAssets',
     'cleanAfterBuild'
 ));
+gulp.task('buildPhonegap', gulp.series(
+    'cleanPhonegap',
+    'build',
+    buildPhonegapTask
+));
 gulp.task('devServerless', gulp.series(
     'build',
     'watch'
 ));
 gulp.task('dev', gulp.series(
     'build',
+    'watch'
+));
+gulp.task('dev-phonegap', gulp.series(
+    'buildPhonegap',
     'watch'
 ));
 gulp.task('lint', lintTask);
@@ -64,9 +75,9 @@ function lintTask() {
         .pipe($.eslint.format())
         .pipe($.eslint.results(function (results) {
             // Called once for all ESLint results.
-            console.log('Total Results: ' + results.length);
-            console.log('Total Warnings: ' + results.warningCount);
-            console.log('Total Errors: ' + results.errorCount);
+            console.info('Total Results: ' + results.length);
+            console.info('Total Warnings: ' + results.warningCount);
+            console.info('Total Errors: ' + results.errorCount);
         }))
         // To have the process exit with an error code (1) on
         // lint error, return the stream and pipe to failAfterError last.
@@ -88,7 +99,7 @@ function injectJsFilesTask() {
 
 function bumpTask() {
     return gulp.src(['bower.json', 'package.json', 'src/app/static/metadata.json'], {base: '.'})
-        //.pipe(using())
+//        .pipe(using())
         .pipe($.bump({type: 'patch'}))
         .pipe(gulp.dest('./'), cwd);
 }
@@ -96,8 +107,18 @@ function bumpTask() {
 function copyStaticTask() {
     // Copy static folder
     return gulp.src(paths.staticSource)
-        //.pipe(using())
+//        .pipe(using())
         .pipe(gulp.dest(paths.staticRoot, cwd));
+}
+
+function buildPhonegapTask() {
+    // Copy static folder
+    return gulp.src(paths.buildRoot + "/**")
+//        .pipe(using())
+        .pipe(gulp.dest(paths.phonegapBuildRoot, cwd));
+}
+function cleanPhonegapTask() {
+    return del(paths.phonegapBuildRoot);
 }
 
 function copyJsTask() {
@@ -108,30 +129,30 @@ function copyJsTask() {
         .pipe($.angularEmbedTemplates({
             basePath: paths.staticRoot
         }))
-        //.pipe(using())
+//        .pipe(using())
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
 
 function compressJsTask() {
     return gulp.src(paths.javascriptSource)
-        //.pipe(using())
+//        .pipe(using())
         .pipe($.sourcemaps.init())
         .pipe($.sourcemaps.write())
-        //.pipe(uglify({
-        //    mangle: false
-        //}))
+//        .pipe(uglify({
+//            mangle: false
+//        }))
         .pipe($.concat('all.js'))
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
 
 function compressJsVendorsTask() {
     return gulp.src(paths.javascriptVendorsSource)
-        //.pipe(using())
-        //.pipe(sourcemaps.init())
-        //.pipe(sourcemaps.write())
-        //.pipe(uglify({
-        //    mangle: false
-        //}))
+//        .pipe(using())
+//        .pipe(sourcemaps.init())
+//        .pipe(sourcemaps.write())
+//        .pipe(uglify({
+//            mangle: false
+//        }))
         .pipe($.concat('vendors.js'))
         .pipe(gulp.dest(paths.javacriptTarget), cwd);
 }
@@ -139,7 +160,7 @@ function compressJsVendorsTask() {
 function copyLess() {
     // move less files into the styles folder
     return gulp.src(paths.distTempLess + "/**")
-        //.pipe(using())
+//        .pipe(using())
         .pipe($.concat('all.css'))
         .pipe(gulp.dest(paths.distStylesRoot, cwd));
 }
@@ -167,7 +188,8 @@ function serverTask(callback) {
 function watchTask(callback) {
     gulp.watch(paths.watches.less, gulp.series('compileLess', 'copyLess', browserSync.reload));
     gulp.watch(paths.watches.js, gulp.series('copyJs', browserSync.reload));
-    gulp.watch(paths.watches.statics, gulp.series('copyStatic', 'copyJs', 'injectJsFiles', browserSync.reload));
+    gulp.watch(paths.watches.statics, gulp.series(
+        'copyStatic', 'copyJs', 'injectJsFiles', browserSync.reload));
     callback();
 }
 

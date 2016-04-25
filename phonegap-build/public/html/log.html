@@ -1,0 +1,14 @@
+<div class="log {{::line.isNewStepClass}}  is-{{::line.type}}">
+    <span class='step' ng-bind="::line.step">#</span>
+    <span class='timestamp'>{{::time }}</span>
+    <text class='text'></text>
+    <span ng-if="::source"
+          ng-click="goToSource(source)"
+          class="source">
+        [<span class="url">
+                {{::source.file }}
+                <span class="line">:{{::source.line }}</span>
+                <md-tooltip md-direction="left">{{::source.uri }}</md-tooltip>
+            </span>]
+    </span>
+</div>

@@ -1,0 +1,271 @@
+<html>
+<head>
+    <title>Yarn Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Yarn">
+
+    <!-- Phonegap specific metas -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection"
+          content="telephone=no">
+    <meta name="msapplication-tap-highlight"
+          content="no">
+    <access origin="*" />
+    <!-- End Phonegap-->
+
+    <link rel="icon" type="image/png" href="./public/images/favicon.png"/>
+
+    <link rel="stylesheet" type='text/css' href="./public/styles/all.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Halant:400,300,600,700&subset=latin,latin-ext' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+
+    <script src="./public/js/vendors.js"></script>
+
+    <script src="/public/javascript/actionheroClient.js"></script>
+
+    <!-- inject:js -->
+    <script src="/js/config/module.js"></script>
+    <script src="/js/config/routes.js"></script>
+    <script src="/js/config/config.js"></script>
+    <script src="/js/game/game.predicates.js"></script>
+    <script src="/js/controllers/createNewProject.js"></script>
+    <script src="/js/controllers/root.js"></script>
+    <script src="/js/ace/ext-searchbox.js"></script>
+    <script src="/js/ace/mode-javascript.js"></script>
+    <script src="/js/ace/theme-tomorrow.js"></script>
+    <script src="/js/ace/worker-javascript.js"></script>
+    <script src="/js/services/commands/aboutTo.js"></script>
+    <script src="/js/services/commands/beginstory.js"></script>
+    <script src="/js/services/commands/clear.js"></script>
+    <script src="/js/services/commands/credits.js"></script>
+    <script src="/js/services/commands/do.js"></script>
+    <script src="/js/services/commands/eval.js"></script>
+    <script src="/js/services/commands/graph.js"></script>
+    <script src="/js/services/commands/help.js"></script>
+    <script src="/js/services/commands/hint.js"></script>
+    <script src="/js/services/commands/inspect.js"></script>
+    <script src="/js/services/commands/inventory.js"></script>
+    <script src="/js/services/commands/load.js"></script>
+    <script src="/js/services/commands/look.js"></script>
+    <script src="/js/services/commands/move.js"></script>
+    <script src="/js/services/commands/restart.js"></script>
+    <script src="/js/services/commands/state.js"></script>
+    <script src="/js/services/commands/take.js"></script>
+    <script src="/js/services/commands/tokens.js"></script>
+    <script src="/js/services/commands/tree.js"></script>
+    <script src="/js/services/commands/use.js"></script>
+    <script src="/js/services/commands/validate.js"></script>
+    <script src="/js/services/inspections/comment.js"></script>
+    <script src="/js/services/inspections/fileReference.js"></script>
+    <script src="/js/services/inspections/inspectionArticle.js"></script>
+    <script src="/js/services/inspections/inspections.js"></script>
+    <script src="/js/services/inspections/objectReference.js"></script>
+    <script src="/js/services/inspections/occurences.js"></script>
+    <script src="/js/services/inspections/predicateReference.js"></script>
+    <script src="/js/services/inspections/punctuation.js"></script>
+    <script src="/js/services/inspections/relatedHelp.js"></script>
+    <script src="/js/services/inspections/template.js"></script>
+    <script src="/js/services/inspections/text.js"></script>
+    <script src="/js/services/prompts/coverpagePrompt.js"></script>
+    <script src="/js/services/prompts/defaultPrompt.js"></script>
+    <script src="/js/services/prompts/getDefaultActionsHelper.js"></script>
+    <script src="/js/services/prompts/inventoryPrompt.js"></script>
+    <script src="/js/services/prompts/lookPrompt.js"></script>
+    <script src="/js/services/prompts/movePrompt.js"></script>
+    <script src="/js/services/prompts/prompt.js"></script>
+    <script src="/js/services/prompts/promptLoop.js"></script>
+    <script src="/js/services/prompts/promptLoopFactory.js"></script>
+    <script src="/js/services/prompts/promptOption.js"></script>
+    <script src="/js/services/prompts/theEndPrompt.js"></script>
+    <script src="/js/services/prompts/usePrompt.js"></script>
+    <script src="/js/services/routines/aboutTo.js"></script>
+    <script src="/js/services/routines/actSceneRoutine.js"></script>
+    <script src="/js/services/routines/doRoutine.js"></script>
+    <script src="/js/services/routines/hintRoutine.js"></script>
+    <script src="/js/services/routines/inventoryRoutine.js"></script>
+    <script src="/js/services/routines/lookAroundRoutine.js"></script>
+    <script src="/js/services/routines/lookAtExitsRoutine.js"></script>
+    <script src="/js/services/routines/lookAtUsablesRoutine.js"></script>
+    <script src="/js/services/routines/lookRoutine.js"></script>
+    <script src="/js/services/routines/move.js"></script>
+    <script src="/js/services/routines/step.js"></script>
+    <script src="/js/services/routines/take.js"></script>
+    <script src="/js/services/routines/talkAboutRoutine.js"></script>
+    <script src="/js/services/routines/talkToRoutine.js"></script>
+    <script src="/js/services/routines/use.js"></script>
+    <script src="/js/services/stateHelpers/doorsInRoom.js"></script>
+    <script src="/js/services/stateHelpers/inventoryInRoom.js"></script>
+    <script src="/js/services/stateHelpers/ownInventory.js"></script>
+    <script src="/js/services/stateHelpers/thingsInRoom.js"></script>
+    <script src="/js/services/stateHelpers/usableItemInRoom.js"></script>
+    <script src="/js/services/status/statuses.js"></script>
+    <script src="/js/services/tools/annotations.js"></script>
+    <script src="/js/services/tools/assertions.js"></script>
+    <script src="/js/services/tools/commands.js"></script>
+    <script src="/js/services/tools/graph.js"></script>
+    <script src="/js/services/tools/inspector.js"></script>
+    <script src="/js/services/tools/project.js"></script>
+    <script src="/js/services/tools/validator.js"></script>
+    <script src="/js/services/utils/isNumeric.js"></script>
+    <script src="/js/services/validators/main.js"></script>
+    <script src="/js/services/validators/validateStory.js"></script>
+    <script src="/js/services/vendors_hacked/postal.js"></script>
+    <script src="/js/services/commands/player/inventory.js"></script>
+    <script src="/js/services/Assertions.js"></script>
+    <script src="/js/services/IDE.js"></script>
+    <script src="/js/services/LoadPageScripts.js"></script>
+    <script src="/js/services/Script.js"></script>
+    <script src="/js/services/Wallpaper.js"></script>
+    <script src="/js/services/assert.js"></script>
+    <script src="/js/services/assertion.js"></script>
+    <script src="/js/services/ast.js"></script>
+    <script src="/js/services/channel.js"></script>
+    <script src="/js/services/commands.js"></script>
+    <script src="/js/services/confirmAction.js"></script>
+    <script src="/js/services/console.js"></script>
+    <script src="/js/services/consoleHelper.js"></script>
+    <script src="/js/services/contextActions.js"></script>
+    <script src="/js/services/currentTheme.js"></script>
+    <script src="/js/services/cursor.js"></script>
+    <script src="/js/services/defaultTexts.js"></script>
+    <script src="/js/services/dialogs.js"></script>
+    <script src="/js/services/easing.js"></script>
+    <script src="/js/services/editorFile.js"></script>
+    <script src="/js/services/editorFiles.js"></script>
+    <script src="/js/services/editors.js"></script>
+    <script src="/js/services/events.js"></script>
+    <script src="/js/services/getSelectionText.js"></script>
+    <script src="/js/services/globalContextMenu.js"></script>
+    <script src="/js/services/guid.js"></script>
+    <script src="/js/services/keyboardShortcuts.js"></script>
+    <script src="/js/services/layerSetup.js"></script>
+    <script src="/js/services/loadScript.js"></script>
+    <script src="/js/services/loader.js"></script>
+    <script src="/js/services/logic.js"></script>
+    <script src="/js/services/match.js"></script>
+    <script src="/js/services/metadata.js"></script>
+    <script src="/js/services/node.js"></script>
+    <script src="/js/services/openFileFromAbsoluteURL.js"></script>
+    <script src="/js/services/parseAssert.js"></script>
+    <script src="/js/services/player.js"></script>
+    <script src="/js/services/pointer.js"></script>
+    <script src="/js/services/postal.js"></script>
+    <script src="/js/services/predicate.js"></script>
+    <script src="/js/services/predicates.js"></script>
+    <script src="/js/services/preventCloseWhenUnsaved.js"></script>
+    <script src="/js/services/profile.js"></script>
+    <script src="/js/services/profiles.js"></script>
+    <script src="/js/services/rememberLastStory.js"></script>
+    <script src="/js/services/runtime.js"></script>
+    <script src="/js/services/session.js"></script>
+    <script src="/js/services/set.js"></script>
+    <script src="/js/services/soundEffects.js"></script>
+    <script src="/js/services/stack.js"></script>
+    <script src="/js/services/state.js"></script>
+    <script src="/js/services/stateHelpers.js"></script>
+    <script src="/js/services/storage.js"></script>
+    <script src="/js/services/story.js"></script>
+    <script src="/js/services/storyLocalStorage.js"></script>
+    <script src="/js/services/storyLog.js"></script>
+    <script src="/js/services/synonyms.js"></script>
+    <script src="/js/services/syntax.js"></script>
+    <script src="/js/services/syntaxes.js"></script>
+    <script src="/js/services/templating.js"></script>
+    <script src="/js/services/theme.js"></script>
+    <script src="/js/services/thing.js"></script>
+    <script src="/js/services/things.js"></script>
+    <script src="/js/services/tool.js"></script>
+    <script src="/js/services/tools.js"></script>
+    <script src="/js/services/transaction.js"></script>
+    <script src="/js/services/transactions.js"></script>
+    <script src="/js/services/twitterProfile.js"></script>
+    <script src="/js/services/wallpaperService.js"></script>
+    <script src="/js/services/weightAssertion.js"></script>
+    <script src="/js/services/welcomeMessage.js"></script>
+    <script src="/js/services/writers.js"></script>
+    <script src="/js/services/yarn.js"></script>
+    <script src="/js/services/yarnScript.js"></script>
+    <script src="/js/filters/biggerProfileImage.js"></script>
+    <script src="/js/filters/keyboardShortcut.js"></script>
+    <script src="/js/filters/orderObjectBy.js"></script>
+    <script src="/js/filters/rawHTML.js"></script>
+    <script src="/js/directives/code/code.js"></script>
+    <script src="/js/directives/assertionGrid/assertionGrid.js"></script>
+    <script src="/js/directives/console/console.js"></script>
+    <script src="/js/directives/console/log.js"></script>
+    <script src="/js/directives/command/command.js"></script>
+    <script src="/js/directives/contextActionMenu/contextActionMenu.js"></script>
+    <script src="/js/directives/editor/editor.js"></script>
+    <script src="/js/directives/editorTabs/editorTabs.js"></script>
+    <script src="/js/directives/editorToolbar/editorToolbar.js"></script>
+    <script src="/js/directives/getContextMenu/getContextMenu.js"></script>
+    <script src="/js/directives/help/help.js"></script>
+    <script src="/js/directives/graph/graph.js"></script>
+    <script src="/js/directives/helpToolbar/helpToolbar.js"></script>
+    <script src="/js/directives/player/player.js"></script>
+    <script src="/js/directives/inspector/inspector.js"></script>
+    <script src="/js/directives/sidebar/sidebar.js"></script>
+    <script src="/js/directives/statusBar/statusBar.js"></script>
+    <script src="/js/directives/storageFiles/storageFiles.js"></script>
+    <script src="/js/directives/storyLog/logItem.js"></script>
+    <script src="/js/directives/storyLog/storyLog.js"></script>
+    <script src="/js/directives/supportChat/supportChat.js"></script>
+    <script src="/js/directives/thing/thing.js"></script>
+    <script src="/js/directives/toolbar/toolbar.js"></script>
+    <script src="/js/directives/tools/annotations.js"></script>
+    <script src="/js/directives/tools/assertions.js"></script>
+    <script src="/js/directives/tools/commands.js"></script>
+    <script src="/js/directives/tools/graph.js"></script>
+    <script src="/js/directives/tools/inspector.js"></script>
+    <script src="/js/directives/tools/project.js"></script>
+    <script src="/js/directives/tools/tool.js"></script>
+    <script src="/js/directives/tools/tools.js"></script>
+    <script src="/js/directives/tools/validator.js"></script>
+    <script src="/js/directives/userChoice/userChoice.js"></script>
+    <script src="/js/directives/userInput/userInput.js"></script>
+    <script src="/js/directives/wallpaper/wallpaper.js"></script>
+    <!-- endinject -->
+
+    <!--script>
+        var _rollbarConfig = {
+            accessToken: "6bec4cddb0c84186a2f437fa13b3f50e",
+            captureUncaught: true,
+            payload: {
+                environment: "test"
+            }
+        };
+        !function(r){function o(e){if(t[e])return t[e].exports;var n=t[e]={exports:{},id:e,loaded:!1};return r[e].call(n.exports,n,n.exports,o),n.loaded=!0,n.exports}var t={};return o.m=r,o.c=t,o.p="",o(0)}([function(r,o,t){"use strict";var e=t(1).Rollbar,n=t(2);_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://d37gvrvc0wt4s1.cloudfront.net/js/v1.8/rollbar.min.js";var a=e.init(window,_rollbarConfig),i=n(a,_rollbarConfig);a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,i)},function(r,o){"use strict";function t(r){return function(){try{return r.apply(this,arguments)}catch(o){try{console.error("[Rollbar]: Internal error",o)}catch(t){}}}}function e(r,o,t){window._rollbarWrappedError&&(t[4]||(t[4]=window._rollbarWrappedError),t[5]||(t[5]=window._rollbarWrappedError._rollbarContext),window._rollbarWrappedError=null),r.uncaughtError.apply(r,t),o&&o.apply(window,t)}function n(r){var o=function(){var o=Array.prototype.slice.call(arguments,0);e(r,r._rollbarOldOnError,o)};return o.belongsToShim=!0,o}function a(r){this.shimId=++s,this.notifier=null,this.parentShim=r,this._rollbarOldOnError=null}function i(r){var o=a;return t(function(){if(this.notifier)return this.notifier[r].apply(this.notifier,arguments);var t=this,e="scope"===r;e&&(t=new o(this));var n=Array.prototype.slice.call(arguments,0),a={shim:t,method:r,args:n,ts:new Date};return window._rollbarShimQueue.push(a),e?t:void 0})}function l(r,o){if(o.hasOwnProperty&&o.hasOwnProperty("addEventListener")){var t=o.addEventListener;o.addEventListener=function(o,e,n){t.call(this,o,r.wrap(e),n)};var e=o.removeEventListener;o.removeEventListener=function(r,o,t){e.call(this,r,o&&o._wrapped?o._wrapped:o,t)}}}var s=0;a.init=function(r,o){var e=o.globalAlias||"Rollbar";if("object"==typeof r[e])return r[e];r._rollbarShimQueue=[],r._rollbarWrappedError=null,o=o||{};var i=new a;return t(function(){if(i.configure(o),o.captureUncaught){i._rollbarOldOnError=r.onerror,r.onerror=n(i);var t,a,s="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(t=0;t<s.length;++t)a=s[t],r[a]&&r[a].prototype&&l(i,r[a].prototype)}return r[e]=i,i})()},a.prototype.loadFull=function(r,o,e,n,a){var i=function(){var o;if(void 0===r._rollbarPayloadQueue){var t,e,n,i;for(o=new Error("rollbar.js did not load");t=r._rollbarShimQueue.shift();)for(n=t.args,i=0;i<n.length;++i)if(e=n[i],"function"==typeof e){e(o);break}}"function"==typeof a&&a(o)},l=!1,s=o.createElement("script"),u=o.getElementsByTagName("script")[0],p=u.parentNode;s.crossOrigin="",s.src=n.rollbarJsUrl,s.async=!e,s.onload=s.onreadystatechange=t(function(){if(!(l||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){s.onload=s.onreadystatechange=null;try{p.removeChild(s)}catch(r){}l=!0,i()}}),p.insertBefore(s,u)},a.prototype.wrap=function(r,o){try{var t;if(t="function"==typeof o?o:function(){return o||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._wrapped){r._wrapped=function(){try{return r.apply(this,arguments)}catch(o){throw o._rollbarContext=t()||{},o._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=o,o}},r._wrapped._isWrap=!0;for(var e in r)r.hasOwnProperty(e)&&(r._wrapped[e]=r[e])}return r._wrapped}catch(n){return r}};for(var u="log,debug,info,warn,warning,error,critical,global,configure,scope,uncaughtError".split(","),p=0;p<u.length;++p)a.prototype[u[p]]=i(u[p]);r.exports={Rollbar:a,_rollbarWindowOnError:e}},function(r,o){"use strict";r.exports=function(r,o){return function(t){if(!t&&!window._rollbarInitialized){var e=window.RollbarNotifier,n=o||{},a=n.globalAlias||"Rollbar",i=window.Rollbar.init(n,r);i._processShimQueue(window._rollbarShimQueue||[]),window[a]=i,window._rollbarInitialized=!0,e.processPayloads()}}}}]);
+    </script-->
+
+    <!--Start of Zopim Live Chat Script-->
+    <!--<script type="text/javascript">-->
+    <!--window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=-->
+    <!--d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.-->
+    <!--_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");-->
+    <!--$.src="//v2.zopim.com/?3g7itxtqWDInMt8o7AQGPbVTSo3LDMIY";z.t=+new Date;$.-->
+    <!--type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");-->
+    <!--</script>-->
+    <!--End of Zopim Live Chat Script-->
+
+</head>
+<body layout="row"
+      ng-app="yarn">
+<section ui-view
+         layout="column"
+         flex="grow"
+         data-context-event="contextmenuexists"
+         data-context-menu="./html/editor-context-menus.html"
+></section>
+<!--<support-chat></support-chat>-->
+</body>
+</html>

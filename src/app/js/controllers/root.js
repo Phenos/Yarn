@@ -143,7 +143,7 @@ yarn.controller('root', function rootController($scope,
             })
         } else {
             state.ready(false, "loginfirst",
-                "You must <strong>first login</strong> with your twitter account...");
+                "You must <strong>first login</strong> with your twitter account.");
         }
     }
 

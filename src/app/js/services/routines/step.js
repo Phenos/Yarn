@@ -23,6 +23,7 @@ yarn.service("step", function (postal,
             "move",
             "dialogs",
             "storyEnds",
+            "prompts",
             "endStep"
         ];
     }

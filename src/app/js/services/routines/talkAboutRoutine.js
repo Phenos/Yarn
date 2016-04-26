@@ -4,9 +4,12 @@ yarn.service("talkAboutRoutine", function (events,
                                            Script,
                                            storyLog,
                                            yConsole,
-                                           doReveal) {
+                                           doReveal,
+                                           things,
+                                           predicates,
+                                           talkToRoutine) {
 
-    events.on("Player talks about *", "after dialogs", function () {
+    events.on("Player talks about *", "dialogs", function () {
         talkAboutRoutine();
         state.negate(assert("Player", "talks about"));
     });
@@ -43,7 +46,17 @@ yarn.service("talkAboutRoutine", function (events,
             if (nextTopic) {
                 talkAboutRoutine(nextTopic);
             } else {
+                var latestInterlocutor = state.value("Player has Latest Interlocutor");
 
+                // todo: Recall the talkToRoutine according to the Latest Interlocutor
+                if (latestInterlocutor) {
+                    state.createAssertion(
+                        things.get("Player"),
+                        predicates("talks to"),
+                        things.get(latestInterlocutor), {
+                            layer: "step"
+                        });
+                }
             }
 
             doReveal(topic);

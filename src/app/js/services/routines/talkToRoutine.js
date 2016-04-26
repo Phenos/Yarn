@@ -24,18 +24,23 @@ yarn.service("talkToRoutine", function (events,
             if (topics) {
                 storyLog.action("Thinking about what you could say...");
                 angular.forEach(topics, function (topic) {
-                    var name = state.value("CurrentTopic has a Name", {
+                    var isHidden = state.value("CurrentTopic is Hidden", {
                         CurrentTopic: topic
                     });
-                    var topicIntro = state.value("CurrentTopic has a Topic Intro", {
-                        CurrentTopic: topic
-                    });
-                    var label = topicIntro || name;
-                    var output = [
-                        "[", label, ":", topic.id ,": Talk About ]"
-                    ].join("");
-                    console.log("scriptText>>> ", output);
-                    storyLog.topic(output);
+                    if (!isHidden) {
+                        var name = state.value("CurrentTopic has a Name", {
+                            CurrentTopic: topic
+                        });
+                        var topicIntro = state.value("CurrentTopic has a Topic Intro", {
+                            CurrentTopic: topic
+                        });
+                        var label = topicIntro || name;
+                        var output = [
+                            "[", label, ":", topic.id ,": Talk About ]"
+                        ].join("");
+//                        console.log("scriptText>>> ", output);
+                        storyLog.topic(output);
+                    }
                 });
 
             } else {

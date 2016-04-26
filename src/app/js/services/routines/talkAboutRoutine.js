@@ -3,7 +3,8 @@ yarn.service("talkAboutRoutine", function (events,
                                            state,
                                            Script,
                                            storyLog,
-                                           yConsole) {
+                                           yConsole,
+                                           doReveal) {
 
     events.on("Player talks about *", "after dialogs", function () {
         talkAboutRoutine();
@@ -41,7 +42,11 @@ yarn.service("talkAboutRoutine", function (events,
 //            console.log("nextTopic", nextTopic);
             if (nextTopic) {
                 talkAboutRoutine(nextTopic);
+            } else {
+
             }
+
+            doReveal(topic);
 
             var triggeredStateChange = state.resolveAll(assert(topic, "triggers"));
             angular.forEach(triggeredStateChange, function (object) {

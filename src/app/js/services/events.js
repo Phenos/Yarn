@@ -173,6 +173,7 @@ yarn.service('events', function (assert,
             });
 
             state.applyObjectAsStageChange(object);
+            doReveal(object);
 
             var isAnAct = state.value("Object is an Act", {
                 Object: object

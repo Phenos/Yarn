@@ -43,7 +43,7 @@ yarn.service("talkToRoutine", function (events,
             });
 
             if (topics && topics.length > 0) {
-                storyLog.action("Thinking about what you could say...");
+                storyLog.action("You think about what you could say...");
 
                 angular.forEach(topics, function (topic) {
                     var name = state.value("CurrentTopic has a Name", {

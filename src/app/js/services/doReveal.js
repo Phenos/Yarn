@@ -3,7 +3,7 @@ yarn.service("doReveal", function (state, assert, predicates, things) {
     // todo: split the Hidden and Active status into discrinct function
 
     function doReveal(object) {
-        console.log("++===>>> doReveal ");
+//        console.log("++===>>> doReveal ");
 
         var reveals = state.many("Object reveals *", {Object: object});
 

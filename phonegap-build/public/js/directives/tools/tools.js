@@ -4,7 +4,7 @@ yarn.directive('tools', function ToolsDirective() {
         restrict: 'E',
         scope: {},
         replace: true,
-        template:'<div flex=grow layout=column><md-tabs flex=100 md-selected=toolTabs.selected ng-click=expandIfNotExpanded($event)><md-tab md-on-select=focus(tool) md-on-deselect=blur(tool) ng-repeat="tool in tools.all" md-active=tool.isFocused><md-tab-label><md-icon style="width: 1.5em; margin-left: 0.7em" md-svg-icon="/svg-icons/{{::tool.icon }}.svg"></md-icon>{{::tool.label }}</md-tab-label><md-tab-body><tool layout-fill is-focused=tool.isFocused directive=tool.directive></tool></md-tab-body></md-tab></md-tabs></div>',
+        template:'<div flex=grow layout=column><md-tabs flex=100 md-selected=toolTabs.selected ng-click=expandIfNotExpanded($event)><md-tab md-on-select=focus(tool) md-on-deselect=blur(tool) ng-repeat="tool in tools.all" md-active=tool.isFocused><md-tab-label><md-icon style="width: 1.5em; margin-left: 0.7em" md-svg-icon="./svg-icons/{{::tool.icon }}.svg"></md-icon>{{::tool.label }}</md-tab-label><md-tab-body><tool layout-fill is-focused=tool.isFocused directive=tool.directive></tool></md-tab-body></md-tab></md-tabs></div>',
         controller: ToolsController
     };
 

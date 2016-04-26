@@ -34,6 +34,7 @@ yarn.service("actSceneRoutine", function (events,
 
             var script = new Script(scriptText, scene.source);
             script.play();
+            doReveal(scene);
 
             var nextScene = state.one("CurrentScene next scene *", {
                 CurrentScene: scene

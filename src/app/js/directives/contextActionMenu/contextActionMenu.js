@@ -95,10 +95,10 @@ yarn.directive('contextActionMenu', function ContextActionMenuDirective($timeout
                 var newActions = contextActions(object);
                 if (newActions.length > 1) {
                     this.defaultLabel = "Do something with the " +
-                        this.objectName || object.text() + "?";
+                        (this.objectName || object.text()) + "?";
                 } else {
                     this.defaultLabel = "You see nothing to do with the " +
-                        this.objectName || object.text() + "!";
+                        (this.objectName || object.text()) + "!";
                 }
                 this.label = this.defaultLabel;
 

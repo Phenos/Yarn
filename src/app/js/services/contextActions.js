@@ -1,6 +1,13 @@
-yarn.service("contextActions", function (state) {
+yarn.service("contextActions", function (state, things) {
 
-    function contextActions(object) {
+    /**
+     * Return the list of contextual/transitive actions that can be done for
+     * a specific action. Optionnaly restric to a single action.
+     * @param {String} object Find all action for this object
+     * @param {String} restrictTo Constrain result to this action
+     * @returns {Array} Returns a list of contextual actions
+     */
+    function contextActions(object, restrictTo) {
         var allowedActions = {};
         var actions = [];
 
@@ -10,6 +17,8 @@ yarn.service("contextActions", function (state) {
         var scope = {
             Space: space
         };
+
+        var restrictToAction = things.get(restrictTo, true);
 
         // If the space is restricted, build a list of allowed actions
         var spaceIsRestricted = state.value("Space is Restricted", scope);
@@ -31,20 +40,27 @@ yarn.service("contextActions", function (state) {
         }));
 
         var customActions = state.many("* is an Action");
-        angular.forEach(customActions, function (actionAssertion) {
+        angular.forEach(customActions, function (actionObj) {
             var actionDoesApply = true;
 //            console.log("actionScope", [actionScope]);
 //                console.log("hu??", !(spaceIsRestricted && !allowedActions[action.id]));
-            if (!(spaceIsRestricted && !allowedActions[actionAssertion.id])) {
+            if (!(spaceIsRestricted && !allowedActions[actionObj.id])) {
                 var actionScope = {
                     CurrentAct: currentAct,
                     CurrentSpace: space,
-                    CurrentAction: actionAssertion,
+                    CurrentAction: actionObj,
                     ActionObject: object
                 };
 
+                if (restrictToAction && actionObj !== restrictToAction) {
+                    actionDoesApply = false;
+                }
+
                 var isTransitive = state.value("CurrentAction is Transitive", actionScope);
-                if (isTransitive) {
+                var appliesTo = state.value("CurrentAction applies to ActionObject", actionScope);
+
+                if (isTransitive || appliesTo) {
+
                     var isActive = state.value("CurrentAction is Active", actionScope);
                     var icon = state.value("CurrentAction has Icon", actionScope);
                     var iconSize = state.value("CurrentAction has IconSize", actionScope);
@@ -58,7 +74,7 @@ yarn.service("contextActions", function (state) {
                     var onlyIfConditions =
                         state.manyAssertions("CurrentAction only if *", actionScope);
 
-                    if (isActive || allowedActions[actionAssertion.id]) {
+                    if (isActive || allowedActions[actionObj.id]) {
 
                         angular.forEach(unlessConditions, function (assertion) {
                             var expression = assertion.value();
@@ -82,7 +98,7 @@ yarn.service("contextActions", function (state) {
                                 icon: icon,
                                 name: name,
                                 label: label,
-                                command: command,
+                                command: command || actionObj.id,
                                 iconSize: iconSize
                             });
                             actions.push(action);

@@ -61,7 +61,6 @@ code .code-inner .ace_editor {
 
 
 .console {
-  overflow: hidden;
   display: block;
   position: relative;
   z-index: 1000;
@@ -1106,6 +1105,7 @@ log-item .logItem {
   padding: 0 0;
   margin: 0.2em 0;
   text-shadow: 1px 1px 5px #000000;
+  color: #eee;
 }
 log-item .logItem:hover a:visited,
 log-item .logItem:hover a:link,

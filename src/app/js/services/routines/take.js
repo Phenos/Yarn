@@ -6,7 +6,7 @@ yarn.service("takeRoutine", function (state,
                                       things,
                                       writers) {
 
-    events.on("Player takes *", "after dialogs", function () {
+    events.on("Player takes *", "before dialogs", function () {
         var object = state.one("Player takes *");
         takeRoutine(object);
         state.negate(assert("Player", "take"));

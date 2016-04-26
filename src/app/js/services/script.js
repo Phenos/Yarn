@@ -70,7 +70,8 @@ yarn.service("Script", function (yConsole, storyLog, state) {
         if (logType) {
 //                console.log("Found builtin voice", voice);
 //                console.log("Statement", statement);
-            storyLog.buffer()[logType](statement);
+//            storyLog.buffer()[logType](statement);
+            storyLog[logType](statement);
         } else {
 //          console.log("Looking for alternate voice", voice);
             // The voice doesnt match any standard voice, so we look for an actor
@@ -90,7 +91,10 @@ yarn.service("Script", function (yConsole, storyLog, state) {
                 });
                 statement = quotedStatement.join("");
 
-                storyLog.buffer().dialog(statement, {
+//                storyLog.buffer().dialog(statement, {
+//                    actor: voice
+//                });
+                storyLog.dialog(statement, {
                     actor: voice
                 });
             }

@@ -61,7 +61,6 @@ code .code-inner .ace_editor {
 
 
 .console {
-  overflow: hidden;
   display: block;
   position: relative;
   z-index: 1000;

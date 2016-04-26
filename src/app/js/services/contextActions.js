@@ -57,7 +57,10 @@ yarn.service("contextActions", function (state, things) {
                 }
 
                 var isTransitive = state.value("CurrentAction is Transitive", actionScope);
-                if (isTransitive) {
+                var appliesTo = state.value("CurrentAction applies to ActionObject", actionScope);
+
+                if (isTransitive || appliesTo) {
+
                     var isActive = state.value("CurrentAction is Active", actionScope);
                     var icon = state.value("CurrentAction has Icon", actionScope);
                     var iconSize = state.value("CurrentAction has IconSize", actionScope);
@@ -95,7 +98,7 @@ yarn.service("contextActions", function (state, things) {
                                 icon: icon,
                                 name: name,
                                 label: label,
-                                command: command,
+                                command: command || actionObj.id,
                                 iconSize: iconSize
                             });
                             actions.push(action);

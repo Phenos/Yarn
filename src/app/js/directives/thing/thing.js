@@ -45,6 +45,7 @@ yarn.directive('thing', function ThingDirective(things,
         this.unrecognizedClass = this.unrecognized ? 'unrecognized' : '';
         this.token = $attrs.token.trim();
         this.text = $attrs.text;
+        this.action = $attrs.action;
         this.selected = false;
         this.tooltip = null;
 
@@ -70,7 +71,7 @@ yarn.directive('thing', function ThingDirective(things,
                 self.unrecognized = true;
                 self.text = self.token;
             } else {
-                self.actions = contextActions(self.thing);
+                self.actions = contextActions(self.thing, self.action);
                 self.actions.shift();
 
                 if (self.actions.length === 0) {

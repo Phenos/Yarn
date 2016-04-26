@@ -32,7 +32,7 @@ yarn.service("talkToRoutine", function (events,
                     });
                     var label = topicIntro || name;
                     var output = [
-                        "[", label, ":", topic.id ,"]"
+                        "[", label, ":", topic.id ,": Talk About ]"
                     ].join("");
                     console.log("scriptText>>> ", output);
                     storyLog.topic(output);

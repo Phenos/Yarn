@@ -2,7 +2,8 @@
 
     yarn.directive('storyLog', StoryLogDirective);
 
-    function StoryLogDirective() {
+    function StoryLogDirective(storyLog,
+                               parseThingLink) {
         return {
             restrict: 'E',
             bindToController: {
@@ -16,8 +17,7 @@
             controller: StoryLogController
         };
 
-        function StoryLogController(storyLog,
-                                    $scope,
+        function StoryLogController($scope,
                                     $element,
                                     $compile,
                                     $document) {
@@ -48,24 +48,8 @@
             };
 
             function LogItem(number, text, type, scope) {
-                var parsedTxt = text;
-
-                if (angular.isString(text)) {
-                    // Render bracket links
-                    parsedTxt = parsedTxt.replace(/\[([^\]]+)]/g, function (match) {
-                        var tokens = match.substring(1, match.length - 1).split(":");
-                        var name = tokens[0];
-                        var id = tokens[1] || tokens[0];
-                        // Sanitize the id
-                        id = id.trim().toLowerCase().replace(/ /g, "_");
-                        return '<thing token="' + id + '" text="' + name + '"></thing>'
-                    });
-                    // Render paragraph breaks and line breaks
-                    parsedTxt = parsedTxt.replace(/(\\[n])/g, '<br/>');
-                }
-
                 this.number = number;
-                this.text = parsedTxt;
+                this.text = parseThingLink(text);
                 this.type = type;
                 this.scope = scope || {};
 

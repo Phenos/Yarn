@@ -1,0 +1,136 @@
+
+// Empty lines (or with only whitespaces) are equivalent to a period "." at the end of a list of statements
+
+Kitchen:
+    is a Room,
+    has a Name "The Kitchen",
+    has a Scenery "./images/rooms/kitchen.jpg",
+    links to the Bedroom,
+    links to the BoilerRoom,
+    links to the FrontOfTheHouse,
+    has a Introduction
+        "You are in a small cosy kitchen. Main doors lead to the bedroom, the bathroom and the front of the house.",
+    has a Description
+        "The kitchen is a small cosy room with wood countertops,
+        white cabinets, old appliances and a kitchen table.
+        Main doors lead to the bedroom, the bathroom and the front of the house. There is also
+        a door leading to a utility room.
+        You see a small key on the table.".
+
+    KitchenTable is in the Kitchen.
+
+LookedAtKitchen (
+    You looked at Kitchen
+) triggers NoticeTheKey (
+    SmallKey is Noticed.
+    Narrator says Monologue "You have noticed the small key on the table.".
+).
+NoticeTheKey has MaximumOccurrence 1
+
+BoilerRoom:
+    is a Room,
+    has a Name "An Small Dark Room",
+    has a Scenery "http://i.imgur.com/lc59UkS.jpg",
+    links to Kitchen,
+    has a Description
+        "This is a small dark room with a funny smell. You basically seen nothing..
+        but there is a light switch next to the door.".
+
+BoilerRoomLightSwitch:
+    is a Thing,
+    has a Status "closed",
+    is in the BoilerRoom,
+    is Usable,
+    has a Name "Light switch",
+    has a Description "Just a light switch!"
+
+FlipBoilerRoomLightSwitchToOn (
+    BoilerRoomLightSwitch has a Status "closed".
+    You use BoilerRoomLightSwitch.
+) triggers OpenBoilerRoomLights.
+ 
+FlipBoilerRoomLightSwitchToOff (
+    BoilerRoomLightSwitch has a Status "open".
+    You use BoilerRoomLightSwitch.
+) triggers CloseBoilerRoomLights.
+
+ExitBoilerRoom (
+    You exited from BoilerRoom.
+) triggers SomethingMovedInBoilerRoom (
+    Narrator says Monologue "As you exited the small room, you feel like something moved in the shadows.".
+)
+
+SomethingMovedInBoilerRoom has MaximumOccurrence 2 .
+
+OpenBoilerRoomLights (
+    BoilerRoomLightSwitch has a Status "open".
+    Narrator says Monologue "The lights come on.".
+    BoilerRoom:
+        has a Name "The Boiler Room",
+        has a Scenery "http://i.imgur.com/9JxRJow.jpg",
+        has a Description "You are in a small utility boiler room. Nothing of interest here... and it smells pretty bad".
+)
+CloseBoilerRoomLights (
+    BoilerRoomLightSwitch has a Status "closed".
+    Narrator says Monologue "The lights go off.".
+    BoilerRoom:
+        has a Scenery "http://i.imgur.com/lc59UkS.jpg",
+        has a Description "You are in a small utility boiler room. The light is closed and you dont see much... but you can sure smell the room".
+)
+
+
+
+
+FrontOfTheHouse:
+    is a Room,
+    has a Scenery "./images/rooms/frontOfTheHouse.jpg",
+    has a Name "Front of the house",
+    links to Kitchen,
+    has a Description "You see a car, your garage and a great big lawn. On the lawn there is a red soccer ball.".
+
+    RedSoccerBall is in the FrontOfTheHouse.
+
+Bedroom:
+    is a Room,
+    has a Name "The Bedroom",
+    links to the Kitchen,
+    links to BedSideTable,
+    has a Scenery "./images/rooms/bedroom.jpg",
+    has a Description
+        "The bedroom is dark and bare of any furniture
+        except a large bed and a small wooden nigh stand.".
+
+BedSideTable:
+    is a Room,
+    is a Thing,
+    is in the Bedroom,
+    has a Name "Bedside Table",
+    links to Bedroom,
+    links to BedsideTableDrawer,
+    has a Scenery "./images/rooms/bedsideTable.jpg",
+    has a Description "A small wooden bedside table, with a drawer... you should look in the drawer".
+
+Gun:
+   is a Thing,
+   is Usable,
+   has a Name "The gun!",
+   has a Description "It's a gun... just in can you choose to end this game abruptly",
+   is in BedSideTable.
+
+UseTheGun (
+    You use the Gun.
+) triggers YouDie (
+    Story has Ended.
+    TheEnd:
+        has Name "A tragic end!",
+        has Description "You took the gun and shot yourself... obviously you are now dead. Congratulations".
+)
+
+BedsideTableDrawer:
+    is a Room,
+    has a Name "Bedside Table Drawer",
+    has a Scenery "./images/rooms/BedsideTableDrawer.jpg",
+    links to BedSideTable,
+    has a Description "Your in the drawer... it's a little cramped. It's you and a flashlight",
+    has a FlashLight.
+

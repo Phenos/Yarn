@@ -1,0 +1,45 @@
+yarn.factory('welcomeMessage', WelcomeMessageService);
+
+function WelcomeMessageService($mdDialog,
+                               sidebar,
+                               $localStorage) {
+
+    var numberOfTimeToOpen = 3;
+    var useFullScreen = false;
+
+    var service = {};
+
+    service.open = function (ev) {
+
+        sidebar.close();
+
+        $mdDialog.show({
+            controller: WelcomeMessageController,
+            template:'<md-dialog ng-cloak><form><md-toolbar><div class=md-toolbar-tools><h2>About this prototype</h2><span flex></span><md-button class=md-icon-button ng-click=close()><md-icon md-svg-src=/svg-icons/close.svg aria-label="Close dialog"></md-icon></md-button></div></md-toolbar><md-dialog-content><div class=md-dialog-content><h2>It is still incomplete!</h2><p>Yarn Studio is still under developement on a daily basis and what you are using is a only a prototype for demonstration purposes.</p><h3>Keep in mind that:</h3><ul><li>It is not a complete and finished product. You might encounter bugs.</li><li>The documentation is also incomplete</li><li>The code you write in the editor might be deleted/lost in future versions of the servive.</li><li>While writing the story, you will not get a lot of hint on compilation errors</li></ul><h3>But, it\'s a good demonstration of:</h3><ul><li>The overall concept of the application (web app, mobile)</li><li>The kind of user interfaces and user experience to expect</li><li>The relationship between the player, the editor and the console</li><li>The gameplay experience on the player/reader</li><li>The performance (speed is similar to expected end product)</li><li>How the language look and works in general</li><li>How the world behaves in relation with the code you write and the gameplay</li></ul><h3>Dont hesitate to:</h3><ul><li>Follow us on twitter <a href=https://twitter.com/YarnStudioGames>@YarnStudioGames</a></li><li>Read our <a href=http://yarnstudio.io>development blog</a></li><li>Recommend us features and ideas</li></ul><p>The development is expected to continue troughout 2016 and fully stable and usable version of the service to be released by end of 2016.</p><p>Cheers :)</p><p>Mathieu</p></div></md-dialog-content><md-dialog-actions layout=row><md-button ng-click=close() style=margin-right:20px;>Close</md-button></md-dialog-actions></form></md-dialog>',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        });
+
+    };
+
+    service.openIfNew = function () {
+        if (!$localStorage.welcomeMessageService_NumberOfOpens) {
+            $localStorage.welcomeMessageService_NumberOfOpens = 1;
+        } else {
+            $localStorage.welcomeMessageService_NumberOfOpens++;
+        }
+        if ($localStorage.welcomeMessageService_NumberOfOpens <= numberOfTimeToOpen) {
+            service.open();
+        }
+    };
+
+    function WelcomeMessageController($scope, $mdDialog) {
+        $scope.close = function () {
+            $mdDialog.cancel();
+        };
+    }
+
+    return service;
+}

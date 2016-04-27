@@ -1,38 +1,40 @@
 yarn.service("takeRoutine", function (state,
                                       events,
-                                      stepRoutine,
+                                      assert,
+                                      predicates,
+                                      storyLog,
+                                      things,
                                       writers) {
 
-/*
-
-
-    TODO: MAKE THIS AS SEXY AS POSSILE
-
-
-*/
-
+    events.on("Player takes *", "before dialogs", function () {
+        var object = state.one("Player takes *");
+        takeRoutine(object);
+        state.negate(assert("Player", "take"));
+    });
 
     function takeRoutine(object) {
         if (object) {
-            var hasInInventory = state.predicate("hasInInventory");
-            var isIn = state.predicate("isIn");
-            var you = state.thing("You");
+
+            // Log the action of the player
+            var thingName = state.resolveValue(assert(object, "has", "Name"));
+            if (thingName) {
+                storyLog.action("You take the " + thingName);
+            } else {
+                storyLog.action("You take the object");
+            }
+
+            // Remove the object from where it was
+            var isAlreadyIn = state.one("Object is in *", {
+                Object: object
+            });
+            if (isAlreadyIn) {
+                state.negate(assert(object, "is in", isAlreadyIn));
+            }
 
             // Put item in inventory and log it to the player
-            state.createAssertion(you, hasInInventory, object);
-            writers.describeThingTakenInInventory(object);
-
-
-            state.negate({
-                subject: object.id,
-                predicate: "isIn"
-            });
-
-            var take = state.predicate("take");
-            // todo: Use id instead of object as arguments for Trigger
-            events.trigger(you, take, object);
-
-            stepRoutine();
+            var YourInventory = things.get("Your Inventory");
+            var isIn = predicates("Is In");
+            state.createAssertion(object, isIn, YourInventory);
         }
         return true;
     }
@@ -40,4 +42,3 @@ yarn.service("takeRoutine", function (state,
     return takeRoutine;
 
 });
-

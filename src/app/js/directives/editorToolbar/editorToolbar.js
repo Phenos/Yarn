@@ -1,24 +1,5 @@
 yarn.directive('editorToolbar', EditorToolbarDirective);
 
-yarn.filter('keyboardShortcut', function($window) {
-    return function(str) {
-        if (!str) return;
-        var keys = str.split('-');
-        var isOSX = /Mac OS X/.test($window.navigator.userAgent);
-        var seperator = (!isOSX || keys.length > 2) ? '+' : '';
-        var abbreviations = {
-            M: isOSX ? '⌘' : 'Ctrl',
-            A: isOSX ? 'Option' : 'Alt',
-            S: 'Shift'
-        };
-        return keys.map(function(key, index) {
-            var last = index == keys.length - 1;
-            return last ? key : abbreviations[key];
-        }).join(seperator);
-    };
-
-});
-
 function EditorToolbarDirective() {
     return {
         restrict: 'E',
@@ -33,9 +14,39 @@ function EditorToolbarDirective() {
         controller: EditorToolbarController
     };
 
-    function EditorToolbarController(IDE) {
-
+    function EditorToolbarController(editors,
+                                     state,
+                                     root,
+                                     tools,
+                                     IDE) {
         this.IDE = IDE;
+        this.state = state;
+        this.editors = editors;
 
+        this.validate = function() {
+            tools.focus("validator");
+            this.IDE.validate();
+        };
+
+        this.openFromProject = function () {
+            tools.focus("project");
+        };
+
+        this.run = function() {
+            tools.focus("commands");
+            this.IDE.run();
+        };
+
+        this.search = function() {
+            editors.search();
+        };
+
+        this.hideConsole = function () {
+            root.hideConsole();
+        };
+
+        this.openHelp = function() {
+            root.showHelp();
+        };
     }
 }

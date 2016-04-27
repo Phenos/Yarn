@@ -1,11 +1,11 @@
 (function () {
 
     yarn.directive('console', ConsoleDirective);
-    yarn.factory('consoleService', consoleService);
-
 
     function ConsoleDirective(commands,
+                              state,
                               getSelectionText) {
+
         return {
             restrict: 'E',
             bindToController: {
@@ -21,31 +21,32 @@
             controller: ConsoleController
         };
 
-        function ConsoleController(consoleService,
-                                   yConsole,
+        function ConsoleController(yConsole,
                                    $scope,
-                                   $rootScope,
                                    $compile,
                                    $timeout,
-                                   $element,
-                                   hotkeys) {
+                                   $element) {
 
             var self = this;
+            var lastStep = 0;
 
-            hotkeys.bindTo($rootScope)
-                .add({
-                    combo: 'mod+k',
-                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                    description: 'Clear the console',
-                    callback: function () {
-                        self.clear();
-                    }
-                });
+            this.isReady = false;
+            $timeout(function () {
+                self.isReady = true;
+            }, 1000);
 
-            consoleService.register(this);
+            this.lines = yConsole.lines;
 
-            var logsElem = $element.find("logs");
-            var logscrollElem = $element.find("md-content");
+            this.scrollbarsConfig = {
+                autoHideScrollbar: true,
+                theme: 'light',
+                advanced: {
+                    updateOnContentResize: true
+                },
+                scrollInertia: 200
+            };
+
+            this.commands = commands;
 
             $element.on("mouseup", function () {
                 var selection = getSelectionText();
@@ -54,6 +55,10 @@
                 }
             });
 
+            this.runCommand = function (command) {
+                commands.run(command);
+            };
+
             this.focus = function () {
                 $timeout(function () {
                     $element.find("input")[0].focus();
@@ -61,12 +66,12 @@
             };
 
             this.onInputEscapeFocus = function () {
-                //console.log("console.onInputEscapeFocus");
+//                console.log("console.onInputEscapeFocus");
                 this.onEscapeFocus();
             };
 
             this.onInputFocus = function () {
-                //console.log("console.onInputFocus");
+//                console.log("console.onInputFocus");
                 this.onFocus();
             };
 
@@ -75,60 +80,57 @@
                 if (trimmed[0] === ">") {
                     yConsole.error("Story script not yet supported!")
                 } else {
-                    commands.command(trimmed);
+                    commands.run(trimmed);
                 }
             };
 
             this.clear = function () {
-                var logElement = $element.find("logs");
-                logElement.empty();
-
+                this.lines.splice(0, this.lines.length);
                 this.onClear();
             };
 
-            this.write = function (text, type) {
-                $scope.$emit("refreshScrollbars");
+            this.write = function (text, type, options) {
+                var step = state.step();
+                var isNewStep = false;
+                if (lastStep !== step) {
+                    isNewStep = true;
+                    lastStep = step;
+                }
 
-                // Log Yarn console to the browser console
-                //if (type === "error") {
-                //    console.error("YARN: ", text);
-                //} else {
-                //    console.log("YARN: " + type + " : " + text.substring(0, 80), [text]);
-                //}
-                var scope = $scope.$new();
-                scope.text = text;
-                scope.type = type;
-                var logElem = $compile('<log type="type" text="text"></log>')(scope);
-                logsElem.append(logElem);
-                $timeout(function () {
-                    logscrollElem[0].scrollTop = logscrollElem[0].scrollHeight;
-                });
+                var newLine = new Line(text, type, step, isNewStep, options);
+                this.lines.push(newLine);
+
+                // todo: Put maximum number of line in a config
+                // Everytime the log overflows by 50 items it is cropped
+                var overflow = this.lines.length - 200;
+                if (overflow > 20) {
+                    this.lines.splice(0, overflow);
+                }
+
+                if (self.updateScrollbar) {
+                    self.updateScrollbar('scrollTo', 10000000);
+                }
             };
+
+            function Line(text, type, step, isNewStep, options) {
+                this.text = text;
+                this.type = type;
+                this.step = step;
+                this.isNewStep = isNewStep;
+                this.isNewStepClass = isNewStep ? 'isNewStep' : '';
+                this.timestamp = Date.now();
+                if (options && options.source) {
+                    this.source = options.source;
+                } else {
+                    this.source = null;
+                }
+                this.options = options;
+            }
 
             yConsole.register(this);
 
         }
 
-    }
-
-    function consoleService() {
-        var service = {};
-        var controller;
-
-
-        service.register = function (_controller) {
-            controller = _controller;
-        };
-
-        service.focus = function () {
-            controller.focus()
-        };
-
-        service.clear = function () {
-            controller.clear()
-        };
-
-        return service;
     }
 
 })();

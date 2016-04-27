@@ -1,0 +1,28 @@
+wallpaper {
+    display: block;
+
+    position: absolute;
+    top: -1%;
+    left: -1%;
+    height: 102%;
+    width: 102%;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    // TOTO: User mixin for vendor prefix
+    background-size: cover;
+    filter: blur(4px);
+
+
+    .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+
+        background: rgba(0, 0, 0, 0.2);
+
+    }
+
+}

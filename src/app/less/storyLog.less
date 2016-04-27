@@ -1,15 +1,41 @@
 story-log {
-
+    position: relative;
+    display: block;
+}
+.story-log {
+    position: relative;
     display: block;
     padding: 20px 20px 20px 20px;
-    margin: 100px auto 0 auto;
-    font-size: 1.1em;
+    margin: 0 auto 0 auto;
+    font-size: 1em;
+    max-width: 44em;
+}
 
-    max-width: 975px;
+@media only screen
+and (max-width : 320px){
+    .story-log {
+        font-size: 0.8em;
+    }
+}
 
-    .isMobileWidth & {
-        padding: 0 0 0 0;
-        font-size: 1.2em;
+@media only screen
+and (min-width : 320px){
+    .story-log {
+        font-size: 0.85em;
+    }
+}
+
+@media only screen
+and (min-width : 414px){
+    .story-log {
+        font-size: 0.9em;
+    }
+}
+
+@media only screen
+and (min-width : 720px){
+    .story-log {
+        font-size: 1em;
     }
 }
 

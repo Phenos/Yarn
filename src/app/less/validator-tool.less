@@ -1,0 +1,46 @@
+.validator-tool {
+
+    font-size: 1em;
+
+    md-list {
+        md-list-item,
+        md-list-item .md-list-item-inner {
+            min-height: 24px;
+        }
+        md-list-item {
+            margin: 0;
+
+            md-icon {
+                width: 12px;
+                height: 12px;
+                margin-right: 0.75em !important;
+                margin-top: 0.1em !important;
+                margin-bottom: 0.0em !important;
+            }
+            &.type-error {
+                color: #bb3828;
+                font-weight: bold;
+                md-icon {
+                    color: #bb3828;
+                }
+            }
+            &.type-passed {
+                color: #11a800;
+                md-icon {
+                    color: #11a800;
+                }
+            }
+            &.type-warning {
+                color: #7f7d7e;
+                md-icon {
+                    color: #d8a612;
+                }
+            }
+        }
+    }
+
+    .list-of-types {
+        background: #eaeaea;
+        overflow-x: hidden;
+    }
+}

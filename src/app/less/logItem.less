@@ -1,146 +1,287 @@
 @import "vars.less";
 
-.logItem {
+log-item {
+    display: inherit;
 
-    padding: 6px 20px;
-    margin: 0.5em 0.5em;
-    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
 
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
-
-    a:visited,
-    a:link,
-    a {
-        color: #ff9;
-        text-decoration: none;
-        font-weight: 400;
-    }
-    strong {
-        font-weight: 600;
+    &.hasBookmark {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .isMobileWidth & {
-        margin-right: 0.2em !important;
-        margin-left: 0.2em !important;
-    }
+    .read {
+        opacity: 0.6;
+        //animation: markAsRead 1s;
 
-    &.is-log {
-        .fadeIn();
-        font-size: 1.2em;
-        margin: 1em 1em;
-        font-weight: 400;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.5em 0.2em !important;
+        //@keyframes markAsRead {
+        //    0% {
+        //        opacity: 1;
+        //    }
+        //    100% {
+        //        opacity: 0.3;
+        //    }
+        //}
+        &:hover.logItem {
+            opacity: 1;
+
+            a:visited,
+            a:link,
+            a {
+                border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+            }
+        }
+        &.logItem {
+            a:visited,
+            a:link,
+            a {
+                border-bottom: 1px dotted rgba(255, 255, 255, 0);
+            }
+
         }
     }
 
-    &.is-image {
-        .fadeIn();
-        font-size: 1.2em;
-        margin: 1em 1em;
-        font-weight: 400;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.5em 0.2em !important;
-        }
-        img {
-            .defaultShadow();
-            max-width: 600px;
-            width: 80%;
-        }
-    }
+    .logItem {
 
-    &.is-error {
-        .fadeOut();
-        font-size: 0.9em;
-        letter-spacing: 0.06em;
-        margin: 1em 3em;
-        font-weight: 300;
-        text-align: center;
-        font-style: italic;
-    }
+        padding: 0 0;
+        margin: 0.2em 0;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+        color: #eee;
 
-    &.is-heading {
-        font-size: 2em;
-        font-weight: 200;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.2em 0.25em;
-        }
-    }
 
-    &.is-subHeading {
-        font-size: 1.3em;
-        font-weight: 200;
-        text-align: center;
-        .isMobileWidth & {
-            margin: 0.2em 0.25em;
-        }
-    }
+        &:hover {
+            a:visited,
+            a:link,
+            a {
+                color: #ffffff;
+            }
 
-    &.is-divider {
-        font-size: 1.3em;
-        margin: 1.5em 5em;
-        font-weight: bold;
-        text-align: center;
-        opacity: 0.4;
-
-        .isMobileWidth & {
-            margin: 0.25em 5em;
         }
 
-        .divider svg {
-            width: 160px;
-            path {
-                fill: #fff;
+        md-icon {
+            position: relative;
+            top: 0.5em;
+            color: inherit;
+            width: 30px;
+            height: 30px;
+            float: right;
+            padding-left: 1em;
+            text-shadow: inherit;
+        }
+
+        a:visited,
+        a:link,
+        a {
+            position: relative;
+            color: #eee;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+
+            &.unrecognized-thing {
+                color: #d0261b !important;
+                font-weight: bold !important;
+                text-decoration: line-through !important;
+            }
+
+        }
+        a:hover,
+        a:hover span {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        &.is-prompt {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0;
+            padding: 0;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        &.is-log {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0.5em 0;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        &.is-dialog {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0.5em 0;
+            font-weight: 400;
+            text-align: justify;
+            line-height: 1.4em;
+
+            .dialogText {
+                color: #eee;
+            }
+
+            .dialogMeta {
+                color: rgba(221, 221, 221, 0.8);
+            }
+        }
+
+        &.is-topic {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0 0;
+            font-weight: 400;
+            text-align: left;
+        }
+
+        &.is-insight {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0.5em 0;
+            font-weight: 400;
+            text-align: justify;
+            font-style: italic;
+            color: #ffffdc;
+
+        }
+
+        &.is-action {
+            .fadeIn();
+            font-size: 1.2em;
+            margin: 0.5em 0;
+            font-style: italic;
+            text-align: justify;
+            color: rgba(255, 255, 255, 0.81);
+
+        }
+
+        &.is-image {
+            .fadeIn();
+            font-size: 1.2em;
+            padding: 0.5em 0.5em;
+            margin: 0 0;
+            font-weight: 400;
+            text-align: center;
+
+            img {
+                box-shadow: 0 9px 19px 0 rgba(0, 0, 0, 0.36);
+                max-width: 400px;
+                width: 80%;
+            }
+        }
+
+        &.is-error {
+            .fadeOut();
+            font-size: 1em;
+            letter-spacing: 0.06em;
+            margin: 1em 0;
+            font-weight: 300;
+            text-align: center;
+            font-style: italic;
+        }
+
+        &.is-heading {
+            .fadeIn();
+            font-size: 2.2em;
+            font-weight: 200;
+            text-align: center;
+            margin: 0.2em 0;
+        }
+
+        &.is-subHeading {
+            .fadeIn();
+            font-size: 1.3em;
+            font-weight: 200;
+            text-align: center;
+        }
+        &.is-headline {
+            .fadeIn();
+            font-size: 1.3em;
+            margin: 0 0;
+            text-align: center;
+
+        }
+
+
+        &.is-divider {
+            font-size: 1.3em;
+            margin: 1.5em 5em;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0.4;
+
+            .divider svg {
+                width: 160px;
+                path {
+                    fill: #fff;
+                }
+            }
+        }
+        &.is-thingImage {
+            .fadeIn();
+            font-size: 1.3em;
+            margin: 1.5em 0;
+            text-align: center;
+
+            img {
+                .defaultShadow();
+                width: 5em;
+                height: 5em;
+                border-radius: 50%;
+                border: none;
+                background: #fff;
             }
         }
     }
-    &.is-thingImage {
-        font-size: 1.3em;
-        margin: 1.5em 5em;
-        text-align: center;
 
-        .isMobileWidth & {
-            margin: 0.25em 5em;
+    .fadeOut {
+
+        opacity: 1;
+        animation: fadingOut 2s;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+        overflow: hidden;
+
+        @keyframes fadingOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
         }
 
-        img {
-            .defaultShadow();
-            width: 5em;
-            height: 5em;
-            border-radius: 50%;
-            border: none;
-            background: #fff;
-        }
-    }
-}
-
-.fadeOut {
-
-    opacity: 1;
-    animation: fadingOut 2s;
-    animation-delay: 2s;
-    animation-fill-mode: forwards;
-    overflow: hidden;
-
-    @keyframes fadingOut {
-        0% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-            height: 0;
-            margin: 0;
-            padding: 0;
-        }
     }
 
+    .fadeOut {
+
+        opacity: 1;
+        animation: fadingOut 2s;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+        overflow: hidden;
+
+        @keyframes fadingOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+    }
 }
 
 .fadeIn {
-
+/*
     opacity: 1;
     animation: fadingIn 2s;
     animation-delay: 0s;
@@ -155,5 +296,5 @@
             opacity: 1;
         }
     }
-
+*/
 }

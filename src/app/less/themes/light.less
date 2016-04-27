@@ -1,0 +1,150 @@
+/*
+
+Light Theme - For light backgrounds and dark text.
+
+*/
+
+.theme-brightness-light {
+    md-toolbar.statusBar,
+    md-toolbar.toolbar {
+
+        background-color: rgba(255, 255, 255, 0.2) !important;
+
+        .md-button {
+            color: #000;
+        }
+        md-icon {
+            fill: #000 !important;
+        }
+    }
+
+    wallpaper {
+    }
+
+    .story-log {
+        log-item .logItem {
+            color: #333333 !important;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.5);
+
+            a {
+                color: #181818 !important;
+                text-shadow: 1px 1px 3px rgba(255, 255, 255, 1);
+                font-weight: 600;
+            }
+
+            &:hover {
+                a {
+                    color: #000000 !important;
+                    border-bottom: 1px dotted rgba(0, 0, 0, 0.4);
+
+                    &:focus,
+                    &:hover {
+                        border-bottom: 1px solid rgba(0, 0, 0, 1);
+                        color: #000 !important;
+                    }
+                }
+
+            }
+
+            &.is-dialog {
+                .dialogText {
+                    color: #000;
+                }
+                .dialogMeta {
+                    color: rgba(0, 0, 0, 0.8);
+                }
+            }
+        }
+    }
+
+    user-choice {
+        .question {
+            color: #000;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
+        }
+        button {
+            color: #000 !important;
+            background-color: rgba(255, 255, 255, 0.6) !important;
+
+            &:hover {
+                background-color: rgb(255, 255, 255) !important;
+            }
+
+            md-icon {
+                fill: #000 !important;
+            }
+        }
+    }
+
+    .context-action-menu {
+        background: rgba(220, 220, 220, 1);
+        .question {
+            color: #000;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
+        }
+        .label {
+            color: #000;
+        }
+        button {
+            color: #000 !important;
+            background-color: rgba(255, 255, 255, 0.6) !important;
+
+            &:hover {
+                background-color: rgb(255, 255, 255) !important;
+            }
+
+            md-icon {
+                fill: #000 !important;
+            }
+        }
+    }
+
+}
+
+
+
+/*
+Mobile optimization test
+*/
+
+wallpaper {
+    //background-image: none !important;
+    mask {
+        //display: none !important;
+    }
+}
+
+.player {
+
+    .story-log {
+        log-item .logItem {
+            text-shadow: none !important;
+            a {
+                text-shadow: none !important;
+            }
+
+            &.is-image {
+
+                img {
+                    //box-shadow: none !important;
+                }
+            }
+
+        }
+    }
+
+    user-choice {
+        .question {
+            text-shadow: none !important;
+        }
+    }
+
+    .context-action-menu {
+        .question {
+            text-shadow: none !important;
+        }
+    }
+
+
+}
+

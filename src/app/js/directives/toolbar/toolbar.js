@@ -1,10 +1,12 @@
-yarn.directive('toolbar', ToolbarDirective);
-
-function ToolbarDirective() {
+yarn.directive('toolbar', function ToolbarDirective($window,
+                                                    session,
+                                                    state,
+                                                    profiles,
+                                                    commands,
+                                                    login) {
     return {
         restrict: 'E',
         bindToController: {
-            user: "="
         },
         scope: {},
         replace: true,
@@ -13,19 +15,36 @@ function ToolbarDirective() {
         controller: ToolbarController
     };
 
-    function ToolbarController(sidebar, $scope, $window) {
+    function ToolbarController(sidebar, $scope) {
 
-        if (this.user && this.user.username) {
-            $scope.avatar = this.user.profiles[0].profile.photos[0].value;
-            $scope.username = this.user.profiles[0].profile.displayName;
+        this.state = state;
+        this.visited = profiles.visited();
+
+        if (session.user()) {
+            this.user = session.user();
         }
 
-        this.logout = function () {
-            $window.location.href = "/auth/logout";
+        if (this.user && this.user.username) {
+            $scope.avatar = this.user.profileImageURL;
+            $scope.username = this.user.displayName;
+        }
+
+        this.restartStory = function () {
+            commands.run("restart");
+        };
+
+        this.undo = function () {
+            state.undo();
+        };
+
+        this.login = function () {
+            login();
         };
 
         this.openSidebar = function() {
             sidebar.open();
-        }
+        };
+
     }
-}
+});
+

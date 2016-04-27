@@ -1,0 +1,131 @@
+<article
+        previous="for-authors.html"
+        parent="for-authors.html"
+        next="custom-vs-standard.html"
+>
+    <h1>The YarnScript Language</h1>
+
+    <p>
+        Yarn interactive stories are written using the <em>YarnScript</em> language.
+    </p>
+
+    <p>
+        These plain text files can be created with any text editor, but are easier to create
+        using the <em>Yarn Studio Editor</em>, which provide a rich writting environment.
+    </p>
+
+    <p>Here is a small sample how how this langage looks:</p>
+    <code lang="javascript">
+Cellar Room
+  is a Place,
+  links to Boiler Room,
+  has Name "The Cellar",
+  has a Description
+    "This cellar is dark, dusty and dry.
+    A flight of stair go up."
+
+Bookcase
+  is a Thing,
+  has a Name "Old Bookcase",
+  has a Description "An old bookcase with old books.",
+  is in Cellar Room.
+</code>
+
+    <p>
+        In this example, the author has created a Cellar room with proper names and
+        descriptions, and added an old bookcase inside it.
+    </p>
+
+    <h2>A "descriptive" language</h2>
+
+    <p>
+        YarnScript is what is what is known as a DSL (Domain Specific Language) and has a "Declarative" syntax.
+        This means two important things:
+    </p>
+    <ul>
+        <li>
+            It has been tailor made for writing interactive stories. It is it's sole purpose.
+        </li>
+        <li>
+            The language is used to "describe" your story, instead of programming
+            complex and detailed instructions.
+        </li>
+    </ul>
+    <p>
+        In the example above, the description provided is all you need to let the user enter the Cellar,
+        look at the bookcase to see it's description, and then move on to the Boiler Room.
+    </p>
+
+    <p>
+        <em>The actual gameplay mechanics to let the player move about and looking around are already built-in.</em>
+    </p>
+
+    <p>
+        A lot of the hard work of game design is taken care of by the Yarn plateform or supplied by
+        existing standard reusable libraries.
+    </p>
+
+    <h2>The "Statement" Structure</h2>
+
+    <p>
+        While the "Cellar" example shown above look like natural language, it is not. This story fragment follows
+        a very specific and very simple syntax.
+    </p>
+
+    <p>
+        Almost everything in a yarn story is created using series of <strong>Statements</strong>. An statement
+        is a truth claim about something in your story using a <strong>Subject</strong>,a
+        <strong>Verb</strong>, an <strong>Object</strong> and an optionnal <strong>Value</strong>.
+    </p>
+
+    <p>
+        Here is a series of simple statements:
+    </p>
+<code>
+Mister Sniffle is a Cat.
+Kernel Mustard is in the Study.
+Bottle Of Gin is an Inventory Item.
+</code>
+
+    <p>
+        Lets dissect the <em>Mister Sniffle</em> statement into it's parts:
+    </p>
+    <ul>
+        <li><strong>Subject</strong>: Mister Sniffle</li>
+        <li><strong>Verb</strong>: is a</li>
+        <li><strong>Object</strong>: Cat</li>
+    </ul>
+    <p>
+        Once in the game, this statement will create an object called "MisterSniffles" and another object called "Cat".
+    </p>
+
+    <p>
+        Then it will create a "is a" relationship between the two objects.
+    </p>
+
+    <h3>Mind the uppercase and lowercase</h3>
+
+    <p>
+        The way that YarnScrip differentiate between each part of the statements is simply by checking
+        which words start with either lowercase or uppercase letters. The rules are very simple:
+    </p>
+    <ul>
+        <li>
+            <strong>Objects</strong>
+            start with an uppercase letter.
+        </li>
+        <li>
+            <strong>Verbs</strong> are in lowercase.
+        </li>
+        <li>
+            You can use multiple word for both Verbs and Objects
+        </li>
+    </ul>
+    <p>Now let's look at a few more examples and notice how these rules apply:</p>
+    <code>
+Story has Author "John Doe".
+You are in Johns Bedroom.
+Entering The Castle triggers Gates Close.
+    </code>
+
+</article>

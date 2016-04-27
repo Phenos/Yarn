@@ -1,0 +1,55 @@
+.editorIconToolbar {
+    //background: rgb(63,81,181) !important;
+    background: rgba(59, 82, 186, 0.94) !important;
+    //background: rgb(80, 97, 179) !important;
+    color: #000;
+    height: 50px;
+    min-height: 50px;
+    font-size: 1em;
+
+    .md-toolbar-tools {
+
+        button.md-button {
+
+            background: none !important;
+            border-radius: 3px;
+            line-height: 3228;
+            height: 30px;
+            min-height: 30px;
+            width: auto;
+            padding: 2px;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.2) !important;
+                md-icon {
+                    color: rgba(255, 255, 255, 1);
+                    fill: rgba(255, 255, 255, 1);
+                }
+            }
+
+            &.isOn {
+                background: rgba(255, 255, 255, 0.7) !important;
+                md-icon {
+                    color: rgb(63,81,181) !important;
+                    fill: rgb(63,81,181) !important;
+                }
+            }
+
+            md-icon {
+                color: rgba(255, 255, 255, 0.9);
+                fill: rgba(255, 255, 255, 0.9);
+                height: 20px;
+                min-height: 20px;
+            }
+        }
+
+        save-status {
+            a {
+                color: #fff;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

@@ -1,10 +1,25 @@
 user-input {
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+
     .inputContainer {
         padding-top: 5px;
+        padding-right: 10px;
     }
+
+    md-autocomplete {
+        background-color: rgb(255, 255, 255);
+
+        input {
+            //backgound: #fff;
+        }
+    }
+
     form {
         margin: 0;
-        padding: 0 20px;
+        padding: 0 10px;
 
         .executeButton {
             min-width: 60px;
@@ -42,7 +57,7 @@ user-input {
             padding: 0;
         }
         .autocomplete-description {
-            font-size: 0.9em;
+            font-size: 1em;
             margin: 0;
             padding: 0;
             color: #222;

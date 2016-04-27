@@ -1,4 +1,4 @@
-@keyframes fadeIn {
+    @keyframes fadeIn {
     from {
         opacity: 0;
     }
@@ -8,32 +8,44 @@
 }
 
 .help {
+
     position: relative;
-    background: #dddddd;
     z-index: 1000;
-    font-size: 0.9em;
+    font-size: 0.85em;
     font-weight: 400;
-    padding: 20px;
+    padding: 0;
+
+    .md-button {
+        min-width: 0;
+    }
 
     help-container {
-        position: relative;
-        display: block;
 
         help-content {
-            position: relative;
-            display: block;
-            background: #fff;
+
+            background: #ffffff;
 
             link-bar {
                 display: block;
-                background: #e5e5e5;
+                //background: rgba(0, 85, 0, 0.20);
+                background: #C3D0BA;
                 min-height: 3.2em;
+                z-index: 1000;
+                md-icon {
+                    margin-top: 5px;
+                }
+            }
+
+            .footer-navigation {
+                margin-bottom: 60px;
             }
 
             help-article {
+                background: #f4efe8;
                 position: relative;
                 display: block;
-                padding: 10px 20px 10px 30px;
+                padding: 10px 20px 30px 30px;
+                margin-bottom: 10px;
 
                 article {
                     animation: fadeIn ease-in 1;
@@ -49,24 +61,62 @@
                 }
                 h2 {
                     font-size: 1.4em;
+                    font-weight: normal;
+                    color: #555;
+                    margin: 1.2em 0 0.3em 0;
                 }
                 h3 {
                     font-size: 1.1em;
-                    color: #333;
+                    color: #666;
+                    margin: 1.2em 0 0.3em 0;
                 }
                 h4 {
                     font-size: 1em;
-                    color: #555;
-                    margin: 0.5em 0;
+                    color: #777;
+                    margin: 1.2em 0 0.3em 0;
                 }
-                code {
-                    display: block;
-                    white-space: pre;
-                    padding: 10px 20px 10px 20px;
-                    border: 1px solid #b9c4c9;
-                    background: #dae7ed;
-                    margin: 0 0 1em 0;
+
+                ul {
+                    margin-top: 0.5em;
+                    margin-bottom: 0.5em;
+                    padding-left: 1.3em;
+
+                    li {
+                        list-style-type: square;
+
+                        a:visited,
+                        a:link {
+                            text-decoration: none;
+                        }
+                        a:hover {
+                            text-decoration: underline;
+                        }
+                    }
                 }
+
+                table {
+                    font-size: 1em;
+                    color: #000;
+                    thead {
+                        th {
+                            color: #666;
+                        }
+                    }
+                    tr {
+                        th {
+                            text-align: left;
+                            padding: 0.2em 2em 0.2em 0.2em;
+                            border-top: 1px solid rgba(0, 0, 0, 0.1);
+                        }
+                        td {
+                            padding: 0.2em 0.2em 0.2em 0.2em;
+                            border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+                        }
+                    }
+
+                }
+
             }
         }
     }

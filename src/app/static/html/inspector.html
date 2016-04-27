@@ -1,0 +1,58 @@
+<div class="inspector"
+     layout="column">
+    <div layout="column"
+         ng-show="inspector.articles.length > 0">
+        <h2>
+            {{ inspector.title }}
+        </h2>
+
+        <div class="summary" ng-if="inspector.summary">
+            {{ inspector.summary }}
+        </div>
+        <articles>
+            <article ng-repeat="article in inspector.articles"
+                     inspector-article
+                     ng-class='"type-" + article.type'
+            >
+                <md-fab-speed-dial md-direction="left"
+                                   md-open="article.menuIsOpen"
+                                   md-fab-top-right
+                                   md-hover-full
+                >
+                    <md-fab-trigger>
+                        <md-button class="md-fab">
+                            <md-icon md-svg-src="/svg-icons/inspections/{{::article.type }}.svg"
+                                     aria-label="menu"></md-icon>
+                        </md-button>
+                    </md-fab-trigger>
+                    <md-fab-actions>
+                        <md-button aria-label="{{::action.label }}"
+                                   class="md-fab md-raised md-mini"
+                                   ng-click="action.callback();"
+                                   ng-repeat="action in ::article.actions">
+                            <md-tooltip md-direction="bottom">{{::action.label}}</md-tooltip>
+                            <md-icon
+                                    md-svg-src="/svg-icons/{{::action.icon }}.svg"
+                                    aria-label="{{::action.label }}"></md-icon>
+                        </md-button>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
+                <h3>
+                    {{::article.title }}
+                </h3>
+                <section>
+                </section>
+            </article>
+        </articles>
+    </div>
+    <div ng-if="!inspector.articles || inspector.articles.length === 0"
+         layout-fill
+         layout="column"
+         layout-align="center center">
+        <div style="color: rgba(0,0,0,0.4)">
+            To inspect something, move you text cursor over any
+            <br/>
+            word in the editor, or select an item from the list of things.
+        </div>
+    </div>
+</div>

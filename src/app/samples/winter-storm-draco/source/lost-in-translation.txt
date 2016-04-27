@@ -1,0 +1,21 @@
+/*
+
+This file contains all the bits and pieces of writing that is potentially
+being lost in the translation from the Inform parser paradigm to the
+Yarn GUI paradigm.
+
+
+## Act 1 : Highway
+
+Instead of climbing the treeline, say "That is not part of your skillset."
+
+## Road
+
+Instead of searching the road, say
+    "The people in the cars are difficult to see, shrouded by clouds of their own breath."
+
+Instead of going nowhere in Highway, say
+    "The way through the woods is south."
+
+
+*/

@@ -1,0 +1,57 @@
+/*
+
+The Unflushed toilet
+
+In this example the toilet has not been flushed.
+
+We use the name of the toilet as variable (as a contraints)
+
+*/
+
+Bathroom:
+    is a Room,
+    has Name "The Bathroom",
+    links to the Kitchen,
+    has a Scenery "./images/rooms/bathroom.jpg",
+    has a Description
+        "The bathroom is small perfectly cubic room covered with white tiles.
+        It is equiped with all the classic bathroom stuff."
+
+Kitchen links to Bathroom.
+
+Toilet:
+    is in Bathroom,
+    has a Name "The Toilet!",
+    has FlushState "unflushed",
+    is a Thing,
+    is Usable,
+    has a Description "A white ceramic toilet, from which emanates the fowl odor".
+
+WalksInTheBathRoom (
+    You enter the Bathroom.
+    Toilet has FlushState "unflushed".
+) triggers WalkInWhenToiletIsDirty (
+    Narrator says Monologue "Something smells like death in here!"
+)
+
+
+FlushingTheFullToilet (
+    You use the Toilet.
+    Toilet has FlushState "unflushed".
+) triggers TheDirtyToiletFlushed (
+    Toilet has FlushState "flushed".
+    Toilet has a Description
+         "A white ceramic toilet. Well flushed!".
+    Narrator says Monologue "As you flush, the toilet makes a loud and chuncky gurgling sound.".
+    Narrator says Monologue "You can already discern the fowl smell is diminishing.".
+)
+
+FlushingTheEmptyToilet (
+    You use the Toilet.
+    Toilet has FlushState "flushed".
+) triggers TheCleanToiletFlushed (
+    Narrator says Monologue "As you flush, the toilet makes a loud and chuncky gurgling sound."
+    Narrator says Monologue "You can already discern the fowl smell is diminishing."
+)
+
+*/

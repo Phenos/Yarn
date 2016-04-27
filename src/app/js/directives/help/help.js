@@ -1,10 +1,10 @@
 (function () {
 
     yarn.directive('help', HelpDirective);
-    yarn.service('helpService', helpService);
+    yarn.service('help', helpService);
 
 
-    function HelpDirective(helpService,
+    function HelpDirective(help,
                            $localStorage) {
         return {
             restrict: 'E',
@@ -23,14 +23,13 @@
                                    $http,
                                    $compile,
                                    $scope,
-                                   URI) {
+                                   URI,
+                                   root) {
             var self = this;
-            helpService.register(this);
+            help.register(this);
 
             this.focus = function () {
-                //$timeout(function () {
-                //    $element.find("input")[0].focus();
-                //}, 200);
+                root.showHelp();
             };
 
             this.lastHelpFileLoaded = function (uri) {
@@ -42,12 +41,9 @@
 
             this.load = function (uri) {
                 this.lastHelpFileLoaded(uri);
-
-                var self = this;
                 var resolvedURI = URI(uri).absoluteTo("./help/").toString();
 
-
-                console.log("resolvedURI", resolvedURI);
+//                console.log("resolvedURI", resolvedURI);
 
                 var config = {
                     method: 'GET',
@@ -57,7 +53,7 @@
 
                 function then(response) {
                     self.setContent(response.data);
-                    //console.log("response", response);
+//                    console.log("response", response);
 
                     return {
                         source: response.data,
@@ -70,8 +66,10 @@
 
             $element.on("click", function (e) {
                 var target = e.target;
-                //console.log("-", e);
-                if (target.parentElement.tagName === "A") target = target.parentElement;
+//                console.log("-", e);
+                if (target.parentElement.tagName === "A") {
+                    target = target.parentElement;
+                }
                 if (target.tagName === "A") {
                     e.preventDefault();
                     var $target = angular.element(target);
@@ -94,9 +92,15 @@
             this.setContent = function (content) {
                 var helpContent = $element.find("help-article");
                 var elem = $compile(content)($scope);
+                this.nextArticle = elem.attr("next");
+                this.parentArticle = elem.attr("parent");
+                this.previousArticle = elem.attr("previous");
+
+                $element.find("md-content")[0].scrollTop = 0;
                 helpContent.empty().append(elem);
-                $scope.$broadcast("refreshScrollbars");
             };
+
+            help.register(this);
 
             this.load(this.lastHelpFileLoaded() || "./index.html");
         }
@@ -113,15 +117,19 @@
         };
 
         service.focus = function () {
-            controller.focus()
+//            console.log("focus!");
+            controller.focus();
+            return this;
         };
 
         service.clear = function () {
-            controller.clear()
+            controller.clear();
+            return this;
         };
 
         service.load = function (url) {
             controller.load(url);
+            return this;
         };
 
         return service;

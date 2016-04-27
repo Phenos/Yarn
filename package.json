@@ -8,52 +8,41 @@
   },
   "version": "0.20.0",
   "description": "",
-  "main": "server/server.js",
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp",
-    "start": "node server/server.js",
     "postinstall": "./node_modules/bower/bin/bower install --config.interactive=false && node ./node_modules/gulp/bin/gulp build",
-    "test": "echo \"Error: no test specified.... tests? tests? we dont need no stinking tests!!\" && exit 1"
+    "actionhero": "actionhero",
+    "start": "actionhero start",
+    "test": "NODE_ENV=test mocha"
   },
   "dependencies": {
+    "actionhero": "^13.2.1",
     "aws-sdk": "^2.2.33",
-    "body-parser": "^1.14.2",
     "bower": "latest",
     "browser-sync": "^2.9.11",
-    "compression": "^1.0.3",
-    "connect-ensure-login": "^0.1.1",
-    "cookie-parser": "^1.4.1",
     "cors": "^2.5.2",
     "del": "^2.1.0",
-    "ejs": "2.3.3",
-    "express-flash": "0.0.2",
-    "express-session": "^1.13.0",
+    "eslint": "^2.7.0",
+    "firebase": "^2.4.1",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-angular-embed-templates": "^2.2.0",
     "gulp-bump": "^1.0.0",
     "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.6.0",
+    "gulp-eslint": "^2.0.0",
     "gulp-inject": "^3.0.0",
     "gulp-less": "^3.0.3",
     "gulp-load-plugins": "^1.2.0",
+    "gulp-rename": "^1.2.2",
     "gulp-serve": "^1.2.0",
     "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.4.2",
     "gulp-using": "0.0.1",
     "gulp-watch": "^4.3.5",
-    "jade": "^1.11.0",
-    "loopback": "^2.22.0",
-    "loopback-boot": "^2.6.5",
-    "loopback-component-explorer": "^2.1.0",
-    "loopback-component-passport": "^2.0.0",
-    "loopback-connector-postgresql": "^2.4.0",
-    "loopback-datasource-juggler": "^2.39.0",
-    "passport": "^0.3.2",
-    "passport-oauth2": "^1.1.2",
-    "passport-twitter": "^1.0.4",
     "s3": "^4.4.0",
-    "serve-favicon": "^2.3.0"
+    "twit": "^2.2.3",
+    "ws": "latest"
   },
   "engines": {
     "node": "4.1.1"
@@ -63,5 +52,9 @@
     "url": "https://github.com/Phenos/Yarn.git"
   },
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp-jsdoc3": "^0.2.1",
+    "mocha": "latest",
+    "should": "latest"
+  }
 }

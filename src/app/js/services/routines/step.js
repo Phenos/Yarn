@@ -1,46 +1,113 @@
-yarn.service("stepRoutine", function (events,
-                                      state,
-                                      dialogs,
-                                      script,
-                                      sceneryService) {
+yarn.service("step", function (postal,
+                               events,
+                               state,
+                               dialogs,
+                               assert,
+                               synonyms,
+                               statuses,
+                               player,
+                               storyLog,
+                               $timeout) {
 
-    /**
-     * Increment the game session step counter
-     */
-    return function stepRoutine() {
-        state.step(1);
-        // Process all the events
-        var somethingHappened = events.process();
-        // Check if dialogs are supposed to be said
-        dialogs.process();
+    function Step () {
+        this.alreadyInsideStep = false;
+        this.listeners = [];
+        this.scope = {};
+        this.channel = postal.channel("yarn.step");
+        this.sequence = [
+            "startStep",
+            "stepIncrement",
+            "stateUpdate",
+            "actions",
+            "events",
+            "move",
+            "dialogs",
+            "storyEnds",
+            "prompts",
+            "endStep"
+        ];
+    }
 
-        // Update the scenery in case it has changed
-        updateScenery();
+    Step.prototype.on = function on(sequenceItemId, callback) {
+        this.channel.subscribe(sequenceItemId.toLowerCase(), callback);
+    };
 
-        state.assertions.removeLayer("step");
-        return somethingHappened;
+    Step.prototype.run = function run(action) {
+        var self = this;
+
+        self.scope.action = action || null;
+
+        if (!this.alreadyInsideStep) {
+            this.alreadyInsideStep = true;
+            angular.forEach(this.sequence, function (eventId) {
+                self.walk(eventId);
+            });
+        } else {
+            console.warn("Prevented accidental step recursion!");
+        }
+        this.alreadyInsideStep = false;
+
+        player.scroll();
+    };
+
+    Step.prototype.walk = function walk(sequenceItemId) {
+        var self = this;
+//        console.log("step.walk", sequenceItemId);
+
+        publish("before " + sequenceItemId);
+        publish(sequenceItemId);
+        publish("after " + sequenceItemId);
+
+        function publish(id) {
+            self.channel.publish(id.toLowerCase(), self);
+            events.process(id);
+        }
     };
 
 
-    function updateScenery() {
-        var room = state.resolveOne({
-            subject: "You",
-            predicate: "isIn"
-        });
 
-        if (room) {
-            var scenery = state.resolveValue({
-                subject: room.id,
-                predicate: "has",
-                object: "Scenery"
-            });
-            var url = script.resolveRelativeURI(scenery);
-            if (url) {
-                sceneryService.change(url);
-            } else {
-                sceneryService.clear();
-            }
+    var step = new Step();
+
+    step.on("startStep", function () {
+        storyLog.markAsRead();
+        state.step(1);
+        events.trigger(assert("Story", "did", "Step"));
+        events.trigger(assert("Player", "did", "Step"));
+    });
+
+    step.on("stateUpdate", function () {
+        synonyms.update(state);
+        statuses.update(state);
+    });
+
+    step.on("actions", function (_step) {
+//        console.log("ACTIONS >>> ", step);
+        _step.scope.action && _step.scope.action();
+    });
+
+    step.on("events", function () {
+        events.process();
+    });
+
+    step.on("dialogs", function () {
+        dialogs.process();
+    });
+
+    step.on("storyEnds", function () {
+        var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
+        if (storyHasEnded) {
+            player.refresh();
         }
-    }
+    });
+
+    step.on("endStep", function () {
+        // Flush the storyLog buffers
+        storyLog.flushBuffers();
+        // Remove the temporary "step" layer of assertions
+        state.assertions.removeLayer("step");
+    });
+
+
+    return step;
 });
 

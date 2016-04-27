@@ -1,0 +1,50 @@
+yarn.directive('toolbar', function ToolbarDirective($window,
+                                                    session,
+                                                    state,
+                                                    profiles,
+                                                    commands,
+                                                    login) {
+    return {
+        restrict: 'E',
+        bindToController: {
+        },
+        scope: {},
+        replace: true,
+        controllerAs: 'toolbar',
+        template:'<md-toolbar class=toolbar><div class=md-toolbar-tools><div flex=30 layout=row layout-align="start center"><md-button ng-click=toolbar.openSidebar() class="md-icon-button main-menu-button" aria-label="Open menu"><md-icon md-svg-icon=./svg-icons/menu.svg></md-icon></md-button><span layout=row layout-align="end center" ng-if=!username><md-button ng-click=toolbar.login()><md-icon md-svg-icon=./svg-icons/twitter.svg></md-icon><span hide-xs>Login</span></md-button></span></div><div flex=40 layout=row layout-align="center center"><md-icon flex=100 style="width: auto; height: 2em;" hide-xs show-gt-xs md-svg-icon=./svg-icons/logo-name-small.svg></md-icon><md-icon show-xs hide-gt-xs flex=100 style="width: auto; height: 2em;" md-svg-icon=./svg-icons/yarn-logo-small-white.svg></md-icon></div><div flex=30 layout=row layout-align="end end"><div flex></div><md-menu ng-if=toolbar.state.story md-offset="-8 0" md-position-mode="target-right target"><md-button style="min-width: 0; padding: 0;" ng-click=$mdOpenMenu($event) class="md-icon-button story-menu-button" aria-label="Story menu"><md-icon md-menu-origin md-svg-icon=./svg-icons/story.svg></md-icon></md-button><md-menu-content width=4 class=story-menu><md-toolbar><div class=md-toolbar-tools layout=row><span flex></span><h2><span>Story Menu</span></h2><div><md-icon style="height: 30px; width: 30px; margin: 0 10px;" md-menu-align-target md-svg-icon=./svg-icons/story.svg></md-icon></div></div></md-toolbar><md-menu-item ng-if=toolbar.visited><md-button ui-sref="profile({ profile: toolbar.visited.shortUsername })" aria-label="{{ toolbar.visited.shortUsername }}"><img alt="{{ toolbar.visited.shortUsername }}" ng-src="{{ toolbar.visited.twitterProfile.profile_image_url | biggerProfileImage }}" class=avatar> {{ toolbar.visited.shortUsername }}</md-button></md-menu-item><md-menu-item><md-button ng-click=toolbar.undo()><md-icon md-svg-icon=./svg-icons/undo.svg></md-icon>Undo <span class=md-alt-text>{{:: \'M-U\' | keyboardShortcut }}</span></md-button></md-menu-item><md-menu-item><md-button ng-click=toolbar.restartStory()><md-icon md-svg-icon=./svg-icons/restart.svg></md-icon><span>Restart</span></md-button></md-menu-item></md-menu-content></md-menu></div></div></md-toolbar>',
+        controller: ToolbarController
+    };
+
+    function ToolbarController(sidebar, $scope) {
+
+        this.state = state;
+        this.visited = profiles.visited();
+
+        if (session.user()) {
+            this.user = session.user();
+        }
+
+        if (this.user && this.user.username) {
+            $scope.avatar = this.user.profileImageURL;
+            $scope.username = this.user.displayName;
+        }
+
+        this.restartStory = function () {
+            commands.run("restart");
+        };
+
+        this.undo = function () {
+            state.undo();
+        };
+
+        this.login = function () {
+            login();
+        };
+
+        this.openSidebar = function() {
+            sidebar.open();
+        };
+
+    }
+});
+

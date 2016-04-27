@@ -1,77 +1,210 @@
-(function () {
+yarn.directive('editor', function EditorDirective(editorFiles,
+                                                  editors,
+                                                  inspector,
+                                                  IDE,
+                                                  state,
+                                                  profiles,
+                                                  soundEffects,
+                                                  globalContextMenu,
+                                                  confirmAction,
+                                                  $timeout,
+                                                  $throttle,
+                                                  $debounce,
+                                                  $mdDialog) {
+    return {
+        restrict: 'E',
+        bindToController: {
+            readOnly: "=",
+            file: "=",
+            saveAndRun: "&",
+            ready: "&",
+            source: "="
+        },
+        scope: {},
+        controllerAs: 'editor',
+        templateUrl: './html/editor.html',
+        controller: EditorController
+    };
 
-    yarn.directive('editor', EditorDirective);
-    yarn.factory('editorService', editorService);
+    function EditorController($element, tools) {
+        var self = this;
+        var aceEditor;
 
-    function EditorDirective() {
-        return {
-            restrict: 'E',
-            bindToController: {
-                saveAndRun: "&",
-                ready: "&",
-                source: "="
-            },
-            scope: {},
-            controllerAs: 'editor',
-            templateUrl: './html/editor.html',
-            controller: EditorController
+        this.saveAllAndRun = function () {
+            IDE.saveAllAndRun();
         };
 
-        function EditorController(editorService) {
-            var aceEditor;
+        this.save = function () {
+            IDE.working(true);
+            editorFiles.save(this.file, function (err) {
+                IDE.working(false);
+                $timeout(function () {
+                    self.file.isModified();
+                })
+            });
+        };
 
-            editorService.register(this);
+        this.reload = function () {
+            confirmAction(
+                "Unsaved changes",
+                "You have unsaved changes in this file.<br/> Are you sure you want to " +
+                "close it and <br/><strong>loose those changes</strong> ?",
+                function () {
+                    self.file.isModified();
+                    this.file.load();
+                })
+        };
 
-            this.focus = function() {
-                aceEditor.textInput.focus();
-            };
+        this.close = function () {
+            editorFiles.close(this.file);
+        };
 
-            function aceLoaded(_editor) {
-                console.log("Editor loaded");
-                aceEditor = _editor;
+        this.rename = function (ev) {
+            var filename = this.file.uri.filename();
+            var confirm = $mdDialog.prompt()
+                .title('Rename')
+                .textContent('Choose a new name for this file.')
+                .placeholder(filename)
+                .ariaLabel('Rename file')
+                .targetEvent(ev)
+                .ok('Rename')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function(newName) {
+//                console.log("Renaming", newName);
+                editorFiles.rename(self.file, newName);
+            }, function() {
+//                $scope.status = 'You didn\'t name your dog.';
+            });
+        };
+
+        this.focus = function () {
+            this.file.isFocused = true;
+            self.file.isModified();
+            self.file.checkOwnership(profiles);
+            if (aceEditor) {
+                aceEditor.focus();
             }
+        };
 
-            function aceChanged(e) {
-            }
+        this.blur = function () {
+            self.file.isModified();
+            this.file.isFocused = false;
+        };
 
-            this.options = {
-                require: [
-                    'ace/ext/language_tools',
-                    'ace/theme/tomorrow',
-                    'ace/mode/javascript'
-                ],
-                workerPath: './bower_components/ace-builds/src-noconflict/',
-                useWrapMode : true,
-                useWorker: false,
-                mode: 'javascript',
-                theme: 'tomorrow',
-                advanced: {
-                    enableSnippets: false,
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true
-                },
-                onLoad: aceLoaded,
-                onChange: aceChanged
+        this.search = function () {
+            if (aceEditor) {
+                aceEditor.execCommand("find");
             }
+        };
+
+        function aceLoaded(_editor) {
+            _editor.$blockScrolling = Infinity;
+            aceEditor = _editor;
+
+            self.file.checkOwnership(profiles);
+
+            aceEditor.on("click", clickHandler);
+            aceEditor.on("focus", function() {
+                checkGoToLine();
+            });
+            var matchChars =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "\t !@#$%ˆ*_+{}[]:''\".,<>/\\" +
+                "()1234567890-=";
+            $element.on("keypress", function(e) {
+                if (self.readOnly) {
+                    if (matchChars.indexOf(String.fromCharCode(e.keyCode)) > -1) {
+                        soundEffects.error()
+                    }
+                }
+            });
+            aceEditor.getSession().selection.on('changeCursor', changeCursorHandler);
 
         }
+
+        function changeCursorHandler() {
+            updateInspection();
+        }
+
+        function aceChanged() {
+            updateInspection();
+            if (self.file) {
+//                self.file.updateStatus();
+//                Refresh the isModified status
+                $timeout(function (){
+                    self.file.isModified();
+                })
+            }
+            checkGoToLine();
+        }
+
+        function checkGoToLine() {
+            $timeout(function () {
+                if (self.file && self.file.goToLine) {
+//                    console.log("checkGoToLine", self.file.goToLine);
+//                    console.log("goToLine", self.file.goToLine);
+//                    aceEditor.resize(true);
+                    aceEditor.gotoLine(self.file.goToLine, 0, true);
+                    self.file.goToLine = null;
+                }
+            }, 500);
+        }
+
+        this.options = {
+            useWrapMode: false,
+            useWorker: false,
+            mode: 'javascript',
+            theme: 'tomorrow',
+            advanced: {
+                enableSnippets: false,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true
+            },
+            onLoad: aceLoaded,
+            onChange: aceChanged
+        };
+
+        editors.add(this);
+
+        function clickHandler() {
+            updateInspection();
+        }
+
+        var updateInspection = $debounce($throttle(slowUpdateInspection, 200), 200);
+
+        function slowUpdateInspection() {
+            if (aceEditor) {
+
+                globalContextMenu.flush();
+                globalContextMenu.add("Inspect", "inspector.svg", function () {
+                    tools.focus("inspector");
+                });
+                $timeout(function() {
+                    angular.forEach(inspector.articles, function(article) {
+                        angular.forEach(article.actions, function(action) {
+                            globalContextMenu.add(
+                                action.label,
+                                action.icon + ".svg",
+                                action.callback);
+                        });
+                    });
+                }, 200);
+
+                var pos = aceEditor.getCursorPosition();
+
+                self.file.position = pos;
+                state.persistEditorFiles(self.file);
+//                console.log("=====> pos  >> ", pos);
+
+                var token = aceEditor.session.getTokenAt(pos.row, pos.column);
+                // Also check if the inspection is not just for whitespace
+                if (token && token.value.trim().length) {
+                    token.file = self.file;
+                    inspector.inspect(token);
+                }
+            }
+        }
+
     }
-
-    function editorService() {
-        var controller;
-
-        function focus() {
-            console.log(".focus");
-            if (controller) controller.focus();
-        }
-
-        function register(ctrl) {
-            controller = ctrl;
-        }
-
-        return {
-            register: register,
-            focus: focus
-        }
-    }
-})();
+});

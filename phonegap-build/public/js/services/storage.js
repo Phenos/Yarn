@@ -1,0 +1,305 @@
+yarn.service("Storage", function (apiClient,
+                                  EditorFile,
+                                  yConsole,
+                                  URI,
+                                  channel,
+                                  session) {
+
+    function Storage(profile) {
+        this.refreshedOnce = false;
+        this.profile = profile;
+        this.files = [];
+        this.projectFolders = {};
+        this.allProjectFolders = [];
+    }
+
+    Storage.prototype.directories = function (projectFolder) {
+        var _directories = {};
+        var filesSource = this.files;
+        if (projectFolder) {
+            filesSource = projectFolder.files;
+        }
+
+//        console.log("Grouping in directories: ", this.files);
+        angular.forEach(filesSource, function (file) {
+            var directoryURI = file.uri.directory();
+            if (projectFolder) {
+                var directoryURIparts = directoryURI.split("/");
+                directoryURIparts.shift();
+                directoryURI = directoryURIparts.join("/");
+//                console.log("-->", directoryURI);
+            }
+            var directory = _directories[directoryURI];
+            if (!directory) {
+                directory = _directories[directoryURI] = new Directory(directoryURI);
+            }
+            directory.files.push(file);
+        });
+        return _directories;
+    };
+
+    function Directory(uri) {
+        this.uri = uri;
+        this._uri = uri.toString();
+        this.files = [];
+    }
+
+    Storage.prototype.sort = function (fileA, fileB) {
+        var a = fileA.uri.toString().toLowerCase();
+        var b = fileB.uri.toString().toLowerCase();
+        this.files.sort(function () {
+            return a.localeCompare(b);
+        });
+    };
+
+    Storage.prototype.add = function (uri, meta) {
+        var self = this;
+        // Todo, first check if the file is already there
+        var foundSameFile = null;
+        var file;
+        var _uri = URI(uri);
+        var isAFolder = false;
+        var projectFolder;
+
+//        console.log(meta.Key);
+        // If it's a folder
+        if (meta.Key[meta.Key.length - 1] === "/") {
+            isAFolder = true;
+        }
+
+        // Create a projectFolder entry
+        // Get the project folder name, then get or create the projectFolder entry
+        var parts = meta.Key.split("/");
+        if (!isAFolder) { // Remove the filename
+            parts.pop();
+        }
+        if (parts.length > 1) {
+            var key = parts[1];
+            projectFolder = self.projectFolders[key];
+            if (!projectFolder) {
+                projectFolder = {
+                    name: key,
+                    files: [],
+                    meta: meta
+                };
+                self.projectFolders[key] = projectFolder;
+                self.allProjectFolders.push(projectFolder);
+            }
+        }
+
+        if (!isAFolder) {
+            angular.forEach(this.files, function (_file) {
+                if (_uri.equals(_file.uri)) {
+                    foundSameFile = _file;
+                }
+            });
+
+            if (foundSameFile) {
+                file = foundSameFile;
+                file.meta = meta;
+            } else {
+                file = new EditorFile(uri, meta, self.profile);
+                this.files.push(file);
+                if (projectFolder) {
+                    projectFolder.files.push(file);
+                }
+            }
+
+            file.markForDiscard = false;
+        }
+
+        return file;
+    };
+
+    Storage.prototype.discardMarkedFiles = function () {
+        // Todo, first check if the file is already there
+        var keptFiles = [];
+        angular.forEach(this.files, function (file) {
+            if (!file.markForDiscard) {
+                keptFiles.push(file);
+            }
+        });
+        this.files = keptFiles;
+    };
+
+    Storage.prototype.selection = function () {
+        var selection = [];
+        angular.forEach(this.files, function (file) {
+            if (file.isSelected) {
+                selection.push(file);
+            }
+        });
+        return selection;
+    };
+
+    Storage.prototype.clear = function () {
+        this.files = [];
+        return this;
+    };
+
+    Storage.prototype.save = function (file, success, failed) {
+        var self = this;
+        self.isLoading = true;
+        var savedContent = file.content;
+        var profile = this.profile;
+        var user = session.user();
+        if (user) {
+            var relativeToUserURI = file.relativeToUserURI();
+            apiClient.action('saveFile', {
+                filename: relativeToUserURI.filename(true),
+                uri: relativeToUserURI.toString(),
+                content: savedContent,
+                profile: profile.username,
+                token: user.token,
+                username: user.username
+            }, function (data) {
+                if (!data.error) {
+//                    console.log("?",[savedContent], [file.originalContent]);
+                    file.originalContent = savedContent;
+//                    console.log("storage.save success", [data]);
+                    success(data);
+                } else {
+                    self.isLoading = false;
+                    yConsole.error(
+                        "An error occurered while trying to load file from storage : " +
+                        data.error);
+                    failed(data.error);
+                }
+                // do stuff
+            });
+        }
+
+    };
+
+    Storage.prototype.rename = function (file, newName, success, failed) {
+        var self = this;
+        self.isLoading = true;
+        var profile = this.profile;
+        var user = session.user();
+        if (user) {
+            var relativeToUserURI = file.relativeToUserURI();
+            var newNameRelativeToUserUID = relativeToUserURI.clone().filename(newName);
+//            console.log("NEW NAME WILL BE: ", newNameRelativeToUserUID);
+            apiClient.action('renameFile', {
+                uri_source: relativeToUserURI.toString(),
+                uri_destination: newNameRelativeToUserUID.toString(),
+                profile: profile.username,
+                token: user.token,
+                username: user.username
+            }, function (data) {
+                if (!data.error) {
+                    self.isLoading = false;
+//                    console.log("?",[savedContent], [file.originalContent]);
+//                    file.originalContent = savedContent;
+//                    console.log("storage.renameFIle success", [data]);
+                    success && success(data);
+                } else {
+                    self.isLoading = false;
+                    yConsole.error(
+                        "An error occurered while trying to rename file in storage : " +
+                        data.error);
+                    failed && failed(data.error);
+                }
+            });
+        }
+
+    };
+
+    Storage.prototype.delete = function (files, success, failed) {
+        var self = this;
+        self.isLoading = true;
+
+        var filesMeta = [];
+        angular.forEach(files, function (file) {
+            filesMeta.push(file.meta);
+        });
+
+//        console.log("filesMeta", filesMeta);
+
+        var user = session.user();
+        var profile = this.profile;
+
+        if (user) {
+            apiClient.action('deleteFiles', {
+                files: filesMeta,
+                profile: profile.username,
+                token: user.token,
+                username: user.username
+            }, function (data) {
+                if (!data.error) {
+                    self.isLoading = false;
+//                    console.log("storage.deleteFiles", [data]);
+                    success && success(data);
+                } else {
+                    self.isLoading = false;
+                    yConsole.error("An error occurered while trying" +
+                        "to delete files in storage : " + data.error);
+                    failed && failed(data.error);
+                }
+            });
+        }
+    };
+
+    Storage.prototype.sortFolders = function () {
+        this.allProjectFolders = this.allProjectFolders.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+//        console.log("this.allProjectFolders", this.allProjectFolders);
+    };
+
+    Storage.prototype.refresh = function () {
+        var self = this;
+        var profile = this.profile;
+//        var user = session.user();
+
+//        if (user) {
+        self.isLoading = true;
+
+        var params = {
+            profile: profile.username
+//                token: user.token,
+//                username: user.username
+        };
+
+//            console.log("params", params);
+        apiClient.action('files', params, function (data) {
+            self.refreshedOnce = true;
+//                console.log("s3 data", data);
+            if (!data.error) {
+                angular.forEach(self.files, function (file) {
+                    file.markForDiscard = true;
+                });
+
+//                    console.log("Storagerefresh > apiClient.files", data);
+                angular.forEach(data.files, function (file) {
+                    var path = file.Key && file.Key.replace(profile.username + "/", "");
+                    if (path) {
+                        self.add(path, file);
+                    }
+                });
+
+                self.discardMarkedFiles();
+
+                self.sortFolders();
+
+                channel.publish("storage.refresh", self);
+                self.isLoading = false;
+            } else {
+                self.isLoading = false;
+                yConsole.error("An error occurered while trying to load file from storage");
+            }
+        }, function (err) {
+            self.refreshedOnce = true;
+            console.error(err);
+        });
+
+//        } else {
+//            yConsole.error("You must me signed-in to load and save data from your storage.");
+//        }
+
+        return this;
+    };
+
+    return Storage;
+});
+

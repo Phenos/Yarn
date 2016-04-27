@@ -13,27 +13,32 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.8",
+    "angular": "~1.5.1",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
-    "angular-ui-router": "~0.2.15",
-    "angular-animate": "~1.4.8",
+    "angular-ui-router": "~0.2.18",
+    "angular-animate": "~1.4.9",
     "angular-uri": "~0.2.0",
     "angular-audio": "~1.7.1",
-    "d3": "~3.5.10",
+    "d3": "~3.5.16",
     "ngstorage": "~0.3.10",
-    "angular-material": "~1.0.3",
+    "angular-material": "~1.1.0",
     "angular-ui-ace": "bower",
     "angular-resource": "~1.4.9",
     "angular-sanitize": "~1.5.0",
     "postal.js": "postal#~1.0.8",
     "lodash": "~4.5.1",
     "jquery": "~2.2.1",
-    "perfect-scrollbar": "~0.6.10",
     "angular-ui-grid": "~3.1.1",
-    "ng-rollbar": "~1.8.3"
+    "ng-rollbar": "~1.8.3",
+    "ng-contextmenu": "~0.4.1",
+    "ng-debottle": "~1.1.0",
+    "angularfire": "~1.1.4",
+    "nunjucks": "~2.4.1",
+    "ng-lodash": "~0.4.0",
+    "hover": "Hover#^2.0.2"
   },
   "resolutions": {
     "lodash": "~4.5.1",
-    "angular": "1.4.9"
+    "angular": "^1.0"
   }
 }

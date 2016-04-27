@@ -2,32 +2,42 @@
 
 yarn.directive('log', LogDirective);
 
-function LogDirective($sce) {
+function LogDirective($sce, $parse, editorFiles, openFileFromAbsoluteURL) {
     return {
         restrict: 'E',
-        bindToController: {
-            type: '=',
-            text: '='
+        scope: {
+            line: '='
         },
-        scope: {},
-        controllerAs: 'log',
-        template: '',
-        controller: LogController
+        replace: true,
+        templateUrl: './html/log.html',
+        link: Link
     };
 
-    function LogController($scope, $element, $compile) {
-        var self = this;
+    function Link(scope, element) {
+        var _options = scope.line.options || {};
 
-        $scope.$watch('log.text', function(value) {
-            //console.log("element", $element);
-            //console.log("value", value);
-            $element.addClass("is-" + self.type);
-            var elem = $compile("<div>" + value + "</div>")($scope);
-            //console.log("elem: ", elem);
-            $element.append(elem);
-        });
+        var _time = new Date(scope.line.timestamp);
+        if (_options.source) {
+            scope.source = _options.source;
+        }
+        scope.time = _time.getHours() + ":" + _time.getMinutes();
+
+        scope.text2htmlRaw = function() {
+            return $sce.getTrustedHtml(scope.line.text) || '';
+        };
+
+        scope._text2htmlRaw = scope.text2htmlRaw();
+        element.find("text").html(scope._text2htmlRaw);
+//        console.log("scope._text2htmlRaw", scope._text2htmlRaw);
+
+        scope.goToSource = function (source) {
+            if (source) {
+                openFileFromAbsoluteURL(source.uri, source.line);
+            }
+        };
 
     }
+
 }
 
 })();

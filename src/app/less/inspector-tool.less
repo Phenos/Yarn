@@ -1,0 +1,41 @@
+.inspector-tool {
+
+    font-size: 1em;
+
+    md-list {
+        md-list-item,
+        md-list-item .md-list-item-inner {
+            min-height: 1.6em;
+
+            button {
+                line-height: 1.6em;
+                min-height: 1.6em;
+            }
+        }
+    }
+
+    .list-of-types {
+        background: #006D00;
+        overflow-x: hidden;
+        z-index: 100;
+        color: #fff;
+
+        .count {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+            padding-right: 0.5em;
+        }
+    }
+
+    .list-of-things {
+        background: #008c00;
+        overflow-x: hidden;
+        z-index: 200;
+        color: #fff;
+    }
+
+    .details-of-thing {
+        background: #fff;
+        z-index: 300;
+    }
+}

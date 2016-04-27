@@ -1,113 +1,140 @@
-yarn.service('script', function (Pointer,
-                                 AST,
-                                 Runtime,
-                                 $q,
-                                 loadScript,
-                                 URI) {
+yarn.service("Script", function (yConsole, storyLog, state) {
 
-    function Script() {
-        this.url = "";
-        this.source = "";
-        this.pointer = new Pointer();
-        this.ast = new AST();
-        // Keep a reference t key named nodes
-        this.references = {};
-        // Imported child scripts
-        this.imports = [];
-        this.runtime = null;
+//    var scriptCuttingRegex = /((^[A-Z ]+:)|(.*))/gm;
+//    var isActorRegex = /(^[A-Z ]+:)/g;
+//    var isActorRegex =
+//        /(?:(^[@A-Z][a-z_A-Z0-9]+)([\s]*(?:[@A-Z]+[a-z_A-Z0-9]*))*(:))/g;
+    var isActorRegex =
+        /(^(?:[ ]*)[@A-Z][a-z_A-Z0-9]+)(([ ]*)([@A-Z]+[a-z_A-Z0-9]*)*)*([ ]*)(?::)/g;
+    var scriptCuttingRegex =
+        /(^(?:[ ]*)[@A-Z][a-z_A-Z0-9]+)(([ ]*)([@A-Z]+[a-z_A-Z0-9]*)*)*([ ]*)(?::)|(.*)/gm;
+
+    var matchvoiceToLogTypes = {
+        default: "log",
+        action: "action",
+        monologue: "log",
+        insight: "insight",
+        narrator: "log",
+        heading: "heading",
+        topic: "topic"
+    };
+
+    function Script(text, source) {
+        this.text = "";
+        if (angular.isString(text)) {
+            this.text = text;
+        }
+        this.lines = [];
+        this.position = 0;
+        this.source = source;
+        this.parse(this.text);
     }
 
-    Script.prototype.load = function (source, url) {
-        this.url = url || "";
-        this.source = source;
-        var self = this;
-        this.pointer.tokenize(source);
-        //console.log("yarn.script.load");
-        return this.compile(this.pointer.tokens).then(function (ast) {
-            //console.log("after compile");
-            return self.processImports(ast);
+    Script.prototype.next = function () {
+        this.position = this.position + 1;
+    };
+
+    Script.prototype.end = function () {
+        return this.position >= this.lines.length;
+    };
+
+    Script.prototype.play = function () {
+//        console.log("play", this);
+        var ellipsis = "";
+        if (this.text.length > 50) {
+            ellipsis = "[…]";
+        }
+        var textCropped = '<span class="value">' +
+            this.text.substring(0, 50) + ellipsis +
+            '"</span>';
+
+        yConsole.log("Playing script: " + textCropped, {
+            source: self.source
         });
+
+        while (!this.end()) {
+            this.playNext();
+            this.next();
+        }
     };
 
-    Script.prototype.run = function () {
-        this.runtime = new Runtime(this.ast);
-        this.runtime.run();
+    Script.prototype.playNext = function () {
+        var line = this.lines[this.position];
+        outputLine(line[0], line[1]);
     };
 
-    Script.prototype.compile = function (tokens) {
-        return this.ast.compile(tokens);
-    };
+    function outputLine(statement, _voice) {
+        var voice = _voice.toLowerCase();
 
-    Script.prototype.processImports = function (ast) {
-        //console.log("Parsing AST for imports");
-        //console.log("ast", ast);
-        return this.parseNode(ast.root);
-    };
-
-    Script.prototype.parseNode = function (node) {
-        var returnValue;
-        if (node.type === "instruction" && node.value === "import") {
-            node.type = "symbol";
-            node.value = "IMPORT";
-            node.variant = "statement";
-            returnValue = this.importSet(node.set);
+        var logType = matchvoiceToLogTypes[voice];
+        if (logType) {
+//                console.log("Found builtin voice", voice);
+//                console.log("Statement", statement);
+//            storyLog.buffer()[logType](statement);
+            storyLog[logType](statement);
         } else {
-            returnValue = this.parseSet(node.set);
-        }
-        return returnValue;
-    };
+//          console.log("Looking for alternate voice", voice);
+            // The voice doesnt match any standard voice, so we look for an actor
+            var isActor = state.value("Subject is Actor", {Subject: voice});
+            if (isActor) {
 
-    Script.prototype.importSet = function (set) {
+                var statementParts = statement.split("--");
+                var quotedStatement = [];
+                angular.forEach(statementParts, function (part, index) {
+                    if ((index + 1) % 2) {
+                        quotedStatement.push(
+                            "<span class='dialogText'>“" + part.trim() + "”</span>");
+                    } else {
+                        quotedStatement.push(
+                            " <span class='dialogMeta'>" + part.trim() + "</span>. ");
+                    }
+                });
+                statement = quotedStatement.join("");
+
+//                storyLog.buffer().dialog(statement, {
+//                    actor: voice
+//                });
+                storyLog.dialog(statement, {
+                    actor: voice
+                });
+            }
+        }
+
+    }
+
+    Script.prototype.parse = function (script) {
         var self = this;
-        var promises = [];
-        if (set.nodes.length) {
-            angular.forEach(set.nodes, function (node) {
-                promises.push(self.importNode(node));
-            });
+        // Here we start cutting the script in pieces
+        var matches = script.match(scriptCuttingRegex);
+//                    console.log("matches", matches);
+        var buffer = [];
+        var actor = "DEFAULT";
+
+        function flushBuffer() {
+            if (buffer.length > 0) {
+                var text = buffer.join(" ");
+                self.lines.push([text, actor]);
+                buffer = [];
+//                            console.log("flushed", [text, voice]);
+                actor = "DEFAULT";
+            }
         }
-        return $q.all(promises);
-    };
 
-    Script.prototype.importNode = function (node) {
-        var url = this.resolveRelativeURI(node.value);
-
-        return loadScript(url).then(function (loadedScript) {
-            var script = new Script();
-            return script.load(loadedScript.source, loadedScript.url).then(function () {
-                // Graft the root node of the imported script onto
-                // the node which imported the script
-                // then change the node type to
-                node.type = "symbol";
-                node.value = "IMPORT";
-                node.variant = "statement";
-                node.set = script.ast.root.set;
-                //console.log("Grafted imported AST into parent AST")
-            });
+//        console.log("matches... ", matches);
+        angular.forEach(matches, function (_match) {
+            var match = _match.trim();
+            if (isActorRegex.test(match)) {
+                flushBuffer();
+                actor = match.substring(0, match.length - 1);
+//                            console.log("voice: ", voice);
+            } else if (match.trim().length > 0) {
+                buffer.push(match);
+            }
         });
+        flushBuffer();
+
     };
 
-    Script.prototype.parseSet = function parseSet(set) {
-        var self = this;
-        var promises = [];
-        if (set.nodes.length) {
-            angular.forEach(set.nodes, function (node) {
-                promises.push(self.parseNode(node));
-            });
-        }
-        return $q.all(promises);
-    };
+    return Script;
 
-    Script.prototype.resolveRelativeURI = function resolveRelativeURI(uri) {
-        var resolvedURI = "";
-        var tmpBaseURI = this.url;
-        if (uri) {
-            //console.log("relative to uri: ", tmpBaseURI);
-            resolvedURI = URI(uri).absoluteTo(tmpBaseURI).toString();
-        } else {
-            resolvedURI = uri;
-        }
-        return resolvedURI;
-    };
-
-    return new Script();
 });

@@ -1,0 +1,30 @@
+<div>
+    <p>
+        This is a
+        <strong ng-if="isCustomPredicate">custom verb</strong>
+        <span ng-if="!isCustomPredicate">standard verb</span>.
+    </p>
+    <p ng-if="syntaxesForPredicate">
+        <span ng-if="syntaxesForPredicate.positive.length === 0">
+            Not synonyms found.
+        </span>
+        <strong ng-if="syntaxesForPredicate.positive.length > 0">
+            Found {{ syntaxesForPredicate.positive.length }} synonyms:&nbsp;&nbsp;
+        </strong>
+        <span ng-repeat="syntax in syntaxesForPredicate.positive">
+            <em>{{ syntax.text}}</em><span ng-if="!$last">,&nbsp;&nbsp;</span><span ng-if="$last">.</span>
+        </span>
+    </p>
+    <p ng-if="syntaxesForPredicate">
+        <span ng-if="syntaxesForPredicate.negative.length === 0">
+            Not antonyms found.
+        </span>
+    <h4 ng-if="syntaxesForPredicate.negative.length > 0">
+        Found {{ syntaxesForPredicate.negative.length }} antonyms:<br/>
+    </h4>
+    <p>
+        <span ng-repeat="syntax in syntaxesForPredicate.negative">
+            <em>{{ syntax.text }}</em><span ng-if="!last">,&nbsp;&nbsp;</span><span ng-if="$last">.</span>
+        </span>
+    </p>
+</div>

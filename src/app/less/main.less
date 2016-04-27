@@ -1,10 +1,12 @@
+
 /* Import CSS from vendors */
 @import (inline) "../../../bower_components/angular-material/angular-material.css";
-@import (inline) "../../../bower_components/angular-material/angular-material.layouts.css";
 @import (inline) "../../../bower_components/angular-hotkeys/src/hotkeys.css";
-@import (inline) "../../../bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css";
 @import (inline) "../../../bower_components/angular-ui-grid/ui-grid.css";
+@import (inline) "../../../bower_components/hover/css/hover-min.css";
 
+@import "vars.less";
+@import "global.less";
 @font-face {
     font-family: 'ui-grid';
     src: url('../fonts/ui-grid/ui-grid.eot');
@@ -16,6 +18,69 @@
     font-style: normal;
 }
 
-@import "vars.less";
-@import "global.less";
+
+body {
+    // Prevent elastic scrolling when reaching bottom
+    overflow: hidden;
+}
+
+md-toolbar {
+    .md-toolbar-tools {
+        font-size: 1em;
+    }
+    font-size: 1em;
+    .md-menu {
+        font-size: 1em;
+    }
+}
+textarea,
+md-content,
+.md-button {
+    font-size: 1em;
+}
+
+md-checkbox.md-checked .md-ink-ripple {
+    color: #445ABC;
+    .md-icon {
+        background-color: #445ABC;
+
+    }
+
+}
+md-list-item._md-button-wrap > .md-button:first-child ._md-list-item-inner {
+    height: auto !important;
+    min-height: 30px !important;
+}
+
+md-progress-circular {
+    path {
+        stroke: #fff;
+    }
+}
+
+html body md-menu-content {
+    padding: 0;
+}
+
+a:not(.md-button) {
+    &:link,
+    &:hover,
+    &:visited {
+        color: rgb(63,81,181);
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+}
+
+// Otherwise all icons endup white!
+//html body md-toolbar:not(.md-menu-toolbar) md-icon {
+//    fill: inherit !important;
+//}
+
+
+
+
 

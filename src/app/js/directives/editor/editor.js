@@ -69,10 +69,10 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 .targetEvent(ev)
                 .ok('Rename')
                 .cancel('Cancel');
-            $mdDialog.show(confirm).then(function(newName) {
+            $mdDialog.show(confirm).then(function (newName) {
 //                console.log("Renaming", newName);
                 editorFiles.rename(self.file, newName);
-            }, function() {
+            }, function () {
 //                $scope.status = 'You didn\'t name your dog.';
             });
         };
@@ -104,7 +104,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             self.file.checkOwnership(profiles);
 
             aceEditor.on("click", clickHandler);
-            aceEditor.on("focus", function() {
+            aceEditor.on("focus", function () {
                 checkGoToLine();
             });
             var matchChars =
@@ -112,7 +112,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 "abcdefghijklmnopqrstuvwxyz" +
                 "\t !@#$%ˆ*_+{}[]:''\".,<>/\\" +
                 "()1234567890-=";
-            $element.on("keypress", function(e) {
+            $element.on("keypress", function (e) {
                 if (self.readOnly) {
                     if (matchChars.indexOf(String.fromCharCode(e.keyCode)) > -1) {
                         soundEffects.error()
@@ -132,7 +132,7 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             if (self.file) {
 //                self.file.updateStatus();
 //                Refresh the isModified status
-                $timeout(function (){
+                $timeout(function () {
                     self.file.isModified();
                 })
             }
@@ -171,18 +171,21 @@ yarn.directive('editor', function EditorDirective(editorFiles,
             updateInspection();
         }
 
-        var updateInspection = $debounce($throttle(slowUpdateInspection, 200), 200);
+        var updateInspection = $debounce($throttle(function () {
+            $timeout(slowUpdateInspection, 100);
+        }, 400), 800);
 
         function slowUpdateInspection() {
+
             if (aceEditor) {
 
                 globalContextMenu.flush();
                 globalContextMenu.add("Inspect", "inspector.svg", function () {
                     tools.focus("inspector");
                 });
-                $timeout(function() {
-                    angular.forEach(inspector.articles, function(article) {
-                        angular.forEach(article.actions, function(action) {
+                $timeout(function () {
+                    angular.forEach(inspector.articles, function (article) {
+                        angular.forEach(article.actions, function (action) {
                             globalContextMenu.add(
                                 action.label,
                                 action.icon + ".svg",
@@ -205,6 +208,5 @@ yarn.directive('editor', function EditorDirective(editorFiles,
                 }
             }
         }
-
     }
 });

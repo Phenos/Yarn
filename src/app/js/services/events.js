@@ -3,6 +3,7 @@ yarn.service('events', function (assert,
                                  state,
                                  predicates,
                                  things,
+                                 doReveal,
                                  yConsole) {
 
     var undef = void 0;

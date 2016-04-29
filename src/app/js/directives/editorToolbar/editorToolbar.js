@@ -18,10 +18,12 @@ function EditorToolbarDirective() {
                                      state,
                                      root,
                                      tools,
+                                     status,
                                      IDE) {
         this.IDE = IDE;
         this.state = state;
         this.editors = editors;
+        this.status = status;
 
         this.validate = function() {
             tools.focus("validator");

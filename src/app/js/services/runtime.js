@@ -4,7 +4,8 @@ yarn.service('Runtime', function RuntimeService(state,
                                                 things,
                                                 Stack,
                                                 yConsole,
-                                                channel) {
+                                                channel,
+                                                status) {
 
     /**
      * Runtime class user to execute the ast with the state
@@ -17,14 +18,17 @@ yarn.service('Runtime', function RuntimeService(state,
         this.ast = ast;
         this.cursor = new Cursor();
         this.stack = new Stack();
+        this.status = status.new("Running the story");
     }
 
     /**
      * Start to execute the AST
      */
     Runtime.prototype.run = function () {
+        this.status.start();
         this.cursor.start(this.ast.root);
         var node = this.runNode(this.ast.root);
+        this.status.success();
 
         channel.publish("runtime.afterRun", {
             root: node
@@ -64,14 +68,12 @@ yarn.service('Runtime', function RuntimeService(state,
                     yConsole.error("Compilation error: Unknown node variant [" + node.variant + "-" + node.type + "-" + node.value + "]");
                 }
 
-
                 var frame = {
                     "this": returnValue
                 };
                 runtime.stack.push(frame);
 
                 children = runtime.runSet(node.set);
-
 
                 runtime.stack.pop();
                 return [returnValue, children];

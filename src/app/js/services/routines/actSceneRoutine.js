@@ -1,9 +1,10 @@
 yarn.service("actSceneRoutine", function (events,
-                                           assert,
-                                           state,
-                                           Script,
-                                           storyLog,
-                                           yConsole) {
+                                          assert,
+                                          state,
+                                          Script,
+                                          storyLog,
+                                          doReveal,
+                                          yConsole) {
 
     events.on("Player acts *", "after dialogs", function () {
         actSceneRoutine();

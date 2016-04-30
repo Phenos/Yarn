@@ -9,9 +9,9 @@
         <div flex="100" layout="row">
             <md-toolbar-filler layout
                                layout-align="center center">
-                <md-icon ng-show="!toolbar.IDE.isWorking" md-svg-icon="./svg-icons/storyFile.svg"></md-icon>
+                <md-icon ng-show="!toolbar.status.isWorking" md-svg-icon="./svg-icons/storyFile.svg"></md-icon>
                 <md-progress-circular
-                        ng-if="toolbar.IDE.isWorking"
+                        ng-if="toolbar.status.isWorking"
                         md-diameter="30"
                         md-mode="indeterminate"></md-progress-circular>
             </md-toolbar-filler>

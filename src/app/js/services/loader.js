@@ -5,15 +5,11 @@ yarn.service('loader', function (yarn,
                                  player,
                                  synonyms,
                                  statuses,
+                                 status,
                                  commands) {
 
     var service = {};
-
-     var timer = {
-         beforeLoad: null,
-         afterCompile: null
-     };
-
+    var loadStatus = status.new("Loading story");
 
     service.fromURL = function fromURL(_url) {
         state.assertions.removeLayer('session');
@@ -23,7 +19,8 @@ yarn.service('loader', function (yarn,
 //        console.log("loader.fromURL", url);
         yConsole.log("Loading story from : " + url);
 
-        timer.beforeLoad  = performance.now();
+        loadStatus.start();
+
         return loadScript(url).then(onSuccess, onError);
 
         function onError() {
@@ -38,18 +35,10 @@ yarn.service('loader', function (yarn,
          * Called once all files are loaded (including imports)
          */
         function onSuccess(script) {
-            timer.afterCompile  = performance.now();
-            var duration = Math.floor(timer.afterCompile - timer.beforeLoad) / 1000;
-            yConsole.log("Loading and compilation took " + duration + " seconds");
-            console.info("Loading and compilation took " + duration + " seconds");
 
             yarn.load(script.source, script.url).then(onSuccess, onError);
 
             function onSuccess(script) {
-//                console.log("============[ THIS SHOULD BE THE LAST CALL ]============");
-//                console.log("script WHOO", script);
-                yConsole.success("Successfully loaded the story script");
-                yConsole.log("Running the <span command='inspect story'>story</span>");
 
                 // Change the current state layer to the static
                 // code (should be the default anyways).
@@ -76,11 +65,21 @@ yarn.service('loader', function (yarn,
                 console.info("Successfuly loaded story. Now refreshing player.");
 
                 player.refresh();
+
+                loadStatus.success();
+                yConsole.log("Loading and compilation took " +
+                    (loadStatus.duration() / 1000) + " seconds");
             }
 
             function onError(request) {
-                yConsole.error("Failed to load story asset from : " + request.config.url);
-                yConsole.tip("This error can happen when one of the imported asset (loaded with Import in your story) cannot be found. Either the address of the asset is not correct or the asset has been moved or deleted. You can check the address for mistakes or check your connection.");
+                loadStatus.fail();
+                yConsole.error("Failed to load story asset from : " +
+                    request.config.url);
+                yConsole.tip("This error can happen when one of the " +
+                    "imported asset (loaded with Import in your story) cannot " +
+                    "be found. Either the address of the asset is not correct or " +
+                    "the asset has been moved or deleted. You can check the address for " +
+                    "mistakes or check your connection.");
             }
 
         }

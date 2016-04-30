@@ -9,20 +9,22 @@ log-item {
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .read {
-        opacity: 0.6;
-        //animation: markAsRead 1s;
+    .logItem.read {
+        opacity: 0.7 !important;
 
-        //@keyframes markAsRead {
-        //    0% {
-        //        opacity: 1;
-        //    }
-        //    100% {
-        //        opacity: 0.3;
-        //    }
-        //}
+        animation: markAsRead 1s !important;
+
+        @keyframes markAsRead {
+            0% {
+                opacity: 1 !important;
+            }
+            100% {
+                opacity: 0.7 !important;
+            }
+        }
+
         &:hover.logItem {
-            opacity: 1;
+            opacity: 1 !important;
 
             a:visited,
             a:link,
@@ -281,9 +283,9 @@ log-item {
 }
 
 .fadeIn {
-/*
+
     opacity: 1;
-    animation: fadingIn 2s;
+    animation: fadingIn 1.5s;
     animation-delay: 0s;
     animation-fill-mode: forwards;
     overflow: hidden;
@@ -294,7 +296,8 @@ log-item {
         }
         100% {
             opacity: 1;
+            overflow: visible;
         }
     }
-*/
+
 }

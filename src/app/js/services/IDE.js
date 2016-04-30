@@ -10,10 +10,12 @@ yarn.service('IDE', function IDEService($mdDialog,
                                         tools,
                                         profiles,
                                         state,
+                                        status,
                                         preventCloseWhenUnsaved) {
 
     function IDE() {
         this.isWorking = false;
+        this.saveAllStatus = status.new("Save all and run story");
     }
 
     IDE.prototype.working = function (newValue) {
@@ -37,12 +39,12 @@ yarn.service('IDE', function IDEService($mdDialog,
     IDE.prototype.saveAllAndRun = function () {
         var self = this;
 //        console.log(".saveAllAndRun()");
-        this.working(true);
+        this.saveAllStatus.start();
         self.saveAll(function (story) {
             self.run(story);
-            self.working(false);
+            self.saveAllStatus.success();
         }, function () {
-            self.working(false);
+            self.saveAllStatus.fail();
             // todo: put this in generic error popup handler
             $mdDialog.show(
                 $mdDialog

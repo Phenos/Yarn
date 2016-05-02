@@ -16,7 +16,7 @@ yarn.service("predicates", function (syntaxes,
                     predicate = null;
                 } else {
                     predicate = new Predicate(id);
-                    //console.log("Created new predicate", predicate);
+//                    console.log("Created new predicate", predicate);
                     allPredicates[id] = predicate;
                     // By default, create a positivie syntax for the ad hoc predicate
                     syntaxes.set(id, predicate);

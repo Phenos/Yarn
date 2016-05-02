@@ -173,16 +173,6 @@ log-item {
             }
         }
 
-        &.is-error {
-            .fadeOut();
-            font-size: 1em;
-            letter-spacing: 0.06em;
-            margin: 1em 0;
-            font-weight: 300;
-            text-align: center;
-            font-style: italic;
-        }
-
         &.is-heading {
             .fadeIn();
             font-size: 2.2em;
@@ -237,49 +227,6 @@ log-item {
         }
     }
 
-    .fadeOut {
-
-        opacity: 1;
-        animation: fadingOut 2s;
-        animation-delay: 2s;
-        animation-fill-mode: forwards;
-        overflow: hidden;
-
-        @keyframes fadingOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                height: 0;
-                margin: 0;
-                padding: 0;
-            }
-        }
-
-    }
-
-    .fadeOut {
-
-        opacity: 1;
-        animation: fadingOut 2s;
-        animation-delay: 2s;
-        animation-fill-mode: forwards;
-        overflow: hidden;
-
-        @keyframes fadingOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                height: 0;
-                margin: 0;
-                padding: 0;
-            }
-        }
-
-    }
 }
 
 .fadeIn {
@@ -288,7 +235,7 @@ log-item {
     animation: fadingIn 1.5s;
     animation-delay: 0s;
     animation-fill-mode: forwards;
-    overflow: hidden;
+    //overflow: hidden;
 
     @keyframes fadingIn {
         0% {
@@ -296,7 +243,7 @@ log-item {
         }
         100% {
             opacity: 1;
-            overflow: visible;
+            //overflow: visible;
         }
     }
 

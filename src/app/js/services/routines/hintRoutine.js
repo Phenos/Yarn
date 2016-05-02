@@ -27,4 +27,3 @@ yarn.service("hintRoutine", function (writers,
 
 });
 
-

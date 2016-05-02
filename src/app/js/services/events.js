@@ -4,8 +4,7 @@ yarn.service('events', function (assert,
                                  predicates,
                                  things,
                                  doReveal,
-                                 yConsole,
-                                 status) {
+                                 yConsole) {
 
     var undef = void 0;
 
@@ -25,6 +24,7 @@ yarn.service('events', function (assert,
     };
 
     Events.prototype.processInternalListeners = function (eventId) {
+        var self = this;
 
         // First, we trigger any hard-coded listeners
         angular.forEach(this.listeners, function (listener) {
@@ -62,6 +62,7 @@ yarn.service('events', function (assert,
     };
 
     Events.prototype.processStoryListeners = function (eventId) {
+        var self = this;
         var setsToBeTriggered = [];
         var triggerAssertions = state.assertions.find(assert(undef, "trigger"));
 
@@ -123,6 +124,7 @@ yarn.service('events', function (assert,
     };
 
     Events.prototype.processSetsToBeTriggered = function (setsToBeTriggered) {
+        var self = this;
         var somethingHappened = false;
         // Then, we trigger each assertion sets that are supposed to be triggered
 //        console.log("setsToBeTriggered ", setsToBeTriggered);

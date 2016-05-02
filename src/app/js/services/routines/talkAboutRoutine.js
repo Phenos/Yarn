@@ -6,8 +6,7 @@ yarn.service("talkAboutRoutine", function (events,
                                            yConsole,
                                            doReveal,
                                            things,
-                                           predicates,
-                                           talkToRoutine) {
+                                           predicates) {
 
     events.on("Player talks about *", "dialogs", function () {
         talkAboutRoutine();

@@ -70,37 +70,35 @@ yarn.service("Script", function (yConsole, storyLog, state) {
         if (logType) {
 //                console.log("Found builtin voice", voice);
 //                console.log("Statement", statement);
-//            storyLog.buffer()[logType](statement);
             storyLog[logType](statement);
         } else {
 //          console.log("Looking for alternate voice", voice);
             // The voice doesnt match any standard voice, so we look for an actor
             var isActor = state.value("Subject is Actor", {Subject: voice});
             if (isActor) {
-
-                var statementParts = statement.split("--");
-                var quotedStatement = [];
-                angular.forEach(statementParts, function (part, index) {
-                    if ((index + 1) % 2) {
-                        quotedStatement.push(
-                            "<span class='dialogText'>“" + part.trim() + "”</span>");
-                    } else {
-                        quotedStatement.push(
-                            " <span class='dialogMeta'>" + part.trim() + "</span>. ");
-                    }
-                });
-                statement = quotedStatement.join("");
-
-//                storyLog.buffer().dialog(statement, {
-//                    actor: voice
-//                });
+                statement = parseStatement(statement);
                 storyLog.dialog(statement, {
                     actor: voice
                 });
             }
         }
-
     }
+
+    function parseStatement(statement) {
+        var statementParts = statement.split("--");
+        var quotedStatement = [];
+        angular.forEach(statementParts, function (part, index) {
+            if ((index + 1) % 2) {
+                quotedStatement.push(
+                    "<span class='dialogText'>“" + part.trim() + "”</span>");
+            } else {
+                quotedStatement.push(
+                    " <span class='dialogMeta'>" + part.trim() + "</span>. ");
+            }
+        });
+        return quotedStatement.join("");
+    }
+
 
     Script.prototype.parse = function (script) {
         var self = this;

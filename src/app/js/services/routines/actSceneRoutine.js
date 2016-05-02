@@ -13,7 +13,7 @@ yarn.service("actSceneRoutine", function (events,
 
     function actSceneRoutine(chainedScene) {
 
-        yConsole.log("Routine: actScene");
+//        yConsole.log("Routine: actScene");
 
         var scene = chainedScene || state.one("Player acts *");
 

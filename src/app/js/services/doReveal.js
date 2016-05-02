@@ -33,11 +33,11 @@ yarn.service("doReveal", function (state, assert, predicates, things) {
             state.negate(assert(deactivated, "is", "Active"));
         });
 
-        console.log("++===>>> Testing activates >>>> ");
+//        console.log("++===>>> Testing activates >>>> ");
         var activates = state.many("Object activates *", {Object: object});
         angular.forEach(activates, function (activated) {
             // todo: Add source
-            console.log("++===>>> Activates >>>> ", activated);
+//            console.log("++===>>> Activates >>>> ", activated);
             state.createAssertion(activated, predicates("is"), things.get("Active"));
         });
 

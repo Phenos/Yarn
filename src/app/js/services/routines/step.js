@@ -7,7 +7,7 @@ yarn.service("step", function (postal,
                                statuses,
                                player,
                                storyLog,
-                               $timeout) {
+                               status) {
 
     function Step () {
         this.alreadyInsideStep = false;
@@ -26,6 +26,7 @@ yarn.service("step", function (postal,
             "prompts",
             "endStep"
         ];
+        this.status = status.new("Processing story step");
     }
 
     Step.prototype.on = function on(sequenceItemId, callback) {
@@ -34,6 +35,7 @@ yarn.service("step", function (postal,
 
     Step.prototype.run = function run(action) {
         var self = this;
+        self.status.start();
 
         self.scope.action = action || null;
 
@@ -48,6 +50,7 @@ yarn.service("step", function (postal,
         this.alreadyInsideStep = false;
 
         player.scroll();
+        self.status.success();
     };
 
     Step.prototype.walk = function walk(sequenceItemId) {

@@ -44,10 +44,13 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
             themeId = state.value("Story has Theme");
         }
 
+
+        // Todo: only output theme change to console is some value has actually changed
+        // This requires that the "applyObjectAsStageChange" returns some status
         if (angular.isString(themeId)) {
             var theme = things.get(themeId);
             state.applyObjectAsStageChange(theme);
-            yConsole.log("Theme changed to : " + themeId);
+            yConsole.log("Theme applied : " + themeId);
         } else {
             console.error("Error occured while rendering template: \n" +
                 themeId.message)

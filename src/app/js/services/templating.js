@@ -32,7 +32,7 @@ yarn.service("templating", function ($window, yConsole, isNumeric) {
 //                console.log("output:: ", output);
 
                 // Coherce the value to a float if needed
-                if (output[0] !== "#") {
+                if (output[0]+output[1]+output[2] !== "===") {
                     if (output === "true") {
                         output = true;
                     } else if (output === "false") {
@@ -43,7 +43,7 @@ yarn.service("templating", function ($window, yConsole, isNumeric) {
                         output = parseFloat(output);
                     }
                 } else {
-                    output = output.substring(1);
+                    output = output.substring(3);
                 }
 
             } catch (e) {

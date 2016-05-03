@@ -1,13 +1,12 @@
-<div layout="column"
-     layout-align="top center"
-     class="context-action-menu"
+<div class="context-action-menu"
      ng-class="{
       'is-visible' : menu.visible,
       'is-invisible' : !menu.visible
       }">
-    <div class="context-action-menu-inner"
-         layout="column"
-         layout-align="top center">
+    <div class="context-action-menu-inner">
+        <div class="label">
+            <span ng-bind="menu.label || ' '"></span>
+        </div>
         <div layout="row" layout-align="center center">
             <md-button
                     ng-repeat="action in menu.actions"
@@ -28,9 +27,5 @@
                 </md-icon>
             </md-button>
         </div>
-        <div class="label">
-            <span ng-bind="menu.label || ' '"></span>
-        </div>
-
     </div>
 </div>

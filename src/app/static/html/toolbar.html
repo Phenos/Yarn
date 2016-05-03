@@ -23,7 +23,8 @@
 
 
         </div>
-        <div flex="40"
+        <div ng-if="!toolbar.state.modelStory.name"
+             flex="40"
              layout="row"
              layout-align="center center">
             <md-icon flex="100"
@@ -36,6 +37,14 @@
                      flex="100"
                      style="width: auto; height: 2em;"
                      md-svg-icon="./svg-icons/yarn-logo-small-white.svg"></md-icon>
+        </div>
+        <div ng-if="toolbar.state.modelStory.name"
+             flex="40"
+             layout="row"
+             layout-align="center center">
+            <div class="storyName">
+                {{ toolbar.state.modelStory.name }}
+            </div>
         </div>
         <div flex="30"
              layout="row"

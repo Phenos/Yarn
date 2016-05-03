@@ -23,6 +23,7 @@ yarn.service('state', function (Assertion,
             this.assertions = new Assertions();
             this.currentLayer = "code";
             this.localState = null;
+            this.modelStory = new ModelStory(this);
 
             this.ready(false, "loading", "Loading...");
 
@@ -30,6 +31,10 @@ yarn.service('state', function (Assertion,
                 self.persistEditorFiles(file);
             });
         }
+
+        State.prototype.updateModel = function () {
+            this.modelStory.update(this);
+        };
 
         State.prototype.ready = function (isReady, status, message) {
             var readyness = this.readyness = this.readyness || {};
@@ -610,6 +615,21 @@ yarn.service('state', function (Assertion,
 
             return newScope;
         };
+
+        // model story
+        function ModelStory(state) {
+            this.update(state);
+        }
+
+        ModelStory.prototype.update = function (state) {
+            this.name = state.value("Story has Name");
+            this.uniqueID = state.value("Story has Unique ID");
+            this.releaseNumber = state.value("Story has Release Number");
+            this.coverpage = state.value("Story has Coverpage");
+            this.headline = state.value("Story has Headline");
+            this.description = state.value("Story has Description");
+        };
+
 
         return new State();
 

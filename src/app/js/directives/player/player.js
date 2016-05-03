@@ -92,6 +92,7 @@ yarn.directive('player', function (channel,
 //            console.log("player.refresh");
             currentTheme.refresh();
             promptLoop.update();
+            state.updateModel();
         };
 
         this.startStory = function() {

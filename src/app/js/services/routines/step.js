@@ -109,6 +109,7 @@ yarn.service("step", function (postal,
         state.assertions.removeLayer("step");
     });
 
+    state.updateModel();
 
     return step;
 });

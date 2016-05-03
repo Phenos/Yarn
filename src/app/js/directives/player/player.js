@@ -88,30 +88,6 @@ yarn.directive('player', function (channel,
         player.register(this);
 
         this.refresh = function () {
-//            console.log("player.refresh");
-
-            var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
-            if (storyHasEnded) {
-                // The story is at the end
-                writers.describeTheEnd();
-            } else if (state.step() === 0) {
-                // The story is at the begining
-                writers.describeCoverpage();
-            } else {
-                // The story is ongoing
-                var space = state.one("Player is in *");
-                var script = state.one("Player is acting *");
-                if (space) {
-                    lookAroundRoutine();
-                }
-                if (script) {
-
-//                    playScriptRoutine();
-                    console.warn("Auto-replay script of reload is deactivated")
-
-                }
-            }
-
             currentTheme.refresh();
             promptLoop.update();
         };

@@ -1,12 +1,25 @@
 yarn.service('transcript', function (state,
                                      $document,
                                      $compile,
+                                     storyLocalStorage,
                                      parseThingLink) {
 
-    function Transcript() {
-        this.items = [];
-        this.lastItemRead = 0;
+    // todo: Put in an app config
+    var MaxTranscriptLength = 30;
 
+    function Transcript() {
+        // Recent log items to be displayed
+        this.items = [];
+        // All items since the beginning
+        this.archive = [];
+        this.lastItemRead = 0;
+        console.log("Reloading the localArchive ?");
+        this.localStorage = storyLocalStorage.get("transcript");
+        if (!this.localStorage.archive) {
+            this.localStorage.archive = [];
+        }
+        this.localArchive = this.localStorage.archive;
+        this.restoreItems(this.localArchive);
     }
 
     Transcript.prototype.log = function (text) {
@@ -21,15 +34,11 @@ yarn.service('transcript', function (state,
         this.write("—" + text, "action");
     };
 
-    Transcript.prototype.dialog = function (text, scope) {
-        var actorName = state.value("Subject has a Name", {
-            Subject: scope.actor
-        });
-        var voiceLabel = actorName || scope.actor;
+    Transcript.prototype.dialog = function (text) {
         this.write(text, "dialog");
     };
 
-    Transcript.prototype.topic = function (text, scope) {
+    Transcript.prototype.topic = function (text) {
         this.write("<strong> ></strong> " + text, "topic");
     };
 
@@ -68,6 +77,7 @@ yarn.service('transcript', function (state,
 
     Transcript.prototype.clear = function () {
         this.items.splice(0, this.items.length);
+        this.localArchive.splice(0, this.localArchive.length);
     };
 
     Transcript.prototype.write = function (text, type, scope) {
@@ -79,13 +89,36 @@ yarn.service('transcript', function (state,
             number = item.number + 1;
         }
         var logItem = new LogItem(number, text, type, scope);
+
         self.items.push(logItem);
+        // Also keep a copy in the archive
+        self.archive.push(logItem);
+
+        // Persist the item to localStorage as a plain object
+        self.persistItem(logItem.pojo());
 
         // todo: Put maximum number of line in a config
-        // Everytime the log overflows by 50 items it is cropped
-        var overflow = self.items.length - 30;
+        // Everytime the log overflows by XX items it is cropped
+        var overflow = self.items.length - MaxTranscriptLength;
         if (overflow > 5) {
             self.items.splice(0, overflow);
+        }
+    };
+
+    Transcript.prototype.persistItem = function (item) {
+        console.log("Persisting transcript...");
+        this.localArchive.push(item);
+    };
+
+    Transcript.prototype.restoreItems = function (items) {
+        var itemCountToRestore = MaxTranscriptLength;
+        if (items.length < itemCountToRestore) {
+            itemCountToRestore = items.length;
+        }
+        for (var i = 0; i < itemCountToRestore; i++) {
+            var item = items[items.length - itemCountToRestore + i];
+            var logItem = new LogItem(item.number, item.text, item.type, {});
+            this.items.push(logItem);
         }
     };
 
@@ -115,8 +148,15 @@ yarn.service('transcript', function (state,
         this.text = parseThingLink(text);
         this.type = type;
         this.scope = scope || {};
-
     }
+
+    LogItem.prototype.pojo = function () {
+        return {
+            number: this.number,
+            text: this.text,
+            type: this.type
+        }
+    };
 
     return new Transcript();
 });

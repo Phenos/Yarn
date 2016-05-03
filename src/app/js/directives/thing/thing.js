@@ -66,6 +66,10 @@ yarn.directive('thing', function ThingDirective(things,
         };
 
         this.update = function update() {
+            var synonym = synonyms.match(this.token);
+            if (synonym) {
+                this.thing = synonym.object;
+            }
 
             if (!angular.isObject(self.thing)) {
                 self.unrecognized = true;
@@ -77,7 +81,6 @@ yarn.directive('thing', function ThingDirective(things,
                 if (self.actions.length === 0) {
                     self.tooltip = "Nothing to do!";
                 } else if (self.actions.length === 1) {
-//                    console.log("--->>>");
                     self.tooltip = self.actions[0].label;
                 } else {
                     var actions = [];

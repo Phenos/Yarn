@@ -1,6 +1,8 @@
 yarn.service('transcript', function (state,
+                                     $window,
                                      $document,
                                      $compile,
+                                     $timeout,
                                      storyLocalStorage,
                                      parseThingLink) {
 
@@ -13,7 +15,7 @@ yarn.service('transcript', function (state,
         // All items since the beginning
         this.archive = [];
         this.lastItemRead = 0;
-        console.log("Reloading the localArchive ?");
+
         this.localStorage = storyLocalStorage.get("transcript");
         if (!this.localStorage.archive) {
             this.localStorage.archive = [];
@@ -78,6 +80,7 @@ yarn.service('transcript', function (state,
     Transcript.prototype.clear = function () {
         this.items.splice(0, this.items.length);
         this.localArchive.splice(0, this.localArchive.length);
+        this.archive.splice(0, this.archive.length);
     };
 
     Transcript.prototype.write = function (text, type, scope) {
@@ -88,7 +91,8 @@ yarn.service('transcript', function (state,
             var item = self.items[self.items.length - 1];
             number = item.number + 1;
         }
-        var logItem = new LogItem(number, text, type, scope);
+        var step = state.step();
+        var logItem = new LogItem(step, number, text, type, scope);
 
         self.items.push(logItem);
         // Also keep a copy in the archive
@@ -106,7 +110,6 @@ yarn.service('transcript', function (state,
     };
 
     Transcript.prototype.persistItem = function (item) {
-        console.log("Persisting transcript...");
         this.localArchive.push(item);
     };
 
@@ -115,10 +118,13 @@ yarn.service('transcript', function (state,
         if (items.length < itemCountToRestore) {
             itemCountToRestore = items.length;
         }
-        for (var i = 0; i < itemCountToRestore; i++) {
-            var item = items[items.length - itemCountToRestore + i];
-            var logItem = new LogItem(item.number, item.text, item.type, {});
-            this.items.push(logItem);
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var logItem = new LogItem(item.step, item.number, item.text, item.type, {});
+            this.archive.push(logItem);
+            if (i > items.length - itemCountToRestore - 1) {
+                this.items.push(logItem);
+            }
         }
     };
 
@@ -143,15 +149,66 @@ yarn.service('transcript', function (state,
         });
     };
 
-    function LogItem(number, text, type, scope) {
+    Transcript.prototype.export = function () {
+        var stylesheet = [
+            "<style>",
+            ".item { margin-left: 4em; }",
+            ".is-image img { max-width: 400px; max-height: 400px;  }",
+            ".is-heading p { font-size: 1.4em; font-weight: bold; }",
+            ".stepCount { position: absolute; left: 1em; font-family:" +
+            "sans-serif; margin-left: 1em; font-size: 0.7em; color: #BBB; }",
+            "</style>"
+        ].join("");
+
+        var body = [];
+
+        angular.forEach(this.archive, function (item) {
+            var html = [
+                "<div class='item is-" + item.type + "'><span class='stepCount'>#",
+                item.step,
+                "</span> <p>",
+                item.text,
+                "</p></div>"
+            ];
+            body.push(html.join(""));
+        });
+
+        var elem = document.createElement("div");
+        elem.innerHTML = body.join("");
+
+        var thingTags = elem.getElementsByTagName("thing");
+        thingTags = [].slice.call(thingTags);
+
+        angular.forEach(thingTags, function (thingTag) {
+            var text = thingTag.getAttribute("text");
+            var token = thingTag.getAttribute("token");
+            thingTag.outerHTML = "<a href='#" + token + "'>" + text + "</a>";
+        });
+
+        var doc = [
+            "<html><head>",
+            stylesheet,
+            "</head><body>",
+            elem.innerHTML,
+            "</body>",
+            "</html>"
+        ].join("");
+
+        var dataURI = "data:text/html;charset=utf-8," + encodeURIComponent(doc);
+        $window.open(dataURI, "_blank", "");
+    };
+
+    function LogItem(step, number, text, type, scope) {
         this.number = number;
         this.text = parseThingLink(text);
         this.type = type;
+        this.step = step;
         this.scope = scope || {};
     }
 
     LogItem.prototype.pojo = function () {
         return {
+            step: this.step,
             number: this.number,
             text: this.text,
             type: this.type

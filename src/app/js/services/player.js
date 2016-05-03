@@ -31,6 +31,18 @@ yarn.service("player", function () {
         }
     };
 
+    service.startStory = function () {
+        if (service.controller) {
+            service.controller.startStory();
+        }
+    };
+
+    service.endStory = function () {
+        if (service.controller) {
+            service.controller.endStory();
+        }
+    };
+
     return service;
 
 });

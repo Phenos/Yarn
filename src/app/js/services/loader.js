@@ -65,6 +65,7 @@ yarn.service('loader', function (yarn,
                 console.info("Successfuly loaded story. Now refreshing player.");
 
                 player.refresh();
+                player.startStory();
 
                 loadStatus.success();
                 yConsole.log("Loading and compilation took " +

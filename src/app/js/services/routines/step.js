@@ -100,6 +100,7 @@ yarn.service("step", function (postal,
         var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
         if (storyHasEnded) {
             player.refresh();
+            player.endStory();
         }
     });
 

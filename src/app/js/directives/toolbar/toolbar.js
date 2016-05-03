@@ -3,6 +3,7 @@ yarn.directive('toolbar', function ToolbarDirective($window,
                                                     state,
                                                     profiles,
                                                     commands,
+                                                    transcript,
                                                     login) {
     return {
         restrict: 'E',
@@ -31,6 +32,10 @@ yarn.directive('toolbar', function ToolbarDirective($window,
 
         this.restartStory = function () {
             commands.run("restart");
+        };
+
+        this.exportTranscript = function () {
+            transcript.export();
         };
 
         this.undo = function () {

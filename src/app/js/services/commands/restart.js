@@ -24,6 +24,7 @@ function restartCommand(commands,
 
         transcript.clear();
         player.refresh();
+        player.startStory();
         yConsole.success("Story restarted");
     }
 

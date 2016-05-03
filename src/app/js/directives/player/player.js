@@ -9,6 +9,7 @@ yarn.directive('player', function (channel,
                                    profiles,
                                    login,
                                    assert,
+                                   transcript,
                                    $timeout) {
 
     return {
@@ -88,8 +89,19 @@ yarn.directive('player', function (channel,
         player.register(this);
 
         this.refresh = function () {
+//            console.log("player.refresh");
             currentTheme.refresh();
             promptLoop.update();
+        };
+
+        this.startStory = function() {
+            if (transcript.archive.length === 0) {
+                writers.describeCoverpage();
+            }
+        };
+
+        this.endStory = function () {
+            writers.describeTheEnd();
         };
 
         this.login = function () {

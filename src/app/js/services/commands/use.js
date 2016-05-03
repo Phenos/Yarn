@@ -14,7 +14,6 @@ yarn.factory('useCommand', function (yConsole,
                 if (!somethingHappened) {
                     writers.nothingHappened(true)
                 }
-                transcript.flushBuffers();
             } else {
                 yConsole.error("Could not find an object called : " + args[0]);
             }

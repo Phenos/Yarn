@@ -1,88 +1,40 @@
-yarn.service('transcript', function (state) {
+yarn.service('transcript', function (state,
+                                     $document,
+                                     $compile,
+                                     parseThingLink) {
 
     function Transcript() {
-        var self = this;
-        this._buffer = [];
-        this.bufferedLogs = [];
-
         this.items = [];
         this.lastItemRead = 0;
 
-        this.controller = {
-            write: mockFunction("write"),
-            clear: mockFunction("clear")
-        };
-
-        // Mock function that buffer function calls until the console is ready
-        function mockFunction(fn) {
-            return function () {
-//                console.log("Log item buffered", fn, arguments);
-                self._buffer.push([fn, arguments])
-            }
-        }
     }
 
-    // Create and return a new buffered log
-    // To be later flushed
-    Transcript.prototype.buffer = function () {
-        var bufferedLog = new Transcript();
-//        console.log("Creating a buffered log ", bufferedLog);
-        this.bufferedLogs.push(bufferedLog);
-        return bufferedLog;
-    };
-
-    Transcript.prototype.flushBuffers = function () {
-        var self = this;
-        var log;
-//        console.log("Flushing the log buffer", this.bufferedLogs);
-        while (this.bufferedLogs.length) {
-            log = this.bufferedLogs.shift();
-            log.register(self.controller);
-            log.flush();
-        }
-    };
-
-    Transcript.prototype.flush = function () {
-        var functionCall;
-        var fn;
-        while (this._buffer.length) {
-            functionCall = this._buffer.shift();
-            fn = this.controller[functionCall[0]];
-            fn.apply(this.controller, functionCall[1]);
-        }
-
-    };
-
-    Transcript.prototype.register = function (_controller) {
-        this.controller = _controller;
-    };
-
     Transcript.prototype.log = function (text) {
-        this.controller.write(text, "log");
+        this.write(text, "log");
     };
 
     Transcript.prototype.headline = function (text) {
-        this.controller.write(text, "headline");
+        this.write(text, "headline");
     };
 
     Transcript.prototype.action = function (text) {
-        this.controller.write("—" + text, "action");
+        this.write("—" + text, "action");
     };
 
     Transcript.prototype.dialog = function (text, scope) {
-//        console.log("SCOPE>>>>>> ", scope);
-        var actorName = state.value("Subject has a Name", { Subject: scope.actor });
+        var actorName = state.value("Subject has a Name", {
+            Subject: scope.actor
+        });
         var voiceLabel = actorName || scope.actor;
-        this.controller.write(text, "dialog");
+        this.write(text, "dialog");
     };
 
     Transcript.prototype.topic = function (text, scope) {
-//        console.log("SCOPE>>>>>> ", scope);
-        this.controller.write("<strong> ></strong> " + text, "topic");
+        this.write("<strong> ></strong> " + text, "topic");
     };
 
     Transcript.prototype.insight = function (text) {
-        this.controller.write(
+        this.write(
             "<md-icon md-svg-icon='./svg-icons/insight.svg'></md-icon>" +
             text, "insight");
     };
@@ -91,36 +43,80 @@ yarn.service('transcript', function (state) {
         var scope = {
             prompt: prompt
         };
-        this.controller.write("<user-choice prompt='prompt'></user-choice>", "prompt", scope);
+        this.write("<user-choice prompt='prompt'></user-choice>", "prompt", scope);
     };
 
     Transcript.prototype.image = function (url) {
-        this.controller.write("<img src='" + url + "' alt='coverpage'>", "image");
+        this.write("<img src='" + url + "' alt='coverpage'>", "image");
     };
 
     Transcript.prototype.error = function (text) {
-        this.controller.write(text, "error");
+        this.write(text, "error");
     };
 
     Transcript.prototype.heading = function (text) {
-        this.controller.write(text, "heading");
+        this.write(text, "heading");
     };
 
     Transcript.prototype.subHeading = function (text) {
-        this.controller.write(text, "subHeading");
+        this.write(text, "subHeading");
     };
 
     Transcript.prototype.thingImage = function (url) {
-        this.controller.write('<img src="' + url + '">', "thingImage");
+        this.write('<img src="' + url + '">', "thingImage");
     };
 
     Transcript.prototype.clear = function () {
-        this.controller.clear();
+        this.items.splice(0, this.items.length);
+    };
+
+    Transcript.prototype.write = function (text, type, scope) {
+        var self = this;
+        // Get the number of the last item to increment the next
+        var number = 0;
+        if (self.items.length > 0) {
+            var item = self.items[self.items.length - 1];
+            number = item.number + 1;
+        }
+        var logItem = new LogItem(number, text, type, scope);
+        self.items.push(logItem);
+
+        // todo: Put maximum number of line in a config
+        // Everytime the log overflows by 50 items it is cropped
+        var overflow = self.items.length - 30;
+        if (overflow > 5) {
+            self.items.splice(0, overflow);
+        }
     };
 
     Transcript.prototype.markAsRead = function () {
-        this.controller.markAsRead();
+        var self = this;
+        var number = 0;
+        if (self.items.length > 0) {
+            var item = self.items[self.items.length - 1];
+            number = item.number;
+        }
+        self.lastItemRead = number;
+
+        var document = $document[0];
+        angular.forEach(self.items, function (_item) {
+            var elem = angular.element(document.getElementById("logItem-" + _item.number));
+            if (_item.number === self.lastItemRead) {
+                elem.parent().addClass("hasBookmark");
+            } else {
+                elem.parent().removeClass("hasBookmark");
+            }
+            elem.removeClass("unread").addClass("read")
+        });
     };
+
+    function LogItem(number, text, type, scope) {
+        this.number = number;
+        this.text = parseThingLink(text);
+        this.type = type;
+        this.scope = scope || {};
+
+    }
 
     return new Transcript();
 });

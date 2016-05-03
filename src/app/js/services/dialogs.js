@@ -60,7 +60,6 @@ yarn.service("dialogs", function (state,
 
             });
 
-            transcript.flushBuffers();
         }
 
     };

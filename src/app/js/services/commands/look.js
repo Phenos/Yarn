@@ -13,7 +13,7 @@ yarn.factory('lookCommand', function (yConsole,
             } else {
                 yConsole.error("Could not find this thing to look at : " + args[0]);
             }
-            transcript.flushBuffers();
+
         } else {
             yConsole.tip("You must provide an object name as the first argument.");
         }

@@ -104,8 +104,6 @@ yarn.service("step", function (postal,
     });
 
     step.on("endStep", function () {
-        // Flush the transcript buffers
-        transcript.flushBuffers();
         // Remove the temporary "step" layer of assertions
         state.assertions.removeLayer("step");
     });

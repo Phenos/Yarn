@@ -122,9 +122,6 @@ yarn.factory('writers', function (Prompt,
                 "Ex.: Player is in the Bedroom.");
         }
 
-        // Before ending, flush the log from any buffered logs
-        transcript.flushBuffers();
-
         return this;
     }
 

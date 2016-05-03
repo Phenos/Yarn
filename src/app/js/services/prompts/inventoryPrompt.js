@@ -1,11 +1,11 @@
 yarn.service("inventoryPrompt", function (logic,
-                                     writers,
-                                     commands,
-                                     state,
-                                     assert,
-                                     stateHelpers,
-                                     storyLog,
-                                     setDefaultOptionsHelper) {
+                                          writers,
+                                          commands,
+                                          state,
+                                          assert,
+                                          stateHelpers,
+                                          transcript,
+                                          setDefaultOptionsHelper) {
 
     function takePrompt(context) {
 

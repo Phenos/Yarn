@@ -1,7 +1,7 @@
 yarn.factory('takeCommand', function (yConsole,
                                       events,
                                       things,
-                                      storyLog,
+                                      transcript,
                                       logic) {
 
     function handler(args) {
@@ -9,7 +9,7 @@ yarn.factory('takeCommand', function (yConsole,
             var object = things.get(args[0], true);
             if (object) {
                 logic.routines.take(object);
-                storyLog.flushBuffers();
+                transcript.flushBuffers();
             } else {
                 yConsole.error("Could not find any object called : " + args[0]);
             }

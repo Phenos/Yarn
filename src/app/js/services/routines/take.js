@@ -2,7 +2,7 @@ yarn.service("takeRoutine", function (state,
                                       events,
                                       assert,
                                       predicates,
-                                      storyLog,
+                                      transcript,
                                       things,
                                       writers) {
 
@@ -18,9 +18,9 @@ yarn.service("takeRoutine", function (state,
             // Log the action of the player
             var thingName = state.resolveValue(assert(object, "has", "Name"));
             if (thingName) {
-                storyLog.action("You take the " + thingName);
+                transcript.action("You take the " + thingName);
             } else {
-                storyLog.action("You take the object");
+                transcript.action("You take the object");
             }
 
             // Remove the object from where it was

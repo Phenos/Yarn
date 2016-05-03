@@ -1,14 +1,14 @@
 yarn.service("lookAtExitsRoutine", function (events,
-                                            writers,
-                                            assert,
-                                            state,
-                                            storyLog,
-                                            stateHelpers) {
+                                             writers,
+                                             assert,
+                                             state,
+                                             transcript,
+                                             stateHelpers) {
 
     return function lookAtExitsRoutine() {
         var phrase = [];
 
-        storyLog.action("You look around for exits");
+        transcript.action("You look around for exits");
 
         var defaultText = state.resolveValue(assert("Default", "for", "NowhereToGo"));
         defaultText = defaultText || "You see nowhere else to go";
@@ -44,11 +44,11 @@ yarn.service("lookAtExitsRoutine", function (events,
                 phrase.push(defaultText);
             }
 
-            storyLog.log(phrase.join(""));
+            transcript.log(phrase.join(""));
 
         } else {
 
-            storyLog.log(defaultText);
+            transcript.log(defaultText);
 
         }
 

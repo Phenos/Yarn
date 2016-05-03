@@ -2,7 +2,7 @@ yarn.service("inventoryRoutine", function (events,
                                            writers,
                                            assert,
                                            state,
-                                           storyLog,
+                                           transcript,
                                            stateHelpers) {
 
     // Process movement triggered by creating an assertion
@@ -13,14 +13,14 @@ yarn.service("inventoryRoutine", function (events,
     function inventoryRoutine() {
         var phrase = [];
 
-        storyLog.action("You look at your inventory");
+        transcript.action("You look at your inventory");
 
         var inventory = stateHelpers.ownInventory();
 
 
         if (inventory.length === 0) {
             var defaultText = state.resolveValue(assert("Default", "for", "YouHaveNothing"));
-            storyLog.log(defaultText || "You have nothing");
+            transcript.log(defaultText || "You have nothing");
 
         } else {
 
@@ -38,7 +38,7 @@ yarn.service("inventoryRoutine", function (events,
                 }
             });
 
-            storyLog.log(phrase.join(""));
+            transcript.log(phrase.join(""));
 
         }
 

@@ -1,12 +1,12 @@
 yarn.service('creditsCommand', function (state,
                                          assert,
                                          yConsole,
-                                         storyLog) {
+                                         transcript) {
 
     function handler() {
         var credits = state.resolveValue(assert("Story", "has", "Credits"));
-        storyLog.heading("Credits");
-        storyLog.log(credits);
+        transcript.heading("Credits");
+        transcript.log(credits);
     }
 
     return {

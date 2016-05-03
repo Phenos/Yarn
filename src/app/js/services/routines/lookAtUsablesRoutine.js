@@ -1,14 +1,14 @@
 yarn.service("lookAtUsablesRoutine", function (events,
-                                            writers,
-                                            assert,
-                                            state,
-                                            storyLog,
-                                            stateHelpers) {
+                                               writers,
+                                               assert,
+                                               state,
+                                               transcript,
+                                               stateHelpers) {
 
     return function lookAtUsablesRoutine() {
         var phrase = [];
 
-        storyLog.action("You look at what you can use...");
+        transcript.action("You look at what you can use...");
 
         var defaultText = state.resolveValue(assert("Default", "for", "NothingToUse"));
         defaultText = defaultText || "You dont see anything that can be used.";
@@ -57,11 +57,11 @@ yarn.service("lookAtUsablesRoutine", function (events,
                 phrase.push(defaultText);
             }
 
-            storyLog.log(phrase.join(""));
+            transcript.log(phrase.join(""));
 
         } else {
 
-            storyLog.log(defaultText);
+            transcript.log(defaultText);
 
         }
 

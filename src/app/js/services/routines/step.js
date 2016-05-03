@@ -6,7 +6,7 @@ yarn.service("step", function (postal,
                                synonyms,
                                statuses,
                                player,
-                               storyLog,
+                               transcript,
                                status) {
 
     function Step () {
@@ -72,7 +72,7 @@ yarn.service("step", function (postal,
     var step = new Step();
 
     step.on("startStep", function () {
-        storyLog.markAsRead();
+        transcript.markAsRead();
         state.step(1);
         events.trigger(assert("Story", "did", "Step"));
         events.trigger(assert("Player", "did", "Step"));
@@ -104,8 +104,8 @@ yarn.service("step", function (postal,
     });
 
     step.on("endStep", function () {
-        // Flush the storyLog buffers
-        storyLog.flushBuffers();
+        // Flush the transcript buffers
+        transcript.flushBuffers();
         // Remove the temporary "step" layer of assertions
         state.assertions.removeLayer("step");
     });

@@ -2,7 +2,7 @@ yarn.factory('inventoryPlayerCommand', inventoryPlayerCommand);
 
 function inventoryPlayerCommand(state,
                                 assert,
-                                storyLog,
+                                transcript,
                                 promptLoop) {
 
     function handler() {
@@ -23,9 +23,9 @@ function inventoryPlayerCommand(state,
                 itemList.join("</a>, <a href='#'>"),
                 "</a>."
             ];
-            storyLog.log(message.join(""));
+            transcript.log(message.join(""));
         } else {
-            storyLog.error("You have nothing in inventory!");
+            transcript.error("You have nothing in inventory!");
         }
 
         promptLoop.update();

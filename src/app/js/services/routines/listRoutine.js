@@ -4,7 +4,7 @@ yarn.service("listRoutine", function (writers,
                                       events,
                                       things,
                                       predicates,
-                                      storyLog) {
+                                      transcript) {
 
     events.on("Player lists *", "after dialogs", doListRoutine);
     events.on("Player lists *", "prompts", doListRoutine);
@@ -51,7 +51,7 @@ yarn.service("listRoutine", function (writers,
             })
         }
 
-        storyLog.action(label);
+        transcript.action(label);
 
         angular.forEach(listItems, function (item) {
             var label = state.value("Item has Label", {
@@ -60,7 +60,7 @@ yarn.service("listRoutine", function (writers,
             var output = [
                 "[", label, ":", item.id, ": Think About ]"
             ].join("");
-            storyLog.topic(output);
+            transcript.topic(output);
         });
 
 

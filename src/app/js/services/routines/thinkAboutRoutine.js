@@ -1,12 +1,12 @@
 yarn.service("thinkAboutRoutine", function (events,
-                                           assert,
-                                           state,
-                                           Script,
-                                           storyLog,
-                                           yConsole,
-                                           doReveal,
-                                           things,
-                                           predicates) {
+                                            assert,
+                                            state,
+                                            Script,
+                                            transcript,
+                                            yConsole,
+                                            doReveal,
+                                            things,
+                                            predicates) {
 
     events.on("Player thinks about *", "dialogs", function () {
         thinkAboutRoutine();
@@ -31,9 +31,9 @@ yarn.service("thinkAboutRoutine", function (events,
             itemLabel = thinkAboutLabel || itemLabel;
 
             if (itemLabel) {
-                storyLog.action("You think about " + itemLabel);
+                transcript.action("You think about " + itemLabel);
             } else {
-                storyLog.action("You thinks...");
+                transcript.action("You thinks...");
             }
 
             var scriptText = state.value("CurrentItem has a Script", {

@@ -3,7 +3,7 @@ yarn.service("moveRoutine", function (state,
                                       assert,
                                       predicates,
                                       things,
-                                      storyLog) {
+                                      transcript) {
 
     // Process movement triggered by creating an assertion
     events.on("Player move to *", "move", function () {
@@ -52,7 +52,7 @@ yarn.service("moveRoutine", function (state,
                     });
 
                     var spaceName = state.resolveValue(assert(linkedSpace, "has", "Name"));
-                    storyLog.action("You move thoward the " + spaceName);
+                    transcript.action("You move thoward the " + spaceName);
                     events.trigger(assert("Player", "entered", linkedSpace));
                     events.trigger(assert("Player", "did", "Look Around"));
                 }

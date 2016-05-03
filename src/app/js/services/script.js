@@ -1,4 +1,4 @@
-yarn.service("Script", function (yConsole, storyLog, state) {
+yarn.service("Script", function (yConsole, transcript, state) {
 
 //    var scriptCuttingRegex = /((^[A-Z ]+:)|(.*))/gm;
 //    var isActorRegex = /(^[A-Z ]+:)/g;
@@ -70,14 +70,14 @@ yarn.service("Script", function (yConsole, storyLog, state) {
         if (logType) {
 //                console.log("Found builtin voice", voice);
 //                console.log("Statement", statement);
-            storyLog[logType](statement);
+            transcript[logType](statement);
         } else {
 //          console.log("Looking for alternate voice", voice);
             // The voice doesnt match any standard voice, so we look for an actor
             var isActor = state.value("Subject is Actor", {Subject: voice});
             if (isActor) {
                 statement = parseStatement(statement);
-                storyLog.dialog(statement, {
+                transcript.dialog(statement, {
                     actor: voice
                 });
             }

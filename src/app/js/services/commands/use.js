@@ -2,7 +2,7 @@ yarn.factory('useCommand', function (yConsole,
                                      events,
                                      things,
                                      logic,
-                                     storyLog,
+                                     transcript,
                                      writers) {
 
     function handler(args) {
@@ -14,7 +14,7 @@ yarn.factory('useCommand', function (yConsole,
                 if (!somethingHappened) {
                     writers.nothingHappened(true)
                 }
-                storyLog.flushBuffers();
+                transcript.flushBuffers();
             } else {
                 yConsole.error("Could not find an object called : " + args[0]);
             }

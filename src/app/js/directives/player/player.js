@@ -9,6 +9,8 @@ yarn.directive('player', function (channel,
                                    profiles,
                                    login,
                                    assert,
+                                   Scroller,
+                                   transcript,
                                    $timeout) {
 
     return {
@@ -22,13 +24,22 @@ yarn.directive('player', function (channel,
         controller: playerController
     };
 
-    function playerController($scope) {
+    function playerController($scope, $element) {
 
         var self = this;
+
+        this.scroller = new Scroller();
 
         this.state = state;
         this.profiles = profiles;
         this.currentTheme = currentTheme;
+
+        this.scrollElement = null;
+
+        $timeout(function () {
+            self.scrollElement = $element[0].querySelector('.player');
+            self.scroller.bind(self.scrollElement);
+        }, 10);
 
         this.scrollbarsConfig = {
             autoHideScrollbar: true,
@@ -89,31 +100,19 @@ yarn.directive('player', function (channel,
 
         this.refresh = function () {
 //            console.log("player.refresh");
-
-            var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
-            if (storyHasEnded) {
-                // The story is at the end
-                writers.describeTheEnd();
-            } else if (state.step() === 0) {
-                // The story is at the begining
-                writers.describeCoverpage();
-            } else {
-                // The story is ongoing
-                var space = state.one("Player is in *");
-                var script = state.one("Player is acting *");
-                if (space) {
-                    lookAroundRoutine();
-                }
-                if (script) {
-
-//                    playScriptRoutine();
-                    console.warn("Auto-replay script of reload is deactivated")
-
-                }
-            }
-
             currentTheme.refresh();
             promptLoop.update();
+            state.updateModel();
+        };
+
+        this.startStory = function() {
+            if (transcript.archive.length === 0) {
+                writers.describeCoverpage();
+            }
+        };
+
+        this.endStory = function () {
+            writers.describeTheEnd();
         };
 
         this.login = function () {
@@ -135,11 +134,15 @@ yarn.directive('player', function (channel,
             $timeout(function () {
                 // First we check to see if it's the first game step
                 // to prevent scrolling when first showing the coverpage
-                if (state.step() > 0) {
-                    console.warn("Auto scrolling de-activated");
-//                    $scope.updateScrollbar('scrollTo', "bottom");
+
+                if (transcript.bookMarkElement) {
+                    var bookmarkPosition = transcript.bookMarkElement.offsetTop;
+                    self.scroller.scrollToPosition(bookmarkPosition - 200, 500);
+                } else {
+                    self.scroller.scrollToPosition("bottom", 500);
                 }
-            }, 50);
+
+            }, 250);
         };
 
     }

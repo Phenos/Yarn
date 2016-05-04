@@ -10,6 +10,7 @@ var yarn = angular.module('yarn', [
     'ngMessages',
     'ui.grid',
     'ngMaterial',
+    'hmTouchEvents',
     'ui.router',
     'firebase',
     'ngDebottle',

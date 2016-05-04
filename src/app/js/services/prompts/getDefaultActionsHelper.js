@@ -42,12 +42,17 @@ yarn.service("setDefaultOptionsHelper", function (state) {
                     var isActive = state.value("Action is Active", _scope);
                     var icon = state.value("Action has Icon", _scope);
                     var name = state.value("Action has Name", _scope);
+                    var command = state.value("Action has Command", _scope);
                     var iconSize = state.value("Action has IconSize", _scope);
                     var isIntransitive = state.value("Action is Intransitive", _scope);
 
 //                    console.log("isIntransitive", isIntransitive);
                     if (isIntransitive && isActive) {
-                        option = prompt.option(name, "do " + action.id);
+                        if (command) {
+                            option = prompt.option(name, "do " + command);
+                        } else {
+                            option = prompt.option(name, "do " + action.id);
+                        }
                         option.iconId = icon;
                         option.iconSize = iconSize || size;
                         option.iconOnly = true;

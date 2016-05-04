@@ -1,7 +1,7 @@
 yarn.service("dialogs", function (state,
                                   assert,
                                   Script,
-                                  storyLog,
+                                  transcript,
                                   yConsole) {
 
 
@@ -60,7 +60,6 @@ yarn.service("dialogs", function (state,
 
             });
 
-            storyLog.flushBuffers();
         }
 
     };

@@ -1,4 +1,4 @@
-<md-toolbar  class="toolbar">
+<md-toolbar class="toolbar">
     <div class="md-toolbar-tools">
         <div
                 flex="30"
@@ -23,7 +23,8 @@
 
 
         </div>
-        <div flex="40"
+        <div ng-if="!toolbar.state.modelStory.name"
+             flex="40"
              layout="row"
              layout-align="center center">
             <md-icon flex="100"
@@ -37,12 +38,20 @@
                      style="width: auto; height: 2em;"
                      md-svg-icon="./svg-icons/yarn-logo-small-white.svg"></md-icon>
         </div>
+        <div ng-if="toolbar.state.modelStory.name"
+             flex="40"
+             layout="row"
+             layout-align="center center">
+            <div class="storyName">
+                {{ toolbar.state.modelStory.name }}
+            </div>
+        </div>
         <div flex="30"
              layout="row"
              layout-align="end end">
             <div flex=""></div>
             <md-menu ng-if="toolbar.state.story"
-                    md-offset="-8 0"
+                     md-offset="-8 0"
                      md-position-mode="target-right target">
                 <md-button
                         style="min-width: 0; padding: 0;"
@@ -74,10 +83,11 @@
                                    aria-label="{{ toolbar.visited.shortUsername }}">
                             <img alt="{{ toolbar.visited.shortUsername }}"
                                  ng-src="{{ toolbar.visited.twitterProfile.profile_image_url | biggerProfileImage }}"
-                                 class="avatar" />
+                                 class="avatar"/>
                             {{ toolbar.visited.shortUsername }}
                         </md-button>
                     </md-menu-item>
+                    <!--
                     <md-menu-item>
                         <md-button ng-click="toolbar.undo()">
                             <md-icon md-svg-icon="./svg-icons/undo.svg"></md-icon>
@@ -85,11 +95,35 @@
                             <span class="md-alt-text">{{:: 'M-U' | keyboardShortcut }}</span>
                         </md-button>
                     </md-menu-item>
+                    -->
+                    <md-menu-item>
+                        <md-button ng-click="toolbar.exportTranscript()">
+                            <md-icon md-svg-icon="./svg-icons/transcript.svg"></md-icon>
+                            Export transcript
+                        </md-button>
+                    </md-menu-item>
                     <md-menu-item>
                         <md-button ng-click="toolbar.restartStory()">
                             <md-icon md-svg-icon="./svg-icons/restart.svg"></md-icon>
                             <span>Restart</span>
                         </md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-if="toolbar.visited">
+                        <div flex="100" layout="row">
+                            <div flex="10" layout="row" layout-align="start center">
+                                <md-icon md-svg-icon="./svg-icons/font-size.svg"></md-icon>
+                            </div>
+                            <div flex="80" flex-offset="10">
+                                <md-slider flex
+                                           md-discrete
+                                           ng-model="toolbar.fontSize"
+                                           step="1"
+                                           min="-2"
+                                           max="2"
+                                           aria-label="Font size">
+                                </md-slider>
+                            </div>
+                        </div>
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>

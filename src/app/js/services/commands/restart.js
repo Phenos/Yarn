@@ -4,7 +4,7 @@ function restartCommand(commands,
                         yConsole,
                         state,
                         player,
-                        storyLog,
+                        transcript,
                         synonyms,
                         statuses) {
 
@@ -22,8 +22,9 @@ function restartCommand(commands,
         synonyms.update(state);
         statuses.update(state);
 
-        storyLog.clear();
+        transcript.clear();
         player.refresh();
+        player.startStory();
         yConsole.success("Story restarted");
     }
 

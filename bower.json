@@ -35,7 +35,9 @@
     "angularfire": "~1.1.4",
     "nunjucks": "~2.4.1",
     "ng-lodash": "~0.4.0",
-    "hover": "Hover#^2.0.2"
+    "hover": "Hover#^2.0.2",
+    "AngularHammer": "ryanmullins-angular-hammer#^2.1.10",
+    "hammerjs": "^2.0.8"
   },
   "resolutions": {
     "lodash": "~4.5.1",

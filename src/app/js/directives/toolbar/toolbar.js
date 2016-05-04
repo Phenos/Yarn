@@ -3,6 +3,8 @@ yarn.directive('toolbar', function ToolbarDirective($window,
                                                     state,
                                                     profiles,
                                                     commands,
+                                                    currentTheme,
+                                                    transcript,
                                                     login) {
     return {
         restrict: 'E',
@@ -19,6 +21,11 @@ yarn.directive('toolbar', function ToolbarDirective($window,
 
         this.state = state;
         this.visited = profiles.visited();
+        this.fontSize = currentTheme.fontSize();
+
+        $scope.$watch("toolbar.fontSize", function (value) {
+            currentTheme.fontSize(value)
+        });
 
         if (session.user()) {
             this.user = session.user();
@@ -31,6 +38,10 @@ yarn.directive('toolbar', function ToolbarDirective($window,
 
         this.restartStory = function () {
             commands.run("restart");
+        };
+
+        this.exportTranscript = function () {
+            transcript.export();
         };
 
         this.undo = function () {

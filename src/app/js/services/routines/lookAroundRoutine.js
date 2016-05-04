@@ -2,7 +2,7 @@ yarn.service("lookAroundRoutine", function (events,
                                             writers,
                                             assert,
                                             state,
-                                            storyLog,
+                                            transcript,
                                             stateHelpers,
                                             yConsole) {
 
@@ -50,7 +50,7 @@ yarn.service("lookAroundRoutine", function (events,
 
             }
 
-            storyLog.log(phrase.join(""));
+            transcript.log(phrase.join(""));
 
         }
 

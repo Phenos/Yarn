@@ -1,7 +1,7 @@
 yarn.service("usePrompt", function (stateHelpers,
                                     assert,
                                     logic,
-                                    storyLog,
+                                    transcript,
                                     commands,
                                     state,
                                     setDefaultOptionsHelper) {
@@ -44,7 +44,7 @@ yarn.service("usePrompt", function (stateHelpers,
                     commands.run(option.value);
                 }
             } else {
-                storyLog.error("Nothing to use here!");
+                transcript.error("Nothing to use here!");
             }
         };
 

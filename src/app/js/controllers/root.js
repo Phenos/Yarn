@@ -8,6 +8,7 @@ yarn.controller('root', function rootController($scope,
                                                 welcomeMessage,
                                                 editorFiles,
                                                 root,
+                                                monitors,
                                                 wallpaper,
                                                 tools,
                                                 globalContextMenu,
@@ -24,6 +25,8 @@ yarn.controller('root', function rootController($scope,
     $scope.IDE = IDE;
     $scope.state = state;
     $scope.editorFiles = editorFiles;
+
+    monitors.hide();
 
     if (user) {
         $scope.user = user; // Note: User not yet in a service, resolved in route instead
@@ -123,7 +126,6 @@ yarn.controller('root', function rootController($scope,
 
             storyLocalStorage.uid(state.story.key());
 
-            console.log("-------- before iExists");
             state.story.ifExists(function () {
 //                console.log("STORY EXISTS!");
                 state.ready(true, "ready", "");

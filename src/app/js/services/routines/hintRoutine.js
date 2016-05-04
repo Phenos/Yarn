@@ -2,7 +2,7 @@ yarn.service("hintRoutine", function (writers,
                                       assert,
                                       state,
                                       events,
-                                      storyLog) {
+                                      transcript) {
 
     events.on("Player did Hint", "after events", function () {
         hintRoutine();
@@ -10,15 +10,15 @@ yarn.service("hintRoutine", function (writers,
 
     function hintRoutine() {
 
-        storyLog.action("You take a moment to think really hard and look around...");
+        transcript.action("You take a moment to think really hard and look around...");
         var room = state.resolveOne(assert("Player", "is in"));
 
         var roomName = state.resolveValue(assert(room, "has", "name"));
-        storyLog.log("You are at the [" + roomName + "]");
+        transcript.log("You are at the [" + roomName + "]");
 
         writers.describeThing(room);
 
-        storyLog.log("Nothing else comes to mind.");
+        transcript.log("Nothing else comes to mind.");
 
         return true;
     }
@@ -26,5 +26,4 @@ yarn.service("hintRoutine", function (writers,
     return hintRoutine;
 
 });
-
 

@@ -2,7 +2,7 @@ yarn.service("lookRoutine", function (events,
                                       writers,
                                       assert,
                                       state,
-                                      storyLog,
+                                      transcript,
                                       yConsole) {
 
     // Process movement triggered by creating an assertion
@@ -19,7 +19,7 @@ yarn.service("lookRoutine", function (events,
 
             var thingName = state.resolveValue(assert(object, "has", "Name"));
             thingName = thingName || object.id;
-            storyLog.action("You examine the " + thingName);
+            transcript.action("You examine the " + thingName);
 
             writers.describeThing(object);
             writers.objectMenu(object);

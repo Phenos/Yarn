@@ -2,12 +2,11 @@ yarn.service("talkAboutRoutine", function (events,
                                            assert,
                                            state,
                                            Script,
-                                           storyLog,
+                                           transcript,
                                            yConsole,
                                            doReveal,
                                            things,
-                                           predicates,
-                                           talkToRoutine) {
+                                           predicates) {
 
     events.on("Player talks about *", "dialogs", function () {
         talkAboutRoutine();
@@ -26,9 +25,9 @@ yarn.service("talkAboutRoutine", function (events,
             });
 
             if (topicName) {
-                storyLog.action("You decide to talk about the " + topicName);
+                transcript.action("You decide to talk about the " + topicName);
             } else {
-                storyLog.action("You start talking");
+                transcript.action("You start talking");
             }
 
             var scriptText = state.value("CurrentTopic has a Script", {

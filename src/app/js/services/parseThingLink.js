@@ -9,7 +9,7 @@ yarn.service("parseThingLink", function () {
                 var tokens = match.substring(1, match.length - 1).split(":");
                 var name = tokens[0];
                 var id = tokens[1] || tokens[0];
-                var action = tokens[2] || null;
+                var action = tokens[2] || "";
                 // Sanitize the id
                 id = id.trim().toLowerCase().replace(/ /g, "_");
 

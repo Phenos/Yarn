@@ -3,7 +3,7 @@ yarn.factory('lookCommand', function (yConsole,
                                       things,
                                       logic,
                                       lookRoutine,
-                                      storyLog) {
+                                      transcript) {
 
     function handler(args) {
         if (args.length) {
@@ -13,7 +13,7 @@ yarn.factory('lookCommand', function (yConsole,
             } else {
                 yConsole.error("Could not find this thing to look at : " + args[0]);
             }
-            storyLog.flushBuffers();
+
         } else {
             yConsole.tip("You must provide an object name as the first argument.");
         }

@@ -7,6 +7,8 @@ yarn.service('logic', function (aboutToRoutine,
                                 actSceneRoutine,
                                 talkAboutRoutine,
                                 talkToRoutine,
+                                thinkAboutRoutine,
+                                listRoutine,
                                 doRoutine,
                                 takeRoutine,
                                 useRoutine,
@@ -19,15 +21,15 @@ yarn.service('logic', function (aboutToRoutine,
         inventory: inventoryRoutine,
         do: doRoutine,
         talkAbout: talkAboutRoutine,
+        thinkAbout: thinkAboutRoutine,
         actScene: actSceneRoutine,
         talkTo: talkToRoutine,
         lookAround: lookAroundRoutine,
         lookAtExits: lookAtExitsRoutine,
+        list: listRoutine,
         take: takeRoutine,
         hint: hintRoutine
     };
-
-    routines.aboutTo = aboutToRoutine;
 
     return {
         routines: routines

@@ -2,7 +2,7 @@ yarn.service("actSceneRoutine", function (events,
                                           assert,
                                           state,
                                           Script,
-                                          storyLog,
+                                          transcript,
                                           doReveal,
                                           yConsole) {
 
@@ -13,7 +13,7 @@ yarn.service("actSceneRoutine", function (events,
 
     function actSceneRoutine(chainedScene) {
 
-        yConsole.log("Routine: actScene");
+//        yConsole.log("Routine: actScene");
 
         var scene = chainedScene || state.one("Player acts *");
 
@@ -24,7 +24,7 @@ yarn.service("actSceneRoutine", function (events,
 
             console.log("actionName ======>>> ", actionName);
             if (actionName) {
-                storyLog.action("You choose to " + actionName);
+                transcript.action("You choose to " + actionName);
             } else {
 //                yConsole.warning("This scene did not have an <em>Action Name</em>");
             }

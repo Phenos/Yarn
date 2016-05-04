@@ -2,7 +2,7 @@ yarn.service("talkToRoutine", function (events,
                                         assert,
                                         state,
                                         Script,
-                                        storyLog,
+                                        transcript,
                                         yConsole,
                                         things,
                                         predicates) {
@@ -43,7 +43,7 @@ yarn.service("talkToRoutine", function (events,
             });
 
             if (topics && topics.length > 0) {
-                storyLog.action("You think about what you could say...");
+                transcript.action("You think about what you could say...");
 
                 angular.forEach(topics, function (topic) {
                     var name = state.value("CurrentTopic has a Name", {
@@ -57,10 +57,10 @@ yarn.service("talkToRoutine", function (events,
                         "[", label, ":", topic.id, ": Talk About ]"
                     ].join("");
                     //                        console.log("scriptText>>> ", output);
-                    storyLog.topic(output);
+                    transcript.topic(output);
                 });
             } else {
-                storyLog.action("You can't think of anything to talk about.")
+                transcript.action("You can't think of anything to talk about.")
             }
 
         }

@@ -1,0 +1,11 @@
+<div class="monitors" ng-if="monitors.monitors.visible">
+    <h3>Monitors</h3>
+    <div ng-repeat="monitor in monitors.monitors.items">
+        <h4>{{ monitor.label }}</h4>
+        <table>
+            <tr ng-repeat="meta in monitor.meta">
+                <th>{{ meta.label }}</th><td>{{ monitor.data[meta.name] }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -6,8 +6,8 @@ yarn.service("step", function (postal,
                                synonyms,
                                statuses,
                                player,
-                               storyLog,
-                               $timeout) {
+                               transcript,
+                               status) {
 
     function Step () {
         this.alreadyInsideStep = false;
@@ -26,6 +26,7 @@ yarn.service("step", function (postal,
             "prompts",
             "endStep"
         ];
+        this.status = status.new("Processing story step");
     }
 
     Step.prototype.on = function on(sequenceItemId, callback) {
@@ -34,6 +35,7 @@ yarn.service("step", function (postal,
 
     Step.prototype.run = function run(action) {
         var self = this;
+        self.status.start();
 
         self.scope.action = action || null;
 
@@ -48,6 +50,7 @@ yarn.service("step", function (postal,
         this.alreadyInsideStep = false;
 
         player.scroll();
+        self.status.success();
     };
 
     Step.prototype.walk = function walk(sequenceItemId) {
@@ -69,7 +72,7 @@ yarn.service("step", function (postal,
     var step = new Step();
 
     step.on("startStep", function () {
-        storyLog.markAsRead();
+        transcript.markAsRead();
         state.step(1);
         events.trigger(assert("Story", "did", "Step"));
         events.trigger(assert("Player", "did", "Step"));
@@ -97,16 +100,16 @@ yarn.service("step", function (postal,
         var storyHasEnded = state.resolveValue(assert("Story", "has", "Ended"));
         if (storyHasEnded) {
             player.refresh();
+            player.endStory();
         }
     });
 
     step.on("endStep", function () {
-        // Flush the storyLog buffers
-        storyLog.flushBuffers();
         // Remove the temporary "step" layer of assertions
         state.assertions.removeLayer("step");
     });
 
+    state.updateModel();
 
     return step;
 });

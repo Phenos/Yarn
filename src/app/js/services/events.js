@@ -23,25 +23,8 @@ yarn.service('events', function (assert,
         this.listeners.push(listener);
     };
 
-    Events.prototype.process = function (_eventId) {
-        var eventId = _eventId || null;
-        var eventIdNormalized = eventId;
-
-        if (eventId) {
-            eventIdNormalized = eventId.trim().toLowerCase();
-        }
-
+    Events.prototype.processInternalListeners = function (eventId) {
         var self = this;
-//        console.log("Events.process()");
-
-        var somethingHappened = false;
-        var setsToBeTriggered = [];
-
-        yConsole.log("Processing events :" + (_eventId || "default"));
-
-        var triggerAssertions = state.assertions.find(assert(undef, "trigger"));
-
-//        console.log("triggerAssertions", triggerAssertions);
 
         // First, we trigger any hard-coded listeners
         angular.forEach(this.listeners, function (listener) {
@@ -50,7 +33,7 @@ yarn.service('events', function (assert,
             var hasOneNonFalseMatch = false;
 //            console.log("--> ", eventId, listener.eventId);
             // Continue if the eventId matches
-            if (eventId && listener.eventId === eventIdNormalized) {
+            if (eventId && listener.eventId === eventId) {
 //                console.log("2", listener.assert);
                 // Continue if the assert is either true or if it resolves at least
                 // one "true" object
@@ -76,8 +59,18 @@ yarn.service('events', function (assert,
             }
         });
 
+    };
+
+    Events.prototype.processStoryListeners = function (eventId) {
+        var self = this;
+        var setsToBeTriggered = [];
+        var triggerAssertions = state.assertions.find(assert(undef, "trigger"));
+
+//        console.log("triggerAssertions", triggerAssertions);
+
         // Second, figure out which assertions set will need to be triggered
         angular.forEach(triggerAssertions, function (assertion) {
+//            console.log("triggerAssertions: ", assertion);
             // Fetch the list of assertions to be used as triggers
             var childAssertions;
             var allConditionsAreTrue = true;
@@ -96,7 +89,7 @@ yarn.service('events', function (assert,
 
 //            console.log("triggerValueNormalized", triggerValueNormalized);
             // Check if the eventId provided matches
-            if ((eventId && triggerValueNormalized === eventIdNormalized) ||
+            if ((eventId && triggerValueNormalized === eventId) ||
                 !eventId && triggerValueNormalized === true) {
 //                console.log("Testing : ", consoleHelper.assertion2log(assertion));
                 childAssertions = state.assertions.find(assert(undef, undef, undef, {
@@ -127,6 +120,12 @@ yarn.service('events', function (assert,
             }
         });
 
+        return setsToBeTriggered;
+    };
+
+    Events.prototype.processSetsToBeTriggered = function (setsToBeTriggered) {
+        var self = this;
+        var somethingHappened = false;
         // Then, we trigger each assertion sets that are supposed to be triggered
 //        console.log("setsToBeTriggered ", setsToBeTriggered);
         angular.forEach(setsToBeTriggered, function (trigger) {
@@ -135,10 +134,8 @@ yarn.service('events', function (assert,
                 somethingHappened = true;
             }
         });
-
         return somethingHappened;
     };
-
 
     Events.prototype.triggerNow = function (object, assertion) {
         var self = this;
@@ -165,7 +162,6 @@ yarn.service('events', function (assert,
             shouldOccur = false;
         }
 
-
         if (shouldOccur) {
             somethingHappened = true;
             // Todo: createAssertion should also use assert() ??
@@ -188,12 +184,33 @@ yarn.service('events', function (assert,
         return somethingHappened;
     };
 
-
     Events.prototype.trigger = function (_assert) {
 //        console.log("Trigger", assert);
         state.createAssertion(_assert.subject, _assert.predicate, _assert.object, {
             layer: "step"
         });
+    };
+
+    Events.prototype.process = function (_eventId) {
+        var self = this;
+        var eventIdNormalized = _eventId || "";
+        eventIdNormalized = eventIdNormalized.trim().toLowerCase();
+
+//        yConsole.log("Processing events :" + (_eventId || "default"));
+
+//        var processInternalListenersStatus = status.new("processInternalListeners");
+//        processInternalListenersStatus.start();
+        self.processInternalListeners(eventIdNormalized);
+//        processInternalListenersStatus.success();
+
+//        var processStoryListenersStatus = status.new("processStoryListeners");
+//        processStoryListenersStatus.start();
+        var setsToBeTriggered = self.processStoryListeners(eventIdNormalized);
+//        processStoryListenersStatus.success();
+
+        var somethingHappened = self.processSetsToBeTriggered(setsToBeTriggered);
+
+        return somethingHappened;
     };
 
     return new Events();

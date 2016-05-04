@@ -24,8 +24,8 @@ yarn.service("doRoutine", function (state,
                 });
 
                 if (predicate) {
+//                    console.log("==>> ", action, predicate, object);
                     events.trigger(assert("Player", predicate, object));
-
                 }
 
                 var space = state.one("Player is in *");

@@ -1,7 +1,7 @@
 yarn.factory('writers', function (Prompt,
                                   assert,
                                   yConsole,
-                                  storyLog,
+                                  transcript,
                                   state,
                                   yarnScript,
                                   commands,
@@ -19,13 +19,13 @@ yarn.factory('writers', function (Prompt,
         var coverpage_url = coverpage && yarnScript.resolveRelativeURI(coverpage);
 
         if (coverpage) {
-            storyLog.image(coverpage_url);
+            transcript.image(coverpage_url);
         }
 
         // Show the story title
         var name = state.resolveValue(assert("Story", "has", "Name"));
         if (name) {
-            storyLog.heading(name);
+            transcript.heading(name);
         }
 
         // Show the headline title
@@ -42,12 +42,12 @@ yarn.factory('writers', function (Prompt,
             if (author) {
                 headlineAndAuthor.push("by " + author);
             }
-            storyLog.headline(headlineAndAuthor.join(""));
+            transcript.headline(headlineAndAuthor.join(""));
         }
 
         var description = state.resolveValue(assert("Story", "has", "Description"));
         if (description) {
-            storyLog.log(description);
+            transcript.log(description);
         }
 
 
@@ -55,14 +55,14 @@ yarn.factory('writers', function (Prompt,
     }
 
     function describeTheEnd() {
-        storyLog.markAsRead();
+        transcript.markAsRead();
 
         currentTheme.refresh();
 
         // Show the story title
         var name = state.resolveValue(assert("TheEnd", "has", "Name"));
         if (name) {
-            storyLog.heading(name);
+            transcript.heading(name);
         }
 
         // Set the wallpaper
@@ -70,12 +70,12 @@ yarn.factory('writers', function (Prompt,
         var coverpage_url = coverpage && yarnScript.resolveRelativeURI(coverpage);
 
         if (coverpage) {
-            storyLog.image(coverpage_url);
+            transcript.image(coverpage_url);
         }
 
         var description = state.resolveValue(assert("TheEnd", "has", "Description"));
         if (description) {
-            storyLog.log("“&nbsp;" + description + "&nbsp;”");
+            transcript.log("“&nbsp;" + description + "&nbsp;”");
         }
 
         return this;
@@ -84,7 +84,7 @@ yarn.factory('writers', function (Prompt,
     function describeRoom() {
         console.log("describeRoom");
 
-        storyLog.markAsRead();
+        transcript.markAsRead();
 
         var room = state.resolveOne(assert("Player", "is in"));
 
@@ -102,28 +102,25 @@ yarn.factory('writers', function (Prompt,
 
             var name = state.resolveValue(assert(room, "has", "Name"));
             if (name) {
-                storyLog.heading(name);
+                transcript.heading(name);
             }
 
             var introduction = state.resolveValue(assert(room, "has", "Introduction"));
             var description = state.resolveValue(assert(room, "has", "Description"));
 
             if (introduction) {
-                storyLog.log(introduction);
+                transcript.log(introduction);
             } else if (description) {
-                storyLog.log(description);
+                transcript.log(description);
             }
 
         } else {
-            storyLog.log(defaultTexts.get("you-dont-know-where-you-are"));
+            transcript.log(defaultTexts.get("you-dont-know-where-you-are"));
 //            yConsole.error("The player is nowhere to be found!");
             yConsole.tip(
                 "For the story to start, you must place the player in a space.<br/>" +
                 "Ex.: Player is in the Bedroom.");
         }
-
-        // Before ending, flush the log from any buffered logs
-        storyLog.flushBuffers();
 
         return this;
     }
@@ -135,16 +132,16 @@ yarn.factory('writers', function (Prompt,
             var description = state.resolveValue(assert(thing, "has", "Description"));
             var image = state.resolveValue(assert(thing, "has", "Image"));
             if (image) {
-                storyLog.thingImage(
+                transcript.thingImage(
                     yarnScript.resolveRelativeURI(image)
                 );
             }
             if (description) {
-                storyLog.log(description);
+                transcript.log(description);
             } else {
                 var defaultSeeNothingText =
                     state.resolveValue(assert("Default", "for", "YouSeeNothing"));
-                storyLog.log(defaultSeeNothingText || "Nothing interesting");
+                transcript.log(defaultSeeNothingText || "Nothing interesting");
             }
         }
         return this;
@@ -152,7 +149,7 @@ yarn.factory('writers', function (Prompt,
 
     // Describe where you are at the beginning
     function nothingHappened() {
-        storyLog.log(defaultTexts.get("nothing-happened"));
+        transcript.log(defaultTexts.get("nothing-happened"));
         return this;
     }
 
@@ -161,7 +158,7 @@ yarn.factory('writers', function (Prompt,
         if (thing) {
             var name = state.resolveValue(assert(thing, "has", "Name"));
             if (name) {
-                storyLog.action("You take the " + name);
+                transcript.action("You take the " + name);
             }
         }
         return this;

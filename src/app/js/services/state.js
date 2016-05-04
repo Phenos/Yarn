@@ -23,6 +23,7 @@ yarn.service('state', function (Assertion,
             this.assertions = new Assertions();
             this.currentLayer = "code";
             this.localState = null;
+            this.modelStory = new ModelStory(this);
 
             this.ready(false, "loading", "Loading...");
 
@@ -30,6 +31,10 @@ yarn.service('state', function (Assertion,
                 self.persistEditorFiles(file);
             });
         }
+
+        State.prototype.updateModel = function () {
+            this.modelStory.update(this);
+        };
 
         State.prototype.ready = function (isReady, status, message) {
             var readyness = this.readyness = this.readyness || {};
@@ -322,7 +327,9 @@ yarn.service('state', function (Assertion,
         };
 
         State.prototype.createAssertion = function (subject, predicate, object, _options) {
+            var self = this;
             var options = _options || {};
+            var shouldCreateNewAssertion = true;
             var assertion;
 //            console.log("options", options.source.uri);
             if (subject && predicate && object) {
@@ -354,59 +361,68 @@ yarn.service('state', function (Assertion,
                     options.layer = this.currentLayer;
                 }
 
-                /* ----- */
-                // TODO:TEST: Dont negate assertions before knowing if an
-                // existing assertion can bemodifier
-                if (!options.parent && this.currentLayer !== "code") {
-                    // Find exquivalent assertions to be negated
-                    this.negate(assert(subject, _predicate, object));
+
+                // Find equivalent assertions to be negated
+                var currentAssertionValue = self.value(assert(subject, _predicate, object));
+
+                if (currentAssertionValue === options.value) {
+                    shouldCreateNewAssertion = false;
                 }
-                /* ----- */
 
-                var _assert = assert(subject, _predicate, object, {
-                    layer: options.layer,
-                    parent: options.parent
-                });
+                if (shouldCreateNewAssertion) {
 
-                var identicalAssertions = this.assertions.filter(_assert);
-                if (identicalAssertions.count() > 0) {
-                    var topAssertion = identicalAssertions.sortByWeight().top();
-                    if (topAssertion.layer === "code") {
-                        // If the top assertion in on the static code layer
-                        // We create a new assertion anyways
+                    /* ----- */
+                    // TODO:TEST: Dont negate assertions before knowing if an
+                    // existing assertion can be modified
+                    if (!options.parent && this.currentLayer !== "code") {
+                        this.negate(assert(subject, _predicate, object));
+                    }
+                    /* ----- */
+
+                    var _assert = assert(subject, _predicate, object, {
+                        layer: options.layer,
+                        parent: options.parent
+                    });
+
+                    var identicalAssertions = this.assertions.filter(_assert);
+                    if (identicalAssertions.count() > 0) {
+                        var topAssertion = identicalAssertions.sortByWeight().top();
+                        if (topAssertion.layer === "code") {
+                            // If the top assertion in on the static code layer
+                            // We create a new assertion anyways
+                            assertion = new Assertion(subject, _predicate, object, options);
+                            this.assertions.add(assertion);
+                            if (!options.noTransaction) {
+                                channel.publish("state.createAssertion", {assertion: assertion});
+                            }
+                            this.persistAssertion(assertion);
+                        } else {
+                            var replaced = topAssertion.value();
+                            // Else we re-use the existing assertion
+                            if (angular.isDefined(options.evaluatedValue)) {
+                                topAssertion.value(options.evaluatedValue);
+                            } else {
+                                topAssertion.value(options.value);
+                            }
+                            if (!options.noTransaction) {
+                                channel.publish("state.updateAssertion", {
+                                    replaced: replaced,
+                                    assertion: topAssertion
+                                });
+                            }
+                            this.persistAssertion(topAssertion);
+                        }
+                    } else {
                         assertion = new Assertion(subject, _predicate, object, options);
                         this.assertions.add(assertion);
                         if (!options.noTransaction) {
-                            channel.publish("state.createAssertion", {assertion: assertion});
-                        }
-                        this.persistAssertion(assertion);
-                    } else {
-                        var replaced = topAssertion.value();
-                        // Else we re-use the existing assertion
-                        if (angular.isDefined(options.evaluatedValue)) {
-                            topAssertion.value(options.evaluatedValue);
-                        } else {
-                            topAssertion.value(options.value);
-                        }
-                        if (!options.noTransaction) {
-                            channel.publish("state.updateAssertion", {
-                                replaced: replaced,
-                                assertion: topAssertion
+                            channel.publish("state.createAssertion", {
+                                assertion: assertion
                             });
                         }
-                        this.persistAssertion(topAssertion);
+                        this.persistAssertion(assertion);
                     }
-                } else {
-                    assertion = new Assertion(subject, _predicate, object, options);
-                    this.assertions.add(assertion);
-                    if (!options.noTransaction) {
-                        channel.publish("state.createAssertion", {
-                            assertion: assertion
-                        });
-                    }
-                    this.persistAssertion(assertion);
                 }
-
             } else {
                 console.error("Impossible to create an incomplete assertion.", arguments);
             }
@@ -599,6 +615,21 @@ yarn.service('state', function (Assertion,
 
             return newScope;
         };
+
+        // model story
+        function ModelStory(state) {
+            this.update(state);
+        }
+
+        ModelStory.prototype.update = function (state) {
+            this.name = state.value("Story has Name");
+            this.uniqueID = state.value("Story has Unique ID");
+            this.releaseNumber = state.value("Story has Release Number");
+            this.coverpage = state.value("Story has Coverpage");
+            this.headline = state.value("Story has Headline");
+            this.description = state.value("Story has Description");
+        };
+
 
         return new State();
 

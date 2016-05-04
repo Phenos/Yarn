@@ -3,6 +3,7 @@ yarn.directive('toolbar', function ToolbarDirective($window,
                                                     state,
                                                     profiles,
                                                     commands,
+                                                    currentTheme,
                                                     transcript,
                                                     login) {
     return {
@@ -20,6 +21,11 @@ yarn.directive('toolbar', function ToolbarDirective($window,
 
         this.state = state;
         this.visited = profiles.visited();
+        this.fontSize = currentTheme.fontSize();
+
+        $scope.$watch("toolbar.fontSize", function (value) {
+            currentTheme.fontSize(value)
+        });
 
         if (session.user()) {
             this.user = session.user();

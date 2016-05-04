@@ -1,6 +1,7 @@
 yarn.service("player", function () {
 
-    var service = {};
+    var service = {
+    };
 
     service.register = function (controller) {
         service.controller = controller;

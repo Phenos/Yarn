@@ -1,5 +1,8 @@
 <div
-        ng-class="'theme-brightness-' + player.currentTheme.wallpaper.brightness"
+        ng-class="[
+            player.currentTheme.fontSizeClass,
+            'theme-brightness-' + player.currentTheme.wallpaper.brightness
+        ]"
         style="position: relative"
         layout-fill
         layout="column">
@@ -11,7 +14,7 @@
          layout="column"
          ng-if="player.state.readyness.isReady">
         <div class="player"
-                flex="grow"
+             flex="grow"
         >
             <div
                     class="main-ui">

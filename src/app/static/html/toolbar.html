@@ -1,4 +1,4 @@
-<md-toolbar  class="toolbar">
+<md-toolbar class="toolbar">
     <div class="md-toolbar-tools">
         <div
                 flex="30"
@@ -51,7 +51,7 @@
              layout-align="end end">
             <div flex=""></div>
             <md-menu ng-if="toolbar.state.story"
-                    md-offset="-8 0"
+                     md-offset="-8 0"
                      md-position-mode="target-right target">
                 <md-button
                         style="min-width: 0; padding: 0;"
@@ -83,7 +83,7 @@
                                    aria-label="{{ toolbar.visited.shortUsername }}">
                             <img alt="{{ toolbar.visited.shortUsername }}"
                                  ng-src="{{ toolbar.visited.twitterProfile.profile_image_url | biggerProfileImage }}"
-                                 class="avatar" />
+                                 class="avatar"/>
                             {{ toolbar.visited.shortUsername }}
                         </md-button>
                     </md-menu-item>
@@ -107,6 +107,23 @@
                             <md-icon md-svg-icon="./svg-icons/restart.svg"></md-icon>
                             <span>Restart</span>
                         </md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-if="toolbar.visited">
+                        <div flex="100" layout="row">
+                            <div flex="10" layout="row" layout-align="start center">
+                                <md-icon md-svg-icon="./svg-icons/font-size.svg"></md-icon>
+                            </div>
+                            <div flex="80" flex-offset="10">
+                                <md-slider flex
+                                           md-discrete
+                                           ng-model="toolbar.fontSize"
+                                           step="1"
+                                           min="-2"
+                                           max="2"
+                                           aria-label="Font size">
+                                </md-slider>
+                            </div>
+                        </div>
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>

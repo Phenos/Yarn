@@ -3,10 +3,12 @@
  * @name Theme
  * @class
  */
-yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
+yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper, storyLocalStorage) {
 
     function Theme() {
         var self = this;
+
+        self.localStorage = storyLocalStorage.get("currentTheme");
 
         /**
          * Wallpaper for this theme
@@ -23,7 +25,29 @@ yarn.service("Theme", function (state, things, yConsole, wallpaper, Wallpaper) {
             layout: "fullscreen",
             effects: ""
         });
+
+        self._fontSize = null;
+        self.fontSizeClass = null;
+
+        if (!angular.isUndefined(self.localStorage.fontSize)) {
+            self.fontSize(self.localStorage.fontSize);
+        } else {
+            self.fontSize(0);
+        }
+
     }
+
+    Theme.prototype.fontSize = function (fontSize) {
+        var self = this;
+
+        if (!angular.isUndefined(fontSize)) {
+            self._fontSize = fontSize;
+        }
+        var classNames = ["font-tiny", "font-small", "font-medium", "font-large", "font-huge"];
+        self.fontSizeClass = classNames[self._fontSize + 2];
+        self.localStorage.fontSize = self._fontSize;
+        return self._fontSize;
+    };
 
     /**
      * Obtain and apply the theme for the current context (story or space).

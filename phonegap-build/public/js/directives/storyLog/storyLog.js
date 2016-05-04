@@ -67,10 +67,15 @@
                 var document = $document[0];
                 angular.forEach(storyLog.items, function (_item) {
                     var elem = angular.element(document.getElementById("logItem-" + _item.number));
+                    var parent = elem.parent();
                     if (_item.number === storyLog.lastItemRead) {
-                        elem.parent().addClass("hasBookmark");
+                        parent.addClass("hasBookmark");
                     } else {
-                        elem.parent().removeClass("hasBookmark");
+                        if (parent.hasClass("hasBookmark")) {
+                            debugger;
+                            parent.addClass("hadBookmark");
+                        }
+                        parent.removeClass("hasBookmark");
                     }
                     elem.removeClass("unread")
                         .addClass("read")

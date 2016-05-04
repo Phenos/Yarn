@@ -34,9 +34,11 @@ yarn.directive('player', function (channel,
         this.profiles = profiles;
         this.currentTheme = currentTheme;
 
+        this.scrollElement = null;
+
         $timeout(function () {
-            var scrollElement = $element[0].querySelector('.player');
-            self.scroller.bind(scrollElement);
+            self.scrollElement = $element[0].querySelector('.player');
+            self.scroller.bind(self.scrollElement);
         }, 10);
 
         this.scrollbarsConfig = {
@@ -133,13 +135,14 @@ yarn.directive('player', function (channel,
                 // First we check to see if it's the first game step
                 // to prevent scrolling when first showing the coverpage
 
-                self.scroller.scrollToPosition("bottom", 500);
-
-                if (state.step() > 0) {
-                    console.warn("Auto scrolling de-activated");
-//                    $scope.updateScrollbar('scrollTo', "bottom");
+                if (transcript.bookMarkElement) {
+                    var bookmarkPosition = transcript.bookMarkElement.offsetTop;
+                    self.scroller.scrollToPosition(bookmarkPosition - 200, 500);
+                } else {
+                    self.scroller.scrollToPosition("bottom", 500);
                 }
-            }, 100);
+
+            }, 250);
         };
 
     }

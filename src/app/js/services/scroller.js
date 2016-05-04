@@ -63,20 +63,12 @@ yarn.service("Scroller", function ($window, Monitor) {
                 targetPosition = self.bottomPosition;
             }
         }
-
-        console.log("scrollToPosition", self.position, targetPosition, duration);
+//        console.log("scrollToPosition", self.position, targetPosition, duration);
 
         var startPosition = self.position;
-//        console.log("scrollToPosition", position, duration);
         var animation = new Animation(function (anim) {
             var distCompleted = (targetPosition - startPosition) * anim.progress;
-//            console.log("self.element.scrollTop", self.element.scrollTop);
-            var updatedPosition = parseInt(startPosition + distCompleted);
-//            console.log("updatedPosition", updatedPosition);
-            self.element.scrollTop = updatedPosition;
-//            console.log("self.element.scrollTop", self.element.scrollTop);
-//            console.log("-");
-//            console.log("progress", animation.progress);
+            self.element.scrollTop = parseInt(startPosition + distCompleted);
         }, duration);
 
         animation.start();

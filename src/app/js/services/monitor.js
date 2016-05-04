@@ -10,7 +10,9 @@ yarn.service("Monitor", function (monitors) {
     }
 
     Monitor.prototype.update = function (data) {
-        angular.extend(this.data, data);
+        if (this.visible) {
+            angular.extend(this.data, data);
+        }
     };
 
     Monitor.prototype.show = function () {

@@ -7,7 +7,8 @@ yarn.service('transcript', function (state,
                                      parseThingLink) {
 
     // todo: Put in an app config
-    var MaxTranscriptLength = 30;
+    var MaxTranscriptLength = 60;
+    var MaxTranscriptLengthBuffer = 30;
 
     function Transcript() {
         // Recent log items to be displayed
@@ -15,6 +16,8 @@ yarn.service('transcript', function (state,
         // All items since the beginning
         this.archive = [];
         this.lastItemRead = 0;
+
+        this.bookMarkElement = null;
 
         this.localStorage = storyLocalStorage.get("transcript");
         if (!this.localStorage.archive) {
@@ -104,7 +107,7 @@ yarn.service('transcript', function (state,
         // todo: Put maximum number of line in a config
         // Everytime the log overflows by XX items it is cropped
         var overflow = self.items.length - MaxTranscriptLength;
-        if (overflow > 5) {
+        if (overflow > MaxTranscriptLengthBuffer) {
             self.items.splice(0, overflow);
         }
     };
@@ -140,12 +143,18 @@ yarn.service('transcript', function (state,
         var document = $document[0];
         angular.forEach(self.items, function (_item) {
             var elem = angular.element(document.getElementById("logItem-" + _item.number));
+            var parent = elem.parent();
             if (_item.number === self.lastItemRead) {
-                elem.parent().addClass("hasBookmark");
+                self.bookMarkElement = parent[0];
+                parent.addClass("hasBookmark");
             } else {
-                elem.parent().removeClass("hasBookmark");
+                if (parent.hasClass("hasBookmark")) {
+                    parent.addClass("hadBookmark");
+                }
+                parent.removeClass("hasBookmark");
             }
-            elem.removeClass("unread").addClass("read")
+            elem.removeClass("unread")
+                .addClass("read")
         });
     };
 

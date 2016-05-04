@@ -83,12 +83,13 @@
 </head>
 <body layout="row"
       ng-app="yarn">
-<section ui-view
-         layout="column"
-         flex="grow"
-         data-context-event="contextmenuexists"
-         data-context-menu="./html/editor-context-menus.html"
-></section>
-<!--<support-chat></support-chat>-->
+    <monitors></monitors>
+    <section ui-view
+             layout="column"
+             flex="grow"
+             data-context-event="contextmenuexists"
+             data-context-menu="./html/editor-context-menus.html"
+    ></section>
+    <!--<support-chat></support-chat>-->
 </body>
 </html>

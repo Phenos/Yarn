@@ -9,6 +9,7 @@ yarn.directive('player', function (channel,
                                    profiles,
                                    login,
                                    assert,
+                                   Scroller,
                                    transcript,
                                    $timeout) {
 
@@ -23,13 +24,20 @@ yarn.directive('player', function (channel,
         controller: playerController
     };
 
-    function playerController($scope) {
+    function playerController($scope, $element) {
 
         var self = this;
+
+        this.scroller = new Scroller();
 
         this.state = state;
         this.profiles = profiles;
         this.currentTheme = currentTheme;
+
+        $timeout(function () {
+            var scrollElement = $element[0].querySelector('.player');
+            self.scroller.bind(scrollElement);
+        }, 10);
 
         this.scrollbarsConfig = {
             autoHideScrollbar: true,
@@ -124,11 +132,14 @@ yarn.directive('player', function (channel,
             $timeout(function () {
                 // First we check to see if it's the first game step
                 // to prevent scrolling when first showing the coverpage
+
+                self.scroller.scrollToPosition("bottom", 500);
+
                 if (state.step() > 0) {
                     console.warn("Auto scrolling de-activated");
 //                    $scope.updateScrollbar('scrollTo', "bottom");
                 }
-            }, 50);
+            }, 100);
         };
 
     }

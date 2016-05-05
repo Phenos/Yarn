@@ -1,7 +1,7 @@
 <md-toolbar class="toolbar">
     <div class="md-toolbar-tools">
         <div
-                flex="30"
+                flex="20"
                 layout="row"
                 layout-align="start center">
             <md-button
@@ -24,7 +24,7 @@
 
         </div>
         <div ng-if="!toolbar.state.modelStory.name"
-             flex="40"
+             flex="60"
              layout="row"
              layout-align="center center">
             <md-icon flex="100"
@@ -39,14 +39,14 @@
                      md-svg-icon="./svg-icons/yarn-logo-small-white.svg"></md-icon>
         </div>
         <div ng-if="toolbar.state.modelStory.name"
-             flex="40"
+             flex="60"
              layout="row"
              layout-align="center center">
             <div class="storyName">
                 {{ toolbar.state.modelStory.name }}
             </div>
         </div>
-        <div flex="30"
+        <div flex="20"
              layout="row"
              layout-align="end end">
             <div flex=""></div>

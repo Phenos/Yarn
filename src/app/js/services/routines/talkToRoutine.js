@@ -20,7 +20,7 @@ yarn.service("talkToRoutine", function (events,
         yConsole.log("Routine: talkTo");
 
         var interlocutor = chainedTopic || state.one("Player talks to *");
-
+        console.log("interlocutor", interlocutor, chainedTopic);
         if (interlocutor) {
 
             // Take not of the Latest Interlocutor

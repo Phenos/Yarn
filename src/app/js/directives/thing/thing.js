@@ -107,6 +107,7 @@ yarn.directive('thing', function ThingDirective(things,
             e.preventDefault();
             e.stopPropagation();
 
+            console.log("====>>>>>>");
             this.update();
 
 //            thingsLinks.unselectAll();

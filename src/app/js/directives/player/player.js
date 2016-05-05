@@ -105,10 +105,15 @@ yarn.directive('player', function (channel,
             state.updateModel();
         };
 
+        // TODO: There should be a distinct method for the actual "start" vs "resuming" a story
         this.startStory = function() {
-            this.scroller.scrollToPosition(0, 100);
             if (transcript.archive.length === 0) {
+                // Start from scratch
+                this.scroller.scrollToPosition(0, 100);
                 writers.describeCoverpage();
+            } else {
+                // Resume to where the story was left
+                this.scroller.scrollToPosition("bottom", 100);
             }
         };
 

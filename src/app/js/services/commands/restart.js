@@ -16,7 +16,7 @@ function restartCommand(commands,
         /*
          Refresh the list of Statuses and Synonyms, in case they changed during game play
          */
-        //TODO: Those two updates should be extracted in a global behavior
+        // TODO: Those two updates should be extracted in a global behavior
         // They are repeated too ofter
         // TODO: Dont inject state as argument
         synonyms.update(state);

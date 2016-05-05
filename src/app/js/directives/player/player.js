@@ -106,6 +106,7 @@ yarn.directive('player', function (channel,
         };
 
         this.startStory = function() {
+            this.scroller.scrollToPosition(0, 100);
             if (transcript.archive.length === 0) {
                 writers.describeCoverpage();
             }
